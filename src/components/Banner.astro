@@ -1,0 +1,14 @@
+---
+// Banner component integrating Header, SecondaryButton, and MainButton
+import Header from './Header.astro';
+import SecondaryButton from './SecondaryButton.astro';
+import MainButton from './MainButton.astro';
+---
+
+<div class="w-full h-full bg-gradient-to-r from-[#EAEAEA] via-[#ECECEC] to-[#EDEDED] overflow-hidden bg-[url('https://placehold.co/2000x1149')] bg-cover bg-center flex flex-col justify-between items-start">
+  <Header />
+  <div class="self-stretch py-6 lg:py-8 flex flex-col sm:flex-row justify-center items-end gap-4 sm:gap-5 px-4">
+    <SecondaryButton />
+    <MainButton />
+  </div>
+</div>
