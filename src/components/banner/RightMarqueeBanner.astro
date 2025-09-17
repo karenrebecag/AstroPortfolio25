@@ -2,6 +2,56 @@
 // RightMarqueeBanner - Large animated text moving from left to right
 ---
 
-<div class="whitespace-nowrap font-display font-bold text-gray-200/20 select-none animate-[marquee-right_240s_linear_infinite] text-left" style="font-size: clamp(163px, 32.6vw, 326px);">
-  FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS •
+<div 
+  id="right-marquee" 
+  class="whitespace-nowrap font-display font-bold text-gray-200/20 select-none text-left" 
+  style="font-size: clamp(163px, 32.6vw, 326px); width: max-content; text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);"
+>
+  <span class="marquee-content">
+    FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+  </span>
+  <span class="marquee-content">
+    FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+  </span>
 </div>
+
+<script>
+  // JavaScript para animación infinita fluida del marquee derecho
+  function initRightMarquee() {
+    const rightMarquee = document.getElementById('right-marquee');
+    if (!rightMarquee) return;
+    
+    const rightContent = rightMarquee.querySelectorAll('.marquee-content');
+    if (rightContent.length === 0) return;
+    
+    let rightPosition = 0;
+    const speed = 1; // Velocidad en píxeles por frame
+    
+    function animateRightMarquee() {
+      rightPosition += speed;
+      
+      // Obtener el ancho del contenido
+      const firstElement = rightContent[0] as HTMLElement;
+      const contentWidth = firstElement.offsetWidth;
+      
+      // Resetear posición cuando el primer elemento sale completamente
+      if (rightPosition >= contentWidth) {
+        rightPosition = 0;
+      }
+      
+      // Aplicar transformación
+      rightMarquee.style.transform = `translateX(${rightPosition}px)`;
+      
+      requestAnimationFrame(animateRightMarquee);
+    }
+    
+    animateRightMarquee();
+  }
+  
+  // Iniciar animación cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRightMarquee);
+  } else {
+    initRightMarquee();
+  }
+</script>

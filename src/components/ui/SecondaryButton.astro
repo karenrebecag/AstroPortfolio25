@@ -7,65 +7,46 @@ export interface Props {
 const { text = "Discover My Works" } = Astro.props;
 ---
 
-<div class="secondary-button w-full h-full px-2.5 py-[27px] bg-gradient-to-br from-transparent via-transparent to-black/21 bg-[rgba(202.35,202.35,202.35,0.20)] shadow-[0px_4px_200px_rgba(255,255,255,0.05)] overflow-hidden rounded-[10px] flex justify-center items-center gap-[5px] cursor-pointer transition-all duration-200">
-  <div class="text-white font-display font-normal break-words" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">{text}</div>
-  <div class="w-[7.39px] h-[7.39px] rotate-[41deg] origin-top-left bg-white"></div>
-  <div class="w-[7.39px] h-[7.39px] rotate-[41deg] origin-top-left bg-white"></div>
-  <div class="w-[2.11px] h-[19px] rotate-[41deg] origin-top-left bg-white"></div>
+<div class="secondary-button w-full h-full px-2.5 py-[18px] bg-black shadow-[0px_4px_200px_rgba(255,255,255,0.05)] overflow-hidden rounded-[10px] flex justify-center items-center cursor-pointer transition-all duration-200">
+  <div class="button-text text-white font-display font-normal text-center" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">{text}</div>
+  
 </div>
 
-<script>
-  import { animate, inView } from "motion"
-
-  // Use a more specific approach to avoid conflicts
-  const initSecondaryButton = () => {
-    const secondaryButtons = document.querySelectorAll('.secondary-button')
-    secondaryButtons.forEach((secondaryButton) => {
-      // Appearance animation
-      inView(secondaryButton, () => {
-        animate(secondaryButton,
-          { opacity: [0, 1], y: [20, 0] },
-          { duration: 0.6, easing: "ease-out", delay: 0.1 }
-        )
-      })
-
-      // Hover animations
-      secondaryButton.addEventListener('mouseenter', () => {
-        animate(secondaryButton,
-          {
-            y: -4,
-            scale: 1.02,
-            boxShadow: "0px 8px 300px rgba(255,255,255,0.12)",
-            backgroundColor: "rgba(202.35,202.35,202.35,0.30)"
-          },
-          { duration: 0.3, easing: "ease-out" }
-        )
-      })
-
-      secondaryButton.addEventListener('mouseleave', () => {
-        animate(secondaryButton,
-          {
-            y: 0,
-            scale: 1,
-            boxShadow: "0px 4px 200px rgba(255,255,255,0.05)",
-            backgroundColor: "rgba(202.35,202.35,202.35,0.20)"
-          },
-          { duration: 0.3, easing: "ease-out" }
-        )
-      })
-    })
-  }
-
-  // Initialize immediately and also on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSecondaryButton)
-  } else {
-    initSecondaryButton()
-  }
-</script>
 
 <style>
   .secondary-button {
     opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%) !important;
+  }
+
+  .secondary-button:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 300px rgba(255,255,255,0.15);
+    background: linear-gradient(135deg, #3a3a3a 0%, #2c2c2c 50%, #1a1a1a 100%) !important;
+    filter: brightness(1.1);
+  }
+
+  .secondary-button:active {
+    transform: translateY(-4px);
+    transition: all 0.1s ease-out;
+  }
+
+  .button-text {
+    color: white !important;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>

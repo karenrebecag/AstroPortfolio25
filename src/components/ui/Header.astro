@@ -292,9 +292,9 @@ import SecondaryButton from './SecondaryButton.astro';
       if (isMenuOpen) return;
       
       isMenuOpen = true;
-      mobileMenuBtn.classList.add('active');
-      mobileMenuOverlay.classList.add('active');
-      mobileMenuPanel.classList.add('active');
+      mobileMenuBtn?.classList.add('active');
+      mobileMenuOverlay?.classList.add('active');
+      mobileMenuPanel?.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
@@ -302,9 +302,9 @@ import SecondaryButton from './SecondaryButton.astro';
       if (!isMenuOpen) return;
       
       isMenuOpen = false;
-      mobileMenuBtn.classList.remove('active');
-      mobileMenuOverlay.classList.remove('active');
-      mobileMenuPanel.classList.remove('active');
+      mobileMenuBtn?.classList.remove('active');
+      mobileMenuOverlay?.classList.remove('active');
+      mobileMenuPanel?.classList.remove('active');
       document.body.style.overflow = '';
     }
 

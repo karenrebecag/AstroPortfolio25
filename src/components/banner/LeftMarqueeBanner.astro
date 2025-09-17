@@ -2,6 +2,56 @@
 // LeftMarqueeBanner - Large animated text moving from right to left
 ---
 
-<div class="whitespace-nowrap font-display font-bold select-none animate-[marquee-left_240s_linear_infinite] text-right" style="font-size: clamp(163px, 32.6vw, 326px); background-image: url('/images/MainImage.webp'); background-size: repeat; background-position: center; background-repeat: repeat; background-clip: text; -webkit-background-clip: text; color: transparent;">
-  CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+<div 
+  id="left-marquee" 
+  class="whitespace-nowrap font-display font-bold select-none text-right" 
+  style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #7343e4, #4e34a2); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);"
+>
+  <span class="marquee-content">
+    CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+  </span>
+  <span class="marquee-content">
+    CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+  </span>
 </div>
+
+<script>
+  // JavaScript para animación infinita fluida del marquee izquierdo
+  function initLeftMarquee() {
+    const leftMarquee = document.getElementById('left-marquee');
+    if (!leftMarquee) return;
+    
+    const leftContent = leftMarquee.querySelectorAll('.marquee-content');
+    if (leftContent.length === 0) return;
+    
+    let leftPosition = 0;
+    const speed = 1; // Velocidad en píxeles por frame
+    
+    function animateLeftMarquee() {
+      leftPosition -= speed;
+      
+      // Obtener el ancho del contenido
+      const firstElement = leftContent[0] as HTMLElement;
+      const contentWidth = firstElement.offsetWidth;
+      
+      // Resetear posición cuando el primer elemento sale completamente
+      if (Math.abs(leftPosition) >= contentWidth) {
+        leftPosition = 0;
+      }
+      
+      // Aplicar transformación
+      leftMarquee.style.transform = `translateX(${leftPosition}px)`;
+      
+      requestAnimationFrame(animateLeftMarquee);
+    }
+    
+    animateLeftMarquee();
+  }
+  
+  // Iniciar animación cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLeftMarquee);
+  } else {
+    initLeftMarquee();
+  }
+</script>

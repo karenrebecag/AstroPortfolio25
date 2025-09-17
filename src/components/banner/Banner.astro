@@ -5,7 +5,7 @@ import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
 import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 ---
 
-<div class="w-full h-full max-h-[80vh] overflow-hidden relative flex flex-col justify-between items-center" style="background-color: #e7e7e6; background-image: linear-gradient(to right, #ccc 1px, transparent 1px), linear-gradient(to bottom, #ccc 1px, transparent 1px); background-size: 40px 40px, 40px 40px; background-position: center; background-repeat: repeat;">
+<div class="w-full h-full max-h-[80vh] overflow-hidden relative flex flex-col justify-between items-center" style="background: linear-gradient(135deg, #e7e7e6 0%, #d8d8d7 100%); background-image: linear-gradient(to right, rgba(204, 204, 204, 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(204, 204, 204, 0.5) 1px, transparent 1px); background-size: 40px 40px, 40px 40px; background-position: center; background-repeat: repeat;">
   <div class="w-full">
     <Header />
   </div>
@@ -18,42 +18,16 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
   </div>
 </div>
 
-<script>
-  import { animate, inView } from "motion"
-
-  const initBannerImageAnimation = () => {
-    const bannerImage = document.getElementById('banner-image')
-    const bannerContainer = document.getElementById('banner-image-container')
-    
-    if (bannerImage && bannerContainer) {
-      // Set initial state
-      bannerImage.style.transform = 'translateY(30px)'
-      
-      // Animate on scroll into view
-      inView(bannerContainer, () => {
-        animate(bannerImage, 
-          {
-            transform: ["translateY(30px)", "translateY(0px)"]
-          },
-          {
-            duration: 0.8,
-            easing: "ease-out"
-          }
-        )
-      }, { margin: "0px 0px -100px 0px" })
-    }
-  }
-
-  // Initialize animation
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBannerImageAnimation)
-  } else {
-    initBannerImageAnimation()
-  }
-</script>
 
 <style>
   #banner-image {
     transform: translateY(30px);
+    animation: slideUp 0.8s ease-out 0.5s forwards;
+  }
+
+  @keyframes slideUp {
+    to {
+      transform: translateY(0px);
+    }
   }
 </style>
