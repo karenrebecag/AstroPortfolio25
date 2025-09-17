@@ -1,1 +1,46 @@
-@import "tailwindcss";
+@import './fonts.css';
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+/* Enhanced base styles using our custom fonts */
+@layer base {
+  html {
+    font-family: var(--font-primary);
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-normal);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-tight);
+  }
+  
+  h1 {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h2 {
+    font-size: var(--text-4xl);
+  }
+  
+  h3 {
+    font-size: var(--text-3xl);
+  }
+}
+
+/* Marquee animations */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-200%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(200%); }
+}

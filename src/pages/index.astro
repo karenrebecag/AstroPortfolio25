@@ -1,40 +1,9 @@
 ---
-import Banner from '../components/Banner.astro';
+import Layout from '../layouts/Layout.astro';
+import Banner from '../components/banner/Banner.astro';
 import '../styles/global.css';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Karen Ortiz - Portfolio</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-	</head>
-	<body>
-		<Banner />
-	</body>
-</html>
-
-<style is:global>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
-	body {
-		font-family: 'Inter', 'Median', sans-serif;
-		width: 100vw;
-		height: 100vh;
-		overflow: hidden;
-	}
-
-	:root {
-		--bgBlue: #060314;
-		--BgLayer1: #131019;
-	}
-</style>
+<Layout title="Karen Ortiz - Portfolio">
+	<Banner />
+</Layout>

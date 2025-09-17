@@ -1,0 +1,109 @@
+/* Typography Utility Classes for Easy Implementation */
+
+/* Primary Typography Classes */
+.text-hero {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.text-heading-xl {
+  font-family: var(--font-secondary);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+}
+
+.text-heading-lg {
+  font-family: var(--font-secondary);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.text-heading-md {
+  font-family: var(--font-secondary);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-snug);
+}
+
+.text-body-xl {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-relaxed);
+}
+
+.text-body-lg {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+.text-body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+.text-body-sm {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+.text-signature {
+  font-family: var(--font-signature);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+/* Font Family Utilities */
+.font-inter { font-family: var(--font-primary); }
+.font-boysen { font-family: var(--font-secondary); }
+.font-median { font-family: var(--font-display); }
+.font-karstar { font-family: var(--font-signature); }
+
+/* Quick Reference Examples */
+/*
+Usage Examples:
+
+1. Hero Section:
+<h1 class="text-hero">Your Amazing Title</h1>
+
+2. Main Headings:
+<h2 class="text-display">Section Title</h2>
+
+3. Navigation:
+<nav class="font-primary font-medium">...</nav>
+
+4. Body Text:
+<p class="text-body">Regular paragraph text</p>
+
+5. Signature/Script:
+<span class="text-signature">Karen Ortiz</span>
+
+6. Custom Combinations:
+<h3 class="font-boysen text-2xl font-bold">Custom Heading</h3>
+
+Available Tailwind Classes:
+- font-primary, font-secondary, font-display, font-signature
+- font-inter, font-boysen, font-median, font-karstar
+- All standard Tailwind font weights: font-light, font-normal, font-medium, font-semibold, font-bold
+- All standard Tailwind text sizes: text-xs through text-9xl
+- Responsive variants: sm:, md:, lg:, xl:, 2xl:
+*/

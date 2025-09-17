@@ -1,0 +1,211 @@
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Boysen';
+  src: url('/fonts/Boysen.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Boysen';
+  src: url('/fonts/Boysen-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Boysen';
+  src: url('/fonts/Boysen-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'InterTight';
+  src: url('/fonts/InterTight.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Median';
+  src: url('/fonts/Median.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Karstar Signature';
+  src: url('/fonts/Karstar signature.woff2') format('woff2'),
+       url('/fonts/Karstar signature.ttf') format('truetype'),
+       url('/fonts/Karstar signature.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Custom Properties for Typography */
+:root {
+  /* Font Families */
+  --font-primary: 'InterTight', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-secondary: 'Boysen', 'InterTight', sans-serif;
+  --font-display: 'Median', 'Boysen', serif;
+  --font-signature: 'Karstar Signature', cursive;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Font Sizes - Mobile First */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+  --text-8xl: 6rem;       /* 96px */
+  --text-9xl: 8rem;       /* 128px */
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  
+  /* Header Specific Responsive Typography */
+  --header-logo-size: clamp(38px, 8vw, 64px);
+  --header-logo-line-height: clamp(51px, 9.6vw, 77px);
+  --header-nav-size: clamp(29px, 6.4vw, 51px);
+  --header-nav-line-height: clamp(32px, 4.8vw, 38px);
+  --header-nav-gap: clamp(32px, 6.4vw, 64px);
+  --header-button-width: clamp(320px, 32vw, 426px);
+  
+  /* Button Specific Responsive Typography */
+  --button-text-size: clamp(22px, 4vw, 29px);
+  --button-text-line-height: clamp(32px, 4.8vw, 42px);
+}
+
+/* Responsive Font Sizes */
+@media (min-width: 640px) {
+  :root {
+    --text-lg: 1.25rem;     /* 20px */
+    --text-xl: 1.5rem;      /* 24px */
+    --text-2xl: 1.875rem;   /* 30px */
+    --text-3xl: 2.25rem;    /* 36px */
+    --text-4xl: 3rem;       /* 48px */
+    --text-5xl: 3.75rem;    /* 60px */
+    --text-6xl: 4.5rem;     /* 72px */
+    --text-7xl: 6rem;       /* 96px */
+    --text-8xl: 8rem;       /* 128px */
+    --text-9xl: 10rem;      /* 160px */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --text-4xl: 3.5rem;     /* 56px */
+    --text-5xl: 4rem;       /* 64px */
+    --text-6xl: 5rem;       /* 80px */
+    --text-7xl: 6.5rem;     /* 104px */
+    --text-8xl: 9rem;       /* 144px */
+    --text-9xl: 12rem;      /* 192px */
+  }
+}
+
+/* Utility Classes for Typography */
+.font-primary {
+  font-family: var(--font-primary);
+}
+
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-signature {
+  font-family: var(--font-signature);
+}
+
+/* Text Styles Combinations */
+.text-hero {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text-heading-1 {
+  font-family: var(--font-secondary);
+  font-size: var(--text-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+}
+
+.text-heading-2 {
+  font-family: var(--font-secondary);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.text-heading-3 {
+  font-family: var(--font-secondary);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-snug);
+}
+
+.text-body-large {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-relaxed);
+}
+
+.text-body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+.text-body-small {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}
+
+.text-signature {
+  font-family: var(--font-signature);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+}

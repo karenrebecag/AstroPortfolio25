@@ -1,0 +1,66 @@
+---
+// BannerMarqueesWrapper - Container for stacked marquees positioned behind banner content
+import LeftMarqueeBanner from './LeftMarqueeBanner.astro';
+import RightMarqueeBanner from './RightMarqueeBanner.astro';
+---
+
+<div class="marquee-container">
+  <div class="marquee-right">
+    <RightMarqueeBanner />
+  </div>
+  <div class="marquee-left">
+    <LeftMarqueeBanner />
+  </div>
+</div>
+
+<style>
+  .marquee-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .marquee-right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -40px; /* More aggressive negative margin */
+  }
+
+  .marquee-left {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -40px; /* More aggressive negative margin */
+  }
+
+  /* Much tighter spacing for larger viewports */
+  @media (min-width: 992px) {
+    .marquee-right {
+      margin-bottom: -80px; /* Much more aggressive for desktop */
+    }
+    
+    .marquee-left {
+      margin-top: -80px; /* Much more aggressive for desktop */
+    }
+  }
+
+  /* Even tighter for very large screens */
+  @media (min-width: 1200px) {
+    .marquee-right {
+      margin-bottom: -100px;
+    }
+    
+    .marquee-left {
+      margin-top: -100px;
+    }
+  }
+</style>

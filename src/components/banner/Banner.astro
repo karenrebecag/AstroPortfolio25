@@ -1,0 +1,59 @@
+---
+// Banner component integrating Header, BannerButtonsWrapper and Marquees
+import Header from '../ui/Header.astro';
+import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
+import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
+---
+
+<div class="w-full h-full max-h-[80vh] overflow-hidden relative flex flex-col justify-between items-center" style="background-color: #e7e7e6; background-image: linear-gradient(to right, #ccc 1px, transparent 1px), linear-gradient(to bottom, #ccc 1px, transparent 1px); background-size: 40px 40px, 40px 40px; background-position: center; background-repeat: repeat;">
+  <div class="w-full">
+    <Header />
+  </div>
+  <BannerMarqueesWrapper />
+  <div id="banner-image-container" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 10; pointer-events: none; width: 70em; height: auto;">
+    <img id="banner-image" src="/images/BannerImage.webp" alt="Banner Image" style="width: 100%; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block;" />
+  </div>
+  <div class="w-full flex justify-center relative z-20">
+    <BannerButtonsWrapper />
+  </div>
+</div>
+
+<script>
+  import { animate, inView } from "motion"
+
+  const initBannerImageAnimation = () => {
+    const bannerImage = document.getElementById('banner-image')
+    const bannerContainer = document.getElementById('banner-image-container')
+    
+    if (bannerImage && bannerContainer) {
+      // Set initial state
+      bannerImage.style.transform = 'translateY(30px)'
+      
+      // Animate on scroll into view
+      inView(bannerContainer, () => {
+        animate(bannerImage, 
+          {
+            transform: ["translateY(30px)", "translateY(0px)"]
+          },
+          {
+            duration: 0.8,
+            easing: "ease-out"
+          }
+        )
+      }, { margin: "0px 0px -100px 0px" })
+    }
+  }
+
+  // Initialize animation
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBannerImageAnimation)
+  } else {
+    initBannerImageAnimation()
+  }
+</script>
+
+<style>
+  #banner-image {
+    transform: translateY(30px);
+  }
+</style>

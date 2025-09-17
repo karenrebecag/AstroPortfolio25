@@ -1,0 +1,334 @@
+---
+// Header component with navigation - Pure CSS & JS
+import SecondaryButton from './SecondaryButton.astro';
+---
+
+<header id="main-header">
+  <!-- Logo/Name -->
+  <div class="logo">
+    KAREN ORTIZ
+  </div>
+
+  <!-- Desktop Navigation Links -->
+  <nav class="desktop-nav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#reviews">Reviews</a>
+  </nav>
+
+  <!-- Desktop Contact Me Button -->
+  <div class="desktop-contact">
+    <SecondaryButton text="Contact Me" />
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle mobile menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu-overlay" class="mobile-overlay">
+  <!-- Mobile Menu Panel -->
+  <div id="mobile-menu-panel" class="mobile-panel">
+    <div class="mobile-content">
+      <!-- Mobile Menu Header -->
+      <div class="mobile-header">
+        <div class="mobile-title">Menu</div>
+        <button id="close-menu-btn" class="close-btn" aria-label="Close mobile menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <nav class="mobile-nav">
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#services" class="mobile-nav-link">Services</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#reviews" class="mobile-nav-link">Reviews</a>
+      </nav>
+
+      <!-- Mobile Contact Button -->
+      <div class="mobile-contact">
+        <SecondaryButton text="Contact Me" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Header Styles */
+  #main-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Logo Styles */
+  .logo {
+    color: #060314;
+    font-family: var(--font-display);
+    font-weight: normal;
+    word-break: break-word;
+    font-size: clamp(24px, 5vw, 40px);
+    line-height: clamp(32px, 6vw, 48px);
+  }
+
+  /* Desktop Navigation */
+  .desktop-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .desktop-nav a {
+    color: #131019;
+    font-family: var(--font-display);
+    font-weight: normal;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    font-size: clamp(16px, 3vw, 24px);
+    line-height: clamp(20px, 3.5vw, 28px);
+  }
+
+  .desktop-nav a:hover {
+    opacity: 0.7;
+  }
+
+  /* Desktop Contact Button */
+  .desktop-contact {
+    width: 200px;
+  }
+
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: #060314;
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile Overlay */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Mobile Panel */
+  .mobile-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 320px;
+    max-width: 90vw;
+    background-color: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-panel.active {
+    transform: translateX(0);
+  }
+
+  .mobile-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Mobile Header */
+  .mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .mobile-title {
+    color: #060314;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .close-btn span {
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: #060314;
+  }
+
+  .close-btn span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .close-btn span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  /* Mobile Navigation */
+  .mobile-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 24px;
+    gap: 24px;
+  }
+
+  .mobile-nav-link {
+    color: #060314;
+    font-family: var(--font-display);
+    font-weight: normal;
+    font-size: 20px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-nav-link:hover {
+    opacity: 0.7;
+  }
+
+  /* Mobile Contact */
+  .mobile-contact {
+    padding: 24px;
+  }
+
+  /* Hamburger Animation */
+  .mobile-menu-btn.active span:first-child {
+    transform: rotate(45deg) translateY(6px);
+  }
+
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.active span:last-child {
+    transform: rotate(-45deg) translateY(-6px);
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 991px) {
+    .desktop-nav,
+    .desktop-contact {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .mobile-overlay {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    let isMenuOpen = false;
+
+    function openMenu() {
+      if (isMenuOpen) return;
+      
+      isMenuOpen = true;
+      mobileMenuBtn.classList.add('active');
+      mobileMenuOverlay.classList.add('active');
+      mobileMenuPanel.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      if (!isMenuOpen) return;
+      
+      isMenuOpen = false;
+      mobileMenuBtn.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      mobileMenuPanel.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Event listeners
+    mobileMenuBtn?.addEventListener('click', openMenu);
+    closeMenuBtn?.addEventListener('click', closeMenu);
+
+    // Close on overlay click
+    mobileMenuOverlay?.addEventListener('click', (e) => {
+      if (e.target === mobileMenuOverlay) {
+        closeMenu();
+      }
+    });
+
+    // Close on navigation link click
+    mobileNavLinks?.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        closeMenu();
+      }
+    });
+  });
+</script>
