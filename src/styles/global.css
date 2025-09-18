@@ -1,6 +1,5 @@
 @import './fonts.css';
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
 /* Enhanced base styles using our custom fonts */
 @layer base {
@@ -43,4 +42,11 @@
 @keyframes marquee-right {
   0% { transform: translateX(0%); }
   100% { transform: translateX(200%); }
+}
+
+/* Gradient utilities for footer */
+@layer utilities {
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
 }

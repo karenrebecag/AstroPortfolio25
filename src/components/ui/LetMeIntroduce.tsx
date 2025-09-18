@@ -42,7 +42,7 @@ export default function LetMeIntroduce() {
   return (
     <div
       ref={containerRef}
-      className="w-full min-h-screen bg-[#E8E7E7] p-6 md:p-12 lg:p-20 xl:p-25"
+      className="w-full bg-[#E8E7E7] p-6 md:p-12 lg:p-20 xl:p-25"
     >
       <div className="flex flex-col gap-8 md:gap-12 lg:gap-15">
         {/* Title */}

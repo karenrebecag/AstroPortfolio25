@@ -16,15 +16,18 @@ const { text = "Get my Resume" } = Astro.props;
 <style>
   .main-button {
     opacity: 0;
+    margin-bottom: 2em;
+    padding: 20px;
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease-out forwards;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .main-button:hover {
-    transform: translateY(-8px);
+    transform: translateY(-12px);
     box-shadow: 0px 12px 300px rgba(255,255,255,0.15);
     filter: brightness(1.1);
+    background-position: center 20%;
   }
 
   .main-button:active {

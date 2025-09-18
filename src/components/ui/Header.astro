@@ -22,13 +22,15 @@
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#projects">Projects</a>
-    <a href="#reviews">Reviews</a>
-    <button class="contact-btn">Contact Me</button>
-  </nav>
+  <div class="mobile-menu-content">
+    <nav class="mobile-nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#reviews">Reviews</a>
+      <button class="mobile-contact-btn">Contact Me</button>
+    </nav>
+  </div>
 </div>
 
 <style>
@@ -43,7 +45,14 @@
   .logo {
     color: #060314;
     font-family: var(--font-display);
-    font-size: clamp(24px, 5vw, 40px);
+    font-size: clamp(17px, 3.5vw, 28px);
+    transition: color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .logo:hover {
+    color: #131019;
+    transform: scale(1.05);
   }
 
   .nav {
@@ -55,16 +64,64 @@
     color: #131019;
     font-family: var(--font-display);
     text-decoration: none;
-    font-size: clamp(16px, 3vw, 24px);
+    font-size: clamp(11px, 2.1vw, 17px);
+    transition: color 0.3s ease, transform 0.2s ease;
+    position: relative;
+  }
+
+  .nav a:hover {
+    color: #060314;
+    transform: translateY(-2px);
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #060314;
+    transition: width 0.3s ease;
+  }
+
+  .nav a:hover::after {
+    width: 100%;
   }
 
   .contact-btn {
     background: transparent;
     border: 2px solid #060314;
     color: #060314;
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-family: var(--font-display);
+    font-size: clamp(10px, 1.8vw, 14px);
     cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #060314;
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .contact-btn:hover::before {
+    left: 0;
+  }
+
+  .contact-btn:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(6, 3, 20, 0.2);
   }
 
   .menu-btn {
@@ -74,41 +131,152 @@
     background: none;
     border: none;
     cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .menu-btn:hover {
+    transform: scale(1.1);
   }
 
   .menu-btn span {
     width: 20px;
     height: 2px;
     background: #060314;
+    transition: all 0.3s ease;
+  }
+
+  .menu-btn:hover span {
+    background: #131019;
   }
 
   .mobile-menu {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: white;
-    z-index: 100;
-  }
-
-  .mobile-menu nav {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 80px 24px;
-  }
-
-  .mobile-menu a {
-    color: #060314;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: 20px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .mobile-menu.open {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .mobile-menu.open .mobile-nav {
+    transform: translateY(0);
+  }
+
+  .mobile-nav a {
+    color: white;
+    font-family: var(--font-display);
+    text-decoration: none;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .mobile-menu.open .mobile-nav a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
+  .mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
+  .mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
+  .mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
+
+  .mobile-nav a:hover {
+    color: #ffffff;
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  .mobile-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    transition: width 0.4s ease;
+  }
+
+  .mobile-nav a:hover::after {
+    width: 100%;
+  }
+
+  .mobile-contact-btn {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 12px 24px;
+    font-family: var(--font-display);
+    font-size: clamp(14px, 3vw, 16px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 24px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .mobile-menu.open .mobile-contact-btn {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+  }
+
+  .mobile-contact-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .mobile-contact-btn:hover::before {
+    left: 0;
+  }
+
+  .mobile-contact-btn:hover {
+    color: black;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
   }
 
   @media (max-width: 768px) {
@@ -124,17 +292,116 @@
 </style>
 
 <script>
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  
-  menuBtn?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('open');
-  });
-  
-  mobileMenu?.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (target && (target.tagName === 'A' || target.tagName === 'BUTTON')) {
-      mobileMenu.classList.remove('open');
-    }
+  import { animate, stagger } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const navLinks = document.querySelectorAll('.mobile-nav a');
+    const contactBtn = document.querySelector('.mobile-contact-btn');
+    
+    let isOpen = false;
+
+    const openMenu = () => {
+      isOpen = true;
+      mobileMenu?.classList.add('open');
+      
+      // Reset initial states
+      if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
+      navLinks.forEach(link => {
+        (link as HTMLElement).style.opacity = '0';
+        (link as HTMLElement).style.transform = 'translateY(20px)';
+      });
+      if (contactBtn) {
+        (contactBtn as HTMLElement).style.opacity = '0';
+        (contactBtn as HTMLElement).style.transform = 'translateY(20px)';
+      }
+
+      // Animate navigation container
+      if (mobileNav) {
+        animate(mobileNav, 
+          { transform: 'translateY(0px)' }, 
+          { duration: 0.4, delay: 0.1 }
+        );
+      }
+
+      // Stagger animate nav links
+      navLinks.forEach((link, index) => {
+        animate(link, 
+          { opacity: 1, transform: 'translateY(0px)' }, 
+          { duration: 0.3, delay: 0.2 + (index * 0.1) }
+        );
+      });
+
+      // Animate contact button
+      if (contactBtn) {
+        animate(contactBtn, 
+          { opacity: 1, transform: 'translateY(0px)' }, 
+          { duration: 0.3, delay: 0.5 }
+        );
+      }
+    };
+
+    const closeMenu = () => {
+      isOpen = false;
+      
+      // Reverse animations
+      navLinks.forEach(link => {
+        animate(link, 
+          { opacity: 0, transform: 'translateY(-20px)' }, 
+          { duration: 0.2 }
+        );
+      });
+
+      if (contactBtn) {
+        animate(contactBtn, 
+          { opacity: 0, transform: 'translateY(-20px)' }, 
+          { duration: 0.2 }
+        );
+      }
+
+      if (mobileNav) {
+        animate(mobileNav, 
+          { transform: 'translateY(30px)' }, 
+          { duration: 0.3, delay: 0.1 }
+        );
+      }
+
+      // Remove class after animation
+      setTimeout(() => {
+        mobileMenu?.classList.remove('open');
+      }, 400);
+    };
+
+    menuBtn?.addEventListener('click', () => {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+    
+    // Close menu when clicking on links or contact button
+    mobileMenu?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'A' || target.classList.contains('mobile-contact-btn'))) {
+        closeMenu();
+      }
+    });
+
+    // Close menu when clicking outside content
+    mobileMenu?.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        closeMenu();
+      }
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
   });
 </script>

@@ -8,7 +8,10 @@ const { text = "Discover My Works" } = Astro.props;
 ---
 
 <div class="secondary-button w-full h-full px-2.5 py-[18px] bg-black shadow-[0px_4px_200px_rgba(255,255,255,0.05)] overflow-hidden rounded-[10px] flex justify-center items-center cursor-pointer transition-all duration-200">
-  <div class="button-text text-white font-display font-normal text-center" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">{text}</div>
+  <div class="button-text text-white font-display font-normal text-center" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">
+    <span class="text-content">{text}</span>
+    <span class="rocket-emoji">🚀</span>
+  </div>
   
 </div>
 
@@ -16,6 +19,9 @@ const { text = "Discover My Works" } = Astro.props;
 <style>
   .secondary-button {
     opacity: 0;
+    padding: 20px;
+    margin-bottom: 2em;
+
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease-out 0.1s forwards;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -23,10 +29,15 @@ const { text = "Discover My Works" } = Astro.props;
   }
 
   .secondary-button:hover {
-    transform: translateY(-8px);
+    transform: translateY(-12px);
     box-shadow: 0px 12px 300px rgba(255,255,255,0.15);
     background: linear-gradient(135deg, #3a3a3a 0%, #2c2c2c 50%, #1a1a1a 100%) !important;
     filter: brightness(1.1);
+  }
+
+  .secondary-button:hover .rocket-emoji {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .secondary-button:active {
@@ -41,6 +52,14 @@ const { text = "Discover My Works" } = Astro.props;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 8px;
+  }
+
+  .rocket-emoji {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease-out;
+    font-size: 1em;
   }
 
   @keyframes fadeInUp {
