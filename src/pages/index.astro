@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Banner from '../components/banner/Banner.astro';
 import Enterprises from '../components/ui/Enterprises.astro';
+import Me from '../components/ui/Me.astro';
+import LetMeIntroduce from '../components/ui/LetMeIntroduce.tsx';
 import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
 ---
@@ -9,5 +11,7 @@ import '../styles/global.css';
 <Layout title="Karen Ortiz - Portfolio">
 	<Banner />
 	<Enterprises />
+	<Me />
+	<LetMeIntroduce client:load />
 	<Footer />
 </Layout>

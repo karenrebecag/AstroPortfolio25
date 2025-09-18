@@ -1,0 +1,214 @@
+---
+// Me.astro - About section component
+import MainButton from './MainButton.astro';
+import SecondaryButton from './SecondaryButton.astro';
+---
+
+<div class="me-section-wrapper w-full overflow-hidden relative justify-center flex">
+  <div class="me-section w-full max-w-[1200px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
+  
+  <!-- Header Section -->
+  <div class="w-full h-[71px] justify-center flex flex-col">
+    <h1 class="text-display text-black text-center font-median">
+      LET ME INTRODUCE MYSELF
+    </h1>
+  </div>
+
+  <!-- Subtitle -->
+  <div class="w-full">
+    <p class="text-body-sm text-white font-primary">
+      Hello! I'm Karen Ortiz, a creative developer with a knack for turning ideas into impactful digital experiences. 
+      My passion lies in crafting solutions that not only solve problems but also spark joy and connection for users. 
+      With a blend of innovative thinking and a deep curiosity for how people interact with technology.
+    </p>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="w-full h-[850px] flex flex-col lg:flex-row items-start ">
+    
+    <!-- Left Side - Content Section -->
+    <div class="flex-1 self-stretch flex flex-col justify-center items-start gap-9 lg:min-w-[60%]">
+      
+      <!-- Profile Section -->
+      <div class="w-full relative flex flex-wrap items-start">
+        <!-- Circle positioned behind text -->
+        <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10"></div>
+        <div class="flex-1 relative z-10">
+          <h2 class="text-hero font-median mb-2" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
+            <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+          </h2>
+          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
+            Based in Mexico City
+          </h3>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="w-full">
+        <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 1.5;">
+          That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
+          who you are and what you stand for, but words that truly land with those that read them, calling your 
+          audience in and making them.
+        </p>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="w-full max-w-[526px] flex items-start gap-[41px]">
+        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
+        <div class="flex flex-col justify-center items-start">
+          <div class="text-display text-[#080808] font-secondary counter" data-target="8" style="font-size: 48px; line-height: 56px;">0</div>
+          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Award winner</div>
+        </div>
+        
+        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
+        <div class="flex flex-col justify-center items-start">
+          <div class="flex items-center">
+            <span class="text-display text-[#080808] font-secondary counter" data-target="1" style="font-size: 48px; line-height: 56px;">0</span>
+            <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.2k</span>
+          </div>
+          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Worldwide client</div>
+        </div>
+        
+        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
+        <div class="flex flex-col justify-center items-start">
+          <div class="flex items-center">
+            <span class="text-display text-[#080808] font-secondary counter" data-target="3" style="font-size: 48px; line-height: 56px;">0</span>
+            <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.5k</span>
+          </div>
+          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Job done successfully</div>
+        </div>
+      </div>
+
+      <!-- Buttons Section -->
+      <div class="flex items-start gap-9">
+        <!-- Discover My Works Button -->
+        <div class="w-[266px]">
+          <SecondaryButton text="Discover My Works" />
+        </div>
+
+        <!-- Check my LinkedIn Button -->
+        <div class="w-[266px]">
+          <MainButton text="Check my linkedin" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Image Section -->
+    <div class="flex-1 lg:min-w-[40%] h-[850px] flex items-center">
+      <div class="w-full aspect-square relative overflow-hidden rounded-lg">
+        <img 
+          src="/images/Me.webp" 
+          alt="Karen Ortiz"
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .me-section-wrapper {
+    background: white;
+    position: relative;
+    padding: 65px 60px;
+  }
+
+  .me-section-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .me-section {
+    position: relative;
+    z-index: 2;
+  }
+
+  .secondary-btn {
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%);
+    box-shadow: 0px 4px 200px rgba(255, 255, 255, 0.05);
+  }
+
+  .main-btn {
+    background: 
+      linear-gradient(47deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.30) 100%),
+      url('/images/MainImage.webp');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 4px 200px rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-text {
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+
+  .counter {
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script>
+  // Animated counter functionality
+  function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target as HTMLElement;
+          const target = parseInt(counter.getAttribute('data-target') || '0');
+          
+          // Start animation after 500ms delay
+          setTimeout(() => {
+            animateCounter(counter, target);
+          }, 500);
+          
+          observer.unobserve(counter);
+        }
+      });
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  function animateCounter(element: HTMLElement, target: number) {
+    const duration = 1000; // 1 second
+    const start = 0;
+    const startTime = performance.now();
+    
+    function updateCounter(currentTime: number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(start + (target - start) * easeOut);
+      
+      element.textContent = current.toString();
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        element.textContent = target.toString();
+      }
+    }
+    
+    requestAnimationFrame(updateCounter);
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', animateCounters);
+  
+  // Re-initialize for Astro page transitions
+  document.addEventListener('astro:page-load', animateCounters);
+</script>
