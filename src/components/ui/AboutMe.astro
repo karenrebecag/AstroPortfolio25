@@ -1,0 +1,354 @@
+---
+const aboutCards = [
+  {
+    id: "01",
+    title: "DESIGN MATTERS",
+    description: "Good UX isn't magic—it's iteration. I look at spacing, hierarchy, content, motion... everything users feel but can't explain.",
+    alignment: "center"
+  },
+  {
+    id: "02",
+    title: "building my\nown",
+    description: "Founding WebCrafters gave me the space to lead full processes—from first call to delivery. I work with teams that value clarity, ownership, and honest feedback.",
+    alignment: "start"
+  },
+  {
+    id: "03",
+    title: "EVOLVING\nWITH INTENTION",
+    description: "Design and dev move fast—but not everything should be rushed. I adapt, but I stay grounded in usability, accessibility, and real needs.",
+    alignment: "center"
+  },
+  {
+    id: "04",
+    title: "PRODUCT\nTHINKING",
+    description: "I design with users in mind, but I also think about dev time, scalability, and business goals. Each screen is a decision—and I care about all of them.",
+    alignment: "center"
+  },
+  {
+    id: "05",
+    title: "Curiosity First",
+    description: "I've always been curious about how things work. Design came as a way to solve problems—not just make things pretty. Understanding both the visual and the structural side has always made sense to me.",
+    alignment: "center"
+  },
+  {
+    id: "06",
+    title: "Bringing Design\nAND CODE",
+    description: "I'm both a developer and a designer, which means I don't just make it look good—I make it work. This mindset helps me build faster, cleaner, and with fewer handoffs.",
+    alignment: "center"
+  }
+];
+---
+
+<section class="aboutme">
+  <div class="aboutme-container">
+    <div class="cards-scroll-container">
+      <div class="cards-scroll">
+        {aboutCards.map((card) => (
+          <div class="about-card">
+            <div class="card-content">
+              <h3 class="text-heading-md card-title" data-alignment={card.alignment}>
+                {card.title.split('\n').map((line, index) => (
+                  <span>
+                    {line}
+                    {index < card.title.split('\n').length - 1 && <br />}
+                  </span>
+                ))}
+              </h3>
+              <p class="text-body-lg card-description">{card.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="giant-text text-hero">
+      <span class="typewriter-text"></span>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .aboutme {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.41) 100%),
+                linear-gradient(291deg, rgb(255, 255, 255) 0%, rgba(82.52, 82.52, 82.52, 0.06) 100%),
+                #F4F4F4;
+    background-blend-mode: normal, difference, normal;
+    overflow: hidden;
+    padding: 70px 0;
+  }
+
+  .aboutme::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/BGTexture.webp');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .aboutme-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .cards-scroll-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 400px;
+    padding: 0 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cards-scroll {
+    display: flex;
+    gap: 30px;
+    height: 100%;
+    align-items: center;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .cards-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .about-card {
+    flex: 0 0 320px;
+    height: 220px;
+    padding: 20px;
+
+    max-width: 200px;
+    background: linear-gradient(180deg, #9D7FC1 0%, #4523AE 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 40px 0;
+  }
+
+  .about-card .card-title {
+    color: white !important;
+    margin: 0;
+    text-shadow: 0px 4px 61px rgba(0, 0, 0, 0.20);
+    white-space: pre-line;
+  }
+
+  .about-card .card-title[data-alignment="center"] {
+    align-self: center;
+    text-align: center;
+  }
+
+  .about-card .card-title[data-alignment="start"] {
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .about-card .card-description {
+    color: white !important;
+    margin: 0;
+    text-shadow: 0px 4px 61px rgba(0, 0, 0, 0.20);
+    align-self: stretch;
+  }
+
+  .giant-text {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(0, 0, 0, 0.88);
+    text-shadow: 0px 4px 40px rgba(0, 0, 0, 0.10);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .typewriter-text {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 2px solid rgba(0, 0, 0, 0.88);
+    white-space: nowrap;
+    animation: blink-caret 1s step-end infinite;
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: rgba(0, 0, 0, 0.88); }
+  }
+
+  @media (max-width: 1024px) {
+    .aboutme {
+      height: 80vh;
+      padding: 50px 0;
+    }
+
+    .cards-scroll-container {
+      padding: 0 20px;
+    }
+
+    .cards-scroll {
+      gap: 20px;
+    }
+
+    .about-card {
+      flex: 0 0 280px;
+      height: 320px;
+      padding: 16px;
+    }
+
+    .card-content {
+      padding: 30px 0;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-size: 36px;
+      line-height: 42px;
+    }
+
+  }
+
+  @media (max-width: 768px) {
+    .aboutme {
+      height: 70vh;
+      padding: 30px 0;
+    }
+
+    .cards-scroll-container {
+      padding: 0 16px;
+      height: 300px;
+    }
+
+    .cards-scroll {
+      gap: 16px;
+    }
+
+    .about-card {
+      flex: 0 0 260px;
+      height: 280px;
+      padding: 12px;
+    }
+
+    .card-content {
+      padding: 20px 0;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .card-description {
+      font-size: 16px;
+      line-height: 22px;
+    }
+
+    .giant-text {
+      bottom: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-card {
+      flex: 0 0 240px;
+      height: 260px;
+      padding: 12px;
+    }
+
+    .card-content {
+      padding: 16px 0;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 24px;
+      line-height: 30px;
+    }
+
+  }
+</style>
+
+<script>
+  import { scroll } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const aboutSection = document.querySelector('.aboutme');
+    const cardsScroll = document.querySelector('.cards-scroll');
+    const typewriterText = document.querySelector('.typewriter-text');
+
+    if (aboutSection && cardsScroll && typewriterText) {
+      // Calculate total scroll width for horizontal cards
+      const scrollWidth = cardsScroll.scrollWidth - cardsScroll.clientWidth;
+
+      if (scrollWidth > 0) {
+        // Horizontal scroll animation for cards
+        scroll(
+          (progress: number) => {
+            cardsScroll.scrollLeft = progress * scrollWidth;
+          },
+          {
+            target: aboutSection,
+            offset: ["start center", "end center"]
+          }
+        );
+      }
+
+      // Typewriter effect for "ABOUT ME"
+      const text = "ABOUT ME";
+      let currentIndex = 0;
+      let isTyping = false;
+
+      scroll(
+        (progress: number) => {
+          if (progress > 0.3 && !isTyping) {
+            isTyping = true;
+            typewriterText.textContent = "";
+
+            const typeNextChar = () => {
+              if (currentIndex < text.length) {
+                typewriterText.textContent += text[currentIndex];
+                currentIndex++;
+                setTimeout(typeNextChar, 150);
+              }
+            };
+
+            typeNextChar();
+          } else if (progress <= 0.3 && isTyping) {
+            isTyping = false;
+            currentIndex = 0;
+            typewriterText.textContent = "";
+          }
+        },
+        {
+          target: aboutSection,
+          offset: ["start center", "end center"]
+        }
+      );
+    }
+  });
+</script>
