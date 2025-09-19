@@ -2,20 +2,21 @@
 // Me.astro - About section component
 import MainButton from './MainButton.astro';
 import SecondaryButton from './SecondaryButton.astro';
+import { Number } from './Number.tsx';
 ---
 
 <div class="me-section-wrapper w-full overflow-hidden relative justify-center flex">
   <div class="me-section w-full max-w-[1200px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
   
   <!-- Header Section -->
-  <div class="w-full h-[71px] justify-center flex flex-col">
+  <div class="w-full h-[71px] justify-center flex flex-col" data-animate="fade-up">
     <h1 class="text-display text-black text-center font-median">
       LET ME INTRODUCE MYSELF
     </h1>
   </div>
 
   <!-- Subtitle -->
-  <div class="w-full">
+  <div class="w-full" data-animate="fade-up" data-delay="0.2">
     <p class="text-body-sm text-white font-primary">
       Hello! I'm Karen Ortiz, a creative developer with a knack for turning ideas into impactful digital experiences. 
       My passion lies in crafting solutions that not only solve problems but also spark joy and connection for users. 
@@ -30,7 +31,7 @@ import SecondaryButton from './SecondaryButton.astro';
     <div class="flex-1 self-stretch flex flex-col justify-center items-start gap-9 lg:min-w-[60%]">
       
       <!-- Profile Section -->
-      <div class="w-full relative flex flex-wrap items-start">
+      <div class="w-full relative flex flex-wrap items-start" data-animate="fade-up" data-delay="0.4">
         <!-- Circle positioned behind text -->
         <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10"></div>
         <div class="flex-1 relative z-10">
@@ -44,7 +45,7 @@ import SecondaryButton from './SecondaryButton.astro';
       </div>
 
       <!-- Description -->
-      <div class="w-full">
+      <div class="w-full" data-animate="fade-up" data-delay="0.6">
         <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 1.5;">
           That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
           who you are and what you stand for, but words that truly land with those that read them, calling your 
@@ -53,17 +54,29 @@ import SecondaryButton from './SecondaryButton.astro';
       </div>
 
       <!-- Stats Section -->
-      <div class="w-full max-w-[526px] flex items-start gap-[41px]">
+      <div class="w-full max-w-[526px] flex items-start gap-[41px]" data-animate="fade-up" data-delay="0.8">
         <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
         <div class="flex flex-col justify-center items-start">
-          <div class="text-display text-[#080808] font-secondary counter" data-target="8" style="font-size: 48px; line-height: 56px;">0</div>
+          <Number 
+            value={8} 
+            className="text-display text-[#080808] font-secondary" 
+            style={{ fontSize: '48px', lineHeight: '56px' }}
+            delay={800}
+            client:load
+          />
           <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Award winner</div>
         </div>
         
         <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
         <div class="flex flex-col justify-center items-start">
           <div class="flex items-center">
-            <span class="text-display text-[#080808] font-secondary counter" data-target="1" style="font-size: 48px; line-height: 56px;">0</span>
+            <Number 
+              value={1} 
+              className="text-display text-[#080808] font-secondary" 
+              style={{ fontSize: '48px', lineHeight: '56px' }}
+              delay={1000}
+              client:load
+            />
             <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.2k</span>
           </div>
           <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Worldwide client</div>
@@ -72,7 +85,13 @@ import SecondaryButton from './SecondaryButton.astro';
         <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
         <div class="flex flex-col justify-center items-start">
           <div class="flex items-center">
-            <span class="text-display text-[#080808] font-secondary counter" data-target="3" style="font-size: 48px; line-height: 56px;">0</span>
+            <Number 
+              value={3} 
+              className="text-display text-[#080808] font-secondary" 
+              style={{ fontSize: '48px', lineHeight: '56px' }}
+              delay={1200}
+              client:load
+            />
             <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.5k</span>
           </div>
           <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Job done successfully</div>
@@ -80,7 +99,7 @@ import SecondaryButton from './SecondaryButton.astro';
       </div>
 
       <!-- Buttons Section -->
-      <div class="flex items-start gap-9">
+      <div class="flex items-start gap-9" data-animate="fade-up" data-delay="1.0">
         <!-- Discover My Works Button -->
         <div class="w-[266px]">
           <SecondaryButton text="Discover My Works" />
@@ -94,7 +113,7 @@ import SecondaryButton from './SecondaryButton.astro';
     </div>
 
     <!-- Right Side - Image Section -->
-    <div class="flex-1 lg:min-w-[40%] h-[850px] flex items-center">
+    <div class="flex-1 lg:min-w-[40%] h-[850px] flex items-center" data-animate="fade-left" data-delay="0.5">
       <div class="w-full aspect-square relative overflow-hidden rounded-lg">
         <img 
           src="/images/Me.webp" 
@@ -155,60 +174,64 @@ import SecondaryButton from './SecondaryButton.astro';
   .counter {
     transition: all 0.3s ease;
   }
+
+  /* Animation styles */
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  [data-animate="fade-left"] {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  [data-animate].animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-animate="fade-left"].animate {
+    opacity: 1;
+    transform: translateX(0);
+  }
 </style>
 
 <script>
-  // Animated counter functionality
-  function animateCounters() {
-    const counters = document.querySelectorAll('.counter');
+  // Motion.dev scroll animations
+  function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('[data-animate]');
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const counter = entry.target as HTMLElement;
-          const target = parseInt(counter.getAttribute('data-target') || '0');
+          const element = entry.target as HTMLElement;
+          const delay = parseFloat(element.getAttribute('data-delay') || '0');
           
-          // Start animation after 500ms delay
           setTimeout(() => {
-            animateCounter(counter, target);
-          }, 500);
+            element.classList.add('animate');
+          }, delay * 1000);
           
-          observer.unobserve(counter);
+          observer.unobserve(element);
         }
       });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
     });
     
-    counters.forEach(counter => observer.observe(counter));
-  }
-
-  function animateCounter(element: HTMLElement, target: number) {
-    const duration = 1000; // 1 second
-    const start = 0;
-    const startTime = performance.now();
-    
-    function updateCounter(currentTime: number) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      const current = Math.floor(start + (target - start) * easeOut);
-      
-      element.textContent = current.toString();
-      
-      if (progress < 1) {
-        requestAnimationFrame(updateCounter);
-      } else {
-        element.textContent = target.toString();
-      }
-    }
-    
-    requestAnimationFrame(updateCounter);
+    animatedElements.forEach(element => observer.observe(element));
   }
 
   // Initialize when DOM is loaded
-  document.addEventListener('DOMContentLoaded', animateCounters);
+  document.addEventListener('DOMContentLoaded', () => {
+    initScrollAnimations();
+  });
   
   // Re-initialize for Astro page transitions
-  document.addEventListener('astro:page-load', animateCounters);
+  document.addEventListener('astro:page-load', () => {
+    initScrollAnimations();
+  });
 </script>
