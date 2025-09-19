@@ -6,6 +6,7 @@ export interface Props {
 const { title } = Astro.props;
 import '../styles/fonts.css';
 import CustomCursor from '../components/ui/CustomCursor.astro';
+import LenisIsland from '../components/ui/LenisIsland.jsx';
 ---
 
 <!DOCTYPE html>
@@ -24,6 +25,8 @@ import CustomCursor from '../components/ui/CustomCursor.astro';
 	<body>
 		<CustomCursor />
 		<slot />
+		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
+		<LenisIsland client:load />
 	</body>
 </html>
 
