@@ -1,0 +1,172 @@
+---
+// CustomCursor.astro - Componente de cursor personalizado sencillo y ligero
+---
+
+<div id="custom-cursor" class="custom-cursor">
+  <svg
+    class="cursor-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 40 40"
+    width="24"
+    height="24"
+  >
+    <path
+      fill="#000000"
+      stroke="#ffffff"
+      stroke-width="2"
+      d="M1.8 4.4 7 36.2c.3 1.8 2.6 2.3 3.6.8l3.9-5.7c1.7-2.5 4.5-4.1 7.5-4.3l6.9-.5c1.8-.1 2.5-2.4 1.1-3.5L5 2.5c-1.4-1.1-3.5 0-3.3 1.9Z"
+    />
+  </svg>
+</div>
+
+<style>
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease, transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .custom-cursor.cursor-hover {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+
+  .cursor-icon {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+    transition: transform 0.2s ease;
+  }
+
+  /* Ocultar cursor en dispositivos táctiles */
+  @media (hover: none) and (pointer: coarse) {
+    .custom-cursor {
+      display: none !important;
+    }
+  }
+
+  /* Ocultar cursor del sistema cuando el personalizado está activo */
+  body.custom-cursor-active {
+    cursor: none !important;
+  }
+
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+</style>
+
+<script>
+  // Detectar si es dispositivo táctil
+  const isTouchDevice = () => {
+    return 'ontouchstart' in window || 
+           navigator.maxTouchPoints > 0 || 
+           window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  };
+
+  // Solo inicializar en dispositivos no táctiles
+  if (!isTouchDevice()) {
+    const cursor = document.getElementById('custom-cursor');
+    const body = document.body;
+    
+    if (cursor) {
+      let isActive = false;
+      let currentX = 0;
+      let currentY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      // Función para interpolar suavemente la posición del cursor
+      const lerp = (start, end, factor) => {
+        return start + (end - start) * factor;
+      };
+
+      // Función para actualizar posición del cursor con delay suave
+      const updateCursorPosition = () => {
+        currentX = lerp(currentX, targetX, 0.15);
+        currentY = lerp(currentY, targetY, 0.15);
+        
+        cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+        
+        requestAnimationFrame(updateCursorPosition);
+      };
+
+      // Función para capturar la posición del mouse
+      const handleMouseMove = (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      };
+
+      // Mostrar cursor cuando el mouse entra en la página
+      const showCursor = () => {
+        if (!isActive) {
+          isActive = true;
+          body.classList.add('custom-cursor-active');
+          cursor.style.opacity = '1';
+        }
+      };
+
+      // Ocultar cursor cuando el mouse sale de la página
+      const hideCursor = () => {
+        if (isActive) {
+          isActive = false;
+          body.classList.remove('custom-cursor-active');
+          cursor.style.opacity = '0';
+        }
+      };
+
+      // Event listeners
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseenter', showCursor);
+      document.addEventListener('mouseleave', hideCursor);
+
+      // Iniciar el loop de animación
+      updateCursorPosition();
+
+      // Efectos hover para elementos interactivos
+      const addHoverEffects = () => {
+        const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea, select');
+        
+        interactiveElements.forEach(element => {
+          element.addEventListener('mouseenter', () => {
+            if (isActive) {
+              cursor.classList.add('cursor-hover');
+            }
+          });
+          
+          element.addEventListener('mouseleave', () => {
+            if (isActive) {
+              cursor.classList.remove('cursor-hover');
+            }
+          });
+        });
+      };
+
+      // Inicializar efectos hover
+      addHoverEffects();
+
+      // Re-aplicar efectos hover cuando se cargue nuevo contenido dinámico
+      const observer = new MutationObserver(() => {
+        addHoverEffects();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      // Limpiar event listeners al descargar la página
+      window.addEventListener('beforeunload', () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseenter', showCursor);
+        document.removeEventListener('mouseleave', hideCursor);
+        observer.disconnect();
+      });
+    }
+  }
+</script>

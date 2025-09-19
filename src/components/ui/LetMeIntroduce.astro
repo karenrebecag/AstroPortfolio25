@@ -37,42 +37,52 @@ const experienceData = [
 
 <section class="letmeintroduce">
   <div class="letme-container">
-    <h2 class="letme-title">LET ME INTRODUCE MYSELF</h2>
-    <img class="letme-hero-image" src="/images/MainImage.webp" alt="Introduction" />
-
+    
     <div class="experience-container">
       <div class="experience-scroll">
         {experienceData.map((experience) => (
           <div class="experience-card">
-            <div class="experience-card-header">
-              <img class="experience-card-image" src={experience.image} alt={experience.company} />
-              <div class="text-experience-number">{experience.id}</div>
-            </div>
             <div class="experience-header">
-              <div class="text-experience-title">{experience.title}</div>
-              <div class="text-experience-company">{experience.company}</div>
+              <div class="experience-number">{experience.id}</div>
+              <img class="experience-image" src={experience.image} alt={experience.company} />
             </div>
-            <div class="text-experience-description">
-              <span class="text-experience-description-normal">{experience.description}</span>
-              <span class="text-experience-description-highlight">{experience.highlight}</span>
+            <div class="experience-content">
+              <div class="experience-title">{experience.title}</div>
+              <div class="experience-company">{experience.company}</div>
+            </div>
+            <div class="experience-description">
+              <span class="description-normal">{experience.description}</span>
+              <span class="description-highlight">{experience.highlight}</span>
             </div>
           </div>
         ))}
       </div>
     </div>
+
+    <img class="letme-hero-image" src="/images/MainImage.webp" alt="Introduction" />
   </div>
 </section>
 
 <style is:global>
   .letmeintroduce {
-    background: linear-gradient(135deg, #e7e7e6 0%, #d8d8d7 100%);
-    background-image: linear-gradient(to right, rgba(204, 204, 204, 0.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(204, 204, 204, 0.25) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
-    padding: 100px 24px;
-    width: 100%;
+    background: white;
     position: relative;
+    width: 100%;
+  }
+
+  .letmeintroduce::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .letme-container {
@@ -81,6 +91,8 @@ const experienceData = [
     display: flex;
     flex-direction: column;
     gap: 40px;
+    position: relative;
+    z-index: 2;
   }
 
   .letme-title {
@@ -102,10 +114,10 @@ const experienceData = [
 
   .experience-container {
     width: 100%;
-    border-radius: 24px;
-    border: 1px solid #EBEBEB;
     overflow: hidden;
     position: relative;
+    background: linear-gradient(to right, white, transparent);
+    min-height: 25rem; /* 400px mínimo, pero puede crecer */
   }
 
   .experience-scroll {
@@ -116,6 +128,7 @@ const experienceData = [
     scrollbar-width: none;
     height: 100%;
     align-items: center;
+    padding: 0 30px;
   }
 
   .experience-scroll::-webkit-scrollbar {
@@ -123,73 +136,182 @@ const experienceData = [
   }
 
   .experience-card {
-    flex: 0 0 390px;
-    padding: 20px;
+    flex: 0 0 auto;
+    min-width: 24.375rem; /* 390px */
+    width: 24.375rem; /* 390px */
+    padding: 1.25rem; /* 20px */
     background: #F0F0F0;
-    border-radius: 20px;
+    border-radius: 1.25rem; /* 20px */
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    height: 100%;
-  }
-
-  .experience-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-
-  .experience-card-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    object-fit: cover;
-    background: white;
-    padding: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.75rem; /* 12px */
+    min-height: calc(100% - 2.5rem); /* Altura mínima, puede crecer */
+    margin: 1.25rem 0; /* 20px */
   }
 
   .experience-header {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
 
-  /* Experience title styles now handled by text-experience-title class */
+  .experience-number {
+    color: #1B1B1B;
+    font-size: 1.5rem; /* 24px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 2rem; /* 32px */
+    word-wrap: break-word;
+  }
 
-  /* Experience company styles now handled by text-experience-company class */
+  .experience-image {
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 0.5rem; /* 8px */
+    object-fit: cover;
+    background: white;
+    padding: 0.25rem; /* 4px */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
+
+  .experience-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .experience-title {
+    width: 100%;
+    color: black;
+    font-size: 1.5rem; /* 24px */
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 2rem; /* 32px */
+    word-wrap: break-word;
+  }
+
+  .experience-company {
+    width: 100%;
+    color: #1B1B1B;
+    font-size: 1.125rem; /* 18px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
+    word-wrap: break-word;
+  }
 
   .experience-description {
+    align-self: stretch;
     flex: 1;
   }
 
-  /* Description text styles now handled by text-experience-description classes */
+  .description-normal {
+    color: #1B1B1B;
+    font-size: 1.125rem; /* 18px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
+    word-wrap: break-word;
+  }
+
+  .description-highlight {
+    color: #4A24B5;
+    font-size: 1.125rem; /* 18px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
+    word-wrap: break-word;
+  }
 
   @media (max-width: 768px) {
     .letmeintroduce {
-      padding: 50px 20px;
+      padding: 3.125rem 1.25rem; /* 50px 20px */
     }
 
     .letme-container {
-      gap: 40px;
+      gap: 2.5rem; /* 40px */
     }
 
     .letme-hero-image {
-      height: 300px;
+      height: 18.75rem; /* 300px */
+    }
+
+    .experience-container {
+      min-height: 20rem; /* 320px mínimo */
     }
 
     .experience-card {
-      flex: 0 0 320px;
-      min-height: 280px;
+      min-width: 20rem; /* 320px */
+      width: 20rem; /* 320px */
+      min-height: calc(100% - 2.5rem); /* Altura mínima */
     }
 
-    /* Mobile typography now handled by responsive clamp() functions in the typography system */
+    .experience-scroll {
+      padding: 0 1.25rem; /* 20px */
+    }
+
+    .experience-number {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .experience-title {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .experience-company {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+    }
+
+    .description-normal,
+    .description-highlight {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+    }
   }
 
   @media (max-width: 480px) {
+    .experience-container {
+      min-height: 18.75rem; /* 300px mínimo */
+    }
+
     .experience-card {
-      flex: 0 0 280px;
+      min-width: 17.5rem; /* 280px */
+      width: 17.5rem; /* 280px */
+      min-height: calc(100% - 2.5rem); /* Altura mínima */
+    }
+
+    .experience-scroll {
+      padding: 0 0.9375rem; /* 15px */
+    }
+
+    .experience-number {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.5rem; /* 24px */
+    }
+
+    .experience-title {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.5rem; /* 24px */
+    }
+
+    .experience-company {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+    }
+
+    .description-normal,
+    .description-highlight {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
     }
   }
 </style>

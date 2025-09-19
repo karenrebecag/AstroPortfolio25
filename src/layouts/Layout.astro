@@ -5,6 +5,7 @@ export interface Props {
 
 const { title } = Astro.props;
 import '../styles/fonts.css';
+import CustomCursor from '../components/ui/CustomCursor.astro';
 ---
 
 <!DOCTYPE html>
@@ -21,6 +22,7 @@ import '../styles/fonts.css';
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 	</head>
 	<body>
+		<CustomCursor />
 		<slot />
 	</body>
 </html>

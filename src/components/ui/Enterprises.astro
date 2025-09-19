@@ -9,36 +9,6 @@ const logos = [
   { src: '/images/EnterprisesLogos/ZoekLogo.png', alt: 'Zoek' }
 ];
 
-const experienceData = [
-  {
-    id: "01",
-    title: "UX/UI & Frontend Developer",
-    company: "OPINATOR (Madrid, Spain)",
-    description: "Collaborated Within A Team Of Five UX/UI Designers To Lead The Redesign Of OPINATORs Core WebAPP - A Live Forms Online Creator. Focused On A Developer-First Design Approach.",
-    highlight: "I Implemented Modular, Server-Side Rendered Architecture Using Shaden Ul And Modern Frontend Best Practices"
-  },
-  {
-    id: "02",
-    title: "UX/UI & Frontend Developer",
-    company: "ANCIENT GLOBAL (Texas, USA)",
-    description: "Led A Four-Month UX Engineering Process To Design And Develop The Main Web For Ancient. Global. Built Entirely In Webflow, The Project Focused On Delivering A Seamless And Intelligent User Experience.",
-    highlight: " I Was Primarily Responsible For Designing And Implementing The Platform's Hero Banner, Which Integrates An Al-Driven Interaction Layer."
-  },
-  {
-    id: "03",
-    title: "UX/UI & Fullstack Developer",
-    company: "AURIN (Cuernavaca, México)",
-    description: "I Made: ",
-    highlight: "Mobile UX/UI For MonexOne App (Mex & US), Web UX/UI, AI Automations & Fullstack Development In Partnership With Ancient Technologies (Global), Project Managment & UX/Ul For Web Apps Like Inglesindividual , Galicia MX, Dentol MX, Fintpay Baking And May More."
-  },
-  {
-    id: "04",
-    title: "FOUNDER & DEV",
-    company: "WebCrafters (Mexico City)",
-    description: "Founded and currently lead WebCrafters, a UX/UI and WebArt agency focused on merging aesthetics, user experience, and AI-powered development.",
-    highlight: "Spearhead the design and implementation of custom web applications with intelligent features and scalable infrastructure for clients across diverse industries."
-  }
-];
 ---
 
 <section class="enterprises">
@@ -52,31 +22,6 @@ const experienceData = [
   </div>
 </section>
 
-<!-- LetMeIntroduce Section -->
-<section class="letmeintroduce">
-  <div class="letme-container">
-    <h2 class="letme-title">LET ME INTRODUCE MYSELF</h2>
-    <img class="letme-hero-image" src="https://placehold.co/1800x528" alt="Introduction" />
-
-    <div class="experience-container">
-      <div class="experience-scroll">
-        {experienceData.map((experience) => (
-          <div class="experience-card">
-            <div class="experience-number">{experience.id}</div>
-            <div class="experience-header">
-              <div class="experience-title">{experience.title}</div>
-              <div class="experience-company">{experience.company}</div>
-            </div>
-            <div class="experience-description">
-              <span class="description-text">{experience.description}</span>
-              <span class="highlight-text">{experience.highlight}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
 
 <style>
   .enterprises {

@@ -1,0 +1,62 @@
+---
+// TopMarquee - Lightweight marquee banner for header
+---
+
+<div class="top-marquee-container">
+  <div id="top-marquee" class="top-marquee">
+    <span class="marquee-text">
+      PORTFOLIO • KAREN ORTIZ • DEVELOPER • DESIGNER • CREATIVE • 
+    </span>
+    <span class="marquee-text">
+      PORTFOLIO • KAREN ORTIZ • DEVELOPER • DESIGNER • CREATIVE • 
+    </span>
+  </div>
+</div>
+
+<style>
+  .top-marquee-container {
+    width: 100%;
+    height: 32px;
+    background-color: #7754cd;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+  }
+
+  .top-marquee {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    height: 100%;
+    align-items: center;
+    animation: marquee-scroll 20s linear infinite;
+  }
+
+  @keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee-text {
+    font-family: 'Boysen', var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 0.5px;
+    padding-right: 0;
+  }
+
+  @media (max-width: 768px) {
+    .top-marquee-container {
+      height: 28px;
+    }
+    
+    .marquee-text {
+      font-size: 12px;
+    }
+  }
+</style>
+

@@ -1,25 +1,30 @@
 ---
 // Simplified header component
+import TopMarquee from './TopMarquee.astro';
 ---
 
-<header class="header">
-  <div class="logo">KAREN ORTIZ</div>
-  
-  <nav class="nav">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#projects">Projects</a>
-    <a href="#reviews">Reviews</a>
-  </nav>
-  
-  <button class="contact-btn">Contact Me</button>
-  
-  <button class="menu-btn" id="menuBtn">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</header>
+<TopMarquee />
+
+<div class="header-wrapper" id="headerWrapper">
+  <header class="header" id="mainHeader">
+    <div class="logo">KAREN ORTIZ</div>
+    
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#reviews">Reviews</a>
+    </nav>
+    
+    <button class="contact-btn">Contact Me</button>
+    
+    <button class="menu-btn" id="menuBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+</div>
 
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-content">
@@ -34,12 +39,69 @@
 </div>
 
 <style>
+  .header-wrapper {
+    position: fixed;
+    top: 32px; /* Account for TopMarquee height */
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: white;
+    background-image: 
+      linear-gradient(to right, rgba(204, 204, 204, 0.3) 1px, transparent 1px), 
+      linear-gradient(to bottom, rgba(204, 204, 204, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: background-image 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+  }
+
+  .header-wrapper.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    background-image: 
+      linear-gradient(to right, rgba(204, 204, 204, 0.15) 1px, transparent 1px), 
+      linear-gradient(to bottom, rgba(204, 204, 204, 0.15) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.25);
+  }
+
+  .header-wrapper.hiding {
+    pointer-events: none;
+  }
+
+  .header-wrapper.hidden {
+    pointer-events: none;
+  }
+
+  /* Smooth hover effects for better interaction */
+  .header-wrapper:hover {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    padding: 12px 24px;
     position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .header-wrapper {
+      top: 28px; /* Account for mobile TopMarquee height */
+    }
+    
+    .header {
+      padding: 8px 16px;
+    }
   }
 
   .logo {
@@ -295,6 +357,81 @@
   import { animate, stagger } from 'motion';
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Header scroll behavior
+    const headerWrapper = document.getElementById('headerWrapper');
+    let lastScrollY = window.scrollY;
+    let isScrolling = false;
+
+    const handleScroll = () => {
+      if (!isScrolling) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollDifference = currentScrollY - lastScrollY;
+          
+          if (!headerWrapper) return;
+
+          // Add scrolled class when scrolled down with smooth transition
+          if (currentScrollY > 80) {
+            headerWrapper.classList.add('scrolled');
+          } else {
+            headerWrapper.classList.remove('scrolled');
+          }
+
+          // Refined hide/show logic with better thresholds
+          if (scrollDifference > 8 && currentScrollY > 150) {
+            // Scrolling down - hide header with Motion.dev
+            if (!headerWrapper.classList.contains('hiding') && !headerWrapper.classList.contains('hidden')) {
+              headerWrapper.classList.add('hiding');
+              
+              // Use Motion.dev for smooth hide animation
+              const hideAnimation = animate(
+                headerWrapper,
+                { 
+                  transform: 'translateY(-100%)',
+                  opacity: 0
+                },
+                { 
+                  duration: 0.4,
+                  ease: [0.23, 1, 0.32, 1],
+                  onComplete: () => {
+                    headerWrapper.classList.add('hidden');
+                    headerWrapper.classList.remove('hiding');
+                  }
+                }
+              );
+            }
+          } else if (scrollDifference < -3 || currentScrollY < 100) {
+            // Scrolling up or near top - show header with Motion.dev
+            if (headerWrapper.classList.contains('hiding') || headerWrapper.classList.contains('hidden')) {
+              headerWrapper.classList.remove('hiding');
+              headerWrapper.classList.remove('hidden');
+              
+              // Use Motion.dev for smooth show animation
+              const showAnimation = animate(
+                headerWrapper,
+                {
+                  transform: 'translateY(0%)',
+                  opacity: 1
+                },
+                {
+                  duration: 0.5,
+                  ease: [0.23, 1, 0.32, 1]
+                }
+              );
+            }
+          }
+
+          lastScrollY = currentScrollY;
+          isScrolling = false;
+        });
+      }
+      isScrolling = true;
+    };
+
+    // Throttled scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Mobile menu functionality
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileNav = document.querySelector('.mobile-nav');

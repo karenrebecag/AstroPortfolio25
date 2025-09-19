@@ -7,22 +7,6 @@ import { Number } from './Number.tsx';
 
 <div class="me-section-wrapper w-full overflow-hidden relative justify-center flex">
   <div class="me-section w-full max-w-[1200px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
-  
-  <!-- Header Section -->
-  <div class="w-full h-[71px] justify-center flex flex-col" data-animate="fade-up">
-    <h1 class="text-display text-black text-center font-median">
-      LET ME INTRODUCE MYSELF
-    </h1>
-  </div>
-
-  <!-- Subtitle -->
-  <div class="w-full" data-animate="fade-up" data-delay="0.2">
-    <p class="text-body-sm text-white font-primary">
-      Hello! I'm Karen Ortiz, a creative developer with a knack for turning ideas into impactful digital experiences. 
-      My passion lies in crafting solutions that not only solve problems but also spark joy and connection for users. 
-      With a blend of innovative thinking and a deep curiosity for how people interact with technology.
-    </p>
-  </div>
 
   <!-- Main Content Section -->
   <div class="w-full h-[850px] flex flex-col lg:flex-row items-start ">
@@ -33,12 +17,12 @@ import { Number } from './Number.tsx';
       <!-- Profile Section -->
       <div class="w-full relative flex flex-wrap items-start" data-animate="fade-up" data-delay="0.4">
         <!-- Circle positioned behind text -->
-        <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10"></div>
+        <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10 scroll-circle"></div>
         <div class="flex-1 relative z-10">
-          <h2 class="text-hero font-median mb-2" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
+          <h2 class="text-hero font-median mb-2 split-text-title" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
             <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
           </h2>
-          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
+          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold split-text-subtitle" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
             Based in Mexico City
           </h3>
         </div>
@@ -46,7 +30,7 @@ import { Number } from './Number.tsx';
 
       <!-- Description -->
       <div class="w-full" data-animate="fade-up" data-delay="0.6">
-        <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 1.5;">
+        <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary split-text-description" style="font-size: 20px; line-height: 1.5;">
           That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
           who you are and what you stand for, but words that truly land with those that read them, calling your 
           audience in and making them.
@@ -54,7 +38,7 @@ import { Number } from './Number.tsx';
       </div>
 
       <!-- Stats Section -->
-      <div class="w-full max-w-[526px] flex items-start gap-[41px]" data-animate="fade-up" data-delay="0.8">
+      <div class="w-full max-w-[526px] flex items-start gap-[41px] scroll-stats" data-animate="fade-up" data-delay="0.8">
         <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
         <div class="flex flex-col justify-center items-start">
           <Number 
@@ -113,7 +97,7 @@ import { Number } from './Number.tsx';
     </div>
 
     <!-- Right Side - Image Section -->
-    <div class="flex-1 lg:min-w-[40%] h-[850px] flex items-center" data-animate="fade-left" data-delay="0.5">
+    <div class="flex-1 lg:min-w-[40%] h-[850px] flex items-center scroll-image" data-animate="fade-left" data-delay="0.5">
       <div class="w-full aspect-square relative overflow-hidden rounded-lg">
         <img 
           src="/images/Me.webp" 
@@ -129,7 +113,7 @@ import { Number } from './Number.tsx';
   .me-section-wrapper {
     background: white;
     position: relative;
-    padding: 65px 60px;
+    padding: 65px 60px 0 60px;
   }
 
   .me-section-wrapper::before {
@@ -175,6 +159,24 @@ import { Number } from './Number.tsx';
     transition: all 0.3s ease;
   }
 
+  /* Split text styles */
+  .split-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .split-char.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .split-word {
+    display: inline-block;
+    overflow: hidden;
+  }
+
   /* Animation styles */
   [data-animate] {
     opacity: 0;
@@ -200,6 +202,174 @@ import { Number } from './Number.tsx';
 </style>
 
 <script>
+  import { animate, stagger, inView, scroll } from 'motion';
+
+  // Split text function
+  function splitText(element: HTMLElement, type: 'chars' | 'words' = 'chars') {
+    const text = element.textContent || '';
+    element.innerHTML = '';
+    
+    if (type === 'chars') {
+      const chars = text.split('').map(char => {
+        if (char === ' ') return ' ';
+        const span = document.createElement('span');
+        span.className = 'split-char';
+        span.textContent = char;
+        return span;
+      });
+      
+      chars.forEach(char => {
+        if (typeof char === 'string') {
+          element.appendChild(document.createTextNode(char));
+        } else {
+          element.appendChild(char);
+        }
+      });
+      
+      return element.querySelectorAll('.split-char');
+    } else {
+      const words = text.split(' ').map(word => {
+        const span = document.createElement('span');
+        span.className = 'split-word';
+        span.innerHTML = word.split('').map(char => 
+          `<span class="split-char">${char}</span>`
+        ).join('');
+        return span;
+      });
+      
+      words.forEach((word, index) => {
+        element.appendChild(word);
+        if (index < words.length - 1) {
+          element.appendChild(document.createTextNode(' '));
+        }
+      });
+      
+      return element.querySelectorAll('.split-char');
+    }
+  }
+
+  // Initialize split text animations
+  function initSplitTextAnimations() {
+    // Title animation
+    const title = document.querySelector('.split-text-title') as HTMLElement;
+    if (title) {
+      const chars = splitText(title, 'chars');
+      
+      inView(title, () => {
+        animate(
+          chars,
+          { opacity: 1, transform: 'translateY(0px)' },
+          { 
+            delay: stagger(0.03),
+            duration: 0.6,
+            easing: [0.25, 0.46, 0.45, 0.94]
+          }
+        );
+      }, { margin: '0px 0px -100px 0px' });
+    }
+
+    // Subtitle animation
+    const subtitle = document.querySelector('.split-text-subtitle') as HTMLElement;
+    if (subtitle) {
+      const chars = splitText(subtitle, 'chars');
+      
+      inView(subtitle, () => {
+        animate(
+          chars,
+          { opacity: 1, transform: 'translateY(0px)' },
+          { 
+            delay: stagger(0.02),
+            duration: 0.5,
+            easing: [0.25, 0.46, 0.45, 0.94]
+          }
+        );
+      }, { margin: '0px 0px -100px 0px' });
+    }
+
+    // Description animation (by words for better readability)
+    const description = document.querySelector('.split-text-description') as HTMLElement;
+    if (description) {
+      const chars = splitText(description, 'words');
+      
+      inView(description, () => {
+        animate(
+          chars,
+          { opacity: 1, transform: 'translateY(0px)' },
+          { 
+            delay: stagger(0.01),
+            duration: 0.4,
+            easing: [0.25, 0.46, 0.45, 0.94]
+          }
+        );
+      }, { margin: '0px 0px -100px 0px' });
+    }
+  }
+
+  // Initialize scroll parallax effects
+  function initScrollParallax() {
+    // Purple circle - slow parallax (0.3x speed)
+    const circle = document.querySelector('.scroll-circle') as HTMLElement;
+    if (circle) {
+      scroll(
+        (progress: number) => {
+          const yOffset = progress * 50; // Move 50px over full scroll
+          circle.style.transform = `translateY(${yOffset}px)`;
+        },
+        {
+          target: circle,
+          offset: ["start end", "end start"]
+        }
+      );
+    }
+
+    // Profile image - medium parallax (0.5x speed)
+    const image = document.querySelector('.scroll-image') as HTMLElement;
+    if (image) {
+      scroll(
+        (progress: number) => {
+          const yOffset = progress * -30; // Move up 30px
+          image.style.transform = `translateY(${yOffset}px)`;
+        },
+        {
+          target: image,
+          offset: ["start end", "end start"]
+        }
+      );
+    }
+
+    // Stats section - fast parallax (0.8x speed)
+    const stats = document.querySelector('.scroll-stats') as HTMLElement;
+    if (stats) {
+      scroll(
+        (progress: number) => {
+          const yOffset = progress * -20; // Move up 20px
+          const scale = 1 + (progress * 0.05); // Slight scale effect
+          stats.style.transform = `translateY(${yOffset}px) scale(${scale})`;
+        },
+        {
+          target: stats,
+          offset: ["start end", "end start"]
+        }
+      );
+    }
+
+    // Title section - rotation effect
+    const title = document.querySelector('.split-text-title') as HTMLElement;
+    if (title) {
+      scroll(
+        (progress: number) => {
+          const rotation = progress * 2; // Rotate 2 degrees
+          const yOffset = progress * -10; // Slight upward movement
+          title.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`;
+        },
+        {
+          target: title,
+          offset: ["start center", "end center"]
+        }
+      );
+    }
+  }
+
   // Motion.dev scroll animations
   function initScrollAnimations() {
     const animatedElements = document.querySelectorAll('[data-animate]');
@@ -228,10 +398,14 @@ import { Number } from './Number.tsx';
   // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
+    initSplitTextAnimations();
+    initScrollParallax();
   });
   
   // Re-initialize for Astro page transitions
   document.addEventListener('astro:page-load', () => {
     initScrollAnimations();
+    initSplitTextAnimations();
+    initScrollParallax();
   });
 </script>
