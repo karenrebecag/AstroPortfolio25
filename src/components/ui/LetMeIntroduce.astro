@@ -116,8 +116,19 @@ const experienceData = [
     width: 100%;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(to right, white, transparent);
     min-height: 25rem; /* 400px mínimo, pero puede crecer */
+  }
+
+  .experience-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, white 0%, transparent 20%, transparent 80%, white 100%);
+    pointer-events: none;
+    z-index: 10;
   }
 
   .experience-scroll {

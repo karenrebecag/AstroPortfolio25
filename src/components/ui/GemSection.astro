@@ -1,0 +1,381 @@
+---
+import SilkBackground from '../three/SilkBackground.tsx';
+
+const softSkillsData = [
+  {
+    id: "01",
+    title: "DESIGN MATTERS",
+    description: "Good UX isn't magic—it's iteration.",
+    highlight: "I look at spacing, hierarchy, content, motion... everything users feel but can't explain."
+  },
+  {
+    id: "02", 
+    title: "building my own",
+    description: "Founding WebCrafters gave me the space to lead full processes—from first call to delivery.",
+    highlight: "I work with teams that value clarity, ownership, and honest feedback."
+  },
+  {
+    id: "03",
+    title: "EVOLVING WITH INTENTION",
+    description: "Design and dev move fast—but not everything should be rushed.",
+    highlight: "I adapt, but I stay grounded in usability, accessibility, and real needs."
+  },
+  {
+    id: "04",
+    title: "PRODUCT THINKING",
+    description: "I design with users in mind, but I also think about dev time, scalability, and business goals.",
+    highlight: "Each screen is a decision—and I care about all of them."
+  },
+  {
+    id: "05",
+    title: "Curiosity First",
+    description: "I've always been curious about how things work. Design came as a way to solve problems—not just make things pretty.",
+    highlight: "Understanding both the visual and the structural side has always made sense to me."
+  },
+  {
+    id: "06",
+    title: "Bringing Design AND CODE",
+    description: "I'm both a developer and a designer, which means I don't just make it look good—I make it work.",
+    highlight: "This mindset helps me build faster, cleaner, and with fewer handoffs."
+  }
+];
+---
+
+<section class="gem-section">
+  <div class="gem-container">
+    
+    <!-- Cards Container -->
+    <div class="skills-container">
+      <div class="skills-scroll">
+        {softSkillsData.map((skill) => (
+          <div class="skill-card">
+            <SilkBackground client:visible className="skill-card-background" />
+            <div class="skill-header">
+              <div class="skill-number">{skill.id}</div>
+            </div>
+            <div class="skill-content">
+              <div class="skill-title">{skill.title}</div>
+            </div>
+            <div class="skill-description">
+              <span class="description-normal">{skill.description}</span>
+              <span class="description-highlight">{skill.highlight}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+        
+    <!-- Large SOFT SKILLS Text -->
+    <div class="soft-skills-title">SOFT SKILLS</div>
+
+  </div>
+</section>
+
+<style is:global>
+  .gem-section {
+    background: white;
+    position: relative;
+    width: 100%;
+    padding: 5rem 0;
+  }
+
+  .gem-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gem-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    position: relative;
+    z-index: 3;
+    padding: 0 20px;
+  }
+
+  .soft-skills-title {
+    font-family: 'Median', serif;
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 400;
+    color: black;
+    text-align: center;
+    margin: 0;
+    text-wrap: nowrap;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+
+  .skills-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    min-height: 25rem;
+  }
+
+  .skills-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, white 0%, transparent 20%, transparent 80%, white 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .skills-scroll {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 100%;
+    align-items: center;
+    padding: 0 30px;
+  }
+
+  .skills-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skill-card {
+    flex: 0 0 auto;
+    min-width: 24.375rem; /* 390px */
+    width: 24.375rem; /* 390px */
+    min-height: 16.8rem; /* 268px - 40% menos altura para desktop */
+    padding: 1.25rem; /* 20px */
+    background: url('/images/SilkCardFallback.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(74, 36, 181, 0.3);
+    border-radius: 1.25rem; /* 20px */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.75rem; /* 12px */
+    margin: 1.25rem 0; /* 20px */
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card-background {
+    border-radius: inherit;
+  }
+
+  .skill-card > *:not(.skill-card-background) {
+    position: relative;
+    z-index: 3;
+  }
+
+
+  .skill-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+
+  .skill-number {
+    color: white;
+    font-size: 1.5rem; /* 24px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 2rem; /* 32px */
+    word-wrap: break-word;
+  }
+
+  .skill-icon {
+    font-size: 2.5rem; /* 40px */
+    line-height: 1;
+  }
+
+  .skill-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .skill-title {
+    width: 100%;
+    color: white;
+    font-size: 1.5rem; /* 24px */
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 2rem; /* 32px */
+    text-wrap: nowrap;
+  }
+
+  .skill-description {
+    align-self: stretch;
+    flex: 1;
+  }
+
+  .skill-description .description-normal {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem; /* 18px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
+    word-wrap: break-word;
+  }
+
+  .skill-description .description-highlight {
+    color: #E0D4FF;
+    font-size: 1.125rem; /* 18px */
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
+    word-wrap: break-word;
+  }
+
+  @media (max-width: 768px) {
+    .gem-section {
+      padding: 3.125rem 0; /* 50px */
+    }
+
+    .gem-container {
+      gap: 2.5rem; /* 40px */
+      padding: 0 1.25rem; /* 20px */
+    }
+
+    .soft-skills-title {
+      font-size: clamp(60px, 12vw, 120px);
+    }
+
+    .skills-container {
+      min-height: 20rem; /* 320px mínimo */
+    }
+
+    .skill-card {
+      min-width: 20rem; /* 320px */
+      width: 20rem; /* 320px */
+      min-height: 15.6rem; /* 250px - 40% menos altura para tablet */
+    }
+
+    .skills-scroll {
+      padding: 0 1.25rem; /* 20px */
+    }
+
+    .skill-number {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .skill-icon {
+      font-size: 2rem; /* 32px */
+    }
+
+    .skill-title {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .skill-description .description-normal {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .skill-description .description-highlight {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+      color: #E0D4FF;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .soft-skills-title {
+      font-size: clamp(40px, 10vw, 80px);
+    }
+
+    .skills-container {
+      min-height: 18.75rem; /* 300px mínimo */
+    }
+
+    .skill-card {
+      min-width: 17.5rem; /* 280px */
+      width: 17.5rem; /* 280px */
+      min-height: 14.4rem; /* 230px - 40% menos altura para mobile */
+    }
+
+    .skills-scroll {
+      padding: 0 0.9375rem; /* 15px */
+    }
+
+    .skill-number {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.5rem; /* 24px */
+    }
+
+    .skill-icon {
+      font-size: 1.75rem; /* 28px */
+    }
+
+    .skill-title {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.5rem; /* 24px */
+    }
+
+    .skill-description .description-normal {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .skill-description .description-highlight {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+      color: #E0D4FF;
+    }
+  }
+</style>
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const gemSection = document.querySelector('.gem-section');
+    const skillsScroll = document.querySelector('.skills-scroll');
+    
+    if (gemSection && skillsScroll) {
+      // Calculate total scroll width
+      const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
+      
+      if (scrollWidth > 0) {
+        // Create scroll-triggered horizontal animation for skill cards
+        scroll(
+          (progress: number) => {
+            skillsScroll.scrollLeft = progress * scrollWidth;
+          },
+          {
+            target: gemSection,
+            offset: ["start center", "end center"]
+          }
+        );
+      }
+    }
+  });
+</script>
