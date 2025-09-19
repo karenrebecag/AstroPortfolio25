@@ -1,64 +1,8 @@
 ---
-const experienceData = [
-  {
-    id: "01",
-    title: "UX/UI & Frontend Developer",
-    company: "OPINATOR (Madrid, Spain)",
-    description: "Collaborated Within A Team Of Five UX/UI Designers To Lead The Redesign Of OPINATORs Core WebAPP - A Live Forms Online Creator. Focused On A Developer-First Design Approach.",
-    highlight: "I Implemented Modular, Server-Side Rendered Architecture Using Shaden Ul And Modern Frontend Best Practices",
-    image: "/images/EnterprisesLogos/ExperienceCards/Opinator.webp"
-  },
-  {
-    id: "02",
-    title: "UX/UI & Frontend Developer",
-    company: "ANCIENT GLOBAL (Texas, USA)",
-    description: "Led A Four-Month UX Engineering Process To Design And Develop The Main Web For Ancient. Global. Built Entirely In Webflow, The Project Focused On Delivering A Seamless And Intelligent User Experience.",
-    highlight: " I Was Primarily Responsible For Designing And Implementing The Platform's Hero Banner, Which Integrates An Al-Driven Interaction Layer.",
-    image: "/images/EnterprisesLogos/ExperienceCards/Ancient.png"
-  },
-  {
-    id: "03",
-    title: "UX/UI & Fullstack Developer",
-    company: "AURIN (Cuernavaca, México)",
-    description: "I Made: ",
-    highlight: "Mobile UX/UI For MonexOne App (Mex & US), Web UX/UI, AI Automations & Fullstack Development In Partnership With Ancient Technologies (Global), Project Managment & UX/Ul For Web Apps Like Inglesindividual , Galicia MX, Dentol MX, Fintpay Baking And May More.",
-    image: "/images/EnterprisesLogos/ExperienceCards/Aurin.webp"
-  },
-  {
-    id: "04",
-    title: "FOUNDER & DEV",
-    company: "WebCrafters (Mexico City)",
-    description: "Founded and currently lead WebCrafters, a UX/UI and WebArt agency focused on merging aesthetics, user experience, and AI-powered development.",
-    highlight: "Spearhead the design and implementation of custom web applications with intelligent features and scalable infrastructure for clients across diverse industries.",
-    image: "/images/EnterprisesLogos/ExperienceCards/WebCrafters.webp"
-  }
-];
 ---
 
 <section class="letmeintroduce">
   <div class="letme-container">
-    
-    <div class="experience-container">
-      <div class="experience-scroll">
-        {experienceData.map((experience) => (
-          <div class="experience-card">
-            <div class="experience-header">
-              <div class="experience-number">{experience.id}</div>
-              <img class="experience-image" src={experience.image} alt={experience.company} />
-            </div>
-            <div class="experience-content">
-              <div class="experience-title">{experience.title}</div>
-              <div class="experience-company">{experience.company}</div>
-            </div>
-            <div class="experience-description">
-              <span class="description-normal">{experience.description}</span>
-              <span class="description-highlight">{experience.highlight}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
     <img class="letme-hero-image" src="/images/MainImage.webp" alt="Introduction" />
   </div>
 </section>
@@ -112,134 +56,6 @@ const experienceData = [
     object-fit: cover;
   }
 
-  .experience-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    min-height: 25rem; /* 400px mínimo, pero puede crecer */
-  }
-
-  .experience-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to right, white 0%, transparent 20%, transparent 80%, white 100%);
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .experience-scroll {
-    display: flex;
-    gap: 30px;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    height: 100%;
-    align-items: center;
-    padding: 0 30px;
-  }
-
-  .experience-scroll::-webkit-scrollbar {
-    display: none;
-  }
-
-  .experience-card {
-    flex: 0 0 auto;
-    min-width: 24.375rem; /* 390px */
-    width: 24.375rem; /* 390px */
-    padding: 1.25rem; /* 20px */
-    background: #F0F0F0;
-    border-radius: 1.25rem; /* 20px */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 0.75rem; /* 12px */
-    min-height: calc(100% - 2.5rem); /* Altura mínima, puede crecer */
-    margin: 1.25rem 0; /* 20px */
-  }
-
-  .experience-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .experience-number {
-    color: #1B1B1B;
-    font-size: 1.5rem; /* 24px */
-    font-family: var(--font-primary);
-    font-weight: 500;
-    line-height: 2rem; /* 32px */
-    word-wrap: break-word;
-  }
-
-  .experience-image {
-    width: 2.5rem; /* 40px */
-    height: 2.5rem; /* 40px */
-    border-radius: 0.5rem; /* 8px */
-    object-fit: cover;
-    background: white;
-    padding: 0.25rem; /* 4px */
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
-  }
-
-  .experience-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .experience-title {
-    width: 100%;
-    color: black;
-    font-size: 1.5rem; /* 24px */
-    font-family: var(--font-primary);
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 2rem; /* 32px */
-    word-wrap: break-word;
-  }
-
-  .experience-company {
-    width: 100%;
-    color: #1B1B1B;
-    font-size: 1.125rem; /* 18px */
-    font-family: var(--font-primary);
-    font-weight: 500;
-    line-height: 1.625rem; /* 26px */
-    word-wrap: break-word;
-  }
-
-  .experience-description {
-    align-self: stretch;
-    flex: 1;
-  }
-
-  .description-normal {
-    color: #1B1B1B;
-    font-size: 1.125rem; /* 18px */
-    font-family: var(--font-primary);
-    font-weight: 500;
-    line-height: 1.625rem; /* 26px */
-    word-wrap: break-word;
-  }
-
-  .description-highlight {
-    color: #4A24B5;
-    font-size: 1.125rem; /* 18px */
-    font-family: var(--font-primary);
-    font-weight: 500;
-    line-height: 1.625rem; /* 26px */
-    word-wrap: break-word;
-  }
-
   @media (max-width: 768px) {
     .letmeintroduce {
       padding: 3.125rem 1.25rem; /* 50px 20px */
@@ -252,108 +68,17 @@ const experienceData = [
     .letme-hero-image {
       height: 18.75rem; /* 300px */
     }
-
-    .experience-container {
-      min-height: 20rem; /* 320px mínimo */
-    }
-
-    .experience-card {
-      min-width: 20rem; /* 320px */
-      width: 20rem; /* 320px */
-      min-height: calc(100% - 2.5rem); /* Altura mínima */
-    }
-
-    .experience-scroll {
-      padding: 0 1.25rem; /* 20px */
-    }
-
-    .experience-number {
-      font-size: 1.25rem; /* 20px */
-      line-height: 1.75rem; /* 28px */
-    }
-
-    .experience-title {
-      font-size: 1.25rem; /* 20px */
-      line-height: 1.75rem; /* 28px */
-    }
-
-    .experience-company {
-      font-size: 1rem; /* 16px */
-      line-height: 1.5rem; /* 24px */
-    }
-
-    .description-normal,
-    .description-highlight {
-      font-size: 1rem; /* 16px */
-      line-height: 1.5rem; /* 24px */
-    }
-  }
-
-  @media (max-width: 480px) {
-    .experience-container {
-      min-height: 18.75rem; /* 300px mínimo */
-    }
-
-    .experience-card {
-      min-width: 17.5rem; /* 280px */
-      width: 17.5rem; /* 280px */
-      min-height: calc(100% - 2.5rem); /* Altura mínima */
-    }
-
-    .experience-scroll {
-      padding: 0 0.9375rem; /* 15px */
-    }
-
-    .experience-number {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.5rem; /* 24px */
-    }
-
-    .experience-title {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.5rem; /* 24px */
-    }
-
-    .experience-company {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.25rem; /* 20px */
-    }
-
-    .description-normal,
-    .description-highlight {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.25rem; /* 20px */
-    }
   }
 </style>
 
 <script>
-  import { scroll, animate } from 'motion';
+  import { scroll } from 'motion';
 
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', () => {
-    const letMeSection = document.querySelector('.letmeintroduce');
-    const experienceScroll = document.querySelector('.experience-scroll');
-    
     const heroImage = document.querySelector('.letme-hero-image');
     
-    if (letMeSection && experienceScroll && heroImage) {
-      // Calculate total scroll width
-      const scrollWidth = experienceScroll.scrollWidth - experienceScroll.clientWidth;
-      
-      if (scrollWidth > 0) {
-        // Create scroll-triggered horizontal animation for experience cards
-        scroll(
-          (progress: number) => {
-            experienceScroll.scrollLeft = progress * scrollWidth;
-          },
-          {
-            target: letMeSection,
-            offset: ["start center", "end center"]
-          }
-        );
-      }
-      
+    if (heroImage) {
       // Create scroll offset animation for hero image
       scroll(
         (progress: number) => {

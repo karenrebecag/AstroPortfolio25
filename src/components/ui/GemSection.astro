@@ -1,5 +1,6 @@
 ---
 import SilkBackground from '../three/SilkBackground.tsx';
+import GemBackground from '../three/GemBackground.tsx';
 
 const softSkillsData = [
   {
@@ -44,6 +45,9 @@ const softSkillsData = [
 <section class="gem-section">
   <div class="gem-container">
     
+    <!-- Gem 3D Background -->
+    <GemBackground client:visible className="gem-background" />
+    
     <!-- Cards Container -->
     <div class="skills-container">
       <div class="skills-scroll">
@@ -67,7 +71,7 @@ const softSkillsData = [
 
         
     <!-- Large SOFT SKILLS Text -->
-    <div class="soft-skills-title">SOFT SKILLS</div>
+    <div class="soft-skills-title">ABOUT ME</div>
 
   </div>
 </section>
@@ -77,7 +81,7 @@ const softSkillsData = [
     background: white;
     position: relative;
     width: 100%;
-    padding: 5rem 0;
+    padding: 5rem 0 0 0;
   }
 
   .gem-section::before {
@@ -92,11 +96,11 @@ const softSkillsData = [
       linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     background-size: 20px 20px;
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
   }
 
   .gem-container {
-    max-width: 1280px;
+    max-width: none;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -108,7 +112,7 @@ const softSkillsData = [
 
   .soft-skills-title {
     font-family: 'Median', serif;
-    font-size: clamp(80px, 15vw, 200px);
+    font-size: clamp(60px, 30vw, 200px);
     font-weight: 400;
     color: black;
     text-align: center;
@@ -116,6 +120,9 @@ const softSkillsData = [
     text-wrap: nowrap;
     line-height: 0.9;
     letter-spacing: -0.02em;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
   }
 
   .skills-container {
@@ -134,7 +141,7 @@ const softSkillsData = [
     bottom: 0;
     background: linear-gradient(to right, white 0%, transparent 20%, transparent 80%, white 100%);
     pointer-events: none;
-    z-index: 10;
+    z-index: 1;
   }
 
   .skills-scroll {
@@ -359,6 +366,7 @@ const softSkillsData = [
   document.addEventListener('DOMContentLoaded', () => {
     const gemSection = document.querySelector('.gem-section');
     const skillsScroll = document.querySelector('.skills-scroll');
+    const softSkillsTitle = document.querySelector('.soft-skills-title');
     
     if (gemSection && skillsScroll) {
       // Calculate total scroll width
@@ -376,6 +384,25 @@ const softSkillsData = [
           }
         );
       }
+    }
+
+    // Subtle animation for "SOFT SKILLS" title
+    if (softSkillsTitle) {
+      // Scroll-triggered subtle scale and opacity animation
+      scroll(
+        (progress: number) => {
+          const scale = 0.95 + (progress * 0.05); // Very subtle scale from 0.95 to 1.0
+          const opacity = 0.7 + (progress * 0.3); // Subtle opacity from 0.7 to 1.0
+          const translateY = (1 - progress) * 20; // Subtle upward movement
+          
+          (softSkillsTitle as HTMLElement).style.transform = `translateY(${translateY}px) scale(${scale})`;
+          (softSkillsTitle as HTMLElement).style.opacity = opacity.toString();
+        },
+        {
+          target: softSkillsTitle,
+          offset: ["start 80%", "start 20%"] // Animate when title enters viewport
+        }
+      );
     }
   });
 </script>
