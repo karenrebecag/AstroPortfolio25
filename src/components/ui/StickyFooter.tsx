@@ -51,7 +51,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
         >
             <div className="fixed bottom-0 h-[720px] w-full">
                 <div className="sticky top-[calc(100vh-720px)] h-full overflow-y-auto">
-                    <div className="relative flex h-full w-full flex-col justify-between gap-5 px-4 py-8 md:px-12 text-gray-800" style={{ 
+                    <div className="footer-grid-texture relative flex h-full w-full flex-col justify-between gap-5 px-4 py-8 md:px-12 text-gray-800" style={{ 
                         backgroundColor: '#e6d9fb',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
                     }}>
@@ -83,7 +83,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 transform: 'translateX(2rem) translateY(-24rem) rotate(-45deg)'
                             }} />
                         </div>
-                        <div className="mt-10 flex flex-col gap-8 md:flex-row xl:mt-0 relative z-10">
+                        <div className="mt-10 flex flex-col gap-8 md:flex-row xl:mt-0 relative z-20">
                             <AnimatedContainer className="w-full max-w-sm space-y-4">
                                 <FrameIcon className="h-8 w-8" />
                                 <p className="text-gray-600 mt-8 text-body md:mt-4">
@@ -124,9 +124,9 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             ))}
                         </div>
                         {/* Texto gigante KAREN ORTIZ */}
-                        <div className="karen-ortiz-title relative z-10">KAREN ORTIZ</div>
+                        <div className="karen-ortiz-title relative z-20">KAREN ORTIZ</div>
                         
-                        <div className="text-gray-600 flex flex-col items-center justify-between gap-2 pt-4 text-body-sm md:flex-row relative z-10">
+                        <div className="text-gray-600 flex flex-col items-center justify-between gap-2 pt-4 text-body-sm md:flex-row relative z-20">
                             <p>© 2025 Karen Ortiz. Todos los derechos reservados.</p>
                             <p>Desarrollado con ❤️</p>
                         </div>
@@ -220,7 +220,7 @@ function AnimatedContainer({
     );
 }
 
-// Añadir estilos globales para el texto gigante
+// Añadir estilos globales para el texto gigante y textura de grid
 if (typeof document !== 'undefined') {
     const style = document.createElement('style');
     style.textContent = `
@@ -239,6 +239,21 @@ if (typeof document !== 'undefined') {
             overflow: hidden;
             margin-top: 2rem;
             margin-bottom: 1rem;
+        }
+        
+        .footer-grid-texture::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
         }
         
         @media (max-width: 768px) {

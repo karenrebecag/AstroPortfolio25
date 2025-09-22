@@ -44,10 +44,10 @@ const experienceData = [
   <div class="me-section w-full max-w-[1400px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
 
   <!-- Main Content Section -->
-  <div class="w-full h-[850px] flex flex-col lg:flex-row-reverse items-start ">
+  <div class="w-full flex flex-col lg:flex-row-reverse items-start ">
     
     <!-- Right Side - Content Section (appears on right in desktop) -->
-    <div class="flex-1 self-stretch flex flex-col justify-center items-start gap-9 lg:min-w-[60%]">
+    <div class="flex-1 flex flex-col justify-start items-start gap-9 lg:min-w-[60%]">
       
       <!-- Profile Section -->
       <div class="w-full relative flex flex-wrap items-start" data-animate="fade-up" data-delay="0.4">
@@ -132,7 +132,7 @@ const experienceData = [
     </div>
 
     <!-- Left Side - Image Section (appears on left in desktop) -->
-    <div class="flex-1 lg:min-w-[40%] h-[850px] items-center scroll-image hidden lg:flex" data-animate="fade-right" data-delay="0.5">
+    <div class="flex-1 lg:min-w-[40%] items-center scroll-image hidden lg:flex" data-animate="fade-right" data-delay="0.5">
       <div class="w-full aspect-square relative overflow-hidden rounded-lg">
         <img 
           src="/images/Me.webp" 
@@ -171,7 +171,7 @@ const experienceData = [
   .me-section-wrapper {
     background: white;
     position: relative;
-    padding: 65px 60px 0 60px;
+    padding: 120px 60px 80px 60px;
   }
 
   .me-section-wrapper::before {
@@ -275,7 +275,7 @@ const experienceData = [
     overflow: hidden;
     position: relative;
     min-height: 25rem; /* Mantener altura del container */
-    margin-top: 60px;
+    margin-top: 0;
   }
 
   .experience-container::before {
