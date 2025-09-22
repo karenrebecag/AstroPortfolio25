@@ -7,6 +7,7 @@ import {
     LinkedinIcon,
     YoutubeIcon,
 } from 'lucide-react';
+import { DitheringShader } from '../three/DitheringShader';
 
 interface FooterLink {
     title: string;
@@ -50,10 +51,28 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
         >
             <div className="fixed bottom-0 h-[720px] w-full">
                 <div className="sticky top-[calc(100vh-720px)] h-full overflow-y-auto">
-                    <div className="relative flex h-full w-full flex-col justify-between gap-5 border-t border-gray-700 px-4 py-8 md:px-12 text-white" style={{ backgroundColor: '#1a1a1a' }}>
+                    <div className="relative flex h-full w-full flex-col justify-between gap-5 px-4 py-8 md:px-12 text-gray-800" style={{ 
+                        backgroundColor: '#e6d9fb',
+                        boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
+                    }}>
+                        {/* DitheringShader Background Scene */}
+                        <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)' }}>
+                            <DitheringShader
+                                width={1920}
+                                height={720}
+                                colorBack="#e6d9fb"
+                                colorFront="#4523AE"
+                                shape="wave"
+                                type="8x8"
+                                pxSize={3}
+                                speed={0.6}
+                            />
+                        </div>
+                        
+                        {/* Fallback decorative elements (mantener como backup) */}
                         <div
                             aria-hidden
-                            className="absolute inset-0 z-0"
+                            className="absolute inset-0 z-0 opacity-30"
                         >
                             <div className="absolute top-0 left-0 h-80 w-40 rounded-full opacity-10" style={{
                                 background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, transparent 100%)',
@@ -67,7 +86,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                         <div className="mt-10 flex flex-col gap-8 md:flex-row xl:mt-0 relative z-10">
                             <AnimatedContainer className="w-full max-w-sm space-y-4">
                                 <FrameIcon className="h-8 w-8" />
-                                <p className="text-gray-400 mt-8 text-sm md:mt-4">
+                                <p className="text-gray-600 mt-8 text-body md:mt-4">
                                     Portfolio desarrollado con Astro, React y Tailwind CSS.
                                     Demostrando habilidades en desarrollo frontend moderno y diseño responsivo.
                                 </p>
@@ -86,13 +105,13 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     className="w-full"
                                 >
                                     <div className="mb-10 md:mb-0">
-                                        <h3 className="text-sm uppercase font-semibold">{group.label}</h3>
-                                        <ul className="text-gray-400 mt-4 space-y-2 text-sm md:text-xs lg:text-sm">
+                                        <h3 className="text-body-sm uppercase font-semibold text-gray-800">{group.label}</h3>
+                                        <ul className="text-gray-600 mt-4 space-y-2 text-body-sm">
                                             {group.links.map((link) => (
                                                 <li key={link.title}>
                                                     <a
                                                         href={link.href}
-                                                        className="hover:text-white inline-flex items-center transition-all duration-300"
+                                                        className="hover:text-gray-900 inline-flex items-center transition-all duration-300"
                                                     >
                                                         {link.icon && <link.icon className="mr-1 h-4 w-4" />}
                                                         {link.title}
@@ -104,7 +123,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 </AnimatedContainer>
                             ))}
                         </div>
-                        <div className="text-gray-400 flex flex-col items-center justify-between gap-2 border-t border-gray-700 pt-4 text-sm md:flex-row relative z-10">
+                        {/* Texto gigante KAREN ORTIZ */}
+                        <div className="karen-ortiz-title relative z-10">KAREN ORTIZ</div>
+                        
+                        <div className="text-gray-600 flex flex-col items-center justify-between gap-2 pt-4 text-body-sm md:flex-row relative z-10">
                             <p>© 2025 Karen Ortiz. Todos los derechos reservados.</p>
                             <p>Desarrollado con ❤️</p>
                         </div>
@@ -167,20 +189,22 @@ const footerLinkGroups: FooterLinkGroup[] = [
     },
 ];
 
-type AnimatedContainerProps = React.ComponentProps<typeof motion.div> & {
+type AnimatedContainerProps = {
     children?: React.ReactNode;
     delay?: number;
-};
+    className?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 function AnimatedContainer({
     delay = 0.1,
     children,
+    className,
     ...props
 }: AnimatedContainerProps) {
     const shouldReduceMotion = useReducedMotion();
 
     if (shouldReduceMotion) {
-        return <div {...props}>{children}</div>;
+        return <div className={className} {...props}>{children}</div>;
     }
 
     return (
@@ -189,9 +213,45 @@ function AnimatedContainer({
             whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay, duration: 0.8 }}
-            {...props}
+            className={className}
         >
             {children}
         </motion.div>
     );
+}
+
+// Añadir estilos globales para el texto gigante
+if (typeof document !== 'undefined') {
+    const style = document.createElement('style');
+    style.textContent = `
+        .karen-ortiz-title {
+            font-family: 'Median', serif;
+            font-size: clamp(60px, 30vw, 200px);
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            margin: 0;
+            text-wrap: nowrap;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            width: 100%;
+            max-width: 100vw;
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .karen-ortiz-title {
+                font-size: clamp(40px, 12vw, 120px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .karen-ortiz-title {
+                font-size: clamp(30px, 10vw, 80px);
+            }
+        }
+    `;
+    document.head.appendChild(style);
 }
