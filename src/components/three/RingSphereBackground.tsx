@@ -200,9 +200,9 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
       });
 
       // Position and scale - optimizado para centrado perfecto en MyStack con contenedor más grande
-      object.scale.set(1.1, 1.1, 1.1); // Aumentado para aprovechar el contenedor más grande
-      object.position.set(0, 0, 0); // Centrado perfecto
-      object.rotation.set(0.1, 0, 0.1); // Ligera inclinación para mejor visualización
+      object.scale.set(1.1, 1.1, 1.1); 
+      object.position.set(0, 0, 0); // Centered
+      object.rotation.set(0.1, 0, 0.1);
       
       scene.add(object);
     }, undefined, (error) => {

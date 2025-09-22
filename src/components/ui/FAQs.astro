@@ -1,0 +1,248 @@
+---
+// FAQs.astro - Sección de preguntas frecuentes con funcionalidad de acordeón (Dark Mode)
+import FAQsIsland from './FAQsIsland.tsx';
+---
+
+<section class="faqs-section">
+  <div class="faqs-container">
+    <div class="faqs-content">
+      <!-- Header Section -->
+      <div class="faqs-header">
+        <h2 class="faqs-title">FAQs</h2>
+        <p class="faqs-description">
+          Frequently asked questions about my services, process, and approach to web development and design
+        </p>
+      </div>
+
+      <!-- FAQs List - Optimized Island Component -->
+      <FAQsIsland client:load />
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .faqs-section {
+    width: 100%;
+    min-height: 100vh;
+    padding: 65px 60px;
+    background:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      #000000;
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .faqs-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .faqs-content {
+    width: 100%;
+    padding-bottom: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 80px;
+  }
+
+  /* Header Styles */
+  .faqs-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .faqs-title {
+    color: #808080;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: 400;
+    line-height: clamp(50px, 8vw, 70px);
+    margin: 0;
+  }
+
+  .faqs-description {
+    width: 100%;
+    max-width: 424px;
+    color: #ffffff;
+    font-family: var(--font-primary);
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 500;
+    line-height: clamp(24px, 3.5vw, 30px);
+    margin: 0;
+  }
+
+  /* FAQs List */
+  :global(.faqs-list) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  :global(.faq-item) {
+    width: 100%;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    gap: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  /* Hover effects solo en desktop */
+  @media (min-width: 769px) {
+    :global(.faq-item:hover) {
+      border-bottom-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  :global(.faq-number) {
+    color: #808080;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    min-width: 40px;
+    transition: color 0.3s ease;
+  }
+
+  :global(.faq-item.active .faq-number) {
+    color: white;
+  }
+
+  :global(.faq-content) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  :global(.faq-question-container) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  :global(.faq-question) {
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 400;
+    line-height: clamp(28px, 4vw, 36px);
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  :global(.faq-item:not(.active) .faq-question) {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  :global(.faq-icon) {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.icon) {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 300;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+  }
+
+  :global(.icon.active) {
+    transform: rotate(45deg);
+    color: #9D7FC1;
+  }
+
+  :global(.faq-answer) {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    margin-top: -24px;
+  }
+
+  :global(.faq-answer.active) {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 0;
+  }
+
+  :global(.faq-answer p) {
+    color: #cccccc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .faqs-section {
+      padding: 40px 20px;
+    }
+
+    .faqs-header {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .faqs-description {
+      max-width: 100%;
+    }
+
+    :global(.faq-item) {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px 0;
+    }
+
+    :global(.faq-number) {
+      min-width: auto;
+    }
+
+    :global(.faq-question-container) {
+      gap: 15px;
+    }
+
+    :global(.faq-answer.active) {
+      max-height: 300px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .faqs-content {
+      gap: 40px;
+      padding-bottom: 100px;
+    }
+
+    :global(.faqs-list) {
+      gap: 24px;
+    }
+
+    :global(.faq-item) {
+      gap: 16px;
+      padding: 20px 0;
+    }
+  }
+</style>
