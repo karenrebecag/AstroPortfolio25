@@ -1,36 +1,52 @@
 ---
-// Services.astro - Sección de servicios con funcionalidad colapsable optimizada
-import ServicesIsland from './ServicesIsland.tsx';
+// Projects.astro - Sección de proyectos con funcionalidad colapsable optimizada (Dark Mode)
+import ProjectsIsland from './ProjectsIsland.tsx';
+import { DitheringShader } from '../three/DitheringShader.tsx';
 ---
 
-<section class="services-section">
-  <div class="services-container">
-    <div class="services-content">
+<section class="projects-section">
+  <!-- DitheringShader Background - Invertido y rotado respecto a MyStack -->
+  <div class="dithering-background">
+    <DitheringShader
+      client:visible
+      width={1920}
+      height={1080}
+      colorBack="#000000"
+      colorFront="#ffffff"
+      shape="swirl"
+      type="8x8"
+      pxSize={4}
+      speed={0.4}
+    />
+  </div>
+  <div class="projects-container">
+    <div class="projects-content">
       <!-- Header Section -->
-      <div class="services-header">
-        <h2 class="services-title">Services</h2>
-        <p class="services-description">
-          I'm a digital designer that design and development high-end projects with affordable price
+      <div class="projects-header">
+        <h2 class="projects-title">Projects</h2>
+        <p class="projects-description">
+          Showcasing innovative digital solutions and creative projects built with cutting-edge technologies
         </p>
       </div>
 
-      <!-- Services List - Optimized Island Component -->
-      <ServicesIsland client:load />
+      <!-- Projects List - Optimized Island Component -->
+      <ProjectsIsland client:load />
 
     </div>
   </div>
 </section>
 
 <style>
-  .services-section {
+  .projects-section {
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
     background:
-      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      white;
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      #000000;
     background-size: 40px 40px, 40px 40px, 100% 100%;
+    position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -38,14 +54,30 @@ import ServicesIsland from './ServicesIsland.tsx';
     align-items: flex-start;
   }
 
-  .services-container {
+  /* DitheringShader Background - Invertido respecto a MyStack */
+  .dithering-background {
+    position: absolute;
+    top: -250px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: screen;
+    transform: rotate(180deg);
+  }
+
+  .projects-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    position: relative;
+    z-index: 1;
   }
 
-  .services-content {
+  .projects-content {
     width: 100%;
     padding-bottom: 200px;
     display: flex;
@@ -56,7 +88,7 @@ import ServicesIsland from './ServicesIsland.tsx';
   }
 
   /* Header Styles */
-  .services-header {
+  .projects-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -64,7 +96,7 @@ import ServicesIsland from './ServicesIsland.tsx';
     gap: 40px;
   }
 
-  .services-title {
+  .projects-title {
     color: #808080;
     font-family: var(--font-display);
     font-size: clamp(32px, 6vw, 48px);
@@ -73,10 +105,10 @@ import ServicesIsland from './ServicesIsland.tsx';
     margin: 0;
   }
 
-  .services-description {
+  .projects-description {
     width: 100%;
     max-width: 424px;
-    color: #111111;
+    color: #ffffff;
     font-family: var(--font-primary);
     font-size: clamp(16px, 2.5vw, 20px);
     font-weight: 500;
@@ -84,18 +116,18 @@ import ServicesIsland from './ServicesIsland.tsx';
     margin: 0;
   }
 
-  /* Services List */
-  :global(.services-list) {
+  /* Projects List */
+  :global(.projects-list) {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 64px;
   }
 
-  :global(.service-item) {
+  :global(.project-item) {
     width: 100%;
     padding-top: 24px;
-    border-top: 1px solid rgba(17, 17, 17, 0.20);
+    border-top: 1px solid rgba(255, 255, 255, 0.20);
     display: flex;
     flex-direction: column;
     gap: 54px;
@@ -103,8 +135,8 @@ import ServicesIsland from './ServicesIsland.tsx';
     transition: all 0.3s ease;
   }
 
-  :global(.service-number) {
-    color: black;
+  :global(.project-number) {
+    color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -112,18 +144,18 @@ import ServicesIsland from './ServicesIsland.tsx';
     transition: color 0.3s ease;
   }
 
-  :global(.service-number.inactive) {
-    color: rgba(17, 17, 17, 0.30);
+  :global(.project-number.inactive) {
+    color: rgba(255, 255, 255, 0.30);
   }
 
-  :global(.service-content) {
+  :global(.project-content) {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 54px;
   }
 
-  :global(.service-title-container) {
+  :global(.project-title-container) {
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -132,40 +164,40 @@ import ServicesIsland from './ServicesIsland.tsx';
     flex-wrap: wrap;
   }
 
-  :global(.service-title) {
-    color: #111111;
+  :global(.project-title) {
+    color: #ffffff;
     margin: 0;
     transition: color 0.3s ease;
   }
 
-  :global(.service-title.inactive) {
-    color: rgba(17, 17, 17, 0.30);
+  :global(.project-title.inactive) {
+    color: rgba(255, 255, 255, 0.30);
   }
 
   /* FlipText hover activation via parent - Solo en desktop */
   @media (min-width: 769px) {
-    .service-item:hover .service-title :global(.flip-text-container) > div:first-child span {
+    .project-item:hover .project-title :global(.flip-text-container) > div:first-child span {
       transform: translateY(-110%);
     }
 
-    .service-item:hover .service-title :global(.flip-text-container) > div.absolute span {
+    .project-item:hover .project-title :global(.flip-text-container) > div.absolute span {
       transform: translateY(0);
     }
   }
 
-  /* Ensure FlipText inherits the color from service-title */
-  .service-title :global(.flip-text-container) {
+  /* Ensure FlipText inherits the color from project-title */
+  .project-title :global(.flip-text-container) {
     color: inherit;
   }
 
   /* Override some Tailwind styles to make sure our transitions work */
-  .service-title :global(.flip-text-container) span {
+  .project-title :global(.flip-text-container) span {
     transition-property: transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
   }
 
-  :global(.service-details) {
+  :global(.project-details) {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -177,7 +209,7 @@ import ServicesIsland from './ServicesIsland.tsx';
     transition: all 0.4s ease;
   }
 
-  :global(.service-info) {
+  :global(.project-info) {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -186,7 +218,7 @@ import ServicesIsland from './ServicesIsland.tsx';
     max-width: 60%;
   }
 
-  :global(.service-tags) {
+  :global(.project-tags) {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -197,8 +229,9 @@ import ServicesIsland from './ServicesIsland.tsx';
   :global(.tag) {
     padding: 8px 11px;
     border-radius: 924px;
-    border: 0.55px solid rgba(17, 17, 17, 0.20);
-    color: #151515;
+    border: 0.55px solid rgba(255, 255, 255, 0.20);
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
     font-weight: 400;
@@ -211,11 +244,12 @@ import ServicesIsland from './ServicesIsland.tsx';
 
   :global(.tag:hover) {
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
-  :global(.service-description) {
-    color: #808080;
+  :global(.project-description) {
+    color: #cccccc;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -223,7 +257,7 @@ import ServicesIsland from './ServicesIsland.tsx';
     margin: 0;
   }
 
-  :global(.service-images) {
+  :global(.project-images) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -234,7 +268,7 @@ import ServicesIsland from './ServicesIsland.tsx';
   }
 
   /* Collapsed State */
-  :global(.service-item:not(.active) .service-details) {
+  :global(.project-item:not(.active) .project-details) {
     opacity: 0;
     max-height: 0;
     margin-top: -54px;
@@ -242,53 +276,79 @@ import ServicesIsland from './ServicesIsland.tsx';
 
   /* Hover effects solo en desktop */
   @media (min-width: 769px) {
-    :global(.service-item:not(.active):hover .service-details) {
+    :global(.project-item:not(.active):hover .project-details) {
       opacity: 1;
       max-height: 200px;
       margin-top: 0;
     }
 
-    :global(.service-item:not(.active):hover .service-number) {
-      color: black;
+    :global(.project-item:not(.active):hover .project-number) {
+      color: white;
     }
 
-    :global(.service-item:not(.active):hover .service-title) {
-      color: #111111;
+    :global(.project-item:not(.active):hover .project-title) {
+      color: #ffffff;
     }
+  }
+
+  /* Read More Button Styles */
+  :global(.read-more-btn) {
+    margin-top: 16px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  :global(.read-more-btn:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.3);
+  }
+
+  :global(.read-more-btn:active) {
+    transform: translateY(0);
   }
 
 
   /* Responsive Design */
   @media (max-width: 768px) {
-    .services-section {
+    .projects-section {
       padding: 40px 20px;
     }
 
-    .services-header {
+    .projects-header {
       flex-direction: column;
       gap: 20px;
     }
 
-    .services-description {
+    .projects-description {
       max-width: 100%;
     }
 
-    :global(.service-title-container) {
+    :global(.project-title-container) {
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
     }
 
-    :global(.service-details) {
+    :global(.project-details) {
       flex-direction: column;
       gap: 20px;
     }
 
-    :global(.service-images) {
+    :global(.project-images) {
       display: none;
     }
 
-    :global(.service-info) {
+    :global(.project-info) {
       width: 100%;
       max-width: 100%;
     }
@@ -296,22 +356,21 @@ import ServicesIsland from './ServicesIsland.tsx';
   }
 
   @media (max-width: 480px) {
-    .services-content {
+    .projects-content {
       gap: 40px;
       padding-bottom: 100px;
     }
 
-    :global(.services-list) {
+    :global(.projects-list) {
       gap: 32px;
     }
 
-    :global(.service-item) {
+    :global(.project-item) {
       gap: 30px;
     }
 
-    :global(.service-content) {
+    :global(.project-content) {
       gap: 30px;
     }
   }
 </style>
-
