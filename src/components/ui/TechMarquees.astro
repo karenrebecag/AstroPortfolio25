@@ -1,0 +1,95 @@
+---
+// TechMarquees.astro
+import TechMarqueesIsland from './TechMarqueesIsland.tsx';
+---
+
+<section class="tech-marquees-section">
+  <TechMarqueesIsland client:visible />
+</section>
+
+<style>
+  .tech-marquees-section {
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  :global(.tech-marquees-container) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    z-index: 1;
+  }
+
+  :global(.tech-marquee-wrapper) {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  :global(.tech-marquee-wrapper:hover) {
+    opacity: 1;
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(1)) {
+    /* Primer marquee - dirección derecha */
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(2)) {
+    /* Segundo marquee - dirección izquierda */
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(3)) {
+    /* Tercer marquee - dirección derecha */
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(4)) {
+    /* Cuarto marquee - dirección izquierda */
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(5)) {
+    /* Quinto marquee - dirección derecha */
+  }
+
+  :global(.tech-marquee-wrapper:nth-child(6)) {
+    /* Sexto marquee - dirección izquierda */
+  }
+
+  @media (max-width: 768px) {
+    .tech-marquees-section {
+      height: 360px;
+    }
+    
+    :global(.tech-marquees-container) {
+      height: 360px;
+      gap: 10px;
+    }
+    
+    :global(.tech-marquee-wrapper) {
+      height: 50px;
+    }
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.tech-marquee-wrapper) {
+      animation: none;
+    }
+    
+    :global(.tech-marquees-container) {
+      overflow: hidden;
+    }
+  }
+</style>

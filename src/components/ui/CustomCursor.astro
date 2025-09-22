@@ -80,34 +80,64 @@
       let currentY = 0;
       let targetX = 0;
       let targetY = 0;
+      let currentRotation = 0;
+      let targetRotation = 0;
+      let lastX = 0;
+      let lastY = 0;
 
       // Función para interpolar suavemente la posición del cursor
       const lerp = (start, end, factor) => {
         return start + (end - start) * factor;
       };
 
+      // Función para calcular el ángulo de rotación basado en la dirección del movimiento
+      const calculateRotation = (deltaX, deltaY) => {
+        if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return targetRotation;
+        return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+      };
+
       // Función para actualizar posición del cursor con delay suave
       const updateCursorPosition = () => {
         currentX = lerp(currentX, targetX, 0.15);
         currentY = lerp(currentY, targetY, 0.15);
-        
-        cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
-        
+        currentRotation = lerp(currentRotation, targetRotation, 0.1);
+
+        cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%) rotate(${currentRotation}deg)`;
+
         requestAnimationFrame(updateCursorPosition);
       };
 
       // Función para capturar la posición del mouse
       const handleMouseMove = (e) => {
+        const deltaX = e.clientX - lastX;
+        const deltaY = e.clientY - lastY;
+
         targetX = e.clientX;
         targetY = e.clientY;
+
+        // Calcular nueva rotación basada en la dirección del movimiento
+        const newRotation = calculateRotation(deltaX, deltaY);
+        if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
+          targetRotation = newRotation;
+        }
+
+        lastX = e.clientX;
+        lastY = e.clientY;
       };
 
       // Mostrar cursor cuando el mouse entra en la página
-      const showCursor = () => {
+      const showCursor = (e) => {
         if (!isActive) {
           isActive = true;
           body.classList.add('custom-cursor-active');
           cursor.style.opacity = '1';
+          // Inicializar posición para evitar salto inicial
+          lastX = e?.clientX || 0;
+          lastY = e?.clientY || 0;
+          targetX = lastX;
+          targetY = lastY;
+          currentX = lastX;
+          currentY = lastY;
         }
       };
 

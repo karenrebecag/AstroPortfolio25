@@ -1,0 +1,186 @@
+---
+// MyStack.astro
+import MyStackIsland from './MyStackIsland.tsx';
+---
+
+<section class="my-stack-section">
+  <div class="container">
+    <div class="title-wrapper">
+      <h1 class="title">MY STACK</h1>
+    </div>
+    <!-- Island optimizado para 3D + Marquees -->
+    <MyStackIsland client:visible />
+  </div>
+</section>
+
+<style>
+  .my-stack-section {
+    width: 100%;
+    background: white;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    position: relative;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100%;
+    position: relative;
+  }
+
+  .title-wrapper {
+    padding: 0px 60px 0px 60px;
+    margin: 0 auto -100px auto;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Estilos globales para el Island */
+  :global(.my-stack-island) {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.stack-content-area) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.model-3d-container) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.model-placeholder) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(157, 127, 193, 0.1);
+    border: 2px dashed rgba(157, 127, 193, 0.3);
+    border-radius: 20px;
+  }
+
+  :global(.placeholder-content) {
+    text-align: center;
+    color: #9D7FC1;
+  }
+
+  :global(.placeholder-icon) {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  :global(.placeholder-text) {
+    font-family: 'Median', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* Estilos específicos para RingSphere 3D */
+  :global(.ringsphere-background) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+  }
+
+  :global(.tech-marquees-wrapper) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    z-index: 1;
+  }
+
+  :global(.tech-marquee-item) {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  :global(.tech-marquee-item:hover) {
+    opacity: 1;
+  }
+
+  .title {
+    font-family: 'Median', sans-serif;
+    font-weight: 900;
+    font-size: clamp(91px, 45vw, 213px);
+    line-height: 1;
+    color: #060314;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .my-stack-section {
+      background-size: 20px 20px;
+    }
+    
+    .title-wrapper {
+      padding: 0px 30px 0px 30px;
+      margin: 0 auto -80px auto;
+    }
+
+    :global(.my-stack-island) {
+      height: 80vh;
+    }
+
+    :global(.model-3d-container) {
+      width: 600px;
+      height: 600px;
+    }
+
+    :global(.tech-marquees-wrapper) {
+      height: 360px;
+      gap: 10px;
+    }
+    
+    :global(.tech-marquee-item) {
+      height: 50px;
+    }
+  }
+</style>
