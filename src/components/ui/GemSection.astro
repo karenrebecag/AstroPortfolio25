@@ -1,7 +1,6 @@
 ---
 import SilkBackground from '../three/SilkBackground.tsx';
 import GemBackground from '../three/GemBackground.tsx';
-import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 import { motion, transform } from 'motion/react';
 
 const softSkillsData = [
@@ -72,7 +71,7 @@ const softSkillsData = [
     </div>
 
         
-    <!-- Large ABOUT ME Text with TextDisperse -->
+    <!-- Large ABOUT ME Text -->
     <motion.div 
       className="soft-skills-title-container"
       initial={{ opacity: 0, y: 50 }}
@@ -81,28 +80,12 @@ const softSkillsData = [
       transition={{ duration: 0.8, ease: "easeOut" }}
       client:load
     >
-      <TextDisperseBlack 
-        text="ABOUT ME" 
-        className="soft-skills-title-disperse-black" 
+      <h2 
+        class="soft-skills-title-normal" 
         data-title="about-me"
-        style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '10.5vw',
-          fontWeight: '400',
-          color: '#000000',
-          lineHeight: '0.9',
-          letterSpacing: '-0.02em',
-          textTransform: 'uppercase',
-          margin: '0',
-          textAlign: 'center',
-          whiteSpace: 'nowrap',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          transform: 'scale(1.4)'
-        }}
-        client:load 
-      />
+      >
+        ABOUT ME
+      </h2>
     </motion.div>
 
   </div>
@@ -156,78 +139,20 @@ const softSkillsData = [
     }
   }
 
-  .soft-skills-title-disperse-black {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    font-weight: 400 !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  .soft-skills-title-disperse-black span {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
-  }
-
-  /* Selectores adicionales para asegurar que se apliquen */
-  [data-title="about-me"] {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    font-weight: 400 !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  [data-title="about-me"] span {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
-  }
-
-  /* Selector más específico para el componente */
-  .gem-section .soft-skills-title-disperse-black {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    font-weight: 400 !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  .gem-section .soft-skills-title-disperse-black span {
-    font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
-    color: #000000 !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.02em !important;
+  .soft-skills-title-normal {
+    font-family: var(--font-display);
+    font-size: 10.5vw;
+    font-weight: 400;
+    color: #000000;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: block;
+    transform: scale(1.4);
   }
 
   .skills-container {
@@ -372,12 +297,8 @@ const softSkillsData = [
       padding: 0 1.25rem; /* 20px */
     }
 
-    .soft-skills-title-disperse-black {
-      font-size: 7.35vw !important; /* 30% reducción de 10.5vw */
-    }
-    
-    .soft-skills-title-disperse-black span {
-      font-size: 7.35vw !important;
+    .soft-skills-title-normal {
+      font-size: 7.35vw; /* 30% reducción de 10.5vw */
     }
 
     .skills-container {
@@ -422,12 +343,8 @@ const softSkillsData = [
   }
 
   @media (max-width: 480px) {
-    .soft-skills-title-disperse-black {
-      font-size: 7vw !important; /* Tamaño para móvil */
-    }
-    
-    .soft-skills-title-disperse-black span {
-      font-size: 7vw !important;
+    .soft-skills-title-normal {
+      font-size: 7vw; /* Tamaño para móvil */
     }
 
     .skills-container {

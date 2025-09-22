@@ -3,6 +3,7 @@
 import MainButton from './MainButton.astro';
 import SecondaryButton from './SecondaryButton.astro';
 import { Number } from './Number.tsx';
+import { DitheringShader } from '../three/DitheringShader.tsx';
 
 const experienceData = [
   {
@@ -40,148 +41,213 @@ const experienceData = [
 ];
 ---
 
-<div class="me-section-wrapper w-full overflow-hidden relative justify-center flex">
-  <div class="me-section w-full max-w-[1400px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
-
-  <!-- Main Content Section -->
-  <div class="w-full flex flex-col lg:flex-row-reverse items-end ">
+<!-- Storytelling Scroll Container -->
+<div class="storytelling-scroll-container">
+  <div class="story-grid w-full max-w-[1400px] mx-auto px-15 grid lg:grid-cols-2 gap-12">
     
-    <!-- Right Side - Content Section (appears on right in desktop) -->
-    <div class="flex-1 flex flex-col justify-start items-start gap-9 lg:min-w-[60%]">
-      
-      <!-- Profile Section -->
-      <div class="w-full relative flex flex-wrap items-start" data-animate="fade-up" data-delay="0.4">
-        <!-- Circle positioned behind text -->
-        <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10 scroll-circle"></div>
-        <div class="flex-1 relative z-10">
-          <h2 class="text-hero font-median mb-2 split-text-title" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
-            <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
-          </h2>
-          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold split-text-subtitle" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
-            Based in Mexico City
-          </h3>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div class="w-full" data-animate="fade-up" data-delay="0.6">
-        <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary split-text-description" style="font-size: 20px; line-height: 1.5;">
-          That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
-          who you are and what you stand for, but words that truly land with those that read them, calling your 
-          audience in and making them.
-        </p>
-      </div>
-
-      <!-- Stats Section -->
-      <div class="w-full max-w-[526px] flex items-start gap-[41px] scroll-stats" data-animate="fade-up" data-delay="0.8">
-        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
-        <div class="flex flex-col justify-center items-start">
-          <Number 
-            value={8} 
-            className="text-display text-[#080808] font-secondary" 
-            style={{ fontSize: '48px', lineHeight: '56px' }}
-            delay={800}
-            client:load
-          />
-          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Award winner</div>
-        </div>
-        
-        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
-        <div class="flex flex-col justify-center items-start">
-          <div class="flex items-center">
-            <Number 
-              value={1} 
-              className="text-display text-[#080808] font-secondary" 
-              style={{ fontSize: '48px', lineHeight: '56px' }}
-              delay={1000}
-              client:load
-            />
-            <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.2k</span>
-          </div>
-          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Worldwide client</div>
-        </div>
-        
-        <div class="w-[43px] h-[43px] bg-[rgba(8,8,8,0.03)] rounded-full"></div>
-        <div class="flex flex-col justify-center items-start">
-          <div class="flex items-center">
-            <Number 
-              value={3} 
-              className="text-display text-[#080808] font-secondary" 
-              style={{ fontSize: '48px', lineHeight: '56px' }}
-              delay={1200}
-              client:load
-            />
-            <span class="text-display text-[#080808] font-secondary" style="font-size: 48px; line-height: 56px;">.5k</span>
-          </div>
-          <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 20px; line-height: 30px;">Job done successfully</div>
-        </div>
-      </div>
-
-      <!-- Buttons Section -->
-      <div class="flex items-start gap-9" data-animate="fade-up" data-delay="1.0">
-        <!-- Discover My Works Button -->
-        <div >
-          <SecondaryButton text="Discover My Works" />
-        </div>
-
-        <!-- Check my LinkedIn Button -->
-        <div >
-          <MainButton text="Check my linkedin" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Left Side - Image Section (appears on left in desktop) -->
-    <div class="flex-1 lg:min-w-[40%] items-center scroll-image hidden lg:flex" data-animate="fade-right" data-delay="0.5">
+    <!-- Left Column: Sticky Image -->
+    <div class="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl">
       <div class="w-full aspect-square relative overflow-hidden rounded-lg">
+        <!-- DitheringShader Background -->
+        <div class="image-dithering-background">
+          <DitheringShader
+            client:visible
+            width={800}
+            height={800}
+            colorBack="#f9f9f9"
+            colorFront="#dcdcdc"
+            shape="wave"
+            type="8x8"
+            pxSize={4}
+            speed={0.4}
+          />
+        </div>
         <img 
           src="/images/Me.webp" 
           alt="Karen Ortiz"
-          class="w-full h-full object-cover object-center"
+          class="w-full h-full object-cover object-top relative z-10"
         />
       </div>
     </div>
-  </div>
+    
+    <!-- Right Column: Scrolling Content -->
+    <div class="scrolling-content-column">
+      
+      <!-- Content Section 1: Introduction -->
+      <div class="content-section">
+        <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute top-0 left-0 -z-10"></div>
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-2" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
+            <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+          </h2>
+          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
+            Based in Mexico City
+          </h3>
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6" style="font-size: 20px; line-height: 1.5;">
+            That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
+            who you are and what you stand for, but words that truly land with those that read them.
+          </p>
+        </div>
+      </div>
 
-  <!-- Experience Cards Section -->
-  <div class="experience-container">
-    <div class="experience-scroll">
-      {experienceData.map((experience) => (
-        <div class="experience-card">
-          <div class="experience-header">
-            <div class="experience-number">{experience.id}</div>
-            <img class="experience-image" src={experience.image} alt={experience.company} />
-          </div>
-          <div class="experience-content">
-            <div class="experience-title">{experience.title}</div>
-            <div class="experience-company">{experience.company}</div>
-          </div>
-          <div class="experience-description">
-            <span class="description-normal">{experience.description}</span>
-            <span class="description-highlight">{experience.highlight}</span>
+      <!-- Content Section 2: Experience -->
+      <div class="content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#7350cc]">5+ Years</span><br />
+            <span class="text-[#080808]">Creating Digital</span><br />
+            <span class="text-[#080808]">Experiences</span>
+          </h2>
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-8" style="font-size: 20px; line-height: 1.5;">
+            From UI/UX design to full-stack development, I've worked with companies across the globe, 
+            creating seamless digital experiences that merge aesthetics with functionality.
+          </p>
+          <div class="flex items-start gap-9">
+            <SecondaryButton text="View My Work" />
+            <MainButton text="Get In Touch" />
           </div>
         </div>
-      ))}
+      </div>
+
+      <!-- Content Section 3: Stats -->
+      <div class="content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-8" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#080808]">Numbers That</span><br />
+            <span class="text-[#7350cc]">Speak Volumes</span>
+          </h2>
+          
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-3 gap-8 mb-8">
+            <div class="text-center">
+              <div class="text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
+                <Number value={8} delay={500} client:load />
+              </div>
+              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Award winner</div>
+            </div>
+            
+            <div class="text-center">
+              <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
+                <Number value={1} delay={700} client:load />
+                <span>.2k</span>
+              </div>
+              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Worldwide clients</div>
+            </div>
+            
+            <div class="text-center">
+              <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
+                <Number value={3} delay={900} client:load />
+                <span>.5k</span>
+              </div>
+              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Jobs completed</div>
+            </div>
+          </div>
+          
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 18px; line-height: 1.5;">
+            Every project is an opportunity to push boundaries and create something extraordinary.
+          </p>
+        </div>
+      </div>
+
+      <!-- Content Section 4: Philosophy -->
+      <div class="content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#080808]">Design Is Not Just</span><br />
+            <span class="text-[#7350cc]">What It Looks Like</span><br />
+            <span class="text-[#080808]">It's How It Works</span>
+          </h2>
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-6" style="font-size: 20px; line-height: 1.5;">
+            I believe in creating digital experiences that are not only visually stunning but also 
+            functionally exceptional. Every pixel serves a purpose, every interaction tells a story.
+          </p>
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 18px; line-height: 1.5;">
+            Ready to bring your vision to life? Let's create something extraordinary together.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
+</div>
 
+<!-- Experience Cards Section - Fuera del sticky container -->
+<div class="experience-container cards-section">
+  <div class="experience-scroll">
+    {experienceData.map((experience) => (
+      <div class="experience-card">
+        <div class="experience-header">
+          <div class="experience-number">{experience.id}</div>
+          <img class="experience-image" src={experience.image} alt={experience.company} />
+        </div>
+        <div class="experience-content">
+          <div class="experience-title">{experience.title}</div>
+          <div class="experience-company">{experience.company}</div>
+        </div>
+        <div class="experience-description">
+          <span class="description-normal">{experience.description}</span>
+          <span class="description-highlight">{experience.highlight}</span>
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
 <style>
-  .me-section-wrapper {
-    background:#f9f9f9;
+  /* Storytelling Scroll Container */
+  .storytelling-scroll-container {
+    background: #f9f9f9;
     position: relative;
-    padding: 120px 60px 80px 60px;
   }
 
-  /* Reducir padding lateral en móvil */
-  @media (max-width: 768px) {
-    .me-section-wrapper {
-      padding: 120px 20px 80px 20px;
-    }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3.75rem;
   }
 
-  .me-section-wrapper::before {
+  /* Left Column: Sticky Image */
+  .sticky-image-column {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* DitheringShader Background for Image */
+  .image-dithering-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  /* Right Column: Scrolling Content */
+  .scrolling-content-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  /* Grid pattern overlay */
+  .storytelling-scroll-container::before {
     content: '';
     position: absolute;
     top: 0;
@@ -196,9 +262,60 @@ const experienceData = [
     z-index: 1;
   }
 
+  .story-grid {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .story-grid {
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .story-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+    
+    .sticky-image {
+      order: -1;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    
+    .story-content {
+      order: 1;
+    }
+  }
+
   .me-section {
     position: relative;
     z-index: 2;
+  }
+
+  /* Contenedor principal del contenido */
+  .main-content-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 120px 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Solo los elementos internos ocultos - mantenemos estructura de columnas */
+  .profile-section,
+  .description-section,
+  .stats-section,
+  .buttons-section,
+  .image-section {
+    opacity: 0;
+    transform: translateY(60px);
   }
 
   .secondary-btn {
@@ -276,22 +393,24 @@ const experienceData = [
     transform: translateX(0);
   }
 
-  /* Experience Cards Styles */
+  /* Experience Cards Styles - Ahora fuera del sticky container */
   .experience-container {
     width: 100%;
     overflow: hidden;
     position: relative;
-    min-height: 25rem; /* Mantener altura del container */
+    min-height: 25rem;
     margin-top: 0;
+    background: #f9f9f9;
+    padding: 80px 60px;
   }
 
   .experience-container::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 80px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 80px;
     background: linear-gradient(to right,#f9f9f9 0%, transparent 20%, transparent 80%,#f9f9f9 100%);
     pointer-events: none;
     z-index: 1;
@@ -487,236 +606,13 @@ const experienceData = [
 </style>
 
 <script>
-  import { animate, stagger, inView, scroll } from 'motion';
-
-  // Split text function
-  function splitText(element: HTMLElement, type: 'chars' | 'words' = 'chars') {
-    const text = element.textContent || '';
-    element.innerHTML = '';
-    
-    if (type === 'chars') {
-      const chars = text.split('').map(char => {
-        if (char === ' ') return ' ';
-        const span = document.createElement('span');
-        span.className = 'split-char';
-        span.textContent = char;
-        return span;
-      });
-      
-      chars.forEach(char => {
-        if (typeof char === 'string') {
-          element.appendChild(document.createTextNode(char));
-        } else {
-          element.appendChild(char);
-        }
-      });
-      
-      return element.querySelectorAll('.split-char');
-    } else {
-      const words = text.split(' ').map(word => {
-        const span = document.createElement('span');
-        span.className = 'split-word';
-        span.innerHTML = word.split('').map(char => 
-          `<span class="split-char">${char}</span>`
-        ).join('');
-        return span;
-      });
-      
-      words.forEach((word, index) => {
-        element.appendChild(word);
-        if (index < words.length - 1) {
-          element.appendChild(document.createTextNode(' '));
-        }
-      });
-      
-      return element.querySelectorAll('.split-char');
-    }
-  }
-
-  // Initialize split text animations
-  function initSplitTextAnimations() {
-    // Title animation
-    const title = document.querySelector('.split-text-title') as HTMLElement;
-    if (title) {
-      const chars = splitText(title, 'chars');
-      
-      inView(title, () => {
-        animate(
-          chars,
-          { opacity: 1, transform: 'translateY(0px)' },
-          { 
-            delay: stagger(0.03),
-            duration: 0.6,
-            easing: [0.25, 0.46, 0.45, 0.94]
-          }
-        );
-      }, { margin: '0px 0px -100px 0px' });
-    }
-
-    // Subtitle animation
-    const subtitle = document.querySelector('.split-text-subtitle') as HTMLElement;
-    if (subtitle) {
-      const chars = splitText(subtitle, 'chars');
-      
-      inView(subtitle, () => {
-        animate(
-          chars,
-          { opacity: 1, transform: 'translateY(0px)' },
-          { 
-            delay: stagger(0.02),
-            duration: 0.5,
-            easing: [0.25, 0.46, 0.45, 0.94]
-          }
-        );
-      }, { margin: '0px 0px -100px 0px' });
-    }
-
-    // Description animation (by words for better readability)
-    const description = document.querySelector('.split-text-description') as HTMLElement;
-    if (description) {
-      const chars = splitText(description, 'words');
-      
-      inView(description, () => {
-        animate(
-          chars,
-          { opacity: 1, transform: 'translateY(0px)' },
-          { 
-            delay: stagger(0.01),
-            duration: 0.4,
-            easing: [0.25, 0.46, 0.45, 0.94]
-          }
-        );
-      }, { margin: '0px 0px -100px 0px' });
-    }
-  }
-
-  // Initialize scroll parallax effects
-  function initScrollParallax() {
-    // Purple circle - slow parallax (0.3x speed)
-    const circle = document.querySelector('.scroll-circle') as HTMLElement;
-    if (circle) {
-      scroll(
-        (progress: number) => {
-          const yOffset = progress * 50; // Move 50px over full scroll
-          circle.style.transform = `translateY(${yOffset}px)`;
-        },
-        {
-          target: circle,
-          offset: ["start end", "end start"]
-        }
-      );
-    }
-
-    // Profile image - medium parallax (0.5x speed)
-    const image = document.querySelector('.scroll-image') as HTMLElement;
-    if (image) {
-      scroll(
-        (progress: number) => {
-          const yOffset = progress * -30; // Move up 30px
-          image.style.transform = `translateY(${yOffset}px)`;
-        },
-        {
-          target: image,
-          offset: ["start end", "end start"]
-        }
-      );
-    }
-
-    // Stats section - fast parallax (0.8x speed)
-    const stats = document.querySelector('.scroll-stats') as HTMLElement;
-    if (stats) {
-      scroll(
-        (progress: number) => {
-          const yOffset = progress * -20; // Move up 20px
-          const scale = 1 + (progress * 0.05); // Slight scale effect
-          stats.style.transform = `translateY(${yOffset}px) scale(${scale})`;
-        },
-        {
-          target: stats,
-          offset: ["start end", "end start"]
-        }
-      );
-    }
-
-    // Title section - rotation effect
-    const title = document.querySelector('.split-text-title') as HTMLElement;
-    if (title) {
-      scroll(
-        (progress: number) => {
-          const rotation = progress * 2; // Rotate 2 degrees
-          const yOffset = progress * -10; // Slight upward movement
-          title.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`;
-        },
-        {
-          target: title,
-          offset: ["start center", "end center"]
-        }
-      );
-    }
-  }
-
-  // Motion.dev scroll animations
-  function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll('[data-animate]');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const element = entry.target as HTMLElement;
-          const delay = parseFloat(element.getAttribute('data-delay') || '0');
-          
-          setTimeout(() => {
-            element.classList.add('animate');
-          }, delay * 1000);
-          
-          observer.unobserve(element);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    
-    animatedElements.forEach(element => observer.observe(element));
-  }
-
-  // Initialize experience cards scroll animation
-  function initExperienceScroll() {
-    const experienceContainer = document.querySelector('.experience-container');
-    const experienceScroll = document.querySelector('.experience-scroll');
-    
-    if (experienceContainer && experienceScroll) {
-      // Calculate total scroll width
-      const scrollWidth = experienceScroll.scrollWidth - experienceScroll.clientWidth;
-      
-      if (scrollWidth > 0) {
-        // Create scroll-triggered horizontal animation for experience cards
-        scroll(
-          (progress: number) => {
-            experienceScroll.scrollLeft = progress * scrollWidth;
-          },
-          {
-            target: experienceContainer,
-            offset: ["start center", "end center"]
-          }
-        );
-      }
-    }
-  }
-
-  // Initialize when DOM is loaded
+  // Simple scroll initialization - el efecto funciona con CSS puro
   document.addEventListener('DOMContentLoaded', () => {
-    initScrollAnimations();
-    initSplitTextAnimations();
-    initScrollParallax();
-    initExperienceScroll();
+    console.log('Storytelling scroll initialized');
   });
   
-  // Re-initialize for Astro page transitions
+  // Re-initialize para transiciones de Astro
   document.addEventListener('astro:page-load', () => {
-    initScrollAnimations();
-    initSplitTextAnimations();
-    initScrollParallax();
-    initExperienceScroll();
+    console.log('Storytelling scroll re-initialized');
   });
 </script>
