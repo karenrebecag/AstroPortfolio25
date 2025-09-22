@@ -2,6 +2,8 @@
 // MyStack.astro
 import MyStackIsland from './MyStackIsland.tsx';
 import { DitheringShader } from '../three/DitheringShader.tsx';
+import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { motion } from 'motion/react';
 ---
 
 <section class="my-stack-section">
@@ -22,11 +24,19 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
   
   <div class="container">
     <div class="title-wrapper">
-      <h1 class="title">MY STACK</h1>
+      <motion.div 
+        className="title-container"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        client:load
+      >
+        <TextDisperseBlack text="MY STACK" className="title-disperse-black" client:load />
+      </motion.div>
     </div>
     <!-- Island optimizado para 3D + Marquees -->
-      <MyStackIsland client:visible />
-    </motion.div>
+    <MyStackIsland client:visible />
   </div>
 </section>
 
@@ -187,17 +197,35 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
     letter-spacing: 0em;
   }
 
-  .title {
-    font-family: 'Median', sans-serif;
-    font-weight: 900;
-    font-size: 15vw;
-    line-height: 1.2em;
-    color: #060314;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    text-align: center;
-    white-space: nowrap;
+  :global(.title-container) {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    :global(.title-container) {
+      justify-content: flex-start;
+    }
+  }
+
+  :global(.title-disperse-black) {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: #060314 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  :global(.title-disperse-black span) {
+    font-family: var(--font-display) !important;
+    color: #060314 !important;
   }
 
   @media (max-width: 768px) {
@@ -235,10 +263,8 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
       font-size: 48px !important;
     }
 
-    .title {
-      width: 100%;
-      overflow: hidden;
-      font-size: 15vw;
+    :global(.title-disperse-black) {
+      font-size: 7.35vw !important; /* 30% reducción para móvil */
     }
   }
 </style>

@@ -1,4 +1,7 @@
 ---
+import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { motion } from 'motion/react';
+
 const aboutCards = [
   {
     id: "01",
@@ -60,9 +63,21 @@ const aboutCards = [
         ))}
       </div>
     </div>
-    <div class="giant-text text-hero">
-      <span class="typewriter-text"></span>
-    </div>
+    <motion.div 
+      className="giant-text-container"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <TextDisperseBlack 
+        text="ABOUT ME" 
+        className="giant-text-disperse-black" 
+        style={{ transform: 'scale(1.4)' }}
+        client:load 
+      />
+    </motion.div>
   </div>
 </section>
 
@@ -75,7 +90,7 @@ const aboutCards = [
                 linear-gradient(291deg, rgb(255, 255, 255) 0%, rgba(82.52, 82.52, 82.52, 0.06) 100%),
                 #FEFEFE;
     background-blend-mode: normal, difference, normal;
-    overflow: hidden;
+    overflow: visible;
     padding: 70px 0;
   }
 
@@ -175,29 +190,36 @@ const aboutCards = [
     align-self: stretch;
   }
 
-  .giant-text {
+  :global(.giant-text-container) {
     position: absolute;
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba(0, 0, 0, 0.88);
-    text-shadow: 0px 4px 40px rgba(0, 0, 0, 0.10);
-    text-align: center;
-    white-space: nowrap;
-    pointer-events: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
   }
 
-  .typewriter-text {
-    display: inline-block;
-    overflow: hidden;
-    border-right: 2px solid rgba(0, 0, 0, 0.88);
-    white-space: nowrap;
-    animation: blink-caret 1s step-end infinite;
+  :global(.giant-text-disperse-black) {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: rgba(0, 0, 0, 0.88) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    text-shadow: 0px 4px 40px rgba(0, 0, 0, 0.10) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
   }
 
-  @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: rgba(0, 0, 0, 0.88); }
+  :global(.giant-text-disperse-black span) {
+    font-family: var(--font-display) !important;
+    color: rgba(0, 0, 0, 0.88) !important;
+    text-shadow: 0px 4px 40px rgba(0, 0, 0, 0.10) !important;
   }
 
   @media (max-width: 1024px) {
@@ -268,7 +290,7 @@ const aboutCards = [
       line-height: 22px;
     }
 
-    .giant-text {
+    :global(.giant-text-container) {
       bottom: 20px;
     }
   }
@@ -299,9 +321,8 @@ const aboutCards = [
   document.addEventListener('DOMContentLoaded', () => {
     const aboutSection = document.querySelector('.aboutme');
     const cardsScroll = document.querySelector('.cards-scroll');
-    const typewriterText = document.querySelector('.typewriter-text');
 
-    if (aboutSection && cardsScroll && typewriterText) {
+    if (aboutSection && cardsScroll) {
       // Calculate total scroll width for horizontal cards
       const scrollWidth = cardsScroll.scrollWidth - cardsScroll.clientWidth;
 
@@ -317,38 +338,6 @@ const aboutCards = [
           }
         );
       }
-
-      // Typewriter effect for "ABOUT ME"
-      const text = "ABOUT ME";
-      let currentIndex = 0;
-      let isTyping = false;
-
-      scroll(
-        (progress: number) => {
-          if (progress > 0.3 && !isTyping) {
-            isTyping = true;
-            typewriterText.textContent = "";
-
-            const typeNextChar = () => {
-              if (currentIndex < text.length) {
-                typewriterText.textContent += text[currentIndex];
-                currentIndex++;
-                setTimeout(typeNextChar, 150);
-              }
-            };
-
-            typeNextChar();
-          } else if (progress <= 0.3 && isTyping) {
-            isTyping = false;
-            currentIndex = 0;
-            typewriterText.textContent = "";
-          }
-        },
-        {
-          target: aboutSection,
-          offset: ["start center", "end center"]
-        }
-      );
     }
   });
 </script>

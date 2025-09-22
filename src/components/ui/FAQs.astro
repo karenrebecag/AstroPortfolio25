@@ -1,11 +1,28 @@
 ---
 // FAQs.astro - Sección de preguntas frecuentes con funcionalidad de acordeón (Dark Mode)
 import FAQsIsland from './FAQsIsland.tsx';
+import { TextDisperse } from './TextDisperse.tsx';
+import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
 ---
 
 <section class="faqs-section">
+  <!-- Noise Background Effect -->
+  <NoiseBackground opacity={0.12} speed={0.25} className="dark" client:load />
+  
   <div class="faqs-container">
+    <!-- Giant Heading with TextDisperse -->
+    <motion.div 
+      className="giant-heading-container"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <TextDisperse text="FAQS" className="giant-heading-disperse" client:load />
+    </motion.div>
+    
     <div class="faqs-content">
       <!-- Header Section with scroll animations -->
       <motion.div 
@@ -56,7 +73,7 @@ import { motion } from 'motion/react';
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-    background: #111111;
+    background: #050112;
     background-size: 40px 40px, 40px 40px, 100% 100%;
     overflow: hidden;
     display: flex;
@@ -70,6 +87,38 @@ import { motion } from 'motion/react';
     display: flex;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Giant Heading Styles */
+  :global(.giant-heading-container) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0 0 0;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    :global(.giant-heading-container) {
+      justify-content: flex-start;
+    }
+  }
+
+  :global(.giant-heading-disperse) {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: white !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+  }
+
+  :global(.giant-heading-disperse span) {
+    font-family: var(--font-display) !important;
+    color: white !important;
   }
 
   .faqs-content {

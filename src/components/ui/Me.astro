@@ -44,7 +44,7 @@ const experienceData = [
   <div class="me-section w-full max-w-[1400px] mx-auto px-15 py-16 relative flex flex-col items-start gap-2.5">
 
   <!-- Main Content Section -->
-  <div class="w-full flex flex-col lg:flex-row-reverse items-start ">
+  <div class="w-full flex flex-col lg:flex-row-reverse items-end ">
     
     <!-- Right Side - Content Section (appears on right in desktop) -->
     <div class="flex-1 flex flex-col justify-start items-start gap-9 lg:min-w-[60%]">
@@ -120,12 +120,12 @@ const experienceData = [
       <!-- Buttons Section -->
       <div class="flex items-start gap-9" data-animate="fade-up" data-delay="1.0">
         <!-- Discover My Works Button -->
-        <div class="w-[266px]">
+        <div >
           <SecondaryButton text="Discover My Works" />
         </div>
 
         <!-- Check my LinkedIn Button -->
-        <div class="w-[266px]">
+        <div >
           <MainButton text="Check my linkedin" />
         </div>
       </div>
@@ -305,7 +305,6 @@ const experienceData = [
     scrollbar-width: none;
     height: 100%;
     align-items: center;
-    padding: 0 30px;
   }
 
   .experience-scroll::-webkit-scrollbar {
@@ -317,7 +316,7 @@ const experienceData = [
     min-width: 24.375rem; /* 390px */
     width: 24.375rem; /* 390px */
     min-height: 16.8rem; /* 268px - altura más baja como GemSection */
-    padding: 1.25rem; /* 20px */
+    padding: 0 1.25rem; /* 20px */
     background: white;
     border: 1px solid rgba(74, 36, 181, 0.15);
     border-radius: 1.25rem; /* 20px */
@@ -461,7 +460,7 @@ const experienceData = [
     }
 
     .experience-scroll {
-      padding: 0 0.9375rem; /* 15px */
+      padding: 0 ;
     }
 
     .experience-number {

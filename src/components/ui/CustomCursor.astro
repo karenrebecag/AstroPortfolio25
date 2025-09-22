@@ -93,7 +93,9 @@
       // Función para calcular el ángulo de rotación basado en la dirección del movimiento
       const calculateRotation = (deltaX, deltaY) => {
         if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return targetRotation;
-        return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        // Ajustar la rotación para que el cursor apunte en la dirección correcta del movimiento
+        // Añadimos +90 grados para compensar la orientación inicial del SVG
+        return Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
       };
 
       // Función para actualizar posición del cursor con delay suave

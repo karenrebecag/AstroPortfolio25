@@ -2,9 +2,13 @@
 // GetInTouch.astro - Sección de contacto con formulario interactivo (Dark Mode)
 import GetInTouchIsland from './GetInTouchIsland.tsx';
 import { DitheringShader } from '../three/DitheringShader.tsx';
+import { NoiseBackground } from './NoiseBackground.tsx';
 ---
 
 <section class="get-in-touch-section">
+  <!-- Noise Background Effect -->
+  <NoiseBackground opacity={0.08} speed={0.2} className="dark" client:load />
+  
   <!-- DitheringShader Background - Igual que Projects pero con menor opacidad -->
   <div class="dithering-background">
     <DitheringShader
@@ -36,7 +40,7 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
   .get-in-touch-section {
     width: 100%;
     min-height: 100vh;
-    background: #111111;
+    background: #050112;
     position: relative;
     overflow: hidden;
     padding: 0;

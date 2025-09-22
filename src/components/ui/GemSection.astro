@@ -1,6 +1,8 @@
 ---
 import SilkBackground from '../three/SilkBackground.tsx';
 import GemBackground from '../three/GemBackground.tsx';
+import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { motion, transform } from 'motion/react';
 
 const softSkillsData = [
   {
@@ -70,8 +72,38 @@ const softSkillsData = [
     </div>
 
         
-    <!-- Large SOFT SKILLS Text -->
-    <div class="soft-skills-title">ABOUT ME</div>
+    <!-- Large ABOUT ME Text with TextDisperse -->
+    <motion.div 
+      className="soft-skills-title-container"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <TextDisperseBlack 
+        text="ABOUT ME" 
+        className="soft-skills-title-disperse-black" 
+        data-title="about-me"
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: '10.5vw',
+          fontWeight: '400',
+          color: '#000000',
+          lineHeight: '0.9',
+          letterSpacing: '-0.02em',
+          textTransform: 'uppercase',
+          margin: '0',
+          textAlign: 'center',
+          whiteSpace: 'nowrap',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          transform: 'scale(1.4)'
+        }}
+        client:load 
+      />
+    </motion.div>
 
   </div>
 </section>
@@ -110,19 +142,92 @@ const softSkillsData = [
     padding: 0 20px;
   }
 
-  .soft-skills-title {
-    font-family: 'Median', serif;
-    font-size: clamp(60px, 30vw, 200px);
-    font-weight: 400;
-    color: black;
-    text-align: center;
-    margin: 0;
-    text-wrap: nowrap;
-    line-height: 0.9;
-    letter-spacing: -0.02em;
+  .soft-skills-title-container {
     width: 100%;
-    max-width: 100vw;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    .soft-skills-title-container {
+      justify-content: flex-start;
+    }
+  }
+
+  .soft-skills-title-disperse-black {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .soft-skills-title-disperse-black span {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* Selectores adicionales para asegurar que se apliquen */
+  [data-title="about-me"] {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  [data-title="about-me"] span {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* Selector más específico para el componente */
+  .gem-section .soft-skills-title-disperse-black {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .gem-section .soft-skills-title-disperse-black span {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
   }
 
   .skills-container {
@@ -267,8 +372,12 @@ const softSkillsData = [
       padding: 0 1.25rem; /* 20px */
     }
 
-    .soft-skills-title {
-      font-size: clamp(60px, 12vw, 120px);
+    .soft-skills-title-disperse-black {
+      font-size: 7.35vw !important; /* 30% reducción de 10.5vw */
+    }
+    
+    .soft-skills-title-disperse-black span {
+      font-size: 7.35vw !important;
     }
 
     .skills-container {
@@ -313,8 +422,12 @@ const softSkillsData = [
   }
 
   @media (max-width: 480px) {
-    .soft-skills-title {
-      font-size: clamp(40px, 10vw, 80px);
+    .soft-skills-title-disperse-black {
+      font-size: 7vw !important; /* Tamaño para móvil */
+    }
+    
+    .soft-skills-title-disperse-black span {
+      font-size: 7vw !important;
     }
 
     .skills-container {
@@ -366,7 +479,6 @@ const softSkillsData = [
   document.addEventListener('DOMContentLoaded', () => {
     const gemSection = document.querySelector('.gem-section');
     const skillsScroll = document.querySelector('.skills-scroll');
-    const softSkillsTitle = document.querySelector('.soft-skills-title');
     
     if (gemSection && skillsScroll) {
       // Calculate total scroll width
@@ -384,25 +496,6 @@ const softSkillsData = [
           }
         );
       }
-    }
-
-    // Subtle animation for "SOFT SKILLS" title
-    if (softSkillsTitle) {
-      // Scroll-triggered subtle scale and opacity animation
-      scroll(
-        (progress: number) => {
-          const scale = 0.95 + (progress * 0.05); // Very subtle scale from 0.95 to 1.0
-          const opacity = 0.7 + (progress * 0.3); // Subtle opacity from 0.7 to 1.0
-          const translateY = (1 - progress) * 20; // Subtle upward movement
-          
-          (softSkillsTitle as HTMLElement).style.transform = `translateY(${translateY}px) scale(${scale})`;
-          (softSkillsTitle as HTMLElement).style.opacity = opacity.toString();
-        },
-        {
-          target: softSkillsTitle,
-          offset: ["start 80%", "start 20%"] // Animate when title enters viewport
-        }
-      );
     }
   });
 </script>

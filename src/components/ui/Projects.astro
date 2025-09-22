@@ -1,39 +1,31 @@
 ---
 // Projects.astro - Sección de proyectos con funcionalidad colapsable optimizada (Dark Mode)
 import ProjectsIsland from './ProjectsIsland.tsx';
+import { TextDisperse } from './TextDisperse.tsx';
+import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
 ---
 
 <section class="projects-section">
+  <!-- Noise Background Effect -->
+  <NoiseBackground opacity={0.12} speed={0.3} className="dark" client:load />
+  
   <div class="projects-container">
+    <!-- Giant Heading with TextDisperse -->
+    <motion.div 
+      className="giant-heading-container"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:load />
+    </motion.div>
+    
     <div class="projects-content">
       <!-- Header Section with scroll animations -->
-      <motion.div 
-        className="projects-header"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        client:load
-      >
-        <motion.h2 
-          className="projects-title"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-        >
-          Projects
-        </motion.h2>
-        <motion.p 
-          className="projects-description"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        >
-          Showcasing innovative digital solutions and creative projects built with cutting-edge technologies
-        </motion.p>
+ 
       </motion.div>
 
       <!-- Projects List - Optimized Island Component with scroll animation -->
@@ -56,7 +48,7 @@ import { motion } from 'motion/react';
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-    background: #111111;
+    background: #050112;
     background-size: 40px 40px, 40px 40px, 100% 100%;
     overflow: hidden;
     display: flex;
@@ -72,11 +64,43 @@ import { motion } from 'motion/react';
     align-items: stretch;
   }
 
+  /* Giant Heading Styles */
+  :global(.giant-heading-container) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0 0 0;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    :global(.giant-heading-container) {
+      justify-content: flex-start;
+    }
+  }
+
+  :global(.giant-heading-disperse) {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: white !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+  }
+
+  :global(.giant-heading-disperse span) {
+    font-family: var(--font-display) !important;
+    color: white !important;
+  }
+
   .projects-content {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import {
     FacebookIcon,
@@ -8,6 +8,8 @@ import {
     YoutubeIcon,
 } from 'lucide-react';
 import { DitheringShader } from '../three/DitheringShader';
+import { NoiseBackground } from './NoiseBackground';
+import FlipText from './FlipText';
 
 interface FooterLink {
     title: string;
@@ -43,6 +45,8 @@ function Button({ children, size, variant, className, ...props }: {
 }
 
 export function StickyFooter({ className, ...props }: StickyFooterProps) {
+    const [isHovered, setIsHovered] = useState(false);
+    
     return (
         <footer
             className={`relative h-[720px] w-full ${className || ''}`}
@@ -51,16 +55,21 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
         >
             <div className="fixed bottom-0 h-[720px] w-full">
                 <div className="sticky top-[calc(100vh-720px)] h-full overflow-y-auto">
-                    <div className="footer-grid-texture relative flex h-full w-full flex-col justify-between gap-5 px-4 py-8 md:px-12 text-gray-800" style={{ 
-                        backgroundColor: '#e6d9fb',
+                    <div className="footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-white" style={{ 
+                        backgroundColor: '#111111',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
                     }}>
+                        {/* Noise Background Effect */}
+                        <div className="absolute inset-0 z-0">
+                            <NoiseBackground opacity={0.06} speed={0.15} className="dark" />
+                        </div>
+                        
                         {/* DitheringShader Background Scene */}
                         <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)' }}>
                             <DitheringShader
                                 width={1920}
                                 height={720}
-                                colorBack="#e6d9fb"
+                                colorBack="#010111"
                                 colorFront="#4523AE"
                                 shape="wave"
                                 type="8x8"
@@ -83,52 +92,59 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 transform: 'translateX(2rem) translateY(-24rem) rotate(-45deg)'
                             }} />
                         </div>
-                        <div className="mt-10 flex flex-col gap-8 md:flex-row xl:mt-0 relative z-20">
-                            <AnimatedContainer className="w-full max-w-sm space-y-4">
-                                <FrameIcon className="h-8 w-8" />
-                                <p className="text-gray-600 mt-8 text-body md:mt-4">
-                                    Portfolio desarrollado con Astro, React y Tailwind CSS.
-                                    Demostrando habilidades en desarrollo frontend moderno y diseño responsivo.
-                                </p>
-                                <div className="flex gap-2">
-                                    {socialLinks.map((link) => (
-                                        <Button key={link.title} size="icon" variant="outline" className="h-8 w-8">
-                                            <link.icon className="h-4 w-4" />
-                                        </Button>
-                                    ))}
-                                </div>
-                            </AnimatedContainer>
-                            {footerLinkGroups.map((group, index) => (
-                                <AnimatedContainer
-                                    key={group.label}
-                                    delay={0.1 + index * 0.1}
-                                    className="w-full"
-                                >
-                                    <div className="mb-10 md:mb-0">
-                                        <h3 className="text-body-sm uppercase font-semibold text-gray-800">{group.label}</h3>
-                                        <ul className="text-gray-600 mt-4 space-y-2 text-body-sm">
-                                            {group.links.map((link) => (
-                                                <li key={link.title}>
-                                                    <a
-                                                        href={link.href}
-                                                        className="hover:text-gray-900 inline-flex items-center transition-all duration-300"
-                                                    >
-                                                        {link.icon && <link.icon className="mr-1 h-4 w-4" />}
-                                                        {link.title}
-                                                    </a>
-                                                </li>
+
+                        {/* Footer Content Container with max-width - Centered */}
+                        <div className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-between gap-5 py-8 relative z-20">
+                            <div className="w-full h-full flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
+                                <AnimatedContainer className="w-full">
+                                    {/* Main Title */}
+                                    <h2 className="text-white font-secondary text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-16" >
+                                        Let's make Something<br />Extraordinary, together.
+                                    </h2>
+                                    
+                                    {/* Follow Me Section */}
+                                    <div className="w-full flex flex-col justify-start items-start gap-6" >
+                                        <div className="w-full flex flex-col justify-start items-start gap-3">
+                                            <h3 className="text-white font-primary text-2xl font-semibold leading-tight">
+                                                Follow Me
+                                            </h3>
+                                            <p className="w-full max-w-lg text-white font-primary text-lg font-medium leading-relaxed">
+                                                Stay connected and inspired! Follow us on our social media platforms to keep up with the latest design trends, project updates, and behind-the-scenes insights
+                                            </p>
+                                        </div>
+                                        <div className="flex justify-start items-center gap-6">
+                                            {socialLinks.slice(0, 3).map((link, index) => (
+                                                <a
+                                                    key={link.title}
+                                                    href={link.href}
+                                                    className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
+                                                    title={link.title}
+                                                >
+                                                    <link.icon className="w-6 h-6 text-white" />
+                                                </a>
                                             ))}
-                                        </ul>
+                                        </div>
                                     </div>
                                 </AnimatedContainer>
-                            ))}
-                        </div>
-                        {/* Texto gigante KAREN ORTIZ */}
-                        <div className="karen-ortiz-title relative z-20">KAREN ORTIZ</div>
-                        
-                        <div className="text-gray-600 flex flex-col items-center justify-between gap-2 pt-4 text-body-sm md:flex-row relative z-20">
-                            <p>© 2025 Karen Ortiz. Todos los derechos reservados.</p>
-                            <p>Desarrollado con ❤️</p>
+                            </div>
+                            
+                            {/* Texto gigante KAREN ORTIZ con FlipText */}
+                            <div 
+                                className="karen-ortiz-container text-white cursor-pointer"
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                            >
+                                <FlipText 
+                                    text="KAREN ORTIZ" 
+                                    isHovered={isHovered}
+                                    className="karen-ortiz-flip-text"
+                                />
+                            </div>
+                            
+                            <div className="text-white flex flex-col items-center justify-between gap-2 pt-4 text-body-sm md:flex-row">
+                                <p className="text-white">© 2025 Karen Ortiz. Todos los derechos reservados.</p>
+                                <p className="text-white">Desarrollado con ❤️</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,21 +240,36 @@ function AnimatedContainer({
 if (typeof document !== 'undefined') {
     const style = document.createElement('style');
     style.textContent = `
-        .karen-ortiz-title {
-            font-family: 'Median', serif;
-            font-size: clamp(60px, 30vw, 200px);
-            font-weight: 400;
-            color: white;
+        .karen-ortiz-container {
             text-align: center;
-            margin: 0;
-            text-wrap: nowrap;
-            line-height: 0.9;
-            letter-spacing: -0.02em;
+            margin: 2rem 0 1rem 0;
             width: 100%;
             max-width: 100vw;
             overflow: hidden;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            height: 200px;
+        }
+        
+        .karen-ortiz-flip-text {
+            font-family: var(--font-display) !important;
+            font-size: 15vw !important;
+            font-weight: 400 !important;
+            color: white !important;
+            text-align: center !important;
+            line-height: 0.9 !important;
+            letter-spacing: -0.02em !important;
+            text-transform: uppercase !important;
+        }
+        
+        .karen-ortiz-flip-text .flip-text-container {
+            font-family: var(--font-display) !important;
+            font-size: clamp(60px, 30vw, 200px) !important;
+            font-weight: 400 !important;
+            color: white !important;
+            text-align: center !important;
+            line-height: 0.9 !important;
+            letter-spacing: -0.02em !important;
+            justify-content: center !important;
+            display: flex !important;
         }
         
         .footer-grid-texture::before {
@@ -257,14 +288,22 @@ if (typeof document !== 'undefined') {
         }
         
         @media (max-width: 768px) {
-            .karen-ortiz-title {
-                font-size: clamp(40px, 12vw, 120px);
+            .karen-ortiz-flip-text {
+                font-size: clamp(40px, 12vw, 120px) !important;
+            }
+            
+            .karen-ortiz-flip-text .flip-text-container {
+                font-size: clamp(40px, 12vw, 120px) !important;
             }
         }
         
         @media (max-width: 480px) {
-            .karen-ortiz-title {
-                font-size: clamp(30px, 10vw, 80px);
+            .karen-ortiz-flip-text {
+                font-size: clamp(30px, 10vw, 80px) !important;
+            }
+            
+            .karen-ortiz-flip-text .flip-text-container {
+                font-size: clamp(30px, 10vw, 80px) !important;
             }
         }
     `;

@@ -1,11 +1,24 @@
 ---
 // Services.astro - Sección de servicios con funcionalidad colapsable optimizada
 import ServicesIsland from './ServicesIsland.tsx';
+import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 import { motion } from 'motion/react';
 ---
 
 <section class="services-section">
   <div class="services-container">
+    <!-- Giant Heading with TextDisperse -->
+    <motion.div 
+      className="giant-heading-container"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:load />
+    </motion.div>
+    
     <div class="services-content">
       <!-- Header Section with scroll animations -->
       <motion.div 
@@ -73,6 +86,38 @@ import { motion } from 'motion/react';
     display: flex;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Giant Heading Styles */
+  :global(.giant-heading-container) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0 0 0;
+    overflow: visible;
+  }
+
+  @media (max-width: 768px) {
+    :global(.giant-heading-container) {
+      justify-content: flex-start;
+    }
+  }
+
+  :global(.giant-heading-disperse-black) {
+    font-family: var(--font-display) !important;
+    font-size: 10.5vw !important;
+    font-weight: 400 !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+  }
+
+  :global(.giant-heading-disperse-black span) {
+    font-family: var(--font-display) !important;
+    color: #000000 !important;
   }
 
   .services-content {
