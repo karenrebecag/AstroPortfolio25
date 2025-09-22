@@ -7,6 +7,7 @@ const { title } = Astro.props;
 import '../styles/fonts.css';
 import CustomCursor from '../components/ui/CustomCursor.astro';
 import LenisIsland from '../components/ui/LenisIsland.jsx';
+import ToastProvider from '../components/ui/ToastProvider.tsx';
 ---
 
 <!DOCTYPE html>
@@ -27,6 +28,8 @@ import LenisIsland from '../components/ui/LenisIsland.jsx';
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:load />
+		<!-- Toast Notification Island - Se carga inmediatamente -->
+		<ToastProvider client:load autoShow={true} showDelay={1500} />
 	</body>
 </html>
 

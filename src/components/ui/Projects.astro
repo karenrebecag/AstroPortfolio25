@@ -12,16 +12,29 @@ import { motion } from 'motion/react';
   
   <div class="projects-container">
     <!-- Giant Heading with TextDisperse -->
-    <motion.div 
-      className="giant-heading-container"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      client:load
-    >
-      <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:load />
-    </motion.div>
+    <div class="giant-heading-wrapper">
+      <motion.div 
+        className="giant-heading-container"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        client:load
+      >
+        <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:load />
+      </motion.div>
+      
+      <motion.p 
+        className="giant-heading-subtitle"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        client:load
+      >
+        Showcasing my latest work and creative solutions
+      </motion.p>
+    </div>
     
     <div class="projects-content">
       <!-- Header Section with scroll animations -->
@@ -65,13 +78,32 @@ import { motion } from 'motion/react';
   }
 
   /* Giant Heading Styles */
+  :global(.giant-heading-wrapper) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 0 0 0;
+  }
+
   :global(.giant-heading-container) {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 0 0 0;
     overflow: visible;
+  }
+
+  :global(.giant-heading-subtitle) {
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-primary);
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    margin: 0;
+    max-width: 600px;
   }
 
   @media (max-width: 768px) {
@@ -195,16 +227,6 @@ import { motion } from 'motion/react';
     color: rgba(255, 255, 255, 0.30);
   }
 
-  /* FlipText hover activation via parent - Solo en desktop */
-  @media (min-width: 769px) {
-    .project-item:hover .project-title :global(.flip-text-container) > div:first-child span {
-      transform: translateY(-110%);
-    }
-
-    .project-item:hover .project-title :global(.flip-text-container) > div.absolute span {
-      transform: translateY(0);
-    }
-  }
 
   /* Ensure FlipText inherits the color from project-title */
   .project-title :global(.flip-text-container) {
@@ -295,22 +317,6 @@ import { motion } from 'motion/react';
     margin-top: -54px;
   }
 
-  /* Hover effects solo en desktop */
-  @media (min-width: 769px) {
-    :global(.project-item:not(.active):hover .project-details) {
-      opacity: 1;
-      max-height: 200px;
-      margin-top: 0;
-    }
-
-    :global(.project-item:not(.active):hover .project-number) {
-      color: white;
-    }
-
-    :global(.project-item:not(.active):hover .project-title) {
-      color: #ffffff;
-    }
-  }
 
   /* Read More Button Styles */
   :global(.read-more-btn) {

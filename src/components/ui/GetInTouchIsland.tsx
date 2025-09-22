@@ -101,6 +101,26 @@ const GetInTouchIsland: React.FC = () => {
           <FlipText text="In" isHovered={isHovered} className="text-white font-display" />
           <FlipText text="Touch" isHovered={isHovered} className="text-white font-display" />
         </motion.div>
+        
+        <motion.p 
+          className="contact-description"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          style={{
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontFamily: 'var(--font-primary)',
+            fontSize: 'clamp(14px, 2vw, 18px)',
+            fontWeight: 400,
+            lineHeight: 1.4,
+            textAlign: 'left',
+            margin: 0,
+            maxWidth: '600px'
+          }}
+        >
+          Ready to bring your ideas to life? Let's discuss your project
+        </motion.p>
       </motion.div>
 
       {/* Form Section */}

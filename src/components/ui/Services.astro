@@ -2,22 +2,40 @@
 // Services.astro - Sección de servicios con funcionalidad colapsable optimizada
 import ServicesIsland from './ServicesIsland.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
 ---
 
 <section class="services-section">
+  <!-- Noise Background Effect -->
+  <NoiseBackground opacity={0.15} speed={0.25} className="light" client:load />
+  
   <div class="services-container">
     <!-- Giant Heading with TextDisperse -->
-    <motion.div 
-      className="giant-heading-container"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      client:load
-    >
-      <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:load />
-    </motion.div>
+    <div class="giant-heading-wrapper">
+      <motion.div 
+        className="giant-heading-container"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        client:load
+      >
+        <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:load />
+      </motion.div>
+      
+      <motion.p 
+        className="text-black/70 font-primary text-center mx-auto max-w-[600px] m-0 leading-relaxed"
+        style={{ fontSize: 'clamp(14px, 2vw, 18px)' }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        client:load
+      >
+        Digital design and development solutions
+      </motion.p>
+    </div>
     
     <div class="services-content">
       <!-- Header Section with scroll animations -->
@@ -89,14 +107,23 @@ import { motion } from 'motion/react';
   }
 
   /* Giant Heading Styles */
+  :global(.giant-heading-wrapper) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 0 0 0;
+  }
+
   :global(.giant-heading-container) {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 0 0 0;
     overflow: visible;
   }
+
 
   @media (max-width: 768px) {
     :global(.giant-heading-container) {
@@ -219,16 +246,6 @@ import { motion } from 'motion/react';
     color: rgba(17, 17, 17, 0.30);
   }
 
-  /* FlipText hover activation via parent - Solo en desktop */
-  @media (min-width: 769px) {
-    .service-item:hover .service-title :global(.flip-text-container) > div:first-child span {
-      transform: translateY(-110%);
-    }
-
-    .service-item:hover .service-title :global(.flip-text-container) > div.absolute span {
-      transform: translateY(0);
-    }
-  }
 
   /* Ensure FlipText inherits the color from service-title */
   .service-title :global(.flip-text-container) {
@@ -317,22 +334,6 @@ import { motion } from 'motion/react';
     margin-top: -54px;
   }
 
-  /* Hover effects solo en desktop */
-  @media (min-width: 769px) {
-    :global(.service-item:not(.active):hover .service-details) {
-      opacity: 1;
-      max-height: 200px;
-      margin-top: 0;
-    }
-
-    :global(.service-item:not(.active):hover .service-number) {
-      color: black;
-    }
-
-    :global(.service-item:not(.active):hover .service-title) {
-      color: #111111;
-    }
-  }
 
 
   /* Responsive Design */

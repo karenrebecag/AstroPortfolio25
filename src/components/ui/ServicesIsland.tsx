@@ -21,19 +21,6 @@ interface Service {
 const ServicesIsland: React.FC = () => {
   const [activeService, setActiveService] = useState<number>(1); // Primer servicio activo por defecto
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  // Detectar si es móvil
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const services: Service[] = [
     {
@@ -95,36 +82,14 @@ const ServicesIsland: React.FC = () => {
     }
   ];
 
-  const handleServiceHover = (serviceId: number) => {
-    if (!isMobile) {
-      setActiveService(serviceId); // Cambiar el activo en hover
-      setHoveredService(serviceId); // Para el flip text
-    }
-  };
-
-  const handleServiceLeave = () => {
-    if (!isMobile) {
-      setHoveredService(null); // Solo quitar el flip text
-      // El activo se mantiene hasta que haya otro hover
-    }
-  };
-
-  const handleContainerLeave = () => {
-    if (!isMobile) {
-      setHoveredService(null);
-      setActiveService(1); // Volver al primer servicio cuando sale del contenedor
-    }
-  };
 
   const handleServiceClick = (serviceId: number) => {
-    if (isMobile) {
-      setActiveService(activeService === serviceId ? 0 : serviceId); // Toggle en móvil
-      setHoveredService(activeService === serviceId ? null : serviceId);
-    }
+    setActiveService(activeService === serviceId ? 0 : serviceId); // Toggle para todos los dispositivos
+    setHoveredService(activeService === serviceId ? null : serviceId);
   };
 
   return (
-    <div className="services-list" onMouseLeave={handleContainerLeave}>
+    <div className="services-list">
       {services.map((service) => {
         const isActive = activeService === service.id;
         const isHovered = hoveredService === service.id;
@@ -134,8 +99,6 @@ const ServicesIsland: React.FC = () => {
             key={service.id}
             className={`service-item ${isActive ? 'active' : ''}`}
             data-service={service.id}
-            onMouseEnter={() => handleServiceHover(service.id)}
-            onMouseLeave={handleServiceLeave}
             onClick={() => handleServiceClick(service.id)}
           >
             <div className={`service-number ${!isActive ? 'inactive' : ''}`}>

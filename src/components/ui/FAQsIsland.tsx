@@ -9,19 +9,6 @@ interface FAQ {
 const FAQsIsland: React.FC = () => {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
   const [hoveredFAQ, setHoveredFAQ] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  // Detectar si es móvil
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const faqs: FAQ[] = [
     {
@@ -56,25 +43,10 @@ const FAQsIsland: React.FC = () => {
     }
   ];
 
-  const handleFAQHover = (faqId: number) => {
-    if (!isMobile) {
-      setActiveFAQ(faqId);
-      setHoveredFAQ(faqId);
-    }
-  };
-
-  const handleFAQLeave = () => {
-    if (!isMobile) {
-      setHoveredFAQ(null);
-      setActiveFAQ(null);
-    }
-  };
 
   const handleFAQClick = (faqId: number) => {
-    if (isMobile) {
-      setActiveFAQ(activeFAQ === faqId ? null : faqId);
-      setHoveredFAQ(activeFAQ === faqId ? null : faqId);
-    }
+    setActiveFAQ(activeFAQ === faqId ? null : faqId);
+    setHoveredFAQ(activeFAQ === faqId ? null : faqId);
   };
 
   return (
@@ -86,8 +58,6 @@ const FAQsIsland: React.FC = () => {
           <div
             key={faq.id}
             className={`faq-item ${isActive ? 'active' : ''}`}
-            onMouseEnter={() => handleFAQHover(faq.id)}
-            onMouseLeave={handleFAQLeave}
             onClick={() => handleFAQClick(faq.id)}
           >
             <div className="faq-number">

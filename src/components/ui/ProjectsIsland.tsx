@@ -21,19 +21,6 @@ interface Project {
 const ProjectsIsland: React.FC = () => {
   const [activeProject, setActiveProject] = useState<number>(1); // Primer proyecto activo por defecto
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  // Detectar si es móvil
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const projects: Project[] = [
     {
@@ -95,32 +82,10 @@ const ProjectsIsland: React.FC = () => {
     }
   ];
 
-  const handleProjectHover = (projectId: number) => {
-    if (!isMobile) {
-      setActiveProject(projectId); // Cambiar el activo en hover
-      setHoveredProject(projectId); // Para el flip text
-    }
-  };
-
-  const handleProjectLeave = () => {
-    if (!isMobile) {
-      setHoveredProject(null); // Solo quitar el flip text
-      // El activo se mantiene hasta que haya otro hover
-    }
-  };
-
-  const handleContainerLeave = () => {
-    if (!isMobile) {
-      setHoveredProject(null);
-      setActiveProject(1); // Volver al primer proyecto cuando sale del contenedor
-    }
-  };
 
   const handleProjectClick = (projectId: number) => {
-    if (isMobile) {
-      setActiveProject(activeProject === projectId ? 0 : projectId); // Toggle en móvil
-      setHoveredProject(activeProject === projectId ? null : projectId);
-    }
+    setActiveProject(activeProject === projectId ? 0 : projectId); // Toggle para todos los dispositivos
+    setHoveredProject(activeProject === projectId ? null : projectId);
   };
 
   const handleReadMore = (projectId: number) => {
@@ -129,7 +94,7 @@ const ProjectsIsland: React.FC = () => {
   };
 
   return (
-    <div className="projects-list" onMouseLeave={handleContainerLeave}>
+    <div className="projects-list">
       {projects.map((project) => {
         const isActive = activeProject === project.id;
         const isHovered = hoveredProject === project.id;
@@ -139,8 +104,6 @@ const ProjectsIsland: React.FC = () => {
             key={project.id}
             className={`project-item ${isActive ? 'active' : ''}`}
             data-project={project.id}
-            onMouseEnter={() => handleProjectHover(project.id)}
-            onMouseLeave={handleProjectLeave}
             onClick={() => handleProjectClick(project.id)}
           >
             <div className={`project-number ${!isActive ? 'inactive' : ''}`}>
@@ -171,17 +134,6 @@ const ProjectsIsland: React.FC = () => {
                   <p className="project-description">
                     {project.description}
                   </p>
-                  {isMobile && (
-                    <button 
-                      className="read-more-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleReadMore(project.id);
-                      }}
-                    >
-                      Read More
-                    </button>
-                  )}
                 </div>
                 <div className="project-images">
                   <BounceCards
