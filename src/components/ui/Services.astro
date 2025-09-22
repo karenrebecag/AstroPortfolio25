@@ -1,21 +1,51 @@
 ---
 // Services.astro - Sección de servicios con funcionalidad colapsable optimizada
 import ServicesIsland from './ServicesIsland.tsx';
+import { motion } from 'motion/react';
 ---
 
 <section class="services-section">
   <div class="services-container">
     <div class="services-content">
-      <!-- Header Section -->
-      <div class="services-header">
-        <h2 class="services-title">Services</h2>
-        <p class="services-description">
+      <!-- Header Section with scroll animations -->
+      <motion.div 
+        className="services-header"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        client:load
+      >
+        <motion.h2 
+          className="services-title"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        >
+          Services
+        </motion.h2>
+        <motion.p 
+          className="services-description"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           I'm a digital designer that design and development high-end projects with affordable price
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <!-- Services List - Optimized Island Component -->
-      <ServicesIsland client:load />
+      <!-- Services List - Optimized Island Component with scroll animation -->
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+        client:load
+      >
+        <ServicesIsland client:load />
+      </motion.div>
 
     </div>
   </div>
@@ -47,6 +77,8 @@ import ServicesIsland from './ServicesIsland.tsx';
 
   .services-content {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding-bottom: 200px;
     display: flex;
     flex-direction: column;

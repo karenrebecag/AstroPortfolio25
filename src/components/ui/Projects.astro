@@ -1,36 +1,51 @@
 ---
 // Projects.astro - Sección de proyectos con funcionalidad colapsable optimizada (Dark Mode)
 import ProjectsIsland from './ProjectsIsland.tsx';
-import { DitheringShader } from '../three/DitheringShader.tsx';
+import { motion } from 'motion/react';
 ---
 
 <section class="projects-section">
-  <!-- DitheringShader Background - Invertido y rotado respecto a MyStack -->
-  <div class="dithering-background">
-    <DitheringShader
-      client:visible
-      width={1920}
-      height={1080}
-      colorBack="#000000"
-      colorFront="#ffffff"
-      shape="swirl"
-      type="8x8"
-      pxSize={4}
-      speed={0.4}
-    />
-  </div>
   <div class="projects-container">
     <div class="projects-content">
-      <!-- Header Section -->
-      <div class="projects-header">
-        <h2 class="projects-title">Projects</h2>
-        <p class="projects-description">
+      <!-- Header Section with scroll animations -->
+      <motion.div 
+        className="projects-header"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        client:load
+      >
+        <motion.h2 
+          className="projects-title"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        >
+          Projects
+        </motion.h2>
+        <motion.p 
+          className="projects-description"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           Showcasing innovative digital solutions and creative projects built with cutting-edge technologies
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <!-- Projects List - Optimized Island Component -->
-      <ProjectsIsland client:load />
+      <!-- Projects List - Optimized Island Component with scroll animation -->
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+        client:load
+      >
+        <ProjectsIsland client:load />
+      </motion.div>
 
     </div>
   </div>
@@ -41,12 +56,8 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-    background:
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      #000000;
+    background: #111111;
     background-size: 40px 40px, 40px 40px, 100% 100%;
-    position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -54,31 +65,17 @@ import { DitheringShader } from '../three/DitheringShader.tsx';
     align-items: flex-start;
   }
 
-  /* DitheringShader Background - Invertido respecto a MyStack */
-  .dithering-background {
-    position: absolute;
-    top: -250px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: 0;
-    mix-blend-mode: screen;
-    transform: rotate(180deg);
-  }
-
   .projects-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    position: relative;
-    z-index: 1;
   }
 
   .projects-content {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding-bottom: 200px;
     display: flex;
     flex-direction: column;

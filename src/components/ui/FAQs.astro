@@ -1,21 +1,51 @@
 ---
 // FAQs.astro - Sección de preguntas frecuentes con funcionalidad de acordeón (Dark Mode)
 import FAQsIsland from './FAQsIsland.tsx';
+import { motion } from 'motion/react';
 ---
 
 <section class="faqs-section">
   <div class="faqs-container">
     <div class="faqs-content">
-      <!-- Header Section -->
-      <div class="faqs-header">
-        <h2 class="faqs-title">FAQs</h2>
-        <p class="faqs-description">
+      <!-- Header Section with scroll animations -->
+      <motion.div 
+        className="faqs-header"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        client:load
+      >
+        <motion.h2 
+          className="faqs-title"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        >
+          FAQs
+        </motion.h2>
+        <motion.p 
+          className="faqs-description"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           Frequently asked questions about my services, process, and approach to web development and design
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <!-- FAQs List - Optimized Island Component -->
-      <FAQsIsland client:load />
+      <!-- FAQs List - Optimized Island Component with scroll animation -->
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+        client:load
+      >
+        <FAQsIsland client:load />
+      </motion.div>
 
     </div>
   </div>
@@ -26,10 +56,7 @@ import FAQsIsland from './FAQsIsland.tsx';
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-    background:
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      #000000;
+    background: #111111;
     background-size: 40px 40px, 40px 40px, 100% 100%;
     overflow: hidden;
     display: flex;
@@ -47,6 +74,8 @@ import FAQsIsland from './FAQsIsland.tsx';
 
   .faqs-content {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding-bottom: 200px;
     display: flex;
     flex-direction: column;
