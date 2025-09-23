@@ -29,6 +29,14 @@ import MainButton from './MainButton.astro';
 
 <div class="cv-mobile-menu" id="cvMobileMenu">
   <div class="cv-mobile-menu-content">
+    <!-- Close Button -->
+    <button class="cv-mobile-close-btn" id="cvMobileCloseBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+        <path d="m18 6-12 12"/>
+        <path d="m6 6 12 12"/>
+      </svg>
+    </button>
+    
     <nav class="cv-mobile-nav">
       <a href="#summary">Summary</a>
       <a href="#experience">Experience</a>
@@ -128,7 +136,7 @@ import MainButton from './MainButton.astro';
     left: 0;
     width: 0;
     height: 2px;
-    background: #4523AE;
+    background: #ffffff;
     transition: width 0.3s ease;
   }
 
@@ -174,7 +182,7 @@ import MainButton from './MainButton.astro';
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(23, 21, 35, 0.98);
+    background:#7537c3;
     backdrop-filter: blur(20px);
     z-index: 1000;
     opacity: 0;
@@ -233,7 +241,7 @@ import MainButton from './MainButton.astro';
   .cv-mobile-nav a:nth-child(5) { transition-delay: 0.5s; }
 
   .cv-mobile-nav a:hover {
-    color: #4523AE;
+    color: #f7f4ff;
     transform: scale(1.05);
     text-shadow: 0 0 20px rgba(69, 35, 174, 0.5);
   }
@@ -246,7 +254,7 @@ import MainButton from './MainButton.astro';
     transform: translateX(-50%);
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #4523AE, transparent);
+    background: linear-gradient(90deg, transparent, #ffffff, transparent);
     transition: width 0.4s ease;
   }
 
@@ -256,13 +264,13 @@ import MainButton from './MainButton.astro';
 
   .cv-mobile-contact-btn {
     background: transparent;
-    border: 2px solid #4523AE;
-    color: #4523AE;
+    border: 2px solid #ffffff;
+    color: #ffffff;
     padding: 12px 24px;
     font-family: var(--font-display); /* Median font */
     font-size: clamp(14px, 3vw, 16px);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
     margin-top: 24px;
@@ -284,7 +292,7 @@ import MainButton from './MainButton.astro';
     left: -100%;
     width: 100%;
     height: 100%;
-    background: #4523AE;
+    background: white;
     transition: left 0.3s ease;
     z-index: -1;
   }
@@ -294,9 +302,80 @@ import MainButton from './MainButton.astro';
   }
 
   .cv-mobile-contact-btn:hover {
-    color: white;
+    color: #000000 !important;
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(69, 35, 174, 0.3);
+    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+  }
+
+  /* Specific pseudo-element styling for text color on hover */
+  .cv-mobile-contact-btn:hover::before ~ * {
+    color: #000000 !important;
+  }
+
+  /* Alternative approach with higher specificity */
+  .cv-mobile-menu .cv-mobile-nav .cv-mobile-contact-btn:hover {
+    color: #000000 !important;
+    position: relative;
+    z-index: 1;
+    transition: color 0.1s ease !important;
+  }
+
+  /* Additional specificity for the hover text color */
+  .cv-mobile-menu .cv-mobile-nav .cv-mobile-contact-btn:hover {
+    color: #000000 !important;
+  }
+
+  /* Close Button Styles */
+  .cv-mobile-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+    z-index: 10;
+  }
+
+  .cv-mobile-menu.open .cv-mobile-close-btn {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition-delay: 0.3s;
+  }
+
+  .cv-mobile-close-btn:hover {
+    background: rgba(69, 35, 174, 0.2);
+    transform: rotate(90deg) scale(1.1);
+    color: #4523AE;
+  }
+
+  .cv-mobile-close-btn:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+
+  .cv-mobile-close-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 480px) {
+    .cv-mobile-close-btn {
+      top: 16px;
+      right: 16px;
+      padding: 6px;
+    }
+    
+    .cv-mobile-close-btn svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -438,32 +517,41 @@ import MainButton from './MainButton.astro';
     const closeMenu = () => {
       isOpen = false;
       
-      // Reverse animations
-      navLinks.forEach(link => {
+      // Animate close button first
+      const closeBtn = document.getElementById('cvMobileCloseBtn');
+      if (closeBtn) {
+        animate(closeBtn, 
+          { opacity: 0, transform: 'rotate(-90deg) scale(0.8)' }, 
+          { duration: 0.2 }
+        );
+      }
+      
+      // Reverse animations with stagger
+      navLinks.forEach((link, index) => {
         animate(link, 
           { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2 }
+          { duration: 0.2, delay: index * 0.05 }
         );
       });
 
       if (contactBtn) {
         animate(contactBtn, 
           { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2 }
+          { duration: 0.2, delay: 0.1 }
         );
       }
 
       if (mobileNav) {
         animate(mobileNav, 
           { transform: 'translateY(30px)' }, 
-          { duration: 0.3, delay: 0.1 }
+          { duration: 0.3, delay: 0.2 }
         );
       }
 
       // Remove class after animation
       setTimeout(() => {
         mobileMenu?.classList.remove('open');
-      }, 400);
+      }, 500);
     };
 
     menuBtn?.addEventListener('click', () => {
@@ -471,6 +559,14 @@ import MainButton from './MainButton.astro';
         closeMenu();
       } else {
         openMenu();
+      }
+    });
+    
+    // Close button functionality
+    const cvMobileCloseBtn = document.getElementById('cvMobileCloseBtn');
+    cvMobileCloseBtn?.addEventListener('click', () => {
+      if (isOpen) {
+        closeMenu();
       }
     });
     

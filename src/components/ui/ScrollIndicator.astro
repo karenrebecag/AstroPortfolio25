@@ -1,0 +1,375 @@
+---
+// ScrollIndicator component - Scroll progress bubble with MainButton styling
+---
+
+<div class="scroll-indicator-wrapper">
+  <div class="scroll-indicator">
+
+
+    
+    <!-- Main circle container -->
+    <div class="indicator-circle">
+      <!-- Progress circle (SVG) -->
+      <svg class="progress-ring" viewBox="0 0 60 60">
+        <circle
+          class="progress-ring-background"
+          cx="30"
+          cy="30"
+          r="26"
+          fill="none"
+          stroke="rgba(255, 255, 255, 0.1)"
+          stroke-width="2"
+        />
+        <circle
+          class="progress-ring-progress"
+          cx="30"
+          cy="30"
+          r="26"
+          fill="none"
+          stroke="url(#progressGradient)"
+          stroke-width="3"
+          stroke-linecap="round"
+          transform="rotate(-90 30 30)"
+        />
+        
+        <!-- Gradient definition -->
+        <defs>
+          <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8f3ff;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#f2f2f2;stop-opacity:0.9" />
+            <stop offset="100%" style="stop-color:#b8a3ff;stop-opacity:0.7" />
+          </linearGradient>
+        </defs>
+      </svg>
+      
+      <!-- Inner content -->
+      <div class="indicator-content">
+        <div class="scroll-percentage">0%</div>
+        <!-- Arrow icon for 100% -->
+        <div class="scroll-arrow" style="display: none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+        </div>
+        <!-- Inner glow layer (similar to MainButton) -->
+        <div class="indicator-inner-glow"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scroll-indicator-wrapper {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+  }
+
+  .scroll-indicator-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .scroll-indicator {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    /* MainButton outer background */
+    background: radial-gradient(circle 40px at 80% -10%, #ffffff, #181b1b);
+    padding: 2px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: visible;
+  }
+
+
+  .indicator-circle {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    /* MainButton inner background */
+    background: radial-gradient(circle 40px at 80% -50%, #777777, #0f1111);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 10;
+  }
+
+  .progress-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+  }
+
+  .progress-ring-progress {
+    stroke-dasharray: 163.36; /* 2 * π * 26 */
+    stroke-dashoffset: 163.36;
+    transition: stroke-dashoffset 0.3s ease-out;
+    filter: drop-shadow(0 0 8px rgba(251, 247, 255, 0.4));
+  }
+
+  .indicator-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .scroll-percentage {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 3;
+    transition: opacity 0.3s ease;
+  }
+
+  .scroll-arrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 3;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+  }
+
+  .scroll-arrow.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .scroll-arrow svg {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  }
+
+  .indicator-inner-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle 30px at 0% 100%, rgba(157, 127, 193, 0.1), rgba(242, 237, 255, 0.067), transparent);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hover Effects (similar to MainButton) */
+  .scroll-indicator:hover .indicator-glow {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.38);
+  }
+
+  .scroll-indicator:hover .indicator-blob {
+    width: 45px;
+    box-shadow: -4px 1px 45px rgba(157, 127, 193, 0.38);
+  }
+
+  .scroll-indicator:hover .indicator-circle {
+    transform: scale(1.05);
+  }
+
+  .scroll-indicator:hover .indicator-inner-glow {
+    opacity: 1.5;
+    background: radial-gradient(circle 40px at 0% 100%, rgba(249, 244, 255, 0.15), rgba(223, 218, 235, 0.1), transparent);
+  }
+
+  .scroll-indicator:hover .scroll-percentage {
+    text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Click effect */
+  .scroll-indicator:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease-out;
+  }
+
+  /* Enhanced glow border (similar to MainButton) */
+  .scroll-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, 
+      rgba(255, 255, 255, 0.1), 
+      transparent, 
+      rgba(157, 127, 193, 0.1));
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .scroll-indicator:hover::before {
+    opacity: 1;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .scroll-indicator-wrapper {
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .scroll-indicator {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .indicator-circle {
+      width: 46px;
+      height: 46px;
+    }
+    
+    .scroll-percentage {
+      font-size: 8px;
+    }
+    
+    .indicator-blob {
+      width: 25px;
+    }
+    
+    .scroll-indicator:hover .indicator-blob {
+      width: 35px;
+    }
+    
+    .scroll-arrow {
+      font-size: 12px;
+    }
+    
+    .scroll-arrow svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-indicator-wrapper {
+      transition: opacity 0.3s ease;
+      transform: none;
+    }
+    
+    .scroll-indicator,
+    .indicator-glow,
+    .indicator-blob,
+    .indicator-circle,
+    .indicator-inner-glow,
+    .progress-ring-progress {
+      transition: none;
+    }
+    
+    .scroll-indicator:hover .indicator-circle {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollIndicator = document.querySelector('.scroll-indicator-wrapper');
+    const progressRing = document.querySelector('.progress-ring-progress');
+    const percentageText = document.querySelector('.scroll-percentage');
+    const indicator = document.querySelector('.scroll-indicator');
+    
+    if (!scrollIndicator || !progressRing || !percentageText) return;
+    
+    const circumference = 2 * Math.PI * 26; // r = 26
+    progressRing.style.strokeDasharray = circumference;
+    progressRing.style.strokeDashoffset = circumference;
+    
+    // Show/hide indicator based on scroll position
+    function updateScrollIndicator() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const documentHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercentage = (scrollTop / documentHeight) * 100;
+      const roundedPercentage = Math.round(scrollPercentage);
+      
+      // Show indicator after scrolling 10% of the page
+      if (scrollPercentage > 10) {
+        scrollIndicator.classList.add('visible');
+      } else {
+        scrollIndicator.classList.remove('visible');
+      }
+      
+      // Update progress ring
+      const offset = circumference - (scrollPercentage / 100) * circumference;
+      progressRing.style.strokeDashoffset = offset;
+      
+      // Show arrow at 100% or percentage text otherwise
+      const arrowElement = document.querySelector('.scroll-arrow');
+      if (roundedPercentage >= 100) {
+        percentageText.style.opacity = '0';
+        if (arrowElement) {
+          arrowElement.style.display = 'flex';
+          arrowElement.classList.add('visible');
+        }
+      } else {
+        percentageText.style.opacity = '1';
+        percentageText.textContent = roundedPercentage + '%';
+        if (arrowElement) {
+          arrowElement.classList.remove('visible');
+          setTimeout(() => {
+            if (!arrowElement.classList.contains('visible')) {
+              arrowElement.style.display = 'none';
+            }
+          }, 300);
+        }
+      }
+    }
+    
+    // Click to scroll to top
+    if (indicator) {
+      indicator.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+    
+    // Magnetic effect (similar to MainButton)
+    if (indicator) {
+      indicator.addEventListener('mouseenter', function(e) {
+        const rect = indicator.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        indicator.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+      });
+      
+      indicator.addEventListener('mouseleave', function() {
+        indicator.style.transform = 'translate(0px, 0px) scale(1)';
+      });
+      
+      indicator.addEventListener('mousemove', function(e) {
+        const rect = indicator.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        indicator.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+      });
+    }
+    
+    // Listen to scroll events
+    window.addEventListener('scroll', updateScrollIndicator);
+    
+    // Initial call
+    updateScrollIndicator();
+  });
+</script>

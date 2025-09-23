@@ -8,7 +8,7 @@ import MainButton from './MainButton.astro';
 
 <div class="header-wrapper" id="headerWrapper">
   <header class="header" id="mainHeader">
-    <div class="logo">KAREN ORTIZ</div>
+    <div class="logo" id="logoBtn">KAREN ORTIZ</div>
     
     <nav class="nav">
       <a href="#about">About</a>
@@ -18,7 +18,9 @@ import MainButton from './MainButton.astro';
     </nav>
     
     <div class="contact-btn-wrapper">
-      <MainButton text="Contact Me" />
+      <a href="#contact" class="contact-link">
+        <MainButton text="Contact Me" />
+      </a>
     </div>
     
     <button class="menu-btn" id="menuBtn">
@@ -31,12 +33,20 @@ import MainButton from './MainButton.astro';
 
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-content">
+    <!-- Close Button -->
+    <button class="mobile-close-btn" id="mobileCloseBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+        <path d="m18 6-12 12"/>
+        <path d="m6 6 12 12"/>
+      </svg>
+    </button>
+    
     <nav class="mobile-nav">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#projects">Projects</a>
       <a href="#reviews">Reviews</a>
-      <button class="mobile-contact-btn">Contact Me</button>
+      <a href="#contact" class="mobile-contact-btn">Contact Me</a>
     </nav>
   </div>
 </div>
@@ -161,6 +171,11 @@ import MainButton from './MainButton.astro';
     transform-origin: center;
   }
 
+  .contact-link {
+    text-decoration: none;
+    display: block;
+  }
+
   .menu-btn {
     display: none;
     flex-direction: column;
@@ -279,13 +294,15 @@ import MainButton from './MainButton.astro';
     font-family: var(--font-display);
     font-size: clamp(14px, 3vw, 16px);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
     margin-top: 24px;
     border-radius: 4px;
     opacity: 0;
     transform: translateY(20px);
+    text-decoration: none;
+    display: inline-block;
   }
 
   .mobile-menu.open .mobile-contact-btn {
@@ -310,10 +327,82 @@ import MainButton from './MainButton.astro';
     left: 0;
   }
 
-  .mobile-contact-btn:hover {
-    color: black;
+  /* Specific pseudo-element styling for text color on hover */
+  .mobile-contact-btn:hover::before ~ * {
+    color: #000000 !important;
+  }
+
+  /* Alternative approach with higher specificity */
+  .mobile-menu .mobile-nav .mobile-contact-btn:hover {
+    color: #000000 !important;
+    position: relative;
+    z-index: 1;
+    transition: color 0.1s ease !important;
+  }
+
+  .mobile-contact-btn:hover,
+  .mobile-nav a.mobile-contact-btn:hover {
+    color: #000000 !important;
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+  }
+
+  /* Additional specificity for the hover text color */
+  .mobile-menu .mobile-nav a.mobile-contact-btn:hover {
+    color: #000000 !important;
+  }
+
+  /* Close Button Styles */
+  .mobile-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+    z-index: 10;
+  }
+
+  .mobile-menu.open .mobile-close-btn {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition-delay: 0.3s;
+  }
+
+  .mobile-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg) scale(1.1);
+    color: #ffffff;
+  }
+
+  .mobile-close-btn:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+
+  .mobile-close-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 480px) {
+    .mobile-close-btn {
+      top: 16px;
+      right: 16px;
+      padding: 6px;
+    }
+    
+    .mobile-close-btn svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -410,7 +499,7 @@ import MainButton from './MainButton.astro';
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileNav = document.querySelector('.mobile-nav');
-    const navLinks = document.querySelectorAll('.mobile-nav a');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
     const contactBtn = document.querySelector('.mobile-contact-btn');
     
     let isOpen = false;
@@ -421,7 +510,7 @@ import MainButton from './MainButton.astro';
       
       // Reset initial states
       if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
-      navLinks.forEach(link => {
+      mobileNavLinks.forEach(link => {
         (link as HTMLElement).style.opacity = '0';
         (link as HTMLElement).style.transform = 'translateY(20px)';
       });
@@ -439,7 +528,7 @@ import MainButton from './MainButton.astro';
       }
 
       // Stagger animate nav links
-      navLinks.forEach((link, index) => {
+      mobileNavLinks.forEach((link, index) => {
         animate(link, 
           { opacity: 1, transform: 'translateY(0px)' }, 
           { duration: 0.3, delay: 0.2 + (index * 0.1) }
@@ -458,32 +547,41 @@ import MainButton from './MainButton.astro';
     const closeMenu = () => {
       isOpen = false;
       
-      // Reverse animations
-      navLinks.forEach(link => {
+      // Animate close button first
+      const closeBtn = document.getElementById('mobileCloseBtn');
+      if (closeBtn) {
+        animate(closeBtn, 
+          { opacity: 0, transform: 'rotate(-90deg) scale(0.8)' }, 
+          { duration: 0.2 }
+        );
+      }
+      
+      // Reverse animations with stagger
+      mobileNavLinks.forEach((link, index) => {
         animate(link, 
           { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2 }
+          { duration: 0.2, delay: index * 0.05 }
         );
       });
 
       if (contactBtn) {
         animate(contactBtn, 
           { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2 }
+          { duration: 0.2, delay: 0.1 }
         );
       }
 
       if (mobileNav) {
         animate(mobileNav, 
           { transform: 'translateY(30px)' }, 
-          { duration: 0.3, delay: 0.1 }
+          { duration: 0.3, delay: 0.2 }
         );
       }
 
       // Remove class after animation
       setTimeout(() => {
         mobileMenu?.classList.remove('open');
-      }, 400);
+      }, 500);
     };
 
     menuBtn?.addEventListener('click', () => {
@@ -491,6 +589,14 @@ import MainButton from './MainButton.astro';
         closeMenu();
       } else {
         openMenu();
+      }
+    });
+    
+    // Close button functionality
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    mobileCloseBtn?.addEventListener('click', () => {
+      if (isOpen) {
+        closeMenu();
       }
     });
     
@@ -514,6 +620,79 @@ import MainButton from './MainButton.astro';
       if (e.key === 'Escape' && isOpen) {
         closeMenu();
       }
+    });
+
+    // Smooth scroll functionality
+    const smoothScrollTo = (targetId: string) => {
+      let target = document.getElementById(targetId);
+      
+      // If target not found, wait a bit for components to load and try again
+      if (!target) {
+        setTimeout(() => {
+          target = document.getElementById(targetId);
+          if (target) {
+            const headerHeight = headerWrapper?.offsetHeight || 0;
+            const targetPosition = target.offsetTop - headerHeight - 20; // 20px extra offset
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+        return;
+      }
+      
+      const headerHeight = headerWrapper?.offsetHeight || 0;
+      const targetPosition = target.offsetTop - headerHeight - 20; // 20px extra offset
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    };
+
+    // Logo scroll to top
+    const logoBtn = document.getElementById('logoBtn');
+    logoBtn?.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Desktop navigation links
+    const desktopNavLinks = document.querySelectorAll('.nav a');
+    desktopNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = (link as HTMLAnchorElement).getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const targetId = href.substring(1);
+          smoothScrollTo(targetId);
+        }
+      });
+    });
+
+    // Mobile navigation links - scroll functionality
+    const mobileScrollLinks = document.querySelectorAll('.mobile-nav a');
+    mobileScrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = (link as HTMLAnchorElement).getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const targetId = href.substring(1);
+          smoothScrollTo(targetId);
+          closeMenu(); // Close mobile menu after clicking
+        }
+      });
+    });
+
+    // Contact button link
+    const contactLink = document.querySelector('.contact-link');
+    contactLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      smoothScrollTo('contact');
     });
   });
 </script>

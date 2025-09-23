@@ -246,38 +246,136 @@
 
       // Función para agregar efectos hover a elementos interactivos
       const addBubbleEffects = () => {
-        const interactiveElements = document.querySelectorAll('a, button, [role="button"], input[type="submit"], .clickable');
+        // Selector expandido para capturar todos los elementos interactivos del portfolio
+        const interactiveSelectors = [
+          // Elementos básicos
+          'a', 'button', '[role="button"]', 'input[type="submit"]', '.clickable',
+          // Botones específicos del portfolio
+          '.realism-button', '.magnetic-button', '.main-button', '.secondary-button',
+          // Elementos con clases específicas de Karen's portfolio
+          '.btn', '.btn-primary', '.btn-secondary', '.button', '.link',
+          // Cards y elementos interactivos
+          '.card', '.project-card', '.service-card', '.review-card',
+          // Elementos de navegación
+          '.nav-link', '.menu-item', '.header-link',
+          // Elementos de formulario
+          'input', 'textarea', 'select', 'label[for]',
+          // Elementos con cursor pointer
+          '[style*="cursor: pointer"]', '[style*="cursor:pointer"]',
+          // Elementos con data attributes que indican interactividad
+          '[data-clickable]', '[data-interactive]', '[data-link]',
+          // Elementos específicos del portfolio de Karen
+          '.flip-text-container', '.experience-card', '.skill-card',
+          '.social-link', '.contact-link', '.download-link',
+          // Elementos con hover effects
+          '.hover\\:scale-', '.hover\\:bg-', '.hover\\:text-',
+          // Elementos de Motion.dev que pueden ser clickeables
+          '[whiletap]', '[whilehover]',
+          // SVGs y iconos clickeables
+          'svg[role="button"]', '.icon[role="button"]', '.clickable-icon'
+        ];
         
-        interactiveElements.forEach(element => {
-          element.addEventListener('mouseenter', (e) => {
-            const variant = getElementVariant(element);
-            showBubble(e.clientX, e.clientY, variant);
-          });
+        const interactiveElements = document.querySelectorAll(interactiveSelectors.join(', '));
+        
+        console.log(`ClickBubble: Found ${interactiveElements.length} interactive elements`);
+        
+        interactiveElements.forEach((element, index) => {
+          // Verificar si el elemento ya tiene los event listeners para evitar duplicados
+          if (element.hasAttribute('data-bubble-attached')) {
+            return;
+          }
           
-          element.addEventListener('mouseleave', () => {
-            hideBubble();
-          });
+          // Marcar el elemento como procesado
+          element.setAttribute('data-bubble-attached', 'true');
+          
+          // Verificar si el elemento es realmente clickeable
+          const isClickable = (
+            element.tagName === 'A' ||
+            element.tagName === 'BUTTON' ||
+            (element as HTMLInputElement).type === 'submit' ||
+            element.getAttribute('role') === 'button' ||
+            (element as any).onclick ||
+            element.getAttribute('href') ||
+            window.getComputedStyle(element).cursor === 'pointer' ||
+            element.classList.contains('clickable') ||
+            element.classList.contains('magnetic-button') ||
+            element.classList.contains('realism-button')
+          );
+          
+          if (isClickable) {
+            element.addEventListener('mouseenter', (e) => {
+              const variant = getElementVariant(element);
+              showBubble(e.clientX, e.clientY, variant);
+            });
+            
+            element.addEventListener('mouseleave', () => {
+              hideBubble();
+            });
 
-          element.addEventListener('mousemove', (e) => {
-            updateBubbleOnMove(e.clientX, e.clientY);
-          });
+            element.addEventListener('mousemove', (e) => {
+              updateBubbleOnMove(e.clientX, e.clientY);
+            });
+          }
         });
       };
 
       // Inicializar el loop de animación
       updateBubblePosition();
 
-      // Inicializar efectos
-      addBubbleEffects();
+      // Inicializar efectos con delay para asegurar que todos los componentes estén cargados
+      const initializeBubbleEffects = () => {
+        addBubbleEffects();
+        
+        // Re-aplicar después de un breve delay para capturar elementos que se cargan dinámicamente
+        setTimeout(() => {
+          console.log('ClickBubble: Second initialization pass');
+          addBubbleEffects();
+        }, 1000);
+      };
+
+      // Inicializar inmediatamente
+      initializeBubbleEffects();
+      
+      // También inicializar cuando el DOM esté completamente cargado
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeBubbleEffects);
+      }
+      
+      // Y una vez más cuando la página esté completamente cargada (incluyendo imágenes, etc.)
+      window.addEventListener('load', () => {
+        setTimeout(initializeBubbleEffects, 500);
+      });
 
       // Re-aplicar efectos cuando se cargue nuevo contenido dinámico
-      const observer = new MutationObserver(() => {
-        addBubbleEffects();
+      const observer = new MutationObserver((mutations) => {
+        let shouldReapply = false;
+        
+        mutations.forEach((mutation) => {
+          // Solo re-aplicar si se agregaron nuevos nodos
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            mutation.addedNodes.forEach((node) => {
+              // Verificar si el nodo agregado es un elemento o contiene elementos
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                shouldReapply = true;
+              }
+            });
+          }
+        });
+        
+        if (shouldReapply) {
+          // Pequeño delay para asegurar que el DOM esté completamente actualizado
+          setTimeout(() => {
+            console.log('ClickBubble: Re-applying effects due to DOM changes');
+            addBubbleEffects();
+          }, 100);
+        }
       });
 
       observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: false, // No necesitamos observar cambios de atributos
+        characterData: false // No necesitamos observar cambios de texto
       });
 
       // Limpiar al descargar la página
