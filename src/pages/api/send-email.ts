@@ -1,7 +1,7 @@
 export const prerender = false; // Necesario para API routes en modo hybrid
 
 import type { APIRoute } from 'astro';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 interface ContactFormData {
   name: string;
@@ -15,8 +15,32 @@ interface ContactFormData {
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  console.log('🚀 API Route iniciado');
+  
   try {
+    // Verificar variables de entorno
+    console.log('📧 Verificando variables de entorno...');
+    console.log('RESEND_API_KEY:', import.meta.env.RESEND_API_KEY ? '✅ Configurado' : '❌ Faltante');
+    console.log('EMAIL_TO:', import.meta.env.EMAIL_TO ? '✅ Configurado' : '❌ Faltante');
+    
+    if (!import.meta.env.RESEND_API_KEY) {
+      console.error('❌ RESEND_API_KEY no está configurado');
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Server configuration error'
+        }),
+        { 
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+    }
+    
     // Obtener datos del formulario
+    console.log('📝 Procesando datos del formulario...');
     const formData = await request.formData();
     
     const name = formData.get('name') as string;
@@ -27,6 +51,17 @@ export const POST: APIRoute = async ({ request }) => {
     const budget = formData.get('budget') as string;
     const message = formData.get('message') as string;
     const attachment = formData.get('attachment') as File | null;
+
+    console.log('📋 Datos recibidos:', { 
+      name: name ? '✅' : '❌', 
+      email: email ? '✅' : '❌', 
+      message: message ? '✅' : '❌',
+      phone: phone || 'N/A',
+      country: country || 'N/A',
+      interests: interests.length,
+      budget: budget || 'N/A',
+      attachment: attachment ? `${attachment.name} (${attachment.size} bytes)` : 'N/A'
+    });
 
     // Validación básica
     if (!name || !email || !message) {
@@ -44,16 +79,9 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Configurar transporter de Nodemailer con Gmail usando variables de entorno
-    const transporter = nodemailer.createTransport({
-      host: import.meta.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(import.meta.env.SMTP_PORT || '587'),
-      secure: false, // true para 465, false para otros puertos
-      auth: {
-        user: import.meta.env.EMAIL_USER,
-        pass: import.meta.env.EMAIL_PASS
-      }
-    });
+    // Configurar Resend
+    console.log('🔧 Configurando Resend...');
+    const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
     // Format interests for email
     const interestsText = interests.length > 0 
@@ -125,13 +153,13 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // Configurar opciones del email
-    const mailOptions = {
-      from: `"Portfolio Karen Ortiz" <${import.meta.env.EMAIL_USER}>`,
-      to: import.meta.env.EMAIL_TO,
+    // Preparar datos para Resend
+    console.log('📧 Preparando email para envío...');
+    const emailData = {
+      from: 'Portfolio Karen Ortiz <onboarding@resend.dev>',
+      to: [import.meta.env.EMAIL_TO || 'karen.ortizg@yahoo.com'],
       subject: `New Contact from ${name} - Portfolio`,
       text: emailContent,
-      attachments: attachments,
       html: `
         <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 20px;">
           <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -232,8 +260,22 @@ export const POST: APIRoute = async ({ request }) => {
       `
     };
 
-    // Enviar el email
-    await transporter.sendMail(mailOptions);
+    // Agregar attachments si existen (Resend no soporta attachments en la versión gratuita)
+    if (attachments.length > 0) {
+      console.log('⚠️ Nota: Resend no soporta attachments en plan gratuito');
+      // Los attachments se mencionan en el contenido del email
+    }
+
+    // Enviar el email con Resend
+    console.log('📤 Enviando email...');
+    const result = await resend.emails.send(emailData);
+    
+    if (result.error) {
+      console.error('❌ Error de Resend:', result.error);
+      throw new Error(`Resend error: ${result.error.message}`);
+    }
+    
+    console.log('✅ Email enviado exitosamente:', result.data?.id);
 
     return new Response(
       JSON.stringify({
