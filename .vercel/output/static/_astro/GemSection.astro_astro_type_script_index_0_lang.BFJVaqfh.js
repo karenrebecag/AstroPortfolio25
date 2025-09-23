@@ -1,0 +1,1 @@
+import{s as l}from"./index.B44lpDEV.js";import"./is-svg-element.D5u9GjhD.js";import"./is-html-element.DJVApvXA.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".gem-section"),t=document.querySelector(".skills-scroll");if(e&&t){const o=t.scrollWidth-t.clientWidth;o>0&&l(c=>{t.scrollLeft=c*o},{target:e,offset:["start center","end center"]})}});

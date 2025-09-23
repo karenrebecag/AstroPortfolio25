@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.3.1",
+    "@astrojs/vercel": "^8.2.8",
     "@number-flow/react": "^0.5.10",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
