@@ -170,10 +170,10 @@
       let targetX = 0;
       let targetY = 0;
       let isVisible = false;
-      let hideTimeout = null;
+      let hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
       // Función para interpolar suavemente la posición
-      const lerp = (start, end, factor) => {
+      const lerp = (start: number, end: number, factor: number): number => {
         return start + (end - start) * factor;
       };
 
@@ -189,7 +189,7 @@
       };
 
       // Función para mostrar el bubble
-      const showBubble = (x, y, variant = 'default') => {
+      const showBubble = (x: number, y: number, variant: string = 'default') => {
         if (hideTimeout) {
           clearTimeout(hideTimeout);
           hideTimeout = null;
@@ -226,7 +226,7 @@
       };
 
       // Función para actualizar posición del bubble mientras se mueve el mouse
-      const updateBubbleOnMove = (x, y) => {
+      const updateBubbleOnMove = (x: number, y: number) => {
         if (isVisible) {
           targetX = x;
           targetY = y;
@@ -234,7 +234,7 @@
       };
 
       // Función para determinar la variante según el tipo de elemento
-      const getElementVariant = (element) => {
+      const getElementVariant = (element: Element): string => {
         if (element.matches('button[type="submit"], .btn-primary, .primary-button')) {
           return 'primary';
         }
@@ -304,8 +304,9 @@
           
           if (isClickable) {
             element.addEventListener('mouseenter', (e) => {
+              const mouseEvent = e as MouseEvent;
               const variant = getElementVariant(element);
-              showBubble(e.clientX, e.clientY, variant);
+              showBubble(mouseEvent.clientX, mouseEvent.clientY, variant);
             });
             
             element.addEventListener('mouseleave', () => {
@@ -313,7 +314,8 @@
             });
 
             element.addEventListener('mousemove', (e) => {
-              updateBubbleOnMove(e.clientX, e.clientY);
+              const mouseEvent = e as MouseEvent;
+              updateBubbleOnMove(mouseEvent.clientX, mouseEvent.clientY);
             });
           }
         });

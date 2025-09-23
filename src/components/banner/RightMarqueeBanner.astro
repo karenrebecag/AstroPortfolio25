@@ -40,7 +40,7 @@
       }
       
       // Aplicar transformación
-      rightMarquee.style.transform = `translateX(${rightPosition}px)`;
+      (rightMarquee as HTMLElement).style.transform = `translateX(${rightPosition}px)`;
       
       requestAnimationFrame(animateRightMarquee);
     }

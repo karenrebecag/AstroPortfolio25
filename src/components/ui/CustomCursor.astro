@@ -86,12 +86,12 @@
       let lastY = 0;
 
       // Función para interpolar suavemente la posición del cursor
-      const lerp = (start, end, factor) => {
+      const lerp = (start: number, end: number, factor: number): number => {
         return start + (end - start) * factor;
       };
 
       // Función para calcular el ángulo de rotación basado en la dirección del movimiento
-      const calculateRotation = (deltaX, deltaY) => {
+      const calculateRotation = (deltaX: number, deltaY: number): number => {
         if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return targetRotation;
         // Ajustar la rotación para que el cursor apunte en la dirección correcta del movimiento
         // Añadimos +90 grados para compensar la orientación inicial del SVG
@@ -110,7 +110,7 @@
       };
 
       // Función para capturar la posición del mouse
-      const handleMouseMove = (e) => {
+      const handleMouseMove = (e: MouseEvent) => {
         const deltaX = e.clientX - lastX;
         const deltaY = e.clientY - lastY;
 
@@ -128,7 +128,7 @@
       };
 
       // Mostrar cursor cuando el mouse entra en la página
-      const showCursor = (e) => {
+      const showCursor = (e?: MouseEvent) => {
         if (!isActive) {
           isActive = true;
           body.classList.add('custom-cursor-active');

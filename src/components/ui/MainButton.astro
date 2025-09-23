@@ -226,15 +226,16 @@ const Tag = href ? 'a' : 'button';
     
     buttons.forEach(button => {
       button.addEventListener('mouseenter', function(e) {
+        const mouseEvent = e as MouseEvent;
         const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = mouseEvent.clientX - rect.left;
+        const y = mouseEvent.clientY - rect.top;
         
-        button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        (button as HTMLElement).style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
       });
       
       button.addEventListener('mouseleave', function() {
-        button.style.transform = 'translate(0px, 0px)';
+        (button as HTMLElement).style.transform = 'translate(0px, 0px)';
       });
     });
   });

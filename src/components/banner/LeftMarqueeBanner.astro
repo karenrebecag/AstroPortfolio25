@@ -40,7 +40,7 @@
       }
       
       // Aplicar transformación
-      leftMarquee.style.transform = `translateX(${leftPosition}px)`;
+      (leftMarquee as HTMLElement).style.transform = `translateX(${leftPosition}px)`;
       
       requestAnimationFrame(animateLeftMarquee);
     }

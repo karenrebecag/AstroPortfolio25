@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import FlipText from './FlipText';
-import Tag from './Tag.astro';
 
 interface ServiceItemProps {
   number: string;
