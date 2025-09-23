@@ -1,6 +1,10 @@
 ---
 // CV Header component - Dark mode variation
 import MainButton from './MainButton.astro';
+import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
+import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <div class="cv-header-wrapper" id="cvHeaderWrapper">
@@ -15,8 +19,11 @@ import MainButton from './MainButton.astro';
       <a href="#education">Education</a>
     </nav>
     
-    <div class="cv-contact-btn-wrapper">
-      <MainButton text="Contact Me" href="#contact" />
+    <div class="cv-header-actions-wrapper">
+      <div class="cv-contact-btn-wrapper">
+        <MainButton text={t('nav.contact', lang)} href="#contact" />
+      </div>
+      <LanguageSelectorWrapper />
     </div>
     
     <button class="cv-menu-btn" id="cvMenuBtn">
@@ -43,7 +50,23 @@ import MainButton from './MainButton.astro';
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#education">Education</a>
-      <button class="cv-mobile-contact-btn">Contact Me</button>
+      <button class="cv-mobile-contact-btn">{t('nav.contact', lang)}</button>
+
+      <!-- Mobile Language Selector -->
+      <div class="cv-mobile-language-section">
+        <div class="cv-mobile-language-title">Language / Idioma</div>
+        <div class="cv-mobile-language-list">
+          {languageOptions.map((language) => (
+            <a
+              href={useTranslatedPath(language.code, Astro.url.pathname)}
+              class={`cv-mobile-language-option ${lang === language.code ? 'active' : ''}`}
+            >
+              <span class="flag">{language.flag}</span>
+              <span class="name">{language.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
     </nav>
   </div>
 </div>
@@ -142,6 +165,12 @@ import MainButton from './MainButton.astro';
 
   .cv-nav a:hover::after {
     width: 100%;
+  }
+
+  .cv-header-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .cv-contact-btn-wrapper {
@@ -326,6 +355,97 @@ import MainButton from './MainButton.astro';
     color: #000000 !important;
   }
 
+  /* CV Mobile Language Selector Styles */
+  .cv-mobile-language-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    transition-delay: 0.6s;
+  }
+
+  .cv-mobile-menu.open .cv-mobile-language-section {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cv-mobile-language-title {
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-display);
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cv-mobile-language-list {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Custom scrollbar for mobile */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  .cv-mobile-language-list::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .cv-mobile-language-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .cv-mobile-language-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .cv-mobile-language-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-family: var(--font-display);
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .cv-mobile-language-option:last-child {
+    border-bottom: none;
+  }
+
+  .cv-mobile-language-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+  }
+
+  .cv-mobile-language-option.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .cv-mobile-language-option .flag {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .cv-mobile-language-option .name {
+    flex: 1;
+    font-weight: 400;
+  }
+
   /* Close Button Styles */
   .cv-mobile-close-btn {
     position: absolute;
@@ -378,12 +498,17 @@ import MainButton from './MainButton.astro';
     }
   }
 
-  @media (max-width: 768px) {
-    .cv-nav,
-    .cv-contact-btn-wrapper {
+  @media (max-width: 1200px) {
+    .cv-nav {
       display: none;
     }
-    
+  }
+
+  @media (max-width: 768px) {
+    .cv-header-actions-wrapper {
+      display: none;
+    }
+
     .cv-menu-btn {
       display: flex;
     }
@@ -395,7 +520,7 @@ import MainButton from './MainButton.astro';
 
   document.addEventListener('DOMContentLoaded', () => {
     // Header scroll behavior
-    const headerWrapper = document.getElementById('cvHeaderWrapper');
+    const headerWrapper = document.querySelector('.cv-header-wrapper');
     let lastScrollY = window.scrollY;
     let isScrolling = false;
 
@@ -465,18 +590,32 @@ import MainButton from './MainButton.astro';
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Mobile menu functionality
-    const menuBtn = document.getElementById('cvMenuBtn');
-    const mobileMenu = document.getElementById('cvMobileMenu');
+    // Mobile menu functionality - using classes instead of IDs to avoid Astro scope issues
+    const allMenuBtns = document.querySelectorAll('.cv-menu-btn');
+    const allMobileMenus = document.querySelectorAll('.cv-mobile-menu');
+    const menuBtn = allMenuBtns[0]; // Keep reference for logging
+    const mobileMenu = allMobileMenus[0]; // Keep reference for logging
     const mobileNav = document.querySelector('.cv-mobile-nav');
     const navLinks = document.querySelectorAll('.cv-mobile-nav a');
     const contactBtn = document.querySelector('.cv-mobile-contact-btn');
+
+    console.log('CV Mobile menu elements found:');
+    console.log('menuBtn:', menuBtn);
+    console.log('mobileMenu:', mobileMenu);
+    console.log('mobileNav:', mobileNav);
+    console.log('navLinks:', navLinks.length);
+    console.log('contactBtn:', contactBtn);
     
     let isOpen = false;
 
     const openMenu = () => {
       isOpen = true;
       mobileMenu?.classList.add('open');
+
+      // Block body scrolling
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
       
       // Reset initial states
       if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
@@ -518,7 +657,7 @@ import MainButton from './MainButton.astro';
       isOpen = false;
       
       // Animate close button first
-      const closeBtn = document.getElementById('cvMobileCloseBtn');
+      const closeBtn = document.querySelector('.cv-mobile-close-btn');
       if (closeBtn) {
         animate(closeBtn, 
           { opacity: 0, transform: 'rotate(-90deg) scale(0.8)' }, 
@@ -551,19 +690,48 @@ import MainButton from './MainButton.astro';
       // Remove class after animation
       setTimeout(() => {
         mobileMenu?.classList.remove('open');
+
+        // Restore body scrolling
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
       }, 500);
     };
 
-    menuBtn?.addEventListener('click', () => {
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+    // Add event listeners to ALL menu buttons since there might be duplicates
+    console.log(`Found ${allMenuBtns.length} CV menu buttons, adding event listeners to all...`);
+
+    allMenuBtns.forEach((btn, index) => {
+      console.log(`Adding event listeners to CV menu button ${index}...`);
+
+      btn.addEventListener('click', (e) => {
+        console.log(`CV CLICK EVENT DETECTED on button ${index}! Current isOpen state:`, isOpen);
+        e.preventDefault();
+        e.stopPropagation();
+        if (isOpen) {
+          console.log('Closing CV menu...');
+          closeMenu();
+        } else {
+          console.log('Opening CV menu...');
+          openMenu();
+        }
+      });
+
+      btn.addEventListener('touchstart', (e) => {
+        console.log(`CV TOUCHSTART EVENT DETECTED on button ${index}!`);
+      });
+
+      btn.addEventListener('mousedown', (e) => {
+        console.log(`CV MOUSEDOWN EVENT DETECTED on button ${index}!`);
+      });
     });
+
+    if (allMenuBtns.length === 0) {
+      console.error('No CV menu buttons found!');
+    }
     
     // Close button functionality
-    const cvMobileCloseBtn = document.getElementById('cvMobileCloseBtn');
+    const cvMobileCloseBtn = document.querySelector('.cv-mobile-close-btn');
     cvMobileCloseBtn?.addEventListener('click', () => {
       if (isOpen) {
         closeMenu();
@@ -597,7 +765,7 @@ import MainButton from './MainButton.astro';
       const targetElement = document.getElementById(targetId.replace('#', ''));
       if (targetElement) {
         const headerHeight = 80; // Account for fixed header
-        const targetPosition = targetElement.offsetTop - headerHeight;
+        const targetPosition = (targetElement as HTMLElement).offsetTop - headerHeight;
         
         window.scrollTo({
           top: targetPosition,

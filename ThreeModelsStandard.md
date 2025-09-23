@@ -110,7 +110,7 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
     const handleVisibilityChange = () => {
       useSilkStore.getState().setPaused(document.hidden);
     };
-    
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);

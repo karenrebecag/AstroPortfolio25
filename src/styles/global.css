@@ -1,4 +1,5 @@
 @import './fonts.css';
+@import './i18n-fonts.css';
 @import "tailwindcss";
 
 /* Enhanced base styles using our custom fonts */

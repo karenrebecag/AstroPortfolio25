@@ -402,13 +402,7 @@ const GetInTouchIsland: React.FC = () => {
         </motion.div>
 
         {/* Attachment Section */}
-        <motion.div 
-          className="attachment-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 1.1 }}
-        >
+        <div className="attachment-section">
           <motion.label 
             htmlFor="file-upload" 
             className="attachment-button clickable"
@@ -454,16 +448,10 @@ const GetInTouchIsland: React.FC = () => {
           <div className="file-specs">
             <span>Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Submit Button */}
-        <motion.div 
-          className="submit-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-        >
+        <div className="submit-section">
           <motion.button 
             type="submit" 
             disabled={isSubmitting}
@@ -485,7 +473,7 @@ const GetInTouchIsland: React.FC = () => {
               )}
             </div>
           </motion.button>
-        </motion.div>
+        </div>
       </motion.form>
 
       {/* Toast Container */}

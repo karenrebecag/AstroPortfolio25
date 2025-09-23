@@ -1,0 +1,227 @@
+---
+import { getLangFromUrl, languageOptions } from '../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
+const currentLanguage = languageOptions.find(l => l.code === lang);
+---
+
+<div class="simple-lang-selector">
+  <button class="lang-trigger" id="simpleLangToggle">
+    <span>{currentLanguage?.flag} {lang.toUpperCase()}</span>
+    <span class="arrow">▼</span>
+  </button>
+
+  <div class="lang-dropdown" id="simpleLangDropdown">
+    {languageOptions.map((language) => (
+      <a href={`/${language.code === 'en' ? '' : language.code}`} class="lang-option">
+        {language.flag} {language.name}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+.simple-lang-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-trigger {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.lang-trigger:hover {
+  border-color: #999;
+}
+
+.arrow {
+  transition: transform 0.2s;
+  font-size: 10px;
+}
+
+.lang-trigger.open .arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: none;
+}
+
+.lang-dropdown.show {
+  display: block;
+}
+
+.lang-option {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.lang-option:last-child {
+  border-bottom: none;
+}
+
+.lang-option:hover {
+  background: #f5f5f5;
+}
+</style>
+
+<script>
+console.log('🌍 Language selector script loading...');
+
+function initLangSelector() {
+  console.log('🔧 Starting language selector initialization...');
+
+  const trigger = document.getElementById('simpleLangToggle');
+  const dropdown = document.getElementById('simpleLangDropdown');
+
+  console.log('🔍 Elements search result:', {
+    trigger: trigger ? '✅ Found' : '❌ Not found',
+    dropdown: dropdown ? '✅ Found' : '❌ Not found',
+    triggerElement: trigger,
+    dropdownElement: dropdown
+  });
+
+  if (!trigger || !dropdown) {
+    console.error('❌ Language selector elements missing!');
+    return;
+  }
+
+  let isOpen = false;
+  console.log('✅ Language selector ready, adding event listeners...');
+
+  // Add multiple event debugging
+  trigger.addEventListener('mousedown', function(e) {
+    console.log('🖱️ MOUSEDOWN detected on trigger');
+  });
+
+  trigger.addEventListener('mouseup', function(e) {
+    console.log('🖱️ MOUSEUP detected on trigger');
+  });
+
+  trigger.addEventListener('click', function(e) {
+    console.log('🖱️ CLICK EVENT FIRED!');
+    console.log('📊 Event details:', {
+      type: e.type,
+      target: e.target,
+      currentTarget: e.currentTarget,
+      bubbles: e.bubbles,
+      cancelable: e.cancelable,
+      defaultPrevented: e.defaultPrevented
+    });
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log('🔄 Before toggle - isOpen:', isOpen);
+    isOpen = !isOpen;
+    console.log('🔄 After toggle - isOpen:', isOpen);
+
+    if (isOpen) {
+      console.log('📂 Opening dropdown...');
+      trigger.classList.add('open');
+      dropdown.classList.add('show');
+      dropdown.style.display = 'block';
+      dropdown.style.visibility = 'visible';
+      dropdown.style.opacity = '1';
+      console.log('✅ Dropdown should be visible now');
+      console.log('📏 Dropdown computed styles:', {
+        display: getComputedStyle(dropdown).display,
+        visibility: getComputedStyle(dropdown).visibility,
+        opacity: getComputedStyle(dropdown).opacity,
+        zIndex: getComputedStyle(dropdown).zIndex
+      });
+    } else {
+      console.log('📁 Closing dropdown...');
+      trigger.classList.remove('open');
+      dropdown.classList.remove('show');
+      dropdown.style.display = 'none';
+      console.log('✅ Dropdown closed');
+    }
+  });
+
+  // Test if element is actually clickable
+  trigger.style.pointerEvents = 'auto';
+  trigger.style.cursor = 'pointer';
+  trigger.style.border = '2px solid red'; // Temporary visual debug
+  trigger.style.zIndex = '9999'; // Force on top
+  trigger.style.position = 'relative'; // Ensure positioning context
+
+  // Alternative event binding method
+  trigger.onclick = function(e) {
+    console.log('🚨 ONCLICK FIRED!');
+    console.log('Event:', e);
+    e.preventDefault();
+    e.stopPropagation();
+
+    isOpen = !isOpen;
+    console.log('New state:', isOpen);
+
+    if (isOpen) {
+      dropdown.style.display = 'block';
+      dropdown.style.background = 'yellow'; // Make it super obvious
+      dropdown.style.border = '3px solid blue';
+      dropdown.style.padding = '20px';
+      dropdown.innerHTML = '<div style="color: black; font-size: 16px;">DROPDOWN IS WORKING!</div>';
+    } else {
+      dropdown.style.display = 'none';
+    }
+  };
+
+  // Also test with direct attachment
+  trigger.setAttribute('onclick', 'console.log("Direct onclick works!")');
+
+  console.log('🔧 Trigger element details:', {
+    tagName: trigger.tagName,
+    id: trigger.id,
+    className: trigger.className,
+    offsetParent: trigger.offsetParent,
+    style: trigger.style.cssText,
+    computedStyle: getComputedStyle(trigger)
+  });
+
+  console.log('🎯 Added red border to trigger for visual debugging');
+  console.log('✅ Language selector fully initialized!');
+}
+
+// Try multiple initialization approaches
+console.log('📚 Document ready state:', document.readyState);
+
+if (document.readyState === 'loading') {
+  console.log('⏳ Waiting for DOMContentLoaded...');
+  document.addEventListener('DOMContentLoaded', initLangSelector);
+} else {
+  console.log('🚀 DOM already loaded, initializing immediately...');
+  initLangSelector();
+}
+
+// Backup initialization
+setTimeout(function() {
+  console.log('⏰ Backup initialization (250ms)...');
+  initLangSelector();
+}, 250);
+
+setTimeout(function() {
+  console.log('⏰ Secondary backup initialization (1000ms)...');
+  initLangSelector();
+}, 1000);
+</script>

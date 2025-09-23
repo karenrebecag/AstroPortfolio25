@@ -279,12 +279,12 @@
 
         interactiveElements.forEach((element) => {
           // Verificar si el elemento ya tiene los event listeners para evitar duplicados
-          if (element.hasAttribute('data-bubble-attached')) {
+          if (element.classList.contains('bubble-attached')) {
             return;
           }
-          
-          // Marcar el elemento como procesado
-          element.setAttribute('data-bubble-attached', 'true');
+
+          // Marcar el elemento como procesado usando una clase en lugar de atributo
+          element.classList.add('bubble-attached');
           
           // Verificar si el elemento es realmente clickeable
           const isClickable = (

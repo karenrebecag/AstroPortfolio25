@@ -13,5 +13,25 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()]
+  },
+  i18n: {
+    defaultLocale: "en",
+    locales: [
+      "en",    // English (default)
+      "es",    // Español
+      "fr",    // Français
+      "hi",    // हिन्दी (Hindi)
+      "ja",    // 日本語 (Japanese)
+      "zh-cn", // 简体中文 (Chinese Simplified)
+      "zh-tw"  // 繁體中文 (Chinese Traditional)
+    ],
+    routing: {
+      prefixDefaultLocale: false,
+      fallbackType: "rewrite"
+    },
+    fallback: {
+      "zh-tw": "zh-cn",
+      "hi": "en"
+    }
   }
 });
