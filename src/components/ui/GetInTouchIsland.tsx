@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip } from 'lucide-react';
+import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip, Send, Loader2, User, Globe, X, FileText } from 'lucide-react';
 import FlipText from './FlipText.tsx';
+import { useToast } from './ToastContainer.tsx';
+import { TextDisperse } from './TextDisperse.tsx';
 
 interface FormData {
+  name: string;
   email: string;
   phone: string;
+  country: string;
   interests: string[];
   budget: string;
   message: string;
@@ -14,8 +18,10 @@ interface FormData {
 
 const GetInTouchIsland: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
+    name: '',
     email: '',
     phone: '',
+    country: '',
     interests: [],
     budget: '',
     message: '',
@@ -24,6 +30,10 @@ const GetInTouchIsland: React.FC = () => {
 
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Hook de toasts
+  const { showSuccess, showError, ToastContainer } = useToast();
 
   const interestOptions = [
     'Website Design',
@@ -57,16 +67,96 @@ const GetInTouchIsland: React.FC = () => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
+    
+    if (file) {
+      // Validar tamaño del archivo (máximo 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        showError('File is too large. Maximum size is 10MB.');
+        // Limpiar el input
+        event.target.value = '';
+        return;
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       attachment: file
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleRemoveFile = () => {
+    setFormData(prev => ({
+      ...prev,
+      attachment: null
+    }));
+    // Limpiar el input file
+    const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('Form submitted:', formData);
-    // Aquí iría la lógica de envío del formulario
+    
+    // Validación básica
+    if (!formData.name || !formData.email || !formData.message) {
+      showError('Please complete name, email and message fields');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Crear FormData para enviar al API
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('email', formData.email);
+      submitData.append('phone', formData.phone);
+      submitData.append('country', formData.country);
+      submitData.append('message', formData.message);
+      submitData.append('budget', formData.budget);
+      
+      // Agregar intereses como array
+      formData.interests.forEach(interest => {
+        submitData.append('interests', interest);
+      });
+
+      // Agregar archivo si existe
+      if (formData.attachment) {
+        submitData.append('attachment', formData.attachment);
+      }
+
+      // Enviar al API route
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        body: submitData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showSuccess('Message sent successfully! I will contact you soon.');
+        // Limpiar formulario
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          country: '',
+          interests: [],
+          budget: '',
+          message: '',
+          attachment: null
+        });
+      } else {
+        showError(result.message || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error enviando formulario:', error);
+      showError('Connection error. Please check your internet and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -90,16 +180,22 @@ const GetInTouchIsland: React.FC = () => {
         </motion.div>
         <motion.div 
           className="contact-title"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <FlipText text="Get" isHovered={isHovered} className="text-white font-display" />
-          <FlipText text="In" isHovered={isHovered} className="text-white font-display" />
-          <FlipText text="Touch" isHovered={isHovered} className="text-white font-display" />
+          <TextDisperse 
+            text="Get In Touch"
+            className="text-white font-display"
+            style={{
+              fontSize: 'clamp(60px, 8vw, 100px)',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 400,
+              lineHeight: '64px',
+              color: 'white'
+            }}
+          />
         </motion.div>
         
         <motion.p 
@@ -132,7 +228,7 @@ const GetInTouchIsland: React.FC = () => {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, delay: 0.3 }}
       >
-        {/* Email and Phone Row */}
+        {/* Name and Email Row */}
         <motion.div 
           className="form-row"
           initial={{ opacity: 0, y: 30 }}
@@ -142,13 +238,31 @@ const GetInTouchIsland: React.FC = () => {
         >
           <div className="form-field">
             <label className="field-label">
+              <User size={18} className="inline-block" />
+              Your Name
+            </label>
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="John Smith"
+                value={formData.name}
+                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                onFocus={() => setFocusedField('name')}
+                onBlur={() => setFocusedField(null)}
+                className={`field-input ${focusedField === 'name' ? 'focused' : ''}`}
+              />
+              <div className="field-underline"></div>
+            </div>
+          </div>
+          <div className="form-field">
+            <label className="field-label">
               <Mail size={18} className="inline-block" />
               Your Email
             </label>
             <div className="input-container">
               <input
                 type="email"
-                placeholder="Enter the Email"
+                placeholder="john@company.com"
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                 onFocus={() => setFocusedField('email')}
@@ -158,6 +272,16 @@ const GetInTouchIsland: React.FC = () => {
               <div className="field-underline"></div>
             </div>
           </div>
+        </motion.div>
+
+        {/* Phone and Country Row */}
+        <motion.div 
+          className="form-row"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
           <div className="form-field">
             <label className="field-label">
               <Phone size={18} className="inline-block" />
@@ -166,12 +290,30 @@ const GetInTouchIsland: React.FC = () => {
             <div className="input-container">
               <input
                 type="tel"
-                placeholder="Enter your phone number"
+                placeholder="+52 123 4444 4444"
                 value={formData.phone}
                 onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                 onFocus={() => setFocusedField('phone')}
                 onBlur={() => setFocusedField(null)}
                 className={`field-input ${focusedField === 'phone' ? 'focused' : ''}`}
+              />
+              <div className="field-underline"></div>
+            </div>
+          </div>
+          <div className="form-field">
+            <label className="field-label">
+              <Globe size={18} className="inline-block" />
+              Country
+            </label>
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Mexico, United States, Canada"
+                value={formData.country}
+                onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                onFocus={() => setFocusedField('country')}
+                onBlur={() => setFocusedField(null)}
+                className={`field-input ${focusedField === 'country' ? 'focused' : ''}`}
               />
               <div className="field-underline"></div>
             </div>
@@ -184,7 +326,7 @@ const GetInTouchIsland: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
           <label className="field-label">
             <Heart size={18} className="inline-block" />
@@ -200,7 +342,7 @@ const GetInTouchIsland: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.4, delay: 0.6 + (index * 0.1) }}
+                transition={{ duration: 0.4, delay: 0.7 + (index * 0.1) }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -216,11 +358,11 @@ const GetInTouchIsland: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
         >
           <label className="field-label">
             <DollarSign size={18} className="inline-block" />
-            Your Budget
+            Your Budget (USD)
           </label>
           <div className="budget-options">
             {budgetOptions.map((budget, index) => (
@@ -232,7 +374,7 @@ const GetInTouchIsland: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.4, delay: 0.8 + (index * 0.1) }}
+                transition={{ duration: 0.4, delay: 0.9 + (index * 0.1) }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -248,7 +390,7 @@ const GetInTouchIsland: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.9 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
         >
           <label className="field-label">
             <MessageSquare size={18} className="inline-block" />
@@ -273,7 +415,7 @@ const GetInTouchIsland: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 1.0 }}
+          transition={{ duration: 0.6, delay: 1.1 }}
         >
           <motion.label 
             htmlFor="file-upload" 
@@ -293,14 +435,33 @@ const GetInTouchIsland: React.FC = () => {
           />
           {formData.attachment && (
             <motion.div 
-              className="attachment-preview"
+              className="attachment-tag"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <span>{formData.attachment.name}</span>
+              <div className="attachment-tag-content">
+                <FileText size={16} className="attachment-icon" />
+                <div className="attachment-info">
+                  <span className="attachment-name">{formData.attachment.name}</span>
+                  <span className="attachment-size">{(formData.attachment.size / 1024).toFixed(1)} KB</span>
+                </div>
+                <motion.button
+                  type="button"
+                  onClick={handleRemoveFile}
+                  className="remove-attachment-btn"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={14} />
+                </motion.button>
+              </div>
             </motion.div>
           )}
+          <div className="file-specs">
+            <span>Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG</span>
+          </div>
         </motion.div>
 
         {/* Submit Button */}
@@ -309,26 +470,34 @@ const GetInTouchIsland: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 1.1 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
         >
           <motion.button 
             type="submit" 
-            className="submit-button clickable"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            disabled={isSubmitting}
+            className={`submit-button clickable ${isSubmitting ? 'submitting' : ''}`}
+            whileHover={!isSubmitting ? { scale: 1.05, y: -2 } : {}}
+            whileTap={!isSubmitting ? { scale: 0.95 } : {}}
             transition={{ duration: 0.2 }}
+            style={{
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }}
           >
-            <span>Send Request</span>
+            <span>{isSubmitting ? 'Sending...' : 'Send Request'}</span>
             <div className="submit-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {isSubmitting ? (
+                <Loader2 size={18} className="animate-spin" color="white" />
+              ) : (
+                <Send size={18} color="white" />
+              )}
             </div>
           </motion.button>
         </motion.div>
       </motion.form>
 
-     
+      {/* Toast Container */}
+      <ToastContainer />
     </div>
   );
 };
