@@ -59,26 +59,21 @@ export const POST: APIRoute = async ({ request }) => {
       }
       
       try {
-        const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
-        console.log('🔍 Blob token disponible:', !!blobToken);
+        console.log('📤 Subiendo archivo a Vercel Blob...');
         
-        if (blobToken) {
-          console.log('📤 Subiendo archivo a Vercel Blob...');
-          const filename = `${Date.now()}-${attachment.name}`;
-          const blob = await put(filename, attachment, {
-            access: 'public',
-            token: blobToken,
-          });
-          
-          attachmentUrl = blob.url;
-          attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
-          console.log('✅ Archivo subido a:', attachmentUrl);
-        } else {
-          console.log('⚠️ BLOB_READ_WRITE_TOKEN no disponible');
-          attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
-        }
+        // Según la documentación oficial de Vercel Blob
+        const blob = await put(attachment.name, attachment, {
+          access: 'public',
+          addRandomSuffix: true, // Vercel agrega sufijo único automáticamente
+        });
+        
+        attachmentUrl = blob.url;
+        attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
+        console.log('✅ Archivo subido a:', attachmentUrl);
+        
       } catch (uploadError) {
         console.error('❌ Error subiendo archivo:', uploadError);
+        console.error('❌ Error details:', (uploadError as any)?.message);
         attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
       }
     }
