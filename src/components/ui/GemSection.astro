@@ -47,14 +47,14 @@ const softSkillsData = [
   <div class="gem-container">
     
     <!-- Gem 3D Background -->
-    <GemBackground client:visible className="gem-background" />
+    <GemBackground client:visible={{ rootMargin: "400px" }} className="gem-background" />
     
     <!-- Cards Container -->
     <div class="skills-container">
       <div class="skills-scroll">
         {softSkillsData.map((skill) => (
           <div class="skill-card">
-            <SilkBackground client:visible className="skill-card-background" />
+            <SilkBackground client:visible={{ rootMargin: "200px" }} className="skill-card-background" />
             <div class="skill-header">
               <div class="skill-number">{skill.id}</div>
             </div>

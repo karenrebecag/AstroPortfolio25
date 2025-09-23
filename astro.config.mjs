@@ -12,6 +12,33 @@ export default defineConfig({
   }),
   integrations: [react()],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    // ✅ Optimizaciones específicas para Three.js siguiendo la guía
+    optimizeDeps: {
+      include: ['three', 'three-stdlib', 'zustand'],
+      exclude: [] // Mantener vacío para mejor tree-shaking
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          // ✅ Chunks separados para Three.js - siguiendo recomendaciones
+          manualChunks: {
+            'three-core': ['three'],
+            'three-extras': ['three-stdlib'],
+            'state-management': ['zustand']
+          }
+        }
+      }
+    },
+    ssr: {
+      // ✅ Evitar SSR de Three.js - crítico para performance
+      noExternal: ['three', 'three-stdlib']
+    }
+  },
+  
+  // ✅ Prefetch selectivo siguiendo la guía
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'viewport'
   }
 });

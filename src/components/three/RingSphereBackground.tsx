@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RGBELoader } from 'three-stdlib';
 import { create } from 'zustand';
+import { useDeviceQuality } from '../../hooks/useDeviceQuality';
+import MaterialPool from '../../utils/MaterialPool';
 
 // Enhanced Zustand store for RingSphere performance control - siguiendo el mismo patrón que GemBackground
 const useRingSphereStore = create<{
@@ -52,6 +54,14 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
   
   const [isLoaded, setIsLoaded] = useState(false);
   const { isVisible, isPaused, isLoading, opacity, quality, rotationSpeed } = useRingSphereStore();
+  
+  // ✅ Detección automática de calidad siguiendo la guía
+  const deviceQuality = useDeviceQuality();
+  
+  // ✅ Actualizar calidad automáticamente basada en dispositivo
+  useEffect(() => {
+    useRingSphereStore.getState().setQuality(deviceQuality);
+  }, [deviceQuality]);
 
   // Intersection Observer - MISMO patrón que GemBackground
   useEffect(() => {
@@ -138,50 +148,17 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
       }
     });
 
-    // Crear material optimizado según calidad - MISMO que gem
+    // ✅ Usar MaterialPool para reutilizar materiales - siguiendo la guía
+    const materialPool = MaterialPool.getInstance();
     const createRingSphereMaterial = () => {
-      const baseConfig = {
-        transmission: 1.0,
-        thickness: 4.2,
-        ior: 2.4,
-        roughness: 0.0,
-        metalness: 0.1,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.01,
-        reflectivity: 1.0,
-        attenuationDistance: 0.5,
-        attenuationColor: new THREE.Color('#b8a3ff'),
-        color: new THREE.Color('#ffffff'),
-      };
-
-      // Quality-based optimizations - siguiendo la guía
-      switch (quality) {
-        case 'low':
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 1.5,
-            roughness: 0.1,
-            clearcoat: 0.5,
-          });
-        case 'high':
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 3.0,
-            sheen: 1,
-            sheenColor: new THREE.Color('#ffffff'),
-            sheenRoughness: 0.1,
-            iridescence: 1.0,
-            iridescenceIOR: 1.5,
-            iridescenceThicknessRange: [200, 600] as [number, number],
-          });
-        default: // medium
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 2.0,
-            iridescence: 0.5,
-            iridescenceIOR: 1.3,
-          });
-      }
+      return materialPool.getMaterial({
+        type: 'physical',
+        quality: quality,
+        colors: {
+          base: '#ffffff',
+          attenuation: '#b8a3ff'
+        }
+      });
     };
 
     // Load RingSphere model - siguiendo patrón de carga optimizada

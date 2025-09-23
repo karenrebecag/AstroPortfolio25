@@ -1,34 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import createGlobe, { type COBEOptions } from "cobe";
-import { cn } from "../../lib/utils";
+import { useDeviceQuality } from '../../hooks/useDeviceQuality';
 
-const GLOBE_CONFIG: COBEOptions = {
-  width: 800,
-  height: 800,
-  onRender: () => {},
-  devicePixelRatio: 2,
+// ✅ Configuración adaptativa basada en calidad - siguiendo la guía (SSR safe)
+const getGlobeConfig = (quality: 'low' | 'medium' | 'high', pixelRatio: number = 1) => ({
+  devicePixelRatio: Math.min(pixelRatio, quality === 'low' ? 1 : 2),
   phi: 0,
   theta: 0.3,
   dark: 0,
   diffuse: 0.4,
-  mapSamples: 16000,
+  mapSamples: quality === 'low' ? 8000 : quality === 'medium' ? 16000 : 24000,
   mapBrightness: 1.2,
-  baseColor: [1, 1, 1],
-  markerColor: [115 / 255, 80 / 255, 204 / 255], // Purple color matching portfolio theme
-  glowColor: [1, 1, 1],
+  baseColor: [1, 1, 1] as [number, number, number],
+  markerColor: [115 / 255, 80 / 255, 204 / 255] as [number, number, number], // Purple color matching portfolio theme
+  glowColor: [1, 1, 1] as [number, number, number],
   markers: [
-    { location: [14.5995, 120.9842], size: 0.03 },
-    { location: [19.076, 72.8777], size: 0.1 },
-    { location: [23.8103, 90.4125], size: 0.05 },
-    { location: [30.0444, 31.2357], size: 0.07 },
-    { location: [39.9042, 116.4074], size: 0.08 },
-    { location: [-23.5505, -46.6333], size: 0.1 },
-    { location: [19.4326, -99.1332], size: 0.1 }, // Mexico City
-    { location: [40.7128, -74.006], size: 0.1 },
-    { location: [34.6937, 135.5022], size: 0.05 },
-    { location: [41.0082, 28.9784], size: 0.06 },
+    { location: [14.5995, 120.9842] as [number, number], size: 0.03 },
+    { location: [19.076, 72.8777] as [number, number], size: 0.1 },
+    { location: [23.8103, 90.4125] as [number, number], size: 0.05 },
+    { location: [30.0444, 31.2357] as [number, number], size: 0.07 },
+    { location: [39.9042, 116.4074] as [number, number], size: 0.08 },
+    { location: [-23.5505, -46.6333] as [number, number], size: 0.1 },
+    { location: [19.4326, -99.1332] as [number, number], size: 0.1 }, // Mexico City
+    { location: [40.7128, -74.006] as [number, number], size: 0.1 },
+    { location: [34.6937, 135.5022] as [number, number], size: 0.05 },
+    { location: [41.0082, 28.9784] as [number, number], size: 0.06 },
   ],
-};
+});
 
 interface GlobeBackgroundProps {
   className?: string;
@@ -37,7 +35,7 @@ interface GlobeBackgroundProps {
 
 export default function GlobeBackground({ 
   className, 
-  config = GLOBE_CONFIG 
+  config 
 }: GlobeBackgroundProps) {
   let phi = 0;
   let width = 0;
@@ -48,6 +46,19 @@ export default function GlobeBackground({
   const [isVisible, setIsVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // ✅ Detección automática de calidad siguiendo la guía (SSR safe)
+  const deviceQuality = useDeviceQuality();
+  const [pixelRatio, setPixelRatio] = useState(1);
+  
+  // ✅ Solo acceder a window en el cliente
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPixelRatio(window.devicePixelRatio || 1);
+    }
+  }, []);
+  
+  const globeConfig = getGlobeConfig(deviceQuality, pixelRatio);
 
   const updatePointerInteraction = (value: number | null) => {
     // Disabled pointer interaction
@@ -72,8 +83,8 @@ export default function GlobeBackground({
   );
 
   const onResize = () => {
-    if (canvasRef.current) {
-      width = canvasRef.current.offsetWidth;
+    if (canvasRef.current && containerRef.current) {
+      width = Math.min(containerRef.current.offsetWidth, 600); // Limitar a 600px máximo
     }
   };
 
@@ -124,9 +135,9 @@ export default function GlobeBackground({
     onResize();
 
     const globe = createGlobe(canvasRef.current!, {
-      ...config,
-      width: width * 2,
-      height: width * 2,
+      ...globeConfig,
+      width: 600, // Tamaño fijo para evitar problemas
+      height: 600, // Tamaño fijo para evitar problemas
       onRender,
     });
 
@@ -140,20 +151,15 @@ export default function GlobeBackground({
       window.removeEventListener("resize", onResize);
       globe.destroy();
     };
-  }, [isVisible, onRender, config]);
+  }, [isVisible, onRender, deviceQuality, pixelRatio]);
 
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "relative mx-auto aspect-[1/1] w-full max-w-[600px] h-[600px]",
-        className,
-      )}
+      className={`relative mx-auto aspect-[1/1] w-full max-w-[600px] h-[600px] ${className || ''}`}
     >
       <canvas
-        className={cn(
-          "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
-        )}
+        className="size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]"
         ref={canvasRef}
         style={{ pointerEvents: 'none' }}
       />
