@@ -33,40 +33,12 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         client:load
       >
-        Digital design and development solutions
+Comprehensive digital solutions from design to deployment
       </motion.p>
     </div>
     
     <div class="services-content">
-      <!-- Header Section with scroll animations -->
-      <motion.div 
-        className="services-header"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        client:load
-      >
-        <motion.h2 
-          className="services-title"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-        >
-          Services
-        </motion.h2>
-        <motion.p 
-          className="services-description"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        >
-          I'm a digital designer that design and development high-end projects with affordable price
-        </motion.p>
-      </motion.div>
-
+    
       <!-- Services List - Optimized Island Component with scroll animation -->
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -110,6 +82,7 @@ import { motion } from 'motion/react';
   :global(.giant-heading-wrapper) {
     width: 100%;
     display: flex;
+    margin-bottom: 80px;
     flex-direction: column;
     align-items: center;
     gap: 20px;
@@ -165,7 +138,7 @@ import { motion } from 'motion/react';
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 40px;
+
   }
 
   .services-title {
@@ -198,10 +171,10 @@ import { motion } from 'motion/react';
 
   :global(.service-item) {
     width: 100%;
-    padding-top: 24px;
+    padding: 80px 0px;
     border-top: 1px solid rgba(17, 17, 17, 0.20);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 54px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -224,7 +197,7 @@ import { motion } from 'motion/react';
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 54px;
+    gap: ;
   }
 
   :global(.service-title-container) {
@@ -266,7 +239,7 @@ import { motion } from 'motion/react';
     align-items: flex-start;
     gap: 40px;
     opacity: 1;
-    max-height: 200px;
+    max-height: 400px;
     overflow: hidden;
     transition: all 0.4s ease;
   }
@@ -275,7 +248,7 @@ import { motion } from 'motion/react';
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 21px;
+    gap: 16px;
     width: 60%;
     max-width: 60%;
   }
@@ -310,11 +283,83 @@ import { motion } from 'motion/react';
 
   :global(.service-description) {
     color: #808080;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
     margin: 0;
+  }
+
+  /* Technologies Section */
+  :global(.service-technologies) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  :global(.tech-title) {
+    color: #111111;
+    font-family: var(--font-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  :global(.tech-tags) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  :global(.tech-tag) {
+    padding: 6px 10px;
+    border-radius: 924px;
+    background: rgba(69, 35, 174, 0.08);
+    border: 0.5px solid rgba(69, 35, 174, 0.15);
+    color: #4523AE;
+    font-family: var(--font-primary);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 14px;
+    white-space: nowrap;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  :global(.tech-tag:hover) {
+    background: rgba(69, 35, 174, 0.12);
+    transform: translateY(-1px);
+  }
+
+  /* Example Project Section */
+  :global(.service-example) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  :global(.example-title) {
+    color: #111111;
+    font-family: var(--font-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  :global(.example-text) {
+    color: #666666;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0;
+    font-style: italic;
   }
 
   :global(.service-images) {
@@ -343,8 +388,8 @@ import { motion } from 'motion/react';
     }
 
     .services-header {
-      flex-direction: column;
-      gap: 20px;
+ 
+
     }
 
     .services-description {
@@ -369,6 +414,10 @@ import { motion } from 'motion/react';
     :global(.service-info) {
       width: 100%;
       max-width: 100%;
+    }
+
+    :global(.service-details) {
+      max-height: 500px;
     }
 
   }

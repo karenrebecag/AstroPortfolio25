@@ -37,34 +37,7 @@ import { motion } from 'motion/react';
     </div>
     
     <div class="faqs-content">
-      <!-- Header Section with scroll animations -->
-      <motion.div 
-        className="faqs-header"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        client:load
-      >
-        <motion.h2 
-          className="faqs-title"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-        >
-          FAQs
-        </motion.h2>
-        <motion.p 
-          className="faqs-description"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        >
-          Frequently asked questions about my services, process, and approach to web development and design
-        </motion.p>
-      </motion.div>
+  
 
       <!-- FAQs List - Optimized Island Component with scroll animation -->
       <motion.div

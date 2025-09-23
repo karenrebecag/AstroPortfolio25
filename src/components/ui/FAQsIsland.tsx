@@ -1,50 +1,50 @@
 import React, { useState } from 'react';
 
 interface FAQ {
-  id: number;
+  id: string;
   question: string;
   answer: string;
 }
 
 const FAQsIsland: React.FC = () => {
-  const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
-  const [hoveredFAQ, setHoveredFAQ] = useState<number | null>(null);
+  const [activeFAQ, setActiveFAQ] = useState<string | null>(null);
+  const [hoveredFAQ, setHoveredFAQ] = useState<string | null>(null);
 
   const faqs: FAQ[] = [
     {
-      id: 1,
-      question: "What technologies do you specialize in?",
-      answer: "I specialize in modern web technologies including React, Next.js, Astro, TypeScript, Node.js, and Three.js. I also have extensive experience with UI/UX design, motion design, and full-stack development."
+      id: "01",
+      question: "What services do you provide as a Design Engineer?",
+      answer: "I offer comprehensive digital solutions, including UX/UI design, mobile app prototyping, fullstack development, Web Art with 3D animations, AI integration, and workflow automation, delivering user-focused, scalable, and innovative experiences."
     },
     {
-      id: 2,
-      question: "How long does a typical project take?",
-      answer: "Project timelines vary depending on complexity and scope. A simple website typically takes 2-4 weeks, while complex web applications can take 2-6 months. I always provide detailed timelines during the initial consultation."
+      id: "02",
+      question: "How do you integrate design and development seamlessly?",
+      answer: "I bridge design and development by creating developer-friendly design systems in Figma, paired with functional React and TypeScript components, ensuring efficient handoff and pixel-perfect implementations."
     },
     {
-      id: 3,
-      question: "Do you work with international clients?",
-      answer: "Yes, I work with clients globally. I have experience collaborating with teams in Spain, USA, and Mexico. I'm comfortable working across different time zones and communication preferences."
+      id: "03",
+      question: "What is your Vibe Coding approach?",
+      answer: "Vibe Coding combines creative problem-solving with disciplined JavaScript and Python practices, delivering clean, maintainable code that infuses personality while ensuring scalability and performance."
     },
     {
-      id: 4,
-      question: "What's included in your design process?",
-      answer: "My design process includes user research, wireframing, prototyping, visual design, and usability testing. I focus on creating intuitive experiences that align with business goals and user needs."
+      id: "04",
+      question: "How do you incorporate AI into your solutions?",
+      answer: "I enhance applications with AI-driven features like chatbots and automated workflows using APIs such as Gemini and OpenAI, boosting productivity and creating intelligent, user-centric experiences."
     },
     {
-      id: 5,
-      question: "Do you provide ongoing support and maintenance?",
-      answer: "Yes, I offer ongoing support and maintenance packages. This includes regular updates, security monitoring, performance optimization, and feature enhancements based on your evolving needs."
+      id: "05",
+      question: "How do you balance aesthetics and functionality in design?",
+      answer: "I merge Web Art techniques, like WebGL and Three.js animations, with user-centric UX principles to create visually stunning, accessible, and high-performing digital interfaces."
     },
     {
-      id: 6,
-      question: "Can you help with existing projects?",
-      answer: "Absolutely! I can help improve existing projects through code reviews, performance optimization, UI/UX redesigns, or adding new features. I'm experienced in working with legacy codebases."
+      id: "06",
+      question: "What is your approach to project delivery and management?",
+      answer: "I follow a streamlined process from discovery and UX design to fullstack development and CI/CD deployment, using tools like Vercel and GitHub Actions to ensure reliable, scalable solutions."
     }
   ];
 
 
-  const handleFAQClick = (faqId: number) => {
+  const handleFAQClick = (faqId: string) => {
     setActiveFAQ(activeFAQ === faqId ? null : faqId);
     setHoveredFAQ(activeFAQ === faqId ? null : faqId);
   };
@@ -61,7 +61,7 @@ const FAQsIsland: React.FC = () => {
             onClick={() => handleFAQClick(faq.id)}
           >
             <div className="faq-number">
-              {faq.id.toString().padStart(2, '0')}.
+              {faq.id}.
             </div>
             <div className="faq-content">
               <div className="faq-question-container">
