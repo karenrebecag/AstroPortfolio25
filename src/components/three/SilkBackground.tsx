@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { create } from 'zustand';
-import { useDeviceQuality } from '../../hooks/useDeviceQuality';
 
 // Enhanced Zustand store for performance control
 const useSilkStore = create<{
@@ -63,14 +62,6 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
   
   const [isLoaded, setIsLoaded] = useState(false);
   const { isVisible, isPaused, isLoading, opacity, quality, animationSpeed } = useSilkStore();
-  
-  // ✅ Detección automática de calidad siguiendo la guía
-  const deviceQuality = useDeviceQuality();
-  
-  // ✅ Actualizar calidad automáticamente basada en dispositivo
-  useEffect(() => {
-    useSilkStore.getState().setQuality(deviceQuality);
-  }, [deviceQuality]);
 
   // Intersection Observer for performance with larger activation range
   useEffect(() => {
