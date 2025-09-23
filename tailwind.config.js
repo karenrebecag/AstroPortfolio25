@@ -8,6 +8,7 @@ export default {
         'secondary': ['Boysen', 'InterTight', 'sans-serif'],
         'display': ['Median', 'Boysen', 'serif'],
         'signature': ['Karstar Signature', 'cursive'],
+        'game': ['Video Game Font', 'Courier New', 'monospace'],
         // Aliases for easier use
         'inter': ['InterTight', 'Inter', 'system-ui', 'sans-serif'],
         'boysen': ['Boysen', 'sans-serif'],

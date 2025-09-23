@@ -1,0 +1,292 @@
+---
+// ClickBubble.astro - Bubble de "Click" en pixel art que aparece al hacer hover
+---
+
+<div id="click-bubble" class="click-bubble">
+  <div class="bubble-container">
+    <div class="bubble-text">CLICK</div>
+    <div class="bubble-tail"></div>
+  </div>
+</div>
+
+<style>
+  .click-bubble {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    opacity: 0;
+    transform: translate(-50%, -100%) translateY(-20px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .click-bubble.show {
+    opacity: 1;
+    transform: translate(-50%, -100%) translateY(-10px);
+  }
+
+  .bubble-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .bubble-text {
+    /* Pixel art styling with Video Game Font */
+    font-family: var(--font-game);
+    font-size: 11px;
+    font-weight: 400;
+    color: #000000;
+    background: #ffffff;
+    border: 2px solid #000000;
+    padding: 6px 10px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
+    /* Pixel art borders */
+    border-radius: 0;
+    box-shadow: 
+      0 0 0 1px #ffffff,
+      3px 3px 0 0 #cccccc,
+      3px 3px 0 1px #000000;
+    
+    /* Disable text smoothing for pixel effect */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
+    text-rendering: optimizeSpeed;
+    
+    /* Animation */
+    animation: pixelPulse 0.6s ease-out;
+  }
+
+  .bubble-tail {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    
+    /* Pixel art triangle tail */
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #000000;
+    
+    /* Shadow for the tail */
+    filter: drop-shadow(2px 2px 0 #cccccc);
+  }
+
+  .bubble-tail::after {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid #ffffff;
+  }
+
+  @keyframes pixelPulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Ocultar en dispositivos táctiles */
+  @media (hover: none) and (pointer: coarse) {
+    .click-bubble {
+      display: none !important;
+    }
+  }
+
+  /* Variaciones de color para diferentes tipos de elementos */
+  .click-bubble.primary {
+    .bubble-text {
+      background: #ffffff;
+      color: #4523AE;
+      border-color: #4523AE;
+      box-shadow: 
+        0 0 0 1px #ffffff,
+        3px 3px 0 0 #b8a3ff,
+        3px 3px 0 1px #4523AE;
+    }
+    .bubble-tail {
+      border-top-color: #4523AE;
+      filter: drop-shadow(2px 2px 0 #b8a3ff);
+    }
+    .bubble-tail::after {
+      border-top-color: #ffffff;
+    }
+  }
+
+  .click-bubble.success {
+    .bubble-text {
+      background: #ffffff;
+      color: #22c55e;
+      border-color: #22c55e;
+      box-shadow: 
+        0 0 0 1px #ffffff,
+        3px 3px 0 0 #86efac,
+        3px 3px 0 1px #22c55e;
+    }
+    .bubble-tail {
+      border-top-color: #22c55e;
+      filter: drop-shadow(2px 2px 0 #86efac);
+    }
+    .bubble-tail::after {
+      border-top-color: #ffffff;
+    }
+  }
+</style>
+
+<script>
+  // Detectar si es dispositivo táctil
+  const isTouchDevice = () => {
+    return 'ontouchstart' in window || 
+           navigator.maxTouchPoints > 0 || 
+           window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  };
+
+  // Solo inicializar en dispositivos no táctiles
+  if (!isTouchDevice()) {
+    const bubble = document.getElementById('click-bubble');
+    
+    if (bubble) {
+      let currentX = 0;
+      let currentY = 0;
+      let targetX = 0;
+      let targetY = 0;
+      let isVisible = false;
+      let hideTimeout = null;
+
+      // Función para interpolar suavemente la posición
+      const lerp = (start, end, factor) => {
+        return start + (end - start) * factor;
+      };
+
+      // Función para actualizar posición del bubble
+      const updateBubblePosition = () => {
+        currentX = lerp(currentX, targetX, 0.2);
+        currentY = lerp(currentY, targetY, 0.2);
+
+        bubble.style.left = `${currentX}px`;
+        bubble.style.top = `${currentY}px`;
+
+        requestAnimationFrame(updateBubblePosition);
+      };
+
+      // Función para mostrar el bubble
+      const showBubble = (x, y, variant = 'default') => {
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
+        targetX = x;
+        targetY = y;
+        
+        // Aplicar variante de color
+        bubble.className = `click-bubble ${variant}`;
+        
+        // Mostrar con delay para suavizar la aparición
+        setTimeout(() => {
+          if (!isVisible) {
+            isVisible = true;
+            bubble.classList.add('show');
+          }
+        }, 50);
+      };
+
+      // Función para ocultar el bubble
+      const hideBubble = () => {
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
+        
+        hideTimeout = setTimeout(() => {
+          if (isVisible) {
+            isVisible = false;
+            bubble.classList.remove('show');
+            bubble.className = 'click-bubble'; // Reset variant
+          }
+        }, 100);
+      };
+
+      // Función para actualizar posición del bubble mientras se mueve el mouse
+      const updateBubbleOnMove = (x, y) => {
+        if (isVisible) {
+          targetX = x;
+          targetY = y;
+        }
+      };
+
+      // Función para determinar la variante según el tipo de elemento
+      const getElementVariant = (element) => {
+        if (element.matches('button[type="submit"], .btn-primary, .primary-button')) {
+          return 'primary';
+        }
+        if (element.matches('.btn-success, .success-button')) {
+          return 'success';
+        }
+        return 'default';
+      };
+
+      // Función para agregar efectos hover a elementos interactivos
+      const addBubbleEffects = () => {
+        const interactiveElements = document.querySelectorAll('a, button, [role="button"], input[type="submit"], .clickable');
+        
+        interactiveElements.forEach(element => {
+          element.addEventListener('mouseenter', (e) => {
+            const variant = getElementVariant(element);
+            showBubble(e.clientX, e.clientY, variant);
+          });
+          
+          element.addEventListener('mouseleave', () => {
+            hideBubble();
+          });
+
+          element.addEventListener('mousemove', (e) => {
+            updateBubbleOnMove(e.clientX, e.clientY);
+          });
+        });
+      };
+
+      // Inicializar el loop de animación
+      updateBubblePosition();
+
+      // Inicializar efectos
+      addBubbleEffects();
+
+      // Re-aplicar efectos cuando se cargue nuevo contenido dinámico
+      const observer = new MutationObserver(() => {
+        addBubbleEffects();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      // Limpiar al descargar la página
+      window.addEventListener('beforeunload', () => {
+        observer.disconnect();
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
+      });
+    }
+  }
+</script>

@@ -102,7 +102,7 @@ const ProjectsIsland: React.FC = () => {
         return (
           <div
             key={project.id}
-            className={`project-item ${isActive ? 'active' : ''}`}
+            className={`project-item clickable ${isActive ? 'active' : ''}`}
             data-project={project.id}
             onClick={() => handleProjectClick(project.id)}
           >
@@ -126,7 +126,7 @@ const ProjectsIsland: React.FC = () => {
                 <div className="project-info">
                   <div className="project-tags">
                     {project.tags.map((tag, index) => (
-                      <span key={index} className="tag">
+                      <span key={index} className="tag clickable">
                         {tag}
                       </span>
                     ))}

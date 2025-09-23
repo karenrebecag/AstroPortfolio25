@@ -49,6 +49,15 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Video Game Font';
+  src: url('/fonts/Video Game Font.otf') format('opentype'),
+       url('/fonts/Video Game Font.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* CSS Custom Properties for Typography */
 :root {
   /* Font Families */
@@ -56,6 +65,7 @@
   --font-secondary: 'Boysen', 'InterTight', sans-serif;
   --font-display: 'Median', 'Boysen', serif;
   --font-signature: 'Karstar Signature', cursive;
+  --font-game: 'Video Game Font', 'Courier New', monospace;
   
   /* Font Weights */
   --font-weight-light: 300;
@@ -150,6 +160,10 @@
 
 .font-signature {
   font-family: var(--font-signature);
+}
+
+.font-game {
+  font-family: var(--font-game);
 }
 
 /* Text Styles Combinations */

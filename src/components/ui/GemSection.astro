@@ -130,7 +130,7 @@ const softSkillsData = [
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible;
+    overflow: hidden;
   }
 
   @media (max-width: 768px) {
@@ -141,7 +141,7 @@ const softSkillsData = [
 
   .soft-skills-title-normal {
     font-family: var(--font-display);
-    font-size: 10.5vw;
+    font-size: clamp(4rem, 8vw, 8rem);
     font-weight: 400;
     color: #000000;
     line-height: 0.9;
@@ -150,9 +150,9 @@ const softSkillsData = [
     margin: 0;
     text-align: center;
     white-space: nowrap;
-    width: 100%;
+    max-width: 100%;
     display: block;
-    transform: scale(1.4);
+    transform: none;
   }
 
   .skills-container {
@@ -298,7 +298,7 @@ const softSkillsData = [
     }
 
     .soft-skills-title-normal {
-      font-size: 7.35vw; /* 30% reducción de 10.5vw */
+      font-size: clamp(2.5rem, 6vw, 5rem);
     }
 
     .skills-container {
@@ -344,7 +344,7 @@ const softSkillsData = [
 
   @media (max-width: 480px) {
     .soft-skills-title-normal {
-      font-size: 7vw; /* Tamaño para móvil */
+      font-size: clamp(2rem, 5vw, 4rem);
     }
 
     .skills-container {

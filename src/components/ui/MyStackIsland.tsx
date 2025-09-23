@@ -41,6 +41,8 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
+  // No longer need Tenor script for 3D Kirby
+
   return (
     <ErrorBoundary>
       <div className={`my-stack-island ${className}`}>
@@ -61,7 +63,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="right"
                     baseVelocity={-0.8}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     REACT • NEXT.JS • TYPESCRIPT • JAVASCRIPT • ASTRO • TAILWIND CSS
                   </MarqueeAnimation>
@@ -72,7 +74,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="left"
                     baseVelocity={-0.9}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     NODE.JS • EXPRESS • MONGODB • POSTGRESQL • PRISMA • SUPABASE
                   </MarqueeAnimation>
@@ -83,7 +85,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="right"
                     baseVelocity={-0.7}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     FIGMA • ADOBE XD • PHOTOSHOP • ILLUSTRATOR • BLENDER • THREE.JS
                   </MarqueeAnimation>
@@ -94,7 +96,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="left"
                     baseVelocity={-0.85}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     GIT • GITHUB • VERCEL • NETLIFY • DOCKER • AWS • FIREBASE
                   </MarqueeAnimation>
@@ -105,7 +107,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="right"
                     baseVelocity={-0.75}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     PYTHON • DJANGO • FLASK • FASTAPI • REDIS • ELASTICSEARCH
                   </MarqueeAnimation>
@@ -116,7 +118,7 @@ const MyStackIsland: React.FC<MyStackIslandProps> = ({ className = '' }) => {
                   <MarqueeAnimation
                     direction="left"
                     baseVelocity={-0.9}
-                    className="text-black py-2 font-display"
+                    className="text-black py-2 font-game"
                   >
                     WEBPACK • VITE • ROLLUP • BABEL • ESLINT • PRETTIER • JEST
                   </MarqueeAnimation>

@@ -14,7 +14,7 @@ import { motion } from 'motion/react';
       width={1920}
       height={1080}
       colorBack="#ffffff"
-      colorFront="#9D7FC1"
+      colorFront="#141223"
       shape="wave"
       type="8x8"
       pxSize={4}
@@ -43,6 +43,7 @@ import { motion } from 'motion/react';
 <style>
   .my-stack-section {
     width: 100%;
+    max-width: 100vw; /* Prevenir overflow horizontal */
     background: white;
     background-image: 
       linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
@@ -50,6 +51,7 @@ import { motion } from 'motion/react';
     background-size: 40px 40px;
     position: relative;
     overflow: hidden;
+    box-sizing: border-box; /* Incluir padding y border en el width */
   }
 
   /* DitheringShader Background con opacidad muy baja */
@@ -93,7 +95,7 @@ import { motion } from 'motion/react';
   /* Estilos globales para el Island */
   :global(.my-stack-island) {
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -118,10 +120,22 @@ import { motion } from 'motion/react';
     transform: translate(-50%, -50%);
     width: 800px;
     height: 800px;
+    max-width: 90vw; /* Prevenir overflow horizontal */
+    max-height: 90vh; /* Prevenir overflow vertical */
     z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* Asegurar que el contenido no se desborde */
+  }
+
+  /* Centrar todos los hijos del contenedor 3D */
+  :global(.model-3d-container > *) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
   :global(.model-placeholder) {
@@ -152,14 +166,83 @@ import { motion } from 'motion/react';
     margin: 0;
   }
 
-  /* Estilos específicos para RingSphere 3D */
-  :global(.ringsphere-background) {
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* Estilos específicos para Kirby 3D Model - centrado perfecto */
+  :global(.kirby-3d-model) {
+    position: relative; /* Cambio de absolute a relative para centrado automático */
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     z-index: 5;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.kirby-3d-container) {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* Estilos específicos para el canvas de Three.js - centrado perfecto */
+  :global(.kirby-3d-container canvas) {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    display: block;
+    box-sizing: border-box;
+    margin: auto; /* Centrado automático */
+  }
+
+  /* Prevenir overflow en todos los elementos de la sección */
+  .my-stack-section * {
+    box-sizing: border-box;
+  }
+
+  .my-stack-section *,
+  .my-stack-section *::before,
+  .my-stack-section *::after {
+    max-width: 100%;
+  }
+
+  :global(.kirby-loading) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #9D7FC1;
+    z-index: 10;
+  }
+
+  :global(.loading-spinner) {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(157, 127, 193, 0.3);
+    border-top: 4px solid #9D7FC1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px auto;
+  }
+
+  :global(.kirby-loading p) {
+    font-family: 'Median', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #9D7FC1;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   :global(.tech-marquees-wrapper) {
@@ -245,8 +328,10 @@ import { motion } from 'motion/react';
     }
 
     :global(.model-3d-container) {
-      width: 600px;
-      height: 600px;
+      width: min(500px, 90vw); /* Usar el menor entre 500px y 90% del viewport */
+      height: min(500px, 60vh); /* Usar el menor entre 500px y 60% del viewport height */
+      max-width: 90vw;
+      max-height: 60vh;
     }
 
     :global(.tech-marquees-wrapper) {

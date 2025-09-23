@@ -57,7 +57,7 @@ const FAQsIsland: React.FC = () => {
         return (
           <div
             key={faq.id}
-            className={`faq-item ${isActive ? 'active' : ''}`}
+            className={`faq-item clickable ${isActive ? 'active' : ''}`}
             onClick={() => handleFAQClick(faq.id)}
           >
             <div className="faq-number">

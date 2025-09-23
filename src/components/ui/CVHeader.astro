@@ -1,27 +1,25 @@
 ---
-// Simplified header component
-import TopMarquee from './TopMarquee.astro';
+// CV Header component - Dark mode variation
 import MainButton from './MainButton.astro';
 ---
 
-<TopMarquee />
-
-<div class="header-wrapper" id="headerWrapper">
-  <header class="header" id="mainHeader">
-    <div class="logo">KAREN ORTIZ</div>
+<div class="cv-header-wrapper" id="cvHeaderWrapper">
+  <header class="cv-header" id="cvMainHeader">
+    <div class="cv-logo">KAREN ORTIZ</div>
     
-    <nav class="nav">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
+    <nav class="cv-nav">
+      <a href="#summary">Summary</a>
+      <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#reviews">Reviews</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
     </nav>
     
-    <div class="contact-btn-wrapper">
-      <MainButton text="Contact Me" />
+    <div class="cv-contact-btn-wrapper">
+      <MainButton text="Contact Me" href="#contact" />
     </div>
     
-    <button class="menu-btn" id="menuBtn">
+    <button class="cv-menu-btn" id="cvMenuBtn">
       <span></span>
       <span></span>
       <span></span>
@@ -29,65 +27,51 @@ import MainButton from './MainButton.astro';
   </header>
 </div>
 
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-content">
-    <nav class="mobile-nav">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
+<div class="cv-mobile-menu" id="cvMobileMenu">
+  <div class="cv-mobile-menu-content">
+    <nav class="cv-mobile-nav">
+      <a href="#summary">Summary</a>
+      <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#reviews">Reviews</a>
-      <button class="mobile-contact-btn">Contact Me</button>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <button class="cv-mobile-contact-btn">Contact Me</button>
     </nav>
   </div>
 </div>
 
 <style>
-  .header-wrapper {
+  .cv-header-wrapper {
     position: fixed;
-    top: 32px; /* Account for TopMarquee height */
+    top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    background: white;
-    background-image: 
-      linear-gradient(to right, rgba(204, 204, 204, 0.3) 1px, transparent 1px), 
-      linear-gradient(to bottom, rgba(204, 204, 204, 0.3) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    transition: background-image 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
-    border-bottom: 1px solid rgba(204, 204, 204, 0.2);
-  }
-
-  .header-wrapper.scrolled {
-    background: rgba(255, 255, 255, 0.98);
-    background-image: 
-      linear-gradient(to right, rgba(204, 204, 204, 0.15) 1px, transparent 1px), 
-      linear-gradient(to bottom, rgba(204, 204, 204, 0.15) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(204, 204, 204, 0.25);
-  }
-
-  .header-wrapper.hiding {
-    pointer-events: none;
-  }
-
-  .header-wrapper.hidden {
-    pointer-events: none;
-  }
-
-  /* Smooth hover effects for better interaction */
-  .header-wrapper:hover {
+    background: #0b0717;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
   }
 
-  .header {
+  .cv-header-wrapper.scrolled {
+    background: #0b0717;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .cv-header-wrapper.hiding {
+    pointer-events: none;
+  }
+
+  .cv-header-wrapper.hidden {
+    pointer-events: none;
+  }
+
+  .cv-header-wrapper:hover {
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+  }
+
+  .cv-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,70 +82,68 @@ import MainButton from './MainButton.astro';
   }
 
   @media (max-width: 768px) {
-    .header-wrapper {
-      top: 28px; /* Account for mobile TopMarquee height */
-    }
-    
-    .header {
+    .cv-header {
       padding: 8px 16px;
     }
   }
 
-  .logo {
-    color: #060314;
-    font-family: var(--font-display);
+  .cv-logo {
+    color: #ffffff;
+    font-family: var(--font-display); /* Median font */
     font-size: clamp(17px, 3.5vw, 28px);
     transition: color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
+    font-weight: 400;
   }
 
-  .logo:hover {
-    color: #131019;
+  .cv-logo:hover {
+    color: #cccccc;
     transform: scale(1.05);
   }
 
-  .nav {
+  .cv-nav {
     display: flex;
     gap: 32px;
   }
 
-  .nav a {
-    color: #131019;
-    font-family: var(--font-display);
+  .cv-nav a {
+    color: #cccccc;
+    font-family: var(--font-display); /* Median font */
     text-decoration: none;
     font-size: clamp(11px, 2.1vw, 17px);
     transition: color 0.3s ease, transform 0.2s ease;
     position: relative;
+    font-weight: 400;
   }
 
-  .nav a:hover {
-    color: #060314;
+  .cv-nav a:hover {
+    color: #ffffff;
     transform: translateY(-2px);
   }
 
-  .nav a::after {
+  .cv-nav a::after {
     content: '';
     position: absolute;
     bottom: -4px;
     left: 0;
     width: 0;
     height: 2px;
-    background: #060314;
+    background: #4523AE;
     transition: width 0.3s ease;
   }
 
-  .nav a:hover::after {
+  .cv-nav a:hover::after {
     width: 100%;
   }
 
-  .contact-btn-wrapper {
+  .cv-contact-btn-wrapper {
     display: flex;
     align-items: center;
     scale: 0.7;
     transform-origin: center;
   }
 
-  .menu-btn {
+  .cv-menu-btn {
     display: none;
     flex-direction: column;
     gap: 4px;
@@ -171,41 +153,41 @@ import MainButton from './MainButton.astro';
     transition: transform 0.2s ease;
   }
 
-  .menu-btn:hover {
+  .cv-menu-btn:hover {
     transform: scale(1.1);
   }
 
-  .menu-btn span {
+  .cv-menu-btn span {
     width: 20px;
     height: 2px;
-    background: #060314;
+    background: #ffffff;
     transition: all 0.3s ease;
   }
 
-  .menu-btn:hover span {
-    background: #131019;
+  .cv-menu-btn:hover span {
+    background: #cccccc;
   }
 
-  .mobile-menu {
+  .cv-mobile-menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(23, 21, 35, 0.98);
+    backdrop-filter: blur(20px);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .mobile-menu.open {
+  .cv-mobile-menu.open {
     opacity: 1;
     visibility: visible;
   }
 
-  .mobile-menu-content {
+  .cv-mobile-menu-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -213,7 +195,7 @@ import MainButton from './MainButton.astro';
     width: 100%;
   }
 
-  .mobile-nav {
+  .cv-mobile-nav {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -222,13 +204,13 @@ import MainButton from './MainButton.astro';
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .mobile-menu.open .mobile-nav {
+  .cv-mobile-menu.open .cv-mobile-nav {
     transform: translateY(0);
   }
 
-  .mobile-nav a {
-    color: white;
-    font-family: var(--font-display);
+  .cv-mobile-nav a {
+    color: #ffffff;
+    font-family: var(--font-display); /* Median font */
     text-decoration: none;
     font-size: clamp(18px, 4vw, 24px);
     font-weight: 300;
@@ -239,23 +221,24 @@ import MainButton from './MainButton.astro';
     transform: translateY(20px);
   }
 
-  .mobile-menu.open .mobile-nav a {
+  .cv-mobile-menu.open .cv-mobile-nav a {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
-  .mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
-  .mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
+  .cv-mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
+  .cv-mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
+  .cv-mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
+  .cv-mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
+  .cv-mobile-nav a:nth-child(5) { transition-delay: 0.5s; }
 
-  .mobile-nav a:hover {
-    color: #ffffff;
+  .cv-mobile-nav a:hover {
+    color: #4523AE;
     transform: scale(1.05);
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 20px rgba(69, 35, 174, 0.5);
   }
 
-  .mobile-nav a::after {
+  .cv-mobile-nav a::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -263,20 +246,20 @@ import MainButton from './MainButton.astro';
     transform: translateX(-50%);
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, white, transparent);
+    background: linear-gradient(90deg, transparent, #4523AE, transparent);
     transition: width 0.4s ease;
   }
 
-  .mobile-nav a:hover::after {
+  .cv-mobile-nav a:hover::after {
     width: 100%;
   }
 
-  .mobile-contact-btn {
+  .cv-mobile-contact-btn {
     background: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid #4523AE;
+    color: #4523AE;
     padding: 12px 24px;
-    font-family: var(--font-display);
+    font-family: var(--font-display); /* Median font */
     font-size: clamp(14px, 3vw, 16px);
     cursor: pointer;
     transition: all 0.3s ease;
@@ -288,52 +271,52 @@ import MainButton from './MainButton.astro';
     transform: translateY(20px);
   }
 
-  .mobile-menu.open .mobile-contact-btn {
+  .cv-mobile-menu.open .cv-mobile-contact-btn {
     opacity: 1;
     transform: translateY(0);
-    transition-delay: 0.5s;
+    transition-delay: 0.6s;
   }
 
-  .mobile-contact-btn::before {
+  .cv-mobile-contact-btn::before {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: white;
+    background: #4523AE;
     transition: left 0.3s ease;
     z-index: -1;
   }
 
-  .mobile-contact-btn:hover::before {
+  .cv-mobile-contact-btn:hover::before {
     left: 0;
   }
 
-  .mobile-contact-btn:hover {
-    color: black;
+  .cv-mobile-contact-btn:hover {
+    color: white;
     transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(69, 35, 174, 0.3);
   }
 
   @media (max-width: 768px) {
-    .nav,
-    .contact-btn-wrapper {
+    .cv-nav,
+    .cv-contact-btn-wrapper {
       display: none;
     }
     
-    .menu-btn {
+    .cv-menu-btn {
       display: flex;
     }
   }
 </style>
 
 <script>
-  import { animate, stagger } from 'motion';
+  import { animate } from 'motion';
 
   document.addEventListener('DOMContentLoaded', () => {
     // Header scroll behavior
-    const headerWrapper = document.getElementById('headerWrapper');
+    const headerWrapper = document.getElementById('cvHeaderWrapper');
     let lastScrollY = window.scrollY;
     let isScrolling = false;
 
@@ -345,20 +328,19 @@ import MainButton from './MainButton.astro';
           
           if (!headerWrapper) return;
 
-          // Add scrolled class when scrolled down with smooth transition
+          // Add scrolled class when scrolled down
           if (currentScrollY > 80) {
             headerWrapper.classList.add('scrolled');
           } else {
             headerWrapper.classList.remove('scrolled');
           }
 
-          // Refined hide/show logic with better thresholds
+          // Hide/show logic
           if (scrollDifference > 8 && currentScrollY > 150) {
-            // Scrolling down - hide header with Motion.dev
+            // Scrolling down - hide header
             if (!headerWrapper.classList.contains('hiding') && !headerWrapper.classList.contains('hidden')) {
               headerWrapper.classList.add('hiding');
               
-              // Use Motion.dev for smooth hide animation
               const hideAnimation = animate(
                 headerWrapper,
                 { 
@@ -376,12 +358,11 @@ import MainButton from './MainButton.astro';
               );
             }
           } else if (scrollDifference < -3 || currentScrollY < 100) {
-            // Scrolling up or near top - show header with Motion.dev
+            // Scrolling up - show header
             if (headerWrapper.classList.contains('hiding') || headerWrapper.classList.contains('hidden')) {
               headerWrapper.classList.remove('hiding');
               headerWrapper.classList.remove('hidden');
               
-              // Use Motion.dev for smooth show animation
               const showAnimation = animate(
                 headerWrapper,
                 {
@@ -403,15 +384,14 @@ import MainButton from './MainButton.astro';
       isScrolling = true;
     };
 
-    // Throttled scroll listener
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Mobile menu functionality
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const navLinks = document.querySelectorAll('.mobile-nav a');
-    const contactBtn = document.querySelector('.mobile-contact-btn');
+    const menuBtn = document.getElementById('cvMenuBtn');
+    const mobileMenu = document.getElementById('cvMobileMenu');
+    const mobileNav = document.querySelector('.cv-mobile-nav');
+    const navLinks = document.querySelectorAll('.cv-mobile-nav a');
+    const contactBtn = document.querySelector('.cv-mobile-contact-btn');
     
     let isOpen = false;
 
@@ -450,7 +430,7 @@ import MainButton from './MainButton.astro';
       if (contactBtn) {
         animate(contactBtn, 
           { opacity: 1, transform: 'translateY(0px)' }, 
-          { duration: 0.3, delay: 0.5 }
+          { duration: 0.3, delay: 0.6 }
         );
       }
     };
@@ -497,7 +477,7 @@ import MainButton from './MainButton.astro';
     // Close menu when clicking on links or contact button
     mobileMenu?.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      if (target && (target.tagName === 'A' || target.classList.contains('mobile-contact-btn'))) {
+      if (target && (target.tagName === 'A' || target.classList.contains('cv-mobile-contact-btn'))) {
         closeMenu();
       }
     });
@@ -514,6 +494,32 @@ import MainButton from './MainButton.astro';
       if (e.key === 'Escape' && isOpen) {
         closeMenu();
       }
+    });
+
+    // Smooth scroll to sections
+    const smoothScrollToSection = (targetId: string) => {
+      const targetElement = document.getElementById(targetId.replace('#', ''));
+      if (targetElement) {
+        const headerHeight = 80; // Account for fixed header
+        const targetPosition = targetElement.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Add smooth scroll to all navigation links
+    document.querySelectorAll('.cv-nav a, .cv-mobile-nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = (e.target as HTMLAnchorElement).getAttribute('href');
+        if (href && href.startsWith('#')) {
+          smoothScrollToSection(href);
+          if (isOpen) closeMenu();
+        }
+      });
     });
   });
 </script>

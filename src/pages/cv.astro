@@ -1,0 +1,1115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CVHeader from '../components/ui/CVHeader.astro';
+import { CVSection } from '../components/ui/CVSection.tsx';
+import { CVTag, CVTagGroup } from '../components/ui/CVTag.tsx';
+import { SkillTag, SkillGroup } from '../components/ui/SkillTag.tsx';
+import { CVHeroBadge, CVHeroDescription, CVHeroContact, CVHeroMain } from '../components/ui/CVHeroAnimations.tsx';
+import { CVFooter } from '../components/ui/CVFooter.tsx';
+import GetInTouch from '../components/ui/GetInTouch.astro';
+import { DitheringShader } from '../components/three/DitheringShader.tsx';
+import MainButton from '../components/ui/MainButton.astro';
+import SecondaryButton from '../components/ui/SecondaryButton.astro';
+---
+
+<Layout title="Karen Rebeca Ortiz - CV Profesional">
+  <CVHeader />
+  
+  <main class="cv-main">
+    <!-- Hero Section with Original CV Animations -->
+    <section class="hero-section">
+      <!-- DitheringShader Background Scene -->
+      <div class="hero-dithering-background">
+        <DitheringShader
+          client:visible
+          width={1920}
+          height={1080}
+          colorBack="#010111"
+          colorFront="#4523AE"
+          shape="wave"
+          type="8x8"
+          pxSize={3}
+          speed={0.6}
+        />
+      </div>
+
+      <CVHeroMain client:load>
+        <div class="hero-container-wrapper">
+          <div class="hero-container">
+            <div class="hero-grid">
+              <div class="hero-content">
+                <CVHeroBadge client:load>
+                  <div class="hero-badge">DESIGN ENGINEER / 2025</div>
+                  <h1 class="hero-title">
+                    Karen Rebeca
+                    <br />
+                    <span class="hero-subtitle">Ortiz</span>
+                  </h1>
+                </CVHeroBadge>
+                
+                <CVHeroDescription client:load>
+                  <div class="hero-description">
+                    <p>
+                      Passionate technology professional focused on improving quality of life through
+                      <span class="highlight"> innovative, sustainable, and scalable digital solutions</span>.
+                    </p>
+                    
+                    <div class="hero-status">
+                      <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        Available for opportunities
+                      </div>
+                      <div>Mexico City (CDMX)</div>
+                    </div>
+                  </div>
+                </CVHeroDescription>
+
+                <!-- Action Buttons -->
+                <div class="hero-actions">
+                  <MainButton text="Download CV" href="/cv-karen-ortiz.pdf" />
+                  <div id="portfolio-button">
+                    <SecondaryButton text="Go Portfolio" variant="glass" />
+                  </div>
+                </div>
+              </div>
+
+              <CVHeroContact client:load>
+                <div class="hero-contact">
+                  <div class="contact-section">
+                    <div class="section-label">CONTACT</div>
+                    <div class="contact-links">
+                      <a href="mailto:karen.ortizg@yahoo.com" class="contact-link primary">
+                        karen.ortizg@yahoo.com
+                      </a>
+                      <a href="tel:+525660014362" class="contact-link">
+                        56 6001 43 62
+                      </a>
+                      <a href="https://linkedin.com/in/karen-rebeca-ortiz" target="_blank" class="contact-link small">
+                        linkedin.com/in/karen-rebeca-ortiz
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="specialties-section">
+                    <div class="section-label">SPECIALTIES</div>
+                    <CVTagGroup client:load>
+                      <CVTag index={0}>UX/UI Design</CVTag>
+                      <CVTag index={1}>Frontend</CVTag>
+                      <CVTag index={2}>Fullstack</CVTag>
+                      <CVTag index={3}>AI Integration</CVTag>
+                      <CVTag index={4}>Project Management</CVTag>
+                    </CVTagGroup>
+                  </div>
+                </div>
+              </CVHeroContact>
+            </div>
+          </div>
+        </div>
+      </CVHeroMain>
+    </section>
+
+    <!-- Professional Summary -->
+    <CVSection client:load id="summary" index={1}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Professional Summary</h2>
+          <div class="section-label">OVERVIEW</div>
+        </div>
+
+        <div class="summary-content">
+          <div class="summary-item">
+            <h3>Design Engineer & Fullstack Developer</h3>
+            <p>
+              Passionate technology professional focused on improving quality of life through innovative, 
+              sustainable, and scalable digital product design and development. Extensive experience in 
+              diverse tech roles including technical UX/UI design, frontend development, 3D animation for 
+              web environments, project architecture, and backend development on serverless platforms with AI integrations.
+            </p>
+          </div>
+
+          <div class="summary-item">
+            <h4>Professional Journey</h4>
+            <p>
+              This journey has enabled me to lead large-scale projects autonomously and collaborate with 
+              multidisciplinary international teams, adding value and creativity at every development stage. 
+              My approach centers on adopting modern and adaptive technologies, prioritizing agile methodologies 
+              and phase-by-phase development to ensure high-quality results in large-scale projects.
+            </p>
+          </div>
+
+          <div class="summary-item">
+            <h4>Career Focus</h4>
+            <p>
+              I actively seek opportunities that challenge me professionally, allowing me to grow and contribute 
+              my experience and passion to the success of innovative initiatives. My expertise spans across the 
+              full development lifecycle, from user research and design to deployment and maintenance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </CVSection>
+
+    <!-- Experience Section -->
+    <CVSection client:load id="experience" index={2}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Professional Experience</h2>
+          <div class="section-label">EXPERIENCE</div>
+        </div>
+
+        <div class="experience-content">
+          <!-- Aurin (Sodio) -->
+          <div class="job-section">
+            <h3 class="job-title">Design Engineer & Fullstack Developer</h3>
+            <div class="job-header">
+              <div class="company">Aurin (Sodio)</div>
+              <div class="location">Cuernavaca, Morelos</div>
+            </div>
+            
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>MonexOne App Design</h4>
+                <p>Designed mobile UX/UI for MonexOne, collaborating with Ancient Technologies for Mexican and US markets. Implemented atomic design system from UX phase, actively participating in post-design product design and development.</p>
+              </div>
+              
+              <div class="project-card">
+                <h4>Fintpay WebApp UX/UI Design</h4>
+                <p>Collaborated with Ancient Technologies in UX engineering development for the platform, leading the creation of atomic components, progressive disclosures in flows, requirement verification, and project management based on primitive modules.</p>
+              </div>
+              
+              <div class="project-card">
+                <h4>Aurin Task Manager Fullstack Development</h4>
+                <p>As senior leader, designed UX/UI and developed fullstack the company's main task manager using Next.js and Firestore. Implemented real-time chat, AI assistant, profile management, geolocation, timelogs, and n8n integrations, deployed on Vercel.</p>
+              </div>
+              
+              <div class="project-card">
+                <h4>Case Management System for Galicia Lawyers</h4>
+                <p>As senior leader, designed UX/UI and developed fullstack case management system using Next.js, Supabase, Clerk, and Framer. Implemented client onboarding, conflict of interest management, automated service proposals, case categorization, user roles, permissions, and email notifications via cronjobs using Docker package on Hostinger.</p>
+              </div>
+              
+              <div class="project-card">
+                <h4>Individual English Online Educational Platform</h4>
+                <p>Participated in UX/UI design and developed the frontend of the national platform with Laravel, using Blade templates, Bootstrap, and Inertia for reactive components.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Athenis AI -->
+          <div class="job-section">
+            <h3 class="job-title">Senior UX/UI Designer</h3>
+            <div class="job-header">
+              <div class="company">Athenis AI</div>
+              <div class="location">LATAM (Mexico, El Salvador, Peru, EU)</div>
+            </div>
+            
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>Main Educational Platform UX/UI Design</h4>
+                <p>Led UX/UI design of main educational platform, leading a team of designers to complete modules. Designed primitive webapp components including Login, Dashboard, Support Material Flow, Resources and Media, Profile, and all interactions with Athenae chatbot.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ancient Tech -->
+          <div class="job-section">
+            <h3 class="job-title">UX/UI Designer & Webflow Developer</h3>
+            <div class="job-header">
+              <div class="company">Ancient Tech</div>
+              <div class="location">Houston, Texas & LATAM</div>
+            </div>
+            
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>Ancient Global Main Website Development</h4>
+                <p>Led a four-month UX engineering process to design and develop Ancient Global's main website, built entirely in Webflow. Project focused on delivering a smooth and intelligent user experience.</p>
+              </div>
+              
+              <div class="project-card">
+                <h4>Ancient AI Implementation</h4>
+                <p>Evolved Hero Banner functionality into Ancient AI, a custom GPT-based chatbot developed as virtual assistant. This improvement increased user interaction by 25%.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Opinator -->
+          <div class="job-section">
+            <h3 class="job-title">UX/UI Designer and Frontend Dev</h3>
+            <div class="job-header">
+              <div class="company">Opinator</div>
+              <div class="location">Madrid, Spain</div>
+            </div>
+            
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>OPINATOR Main WebApp Redesign</h4>
+                <p>Participated in redesigning OPINATOR's main WebApp, an online platform for live form creation. Implemented atomic design system based on Shadcn UI components, optimizing development experience for technical teams.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- WebCrafters -->
+          <div class="job-section">
+            <h3 class="job-title">Design Engineer</h3>
+            <div class="job-header">
+              <div class="company">WebCrafters</div>
+              <div class="location">Mexico City</div>
+            </div>
+            
+            <div class="projects-grid">
+              <div class="project-card">
+                <h4>WebArt and UX/UI Agency</h4>
+                <p>Personal project: WebArt and UX/UI agency with artificial intelligence integrations for web application development and staffing services. Ongoing collaboration with teams in United States and Latin America.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </CVSection>
+
+    <!-- Technical Skills -->
+    <CVSection client:load id="skills" index={3}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Technical Skills</h2>
+          <div class="section-label">EXPERTISE</div>
+        </div>
+
+        <div class="skills-container">
+          <SkillGroup client:load title="Frontend Development" delay={0}>
+            <SkillTag index={0}>Next.js</SkillTag>
+            <SkillTag index={1}>React</SkillTag>
+            <SkillTag index={2}>TypeScript</SkillTag>
+            <SkillTag index={3}>Three.js</SkillTag>
+            <SkillTag index={4}>JavaScript</SkillTag>
+            <SkillTag index={5}>Astro</SkillTag>
+            <SkillTag index={6}>SASS</SkillTag>
+            <SkillTag index={7}>Tailwind CSS</SkillTag>
+          </SkillGroup>
+
+          <SkillGroup client:load title="Backend & Database" delay={1}>
+            <SkillTag variant="secondary" index={0}>Node.js</SkillTag>
+            <SkillTag variant="secondary" index={1}>Prisma</SkillTag>
+            <SkillTag variant="secondary" index={2}>Python</SkillTag>
+            <SkillTag variant="secondary" index={3}>FastAPI</SkillTag>
+            <SkillTag variant="secondary" index={4}>Firestore</SkillTag>
+            <SkillTag variant="secondary" index={5}>Supabase</SkillTag>
+            <SkillTag variant="secondary" index={6}>PostgreSQL</SkillTag>
+            <SkillTag variant="secondary" index={7}>MongoDB</SkillTag>
+          </SkillGroup>
+
+          <SkillGroup client:load title="Design & Tools" delay={2}>
+            <SkillTag variant="accent" index={0}>Figma</SkillTag>
+            <SkillTag variant="accent" index={1}>Webflow</SkillTag>
+            <SkillTag variant="accent" index={2}>Framer</SkillTag>
+            <SkillTag variant="accent" index={3}>Wix Studio</SkillTag>
+            <SkillTag variant="accent" index={4}>Shopify</SkillTag>
+            <SkillTag variant="accent" index={5}>WordPress</SkillTag>
+            <SkillTag variant="accent" index={6}>Git</SkillTag>
+            <SkillTag variant="accent" index={7}>Docker</SkillTag>
+          </SkillGroup>
+
+          <SkillGroup client:load title="AI & Automation" delay={3}>
+            <SkillTag index={0}>OpenAI API</SkillTag>
+            <SkillTag index={1}>Anthropic API</SkillTag>
+            <SkillTag index={2}>n8n</SkillTag>
+            <SkillTag index={3}>Make</SkillTag>
+            <SkillTag index={4}>Cursor</SkillTag>
+            <SkillTag index={5}>Claude.ai</SkillTag>
+            <SkillTag index={6}>GitHub</SkillTag>
+            <SkillTag index={7}>Vercel</SkillTag>
+          </SkillGroup>
+        </div>
+      </div>
+    </CVSection>
+
+    <!-- Projects Section -->
+    <CVSection client:load id="projects" index={4}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Key Projects</h2>
+          <div class="section-label">PORTFOLIO</div>
+        </div>
+
+        <div class="projects-content">
+          <div class="project-item">
+            <div class="project-number">1</div>
+            <div class="project-details">
+              <h3>Aurin Task Manager</h3>
+              <div class="project-subtitle">Fullstack Development with AI Integration</div>
+              <p>Designed UX/UI and developed fullstack the company's main task manager using Next.js and Firestore. Implemented features like real-time chat, AI assistant, profile management, geolocation, timelogs, and n8n integrations, deployed on Vercel.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>Enhanced team productivity through real-time collaboration. AI-powered assistance for task management. Seamless integration with company workflows.</p>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-number">2</div>
+            <div class="project-details">
+              <h3>Case Management System for Galicia Lawyers</h3>
+              <div class="project-subtitle">Complete Legal Management Platform</div>
+              <p>As senior leader, designed UX/UI and developed fullstack case management system using Next.js, Supabase, Clerk, and Framer. Implemented client onboarding, conflict of interest management, automated service proposals, case categorization, user roles, permissions, and email notifications.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>Streamlined legal case management. Automated conflict detection and proposal generation. Enhanced client communication and case tracking.</p>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-number">3</div>
+            <div class="project-details">
+              <h3>MonexOne Mobile App Design</h3>
+              <div class="project-subtitle">Financial Mobile UX/UI for Mexican & US Markets</div>
+              <p>Designed mobile UX/UI for MonexOne, collaborating with Ancient Technologies for Mexican and US markets. Implemented atomic design system from UX phase, actively participating in post-design product design and development.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>Improved user experience across two major markets. Scalable design system implementation. Enhanced financial service accessibility.</p>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-number">4</div>
+            <div class="project-details">
+              <h3>Ancient Global Website & AI Chatbot</h3>
+              <div class="project-subtitle">Complete Web Experience with Custom GPT</div>
+              <p>Led UX engineering process to design and develop Ancient Global's main website in Webflow. Evolved Hero Banner into Ancient AI, a custom GPT-based chatbot virtual assistant, increasing user interaction by 25%.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>Significant increase in user engagement. Intelligent user assistance through AI. Modern and professional web presence.</p>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-number">5</div>
+            <div class="project-details">
+              <h3>OPINATOR WebApp Redesign</h3>
+              <div class="project-subtitle">Enterprise Form Creation Platform</div>
+              <p>Participated in redesigning OPINATOR's main WebApp for live form creation, serving high-profile clients including Santander, AT&T, BBVA, Häagen-Dazs, and Pittsburgh Steelers. Implemented atomic design system based on Shadcn UI components.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>30% increase in form response rates. Improved development experience for technical teams. Enhanced usability for enterprise clients.</p>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-number">6</div>
+            <div class="project-details">
+              <h3>Athenis AI Educational Platform</h3>
+              <div class="project-subtitle">Complete Educational Experience Design</div>
+              <p>Led UX/UI design of main educational platform, designing primitive webapp components including Login, Dashboard, Support Material Flow, Resources and Media, Profile, and all interactions with Athenae chatbot, using Figma for comprehensive design system.</p>
+            </div>
+            <div class="project-benefits">
+              <div class="benefits-label">BENEFITS</div>
+              <p>Cohesive educational experience design. Seamless chatbot integration. Scalable component system for development teams.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </CVSection>
+
+    <!-- Education Section -->
+    <CVSection client:load id="education" index={5}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Education</h2>
+          <div class="section-label">ACADEMIC</div>
+        </div>
+        
+        <div class="education-content">
+          <div class="education-item">
+            <div class="education-number">1</div>
+            <div class="education-details">
+              <h3>Master's in Software Engineering Management</h3>
+              <div class="education-duration">In progress until Sept 2025</div>
+              <ul class="education-points">
+                <li>UTEL</li>
+                <li>Mexico City</li>
+                <li>Advanced project management methodologies</li>
+                <li>Software architecture and design patterns</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="education-item">
+            <div class="education-number">2</div>
+            <div class="education-details">
+              <h3>Bachelor's in Computer Systems</h3>
+              <div class="education-duration">Completed</div>
+              <ul class="education-points">
+                <li>UTEL</li>
+                <li>Mexico City</li>
+                <li>Computer science fundamentals</li>
+                <li>Software development principles</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="education-item">
+            <div class="education-number">3</div>
+            <div class="education-details">
+              <h3>Professional Certifications</h3>
+              <div class="education-duration">2020-2024</div>
+              <ul class="education-points">
+                <li>Data Science Diploma - BEDU + Santander</li>
+                <li>Frontend Development - Tecnolochicas + Microsoft</li>
+                <li>AWS Course - Amazon Web Services + Platzi</li>
+                <li>Machine Learning & AI - Platzi</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="learning-badge">
+          <div class="badge-title">Continuous Learning</div>
+          <div class="badge-subtitle">Always growing and expanding technical expertise</div>
+        </div>
+      </div>
+    </CVSection>
+
+  </main>
+
+  <!-- Contact Section - Reusing existing GetInTouch component -->
+  <GetInTouch />
+
+ 
+</Layout>
+
+<style>
+  /* Footer Spacer for Sticky Footer */
+  .footer-spacer {
+    height: 720px;
+  }
+
+  /* Main CV Styles - Dark Mode */
+  .cv-main {
+    background: #7435c3;
+    color: #ffffff;
+    font-family: var(--font-primary);
+    padding-top: 80px; /* Account for CV header (no TopMarquee) */
+    min-height: 100vh;
+  }
+
+  /* Hero Section */
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.875rem;
+    color: #cccccc;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display); /* Median font */
+    color: #ffffff;
+  }
+
+  .hero-subtitle {
+    color: #cccccc;
+  }
+
+  .hero-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 32rem;
+  }
+
+  .hero-description p {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+    line-height: 1.6;
+    color: #cccccc;
+  }
+
+  .highlight {
+    color: #ffffff;
+  }
+
+  /* Hero Action Buttons */
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .hero-actions {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .hero-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #cccccc;
+  }
+
+  @media (min-width: 640px) {
+    .hero-status {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #4523AE;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .hero-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-contact {
+      margin-top: 0;
+    }
+  }
+
+  .contact-section, .specialties-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .section-label {
+    font-size: 0.875rem;
+    color: #cccccc;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .contact-link:hover {
+    color: #4523AE;
+  }
+
+  .contact-link.primary {
+    font-weight: 500;
+  }
+
+  .contact-link.small {
+    font-size: 0.75rem;
+    color: #cccccc;
+  }
+
+  /* Section Styles */
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-header {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-header {
+      margin-bottom: 4rem;
+    }
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 300;
+    font-family: var(--font-display); /* Median font */
+    color: #ffffff;
+  }
+
+  /* Summary Styles */
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .summary-item h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .summary-item h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .summary-item p {
+    color: #cccccc;
+    line-height: 1.6;
+  }
+
+  /* Experience Styles */
+  .experience-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .job-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .job-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .job-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .job-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .company {
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+  .location {
+    font-size: 0.875rem;
+    color: #cccccc;
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 1.5rem;
+    border: 1px solid #333333;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .project-card h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .project-card p {
+    color: #cccccc;
+    line-height: 1.6;
+  }
+
+  /* Skills Styles */
+  .skills-container {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4rem;
+    }
+  }
+
+  /* Projects Styles */
+  .projects-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .project-item {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #333333;
+    transition: border-color 0.5s ease;
+  }
+
+  .project-item:hover {
+    border-color: #555555;
+  }
+
+  @media (min-width: 1024px) {
+    .project-item {
+      grid-template-columns: 2fr 6fr 4fr;
+      gap: 2rem;
+    }
+  }
+
+  .project-number {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #cccccc;
+    transition: color 0.5s ease;
+  }
+
+  .project-item:hover .project-number {
+    color: #ffffff;
+  }
+
+  .project-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-details h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .project-subtitle {
+    color: #cccccc;
+    font-size: 0.875rem;
+  }
+
+  .project-details p {
+    color: #cccccc;
+    line-height: 1.6;
+    max-width: 32rem;
+  }
+
+  .project-benefits {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .project-benefits {
+      margin-top: 0;
+    }
+  }
+
+  .benefits-label {
+    font-size: 0.875rem;
+    color: #cccccc;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-benefits p {
+    font-size: 0.875rem;
+    color: #cccccc;
+    line-height: 1.6;
+  }
+
+  /* Education Styles */
+  .education-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .education-item {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #333333;
+  }
+
+  @media (min-width: 1024px) {
+    .education-item {
+      grid-template-columns: 2fr 6fr 4fr;
+      gap: 2rem;
+    }
+  }
+
+  .education-number {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #cccccc;
+  }
+
+  .education-details h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .education-duration {
+    color: #cccccc;
+    margin-bottom: 1rem;
+  }
+
+  .education-points {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .education-points li {
+    font-size: 0.875rem;
+    color: #cccccc;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .education-points li::before {
+    content: '';
+    width: 0.25rem;
+    height: 0.25rem;
+    background: #4523AE;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .learning-badge {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid #333333;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .badge-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .badge-subtitle {
+    font-size: 1.125rem;
+    color: #cccccc;
+  }
+
+  /* CV Footer Styles */
+  .cv-footer {
+    padding: 3rem 0 4rem 0;
+    border-top: 1px solid #333333;
+    position: relative;
+  }
+
+  .cv-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .cv-footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .cv-footer-content {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
+
+  .cv-footer-text {
+    font-size: 0.875rem;
+    color: #cccccc;
+    text-align: center;
+  }
+
+  .cv-footer-gradient {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    background: linear-gradient(to top, #171523 0%, rgba(23, 21, 35, 0.8) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Hero Section Styles */
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Hero Background Effects */
+  .hero-dithering-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    
+    filter: hue-rotate(12deg) saturate(0.78) brightness(1.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Hero Container Wrapper - Full width for centering */
+  .hero-container-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Hero Container with limited width */
+  .hero-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 2rem;
+    
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .cv-main {
+      padding-top: 70px;
+    }
+    
+    .hero-container {
+      padding: 0 1rem;
+    }
+    
+    .section-container {
+      padding: 0 1rem;
+    }
+
+    .cv-footer-container {
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle "Go Portfolio" button click
+    const portfolioButton = document.getElementById('portfolio-button');
+    if (portfolioButton) {
+      portfolioButton.addEventListener('click', () => {
+        window.location.href = '/';
+      });
+    }
+  });
+</script>

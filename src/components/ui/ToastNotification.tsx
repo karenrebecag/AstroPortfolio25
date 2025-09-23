@@ -104,7 +104,7 @@ export function ToastNotification({
                 /* Compact Notification View */
                 <div className="flex items-center justify-between">
                   <motion.div
-                    className="flex items-center gap-3 cursor-pointer flex-1"
+                    className="flex items-center gap-3 cursor-pointer flex-1 clickable"
                     onClick={() => setIsHovered(true)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -146,7 +146,7 @@ export function ToastNotification({
                       e.stopPropagation();
                       handleClose();
                     }}
-                    className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                    className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors clickable"
                   >
                     <X size={12} />
                   </motion.button>
@@ -195,7 +195,7 @@ export function ToastNotification({
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsHovered(false)}
-                        className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                        className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors clickable"
                       >
                         <ChevronDown size={14} />
                       </motion.button>
@@ -205,7 +205,7 @@ export function ToastNotification({
                         whileHover={{ scale: 1.1, rotate: 90 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={handleClose}
-                        className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                        className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors clickable"
                       >
                         <X size={14} />
                       </motion.button>
@@ -246,7 +246,7 @@ export function ToastNotification({
                     }}
                     whileTap={{ scale: 0.99 }}
                     onClick={handleOpenMessage}
-                    className="toast-button w-full bg-white/8 hover:bg-white/12 backdrop-blur-sm  rounded-lg text-white/90 font-primary font-normal text-xs transition-all duration-200 flex items-center justify-center gap-2"
+                    className="toast-button clickable w-full bg-white/8 hover:bg-white/12 backdrop-blur-sm  rounded-lg text-white/90 font-primary font-normal text-xs transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <MessageSquare size={14} />
                     Send Message

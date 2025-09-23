@@ -25,7 +25,7 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
 
   return (
     <div
-      className={`service-item ${isActive ? 'active' : ''}`}
+      className={`service-item clickable ${isActive ? 'active' : ''}`}
       data-service={number}
       onMouseEnter={() => {
         setIsHovered(true);
@@ -60,7 +60,7 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
           <div className="service-info">
             <div className="service-tags">
               {tags.map((tag, index) => (
-                <span key={index} className="tag">
+                <span key={index} className="tag clickable">
                   {tag}
                 </span>
               ))}

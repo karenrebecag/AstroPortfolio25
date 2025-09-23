@@ -1,64 +1,203 @@
 ---
-// SecondaryButton component - "Discover My Works"
+// SecondaryButton component - Modern Glass Design
 export interface Props {
   text?: string;
+  size?: 'sm' | 'default' | 'lg';
+  variant?: 'glass' | 'dark' | 'gradient';
 }
 
-const { text = "Discover My Works" } = Astro.props;
+const { 
+  text = "Check Projects", 
+  size = "default",
+  variant = "glass" 
+} = Astro.props;
 ---
 
-<div class="secondary-button w-full h-full px-2.5 py-[18px] bg-black shadow-[0px_4px_200px_rgba(255,255,255,0.05)] overflow-hidden rounded-[10px] flex justify-center items-center cursor-pointer transition-all duration-200">
-  <div class="button-text text-white font-display font-normal text-center" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">
-    <span class="text-content">{text}</span>
-    <span class="rocket-emoji">🚀</span>
-  </div>
-  
+<div class="glass-button-wrap">
+  <button class={`glass-button glass-button-${size} glass-button-${variant}`}>
+    <span class={`glass-button-text glass-button-text-${size}`}>
+      <span class="text-content">{text}</span>
+      <span class="rocket-emoji">🚀</span>
+    </span>
+  </button>
+  <div class="glass-button-shadow"></div>
 </div>
 
-
 <style>
-  .secondary-button {
+  .glass-button-wrap {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 10px;
     opacity: 0;
-    padding: 20px;
-
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    transition: transform 0.2s ease-out;
+  }
+
+  .glass-button {
+    position: relative;
+    isolation: isolate;
+    all: unset;
+    cursor: pointer;
+    border-radius: 15px;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 50%, #000000 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
   }
 
-  .secondary-button:hover {
-    transform: translateY(-12px);
-    box-shadow: 0px 12px 300px rgba(255,255,255,0.15);
-    background: linear-gradient(135deg, #3a3a3a 0%, #2c2c2c 50%, #1a1a1a 100%) !important;
-    filter: brightness(1.1);
+  /* Size variants */
+  .glass-button-sm {
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 
-  .secondary-button:hover .rocket-emoji {
-    opacity: 1;
-    transform: translateX(0);
+  .glass-button-default {
+    font-size: clamp(16px, 2.8vw, 22px);
+    font-weight: 500;
   }
 
-  .secondary-button:active {
-    transform: translateY(-4px);
-    transition: all 0.1s ease-out;
+  .glass-button-lg {
+    font-size: 1.125rem;
+    font-weight: 500;
   }
 
-  .button-text {
-    color: white !important;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
-    width: 100%;
+  /* Style variants */
+  .glass-button-glass {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-button-dark {
+    background: linear-gradient(135deg, 
+      rgba(44, 44, 44, 0.8) 0%, 
+      rgba(26, 26, 26, 0.9) 50%, 
+      rgba(0, 0, 0, 0.95) 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .glass-button-gradient {
+    background: linear-gradient(135deg, 
+      rgba(157, 127, 193, 0.2) 0%, 
+      rgba(69, 35, 174, 0.3) 50%, 
+      rgba(0, 0, 0, 0.8) 100%);
+    box-shadow: 0 8px 32px rgba(157, 127, 193, 0.2);
+  }
+
+  .glass-button-text {
+    position: relative;
+    display: block;
+    user-select: none;
+    letter-spacing: -0.025em;
+    color: white;
+    font-family: var(--font-display);
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
+    width: 100%;
+  }
+
+  /* Text size variants */
+  .glass-button-text-sm {
+    padding: 0.5rem 1rem;
+  }
+
+  .glass-button-text-default {
+    padding: clamp(12px, 2.2vw, 16px) clamp(20px, 4vw, 28px);
+  }
+
+  .glass-button-text-lg {
+    padding: 1rem 2rem;
+  }
+
+  .glass-button-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      transparent 50%, 
+      rgba(0, 0, 0, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
   }
 
   .rocket-emoji {
     opacity: 0;
     transform: translateX(-10px);
-    transition: all 0.3s ease-out;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     font-size: 1em;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Hover effects */
+  .glass-button-wrap:hover .glass-button {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-button-wrap:hover .glass-button-glass {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 16px 64px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-button-wrap:hover .glass-button-dark {
+    background: linear-gradient(135deg, 
+      rgba(58, 58, 58, 0.9) 0%, 
+      rgba(44, 44, 44, 0.95) 50%, 
+      rgba(26, 26, 26, 1) 100%);
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+  }
+
+  .glass-button-wrap:hover .glass-button-gradient {
+    background: linear-gradient(135deg, 
+      rgba(157, 127, 193, 0.3) 0%, 
+      rgba(69, 35, 174, 0.4) 50%, 
+      rgba(0, 0, 0, 0.9) 100%);
+    box-shadow: 0 16px 64px rgba(157, 127, 193, 0.3);
+  }
+
+  .glass-button-wrap:hover .glass-button-shadow {
+    opacity: 1;
+  }
+
+  .glass-button-wrap:hover::before {
+    opacity: 1;
+  }
+
+  .glass-button-wrap:hover .rocket-emoji {
+    opacity: 1;
+    transform: translateX(0) scale(1.1);
+  }
+
+  .glass-button-wrap:hover .glass-button-text {
+    text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Active state */
+  .glass-button-wrap:active .glass-button {
+    transform: translateY(-2px);
+    transition: all 0.1s ease-out;
+  }
+
+  /* Focus state for accessibility */
+  .glass-button:focus-visible {
+    outline: 2px solid rgba(157, 127, 193, 0.5);
+    outline-offset: 2px;
   }
 
   @keyframes fadeInUp {
@@ -67,4 +206,51 @@ const { text = "Discover My Works" } = Astro.props;
       transform: translateY(0);
     }
   }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .glass-button-wrap:hover .glass-button {
+      transform: translateY(-4px);
+    }
+    
+    .glass-button {
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .glass-button-wrap {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    
+    .glass-button,
+    .rocket-emoji,
+    .glass-button-shadow {
+      transition: none;
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.glass-button-wrap');
+    
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', function(e) {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        button.style.transform = 'translate(0px, 0px)';
+      });
+    });
+  });
+</script>

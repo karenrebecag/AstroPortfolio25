@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip } from 'lucide-react';
-import FlipText from './FlipText';
+import FlipText from './FlipText.tsx';
 
 interface FormData {
   email: string;
@@ -196,7 +196,7 @@ const GetInTouchIsland: React.FC = () => {
                 key={interest}
                 type="button"
                 onClick={() => handleInterestToggle(interest)}
-                className={`interest-pill ${formData.interests.includes(interest) ? 'selected' : ''}`}
+                className={`interest-pill clickable ${formData.interests.includes(interest) ? 'selected' : ''}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -228,7 +228,7 @@ const GetInTouchIsland: React.FC = () => {
                 key={budget}
                 type="button"
                 onClick={() => handleBudgetSelect(budget)}
-                className={`budget-pill ${formData.budget === budget ? 'selected' : ''}`}
+                className={`budget-pill clickable ${formData.budget === budget ? 'selected' : ''}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -277,7 +277,7 @@ const GetInTouchIsland: React.FC = () => {
         >
           <motion.label 
             htmlFor="file-upload" 
-            className="attachment-button"
+            className="attachment-button clickable"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -313,7 +313,7 @@ const GetInTouchIsland: React.FC = () => {
         >
           <motion.button 
             type="submit" 
-            className="submit-button"
+            className="submit-button clickable"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}

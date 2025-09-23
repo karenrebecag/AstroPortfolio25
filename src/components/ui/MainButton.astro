@@ -1,46 +1,156 @@
 ---
-// MainButton component - " sume"
+// MainButton component - Realistic Design with Magnetic Effect
 export interface Props {
   text?: string;
+  href?: string;
 }
 
-const { text = "Get my Resume" } = Astro.props;
+const { text = "Get my Resume", href } = Astro.props;
+const Tag = href ? 'a' : 'button';
 ---
 
-<div class="main-button w-full h-full px-2.5 py-[18px] bg-gradient-to-br from-transparent via-transparent to-black/30 shadow-[0px_4px_200px_rgba(255,255,255,0.05)] overflow-hidden rounded-[10px] bg-[url('/images/MainImage.webp')] bg-cover bg-center flex justify-center items-center cursor-pointer transition-all duration-200">
-  <div class="button-text text-white font-display font-normal text-center" style="font-size: clamp(11px, 2vw, 15px); line-height: clamp(16px, 2.4vw, 21px);">{text}</div>
+<div class="realism-button-wrapper">
+  <Tag class="realism-button group" href={href}>
+    <!-- Glow behind button -->
+    <div class="button-glow"></div>
 
+    <!-- Bottom-left green blob -->
+    <div class="button-blob"></div>
+
+    <!-- Inner content -->
+    <div class="button-content">
+      <span class="button-text">{text}</span>
+      
+      <!-- Inner glow layer -->
+      <div class="inner-glow"></div>
+    </div>
+  </Tag>
 </div>
 
-
 <style>
-  .main-button {
+  .realism-button-wrapper {
+    position: relative;
+    display: inline-block;
     opacity: 0;
-    padding: 20px;
     transform: translateY(20px);
-    animation: fadeInUp 0.6s ease-out forwards;
+    animation: fadeInUp 0.6s ease-out 0.1s forwards;
+    transition: transform 0.2s ease-out;
+  }
+
+  .realism-button {
+    position: relative;
+    padding: 2px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle 80px at 80% -10%, #ffffff, #181b1b);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: clamp(16px, 2.8vw, 22px);
+    overflow: visible;
+    text-decoration: none;
+    display: inline-block;
   }
 
-  .main-button:hover {
-    transform: translateY(-12px);
-    box-shadow: 0px 12px 300px rgba(255,255,255,0.15);
-    filter: brightness(1.1);
-    background-position: center 20%;
+  /* Ensure links behave like buttons */
+  a.realism-button {
+    color: inherit;
   }
 
-  .main-button:active {
-    transform: translateY(-4px);
-    transition: all 0.1s ease-out;
+  a.realism-button:visited {
+    color: inherit;
+  }
+
+  .button-glow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 65%;
+    height: 60%;
+    border-radius: 120px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
+    transition: all 0.3s ease-out;
+    z-index: -1;
+  }
+
+  .button-blob {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50%;
+    border-radius: 17px;
+    background: radial-gradient(circle 60px at 0% 100%, #3fff75, rgba(0, 255, 128, 0.31), transparent);
+    box-shadow: -2px 9px 40px rgba(0, 255, 45, 0.25);
+    transition: all 0.3s ease-out;
+    z-index: 1;
+  }
+
+  .button-content {
+    position: relative;
+    padding: clamp(12px, 2.2vw, 16px) clamp(20px, 4vw, 28px);
+    border-radius: 14px;
+    color: white;
+    background: radial-gradient(circle 80px at 80% -50%, #777777, #0f1111);
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
   }
 
   .button-text {
-    color: white !important;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 2;
+  }
+
+  .inner-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: radial-gradient(circle 60px at 0% 100%, rgba(0, 225, 255, 0.1), rgba(0, 0, 255, 0.067), transparent);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hover Effects */
+  .realism-button:hover .button-glow {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.38);
+  }
+
+  .realism-button:hover .button-blob {
+    width: 90px;
+    box-shadow: -4px 1px 45px rgba(0, 255, 45, 0.38);
+  }
+
+  .realism-button:hover .button-content {
+    transform: scale(1.05);
+  }
+
+  .realism-button:hover .inner-glow {
+    opacity: 1.5;
+    background: radial-gradient(circle 80px at 0% 100%, rgba(0, 225, 255, 0.15), rgba(0, 0, 255, 0.1), transparent);
+  }
+
+  .realism-button:hover .button-text {
+    text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Active state */
+  .realism-button:active {
+    transform: scale(0.98);
+    transition: all 0.1s ease-out;
+  }
+
+  .realism-button:active .button-content {
+    transform: scale(1.02);
+  }
+
+  /* Focus state for accessibility */
+  .realism-button:focus-visible {
+    outline: 2px solid rgba(63, 255, 117, 0.5);
+    outline-offset: 4px;
   }
 
   @keyframes fadeInUp {
@@ -50,8 +160,82 @@ const { text = "Get my Resume" } = Astro.props;
     }
   }
 
-  /* Intersection Observer trigger */
-  .main-button.animate {
-    animation-play-state: running;
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .realism-button {
+      font-size: clamp(14px, 3.5vw, 18px);
+    }
+    
+    .button-content {
+      padding: clamp(10px, 2.5vw, 14px) clamp(16px, 4.5vw, 22px);
+    }
+    
+    .button-blob {
+      width: 40px;
+    }
+    
+    .realism-button:hover .button-blob {
+      width: 70px;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .realism-button-wrapper {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    
+    .realism-button,
+    .button-glow,
+    .button-blob,
+    .button-content,
+    .inner-glow {
+      transition: none;
+    }
+    
+    .realism-button:hover .button-content {
+      transform: none;
+    }
+  }
+
+  /* Enhanced glow effects for better visibility */
+  .realism-button::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, 
+      rgba(255, 255, 255, 0.1), 
+      transparent, 
+      rgba(63, 255, 117, 0.1));
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .realism-button:hover::before {
+    opacity: 1;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.realism-button-wrapper');
+    
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', function(e) {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        button.style.transform = 'translate(0px, 0px)';
+      });
+    });
+  });
+</script>

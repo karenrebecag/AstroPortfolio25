@@ -97,7 +97,7 @@ const ServicesIsland: React.FC = () => {
         return (
           <div
             key={service.id}
-            className={`service-item ${isActive ? 'active' : ''}`}
+            className={`service-item clickable ${isActive ? 'active' : ''}`}
             data-service={service.id}
             onClick={() => handleServiceClick(service.id)}
           >
@@ -121,7 +121,7 @@ const ServicesIsland: React.FC = () => {
                 <div className="service-info">
                   <div className="service-tags">
                     {service.tags.map((tag, index) => (
-                      <span key={index} className="tag">
+                      <span key={index} className="tag clickable">
                         {tag}
                       </span>
                     ))}
