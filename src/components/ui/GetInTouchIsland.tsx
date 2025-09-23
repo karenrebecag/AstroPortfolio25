@@ -169,15 +169,7 @@ const GetInTouchIsland: React.FC = () => {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <motion.div 
-          className="contact-subtitle"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          Contact Me
-        </motion.div>
+
         <motion.div 
           className="contact-title"
           initial={{ opacity: 0, y: 30 }}

@@ -277,7 +277,6 @@
         
         const interactiveElements = document.querySelectorAll(interactiveSelectors.join(', '));
         
-        console.log(`ClickBubble: Found ${interactiveElements.length} interactive elements`);
         
         interactiveElements.forEach((element, index) => {
           // Verificar si el elemento ya tiene los event listeners para evitar duplicados
@@ -330,7 +329,6 @@
         
         // Re-aplicar después de un breve delay para capturar elementos que se cargan dinámicamente
         setTimeout(() => {
-          console.log('ClickBubble: Second initialization pass');
           addBubbleEffects();
         }, 1000);
       };
@@ -367,7 +365,6 @@
         if (shouldReapply) {
           // Pequeño delay para asegurar que el DOM esté completamente actualizado
           setTimeout(() => {
-            console.log('ClickBubble: Re-applying effects due to DOM changes');
             addBubbleEffects();
           }, 100);
         }

@@ -1,46 +1,22 @@
-export const prerender = false; // Necesario para API routes en modo hybrid
+export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { put } from '@vercel/blob';
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  country: string;
-  interests: string[];
-  budget: string;
-  message: string;
-  attachment?: File;
-}
 
 export const POST: APIRoute = async ({ request }) => {
   console.log('🚀 API Route iniciado');
   
   try {
     // Verificar variables de entorno
-    console.log('📧 Verificando variables de entorno...');
-    console.log('RESEND_API_KEY:', import.meta.env.RESEND_API_KEY ? '✅ Configurado' : '❌ Faltante');
-    console.log('EMAIL_TO:', import.meta.env.EMAIL_TO ? '✅ Configurado' : '❌ Faltante');
-    console.log('BLOB_READ_WRITE_TOKEN:', import.meta.env.BLOB_READ_WRITE_TOKEN ? '✅ Configurado' : '❌ Faltante');
+    console.log('📧 Variables de entorno:');
+    console.log('RESEND_API_KEY:', !!import.meta.env.RESEND_API_KEY);
+    console.log('EMAIL_TO:', !!import.meta.env.EMAIL_TO);
     
     if (!import.meta.env.RESEND_API_KEY) {
-      console.error('❌ RESEND_API_KEY no está configurado');
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: 'Server configuration error'
-        }),
-        { 
-          status: 500,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      throw new Error('RESEND_API_KEY no configurado');
     }
-    
+
     // Obtener datos del formulario
     console.log('📝 Procesando datos del formulario...');
     const formData = await request.formData();
@@ -55,72 +31,39 @@ export const POST: APIRoute = async ({ request }) => {
     const attachment = formData.get('attachment') as File | null;
 
     console.log('📋 Datos recibidos:', { 
-      name: name ? '✅' : '❌', 
-      email: email ? '✅' : '❌', 
-      message: message ? '✅' : '❌',
-      phone: phone || 'N/A',
-      country: country || 'N/A',
-      interests: interests.length,
-      budget: budget || 'N/A',
-      attachment: attachment ? `${attachment.name} (${attachment.size} bytes)` : 'N/A'
+      name: !!name, 
+      email: !!email, 
+      message: !!message,
+      hasAttachment: !!(attachment && attachment.size > 0)
     });
 
     // Validación básica
     if (!name || !email || !message) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: 'Name, email and message are required'
-        }),
-        { 
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      throw new Error('Name, email and message are required');
     }
 
     // Configurar Resend
     console.log('🔧 Configurando Resend...');
     const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
-    // Format interests for email
-    const interestsText = interests.length > 0 
-      ? interests.join(', ') 
-      : 'Not specified';
-
-    // Process attachments - Upload to Vercel Blob
+    // Procesar archivo adjunto si existe
     let attachmentUrl = '';
     let attachmentInfo = '';
     
     if (attachment && attachment.size > 0) {
       console.log('📎 Procesando archivo adjunto...');
       
-      // Validar tamaño del archivo (máximo 10MB)
+      // Validar tamaño (máximo 10MB)
       if (attachment.size > 10 * 1024 * 1024) {
-        return new Response(
-          JSON.stringify({
-            success: false,
-            message: 'File is too large. Maximum size is 10MB.'
-          }),
-          { 
-            status: 400,
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        );
+        throw new Error('File is too large. Maximum size is 10MB.');
       }
-
+      
       try {
-        // Verificar si tenemos token de Vercel Blob
         const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
         console.log('🔍 Blob token disponible:', !!blobToken);
         
         if (blobToken) {
-          console.log('📤 Intentando subir archivo a Vercel Blob...');
-          // Subir archivo a Vercel Blob
+          console.log('📤 Subiendo archivo a Vercel Blob...');
           const filename = `${Date.now()}-${attachment.name}`;
           const blob = await put(filename, attachment, {
             access: 'public',
@@ -129,56 +72,55 @@ export const POST: APIRoute = async ({ request }) => {
           
           attachmentUrl = blob.url;
           attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
-          console.log('✅ Archivo subido exitosamente a:', attachmentUrl);
+          console.log('✅ Archivo subido a:', attachmentUrl);
         } else {
-          console.log('⚠️ BLOB_READ_WRITE_TOKEN no disponible, solo se mencionará el archivo');
+          console.log('⚠️ BLOB_READ_WRITE_TOKEN no disponible');
           attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
         }
-        
       } catch (uploadError) {
-        console.error('❌ Error subiendo archivo a Blob:', uploadError);
-        console.error('❌ Upload error type:', typeof uploadError);
-        console.error('❌ Upload error message:', (uploadError as any)?.message);
-        // Continuar sin attachment si falla la subida
+        console.error('❌ Error subiendo archivo:', uploadError);
         attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
       }
     }
 
-    // Create email content
+    // Preparar contenido del email
+    const interestsText = interests.length > 0 ? interests.join(', ') : 'Not specified';
     const attachmentText = attachmentUrl 
-      ? `\n    ATTACHMENT:\n    • ${attachmentInfo}\n    • Download: ${attachmentUrl}\n`
-      : '';
+      ? `\n    ATTACHMENT: ${attachmentInfo}\n    Download: ${attachmentUrl}`
+      : attachment && attachment.size > 0 
+        ? `\n    ATTACHMENT: ${attachmentInfo} (no download link available)`
+        : '';
 
     const emailContent = `
-    NEW CONTACT MESSAGE
-    ===================
-    
-    CONTACT INFORMATION:
-    • Name: ${name}
-    • Email: ${email}
-    • Phone: ${phone || 'Not provided'}
-    • Country: ${country || 'Not provided'}
-    
-    PROJECT DETAILS:
-    • Interests: ${interestsText}
-    • Budget: ${budget || 'Not specified'}
-    
-    MESSAGE:
-    ${message}${attachmentText}
-    
-    Date: ${new Date().toLocaleString('en-US', { 
-      timeZone: 'America/Mexico_City',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })}
+NEW CONTACT MESSAGE
+===================
+
+CONTACT INFORMATION:
+• Name: ${name}
+• Email: ${email}
+• Phone: ${phone || 'Not provided'}
+• Country: ${country || 'Not provided'}
+
+PROJECT DETAILS:
+• Interests: ${interestsText}
+• Budget: ${budget || 'Not specified'}
+
+MESSAGE:
+${message}${attachmentText}
+
+Date: ${new Date().toLocaleString('en-US', { 
+  timeZone: 'America/Mexico_City',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit'
+})}
     `;
 
-    // Preparar datos para Resend
-    console.log('📧 Preparando email para envío...');
-    const emailData = {
+    // Enviar email
+    console.log('📤 Enviando email...');
+    const { data, error } = await resend.emails.send({
       from: 'Portfolio Karen Ortiz <onboarding@resend.dev>',
       to: import.meta.env.EMAIL_TO || 'karen.ortizg@yahoo.com',
       subject: `New Contact from ${name} - Portfolio`,
@@ -188,56 +130,38 @@ export const POST: APIRoute = async ({ request }) => {
           <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             
             <!-- Header -->
-            <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #4523AE;">
+            <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-top: 2px solid #4523AE;">
               <h1 style="color: #4523AE; margin: 0; font-size: 24px; font-weight: 600;">
                 New Contact Message
               </h1>
               <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">
-                Karen Ortiz Portfolio
+                From your portfolio website
               </p>
             </div>
 
             <!-- Contact Info -->
             <div style="margin-bottom: 25px;">
-              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">
-                Contact Information
-              </h3>
+              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">Contact Information</h3>
               <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #4523AE;">
-                <p style="margin: 0 0 8px 0; color: #333;">
-                  <strong>Name:</strong> ${name}
-                </p>
-                <p style="margin: 0 0 8px 0; color: #333;">
-                  <strong>Email:</strong> <a href="mailto:${email}" style="color: #4523AE; text-decoration: none;">${email}</a>
-                </p>
-                <p style="margin: 0 0 8px 0; color: #333;">
-                  <strong>Phone:</strong> ${phone || 'Not provided'}
-                </p>
-                <p style="margin: 0; color: #333;">
-                  <strong>Country:</strong> ${country || 'Not provided'}
-                </p>
+                <p style="margin: 0 0 8px 0; color: #333;"><strong>Name:</strong> ${name}</p>
+                <p style="margin: 0 0 8px 0; color: #333;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #4523AE; text-decoration: none;">${email}</a></p>
+                <p style="margin: 0 0 8px 0; color: #333;"><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+                <p style="margin: 0; color: #333;"><strong>Country:</strong> ${country || 'Not provided'}</p>
               </div>
             </div>
 
             <!-- Project Details -->
             <div style="margin-bottom: 25px;">
-              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">
-                Project Details
-              </h3>
+              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">Project Details</h3>
               <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #9D7FC1;">
-                <p style="margin: 0 0 8px 0; color: #333;">
-                  <strong>Interests:</strong> ${interestsText}
-                </p>
-                <p style="margin: 0; color: #333;">
-                  <strong>Budget:</strong> ${budget || 'Not specified'}
-                </p>
+                <p style="margin: 0 0 8px 0; color: #333;"><strong>Interests:</strong> ${interestsText}</p>
+                <p style="margin: 0; color: #333;"><strong>Budget:</strong> ${budget || 'Not specified'}</p>
               </div>
             </div>
 
             <!-- Message -->
             <div style="margin-bottom: 25px;">
-              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">
-                Message
-              </h3>
+              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">Message</h3>
               <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #4523AE;">
                 <p style="margin: 0; color: #333; line-height: 1.6; white-space: pre-wrap;">${message}</p>
               </div>
@@ -246,9 +170,7 @@ export const POST: APIRoute = async ({ request }) => {
             ${attachmentUrl ? `
             <!-- Attachment -->
             <div style="margin-bottom: 25px;">
-              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">
-                Attachment
-              </h3>
+              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">Attachment</h3>
               <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                   <div style="background: #0ea5e9; color: white; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">
@@ -261,6 +183,14 @@ export const POST: APIRoute = async ({ request }) => {
                 <a href="${attachmentUrl}" style="display: inline-block; background: #4523AE; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">
                   📎 Download File
                 </a>
+              </div>
+            </div>
+            ` : attachmentInfo ? `
+            <!-- Attachment (No Download) -->
+            <div style="margin-bottom: 25px;">
+              <h3 style="color: #333; margin: 0 0 15px 0; font-size: 18px;">Attachment</h3>
+              <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                <p style="margin: 0; color: #333;">${attachmentInfo} (download not available)</p>
               </div>
             </div>
             ` : ''}
@@ -285,16 +215,7 @@ export const POST: APIRoute = async ({ request }) => {
           </div>
         </div>
       `
-    };
-
-    // Nota: Los archivos se suben a Vercel Blob y se incluye el link en el email
-    if (attachmentUrl) {
-      console.log('✅ Archivo adjunto incluido como link en el email');
-    }
-
-    // Enviar el email con Resend
-    console.log('📤 Enviando email...');
-    const { data, error } = await resend.emails.send(emailData);
+    });
     
     if (error) {
       console.error('❌ Error de Resend:', error);
@@ -319,39 +240,12 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (error) {
     console.error('❌ Error completo:', error);
     
-    // Logging detallado para debugging en producción
-    console.error('❌ Error type:', typeof error);
-    console.error('❌ Error constructor:', error?.constructor?.name);
-    
-    // Extraer mensaje de error más específico
-    let errorMessage = 'Internal server error';
-    let errorDetails = '';
-    
-    if (error instanceof Error) {
-      errorMessage = error.message;
-      errorDetails = error.stack || '';
-      console.error('❌ Error message:', error.message);
-      console.error('❌ Error stack:', error.stack);
-    } else {
-      console.error('❌ Non-Error object:', JSON.stringify(error, null, 2));
-      errorMessage = String(error);
-    }
-    
-    // En desarrollo, incluir más detalles
-    const isDev = import.meta.env.DEV;
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     
     return new Response(
       JSON.stringify({
         success: false,
-        message: errorMessage,
-        ...(isDev && { 
-          details: errorDetails,
-          env: {
-            RESEND_API_KEY: !!import.meta.env.RESEND_API_KEY,
-            EMAIL_TO: !!import.meta.env.EMAIL_TO,
-            BLOB_READ_WRITE_TOKEN: !!import.meta.env.BLOB_READ_WRITE_TOKEN
-          }
-        })
+        message: errorMessage
       }),
       { 
         status: 500,
