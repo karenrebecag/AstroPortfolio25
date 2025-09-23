@@ -276,9 +276,8 @@
         ];
         
         const interactiveElements = document.querySelectorAll(interactiveSelectors.join(', '));
-        
-        
-        interactiveElements.forEach((element, index) => {
+
+        interactiveElements.forEach((element) => {
           // Verificar si el elemento ya tiene los event listeners para evitar duplicados
           if (element.hasAttribute('data-bubble-attached')) {
             return;
