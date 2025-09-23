@@ -115,24 +115,30 @@ export const POST: APIRoute = async ({ request }) => {
 
       try {
         // Verificar si tenemos token de Vercel Blob
-        if (import.meta.env.BLOB_READ_WRITE_TOKEN) {
+        const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
+        console.log('🔍 Blob token disponible:', !!blobToken);
+        
+        if (blobToken) {
+          console.log('📤 Intentando subir archivo a Vercel Blob...');
           // Subir archivo a Vercel Blob
           const filename = `${Date.now()}-${attachment.name}`;
           const blob = await put(filename, attachment, {
             access: 'public',
-            token: import.meta.env.BLOB_READ_WRITE_TOKEN,
+            token: blobToken,
           });
           
           attachmentUrl = blob.url;
           attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
-          console.log('✅ Archivo subido a:', attachmentUrl);
+          console.log('✅ Archivo subido exitosamente a:', attachmentUrl);
         } else {
           console.log('⚠️ BLOB_READ_WRITE_TOKEN no disponible, solo se mencionará el archivo');
           attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
         }
         
       } catch (uploadError) {
-        console.error('❌ Error subiendo archivo:', uploadError);
+        console.error('❌ Error subiendo archivo a Blob:', uploadError);
+        console.error('❌ Upload error type:', typeof uploadError);
+        console.error('❌ Upload error message:', (uploadError as any)?.message);
         // Continuar sin attachment si falla la subida
         attachmentInfo = `${attachment.name} (${(attachment.size / 1024).toFixed(1)} KB)`;
       }
@@ -313,18 +319,39 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (error) {
     console.error('❌ Error completo:', error);
     
+    // Logging detallado para debugging en producción
+    console.error('❌ Error type:', typeof error);
+    console.error('❌ Error constructor:', error?.constructor?.name);
+    
     // Extraer mensaje de error más específico
     let errorMessage = 'Internal server error';
+    let errorDetails = '';
+    
     if (error instanceof Error) {
       errorMessage = error.message;
+      errorDetails = error.stack || '';
       console.error('❌ Error message:', error.message);
       console.error('❌ Error stack:', error.stack);
+    } else {
+      console.error('❌ Non-Error object:', JSON.stringify(error, null, 2));
+      errorMessage = String(error);
     }
+    
+    // En desarrollo, incluir más detalles
+    const isDev = import.meta.env.DEV;
     
     return new Response(
       JSON.stringify({
         success: false,
-        message: errorMessage
+        message: errorMessage,
+        ...(isDev && { 
+          details: errorDetails,
+          env: {
+            RESEND_API_KEY: !!import.meta.env.RESEND_API_KEY,
+            EMAIL_TO: !!import.meta.env.EMAIL_TO,
+            BLOB_READ_WRITE_TOKEN: !!import.meta.env.BLOB_READ_WRITE_TOKEN
+          }
+        })
       }),
       { 
         status: 500,
