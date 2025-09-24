@@ -8,30 +8,30 @@ import { motion } from 'motion/react';
 
 <section class="services-section">
   <!-- Noise Background Effect -->
-  <NoiseBackground opacity={0.15} speed={0.25} className="light" client:load />
+  <NoiseBackground opacity={0.15} speed={0.25} className="light" client:visible />
   
   <div class="services-container">
     <!-- Giant Heading with TextDisperse -->
     <div class="giant-heading-wrapper">
-      <motion.div 
+      <motion.div
         className="giant-heading-container"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        client:load
+        client:idle
       >
-        <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:load />
+        <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:idle />
       </motion.div>
       
-      <motion.p 
+      <motion.p
         className="text-black/70 font-primary text-center mx-auto max-w-[600px] m-0 leading-relaxed"
         style={{ fontSize: 'clamp(14px, 2vw, 18px)' }}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-        client:load
+        client:idle
       >
 Comprehensive digital solutions from design to deployment
       </motion.p>
@@ -45,9 +45,9 @@ Comprehensive digital solutions from design to deployment
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-        client:load
+        client:visible
       >
-        <ServicesIsland client:load />
+        <ServicesIsland client:visible />
       </motion.div>
 
     </div>

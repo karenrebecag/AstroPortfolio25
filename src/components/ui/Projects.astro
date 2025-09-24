@@ -8,29 +8,29 @@ import { motion } from 'motion/react';
 
 <section class="projects-section">
   <!-- Noise Background Effect -->
-  <NoiseBackground opacity={0.12} speed={0.3} className="dark" client:load />
+  <NoiseBackground opacity={0.12} speed={0.3} className="dark" client:visible />
   
   <div class="projects-container">
     <!-- Giant Heading with TextDisperse -->
     <div class="giant-heading-wrapper">
-      <motion.div 
+      <motion.div
         className="giant-heading-container"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        client:load
+        client:idle
       >
-        <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:load />
+        <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:idle />
       </motion.div>
       
-      <motion.p 
+      <motion.p
         className="giant-heading-subtitle"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-        client:load
+        client:idle
       >
         Showcasing my latest work and creative solutions
       </motion.p>
@@ -47,9 +47,9 @@ import { motion } from 'motion/react';
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-        client:load
+        client:visible
       >
-        <ProjectsIsland client:load />
+        <ProjectsIsland client:visible />
       </motion.div>
 
     </div>

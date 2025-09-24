@@ -119,14 +119,14 @@ const experienceData = [
           <div class="grid grid-cols-3 gap-8 mb-8">
             <div class="text-center">
               <div class="text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={8} delay={500} client:load />
+                <Number value={8} delay={500} client:visible />
               </div>
               <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Award winner</div>
             </div>
             
             <div class="text-center">
               <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={1} delay={700} client:load />
+                <Number value={1} delay={700} client:visible />
                 <span>.2k</span>
               </div>
               <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Worldwide clients</div>
@@ -134,7 +134,7 @@ const experienceData = [
             
             <div class="text-center">
               <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={3} delay={900} client:load />
+                <Number value={3} delay={900} client:visible />
                 <span>.5k</span>
               </div>
               <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Jobs completed</div>
@@ -172,16 +172,16 @@ const experienceData = [
 <!-- Globe Section - Above Experience Cards -->
 <div class="globe-section">
   <div class="globe-title-wrapper">
-    <motion.div 
+    <motion.div
       className="globe-title-container"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      client:load
+      client:idle
     >
       <div class="globe-title-text-wrapper">
-        <TextDisperseBlack text="GLOBAL IMPACT" className="globe-title-disperse" client:load />
+        <TextDisperseBlack text="GLOBAL IMPACT" className="globe-title-disperse" client:idle />
       </div>
     </motion.div>
   </div>
@@ -194,13 +194,13 @@ const experienceData = [
 <div class="experience-container cards-section">
   <!-- Text Above Experience Cards -->
   <div class="experience-text-container">
-    <motion.div 
+    <motion.div
       className="experience-text-wrapper"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      client:load
+      client:idle
     >
       <p class="experience-description-text">
         I've collaborated with clients worldwide to create efficient, 

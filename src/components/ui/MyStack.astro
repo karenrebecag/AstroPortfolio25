@@ -24,15 +24,15 @@ import { motion } from 'motion/react';
   
   <div class="container">
     <div class="title-wrapper">
-      <motion.div 
+      <motion.div
         className="title-container"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        client:load
+        client:idle
       >
-        <TextDisperseBlack text="MY STACK" className="title-disperse-black" client:load />
+        <TextDisperseBlack text="MY STACK" className="title-disperse-black" client:idle />
       </motion.div>
     </div>
     <!-- Island optimizado para 3D + Marquees -->

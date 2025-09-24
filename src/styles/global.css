@@ -71,6 +71,7 @@
   scrollbar-color: #d7ccfb transparent;
 }
 
+
 /* Gradient utilities for footer */
 @layer utilities {
   .bg-gradient-radial {
