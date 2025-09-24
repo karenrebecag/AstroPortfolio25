@@ -87,6 +87,7 @@ import { motion } from 'motion/react';
     padding: 0px 60px 0px 60px;
     margin: 0 auto -100px auto;
     width: 100%;
+    max-width: 1400px;
     display: flex;
     justify-content: center;
     position: relative;
@@ -283,28 +284,25 @@ import { motion } from 'motion/react';
 
   :global(.title-container) {
     width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  @media (max-width: 768px) {
-    :global(.title-container) {
-      justify-content: flex-start;
-    }
-  }
-
   :global(.title-disperse-black) {
     font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
+    font-size: clamp(80px, 15vw, 200px) !important;
     font-weight: 400 !important;
     color: #060314 !important;
-    line-height: 0.9 !important;
+    line-height: 0.8 !important;
     letter-spacing: -0.02em !important;
     text-transform: uppercase !important;
     margin: 0 !important;
     text-align: center !important;
     white-space: nowrap !important;
+    width: 100% !important;
   }
 
   :global(.title-disperse-black span) {
@@ -322,6 +320,14 @@ import { motion } from 'motion/react';
       margin: 0 auto -80px auto;
       width: 100%;
       max-width: 100%;
+    }
+
+    :global(.title-container) {
+      justify-content: center;
+    }
+
+    :global(.title-disperse-black) {
+      justify-content: center !important;
     }
 
     :global(.my-stack-island) {
@@ -350,7 +356,7 @@ import { motion } from 'motion/react';
     }
 
     :global(.title-disperse-black) {
-      font-size: 7.35vw !important; /* 30% reducción para móvil */
+      font-size: clamp(60px, 12vw, 120px) !important;
     }
   }
 </style>

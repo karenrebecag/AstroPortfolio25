@@ -1,6 +1,7 @@
 ---
 import SilkBackground from '../three/SilkBackground.tsx';
 import GemBackground from '../three/GemBackground.tsx';
+import SoftSkillsSlider from './SoftSkillsSlider.tsx';
 import { motion, transform } from 'motion/react';
 
 const softSkillsData = [
@@ -49,8 +50,8 @@ const softSkillsData = [
     <!-- Gem 3D Background -->
     <GemBackground client:visible className="gem-background" />
     
-    <!-- Cards Container -->
-    <div class="skills-container">
+    <!-- Desktop: Cards Container con scroll horizontal (visible en vp >= 768px) -->
+    <div class="skills-container-desktop">
       <div class="skills-scroll">
         {softSkillsData.map((skill) => (
           <div class="skill-card">
@@ -68,6 +69,11 @@ const softSkillsData = [
           </div>
         ))}
       </div>
+    </div>
+    
+    <!-- Mobile: Slider Manual (visible en vp < 768px) -->
+    <div class="skills-container-mobile">
+      <SoftSkillsSlider softSkillsData={softSkillsData} client:visible />
     </div>
 
         
@@ -127,49 +133,66 @@ const softSkillsData = [
 
   .soft-skills-title-container {
     width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
   }
 
-  @media (max-width: 768px) {
-    .soft-skills-title-container {
-      justify-content: flex-start;
-    }
-  }
-
   .soft-skills-title-normal {
     font-family: var(--font-display);
-    font-size: clamp(8rem, 8vw, 8rem);
+    font-size: clamp(80px, 15vw, 200px);
     font-weight: 400;
     color: #000000;
-    line-height: 0.9;
+    line-height: 0.8;
     letter-spacing: -0.02em;
     text-transform: uppercase;
     margin: 0;
     text-align: center;
     white-space: nowrap;
-    max-width: 100%;
+    width: 100%;
     display: block;
     transform: none;
   }
 
-  .skills-container {
+  /* Dual System: Desktop Scroll + Mobile Slider */
+  .skills-container-desktop {
+    display: block;
     width: 100%;
     overflow: hidden;
     position: relative;
     min-height: 25rem;
   }
 
-  .skills-container::before {
+  .skills-container-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .skills-container-desktop {
+      display: none;
+    }
+
+    .skills-container-mobile {
+      display: block;
+      padding: 0; /* Sin padding en móvil */
+    }
+
+    .gem-container {
+      padding: 0; /* Sin padding en móvil */
+    }
+  }
+
+  .skills-container-desktop::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right,#f9f9f9 0%, transparent 20%, transparent 80%,#f9f9f9 100%);
+    background: linear-gradient(to right,#f9f9f9 0%, transparent 10%, transparent 90%,#f9f9f9 100%);
     pointer-events: none;
     z-index: 1;
   }
@@ -297,11 +320,15 @@ const softSkillsData = [
       padding: 0 1.25rem; /* 20px */
     }
 
-    .soft-skills-title-normal {
-      font-size: clamp(2.5rem, 6vw, 5rem);
+    .soft-skills-title-container {
+      justify-content: center;
     }
 
-    .skills-container {
+    .soft-skills-title-normal {
+      font-size: clamp(60px, 12vw, 120px);
+    }
+
+    .skills-container-desktop {
       min-height: 20rem; /* 320px mínimo */
     }
 
@@ -344,10 +371,10 @@ const softSkillsData = [
 
   @media (max-width: 480px) {
     .soft-skills-title-normal {
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(50px, 10vw, 80px);
     }
 
-    .skills-container {
+    .skills-container-desktop {
       min-height: 18.75rem; /* 300px mínimo */
     }
 
@@ -385,6 +412,252 @@ const softSkillsData = [
       font-size: 0.875rem; /* 14px */
       line-height: 1.25rem; /* 20px */
       color: #E0D4FF;
+    }
+  }
+
+  /* Soft Skills Slider Styles */
+  :global(.soft-skills-slider-container) {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+
+  :global(.soft-skills-splide) {
+    padding: 0;
+  }
+
+  :global(.soft-skills-slide) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  /* Skill Card Slider - Copiando exactamente el estilo de .skill-card */
+  :global(.skill-card-slider) {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-height: 16.8rem !important; /* 268px - igual que las originales */
+    padding: 1.25rem !important; /* 20px - igual que las originales */
+    background: linear-gradient(135deg, #4A24B5 0%, #9D7FC1 50%, #b8a3ff 100%), url('/images/SilkCardFallback.webp') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    border: 1px solid rgba(74, 36, 181, 0.3) !important;
+    border-radius: 1.25rem !important; /* 20px - igual que las originales */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important; /* 12px - igual que las originales */
+    margin: 1.25rem 0 !important; /* 20px - igual que las originales */
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  :global(.skill-header-slider) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+
+  :global(.skill-number-slider) {
+    color: white;
+    font-size: 1.5rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 2rem;
+    word-wrap: break-word;
+  }
+
+  :global(.skill-content-slider) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  :global(.skill-title-slider) {
+    width: 100%;
+    color: white;
+    font-size: 1.5rem;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 2rem;
+    text-wrap: nowrap;
+    margin: 0;
+  }
+
+  :global(.skill-description-slider) {
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  :global(.description-normal-slider) {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  :global(.description-highlight-slider) {
+    color: #E0D4FF;
+    font-size: 1.125rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.625rem;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  /* Splide Custom Styles */
+  :global(.soft-skills-slider-arrows) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  :global(.soft-skills-slider-arrow) {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(74, 36, 181, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  :global(.soft-skills-slider-arrow:hover) {
+    background: rgba(74, 36, 181, 0.1);
+    border-color: rgba(74, 36, 181, 0.4);
+    transform: scale(1.05);
+  }
+
+  :global(.soft-skills-slider-arrow:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  :global(.soft-skills-slider-arrow svg) {
+    width: 18px;
+    height: 18px;
+    fill: #4A24B5;
+  }
+
+  /* Corregir dirección del chevron en botón previous */
+  :global(.soft-skills-slider-prev svg) {
+    transform: rotate(180deg);
+  }
+
+  :global(.soft-skills-slider-prev) {
+    left: -22px;
+  }
+
+  :global(.soft-skills-slider-next) {
+    right: -22px;
+  }
+
+  /* Pagination Dots */
+  :global(.soft-skills-slider-pagination) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  :global(.soft-skills-slider-page) {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(74, 36, 181, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  :global(.soft-skills-slider-page.is-active) {
+    background: #4A24B5;
+    transform: scale(1.2);
+  }
+
+  :global(.soft-skills-slider-page:hover) {
+    background: rgba(74, 36, 181, 0.6);
+    transform: scale(1.1);
+  }
+
+  /* Responsive adjustments for slider */
+  @media (max-width: 480px) {
+    :global(.skill-card-slider) {
+      min-height: 250px;
+      padding: 16px;
+    }
+
+    :global(.soft-skills-slider-prev) {
+      left: -15px;
+    }
+
+    :global(.soft-skills-slider-next) {
+      right: -15px;
+    }
+
+    :global(.soft-skills-slider-arrow) {
+      width: 36px;
+      height: 36px;
+    }
+
+    :global(.soft-skills-slider-arrow svg) {
+      width: 14px;
+      height: 14px;
+    }
+
+    .skills-container-mobile {
+      padding: 0 15px;
+    }
+
+    :global(.skill-number-slider) {
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+    }
+
+    :global(.skill-title-slider) {
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+    }
+
+    :global(.description-normal-slider),
+    :global(.description-highlight-slider) {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
     }
   }
 </style>

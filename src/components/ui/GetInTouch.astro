@@ -111,7 +111,8 @@ import ReviewsIsland from './ReviewsIsland.tsx';
   /* Header Styles */
   :global(.contact-header) {
     width: 100%;
-    max-width: fit-content;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -129,9 +130,10 @@ import ReviewsIsland from './ReviewsIsland.tsx';
   :global(.contact-title) {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 16px;
     flex-wrap: wrap;
-    width: fit-content;
+    width: 100%;
   }
 
   :global(.contact-title span) {
@@ -140,6 +142,17 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     font-family: var(--font-display);
     font-weight: 400;
     line-height: 64px;
+  }
+
+  /* Force center alignment for TextDisperse component */
+  :global(.contact-title .relative) {
+    justify-content: center !important;
+  }
+
+  @media (max-width: 768px) {
+    :global(.contact-title .relative) {
+      justify-content: center !important;
+    }
   }
 
   /* Form Container */
@@ -151,10 +164,42 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     gap: 40px;
   }
 
-  /* Align last two sections to the right */
+  /* Full width for attachment and submit sections - Mobile First */
   :global(.contact-form-container > .attachment-section),
   :global(.contact-form-container > .submit-section) {
-    align-self: flex-end;
+    align-self: stretch;
+    width: 100%;
+  }
+
+  /* Actions Row - Mobile First (Column) */
+  :global(.actions-row) {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+  }
+
+  /* Desktop Layout - Row alignment for attachment and submit */
+  @media (min-width: 992px) {
+    :global(.contact-form-container) {
+      align-items: flex-start;
+    }
+
+    :global(.actions-row) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 20px;
+      width: 100%;
+    }
+
+    :global(.actions-row .attachment-section),
+    :global(.actions-row .submit-section) {
+      width: auto;
+      max-width: 400px;
+      flex-shrink: 0;
+    }
+
   }
 
   /* Form Row */
@@ -305,6 +350,7 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     display: flex;
     flex-direction: column;
     gap: 24px;
+    width: 100%;
   }
 
   :global(.message-container) {
@@ -350,22 +396,46 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     display: flex;
     flex-direction: column;
     gap: 16px;
-    align-items: flex-end;
+    width: 100%;
   }
 
   :global(.attachment-button) {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+  }
+
+  :global(.attachment-button-content) {
+    display: flex;
     align-items: center;
     gap: 16px;
-    cursor: pointer;
-    padding: 16px 0;
-    transition: all 0.3s ease;
   }
 
   :global(.attachment-button svg) {
     color: white;
     flex-shrink: 0;
     margin-right: 8px;
+  }
+
+  :global(.attachment-button:hover) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
   }
 
   :global(.attachment-button span) {
@@ -456,29 +526,32 @@ import ReviewsIsland from './ReviewsIsland.tsx';
   }
 
   :global(.file-specs) {
-    margin-top: 8px;
+    margin: 0;
+    text-align: center;
   }
 
   :global(.file-specs span) {
     color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
     font-weight: 400;
+    line-height: 1.4;
   }
 
   /* Submit Section */
   :global(.submit-section) {
-    width: 315px;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   :global(.submit-button) {
     width: 100%;
-    padding: 4px 4px 4px 24px;
+    padding: 22px 24px;
+    border-radius: 12px;
     background: white;
     border: none;
-    border-radius: 999px;
+    gap: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -521,7 +594,7 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     width: 48px;
     height: 48px;
     background: #0D0D0D;
-    border-radius: 50%;
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -753,14 +826,24 @@ import ReviewsIsland from './ReviewsIsland.tsx';
       align-self: flex-start;
     }
 
-    :global(.submit-section) {
+    :global(.actions-row) {
+      flex-direction: column;
+      gap: 40px;
       width: 100%;
-      max-width: 315px;
-      align-self: center !important;
     }
 
-    :global(.attachment-section) {
-      align-self: center !important;
+    :global(.actions-row .submit-section) {
+      width: 100%;
+      justify-content: center;
+    }
+
+    :global(.actions-row .attachment-section) {
+      width: 100%;
+    }
+
+    :global(.actions-row .submit-button) {
+      max-width: none !important;
+      width: 100% !important;
     }
 
     .reviews-container {

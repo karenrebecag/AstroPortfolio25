@@ -32,12 +32,14 @@ setTimeout(() => {
     debugBtn.addEventListener('click', function(e) {
       console.log('🎯 DEBUG CLICK EVENT FIRED!');
 
-      if (debugDropdown.style.display === 'none') {
-        debugDropdown.style.display = 'block';
-        console.log('📂 Debug dropdown opened');
-      } else {
-        debugDropdown.style.display = 'none';
-        console.log('📁 Debug dropdown closed');
+      if (debugDropdown) {
+        if (debugDropdown.style.display === 'none') {
+          debugDropdown.style.display = 'block';
+          console.log('📂 Debug dropdown opened');
+        } else {
+          debugDropdown.style.display = 'none';
+          console.log('📁 Debug dropdown closed');
+        }
       }
     });
 
@@ -73,13 +75,15 @@ setTimeout(() => {
     existingBtn.replaceWith(existingBtn.cloneNode(true));
 
     const newBtn = document.getElementById('simpleLangToggle');
-    newBtn.onclick = function() {
-      console.log('🎯 HIJACKED BUTTON CLICKED!');
-      alert('Hijacked button works!');
-    };
+    if (newBtn) {
+      newBtn.onclick = function() {
+        console.log('🎯 HIJACKED BUTTON CLICKED!');
+        alert('Hijacked button works!');
+      };
 
-    newBtn.style.border = '5px solid lime';
-    newBtn.style.background = 'magenta';
+      newBtn.style.border = '5px solid lime';
+      newBtn.style.background = 'magenta';
+    }
 
     console.log('✅ Button hijacked successfully!');
   }

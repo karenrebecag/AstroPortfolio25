@@ -89,6 +89,8 @@ import { motion } from 'motion/react';
 
   :global(.giant-heading-container) {
     width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,21 +108,33 @@ import { motion } from 'motion/react';
     max-width: 600px;
   }
 
-  @media (max-width: 768px) {
-    :global(.giant-heading-container) {
-      justify-content: flex-start;
-    }
-  }
-
   :global(.giant-heading-disperse) {
     font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
+    font-size: clamp(80px, 15vw, 200px) !important;
     font-weight: 400 !important;
     color: white !important;
-    line-height: 0.9 !important;
+    line-height: 0.8 !important;
     letter-spacing: -0.02em !important;
     text-transform: uppercase !important;
     margin: 0 !important;
+    width: 100% !important;
+  }
+
+  @media (max-width: 768px) {
+    :global(.giant-heading-container) {
+      justify-content: center;
+    }
+
+    :global(.giant-heading-disperse) {
+      font-size: clamp(60px, 12vw, 120px) !important;
+      justify-content: center !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :global(.giant-heading-disperse) {
+      font-size: clamp(50px, 10vw, 80px) !important;
+    }
   }
 
   :global(.giant-heading-disperse span) {
@@ -221,6 +235,10 @@ import { motion } from 'motion/react';
     color: #ffffff;
     margin: 0;
     transition: color 0.3s ease;
+    font-family: var(--font-display) !important;
+    font-size: clamp(2rem, 6vw, 3.5rem) !important;
+    font-weight: 900 !important;
+    line-height: 0.9 !important;
   }
 
   :global(.project-title.inactive) {
@@ -346,6 +364,19 @@ import { motion } from 'motion/react';
 
 
   /* Responsive Design */
+  @media (max-width: 991px) {
+    /* Hide project numbers in mobile/tablet */
+    :global(.project-number) {
+      display: none;
+    }
+
+    /* Adjust project item layout without numbers */
+    :global(.project-item) {
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
+
   @media (max-width: 768px) {
     .projects-section {
       padding: 40px 20px;

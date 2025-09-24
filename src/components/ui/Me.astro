@@ -7,6 +7,7 @@ import CubeBackground from '../three/CubeBackground.tsx';
 import GlobeBackground from '../three/GlobeBackground.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 import ExperienceMarqueeIsland from './ExperienceMarqueeIsland.tsx';
+import ExperienceSlider from './ExperienceSlider.tsx';
 import { motion } from 'motion/react';
 
 const experienceData = [
@@ -100,7 +101,7 @@ const experienceData = [
             From UI/UX design to full-stack development, I've worked with companies across the globe, 
             creating seamless digital experiences that merge aesthetics with functionality.
           </p>
-          <div class="flex items-start gap-9">
+          <div class="flex items-start gap-9 button-container-me">
             <MainButton text="Get In Touch" />
           </div>
         </div>
@@ -187,9 +188,34 @@ const experienceData = [
   </div>
 </div>
 
-<!-- Experience Cards Section - Marquee Infinito -->
+<!-- Experience Cards Section - Dual System: Marquee (Desktop) + Slider (Mobile) -->
 <div class="experience-container cards-section">
-  <ExperienceMarqueeIsland client:visible />
+  <!-- Text Above Experience Cards -->
+  <div class="experience-text-container">
+    <motion.div 
+      className="experience-text-wrapper"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:load
+    >
+      <p class="experience-description-text">
+        I've collaborated with clients worldwide to create efficient, 
+        impactful digital products that drive real business results.
+      </p>
+    </motion.div>
+  </div>
+  
+  <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
+  <div class="experience-marquee-desktop">
+    <ExperienceMarqueeIsland client:visible />
+  </div>
+  
+  <!-- Mobile: Slider Manual (visible en vp < 768px) -->
+  <div class="experience-slider-mobile">
+    <ExperienceSlider experienceData={experienceData} client:visible />
+  </div>
 </div>
 
 <style>
@@ -396,7 +422,7 @@ const experienceData = [
   .globe-section {
     width: 100%;
     background: #f9f9f9;
-    padding: 0px 60px;
+    padding: 0px 60px 0px 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -445,7 +471,7 @@ const experienceData = [
 
   /* Globe Title Styles - Behind Globe */
   .globe-title-wrapper {
-    padding: 0px 60px 560px 60px;
+    padding: 50px 60px 510px 60px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -455,6 +481,7 @@ const experienceData = [
 
   .globe-title-container {
     width: 100%;
+    max-width: 1400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -463,15 +490,16 @@ const experienceData = [
 
   :global(.globe-title-disperse) {
     font-family: var(--font-display) !important;
-    font-size: 10.5vw !important;
+    font-size: clamp(80px, 15vw, 200px) !important;
     font-weight: 400 !important;
     color: #060314 !important;
-    line-height: 0.9 !important;
+    line-height: 0.8 !important;
     letter-spacing: -0.02em !important;
     text-transform: uppercase !important;
     margin: 0 !important;
     text-align: center !important;
     white-space: nowrap !important;
+    width: 100% !important;
   }
 
   :global(.globe-title-disperse span) {
@@ -486,6 +514,32 @@ const experienceData = [
     margin-top: 0;
     background: #f9f9f9;
     padding: 80px 0;
+  }
+
+  /* Experience Text Styles */
+  .experience-text-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px 60px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .experience-text-wrapper {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .experience-description-text {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-relaxed);
+    color: rgba(8, 8, 8, 0.8);
+    margin: 0;
   }
 
   /* Experience Marquee Styles */
@@ -651,8 +705,7 @@ const experienceData = [
   /* Responsive styles for globe section */
   @media (max-width: 1024px) {
     .globe-section {
-      padding: 60px 40px;
-      min-height: 80vh;
+      padding: 60px 40px 0px 40px;
     }
     
     .globe-container {
@@ -663,7 +716,7 @@ const experienceData = [
 
   @media (max-width: 768px) {
     .globe-section {
-      padding: 40px 20px;
+      padding: 40px 20px 0px 20px;
       min-height: 70vh;
     }
     
@@ -673,27 +726,55 @@ const experienceData = [
     }
 
     .globe-title-wrapper {
-      padding: 0px 30px 0px 30px;
+      padding: 40px 30px 400px 30px;
     }
 
     .globe-title-container {
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     :global(.globe-title-disperse) {
-      font-size: 7.35vw !important; /* 30% reducción para móvil */
+      font-size: clamp(60px, 12vw, 120px) !important;
     }
   }
 
   @media (max-width: 480px) {
     .globe-section {
-      padding: 30px 15px;
+      padding: 30px 15px 0px 15px;
       min-height: 60vh;
     }
     
     .globe-container {
       max-width: 390px; /* 300px * 1.3 = 390px */
       height: 390px; /* 300px * 1.3 = 390px */
+    }
+  }
+
+  /* Responsive styles for experience text */
+  @media (max-width: 1024px) {
+    .experience-text-container {
+      padding: 0 40px 50px 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .experience-text-container {
+      padding: 0 30px 40px 30px;
+    }
+
+    .experience-description-text {
+      font-size: var(--text-lg);
+      line-height: var(--leading-normal);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .experience-text-container {
+      padding: 0 20px 30px 20px;
+    }
+
+    .experience-description-text {
+      font-size: var(--text-base);
     }
   }
 
@@ -777,6 +858,307 @@ const experienceData = [
     :global(.description-highlight) {
       font-size: 0.61rem; /* 9.8px */
       line-height: 0.875rem; /* 14px */
+    }
+  }
+
+  /* Dual System: Desktop Marquee + Mobile Slider */
+  .experience-marquee-desktop {
+    display: block;
+  }
+
+  .experience-slider-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .experience-marquee-desktop {
+      display: none;
+    }
+
+    .experience-slider-mobile {
+      display: block;
+      padding: 0 20px;
+    }
+  }
+
+  /* Experience Slider Styles */
+  :global(.experience-slider-container) {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+
+  :global(.experience-splide) {
+    padding: 0;
+  }
+
+  :global(.experience-slide) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  /* Experience Card Slider - Idéntico al marquee pero adaptado */
+  :global(.experience-card-slider) {
+    width: 100%;
+    max-width: 320px;
+    min-height: 268px;
+    padding: 20px;
+    background: white;
+    border: 1px solid rgba(74, 36, 181, 0.15);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  /* Fullwidth cards en móvil */
+  @media (max-width: 767px) {
+    :global(.experience-card-slider) {
+      max-width: 100%;
+      width: 100%;
+      padding: 20px 50px 0px 50px;
+    }
+  }
+
+  :global(.experience-header-slider) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  :global(.experience-number-slider) {
+    color: #1B1B1B;
+    font-size: 1.05rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.4rem;
+    word-wrap: break-word;
+  }
+
+  :global(.experience-image-slider) {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    background: white;
+    padding: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.experience-content-slider) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  :global(.experience-title-slider) {
+    width: 100%;
+    color: black;
+    font-size: 1.05rem;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.4rem;
+    word-wrap: break-word;
+    margin-bottom: 4px;
+  }
+
+  :global(.experience-company-slider) {
+    width: 100%;
+    color: #1B1B1B;
+    font-size: 0.79rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.14rem;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  :global(.experience-description-slider) {
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  :global(.description-normal-slider) {
+    color: #1B1B1B;
+    font-size: 0.79rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.14rem;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  :global(.description-highlight-slider) {
+    color: #4A24B5;
+    font-size: 0.79rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    line-height: 1.14rem;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  /* Splide Custom Styles */
+  :global(.experience-slider-arrows) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  :global(.experience-slider-arrow) {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(74, 36, 181, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  :global(.experience-slider-arrow:hover) {
+    background: rgba(74, 36, 181, 0.1);
+    border-color: rgba(74, 36, 181, 0.4);
+    transform: scale(1.05);
+  }
+
+  :global(.experience-slider-arrow:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  :global(.experience-slider-arrow svg) {
+    width: 18px;
+    height: 18px;
+    fill: #4A24B5;
+  }
+
+  /* Corregir dirección del chevron en botón previous */
+  :global(.experience-slider-prev svg) {
+    transform: rotate(180deg);
+  }
+
+  :global(.experience-slider-prev) {
+    left: -22px;
+  }
+
+  :global(.experience-slider-next) {
+    right: -22px;
+  }
+
+  /* Pagination Dots */
+  :global(.experience-slider-pagination) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  :global(.experience-slider-page) {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(74, 36, 181, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  :global(.experience-slider-page.is-active) {
+    background: #4A24B5;
+    transform: scale(1.2);
+  }
+
+  :global(.experience-slider-page:hover) {
+    background: rgba(74, 36, 181, 0.6);
+    transform: scale(1.1);
+  }
+
+  /* Responsive adjustments for slider */
+  @media (max-width: 480px) {
+    :global(.experience-card-slider) {
+      max-width: 100%;
+      width: 100%;
+      min-height: 250px;
+      padding: 16px;
+    }
+
+    :global(.experience-slider-prev) {
+      left: -15px;
+    }
+
+    :global(.experience-slider-next) {
+      right: -15px;
+    }
+
+    :global(.experience-slider-arrow) {
+      width: 36px;
+      height: 36px;
+    }
+
+    :global(.experience-slider-arrow svg) {
+      width: 14px;
+      height: 14px;
+    }
+
+    .experience-slider-mobile {
+      padding: 0 15px;
+    }
+  }
+
+  /* Button container y botón full width en móvil */
+  @media (max-width: 767px) {
+    .button-container-me {
+      width: 100% !important;
+      justify-content: stretch !important;
+    }
+
+    .button-container-me :global(.realism-button-wrapper) {
+      width: 100% !important;
+      flex: 1 !important;
+    }
+
+    .button-container-me :global(.realism-button) {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+
+    .button-container-me :global(.button-content) {
+      width: 100% !important;
+      justify-content: center !important;
     }
   }
 </style>

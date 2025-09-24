@@ -181,11 +181,13 @@ const GetInTouchIsland: React.FC = () => {
             text="Get In Touch"
             className="text-white font-display"
             style={{
-              fontSize: 'clamp(60px, 8vw, 100px)',
+              fontSize: 'clamp(80px, 15vw, 200px)',
               fontFamily: 'var(--font-display)',
               fontWeight: 400,
-              lineHeight: '64px',
-              color: 'white'
+              lineHeight: '0.8',
+              color: 'white',
+              width: '100%',
+              textAlign: 'center'
             }}
           />
         </motion.div>
@@ -202,9 +204,10 @@ const GetInTouchIsland: React.FC = () => {
             fontSize: 'clamp(14px, 2vw, 18px)',
             fontWeight: 400,
             lineHeight: 1.4,
-            textAlign: 'left',
-            margin: 0,
-            maxWidth: '600px'
+            textAlign: 'center',
+            margin: '0 auto',
+            maxWidth: '600px',
+            width: '100%'
           }}
         >
           Ready to bring your ideas to life? Let's discuss your project
@@ -401,57 +404,61 @@ const GetInTouchIsland: React.FC = () => {
           <div className="message-underline"></div>
         </motion.div>
 
-        {/* Attachment Section */}
-        <div className="attachment-section">
-          <motion.label 
-            htmlFor="file-upload" 
-            className="attachment-button clickable"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Paperclip size={18} className="inline-block" />
-            <span>Add an Attachment</span>
-          </motion.label>
-          <input
-            id="file-upload"
-            type="file"
-            onChange={handleFileUpload}
-            className="file-input"
-            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-          />
-          {formData.attachment && (
-            <motion.div 
-              className="attachment-tag"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+        {/* Actions Row - Attachment and Submit */}
+        <div className="actions-row">
+          {/* Attachment Section */}
+          <div className="attachment-section">
+            <motion.label 
+              htmlFor="file-upload" 
+              className="attachment-button clickable"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="attachment-tag-content">
-                <FileText size={16} className="attachment-icon" />
-                <div className="attachment-info">
-                  <span className="attachment-name">{formData.attachment.name}</span>
-                  <span className="attachment-size">{(formData.attachment.size / 1024).toFixed(1)} KB</span>
-                </div>
-                <motion.button
-                  type="button"
-                  onClick={handleRemoveFile}
-                  className="remove-attachment-btn"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X size={14} />
-                </motion.button>
+              <div className="attachment-button-content">
+                <Paperclip size={18} className="inline-block" />
+                <span>Add an Attachment</span>
               </div>
-            </motion.div>
-          )}
-          <div className="file-specs">
-            <span>Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG</span>
+              <div className="file-specs">
+                <span>Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG</span>
+              </div>
+            </motion.label>
+            <input
+              id="file-upload"
+              type="file"
+              onChange={handleFileUpload}
+              className="file-input"
+              accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+            />
+            {formData.attachment && (
+              <motion.div 
+                className="attachment-tag"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="attachment-tag-content">
+                  <FileText size={16} className="attachment-icon" />
+                  <div className="attachment-info">
+                    <span className="attachment-name">{formData.attachment.name}</span>
+                    <span className="attachment-size">{(formData.attachment.size / 1024).toFixed(1)} KB</span>
+                  </div>
+                  <motion.button
+                    type="button"
+                    onClick={handleRemoveFile}
+                    className="remove-attachment-btn"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X size={14} />
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
           </div>
-        </div>
 
-        {/* Submit Button */}
-        <div className="submit-section">
+          {/* Submit Button */}
+          <div className="submit-section">
           <motion.button 
             type="submit" 
             disabled={isSubmitting}
@@ -473,6 +480,7 @@ const GetInTouchIsland: React.FC = () => {
               )}
             </div>
           </motion.button>
+          </div>
         </div>
       </motion.form>
 

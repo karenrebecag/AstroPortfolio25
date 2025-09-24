@@ -15,9 +15,12 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
 
   return (
     <div
-      className={`flip-text-container relative block overflow-hidden whitespace-nowrap text-hero font-inter font-black uppercase ${className}`}
+      className={`flip-text-container relative block overflow-hidden whitespace-nowrap font-black uppercase ${className}`}
       style={{
-        lineHeight: 0.75,
+        lineHeight: 'inherit',
+        fontSize: 'inherit',
+        fontFamily: 'inherit',
+        fontWeight: 'inherit',
       }}
     >
       <motion.div className="flex">
@@ -25,6 +28,12 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
           <motion.span
             key={`top-${i}`}
             className="inline-block"
+            style={{
+              fontSize: 'inherit',
+              fontFamily: 'inherit',
+              fontWeight: 'inherit',
+              lineHeight: 'inherit',
+            }}
             initial={{ y: 0 }}
             animate={{ y: isHovered ? "-110%" : 0 }}
             transition={{
@@ -42,6 +51,12 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
           <motion.span
             key={`bottom-${i}`}
             className="inline-block"
+            style={{
+              fontSize: 'inherit',
+              fontFamily: 'inherit',
+              fontWeight: 'inherit',
+              lineHeight: 'inherit',
+            }}
             initial={{ y: "110%" }}
             animate={{ y: isHovered ? 0 : "110%" }}
             transition={{
