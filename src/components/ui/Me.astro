@@ -506,7 +506,7 @@ const experienceData = [
 
   :global(.globe-title-disperse) {
     font-family: var(--font-display) !important;
-    font-size: clamp(60px, 12vw, 160px) !important; /* Reducido el tamaño máximo */
+    font-size: clamp(40px, 8vw, 120px) !important; /* Tamaño más conservador */
     font-weight: 400 !important;
     color: #060314 !important;
     line-height: 0.8 !important;
@@ -515,10 +515,10 @@ const experienceData = [
     margin: 0 !important;
     text-align: center !important;
     white-space: nowrap !important;
-    width: auto !important; /* Cambio de 100% a auto */
-    max-width: 100% !important; /* Limitar al contenedor */
-    overflow: hidden !important; /* Evitar overflow */
-    text-overflow: ellipsis !important; /* Fallback si es necesario */
+    width: fit-content !important;
+    max-width: calc(100vw - 40px) !important; /* Considerar padding lateral */
+    transform-origin: center !important;
+    will-change: transform !important;
   }
 
   :global(.globe-title-disperse span) {
@@ -1204,11 +1204,49 @@ const experienceData = [
 <script>
   // Simple scroll initialization - el efecto funciona con CSS puro
   document.addEventListener('DOMContentLoaded', () => {
-    // Scroll initialized
+    initializeGlobalTitleResize();
   });
-  
+
   // Re-initialize para transiciones de Astro
   document.addEventListener('astro:page-load', () => {
-    // Scroll re-initialized
+    initializeGlobalTitleResize();
   });
+
+  function initializeGlobalTitleResize() {
+    const globeTitle = document.querySelector('.globe-title-disperse') as HTMLElement;
+    const titleWrapper = document.querySelector('.globe-title-text-wrapper') as HTMLElement;
+
+    if (!globeTitle || !titleWrapper) return;
+
+    function adjustTitleSize() {
+      if (!globeTitle || !titleWrapper) return;
+      
+      const wrapperWidth = titleWrapper.offsetWidth;
+      const titleWidth = globeTitle.scrollWidth;
+
+      if (titleWidth > wrapperWidth) {
+        // Calcular el factor de escala necesario
+        const scaleFactor = (wrapperWidth - 40) / titleWidth; // 40px de margen de seguridad
+        const minScale = 0.6; // Escala mínima para mantener legibilidad
+        const finalScale = Math.max(scaleFactor, minScale);
+
+        // Aplicar transform scale en lugar de cambiar font-size
+        globeTitle.style.transform = `scale(${finalScale})`;
+        globeTitle.style.transformOrigin = 'center';
+      } else {
+        // Resetear si el texto cabe naturalmente
+        globeTitle.style.transform = 'scale(1)';
+      }
+    }
+
+    // Ejecutar al cargar
+    setTimeout(adjustTitleSize, 100);
+
+    // Ejecutar en resize
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(adjustTitleSize, 150);
+    });
+  }
 </script>

@@ -14,6 +14,7 @@ import CustomCursor from '../components/ui/CustomCursor.astro';
 import ClickBubble from '../components/ui/ClickBubble.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';
 import LenisIsland from '../components/ui/LenisIsland.jsx';
+import PageLoader from '../components/ui/PageLoader.astro';
 ---
 
 <!DOCTYPE html>
@@ -63,6 +64,7 @@ import LenisIsland from '../components/ui/LenisIsland.jsx';
 		<link rel="alternate" hreflang={lang} href={Astro.url.href} />
 	</head>
 	<body>
+		<PageLoader loadingText="Loading" />
 		<CustomCursor />
 		<!-- <ClickBubble /> -->
 		<ScrollIndicator />

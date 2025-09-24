@@ -24,8 +24,8 @@ const lang = getLangFromUrl(Astro.url);
     <section class="hero-section">
         <!-- DitheringShader Background Scene -->
         <div class="hero-dithering-background">
-          <DitheringShader 
-            client:load
+          <DitheringShader
+            client:idle
             width={1920}
             height={1800}
             colorBack="#dcdcdc"
@@ -37,12 +37,12 @@ const lang = getLangFromUrl(Astro.url);
           />
         </div>
 
-      <ResumeHeroMain client:load>
+      <ResumeHeroMain client:visible>
         <div class="hero-container-wrapper">
           <div class="hero-container">
             <div class="hero-grid">
               <div class="hero-content">
-                <ResumeHeroBadge client:load>
+                <ResumeHeroBadge client:visible>
                   <div class="hero-badge">{t('resume.badge', lang)}</div>
                   <h1 class="hero-title">
                     Karen Rebeca
@@ -51,7 +51,7 @@ const lang = getLangFromUrl(Astro.url);
                   </h1>
                 </ResumeHeroBadge>
                 
-                <ResumeHeroDescription client:load>
+                <ResumeHeroDescription client:visible>
                   <div class="hero-description">
                     <p>
                       {t('resume.description.main', lang)}
@@ -77,7 +77,7 @@ const lang = getLangFromUrl(Astro.url);
                 </div>
               </div>
 
-              <ResumeHeroContact client:load>
+              <ResumeHeroContact client:visible>
                 <div class="hero-contact">
                   <div class="contact-section">
                     <div class="section-label">{t('resume.contact.title', lang)}</div>
@@ -96,7 +96,7 @@ const lang = getLangFromUrl(Astro.url);
 
                   <div class="specialties-section">
                     <div class="section-label">{t('resume.specialties.title', lang)}</div>
-                    <ResumeTagGroup client:load>
+                    <ResumeTagGroup client:visible>
                       {t('resume.specialties.items', lang).map((specialty, index) => (
                         <ResumeTag index={index}>{specialty}</ResumeTag>
                       ))}
@@ -111,17 +111,17 @@ const lang = getLangFromUrl(Astro.url);
     </section>
 
     <!-- Professional Summary -->
-    <ResumeSection client:load id="summary" index={1}>
+    <ResumeSection client:visible id="summary" index={1}>
       <div class="section-container">
         <div class="section-header">
           <h2 class="section-title">
-            <TextDisperse client:load text={t('resume.sections.summary.title', lang)} />
+            <TextDisperse client:visible text={t('resume.sections.summary.title', lang)} />
           </h2>
           <div class="section-label">{t('resume.sections.summary.label', lang)}</div>
         </div>
 
         <div class="summary-content">
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -137,7 +137,7 @@ const lang = getLangFromUrl(Astro.url);
             </div>
           </InView>
 
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -153,7 +153,7 @@ const lang = getLangFromUrl(Astro.url);
             </div>
           </InView>
 
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -173,18 +173,18 @@ const lang = getLangFromUrl(Astro.url);
     </ResumeSection>
 
     <!-- Experience Section -->
-    <ResumeSection client:load id="experience" index={2}>
+    <ResumeSection client:visible id="experience" index={2}>
       <div class="section-container">
         <div class="section-header">
           <h2 class="section-title">
-            <TextDisperse client:load text={t('resume.sections.experience.title', lang)} />
+            <TextDisperse client:visible text={t('resume.sections.experience.title', lang)} />
           </h2>
           <div class="section-label">{t('resume.sections.experience.label', lang)}</div>
         </div>
 
         <div class="experience-content">
           {t('resume.sections.experience.jobs', lang).map((job, jobIndex) => (
-            <InView client:load
+            <InView client:visible
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
                 visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -215,17 +215,17 @@ const lang = getLangFromUrl(Astro.url);
     </ResumeSection>
 
     <!-- Technical Skills -->
-    <ResumeSection client:load id="skills" index={3}>
+    <ResumeSection client:visible id="skills" index={3}>
       <div class="section-container">
         <div class="section-header">
           <h2 class="section-title">
-            <TextDisperse client:load text={t('resume.sections.skills.title', lang)} />
+            <TextDisperse client:visible text={t('resume.sections.skills.title', lang)} />
           </h2>
           <div class="section-label">{t('resume.sections.skills.label', lang)}</div>
         </div>
 
         <div class="skills-container">
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -240,7 +240,7 @@ const lang = getLangFromUrl(Astro.url);
             </SkillGroup>
           </InView>
 
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -255,7 +255,7 @@ const lang = getLangFromUrl(Astro.url);
             </SkillGroup>
           </InView>
 
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -270,7 +270,7 @@ const lang = getLangFromUrl(Astro.url);
             </SkillGroup>
           </InView>
 
-          <InView client:load
+          <InView client:visible
             variants={{
               hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
               visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -289,18 +289,18 @@ const lang = getLangFromUrl(Astro.url);
     </ResumeSection>
 
     <!-- Projects Section -->
-    <ResumeSection client:load id="projects" index={4}>
+    <ResumeSection client:visible id="projects" index={4}>
       <div class="section-container">
         <div class="section-header">
           <h2 class="section-title">
-            <TextDisperse client:load text={t('resume.sections.projects.title', lang)} />
+            <TextDisperse client:visible text={t('resume.sections.projects.title', lang)} />
           </h2>
           <div class="section-label">{t('resume.sections.projects.label', lang)}</div>
         </div>
 
         <div class="projects-content">
           {t('resume.sections.projects.items', lang).map((project, index) => (
-            <InView client:load
+            <InView client:visible
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
                 visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -327,18 +327,18 @@ const lang = getLangFromUrl(Astro.url);
     </ResumeSection>
 
     <!-- Education Section -->
-    <ResumeSection client:load id="education" index={5}>
+    <ResumeSection client:visible id="education" index={5}>
       <div class="section-container">
         <div class="section-header">
           <h2 class="section-title">
-            <TextDisperse client:load text={t('resume.sections.education.title', lang)} />
+            <TextDisperse client:visible text={t('resume.sections.education.title', lang)} />
           </h2>
           <div class="section-label">{t('resume.sections.education.label', lang)}</div>
         </div>
         
         <div class="education-content">
           {t('resume.sections.education.items', lang).map((item, index) => (
-            <InView client:load
+            <InView client:visible
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
                 visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -362,7 +362,7 @@ const lang = getLangFromUrl(Astro.url);
           ))}
         </div>
         
-        <InView client:load
+        <InView client:visible
           variants={{
             hidden: { opacity: 0, y: 100, filter: "blur(4px)" },
             visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -448,7 +448,6 @@ const lang = getLangFromUrl(Astro.url);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    max-width: 32rem;
   }
 
   .hero-description p {
@@ -1006,7 +1005,9 @@ const lang = getLangFromUrl(Astro.url);
   /* Hero Container with limited width */
   .hero-container {
     width: 100%;
-    
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
   /* Responsive adjustments */
