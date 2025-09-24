@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react"
 
-export function CVFooter() {
+export function ResumeFooter() {
   return (
     <motion.footer 
       className="cv-footer"

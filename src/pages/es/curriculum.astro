@@ -1,0 +1,1042 @@
+---
+import ResumeLayout from '../../layouts/ResumeLayout.astro';
+import ResumeHeader from '../../components/ui/ResumeHeader.astro';
+import { ResumeSection } from '../../components/ui/ResumeSection.tsx';
+import { ResumeTag, ResumeTagGroup } from '../../components/ui/ResumeTag.tsx';
+import { SkillTag, SkillGroup } from '../../components/ui/SkillTag.tsx';
+import { ResumeHeroBadge, ResumeHeroDescription, ResumeHeroContact, ResumeHeroMain } from '../../components/ui/ResumeHeroAnimations.tsx';
+import { ResumeFooter } from '../../components/ui/ResumeFooter.tsx';
+import { DitheringShader } from '../../components/three/DitheringShader.tsx';
+import MainButton from '../../components/ui/MainButton.astro';
+import SecondaryButton from '../../components/ui/SecondaryButton.astro';
+import { TextDisperse } from '../../components/ui/TextDisperse.tsx';
+import { InView } from '../../components/ui/InView.tsx';
+import { getLangFromUrl, t } from '../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<ResumeLayout title={t('resume.title', lang)}>
+  <ResumeHeader />
+
+  <main class="cv-main">
+    <!-- Hero Section with Original CV Animations -->
+    <section class="hero-section">
+        <!-- DitheringShader Background Scene -->
+        <div class="hero-dithering-background">
+          <DitheringShader
+            client:load
+            width={1920}
+            height={1800}
+            colorBack="#dcdcdc"
+            colorFront="#ffffff"
+            shape="wave"
+            type="8x8"
+            pxSize={3}
+            speed={0.6}
+          />
+        </div>
+
+      <ResumeHeroMain client:load>
+        <div class="hero-container-wrapper">
+          <div class="hero-container">
+            <div class="hero-grid">
+              <div class="hero-content">
+                <ResumeHeroBadge client:load>
+                  <div class="hero-badge">{t('resume.badge', lang)}</div>
+                  <h1 class="hero-title">
+                    Karen Rebeca
+                    <br />
+                    <span class="hero-subtitle">Ortiz</span>
+                  </h1>
+                </ResumeHeroBadge>
+
+                <ResumeHeroDescription client:load>
+                  <div class="hero-description">
+                    <p>
+                      {t('resume.description.main', lang)}
+                      <span class="highlight">{t('resume.description.highlight', lang)}</span>.
+                    </p>
+
+                    <div class="hero-status">
+                      <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        {t('resume.description.status', lang)}
+                      </div>
+                      <div>{t('resume.description.location', lang)}</div>
+                    </div>
+                  </div>
+                </ResumeHeroDescription>
+
+                <!-- Action Buttons -->
+                <div class="hero-actions">
+                  <MainButton text={t('resume.buttons.downloadCV', lang)} href="/cv-karen-ortiz.pdf" />
+                  <div id="portfolio-button">
+                    <SecondaryButton text={t('resume.buttons.portfolio', lang)} variant="glass" />
+                  </div>
+                </div>
+              </div>
+
+              <ResumeHeroContact client:load>
+                <div class="hero-contact">
+                  <div class="contact-section">
+                    <div class="section-label">{t('resume.contact.title', lang)}</div>
+                    <div class="contact-links">
+                      <a href="mailto:karen.ortizg@yahoo.com" class="contact-link primary">
+                        karen.ortizg@yahoo.com
+                      </a>
+                      <a href="tel:+525660014362" class="contact-link">
+                        56 6001 43 62
+                      </a>
+                      <a href="https://linkedin.com/in/karen-rebeca-ortiz" target="_blank" class="contact-link small">
+                        linkedin.com/in/karen-rebeca-ortiz
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="specialties-section">
+                    <div class="section-label">{t('resume.specialties.title', lang)}</div>
+                    <ResumeTagGroup client:load>
+                      {t('resume.specialties.items', lang).map((specialty, index) => (
+                        <ResumeTag index={index}>{specialty}</ResumeTag>
+                      ))}
+                    </ResumeTagGroup>
+                  </div>
+                </div>
+              </ResumeHeroContact>
+            </div>
+          </div>
+        </div>
+      </ResumeHeroMain>
+    </section>
+
+    <!-- Professional Summary -->
+    <ResumeSection client:load id="summary" index={1}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <TextDisperse client:load text={t('resume.sections.summary.title', lang)} />
+          </h2>
+          <div class="section-label">{t('resume.sections.summary.label', lang)}</div>
+        </div>
+
+        <div class="summary-content">
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <div class="summary-item">
+              <h3>{t('resume.sections.summary.items.0.title', lang)}</h3>
+              <p>
+                {t('resume.sections.summary.items.0.content', lang)}
+              </p>
+            </div>
+          </InView>
+
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.08 }}
+          >
+            <div class="summary-item">
+              <h4>{t('resume.sections.summary.items.1.title', lang)}</h4>
+              <p>
+                {t('resume.sections.summary.items.1.content', lang)}
+              </p>
+            </div>
+          </InView>
+
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.16 }}
+          >
+            <div class="summary-item">
+              <h4>{t('resume.sections.summary.items.2.title', lang)}</h4>
+              <p>
+                {t('resume.sections.summary.items.2.content', lang)}
+              </p>
+            </div>
+          </InView>
+        </div>
+      </div>
+    </ResumeSection>
+
+    <!-- Experience Section -->
+    <ResumeSection client:load id="experience" index={2}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <TextDisperse client:load text={t('resume.sections.experience.title', lang)} />
+          </h2>
+          <div class="section-label">{t('resume.sections.experience.label', lang)}</div>
+        </div>
+
+        <div class="experience-content">
+          {t('resume.sections.experience.jobs', lang).map((job, jobIndex) => (
+            <InView client:load
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+              }}
+              viewOptions={{ margin: "0px 0px -100px 0px" }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: jobIndex * 0.08 }}
+            >
+              <div class="job-section">
+                <h3 class="job-title">{job.title}</h3>
+                <div class="job-header">
+                  <div class="company">{job.company}</div>
+                  <div class="location">{job.location}</div>
+                </div>
+
+                <div class="projects-grid">
+                  {job.projects.map((project) => (
+                    <div class="project-card">
+                      <h4>{project.title}</h4>
+                      <p>{project.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </InView>
+          ))}
+        </div>
+      </div>
+    </ResumeSection>
+
+    <!-- Technical Skills -->
+    <ResumeSection client:load id="skills" index={3}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <TextDisperse client:load text={t('resume.sections.skills.title', lang)} />
+          </h2>
+          <div class="section-label">{t('resume.sections.skills.label', lang)}</div>
+        </div>
+
+        <div class="skills-container">
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <SkillGroup title={t('resume.sections.skills.groups.0.title', lang)} delay={0}>
+              {t('resume.sections.skills.groups.0.skills', lang).map((skill, index) => (
+                <SkillTag index={index}>{skill}</SkillTag>
+              ))}
+            </SkillGroup>
+          </InView>
+
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.08 }}
+          >
+            <SkillGroup title={t('resume.sections.skills.groups.1.title', lang)} delay={1}>
+              {t('resume.sections.skills.groups.1.skills', lang).map((skill, index) => (
+                <SkillTag variant="secondary" index={index}>{skill}</SkillTag>
+              ))}
+            </SkillGroup>
+          </InView>
+
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.16 }}
+          >
+            <SkillGroup title={t('resume.sections.skills.groups.2.title', lang)} delay={2}>
+              {t('resume.sections.skills.groups.2.skills', lang).map((skill, index) => (
+                <SkillTag variant="accent" index={index}>{skill}</SkillTag>
+              ))}
+            </SkillGroup>
+          </InView>
+
+          <InView client:load
+            variants={{
+              hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+              visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+            }}
+            viewOptions={{ margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.24 }}
+          >
+            <SkillGroup title={t('resume.sections.skills.groups.3.title', lang)} delay={3}>
+              {t('resume.sections.skills.groups.3.skills', lang).map((skill, index) => (
+                <SkillTag index={index}>{skill}</SkillTag>
+              ))}
+            </SkillGroup>
+          </InView>
+        </div>
+      </div>
+    </ResumeSection>
+
+    <!-- Projects Section -->
+    <ResumeSection client:load id="projects" index={4}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <TextDisperse client:load text={t('resume.sections.projects.title', lang)} />
+          </h2>
+          <div class="section-label">{t('resume.sections.projects.label', lang)}</div>
+        </div>
+
+        <div class="projects-content">
+          {t('resume.sections.projects.items', lang).map((project, index) => (
+            <InView client:load
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+              }}
+              viewOptions={{ margin: "0px 0px -100px 0px" }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.08 }}
+            >
+              <div class="project-item">
+                <div class="project-number">{project.number}</div>
+                <div class="project-details">
+                  <h3>{project.title}</h3>
+                  <div class="project-subtitle">{project.subtitle}</div>
+                  <p>{project.description}</p>
+                </div>
+                <div class="project-benefits">
+                  <div class="benefits-label">{t('resume.sections.projects.benefitsLabel', lang)}</div>
+                  <p>{project.benefits}</p>
+                </div>
+              </div>
+            </InView>
+          ))}
+        </div>
+      </div>
+    </ResumeSection>
+
+    <!-- Education Section -->
+    <ResumeSection client:load id="education" index={5}>
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">
+            <TextDisperse client:load text={t('resume.sections.education.title', lang)} />
+          </h2>
+          <div class="section-label">{t('resume.sections.education.label', lang)}</div>
+        </div>
+
+        <div class="education-content">
+          {t('resume.sections.education.items', lang).map((item, index) => (
+            <InView client:load
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+              }}
+              viewOptions={{ margin: "0px 0px -100px 0px" }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.08 }}
+            >
+              <div class="education-item">
+                <div class="education-number">{item.number}</div>
+                <div class="education-details">
+                  <h3>{item.title}</h3>
+                  <div class="education-duration">{item.duration}</div>
+                  <ul class="education-points">
+                    {item.points.map((point) => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </InView>
+          ))}
+        </div>
+
+        <InView client:load
+          variants={{
+            hidden: { opacity: 0, y: 100, filter: "blur(4px)" },
+            visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+          }}
+          viewOptions={{ margin: "0px 0px -200px 0px" }}
+          transition={{ duration: 0.3, ease: "easeInOut", delay: 0.3 }}
+        >
+          <div class="learning-badge">
+            <div class="badge-title">{t('resume.sections.education.learningBadge.title', lang)}</div>
+            <div class="badge-subtitle">{t('resume.sections.education.learningBadge.subtitle', lang)}</div>
+          </div>
+        </InView>
+      </div>
+    </ResumeSection>
+
+  </main>
+
+</ResumeLayout>
+
+<style>
+  body{
+
+    background-color: #fffefe;
+  }
+  /* Footer Spacer for Sticky Footer */
+  .footer-spacer {
+    height: 720px;
+  }
+
+  /* Main CV Styles - Dark Mode */
+  .cv-main {
+    background: #fffefe;
+    color: #000000;
+    font-family: var(--font-primary);
+    padding-top: 80px; /* Account for CV header (no TopMarquee) */
+    min-height: 100vh;
+  }
+
+  /* Hero Section */
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.875rem;
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display); /* Median font */
+    color: #313131;
+  }
+
+  .hero-subtitle {
+    color: #888888;
+  }
+
+  .hero-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 32rem;
+  }
+
+  .hero-description p {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+    line-height: 1.6;
+    color: #000000;
+  }
+
+  .highlight {
+    color: #7a7a7a;
+  }
+
+  /* Hero Action Buttons */
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .hero-actions {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .hero-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #363636;
+  }
+
+  @media (min-width: 640px) {
+    .hero-status {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #000000;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .hero-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-contact {
+      margin-top: 0;
+    }
+  }
+
+  .contact-section, .specialties-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .section-label {
+    font-size: 0.875rem;
+    color: #000000;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-link {
+    color: #1d1d1db6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .contact-link:hover {
+    color: rgb(0, 0, 0);
+  }
+
+  .contact-link.primary {
+    font-weight: 500;
+  }
+
+  .contact-link.small {
+    font-size: 0.75rem;
+    color: #222222;
+  }
+
+  /* Section Styles */
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-bottom: 8rem; /* Increased spacing between sections */
+  }
+
+  @media (max-width: 768px) {
+    .section-container {
+      margin-bottom: 6rem; /* Reduced spacing on mobile */
+    }
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-header {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-header {
+      margin-bottom: 4rem;
+    }
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 300;
+    font-family: var(--font-display); /* Median font */
+    color: #0c0819;
+  }
+
+  /* TextDisperse styles for section titles */
+  .section-title :global(.relative) {
+    color: #0c0819 !important;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+
+  /* Summary Styles */
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .summary-item h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .summary-item h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .summary-item p {
+    color: #0c08198c;
+    line-height: 1.6;
+  }
+
+  /* Experience Styles */
+  .experience-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .job-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .job-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .job-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .job-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .company {
+    font-weight: 500;
+    color: ;
+  }
+
+  .location {
+    font-size: 0.875rem;
+    color: #cccccc;
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 1.5rem;
+    border: 1px solid #f9f9f941;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(183, 183, 183, 0.069);
+  }
+
+  .project-card h4 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: ;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .project-card p {
+    color: #0c08198c;
+    line-height: 1.6;
+  }
+
+  /* Skills Styles */
+  .skills-container {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .skills-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4rem;
+    }
+  }
+
+  /* Projects Styles */
+  .projects-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .project-item {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e2e2e2;
+    transition: border-color 0.5s ease;
+  }
+
+  .project-item:hover {
+    border-color: #555555;
+  }
+
+  @media (min-width: 1024px) {
+    .project-item {
+      grid-template-columns: 2fr 6fr 4fr;
+      gap: 2rem;
+    }
+  }
+
+  .project-number {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #0c08198c;
+    transition: color 0.5s ease;
+  }
+
+  .project-item:hover .project-number {
+    color: ;
+  }
+
+  .project-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-details h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .project-subtitle {
+    color: #0c08198c;
+    font-size: 0.875rem;
+  }
+
+  .project-details p {
+    color: #0c08198c;
+    line-height: 1.6;
+    max-width: 32rem;
+  }
+
+  .project-benefits {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .project-benefits {
+      margin-top: 0;
+    }
+  }
+
+  .benefits-label {
+    font-size: 0.875rem;
+    color: #0c08198c;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-benefits p {
+    font-size: 0.875rem;
+    color: #0c08198c;
+    line-height: 1.6;
+  }
+
+  /* Education Styles */
+  .education-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .education-item {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e3e3e3;
+  }
+
+  @media (min-width: 1024px) {
+    .education-item {
+      grid-template-columns: 2fr 6fr 4fr;
+      gap: 2rem;
+    }
+  }
+
+  .education-number {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #cccccc;
+  }
+
+  .education-details h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .education-duration {
+    color: #0c08198c;
+    margin-bottom: 1rem;
+  }
+
+  .education-points {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .education-points li {
+    font-size: 0.875rem;
+    color: #0c08198c;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .education-points li::before {
+    content: '';
+    width: 0.25rem;
+    height: 0.25rem;
+    background: #0c08198c;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .learning-badge {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid #333333;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .badge-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: #0c0819;
+    font-family: var(--font-secondary); /* Boysen font */
+  }
+
+  .badge-subtitle {
+    font-size: 1.125rem;
+    color: #cccccc;
+  }
+
+  /* CV Footer Styles */
+  .cv-footer {
+    padding: 3rem 0 4rem 0;
+    border-top: 1px solid #333333;
+    position: relative;
+  }
+
+  .cv-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .cv-footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .cv-footer-content {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
+
+  .cv-footer-text {
+    font-size: 0.875rem;
+    color: #cccccc;
+    text-align: center;
+  }
+
+  .cv-footer-gradient {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    background: linear-gradient(to top, #171523 0%, rgba(23, 21, 35, 0.8) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Hero Section Styles */
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Hero Background Effects */
+  .hero-dithering-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Move background up only on mobile */
+  @media (max-width: 768px) {
+    .hero-dithering-background {
+      transform: translateY(-100px) !important;
+    }
+  }
+
+  /* Hero Container Wrapper - Full width for centering */
+  .hero-container-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Hero Container with limited width */
+  .hero-container {
+    width: 100%;
+
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .cv-main {
+      padding-top: 70px;
+    }
+
+    .hero-container {
+      padding: 0 1rem;
+    }
+
+    .section-container {
+      padding: 0 1rem;
+    }
+
+    .cv-footer-container {
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle "Go Portfolio" button click
+    const portfolioButton = document.getElementById('portfolio-button');
+    if (portfolioButton) {
+      portfolioButton.addEventListener('click', () => {
+        window.location.href = '/es';
+      });
+    }
+  });
+</script>

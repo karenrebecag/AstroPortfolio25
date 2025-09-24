@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react"
 
-interface CVTagProps {
+interface ResumeTagProps {
   children: React.ReactNode
   variant?: "default" | "secondary" | "outline"
   index?: number
@@ -15,7 +15,7 @@ const tagVariants = {
   outline: "border-gray-600 text-white hover:border-gray-400",
 }
 
-export function CVTag({ children, variant = "default", index = 0, className }: CVTagProps) {
+export function ResumeTag({ children, variant = "default", index = 0, className }: ResumeTagProps) {
   return (
     <motion.div 
       className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium transition-colors ${tagVariants[variant]} ${className || ""}`}
@@ -35,13 +35,13 @@ export function CVTag({ children, variant = "default", index = 0, className }: C
   )
 }
 
-interface CVTagGroupProps {
+interface ResumeTagGroupProps {
   label?: string
   children: React.ReactNode
   className?: string
 }
 
-export function CVTagGroup({ label, children, className }: CVTagGroupProps) {
+export function ResumeTagGroup({ label, children, className }: ResumeTagGroupProps) {
   return (
     <motion.div 
       className={`space-y-3 ${className || ""}`}

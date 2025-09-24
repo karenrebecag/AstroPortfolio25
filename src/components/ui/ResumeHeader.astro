@@ -1,32 +1,53 @@
 ---
-// CV Header component - Dark mode variation
+// Resume Header component - Dark mode variation
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
 
 const lang = getLangFromUrl(Astro.url);
+
+// Function to get the native resume path for each language
+const getResumePathForLang = (langCode: string) => {
+  const resumeRoutes = {
+    'en': '/resume',
+    'es': '/es/curriculum',
+    'fr': '/fr/resume',
+    'hi': '/hi/biodata',
+    'ja': '/ja/rirekisho',
+    'zh-cn': '/zh-cn/jianli',
+    'zh-tw': '/zh-tw/jianli'
+  };
+
+  return resumeRoutes[langCode as keyof typeof resumeRoutes] || '/resume';
+};
+
+// Function to get home path for each language
+const getHomePathForLang = (langCode: string) => {
+  if (langCode === 'en') return '/';
+  return `/${langCode}/`;
+};
 ---
 
-<div class="cv-header-wrapper" id="cvHeaderWrapper">
-  <header class="cv-header" id="cvMainHeader">
-    <div class="cv-logo">KAREN ORTIZ</div>
+<div class="resume-header-wrapper" id="cvHeaderWrapper">
+  <header class="resume-header" id="cvMainHeader">
+    <a href={getHomePathForLang(lang)} class="resume-logo">KAREN ORTIZ</a>
     
-    <nav class="cv-nav">
-      <a href="#summary">Summary</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
+    <nav class="resume-nav">
+      <a href="#summary">{t('nav.summary', lang)}</a>
+      <a href="#experience">{t('nav.experience', lang)}</a>
+      <a href="#projects">{t('nav.projects', lang)}</a>
+      <a href="#skills">{t('nav.skills', lang)}</a>
+      <a href="#education">{t('nav.education', lang)}</a>
     </nav>
     
-    <div class="cv-header-actions-wrapper">
-      <div class="cv-contact-btn-wrapper">
+    <div class="resume-header-actions-wrapper">
+      <div class="resume-contact-btn-wrapper">
         <MainButton text={t('nav.contact', lang)} href="#contact" />
       </div>
       <LanguageSelectorWrapper />
     </div>
     
-    <button class="cv-menu-btn" id="cvMenuBtn">
+    <button class="resume-menu-btn" id="cvMenuBtn">
       <span></span>
       <span></span>
       <span></span>
@@ -34,32 +55,32 @@ const lang = getLangFromUrl(Astro.url);
   </header>
 </div>
 
-<div class="cv-mobile-menu" id="cvMobileMenu">
-  <div class="cv-mobile-menu-content">
+<div class="resume-mobile-menu" id="cvMobileMenu">
+  <div class="resume-mobile-menu-content">
     <!-- Close Button -->
-    <button class="cv-mobile-close-btn" id="cvMobileCloseBtn">
+    <button class="resume-mobile-close-btn" id="cvMobileCloseBtn">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
         <path d="m18 6-12 12"/>
         <path d="m6 6 12 12"/>
       </svg>
     </button>
     
-    <nav class="cv-mobile-nav">
-      <a href="#summary">Summary</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <button class="cv-mobile-contact-btn">{t('nav.contact', lang)}</button>
+    <nav class="resume-mobile-nav">
+      <a href="#summary">{t('nav.summary', lang)}</a>
+      <a href="#experience">{t('nav.experience', lang)}</a>
+      <a href="#projects">{t('nav.projects', lang)}</a>
+      <a href="#skills">{t('nav.skills', lang)}</a>
+      <a href="#education">{t('nav.education', lang)}</a>
+      <button class="resume-mobile-contact-btn">{t('nav.contact', lang)}</button>
 
       <!-- Mobile Language Selector -->
-      <div class="cv-mobile-language-section">
-        <div class="cv-mobile-language-title">Language / Idioma</div>
-        <div class="cv-mobile-language-list">
+      <div class="resume-mobile-language-section">
+        <div class="resume-mobile-language-title">Language / Idioma</div>
+        <div class="resume-mobile-language-list">
           {languageOptions.map((language) => (
             <a
-              href={useTranslatedPath(language.code, Astro.url.pathname)}
-              class={`cv-mobile-language-option ${lang === language.code ? 'active' : ''}`}
+              href={getResumePathForLang(language.code)}
+              class={`resume-mobile-language-option ${lang === language.code ? 'active' : ''}`}
             >
               <span class="flag">{language.flag}</span>
               <span class="name">{language.name}</span>
@@ -72,7 +93,7 @@ const lang = getLangFromUrl(Astro.url);
 </div>
 
 <style>
-  .cv-header-wrapper {
+  .resume-header-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -84,25 +105,25 @@ const lang = getLangFromUrl(Astro.url);
     transition: all 0.3s ease;
   }
 
-  .cv-header-wrapper.scrolled {
+  .resume-header-wrapper.scrolled {
     background: #0b0717;
     box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
   }
 
-  .cv-header-wrapper.hiding {
+  .resume-header-wrapper.hiding {
     pointer-events: none;
   }
 
-  .cv-header-wrapper.hidden {
+  .resume-header-wrapper.hidden {
     pointer-events: none;
   }
 
-  .cv-header-wrapper:hover {
+  .resume-header-wrapper:hover {
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
   }
 
-  .cv-header {
+  .resume-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -113,31 +134,33 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   @media (max-width: 768px) {
-    .cv-header {
+    .resume-header {
       padding: 25px 16px;
     }
   }
 
-  .cv-logo {
+  .resume-logo {
     color: #ffffff;
     font-family: var(--font-display); /* Median font */
     font-size: clamp(17px, 3.5vw, 28px);
     transition: color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
     font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
   }
 
-  .cv-logo:hover {
+  .resume-logo:hover {
     color: #cccccc;
     transform: scale(1.05);
   }
 
-  .cv-nav {
+  .resume-nav {
     display: flex;
     gap: 32px;
   }
 
-  .cv-nav a {
+  .resume-nav a {
     color: #cccccc;
     font-family: var(--font-display); /* Median font */
     text-decoration: none;
@@ -147,12 +170,12 @@ const lang = getLangFromUrl(Astro.url);
     font-weight: 400;
   }
 
-  .cv-nav a:hover {
+  .resume-nav a:hover {
     color: #ffffff;
     transform: translateY(-2px);
   }
 
-  .cv-nav a::after {
+  .resume-nav a::after {
     content: '';
     position: absolute;
     bottom: -4px;
@@ -163,24 +186,24 @@ const lang = getLangFromUrl(Astro.url);
     transition: width 0.3s ease;
   }
 
-  .cv-nav a:hover::after {
+  .resume-nav a:hover::after {
     width: 100%;
   }
 
-  .cv-header-actions-wrapper {
+  .resume-header-actions-wrapper {
     display: flex;
     align-items: center;
     gap: 5px;
   }
 
-  .cv-contact-btn-wrapper {
+  .resume-contact-btn-wrapper {
     display: flex;
     align-items: center;
     scale: 0.7;
     transform-origin: center;
   }
 
-  .cv-menu-btn {
+  .resume-menu-btn {
     display: none;
     flex-direction: column;
     gap: 4px;
@@ -190,22 +213,22 @@ const lang = getLangFromUrl(Astro.url);
     transition: transform 0.2s ease;
   }
 
-  .cv-menu-btn:hover {
+  .resume-menu-btn:hover {
     transform: scale(1.1);
   }
 
-  .cv-menu-btn span {
+  .resume-menu-btn span {
     width: 20px;
     height: 2px;
     background: #ffffff;
     transition: all 0.3s ease;
   }
 
-  .cv-menu-btn:hover span {
+  .resume-menu-btn:hover span {
     background: #cccccc;
   }
 
-  .cv-mobile-menu {
+  .resume-mobile-menu {
     position: fixed;
     top: 0;
     left: 0;
@@ -219,12 +242,12 @@ const lang = getLangFromUrl(Astro.url);
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .cv-mobile-menu.open {
+  .resume-mobile-menu.open {
     opacity: 1;
     visibility: visible;
   }
 
-  .cv-mobile-menu-content {
+  .resume-mobile-menu-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -232,7 +255,7 @@ const lang = getLangFromUrl(Astro.url);
     width: 100%;
   }
 
-  .cv-mobile-nav {
+  .resume-mobile-nav {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -241,11 +264,11 @@ const lang = getLangFromUrl(Astro.url);
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .cv-mobile-menu.open .cv-mobile-nav {
+  .resume-mobile-menu.open .resume-mobile-nav {
     transform: translateY(0);
   }
 
-  .cv-mobile-nav a {
+  .resume-mobile-nav a {
     color: #ffffff;
     font-family: var(--font-display); /* Median font */
     text-decoration: none;
@@ -258,24 +281,24 @@ const lang = getLangFromUrl(Astro.url);
     transform: translateY(20px);
   }
 
-  .cv-mobile-menu.open .cv-mobile-nav a {
+  .resume-mobile-menu.open .resume-mobile-nav a {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .cv-mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
-  .cv-mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
-  .cv-mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
-  .cv-mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
-  .cv-mobile-nav a:nth-child(5) { transition-delay: 0.5s; }
+  .resume-mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
+  .resume-mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
+  .resume-mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
+  .resume-mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
+  .resume-mobile-nav a:nth-child(5) { transition-delay: 0.5s; }
 
-  .cv-mobile-nav a:hover {
+  .resume-mobile-nav a:hover {
     color: #f7f4ff;
     transform: scale(1.05);
     text-shadow: 0 0 20px rgba(69, 35, 174, 0.5);
   }
 
-  .cv-mobile-nav a::after {
+  .resume-mobile-nav a::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -287,11 +310,11 @@ const lang = getLangFromUrl(Astro.url);
     transition: width 0.4s ease;
   }
 
-  .cv-mobile-nav a:hover::after {
+  .resume-mobile-nav a:hover::after {
     width: 100%;
   }
 
-  .cv-mobile-contact-btn {
+  .resume-mobile-contact-btn {
     background: transparent;
     border: 2px solid #ffffff;
     color: #ffffff;
@@ -308,13 +331,13 @@ const lang = getLangFromUrl(Astro.url);
     transform: translateY(20px);
   }
 
-  .cv-mobile-menu.open .cv-mobile-contact-btn {
+  .resume-mobile-menu.open .resume-mobile-contact-btn {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0.6s;
   }
 
-  .cv-mobile-contact-btn::before {
+  .resume-mobile-contact-btn::before {
     content: '';
     position: absolute;
     top: 0;
@@ -326,11 +349,11 @@ const lang = getLangFromUrl(Astro.url);
     z-index: -1;
   }
 
-  .cv-mobile-contact-btn:hover::before {
+  .resume-mobile-contact-btn:hover::before {
     left: 0;
   }
 
-  .cv-mobile-contact-btn:hover {
+  .resume-mobile-contact-btn:hover {
     color: #000000 !important;
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(69, 35, 174, 0.3);
@@ -338,12 +361,12 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   /* Specific pseudo-element styling for text color on hover */
-  .cv-mobile-contact-btn:hover::before ~ * {
+  .resume-mobile-contact-btn:hover::before ~ * {
     color: #000000 !important;
   }
 
   /* Alternative approach with higher specificity */
-  .cv-mobile-menu .cv-mobile-nav .cv-mobile-contact-btn:hover {
+  .resume-mobile-menu .resume-mobile-nav .resume-mobile-contact-btn:hover {
     color: #000000 !important;
     position: relative;
     z-index: 1;
@@ -351,12 +374,12 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   /* Additional specificity for the hover text color */
-  .cv-mobile-menu .cv-mobile-nav .cv-mobile-contact-btn:hover {
+  .resume-mobile-menu .resume-mobile-nav .resume-mobile-contact-btn:hover {
     color: #000000 !important;
   }
 
-  /* CV Mobile Language Selector Styles */
-  .cv-mobile-language-section {
+  /* ResumeMobile Language Selector Styles */
+  .resume-mobile-language-section {
     margin-top: 32px;
     padding-top: 24px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -366,12 +389,12 @@ const lang = getLangFromUrl(Astro.url);
     transition-delay: 0.6s;
   }
 
-  .cv-mobile-menu.open .cv-mobile-language-section {
+  .resume-mobile-menu.open .resume-mobile-language-section {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .cv-mobile-language-title {
+  .resume-mobile-language-title {
     color: rgba(255, 255, 255, 0.7);
     font-family: var(--font-display);
     font-size: 12px;
@@ -381,7 +404,7 @@ const lang = getLangFromUrl(Astro.url);
     text-transform: uppercase;
   }
 
-  .cv-mobile-language-list {
+  .resume-mobile-language-list {
     max-height: 200px;
     overflow-y: auto;
     padding: 8px;
@@ -394,20 +417,20 @@ const lang = getLangFromUrl(Astro.url);
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
-  .cv-mobile-language-list::-webkit-scrollbar {
+  .resume-mobile-language-list::-webkit-scrollbar {
     width: 4px;
   }
 
-  .cv-mobile-language-list::-webkit-scrollbar-track {
+  .resume-mobile-language-list::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .cv-mobile-language-list::-webkit-scrollbar-thumb {
+  .resume-mobile-language-list::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
   }
 
-  .cv-mobile-language-option {
+  .resume-mobile-language-option {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -421,33 +444,33 @@ const lang = getLangFromUrl(Astro.url);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .cv-mobile-language-option:last-child {
+  .resume-mobile-language-option:last-child {
     border-bottom: none;
   }
 
-  .cv-mobile-language-option:hover {
+  .resume-mobile-language-option:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateX(4px);
   }
 
-  .cv-mobile-language-option.active {
+  .resume-mobile-language-option.active {
     background: rgba(255, 255, 255, 0.15);
     color: #ffffff;
     font-weight: 500;
   }
 
-  .cv-mobile-language-option .flag {
+  .resume-mobile-language-option .flag {
     font-size: 18px;
     line-height: 1;
   }
 
-  .cv-mobile-language-option .name {
+  .resume-mobile-language-option .name {
     flex: 1;
     font-weight: 400;
   }
 
   /* Close Button Styles */
-  .cv-mobile-close-btn {
+  .resume-mobile-close-btn {
     position: absolute;
     top: 24px;
     right: 24px;
@@ -463,53 +486,53 @@ const lang = getLangFromUrl(Astro.url);
     z-index: 10;
   }
 
-  .cv-mobile-menu.open .cv-mobile-close-btn {
+  .resume-mobile-menu.open .resume-mobile-close-btn {
     opacity: 1;
     transform: rotate(0deg) scale(1);
     transition-delay: 0.3s;
   }
 
-  .cv-mobile-close-btn:hover {
+  .resume-mobile-close-btn:hover {
     background: rgba(69, 35, 174, 0.2);
     transform: rotate(90deg) scale(1.1);
     color: #4523AE;
   }
 
-  .cv-mobile-close-btn:active {
+  .resume-mobile-close-btn:active {
     transform: rotate(90deg) scale(0.95);
   }
 
-  .cv-mobile-close-btn svg {
+  .resume-mobile-close-btn svg {
     width: 24px;
     height: 24px;
     transition: all 0.2s ease;
   }
 
   @media (max-width: 480px) {
-    .cv-mobile-close-btn {
+    .resume-mobile-close-btn {
       top: 16px;
       right: 16px;
       padding: 6px;
     }
     
-    .cv-mobile-close-btn svg {
+    .resume-mobile-close-btn svg {
       width: 20px;
       height: 20px;
     }
   }
 
   @media (max-width: 1200px) {
-    .cv-nav {
+    .resume-nav {
       display: none;
     }
   }
 
   @media (max-width: 768px) {
-    .cv-header-actions-wrapper {
+    .resume-header-actions-wrapper {
       display: none;
     }
 
-    .cv-menu-btn {
+    .resume-menu-btn {
       display: flex;
     }
   }
@@ -520,7 +543,7 @@ const lang = getLangFromUrl(Astro.url);
 
   document.addEventListener('DOMContentLoaded', () => {
     // Header scroll behavior
-    const headerWrapper = document.querySelector('.cv-header-wrapper');
+    const headerWrapper = document.querySelector('.resume-header-wrapper');
     let lastScrollY = window.scrollY;
     let isScrolling = false;
 
@@ -591,15 +614,15 @@ const lang = getLangFromUrl(Astro.url);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Mobile menu functionality - using classes instead of IDs to avoid Astro scope issues
-    const allMenuBtns = document.querySelectorAll('.cv-menu-btn');
-    const allMobileMenus = document.querySelectorAll('.cv-mobile-menu');
+    const allMenuBtns = document.querySelectorAll('.resume-menu-btn');
+    const allMobileMenus = document.querySelectorAll('.resume-mobile-menu');
     const menuBtn = allMenuBtns[0]; // Keep reference for logging
     const mobileMenu = allMobileMenus[0]; // Keep reference for logging
-    const mobileNav = document.querySelector('.cv-mobile-nav');
-    const navLinks = document.querySelectorAll('.cv-mobile-nav a');
-    const contactBtn = document.querySelector('.cv-mobile-contact-btn');
+    const mobileNav = document.querySelector('.resume-mobile-nav');
+    const navLinks = document.querySelectorAll('.resume-mobile-nav a');
+    const contactBtn = document.querySelector('.resume-mobile-contact-btn');
 
-    console.log('CV Mobile menu elements found:');
+    console.log('ResumeMobile menu elements found:');
     console.log('menuBtn:', menuBtn);
     console.log('mobileMenu:', mobileMenu);
     console.log('mobileNav:', mobileNav);
@@ -657,7 +680,7 @@ const lang = getLangFromUrl(Astro.url);
       isOpen = false;
       
       // Animate close button first
-      const closeBtn = document.querySelector('.cv-mobile-close-btn');
+      const closeBtn = document.querySelector('.resume-mobile-close-btn');
       if (closeBtn) {
         animate(closeBtn, 
           { opacity: 0, transform: 'rotate(-90deg) scale(0.8)' }, 
@@ -699,39 +722,39 @@ const lang = getLangFromUrl(Astro.url);
     };
 
     // Add event listeners to ALL menu buttons since there might be duplicates
-    console.log(`Found ${allMenuBtns.length} CV menu buttons, adding event listeners to all...`);
+    console.log(`Found ${allMenuBtns.length} Resumemenu buttons, adding event listeners to all...`);
 
     allMenuBtns.forEach((btn, index) => {
-      console.log(`Adding event listeners to CV menu button ${index}...`);
+      console.log(`Adding event listeners to Resumemenu button ${index}...`);
 
       btn.addEventListener('click', (e) => {
-        console.log(`CV CLICK EVENT DETECTED on button ${index}! Current isOpen state:`, isOpen);
+        console.log(`ResumeCLICK EVENT DETECTED on button ${index}! Current isOpen state:`, isOpen);
         e.preventDefault();
         e.stopPropagation();
         if (isOpen) {
-          console.log('Closing CV menu...');
+          console.log('Closing Resumemenu...');
           closeMenu();
         } else {
-          console.log('Opening CV menu...');
+          console.log('Opening Resumemenu...');
           openMenu();
         }
       });
 
       btn.addEventListener('touchstart', (e) => {
-        console.log(`CV TOUCHSTART EVENT DETECTED on button ${index}!`);
+        console.log(`ResumeTOUCHSTART EVENT DETECTED on button ${index}!`);
       });
 
       btn.addEventListener('mousedown', (e) => {
-        console.log(`CV MOUSEDOWN EVENT DETECTED on button ${index}!`);
+        console.log(`ResumeMOUSEDOWN EVENT DETECTED on button ${index}!`);
       });
     });
 
     if (allMenuBtns.length === 0) {
-      console.error('No CV menu buttons found!');
+      console.error('No Resumemenu buttons found!');
     }
     
     // Close button functionality
-    const cvMobileCloseBtn = document.querySelector('.cv-mobile-close-btn');
+    const cvMobileCloseBtn = document.querySelector('.resume-mobile-close-btn');
     cvMobileCloseBtn?.addEventListener('click', () => {
       if (isOpen) {
         closeMenu();
@@ -741,7 +764,7 @@ const lang = getLangFromUrl(Astro.url);
     // Close menu when clicking on links or contact button
     mobileMenu?.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      if (target && (target.tagName === 'A' || target.classList.contains('cv-mobile-contact-btn'))) {
+      if (target && (target.tagName === 'A' || target.classList.contains('resume-mobile-contact-btn'))) {
         closeMenu();
       }
     });
@@ -775,7 +798,7 @@ const lang = getLangFromUrl(Astro.url);
     };
 
     // Add smooth scroll to all navigation links
-    document.querySelectorAll('.cv-nav a, .cv-mobile-nav a').forEach(link => {
+    document.querySelectorAll('.resume-nav a, .resume-mobile-nav a').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const href = (e.target as HTMLAnchorElement).getAttribute('href');

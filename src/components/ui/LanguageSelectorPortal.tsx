@@ -178,6 +178,29 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
   };
 
   const getLanguagePath = (langCode: string) => {
+    // Get current path
+    const currentPath = window.location.pathname;
+
+    // Check if we're on a resume/CV page
+    const resumePages = ['/resume', '/cv', '/curriculum', '/biodata', '/rirekisho', '/jianli'];
+    const isResumePage = resumePages.some(page => currentPath.includes(page));
+
+    if (isResumePage) {
+      // Map language codes to their native resume page names
+      const resumeRoutes = {
+        'en': '/resume',
+        'es': '/es/curriculum',
+        'fr': '/fr/resume',
+        'hi': '/hi/biodata',
+        'ja': '/ja/rirekisho',
+        'zh-cn': '/zh-cn/jianli',
+        'zh-tw': '/zh-tw/jianli'
+      };
+
+      return resumeRoutes[langCode as keyof typeof resumeRoutes] || '/resume';
+    }
+
+    // Default behavior for other pages
     if (langCode === 'en') return '/';
     return `/${langCode}/`;
   };

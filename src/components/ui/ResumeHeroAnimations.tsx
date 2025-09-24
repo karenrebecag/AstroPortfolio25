@@ -2,12 +2,12 @@
 
 import { motion } from "motion/react"
 
-interface CVHeroAnimationsProps {
+interface ResumeHeroAnimationsProps {
   children: React.ReactNode
   delay?: number
 }
 
-export function CVHeroBadge({ children, delay = 0 }: CVHeroAnimationsProps) {
+export function ResumeHeroBadge({ children, delay = 0 }: ResumeHeroAnimationsProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -19,7 +19,7 @@ export function CVHeroBadge({ children, delay = 0 }: CVHeroAnimationsProps) {
   )
 }
 
-export function CVHeroDescription({ children, delay = 0 }: CVHeroAnimationsProps) {
+export function ResumeHeroDescription({ children, delay = 0 }: ResumeHeroAnimationsProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -31,7 +31,7 @@ export function CVHeroDescription({ children, delay = 0 }: CVHeroAnimationsProps
   )
 }
 
-export function CVHeroContact({ children, delay = 0 }: CVHeroAnimationsProps) {
+export function ResumeHeroContact({ children, delay = 0 }: ResumeHeroAnimationsProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
@@ -43,7 +43,7 @@ export function CVHeroContact({ children, delay = 0 }: CVHeroAnimationsProps) {
   )
 }
 
-export function CVHeroMain({ children }: { children: React.ReactNode }) {
+export function ResumeHeroMain({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       className="min-h-screen flex items-center"

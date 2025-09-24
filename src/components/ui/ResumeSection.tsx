@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react"
 
-interface CVSectionProps {
+interface ResumeSectionProps {
   children: React.ReactNode
   id?: string
   index?: number
@@ -10,13 +10,13 @@ interface CVSectionProps {
   noPadding?: boolean
 }
 
-export function CVSection({ 
+export function ResumeSection({ 
   children, 
   id, 
   index = 0, 
   className, 
   noPadding = false 
-}: CVSectionProps) {
+}: ResumeSectionProps) {
   return (
     <motion.section
       id={id}
