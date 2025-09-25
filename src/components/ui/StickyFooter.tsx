@@ -7,6 +7,7 @@ import {
 import { DitheringShader } from '../three/DitheringShader';
 import { NoiseBackground } from './NoiseBackground';
 import FlipText from './FlipText';
+import { SpeedlifyStats } from './SpeedlifyStats';
 
 interface FooterLink {
     title: string;
@@ -92,7 +93,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 
                         {/* Footer Content Container with max-width - Centered */}
                         <div className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-between gap-5 py-8 relative z-20">
-                            <div className="w-full h-full flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
+                            <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
                                 <AnimatedContainer className="w-full">
                                     {/* Main Title */}
                                     <h2 className="text-white font-secondary text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-16" >
@@ -140,6 +141,20 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 />
                             </div>
                             
+                            {/* Performance Stats Section */}
+                            <AnimatedContainer delay={0.4} className="w-full">
+                                <div className="w-full flex flex-col gap-4 py-10 border-t border-white/10">
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="text-white font-primary text-lg font-semibold">
+                                            Site Performance
+                                        </h3>
+                                        <span className="text-white/50 text-sm font-primary">
+                                            Powered by Speedlify
+                                        </span>
+                                    </div>
+                                    <SpeedlifyStats className="w-full" />
+                                </div>
+                            </AnimatedContainer>
                
                         </div>
                     </div>
@@ -248,7 +263,11 @@ if (typeof document !== 'undefined') {
             width: 100%;
             max-width: 100vw;
             overflow: hidden;
-            height: 200px;
+            height: auto;
+            min-height: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .karen-ortiz-flip-text {
@@ -272,6 +291,8 @@ if (typeof document !== 'undefined') {
             letter-spacing: -0.02em !important;
             justify-content: center !important;
             display: flex !important;
+            height: auto !important;
+            min-height: fit-content !important;
         }
         
         .footer-grid-texture::before {

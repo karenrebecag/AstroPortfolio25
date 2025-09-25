@@ -213,7 +213,7 @@ const softSkillsData = [
   .skills-scroll {
     display: flex;
     gap: 30px;
-    overflow-x: auto;
+    overflow-x: hidden; /* Cambiado de 'auto' a 'hidden' para deshabilitar scroll manual */
     -ms-overflow-style: none;
     scrollbar-width: none;
     height: 100%;
@@ -221,6 +221,7 @@ const softSkillsData = [
     padding: 0 30px;
     position: relative;
     z-index: 1; /* Ensure proper stacking within container */
+    pointer-events: none; /* Deshabilita interacciones de arrastre */
   }
 
   .skills-scroll::-webkit-scrollbar {
@@ -251,6 +252,7 @@ const softSkillsData = [
     position: relative;
     overflow: hidden;
     z-index: 4;
+    pointer-events: auto; /* Rehabilita interacciones en las cards individuales */
   }
 
   /* SilkBackground styling */

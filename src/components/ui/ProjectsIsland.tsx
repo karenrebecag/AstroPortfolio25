@@ -94,7 +94,7 @@ const ProjectsIsland: React.FC = () => {
   };
 
   return (
-    <div className="projects-list">
+    <div className="projects-list relative">
       {projects.map((project) => {
         const isActive = activeProject === project.id;
         const isHovered = hoveredProject === project.id;
@@ -102,7 +102,7 @@ const ProjectsIsland: React.FC = () => {
         return (
           <div
             key={project.id}
-            className={`project-item clickable ${isActive ? 'active' : ''}`}
+            className={`project-item clickable relative z-10 ${isActive ? 'active' : ''}`}
             data-project={project.id}
             onClick={() => handleProjectClick(project.id)}
           >

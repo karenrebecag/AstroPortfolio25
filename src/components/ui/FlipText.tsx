@@ -21,6 +21,8 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
         fontSize: 'inherit',
         fontFamily: 'inherit',
         fontWeight: 'inherit',
+        height: 'auto',
+        minHeight: 'fit-content',
       }}
     >
       <motion.div className="flex">

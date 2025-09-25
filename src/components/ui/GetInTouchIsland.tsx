@@ -1,36 +1,26 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip, Send, Loader2, User, Globe, X, FileText } from 'lucide-react';
 import FlipText from './FlipText.tsx';
 import { useToast } from './ToastContainer.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
+import { useContactFormStore } from '../../stores/contactFormStore';
+import { shallow } from 'zustand/shallow';
 
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  country: string;
-  interests: string[];
-  budget: string;
-  message: string;
-  attachment: File | null;
-}
+// FormData interface ahora está en el store
 
-const GetInTouchIsland: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    country: '',
-    interests: [],
-    budget: '',
-    message: '',
-    attachment: null
-  });
-
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const GetInTouchIsland: React.FC = React.memo(() => {
+  // Zustand store hooks optimizados - acceso directo
+  const formData = useContactFormStore((state) => state.formData);
+  const { focusedField, isHovered, isSubmitting } = useContactFormStore((state) => state.uiState);
+  const setField = useContactFormStore((state) => state.setField);
+  const toggleInterest = useContactFormStore((state) => state.toggleInterest);
+  const selectBudget = useContactFormStore((state) => state.selectBudget);
+  const setAttachment = useContactFormStore((state) => state.setAttachment);
+  const resetForm = useContactFormStore((state) => state.resetForm);
+  const setFocusedField = useContactFormStore((state) => state.setFocusedField);
+  const setIsHovered = useContactFormStore((state) => state.setIsHovered);
+  const setIsSubmitting = useContactFormStore((state) => state.setIsSubmitting);
   
   // Hook de toasts
   const { showSuccess, showError, ToastContainer } = useToast();
@@ -49,21 +39,13 @@ const GetInTouchIsland: React.FC = () => {
     '> $20,000'
   ];
 
-  const handleInterestToggle = (interest: string) => {
-    setFormData(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
-  };
+  const handleInterestToggle = useCallback((interest: string) => {
+    toggleInterest(interest);
+  }, [toggleInterest]);
 
-  const handleBudgetSelect = (budget: string) => {
-    setFormData(prev => ({
-      ...prev,
-      budget: prev.budget === budget ? '' : budget
-    }));
-  };
+  const handleBudgetSelect = useCallback((budget: string) => {
+    selectBudget(budget);
+  }, [selectBudget]);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -78,23 +60,17 @@ const GetInTouchIsland: React.FC = () => {
       }
     }
     
-    setFormData(prev => ({
-      ...prev,
-      attachment: file
-    }));
+    setAttachment(file);
   };
 
-  const handleRemoveFile = () => {
-    setFormData(prev => ({
-      ...prev,
-      attachment: null
-    }));
+  const handleRemoveFile = useCallback(() => {
+    setAttachment(null);
     // Limpiar el input file
     const fileInput = document.getElementById('file-upload') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
-  };
+  }, [setAttachment]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -138,16 +114,7 @@ const GetInTouchIsland: React.FC = () => {
       if (result.success) {
         showSuccess('Message sent successfully! I will contact you soon.');
         // Limpiar formulario
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          country: '',
-          interests: [],
-          budget: '',
-          message: '',
-          attachment: null
-        });
+        resetForm();
       } else {
         showError(result.message || 'Failed to send message. Please try again.');
       }
@@ -241,7 +208,7 @@ const GetInTouchIsland: React.FC = () => {
                 type="text"
                 placeholder="John Smith"
                 value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={(e) => setField('name', e.target.value)}
                 onFocus={() => setFocusedField('name')}
                 onBlur={() => setFocusedField(null)}
                 className={`field-input ${focusedField === 'name' ? 'focused' : ''}`}
@@ -259,7 +226,7 @@ const GetInTouchIsland: React.FC = () => {
                 type="email"
                 placeholder="john@company.com"
                 value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                onChange={(e) => setField('email', e.target.value)}
                 onFocus={() => setFocusedField('email')}
                 onBlur={() => setFocusedField(null)}
                 className={`field-input ${focusedField === 'email' ? 'focused' : ''}`}
@@ -287,7 +254,7 @@ const GetInTouchIsland: React.FC = () => {
                 type="tel"
                 placeholder="+52 123 4444 4444"
                 value={formData.phone}
-                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                onChange={(e) => setField('phone', e.target.value)}
                 onFocus={() => setFocusedField('phone')}
                 onBlur={() => setFocusedField(null)}
                 className={`field-input ${focusedField === 'phone' ? 'focused' : ''}`}
@@ -305,7 +272,7 @@ const GetInTouchIsland: React.FC = () => {
                 type="text"
                 placeholder="Mexico, United States, Canada"
                 value={formData.country}
-                onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                onChange={(e) => setField('country', e.target.value)}
                 onFocus={() => setFocusedField('country')}
                 onBlur={() => setFocusedField(null)}
                 className={`field-input ${focusedField === 'country' ? 'focused' : ''}`}
@@ -395,7 +362,7 @@ const GetInTouchIsland: React.FC = () => {
             <textarea
               placeholder="Tell me more about your project..."
               value={formData.message}
-              onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+              onChange={(e) => setField('message', e.target.value)}
               onFocus={() => setFocusedField('message')}
               onBlur={() => setFocusedField(null)}
               className={`message-input ${focusedField === 'message' ? 'focused' : ''}`}
@@ -488,6 +455,8 @@ const GetInTouchIsland: React.FC = () => {
       <ToastContainer />
     </div>
   );
-};
+});
+
+GetInTouchIsland.displayName = 'GetInTouchIsland';
 
 export default GetInTouchIsland;

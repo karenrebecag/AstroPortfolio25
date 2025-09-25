@@ -14,6 +14,7 @@ import Footer from '../components/ui/Footer.astro';
 import Enterprises from '../components/ui/Enterprises.astro';
 import GemSection from '../components/ui/GemSection.astro';
 import '../styles/global.css';
+import ScrollPathAnimation from '../components/ui/ScrollPathAnimation.tsx';
 ---
 
 <Layout title="Karen Ortiz - Portfolio" lang="en">
@@ -29,13 +30,31 @@ import '../styles/global.css';
 	<Marquees />
 
 	<MyStack />
-	<section id="projects">
-		<Projects />
-	</section>
-	<FAQs />
+
+	<!-- Projects and FAQs Wrapper with ScrollPath Animation -->
+	<div class="projects-faqs-wrapper">
+		<ScrollPathAnimation client:visible />
+		<section id="projects">
+			<Projects />
+		</section>
+		<FAQs />
+	</div>
 	<section id="contact">
 		<div id="reviews"></div>
 		<GetInTouch />
 	</section>
 	<Footer />
 </Layout>
+
+<style>
+  .projects-faqs-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .projects-faqs-wrapper :global(.scroll-path-animation) {
+    z-index: 0;
+  }
+</style>
