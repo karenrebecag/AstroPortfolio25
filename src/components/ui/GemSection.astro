@@ -45,17 +45,18 @@ const softSkillsData = [
 ---
 
 <section class="gem-section">
+
+  <!-- Gem 3D Background - moved outside gem-container for proper stacking -->
+  <GemBackground client:visible className="gem-background" />
+
   <div class="gem-container">
-    
-    <!-- Gem 3D Background -->
-    <GemBackground client:visible className="gem-background" />
-    
+
     <!-- Desktop: Cards Container con scroll horizontal (visible en vp >= 768px) -->
     <div class="skills-container-desktop">
       <div class="skills-scroll">
         {softSkillsData.map((skill) => (
           <div class="skill-card">
-            <SilkBackground client:visible className="skill-card-background" />
+            <SilkBackground client:visible className="skill-card-silk-bg" />
             <div class="skill-header">
               <div class="skill-number">{skill.id}</div>
             </div>
@@ -127,8 +128,18 @@ const softSkillsData = [
     flex-direction: column;
     gap: 60px;
     position: relative;
-    z-index: 3;
-    padding: 0 20px;
+    z-index: 5; /* Below gem (z-index: 10) */
+  }
+
+  /* GemBackground - positioned to be above cards */
+  .gem-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10; /* Well above cards (z-index: 4) */
+    pointer-events: none;
   }
 
   .soft-skills-title-container {
@@ -164,10 +175,12 @@ const softSkillsData = [
     overflow: hidden;
     position: relative;
     min-height: 25rem;
+    z-index: 2; /* Below gem (z-index: 10) and gem-container (z-index: 5) */
   }
 
   .skills-container-mobile {
     display: none;
+    z-index: 2; /* Below gem (z-index: 10) and gem-container (z-index: 5) */
   }
 
   @media (max-width: 767px) {
@@ -206,6 +219,8 @@ const softSkillsData = [
     height: 100%;
     align-items: center;
     padding: 0 30px;
+    position: relative;
+    z-index: 1; /* Ensure proper stacking within container */
   }
 
   .skills-scroll::-webkit-scrollbar {
@@ -218,7 +233,7 @@ const softSkillsData = [
     width: 24.375rem; /* 390px */
     min-height: 16.8rem; /* 268px - 40% menos altura para desktop */
     padding: 1.25rem; /* 20px */
-    background: url('/images/SilkCardFallback.webp');
+    background: url('/images/SilkCardFallback.webp'); /* Fallback visible */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -235,15 +250,24 @@ const softSkillsData = [
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
+    z-index: 4;
   }
 
-  .skill-card-background {
+  /* SilkBackground styling */
+  .skill-card-silk-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border-radius: inherit;
+    z-index: -1; /* Behind content but above card background */
   }
 
-  .skill-card > *:not(.skill-card-background) {
+
+  .skill-card > *:not(.skill-card-silk-bg) {
     position: relative;
-    z-index: 3;
+    z-index: 2; /* Above silk background */
   }
 
 
@@ -433,16 +457,14 @@ const softSkillsData = [
     padding: 0 10px;
   }
 
-  /* Skill Card Slider - Copiando exactamente el estilo de .skill-card */
+  /* Skill Card Slider - Matching desktop cards with shared background */
   :global(.skill-card-slider) {
     flex: 0 0 auto !important;
     width: 100% !important;
     min-height: 16.8rem !important; /* 268px - igual que las originales */
     padding: 1.25rem !important; /* 20px - igual que las originales */
-    background: linear-gradient(135deg, #4A24B5 0%, #9D7FC1 50%, #b8a3ff 100%), url('/images/SilkCardFallback.webp') !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
+    /* Remove individual background, will use shared silk background */
+    background: transparent !important;
     border: 1px solid rgba(74, 36, 181, 0.3) !important;
     border-radius: 1.25rem !important; /* 20px - igual que las originales */
     display: flex !important;
@@ -456,6 +478,7 @@ const softSkillsData = [
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
     position: relative !important;
     overflow: hidden !important;
+    z-index: 4 !important; /* Above shared silk background */
   }
 
   :global(.skill-header-slider) {

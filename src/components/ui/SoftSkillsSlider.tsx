@@ -4,15 +4,13 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { motion } from 'motion/react';
 import '@splidejs/splide/css/core';
 
-// Estilos inline para asegurar que se apliquen
+// Estilos inline optimizados - sin background individual, usará el compartido
 const cardStyles: React.CSSProperties = {
   width: '100%',
   minHeight: '268px',
   padding: '20px',
-  background: 'url("/images/SilkCardFallback.webp")',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
+  // Remove individual background, will use shared silk background
+  background: 'transparent',
   border: '1px solid rgba(74, 36, 181, 0.3)',
   borderRadius: '20px',
   display: 'flex',
@@ -25,7 +23,8 @@ const cardStyles: React.CSSProperties = {
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
   position: 'relative',
   overflow: 'hidden',
-  margin: '0 auto'
+  margin: '0 auto',
+  zIndex: 4 // Above shared silk background
 };
 
 // Estilos para elementos internos con texto blanco
@@ -156,6 +155,36 @@ const SoftSkillsSlider: React.FC<SoftSkillsSliderProps> = ({ softSkillsData }) =
       const style = document.createElement('style');
       style.id = styleId;
       style.textContent = `
+        /* Slider card background effects - matching desktop cards */
+        .skill-card-slider::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: url('/images/SilkCardFallback.webp');
+          background-size: cover;
+          background-position: center;
+          border-radius: inherit;
+          z-index: -2;
+        }
+
+        .skill-card-slider::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg,
+            rgba(74, 36, 181, 0.1) 0%,
+            rgba(157, 127, 193, 0.05) 50%,
+            rgba(184, 163, 255, 0.1) 100%);
+          border-radius: inherit;
+          z-index: -1;
+        }
+
         .soft-skills-slider-arrows {
           display: flex !important;
           justify-content: space-between !important;

@@ -1,7 +1,9 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo } from "react"
+import { create } from 'zustand'
+import { useShallow } from 'zustand/react/shallow'
 
 // GLSL utility functions
 const declarePI = `
@@ -256,6 +258,123 @@ export const DitheringTypes = {
 export type DitheringShape = keyof typeof DitheringShapes
 export type DitheringType = keyof typeof DitheringTypes
 
+// Optimized Zustand store for DitheringShader performance control
+// Dividido en slices por funcionalidad para evitar re-renders innecesarios
+const useDitheringStore = create<{
+  // Visibility slice - para control de renderizado
+  isVisible: boolean;
+  isPaused: boolean;
+  isLoading: boolean;
+
+  // Animation slice - para propiedades de animación
+  speed: number;
+
+  // Settings slice - para configuración que cambia poco
+  width: number;
+  height: number;
+  colorBack: string;
+  colorFront: string;
+  shape: DitheringShape;
+  type: DitheringType;
+  pxSize: number;
+
+  // Actions - memoizadas para evitar recreación
+  setVisible: (visible: boolean) => void;
+  setPaused: (paused: boolean) => void;
+  setLoading: (loading: boolean) => void;
+  setSpeed: (speed: number) => void;
+  setDimensions: (width: number, height: number) => void;
+  setColors: (colorBack: string, colorFront: string) => void;
+  setShaderSettings: (shape: DitheringShape, type: DitheringType, pxSize: number) => void;
+
+  // Batch updater para múltiples cambios
+  batchUpdate: (updates: Partial<{
+    isVisible: boolean;
+    isPaused: boolean;
+    isLoading: boolean;
+    speed: number;
+    width: number;
+    height: number;
+    colorBack: string;
+    colorFront: string;
+    shape: DitheringShape;
+    type: DitheringType;
+    pxSize: number;
+  }>) => void;
+}>((set, get) => ({
+  // Initial state
+  isVisible: false,
+  isPaused: false,
+  isLoading: true,
+  speed: 0.3,
+  width: 800,
+  height: 800,
+  colorBack: "#e6d9fb",
+  colorFront: "#9D7FC1",
+  shape: "warp",
+  type: "8x8",
+  pxSize: 2,
+
+  // Optimized actions con batch updates cuando es posible
+  setVisible: (visible) => {
+    const currentState = get();
+    if (currentState.isVisible === visible) return;
+    set({ isVisible: visible });
+  },
+
+  setPaused: (paused) => {
+    const currentState = get();
+    if (currentState.isPaused === paused) return;
+    set({ isPaused: paused });
+  },
+
+  setLoading: (loading) => {
+    const currentState = get();
+    if (currentState.isLoading === loading) return;
+    set({ isLoading: loading });
+  },
+
+  setSpeed: (speed) => {
+    const currentState = get();
+    if (currentState.speed === speed) return;
+    set({ speed });
+  },
+
+  setDimensions: (width, height) => {
+    const currentState = get();
+    if (currentState.width === width && currentState.height === height) return;
+    set({ width, height });
+  },
+
+  setColors: (colorBack, colorFront) => {
+    const currentState = get();
+    if (currentState.colorBack === colorBack && currentState.colorFront === colorFront) return;
+    set({ colorBack, colorFront });
+  },
+
+  setShaderSettings: (shape, type, pxSize) => {
+    const currentState = get();
+    if (currentState.shape === shape && currentState.type === type && currentState.pxSize === pxSize) return;
+    set({ shape, type, pxSize });
+  },
+
+  // Batch updater para múltiples cambios simultáneos
+  batchUpdate: (updates) => {
+    const currentState = get();
+    const filteredUpdates: Partial<typeof currentState> = {};
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (currentState[key as keyof typeof currentState] !== value) {
+        (filteredUpdates as any)[key] = value;
+      }
+    });
+
+    if (Object.keys(filteredUpdates).length > 0) {
+      set(filteredUpdates);
+    }
+  },
+}));
+
 interface DitheringShaderProps {
   width?: number
   height?: number
@@ -341,10 +460,72 @@ export function DitheringShader({
   const glRef = useRef<WebGL2RenderingContext | null>(null)
   const uniformLocationsRef = useRef<Record<string, WebGLUniformLocation | null>>({})
   const startTimeRef = useRef<number>(Date.now())
+  const mountRef = useRef<HTMLDivElement>(null)
+
+  // Selectores optimizados con useShallow - evita re-renders innecesarios
+  const { isVisible, isPaused, isLoading } = useDitheringStore(
+    useShallow((state) => ({
+      isVisible: state.isVisible,
+      isPaused: state.isPaused,
+      isLoading: state.isLoading,
+    }))
+  );
+
+  const { setVisible, setPaused, setLoading, batchUpdate } = useDitheringStore(
+    useShallow((state) => ({
+      setVisible: state.setVisible,
+      setPaused: state.setPaused,
+      setLoading: state.setLoading,
+      batchUpdate: state.batchUpdate,
+    }))
+  );
+
+  // Intersection Observer para performance
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: '400px 0px 100px 0px'
+      }
+    );
+
+    if (mountRef.current) {
+      observer.observe(mountRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [setVisible]);
+
+  // Page Visibility API para performance
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setPaused(document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [setPaused]);
+
+  // Sincronizar props con store
+  useEffect(() => {
+    batchUpdate({
+      speed,
+      width,
+      height,
+      colorBack,
+      colorFront,
+      shape,
+      type,
+      pxSize,
+    });
+  }, [width, height, colorBack, colorFront, shape, type, pxSize, speed, batchUpdate]);
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!canvas || !isVisible) return
 
     const gl = canvas.getContext("webgl2")
     
@@ -386,9 +567,18 @@ export function DitheringShader({
     canvas.height = height
     gl.viewport(0, 0, width, height)
 
-    // Animation loop
+    // Animation loop optimizado con store state
     const render = () => {
-      const currentTime = (Date.now() - startTimeRef.current) * 0.001 * speed
+      const currentState = useDitheringStore.getState();
+
+      if (!currentState.isVisible || currentState.isPaused) {
+        if (currentState.speed !== 0) {
+          animationRef.current = requestAnimationFrame(render);
+        }
+        return;
+      }
+
+      const currentTime = (Date.now() - startTimeRef.current) * 0.001 * currentState.speed;
 
       const context = glRef.current
       const shaderProgram = programRef.current
@@ -398,44 +588,59 @@ export function DitheringShader({
       context.clear(context.COLOR_BUFFER_BIT)
       context["useProgram"](shaderProgram)
 
-      // Set uniforms
+      // Set uniforms usando valores del store
       const locations = uniformLocationsRef.current
 
       if (locations.u_time) context.uniform1f(locations.u_time, currentTime)
-      if (locations.u_resolution) context.uniform2f(locations.u_resolution, width, height)
-      if (locations.u_colorBack) context.uniform4fv(locations.u_colorBack, hexToRgba(colorBack))
-      if (locations.u_colorFront) context.uniform4fv(locations.u_colorFront, hexToRgba(colorFront))
-      if (locations.u_shape) context.uniform1f(locations.u_shape, DitheringShapes[shape])
-      if (locations.u_type) context.uniform1f(locations.u_type, DitheringTypes[type])
-      if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, pxSize)
+      if (locations.u_resolution) context.uniform2f(locations.u_resolution, currentState.width, currentState.height)
+      if (locations.u_colorBack) context.uniform4fv(locations.u_colorBack, hexToRgba(currentState.colorBack))
+      if (locations.u_colorFront) context.uniform4fv(locations.u_colorFront, hexToRgba(currentState.colorFront))
+      if (locations.u_shape) context.uniform1f(locations.u_shape, DitheringShapes[currentState.shape])
+      if (locations.u_type) context.uniform1f(locations.u_type, DitheringTypes[currentState.type])
+      if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, currentState.pxSize)
 
       context.drawArrays(context.TRIANGLES, 0, 6)
 
-      if (speed !== 0) {
+      if (currentState.speed !== 0) {
         animationRef.current = requestAnimationFrame(render)
       }
     }
 
     const startAnimation = () => {
-      if (speed !== 0) {
+      const currentState = useDitheringStore.getState();
+      if (currentState.speed !== 0) {
         animationRef.current = requestAnimationFrame(render)
       }
     }
 
-    startAnimation()
+    // Start con smooth loading usando acción memoizada
+    const timer = setTimeout(() => {
+      setLoading(false);
+      startAnimation();
+    }, 100);
 
     return () => {
+      clearTimeout(timer);
       if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
+        cancelAnimationFrame(animationRef.current);
       }
+
+      // Cleanup completo de WebGL resources
       if (glRef.current && programRef.current) {
-        glRef.current.deleteProgram(programRef.current)
+        glRef.current.deleteProgram(programRef.current);
+
+        // Cleanup de buffers y otros recursos WebGL
+        const buffers = glRef.current.getParameter(glRef.current.ARRAY_BUFFER_BINDING);
+        if (buffers) {
+          glRef.current.deleteBuffer(buffers);
+        }
       }
     }
-  }, [width, height, colorBack, colorFront, shape, type, pxSize, speed])
+  }, [width, height, colorBack, colorFront, shape, type, pxSize, speed, isVisible, setLoading])
 
   return (
     <div
+      ref={mountRef}
       className={className}
       style={{
         position: "relative",
@@ -451,6 +656,8 @@ export function DitheringShader({
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          opacity: isVisible && !isLoading ? 1 : 0,
+          transition: "opacity 0.3s ease-out",
         }}
       />
     </div>

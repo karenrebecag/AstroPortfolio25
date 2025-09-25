@@ -1,19 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+import { createThreeJSCleanup } from '../../utils/zustand-optimizations';
 
-// Enhanced Zustand store for performance control
+// Optimized Zustand store siguiendo mejores prácticas de la guía
+// Dividido en slices por funcionalidad para evitar re-renders innecesarios
 const useSilkStore = create<{
+  // Visibility slice - para control de renderizado
   isVisible: boolean;
   isPaused: boolean;
   isLoading: boolean;
+
+  // Settings slice - para configuración que cambia poco
   opacity: number;
   quality: 'low' | 'medium' | 'high';
+
+  // Animation slice - para propiedades de animación
   animationSpeed: number;
+
+  // Color slice - para configuración de colores
   colors: {
     primary: string;
     contrast: string;
   };
+
+  // Actions - memoizadas para evitar recreación
   setVisible: (visible: boolean) => void;
   setPaused: (paused: boolean) => void;
   setLoading: (loading: boolean) => void;
@@ -21,7 +33,19 @@ const useSilkStore = create<{
   setQuality: (quality: 'low' | 'medium' | 'high') => void;
   setAnimationSpeed: (speed: number) => void;
   setColors: (colors: { primary: string; contrast: string }) => void;
+
+  // Batch updater para múltiples cambios
+  batchUpdate: (updates: Partial<{
+    isVisible: boolean;
+    isPaused: boolean;
+    isLoading: boolean;
+    opacity: number;
+    quality: 'low' | 'medium' | 'high';
+    animationSpeed: number;
+    colors: { primary: string; contrast: string };
+  }>) => void;
 }>((set, get) => ({
+  // Initial state
   isVisible: false,
   isPaused: false,
   isLoading: true,
@@ -32,22 +56,82 @@ const useSilkStore = create<{
     primary: '#9D7FC1',
     contrast: '#4523AE'
   },
+
+  // Optimized actions con batch updates cuando es posible
   setVisible: (visible) => {
+    const currentState = get();
+    if (currentState.isVisible === visible) return; // Evita updates innecesarios
+
     set({ isVisible: visible });
-    // Smoother opacity transition with longer delay
+
+    // Smooth opacity transition con batch update
     if (visible) {
-      setTimeout(() => set({ opacity: 1 }), 200);
+      setTimeout(() => {
+        const state = get();
+        if (state.isVisible) { // Double-check para evitar race conditions
+          set({ opacity: 1 });
+        }
+      }, 200);
     } else {
-      // Gradual fade out
       setTimeout(() => set({ opacity: 0 }), 100);
     }
   },
-  setPaused: (paused) => set({ isPaused: paused }),
-  setLoading: (loading) => set({ isLoading: loading }),
-  setOpacity: (opacity) => set({ opacity }),
-  setQuality: (quality) => set({ quality }),
-  setAnimationSpeed: (speed) => set({ animationSpeed: speed }),
-  setColors: (colors) => set({ colors }),
+
+  setPaused: (paused) => {
+    const currentState = get();
+    if (currentState.isPaused === paused) return;
+    set({ isPaused: paused });
+  },
+
+  setLoading: (loading) => {
+    const currentState = get();
+    if (currentState.isLoading === loading) return;
+    set({ isLoading: loading });
+  },
+
+  setOpacity: (opacity) => {
+    const currentState = get();
+    if (currentState.opacity === opacity) return;
+    set({ opacity });
+  },
+
+  setQuality: (quality) => {
+    const currentState = get();
+    if (currentState.quality === quality) return;
+    set({ quality });
+  },
+
+  setAnimationSpeed: (speed) => {
+    const currentState = get();
+    if (currentState.animationSpeed === speed) return;
+    set({ animationSpeed: speed });
+  },
+
+  setColors: (colors) => {
+    const currentState = get();
+    if (JSON.stringify(currentState.colors) === JSON.stringify(colors)) return;
+    set({ colors });
+  },
+
+  // Batch updater para múltiples cambios simultáneos
+  batchUpdate: (updates) => {
+    const currentState = get();
+    const filteredUpdates: Partial<typeof currentState> = {};
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (key === 'colors') {
+        if (JSON.stringify(currentState.colors) !== JSON.stringify(value)) {
+          (filteredUpdates as any)[key] = value;
+        }
+      } else if (currentState[key as keyof typeof currentState] !== value) {
+        (filteredUpdates as any)[key] = value;
+      }
+    });
+
+    if (Object.keys(filteredUpdates).length > 0) {
+      set(filteredUpdates);
+    }
+  },
 }));
 
 export const SilkBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
@@ -61,15 +145,49 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
   } | null>(null);
   
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isVisible, isPaused, isLoading, opacity, quality, animationSpeed } = useSilkStore();
 
-  // Intersection Observer for performance with larger activation range
+  // Selectores optimizados con useShallow - evita re-renders innecesarios
+  // Siguiendo las mejores prácticas de la documentación oficial de Zustand
+  const { isVisible, isPaused, isLoading } = useSilkStore(
+    useShallow((state) => ({
+      isVisible: state.isVisible,
+      isPaused: state.isPaused,
+      isLoading: state.isLoading,
+    }))
+  );
+
+  const { quality, opacity } = useSilkStore(
+    useShallow((state) => ({
+      quality: state.quality,
+      opacity: state.opacity,
+    }))
+  );
+
+  const { animationSpeed } = useSilkStore(
+    useShallow((state) => ({
+      animationSpeed: state.animationSpeed,
+    }))
+  );
+
+  // Actions memoizadas - solo se extraen cuando es necesario
+  const { setVisible, setPaused, setLoading, batchUpdate } = useSilkStore(
+    useShallow((state) => ({
+      setVisible: state.setVisible,
+      setPaused: state.setPaused,
+      setLoading: state.setLoading,
+      batchUpdate: state.batchUpdate,
+    }))
+  );
+
+  const cleanup = useMemo(() => createThreeJSCleanup(), []);
+
+  // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        useSilkStore.getState().setVisible(entry.isIntersecting);
+        setVisible(entry.isIntersecting);
       },
-      { 
+      {
         threshold: 0,
         rootMargin: '800px 0px 200px 0px' // Activate 800px before entering and deactivate 200px after leaving
       }
@@ -80,17 +198,17 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [setVisible]);
 
-  // Page Visibility API for performance
+  // Page Visibility API - optimizado con acciones memoizadas
   useEffect(() => {
     const handleVisibilityChange = () => {
-      useSilkStore.getState().setPaused(document.hidden);
+      setPaused(document.hidden);
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
+  }, [setPaused]);
 
   useEffect(() => {
     if (!mountRef.current || !isVisible) return;
@@ -215,9 +333,9 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
       sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 
-    // Start animation after a small delay with smooth loading
+    // Start animation con smooth loading - usando acción memoizada
     const timer = setTimeout(() => {
-      useSilkStore.getState().setLoading(false);
+      setLoading(false);
       setIsLoaded(true);
       animate();
     }, 300);
@@ -243,18 +361,34 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
         if (sceneRef.current.animationId) {
           cancelAnimationFrame(sceneRef.current.animationId);
         }
-        
-        // Cleanup Three.js resources
+
+        // Cleanup completo de recursos Three.js - siguiendo la guía
+        sceneRef.current.scene.traverse((child: THREE.Object3D) => {
+          if (child instanceof THREE.Mesh) {
+            if (child.material) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(material => material.dispose());
+              } else {
+                child.material.dispose();
+              }
+            }
+            if (child.geometry) {
+              child.geometry.dispose();
+            }
+          }
+        });
+
+        // Cleanup específico del material shader
         sceneRef.current.material.dispose();
         geometry.dispose();
         sceneRef.current.renderer.dispose();
-        
+
         if (currentMount.contains(sceneRef.current.renderer.domElement)) {
           currentMount.removeChild(sceneRef.current.renderer.domElement);
         }
       }
     };
-  }, [isVisible, isPaused, quality]);
+  }, [isVisible, isPaused, quality, setLoading]);
 
   return (
     <div 

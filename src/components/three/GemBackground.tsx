@@ -387,7 +387,7 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
         isLoaded && !isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       } ${className}`}
       style={{ 
-        zIndex: 2, // Por encima de SilkBackground (z-index: 1)
+        zIndex: 20, // Por encima de SilkBackground (z-index: 1)
         mixBlendMode: 'normal'
       }}
     />
