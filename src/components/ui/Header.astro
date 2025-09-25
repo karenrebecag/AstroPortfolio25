@@ -82,15 +82,15 @@ const lang = getLangFromUrl(Astro.url);
     right: 0;
     z-index: 100;
     background: white;
-    background-image: 
-      linear-gradient(to right, rgba(204, 204, 204, 0.3) 1px, transparent 1px), 
+    background-image:
+      linear-gradient(to right, rgba(204, 204, 204, 0.3) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(204, 204, 204, 0.3) 1px, transparent 1px);
     background-size: 40px 40px, 40px 40px;
     background-position: center;
     background-repeat: repeat;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    transition: background-image 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
+    transition: background-image 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease, transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     border-bottom: 1px solid rgba(204, 204, 204, 0.2);
   }
 
@@ -106,12 +106,9 @@ const lang = getLangFromUrl(Astro.url);
     border-bottom: 1px solid rgba(204, 204, 204, 0.25);
   }
 
-  .header-wrapper.hiding {
-    pointer-events: none;
-  }
-
-  .header-wrapper.hidden {
-    pointer-events: none;
+  :global(.header-wrapper.hidden) {
+    transform: translateY(-100%) !important;
+    pointer-events: none !important;
   }
 
   /* Smooth hover effects for better interaction */
@@ -544,12 +541,8 @@ const lang = getLangFromUrl(Astro.url);
 </style>
 
 <script>
-  import { animate } from 'motion';
-
-  console.log('Header script loading...');
 
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded fired');
     // Header scroll behavior
     const headerWrapper = document.querySelector('.header-wrapper');
     let lastScrollY = window.scrollY;
@@ -570,47 +563,54 @@ const lang = getLangFromUrl(Astro.url);
             headerWrapper.classList.remove('scrolled');
           }
 
-          // Refined hide/show logic with better thresholds
-          if (scrollDifference > 8 && currentScrollY > 150) {
-            // Scrolling down - hide header with Motion.dev
-            if (!headerWrapper.classList.contains('hiding') && !headerWrapper.classList.contains('hidden')) {
-              headerWrapper.classList.add('hiding');
-              
-              // Use Motion.dev for smooth hide animation
-              animate(
-                headerWrapper,
-                { 
-                  transform: 'translateY(-100%)',
-                  opacity: 0
-                },
-                { 
-                  duration: 0.4,
-                  ease: [0.23, 1, 0.32, 1],
-                  onComplete: () => {
-                    headerWrapper.classList.add('hidden');
-                    headerWrapper.classList.remove('hiding');
-                  }
-                }
-              );
+          // Hide/show logic - apply styles directly
+          if (scrollDifference > 5 && currentScrollY > 100) {
+            // Scrolling down - hide header
+            if (!headerWrapper.classList.contains('hidden')) {
+              headerWrapper.classList.add('hidden');
+
+              // Animate OUT first, then hide
+              const allHeaders = document.querySelectorAll('.header-wrapper');
+
+              allHeaders.forEach((header) => {
+                // First set up the animation
+                (header as HTMLElement).style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+                (header as HTMLElement).style.transform = 'translateY(-100%)';
+                (header as HTMLElement).style.opacity = '0';
+              });
+
+              // Only hide after animation completes
+              setTimeout(() => {
+                allHeaders.forEach((header) => {
+                  (header as HTMLElement).style.display = 'none';
+                });
+              }, 400);
             }
-          } else if (scrollDifference < -3 || currentScrollY < 100) {
-            // Scrolling up or near top - show header with Motion.dev
-            if (headerWrapper.classList.contains('hiding') || headerWrapper.classList.contains('hidden')) {
-              headerWrapper.classList.remove('hiding');
+          } else if (scrollDifference < -2 || currentScrollY < 80) {
+            // Scrolling up or near top - show header
+            if (headerWrapper.classList.contains('hidden')) {
               headerWrapper.classList.remove('hidden');
-              
-              // Use Motion.dev for smooth show animation
-              animate(
-                headerWrapper,
-                {
-                  transform: 'translateY(0%)',
-                  opacity: 1
-                },
-                {
-                  duration: 0.5,
-                  ease: [0.23, 1, 0.32, 1]
-                }
-              );
+
+              // Show first, then animate IN
+              const allHeaders = document.querySelectorAll('.header-wrapper');
+
+              allHeaders.forEach((header) => {
+                // Make sure it's visible but still in hidden position
+                (header as HTMLElement).style.display = '';
+                (header as HTMLElement).style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                (header as HTMLElement).style.transform = 'translateY(-60px)';
+                (header as HTMLElement).style.opacity = '0';
+              });
+
+              // Animate IN after a frame
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  allHeaders.forEach((header) => {
+                    (header as HTMLElement).style.transform = 'translateY(0%)';
+                    (header as HTMLElement).style.opacity = '1';
+                  });
+                });
+              });
             }
           }
 
@@ -624,44 +624,16 @@ const lang = getLangFromUrl(Astro.url);
     // Throttled scroll listener
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Mobile menu functionality - using classes instead of IDs to avoid Astro scope issues
-    console.log('Starting mobile menu setup...');
-
-    // Get ALL menu buttons since there are duplicates
+    // Mobile menu functionality
     const allMenuBtns = document.querySelectorAll('.menu-btn');
-    const allMobileMenus = document.querySelectorAll('.mobile-menu');
-    const menuBtn = allMenuBtns[0]; // Keep reference for logging
-    const mobileMenu = allMobileMenus[0]; // Keep reference for logging
+    const mobileMenu = document.querySelector('.mobile-menu');
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
     const contactBtn = document.querySelector('.mobile-contact-btn');
 
-    console.log('Mobile menu elements found:');
-    console.log('menuBtn:', menuBtn);
-    console.log('menuBtn classes:', menuBtn?.className);
-    console.log('menuBtn id:', menuBtn?.id);
-    console.log('mobileMenu:', mobileMenu);
-    console.log('mobileMenu classes:', mobileMenu?.className);
-    console.log('mobileMenu id:', mobileMenu?.id);
-    console.log('mobileNav:', mobileNav);
-    console.log('mobileNavLinks:', mobileNavLinks.length);
-    console.log('contactBtn:', contactBtn);
-
-    // Log all found elements
-    console.log('All elements with .menu-btn class:', allMenuBtns.length);
-    allMenuBtns.forEach((btn, index) => {
-      console.log(`Menu button ${index}:`, btn, btn.className, btn.id);
-    });
-
-    console.log('All elements with .mobile-menu class:', allMobileMenus.length);
-    allMobileMenus.forEach((menu, index) => {
-      console.log(`Mobile menu ${index}:`, menu, menu.className, menu.id);
-    });
-
     let isOpen = false;
 
     const openMenu = () => {
-      console.log('openMenu() called');
       isOpen = true;
       mobileMenu?.classList.add('open');
 
@@ -670,7 +642,6 @@ const lang = getLangFromUrl(Astro.url);
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
 
-      console.log('Added "open" class to mobileMenu, current classes:', mobileMenu?.className);
       
       // Reset initial states
       if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
@@ -684,64 +655,48 @@ const lang = getLangFromUrl(Astro.url);
         (contactBtn as HTMLElement).style.transform = 'translateY(20px)';
       }
 
-      // Animate navigation container
-      if (mobileNav) {
-        animate(mobileNav, 
-          { transform: 'translateY(0px)' }, 
-          { duration: 0.4, delay: 0.1 }
-        );
-      }
-
-      // Stagger animate nav links
-      mobileNavLinks.forEach((link, index) => {
-        animate(link, 
-          { opacity: 1, transform: 'translateY(0px)' }, 
-          { duration: 0.3, delay: 0.2 + (index * 0.1) }
-        );
-      });
-
-      // Animate contact button
-      if (contactBtn) {
-        animate(contactBtn, 
-          { opacity: 1, transform: 'translateY(0px)' }, 
-          { duration: 0.3, delay: 0.5 }
-        );
-      }
+      // Animate with CSS transitions - elements will animate due to CSS transitions
+      setTimeout(() => {
+        if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(0px)';
+        mobileNavLinks.forEach((link, index) => {
+          const linkEl = link as HTMLElement;
+          setTimeout(() => {
+            linkEl.style.opacity = '1';
+            linkEl.style.transform = 'translateY(0px)';
+          }, 100 + (index * 100));
+        });
+        if (contactBtn) {
+          setTimeout(() => {
+            (contactBtn as HTMLElement).style.opacity = '1';
+            (contactBtn as HTMLElement).style.transform = 'translateY(0px)';
+          }, 500);
+        }
+      }, 100);
     };
 
     const closeMenu = () => {
-      console.log('closeMenu() called');
       isOpen = false;
-      
-      // Animate close button first
-      const closeBtn = document.querySelector('.mobile-close-btn');
-      if (closeBtn) {
-        animate(closeBtn, 
-          { opacity: 0, transform: 'rotate(-90deg) scale(0.8)' }, 
-          { duration: 0.2 }
-        );
-      }
-      
-      // Reverse animations with stagger
+
+      // Reverse animations with CSS transitions
       mobileNavLinks.forEach((link, index) => {
-        animate(link, 
-          { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2, delay: index * 0.05 }
-        );
+        const linkEl = link as HTMLElement;
+        setTimeout(() => {
+          linkEl.style.opacity = '0';
+          linkEl.style.transform = 'translateY(-20px)';
+        }, index * 50);
       });
 
       if (contactBtn) {
-        animate(contactBtn, 
-          { opacity: 0, transform: 'translateY(-20px)' }, 
-          { duration: 0.2, delay: 0.1 }
-        );
+        setTimeout(() => {
+          (contactBtn as HTMLElement).style.opacity = '0';
+          (contactBtn as HTMLElement).style.transform = 'translateY(-20px)';
+        }, 100);
       }
 
       if (mobileNav) {
-        animate(mobileNav, 
-          { transform: 'translateY(30px)' }, 
-          { duration: 0.3, delay: 0.2 }
-        );
+        setTimeout(() => {
+          (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
+        }, 200);
       }
 
       // Remove class after animation
@@ -755,37 +710,18 @@ const lang = getLangFromUrl(Astro.url);
       }, 500);
     };
 
-    // Add event listeners to ALL menu buttons since there are duplicates
-    console.log(`Found ${allMenuBtns.length} menu buttons, adding event listeners to all...`);
-
-    allMenuBtns.forEach((btn, index) => {
-      console.log(`Adding event listeners to menu button ${index}...`);
-
+    // Add event listeners to ALL menu buttons
+    allMenuBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        console.log(`CLICK EVENT DETECTED on button ${index}! Current isOpen state:`, isOpen);
         e.preventDefault();
         e.stopPropagation();
         if (isOpen) {
-          console.log('Closing menu...');
           closeMenu();
         } else {
-          console.log('Opening menu...');
           openMenu();
         }
       });
-
-      btn.addEventListener('touchstart', (e) => {
-        console.log(`TOUCHSTART EVENT DETECTED on button ${index}!`);
-      });
-
-      btn.addEventListener('mousedown', (e) => {
-        console.log(`MOUSEDOWN EVENT DETECTED on button ${index}!`);
-      });
     });
-
-    if (allMenuBtns.length === 0) {
-      console.error('No menu buttons found!');
-    }
     
     // Close button functionality
     const mobileCloseBtn = document.querySelector('.mobile-close-btn');

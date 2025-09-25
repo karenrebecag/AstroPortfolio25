@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { JSX, ComponentProps } from 'react';
 import { motion } from 'motion/react';
 
@@ -42,6 +42,11 @@ export function TextDisperseBlack({
 	...props
 }: Omit<TextDisperseBlackProps, 'onMouseEnter' | 'onMouseLeave'>) {
 	const [isAnimated, setIsAnimated] = useState(false);
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
 	const extractTextFromChildren = (children: any): string => {
 		if (typeof children === 'string') {
@@ -72,6 +77,8 @@ export function TextDisperseBlack({
 		word.split('').forEach((char, i) => {
 			// Use modulo to cycle through transforms if word is longer than transforms array
 			const transformIndex = i % transforms.length;
+			// Create a stable key that won't change between server and client
+			const stableKey = `char-${i}-${word.length}`;
 			chars.push(
 				<motion.span
 					custom={i}
@@ -91,11 +98,11 @@ export function TextDisperseBlack({
 							zIndex: 0,
 						},
 					}}
-					animate={isAnimated ? 'open' : 'closed'}
-					key={char + i}
+					animate={isClient && isAnimated ? 'open' : 'closed'}
+					key={stableKey}
 					className="inline-block"
 					style={{ 
-						color: '#000000',
+						color: 'rgb(0, 0, 0)',
 						fontSize: 'inherit',
 						fontFamily: 'inherit',
 						lineHeight: 'inherit',
@@ -110,11 +117,13 @@ export function TextDisperseBlack({
 	};
 
 	const manageMouseEnter = () => {
+		if (!isClient) return;
 		onHover?.(true);
 		setIsAnimated(true);
 	};
 
 	const manageMouseLeave = () => {
+		if (!isClient) return;
 		onHover?.(false);
 		setIsAnimated(false);
 	};
@@ -128,17 +137,20 @@ export function TextDisperseBlack({
 			onMouseEnter={manageMouseEnter}
 			onMouseLeave={manageMouseLeave}
 			style={{ 
-				color: '#000000',
+				color: 'rgb(0, 0, 0)',
 				fontSize: 'inherit',
 				fontFamily: 'inherit',
 				lineHeight: 'inherit',
 				letterSpacing: 'inherit',
-				overflow: 'visible',
+				overflowX: 'visible',
+				overflowY: 'visible',
+				transform: 'scale(1)',
 				...style
 			}}
+			suppressHydrationWarning={true}
 			{...props}
 		>
-			{splitWord(textToUse)}
+			{isClient ? splitWord(textToUse) : textToUse}
 		</div>
 	);
 }

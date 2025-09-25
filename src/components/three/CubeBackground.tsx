@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { RGBELoader } from 'three-stdlib';
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+import { createThreeJSCleanup } from '../../utils/zustand-optimizations';
 
 // Enhanced Zustand store for Cube performance control - siguiendo el mismo patrón que GemBackground
 const useCubeStore = create<{
@@ -51,13 +53,46 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
   } | null>(null);
   
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isVisible, isPaused, isLoading, opacity, quality, rotationSpeed } = useCubeStore();
+  
+  // Selectores optimizados con useShallow - evita re-renders innecesarios
+  const { isVisible, isPaused, isLoading } = useCubeStore(
+    useShallow((state) => ({
+      isVisible: state.isVisible,
+      isPaused: state.isPaused,
+      isLoading: state.isLoading,
+    }))
+  );
+  
+  const { quality, opacity } = useCubeStore(
+    useShallow((state) => ({
+      quality: state.quality,
+      opacity: state.opacity,
+    }))
+  );
+  
+  const { rotationSpeed } = useCubeStore(
+    useShallow((state) => ({
+      rotationSpeed: state.rotationSpeed,
+    }))
+  );
+  
+  // Actions memoizadas
+  const { setVisible, setPaused, setLoading } = useCubeStore(
+    useShallow((state) => ({
+      setVisible: state.setVisible,
+      setPaused: state.setPaused,
+      setLoading: state.setLoading,
+    }))
+  );
+  
+  // Cleanup helper para Three.js
+  const cleanup = useMemo(() => createThreeJSCleanup(), []);
 
-  // Intersection Observer - MISMO patrón que GemBackground
+  // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        useCubeStore.getState().setVisible(entry.isIntersecting);
+        setVisible(entry.isIntersecting);
       },
       { 
         threshold: 0,
@@ -70,17 +105,17 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [setVisible]);
 
-  // Page Visibility API - MISMO patrón que GemBackground
+  // Page Visibility API - optimizado con acciones memoizadas
   useEffect(() => {
     const handleVisibilityChange = () => {
-      useCubeStore.getState().setPaused(document.hidden);
+      setPaused(document.hidden);
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
+  }, [setPaused]);
 
   // Three.js setup - siguiendo EXACTAMENTE el patrón de GemBackground
   useEffect(() => {
@@ -274,9 +309,9 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
     // Add scroll listener for rotation
     window.addEventListener('scroll', updateRotationFromScroll, { passive: true });
 
-    // Start with initial render
+    // Start with initial render - usando acción memoizada
     const timer = setTimeout(() => {
-      useCubeStore.getState().setLoading(false);
+      setLoading(false);
       setIsLoaded(true);
       render();
       updateRotationFromScroll(); // Initial rotation based on current scroll
@@ -329,7 +364,7 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
         }
       }
     };
-  }, [isVisible, isPaused, quality]);
+  }, [isVisible, isPaused, quality, setLoading]);
 
   return (
     <div 

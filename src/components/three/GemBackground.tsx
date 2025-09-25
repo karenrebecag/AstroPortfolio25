@@ -1,43 +1,116 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { RGBELoader } from 'three-stdlib';
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+import { createThreeJSCleanup } from '../../utils/zustand-optimizations';
 
-// Enhanced Zustand store for Gem performance control - siguiendo el mismo patrón que SilkBackground
+// Optimized Zustand store siguiendo mejores prácticas de la guía
+// Dividido en slices por funcionalidad para evitar re-renders innecesarios
 const useGemStore = create<{
+  // Visibility slice - para control de renderizado
   isVisible: boolean;
   isPaused: boolean;
   isLoading: boolean;
+  
+  // Settings slice - para configuración que cambia poco
   opacity: number;
   quality: 'low' | 'medium' | 'high';
+  
+  // Animation slice - para propiedades de animación
   rotationSpeed: number;
+  
+  // Actions - memoizadas para evitar recreación
   setVisible: (visible: boolean) => void;
   setPaused: (paused: boolean) => void;
   setLoading: (loading: boolean) => void;
   setOpacity: (opacity: number) => void;
   setQuality: (quality: 'low' | 'medium' | 'high') => void;
   setRotationSpeed: (speed: number) => void;
+  
+  // Batch updater para múltiples cambios
+  batchUpdate: (updates: Partial<{
+    isVisible: boolean;
+    isPaused: boolean;
+    isLoading: boolean;
+    opacity: number;
+    quality: 'low' | 'medium' | 'high';
+    rotationSpeed: number;
+  }>) => void;
 }>((set, get) => ({
+  // Initial state
   isVisible: false,
   isPaused: false,
   isLoading: true,
   opacity: 0,
   quality: 'medium',
   rotationSpeed: 1.0,
+  
+  // Optimized actions con batch updates cuando es posible
   setVisible: (visible) => {
+    const currentState = get();
+    if (currentState.isVisible === visible) return; // Evita updates innecesarios
+    
     set({ isVisible: visible });
-    // Smooth opacity transition - igual que SilkBackground
+    
+    // Smooth opacity transition con batch update
     if (visible) {
-      setTimeout(() => set({ opacity: 1 }), 200);
+      setTimeout(() => {
+        const state = get();
+        if (state.isVisible) { // Double-check para evitar race conditions
+          set({ opacity: 1 });
+        }
+      }, 200);
     } else {
       setTimeout(() => set({ opacity: 0 }), 100);
     }
   },
-  setPaused: (paused) => set({ isPaused: paused }),
-  setLoading: (loading) => set({ isLoading: loading }),
-  setOpacity: (opacity) => set({ opacity }),
-  setQuality: (quality) => set({ quality }),
-  setRotationSpeed: (speed) => set({ rotationSpeed: speed }),
+  
+  setPaused: (paused) => {
+    const currentState = get();
+    if (currentState.isPaused === paused) return;
+    set({ isPaused: paused });
+  },
+  
+  setLoading: (loading) => {
+    const currentState = get();
+    if (currentState.isLoading === loading) return;
+    set({ isLoading: loading });
+  },
+  
+  setOpacity: (opacity) => {
+    const currentState = get();
+    if (currentState.opacity === opacity) return;
+    set({ opacity });
+  },
+  
+  setQuality: (quality) => {
+    const currentState = get();
+    if (currentState.quality === quality) return;
+    set({ quality });
+  },
+  
+  setRotationSpeed: (speed) => {
+    const currentState = get();
+    if (currentState.rotationSpeed === speed) return;
+    set({ rotationSpeed: speed });
+  },
+  
+  // Batch updater para múltiples cambios simultáneos
+  batchUpdate: (updates) => {
+    const currentState = get();
+    const filteredUpdates: Partial<typeof currentState> = {};
+    
+    Object.entries(updates).forEach(([key, value]) => {
+      if (currentState[key as keyof typeof currentState] !== value) {
+        (filteredUpdates as any)[key] = value;
+      }
+    });
+    
+    if (Object.keys(filteredUpdates).length > 0) {
+      set(filteredUpdates);
+    }
+  },
 }));
 
 export const GemBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
@@ -51,13 +124,47 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
   } | null>(null);
   
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isVisible, isPaused, isLoading, opacity, quality, rotationSpeed } = useGemStore();
+  
+  // Selectores optimizados con useShallow - evita re-renders innecesarios
+  // Siguiendo las mejores prácticas de la documentación oficial de Zustand
+  const { isVisible, isPaused, isLoading } = useGemStore(
+    useShallow((state) => ({
+      isVisible: state.isVisible,
+      isPaused: state.isPaused,
+      isLoading: state.isLoading,
+    }))
+  );
+  
+  const { quality, opacity } = useGemStore(
+    useShallow((state) => ({
+      quality: state.quality,
+      opacity: state.opacity,
+    }))
+  );
+  
+  const { rotationSpeed } = useGemStore(
+    useShallow((state) => ({
+      rotationSpeed: state.rotationSpeed,
+    }))
+  );
+  
+  // Actions memoizadas - solo se extraen cuando es necesario
+  const { setVisible, setPaused, setLoading, batchUpdate } = useGemStore(
+    useShallow((state) => ({
+      setVisible: state.setVisible,
+      setPaused: state.setPaused,
+      setLoading: state.setLoading,
+      batchUpdate: state.batchUpdate,
+    }))
+  );
 
-  // Intersection Observer - MISMO patrón que SilkBackground
+  const cleanup = useMemo(() => createThreeJSCleanup(), []);
+
+  // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        useGemStore.getState().setVisible(entry.isIntersecting);
+        setVisible(entry.isIntersecting);
       },
       { 
         threshold: 0,
@@ -70,17 +177,17 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [setVisible]);
 
-  // Page Visibility API - MISMO patrón que SilkBackground
+  // Page Visibility API - optimizado con acciones memoizadas
   useEffect(() => {
     const handleVisibilityChange = () => {
-      useGemStore.getState().setPaused(document.hidden);
+      setPaused(document.hidden);
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
+  }, [setPaused]);
 
   // Three.js setup - siguiendo EXACTAMENTE el patrón de SilkBackground
   useEffect(() => {
@@ -233,9 +340,9 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 
-    // Start animation con smooth loading - MISMO patrón
+    // Start animation con smooth loading - usando acción memoizada
     const timer = setTimeout(() => {
-      useGemStore.getState().setLoading(false);
+      setLoading(false);
       setIsLoaded(true);
       animate();
     }, 300);
@@ -271,7 +378,7 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
         }
       }
     };
-  }, [isVisible, isPaused, quality]);
+  }, [isVisible, isPaused, quality, setLoading]);
 
   return (
     <div 
