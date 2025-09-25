@@ -1,0 +1,217 @@
+---
+import CodeBlockIsland from './CodeBlockIsland.tsx';
+
+export interface Props {
+  code: string;
+  language?: string;
+  theme?: string;
+  className?: string;
+  showLineNumbers?: boolean;
+  title?: string;
+}
+
+const {
+  code,
+  language = 'javascript',
+  theme = 'github-dark',
+  className = '',
+  showLineNumbers = false,
+  title,
+} = Astro.props;
+---
+
+<div class={`codeblock-container ${className}`}>
+  {title && (
+    <div class="codeblock-header">
+      <span class="codeblock-title">{title}</span>
+    </div>
+  )}
+  
+  <div class="codeblock-content">
+    <!-- Astro Island for interactive features -->
+    <div class="codeblock-island-container" data-loaded="false">
+      <div class="codeblock-island-wrapper">
+        <CodeBlockIsland 
+          client:visible
+          code={code}
+          language={language}
+          theme={theme}
+          showLineNumbers={showLineNumbers}
+          title={title}
+        />
+      </div>
+    </div>
+    
+    <!-- SSR Fallback for SEO and initial render -->
+    <pre class="codeblock-fallback"><code>{code}</code></pre>
+  </div>
+</div>
+
+<script>
+  // Handle island loading state
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('.codeblock-island-container');
+    
+    containers.forEach(container => {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            const hasReactContent = Array.from(mutation.addedNodes).some(node => 
+              node.nodeType === Node.ELEMENT_NODE && 
+              (node as Element).querySelector('.codeblock-island')
+            );
+            
+            if (hasReactContent) {
+              container.classList.add('loaded');
+              container.setAttribute('data-loaded', 'true');
+              observer.disconnect();
+            }
+          }
+        });
+      });
+      
+      observer.observe(container, { childList: true, subtree: true });
+      
+      // Cleanup after 10 seconds to prevent memory leaks
+      setTimeout(() => observer.disconnect(), 10000);
+    });
+  });
+</script>
+
+<style>
+  .codeblock-container {
+    width: 100%;
+    border: 1px solid rgba(229, 231, 235, 1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+  }
+
+  .codeblock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
+    border-bottom: 1px solid rgba(229, 231, 235, 1);
+    background-color: rgba(249, 250, 251, 1);
+  }
+
+  .codeblock-title {
+    font-size: clamp(11px, 2vw, 13px);
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .codeblock-content {
+    position: relative;
+  }
+
+  .codeblock-fallback {
+    width: 100%;
+    overflow-x: auto;
+    font-size: clamp(8px, 1.2vw, 12px);
+    padding: clamp(8px, 2vw, 12px);
+    background: #f9fafb;
+    color: #1f2937;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .codeblock-fallback code {
+    display: block;
+    font-family: 'Courier New', monospace;
+    white-space: pre;
+  }
+
+  .codeblock-island-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .codeblock-island-container.loaded {
+    opacity: 1;
+  }
+
+  .codeblock-island-container.loaded + .codeblock-fallback {
+    display: none;
+  }
+
+  /* Dark mode styles - siguiendo DARK_MODE_DOCUMENTATION.md */
+  :global(.dark-mode) .codeblock-container {
+    border-color: #333333;
+    background: #1f1f1f;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode) .codeblock-header {
+    border-bottom-color: #333333;
+    background: #111111;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode) .codeblock-title {
+    color: #ffffff;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode) .copy-button {
+    color: #e5e5e5;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode) .copy-button:hover {
+    background: #333333;
+    color: #ffffff;
+  }
+
+  :global(.dark-mode) .codeblock-fallback {
+    background: #111111;
+    color: #ffffff;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Transiciones para light mode */
+  .codeblock-container,
+  .codeblock-header,
+  .codeblock-title,
+  .copy-button,
+  .codeblock-fallback {
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Responsive design */
+  @media (max-width: 640px) {
+    .codeblock-container {
+      border-radius: 8px;
+    }
+    
+    .codeblock-fallback {
+      font-size: clamp(7px, 2.2vw, 10px);
+      padding: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .codeblock-header {
+      padding: clamp(4px, 1vw, 8px) clamp(6px, 1.5vw, 10px);
+    }
+    
+    .codeblock-title {
+      font-size: clamp(9px, 2.5vw, 11px);
+    }
+  }
+</style>
