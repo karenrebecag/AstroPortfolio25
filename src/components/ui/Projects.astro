@@ -202,6 +202,23 @@ import { motion } from 'motion/react';
     transition: all 0.3s ease;
   }
 
+  /* Hover effects for clickable project items */
+  :global(.project-item:hover .project-title) {
+    color: #9D7FC1 !important;
+    transition: color 0.3s ease;
+  }
+
+  :global(.project-item:hover .project-number) {
+    color: #9D7FC1 !important;
+    transition: color 0.3s ease;
+  }
+
+  /* Hover effect for FlipText inside project titles */
+  :global(.project-item:hover .project-title .flip-text-container span) {
+    color: #9D7FC1 !important;
+    transition: color 0.3s ease;
+  }
+
   :global(.project-number) {
     color: white;
     font-family: 'Poppins', sans-serif;
@@ -213,6 +230,11 @@ import { motion } from 'motion/react';
 
   :global(.project-number.inactive) {
     color: rgba(255, 255, 255, 0.30);
+  }
+
+  /* Hover state for inactive numbers */
+  :global(.project-item:hover .project-number.inactive) {
+    color: #9D7FC1 !important;
   }
 
   :global(.project-content) {
@@ -243,6 +265,11 @@ import { motion } from 'motion/react';
 
   :global(.project-title.inactive) {
     color: rgba(255, 255, 255, 0.30);
+  }
+
+  /* Hover state for inactive titles */
+  :global(.project-item:hover .project-title.inactive) {
+    color: #9D7FC1 !important;
   }
 
 

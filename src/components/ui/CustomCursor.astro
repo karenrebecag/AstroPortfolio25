@@ -1,5 +1,5 @@
 ---
-// CustomCursor.astro - Componente de cursor personalizado sencillo y ligero
+// CustomCursor.astro - Componente de cursor personalizado con texto interactivo
 ---
 
 <div id="custom-cursor" class="custom-cursor">
@@ -17,6 +17,11 @@
       d="M1.8 4.4 7 36.2c.3 1.8 2.6 2.3 3.6.8l3.9-5.7c1.7-2.5 4.5-4.1 7.5-4.3l6.9-.5c1.8-.1 2.5-2.4 1.1-3.5L5 2.5c-1.4-1.1-3.5 0-3.3 1.9Z"
     />
   </svg>
+</div>
+
+<!-- Elemento de texto que aparece junto al cursor -->
+<div id="cursor-text" class="cursor-text">
+  <span class="cursor-text-content"></span>
 </div>
 
 <style>
@@ -44,9 +49,44 @@
     transition: transform 0.2s ease;
   }
 
+  /* Estilos para el texto del cursor */
+  .cursor-text {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .cursor-text.cursor-text-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .cursor-text-content {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #fefaec;
+    color: #000000;
+    font-family: var(--font-game, 'Video Game Font', 'Courier New', monospace);
+    font-size: 11px;
+    font-weight: 400;
+    border-radius: 0;
+    white-space: nowrap;
+    border: 2px solid #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
   /* Ocultar cursor en dispositivos táctiles */
   @media (hover: none) and (pointer: coarse) {
-    .custom-cursor {
+    .custom-cursor,
+    .cursor-text {
       display: none !important;
     }
   }
@@ -72,9 +112,11 @@
   // Solo inicializar en dispositivos no táctiles
   if (!isTouchDevice()) {
     const cursor = document.getElementById('custom-cursor');
+    const cursorText = document.getElementById('cursor-text');
+    const cursorTextContent = document.querySelector('.cursor-text-content');
     const body = document.body;
     
-    if (cursor) {
+    if (cursor && cursorText && cursorTextContent) {
       let isActive = false;
       let currentX = 0;
       let currentY = 0;
@@ -84,6 +126,17 @@
       let targetRotation = 0;
       let lastX = 0;
       let lastY = 0;
+      
+      // Variables para el texto del cursor
+      let textCurrentX = 0;
+      let textCurrentY = 0;
+      let textTargetX = 0;
+      let textTargetY = 0;
+      let isTextVisible = false;
+
+      // WeakMaps para almacenar referencias de event handlers
+      const enterHandlers = new WeakMap();
+      const leaveHandlers = new WeakMap();
 
       // Función para interpolar suavemente la posición del cursor
       const lerp = (start: number, end: number, factor: number): number => {
@@ -106,6 +159,13 @@
 
         cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%) rotate(${currentRotation}deg)`;
 
+        // Actualizar posición del texto con un delay ligeramente diferente para efecto suave
+        if (isTextVisible) {
+          textCurrentX = lerp(textCurrentX, textTargetX, 0.12);
+          textCurrentY = lerp(textCurrentY, textTargetY, 0.12);
+          cursorText.style.transform = `translate(${textCurrentX}px, ${textCurrentY}px) translate(-50%, -50%)`;
+        }
+
         requestAnimationFrame(updateCursorPosition);
       };
 
@@ -116,6 +176,12 @@
 
         targetX = e.clientX;
         targetY = e.clientY;
+
+        // Posicionar el texto con un offset para que aparezca cerca del cursor
+        if (isTextVisible) {
+          textTargetX = e.clientX + 20; // Offset horizontal
+          textTargetY = e.clientY - 30; // Offset vertical (arriba del cursor)
+        }
 
         // Calcular nueva rotación basada en la dirección del movimiento
         const newRotation = calculateRotation(deltaX, deltaY);
@@ -149,7 +215,117 @@
           isActive = false;
           body.classList.remove('custom-cursor-active');
           cursor.style.opacity = '0';
+          hideCursorText();
         }
+      };
+
+      // Función para mostrar el texto del cursor
+      const showCursorText = (text: string) => {
+        if (!isTextVisible && isActive) {
+          isTextVisible = true;
+          cursorTextContent.textContent = text;
+          cursorText.classList.add('cursor-text-visible');
+          
+          // Inicializar posición del texto
+          textTargetX = targetX + 20;
+          textTargetY = targetY - 30;
+          textCurrentX = textTargetX;
+          textCurrentY = textTargetY;
+        }
+      };
+
+      // Función para ocultar el texto del cursor
+      const hideCursorText = () => {
+        if (isTextVisible) {
+          isTextVisible = false;
+          cursorText.classList.remove('cursor-text-visible');
+        }
+      };
+
+      // Función para obtener el texto apropiado según el elemento
+      const getElementText = (element: Element): string => {
+        // Verificar si el elemento tiene un atributo data-cursor-text personalizado
+        const customText = element.getAttribute('data-cursor-text');
+        if (customText) return customText;
+
+        // Determinar el texto según el tipo de elemento
+        const tagName = element.tagName.toLowerCase();
+        const role = element.getAttribute('role');
+
+        if (tagName === 'a') {
+          const href = element.getAttribute('href');
+          if (href && href.startsWith('#')) return 'Scroll There';
+          if (href && href.startsWith('mailto:')) return 'Email';
+          if (href && href.startsWith('tel:')) return 'Call';
+          if (href && (href.includes('/fr/') || href.includes('/es/'))) return 'Change Language';
+          return 'Visit';
+        }
+
+        if (tagName === 'button' || role === 'button') {
+          const buttonText = element.textContent?.trim();
+          if (buttonText && buttonText.length < 20) return buttonText;
+          return 'Click';
+        }
+
+        if (['input', 'textarea', 'select'].includes(tagName)) {
+          return 'Focus';
+        }
+
+        // Para elementos específicos de Projects
+        if (element.classList.contains('project-item')) return 'Expand Project';
+        if (element.classList.contains('project-title')) return 'View Details';
+        if (element.classList.contains('tag') && element.closest('.project-item')) return 'Tech Stack';
+        if (element.classList.contains('read-more-btn')) return 'Read More';
+
+        // Para elementos específicos de Services
+        if (element.classList.contains('service-item')) return 'Expand Service';
+        if (element.classList.contains('service-title')) return 'Learn More';
+        if (element.classList.contains('tag') && element.closest('.service-item')) return 'Service Tag';
+        if (element.classList.contains('tech-tag')) return 'Technology';
+
+        // Para elementos con clases específicas del portfolio
+        if (element.classList.contains('experience-card-marquee')) return 'View Experience';
+        if (element.classList.contains('review-card-marquee')) return 'Read Review';
+        if (element.classList.contains('project-card')) return 'View Project';
+        if (element.classList.contains('service-card')) return 'Learn More';
+
+        // Para elementos específicos de FAQs
+        if (element.classList.contains('faq-item')) return 'Expand FAQ';
+        if (element.classList.contains('faq-question')) return 'Read Answer';
+        if (element.classList.contains('faq-icon') || element.classList.contains('icon')) return 'Toggle FAQ';
+
+        // Para elementos específicos de GetInTouch
+        if (element.classList.contains('interest-pill')) return 'Select Interest';
+        if (element.classList.contains('budget-pill')) return 'Select Budget';
+        if (element.classList.contains('attachment-button')) return 'Upload File';
+        if (element.classList.contains('remove-attachment-btn')) return 'Remove File';
+        if (element.classList.contains('submit-button')) return 'Send Message';
+        if (element.classList.contains('field-input') || element.classList.contains('message-input')) return 'Type Here';
+
+        // Para elementos específicos de StickyFooter
+        if (element.classList.contains('karen-ortiz-container') || element.classList.contains('karen-ortiz-flip-text')) return 'Interactive Name';
+        if (element.closest('.karen-ortiz-container')) return 'Interactive Name';
+        
+        // Para enlaces sociales en footer
+        if (element.closest('a[href*="linkedin"]')) return 'LinkedIn Profile';
+        if (element.closest('a[href*="instagram"]')) return 'Instagram Profile';
+        if (element.closest('a[href*="dribbble"]')) return 'Dribbble Profile';
+        if (element.closest('a[href*="github"]')) return 'GitHub Profile';
+
+        // Para elementos FlipText
+        if (element.classList.contains('flip-text') || element.closest('.flip-text')) {
+          const parentProject = element.closest('.project-item');
+          const parentService = element.closest('.service-item');
+          const parentFAQ = element.closest('.faq-item');
+          const parentFooter = element.closest('.karen-ortiz-container');
+          if (parentProject) return 'Expand Project';
+          if (parentService) return 'Expand Service';
+          if (parentFAQ) return 'Read Answer';
+          if (parentFooter) return 'Interactive Name';
+          return 'Interactive Text';
+        }
+
+        return 'Click';
       };
 
       // Event listeners
@@ -162,20 +338,58 @@
 
       // Efectos hover para elementos interactivos
       const addHoverEffects = () => {
-        const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea, select');
+        // Selector ampliado para incluir más elementos interactivos del portfolio
+        const interactiveElements = document.querySelectorAll(`
+          a, button, [role="button"], input, textarea, select, label,
+          .realism-button, .main-button, .secondary-button,
+          .experience-card-marquee, .review-card-marquee,
+          .project-card, .service-card,
+          .project-item, .project-title, .service-item, .service-title,
+          .tag, .tech-tag, .read-more-btn,
+          .faq-item, .faq-question, .faq-icon, .icon,
+          .interest-pill, .budget-pill, .attachment-button, .remove-attachment-btn,
+          .submit-button, .field-input, .message-input,
+          .karen-ortiz-container, .karen-ortiz-flip-text,
+          .flip-text, .flip-text-container,
+          [class*="hover:scale"], [class*="cursor-pointer"],
+          .magnetic-button, .clickable
+        `);
         
         interactiveElements.forEach(element => {
-          element.addEventListener('mouseenter', () => {
+          // Remover event listeners previos para evitar duplicados
+          const oldEnterHandler = enterHandlers.get(element);
+          const oldLeaveHandler = leaveHandlers.get(element);
+          
+          if (oldEnterHandler) {
+            element.removeEventListener('mouseenter', oldEnterHandler);
+          }
+          if (oldLeaveHandler) {
+            element.removeEventListener('mouseleave', oldLeaveHandler);
+          }
+          
+          // Crear nuevos handlers
+          const enterHandler = () => {
             if (isActive) {
               cursor.classList.add('cursor-hover');
+              const text = getElementText(element);
+              showCursorText(text);
             }
-          });
+          };
           
-          element.addEventListener('mouseleave', () => {
+          const leaveHandler = () => {
             if (isActive) {
               cursor.classList.remove('cursor-hover');
+              hideCursorText();
             }
-          });
+          };
+          
+          // Guardar referencias en WeakMaps
+          enterHandlers.set(element, enterHandler);
+          leaveHandlers.set(element, leaveHandler);
+          
+          // Agregar event listeners
+          element.addEventListener('mouseenter', enterHandler);
+          element.addEventListener('mouseleave', leaveHandler);
         });
       };
 
@@ -198,6 +412,9 @@
         document.removeEventListener('mouseenter', showCursor);
         document.removeEventListener('mouseleave', hideCursor);
         observer.disconnect();
+        
+        // Limpiar estado del texto
+        hideCursorText();
       });
     }
   }

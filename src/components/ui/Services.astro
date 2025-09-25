@@ -194,6 +194,23 @@ Comprehensive digital solutions from design to deployment
     transition: all 0.3s ease;
   }
 
+  /* Hover effects for clickable service items */
+  :global(.service-item:hover .service-title) {
+    color: #434343 !important;
+    transition: color 0.3s ease;
+  }
+
+  :global(.service-item:hover .service-number) {
+    color: #434343 !important;
+    transition: color 0.3s ease;
+  }
+
+  /* Hover effect for FlipText inside service titles */
+  :global(.service-item:hover .service-title .flip-text-container span) {
+    color: #434343 !important;
+    transition: color 0.3s ease;
+  }
+
   :global(.service-number) {
     color: black;
     font-family: 'Poppins', sans-serif;
@@ -205,6 +222,11 @@ Comprehensive digital solutions from design to deployment
 
   :global(.service-number.inactive) {
     color: rgba(17, 17, 17, 0.30);
+  }
+
+  /* Hover state for inactive numbers */
+  :global(.service-item:hover .service-number.inactive) {
+    color: #434343 !important;
   }
 
   :global(.service-content) {
@@ -235,6 +257,11 @@ Comprehensive digital solutions from design to deployment
 
   :global(.service-title.inactive) {
     color: rgba(17, 17, 17, 0.30);
+  }
+
+  /* Hover state for inactive titles */
+  :global(.service-item:hover .service-title.inactive) {
+    color: #434343 !important;
   }
 
 

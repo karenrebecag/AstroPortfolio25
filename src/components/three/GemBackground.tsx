@@ -4,6 +4,7 @@ import { RGBELoader } from 'three-stdlib';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 import { createThreeJSCleanup } from '../../utils/zustand-optimizations';
+import { useScroll, useTransform } from 'motion/react';
 
 // Optimized Zustand store siguiendo mejores prácticas de la guía
 // Dividido en slices por funcionalidad para evitar re-renders innecesarios
@@ -17,8 +18,10 @@ const useGemStore = create<{
   opacity: number;
   quality: 'low' | 'medium' | 'high';
   
-  // Animation slice - para propiedades de animación
-  rotationSpeed: number;
+  // Animation slice - para propiedades de animación basadas en scroll
+  scrollRotationX: number;
+  scrollRotationY: number;
+  scrollRotationZ: number;
   
   // Actions - memoizadas para evitar recreación
   setVisible: (visible: boolean) => void;
@@ -26,7 +29,7 @@ const useGemStore = create<{
   setLoading: (loading: boolean) => void;
   setOpacity: (opacity: number) => void;
   setQuality: (quality: 'low' | 'medium' | 'high') => void;
-  setRotationSpeed: (speed: number) => void;
+  setScrollRotation: (x: number, y: number, z: number) => void;
   
   // Batch updater para múltiples cambios
   batchUpdate: (updates: Partial<{
@@ -35,7 +38,9 @@ const useGemStore = create<{
     isLoading: boolean;
     opacity: number;
     quality: 'low' | 'medium' | 'high';
-    rotationSpeed: number;
+    scrollRotationX: number;
+    scrollRotationY: number;
+    scrollRotationZ: number;
   }>) => void;
 }>((set, get) => ({
   // Initial state
@@ -44,7 +49,9 @@ const useGemStore = create<{
   isLoading: true,
   opacity: 0,
   quality: 'medium',
-  rotationSpeed: 1.0,
+  scrollRotationX: 0,
+  scrollRotationY: 0,
+  scrollRotationZ: 0,
   
   // Optimized actions con batch updates cuando es posible
   setVisible: (visible) => {
@@ -90,10 +97,10 @@ const useGemStore = create<{
     set({ quality });
   },
   
-  setRotationSpeed: (speed) => {
+  setScrollRotation: (x, y, z) => {
     const currentState = get();
-    if (currentState.rotationSpeed === speed) return;
-    set({ rotationSpeed: speed });
+    if (currentState.scrollRotationX === x && currentState.scrollRotationY === y && currentState.scrollRotationZ === z) return;
+    set({ scrollRotationX: x, scrollRotationY: y, scrollRotationZ: z });
   },
   
   // Batch updater para múltiples cambios simultáneos
@@ -142,23 +149,34 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     }))
   );
   
-  const { rotationSpeed } = useGemStore(
+  const { scrollRotationX, scrollRotationY, scrollRotationZ } = useGemStore(
     useShallow((state) => ({
-      rotationSpeed: state.rotationSpeed,
+      scrollRotationX: state.scrollRotationX,
+      scrollRotationY: state.scrollRotationY,
+      scrollRotationZ: state.scrollRotationZ,
     }))
   );
   
   // Actions memoizadas - solo se extraen cuando es necesario
-  const { setVisible, setPaused, setLoading, batchUpdate } = useGemStore(
+  const { setVisible, setPaused, setLoading, batchUpdate, setScrollRotation } = useGemStore(
     useShallow((state) => ({
       setVisible: state.setVisible,
       setPaused: state.setPaused,
       setLoading: state.setLoading,
       batchUpdate: state.batchUpdate,
+      setScrollRotation: state.setScrollRotation,
     }))
   );
 
   const cleanup = useMemo(() => createThreeJSCleanup(), []);
+
+  // Motion.dev scroll velocity setup
+  const { scrollYProgress } = useScroll();
+  
+  // Transform scroll progress to rotation values (more evident, rotating right)
+  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.2]); // 36 degrees max
+  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 0.4]); // 72 degrees max (right rotation)  
+  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.12]); // 21.6 degrees max
 
   // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {
@@ -324,15 +342,14 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       animationId: null
     };
 
-    let time = 0;
     const animate = () => {
       const currentState = useGemStore.getState();
       
       if (!currentState.isPaused && currentState.isVisible && gemObject) {
-        time += 0.016 * currentState.rotationSpeed;
-        
-        // Optimized rotation - solo eje horizontal (Y), conservando inclinación
-        gemObject.rotation.y += 0.0001 * currentState.rotationSpeed;
+        // Apply scroll-based rotation (very subtle) while maintaining original positioning
+        gemObject.rotation.x = 0.2 + currentState.scrollRotationX;
+        gemObject.rotation.y = -0.35 + currentState.scrollRotationY;
+        gemObject.rotation.z = -0.32 + currentState.scrollRotationZ;
         
         renderer.render(scene, camera);
       }
@@ -361,9 +378,30 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
 
     window.addEventListener('resize', handleResize);
 
+    // Subscribe to scroll rotation changes
+    const unsubscribeRotationX = rotationX.on('change', (value) => {
+      const currentState = useGemStore.getState();
+      setScrollRotation(value, currentState.scrollRotationY, currentState.scrollRotationZ);
+    });
+    
+    const unsubscribeRotationY = rotationY.on('change', (value) => {
+      const currentState = useGemStore.getState();
+      setScrollRotation(currentState.scrollRotationX, value, currentState.scrollRotationZ);
+    });
+    
+    const unsubscribeRotationZ = rotationZ.on('change', (value) => {
+      const currentState = useGemStore.getState();
+      setScrollRotation(currentState.scrollRotationX, currentState.scrollRotationY, value);
+    });
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
+      
+      // Unsubscribe from motion values
+      unsubscribeRotationX();
+      unsubscribeRotationY();
+      unsubscribeRotationZ();
       
       if (sceneRef.current) {
         if (sceneRef.current.animationId) {
@@ -378,7 +416,7 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
         }
       }
     };
-  }, [isVisible, isPaused, quality, setLoading]);
+  }, [isVisible, isPaused, quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
 
   return (
     <div 
