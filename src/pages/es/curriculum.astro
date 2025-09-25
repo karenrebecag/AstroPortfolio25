@@ -97,7 +97,7 @@ const lang = getLangFromUrl(Astro.url);
                   <div class="specialties-section">
                     <div class="section-label">{t('resume.specialties.title', lang)}</div>
                     <ResumeTagGroup client:load>
-                      {t('resume.specialties.items', lang).map((specialty, index) => (
+                      {t('resume.specialties.items', lang).map((specialty: string, index: number) => (
                         <ResumeTag index={index}>{specialty}</ResumeTag>
                       ))}
                     </ResumeTagGroup>
@@ -183,7 +183,7 @@ const lang = getLangFromUrl(Astro.url);
         </div>
 
         <div class="experience-content">
-          {t('resume.sections.experience.jobs', lang).map((job, jobIndex) => (
+          {t('resume.sections.experience.jobs', lang).map((job: any, jobIndex: number) => (
             <InView client:load
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
@@ -200,7 +200,7 @@ const lang = getLangFromUrl(Astro.url);
                 </div>
 
                 <div class="projects-grid">
-                  {job.projects.map((project) => (
+                  {job.projects.map((project: any) => (
                     <div class="project-card">
                       <h4>{project.title}</h4>
                       <p>{project.description}</p>
@@ -234,7 +234,7 @@ const lang = getLangFromUrl(Astro.url);
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <SkillGroup title={t('resume.sections.skills.groups.0.title', lang)} delay={0}>
-              {t('resume.sections.skills.groups.0.skills', lang).map((skill, index) => (
+              {t('resume.sections.skills.groups.0.skills', lang).map((skill: string, index: number) => (
                 <SkillTag index={index}>{skill}</SkillTag>
               ))}
             </SkillGroup>
@@ -249,7 +249,7 @@ const lang = getLangFromUrl(Astro.url);
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.08 }}
           >
             <SkillGroup title={t('resume.sections.skills.groups.1.title', lang)} delay={1}>
-              {t('resume.sections.skills.groups.1.skills', lang).map((skill, index) => (
+              {t('resume.sections.skills.groups.1.skills', lang).map((skill: string, index: number) => (
                 <SkillTag variant="secondary" index={index}>{skill}</SkillTag>
               ))}
             </SkillGroup>
@@ -264,7 +264,7 @@ const lang = getLangFromUrl(Astro.url);
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.16 }}
           >
             <SkillGroup title={t('resume.sections.skills.groups.2.title', lang)} delay={2}>
-              {t('resume.sections.skills.groups.2.skills', lang).map((skill, index) => (
+              {t('resume.sections.skills.groups.2.skills', lang).map((skill: string, index: number) => (
                 <SkillTag variant="accent" index={index}>{skill}</SkillTag>
               ))}
             </SkillGroup>
@@ -279,7 +279,7 @@ const lang = getLangFromUrl(Astro.url);
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.24 }}
           >
             <SkillGroup title={t('resume.sections.skills.groups.3.title', lang)} delay={3}>
-              {t('resume.sections.skills.groups.3.skills', lang).map((skill, index) => (
+              {t('resume.sections.skills.groups.3.skills', lang).map((skill: string, index: number) => (
                 <SkillTag index={index}>{skill}</SkillTag>
               ))}
             </SkillGroup>
@@ -299,7 +299,7 @@ const lang = getLangFromUrl(Astro.url);
         </div>
 
         <div class="projects-content">
-          {t('resume.sections.projects.items', lang).map((project, index) => (
+          {t('resume.sections.projects.items', lang).map((project: any, index: number) => (
             <InView client:load
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
@@ -337,7 +337,7 @@ const lang = getLangFromUrl(Astro.url);
         </div>
 
         <div class="education-content">
-          {t('resume.sections.education.items', lang).map((item, index) => (
+          {t('resume.sections.education.items', lang).map((item: any, index: number) => (
             <InView client:load
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
@@ -352,7 +352,7 @@ const lang = getLangFromUrl(Astro.url);
                   <h3>{item.title}</h3>
                   <div class="education-duration">{item.duration}</div>
                   <ul class="education-points">
-                    {item.points.map((point) => (
+                    {item.points.map((point: string) => (
                       <li>{point}</li>
                     ))}
                   </ul>

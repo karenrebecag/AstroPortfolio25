@@ -101,8 +101,8 @@ export function TextDisperseBlack({
 					animate={isClient && isAnimated ? 'open' : 'closed'}
 					key={stableKey}
 					className="inline-block"
-					style={{ 
-						color: 'rgb(0, 0, 0)',
+					style={{
+						color: 'inherit',
 						fontSize: 'inherit',
 						fontFamily: 'inherit',
 						lineHeight: 'inherit',
@@ -133,11 +133,11 @@ export function TextDisperseBlack({
 	
 	return (
 		<div
-			className={`relative flex cursor-pointer justify-center md:justify-center sm:justify-start text-black ${className || ''}`}
+			className={`relative flex cursor-pointer justify-center md:justify-center sm:justify-start ${className || ''}`}
 			onMouseEnter={manageMouseEnter}
 			onMouseLeave={manageMouseLeave}
-			style={{ 
-				color: 'rgb(0, 0, 0)',
+			style={{
+				color: 'inherit',
 				fontSize: 'inherit',
 				fontFamily: 'inherit',
 				lineHeight: 'inherit',

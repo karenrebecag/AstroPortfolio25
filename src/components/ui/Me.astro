@@ -102,7 +102,22 @@ const experienceData = [
             creating seamless digital experiences that merge aesthetics with functionality.
           </p>
           <div class="flex items-start gap-9 button-container-me">
-            <MainButton text="Get In Touch" />
+            <div class="realism-button-wrapper" data-astro-cid-rjz7vswu="" style="transform: translate(0px, 0px);">
+              <a href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/" target="_blank" rel="noopener noreferrer" class="realism-button group" data-astro-cid-rjz7vswu="true" data-cursor-text="Go there!">
+                <div class="button-glow" data-astro-cid-rjz7vswu=""></div>
+                <div class="button-blob" data-astro-cid-rjz7vswu=""></div>
+                <div class="button-content" data-astro-cid-rjz7vswu="">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="color: white; margin-right: 8px;">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect width="4" height="12" x="2" y="9"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                  <span class="button-text" data-astro-cid-rjz7vswu="">Connect</span>
+                  <!-- Inner glow layer -->
+                  <div class="inner-glow" data-astro-cid-rjz7vswu=""></div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -1175,6 +1190,121 @@ const experienceData = [
     .experience-slider-mobile {
       padding: 0 15px;
     }
+  }
+
+  /* MainButton Styles - Realism Button */
+  :global(.realism-button-wrapper) {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.1s ease;
+  }
+
+  :global(.realism-button) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 2.2vw, 16px) clamp(20px, 4vw, 28px);
+    background: 
+      radial-gradient(circle at 20% 80%, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%),
+      radial-gradient(circle at 80% 20%, #777777 0%, rgba(119, 119, 119, 0.3) 50%, transparent 100%),
+      radial-gradient(circle at 40% 40%, #181b1b 0%, #0f1111 100%);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-family: var(--font-display);
+    font-size: clamp(16px, 2.8vw, 22px);
+    font-weight: 400;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.realism-button:hover) {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  :global(.realism-button:active) {
+    transform: translateY(0px);
+    transition: transform 0.1s ease;
+  }
+
+  :global(.button-glow) {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  :global(.realism-button:hover .button-glow) {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  :global(.button-blob) {
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #22c55e 0%, #16a34a 100%);
+    border-radius: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  :global(.realism-button:hover .button-blob) {
+    transform: scale(1.5);
+    opacity: 0.9;
+  }
+
+  :global(.button-content) {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  :global(.realism-button:hover .button-content) {
+    transform: scale(1.05);
+  }
+
+  :global(.button-text) {
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.inner-glow) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    border-radius: inherit;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  :global(.realism-button:hover .inner-glow) {
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
   }
 
   /* Button container y botón full width en móvil */

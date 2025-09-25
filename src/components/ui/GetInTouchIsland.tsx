@@ -4,7 +4,7 @@ import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip, Send, Loader2
 import FlipText from './FlipText.tsx';
 import { useToast } from './ToastContainer.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
-import { useContactFormStore } from '../../stores/contactFormStore';
+import { useContactFormStore } from '../../stores/contactFormStore.ts';
 import { shallow } from 'zustand/shallow';
 
 // FormData interface ahora está en el store

@@ -10,7 +10,6 @@ export interface Props {
 const { title, lang = 'en' } = Astro.props;
 const metadata = getLanguageMetadata(lang);
 import '../styles/fonts.css';
-import Header from '../components/ui/Header.astro';
 import CustomCursor from '../components/ui/CustomCursor.astro';
 import ClickBubble from '../components/ui/ClickBubble.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';
@@ -69,7 +68,6 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<CustomCursor />
 		<!-- <ClickBubble /> -->
 		<ScrollIndicator />
-		<Header />
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:load />

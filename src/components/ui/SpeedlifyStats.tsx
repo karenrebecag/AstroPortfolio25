@@ -33,10 +33,41 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
     const fetchStats = async () => {
       try {
         setLoading(true);
-        // En producción, esto sería tu endpoint de Speedlify
-        // Por ahora, usaremos datos mock hasta que tengas el endpoint real
+        
+        // Intentar obtener datos reales de Speedlify API
+        const response = await fetch('https://guileless-douhua-b2ff53.netlify.app/api/karen-portfolio.json');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch from Speedlify API');
+        }
+        
+        const data = await response.json();
+        
+        // Transformar datos de Speedlify al formato esperado
+        const speedlifyData: SpeedlifyData = {
+          url: data.url,
+          lighthouse: {
+            performance: data.lighthouse.performance || 0,
+            accessibility: data.lighthouse.accessibility || 0,
+            bestPractices: data.lighthouse.bestPractices || 0,
+            seo: data.lighthouse.seo || 0,
+            pwa: data.lighthouse.pwa || 0
+          },
+          timestamp: data.timestamp,
+          firstContentfulPaint: data.firstContentfulPaint || 0,
+          largestContentfulPaint: data.largestContentfulPaint || 0,
+          cumulativeLayoutShift: data.cumulativeLayoutShift || 0,
+          totalBlockingTime: data.totalBlockingTime || 0,
+          speedIndex: data.speedIndex || 0
+        };
+        
+        setStats(speedlifyData);
+      } catch (err) {
+        console.error('Error fetching Speedlify stats:', err);
+        
+        // Fallback a datos mock si la API falla
         const mockData: SpeedlifyData = {
-          url: "https://karen-ortiz-portfolio.vercel.app/",
+          url: "https://www.karenortiz.space/",
           lighthouse: {
             performance: 95,
             accessibility: 98,
@@ -52,12 +83,8 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
           speedIndex: 1.8
         };
         
-        // Simular delay de red
-        await new Promise(resolve => setTimeout(resolve, 1000));
         setStats(mockData);
-      } catch (err) {
-        setError('Failed to fetch performance stats');
-        console.error('Error fetching Speedlify stats:', err);
+        setError('Using cached performance data');
       } finally {
         setLoading(false);
       }
