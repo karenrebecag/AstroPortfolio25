@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import {
     InstagramIcon,
     LinkedinIcon,
+    CircleArrowOutUpRight,
 } from 'lucide-react';
 import { DitheringShader } from '../three/DitheringShader';
 import { NoiseBackground } from './NoiseBackground';
@@ -145,9 +146,18 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             <AnimatedContainer delay={0.4} className="w-full">
                                 <div className="w-full flex flex-col gap-4 py-10 border-t border-white/10">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-white font-primary text-lg font-semibold">
-                                            Site Performance
-                                        </h3>
+                                        <div className="flex items-center gap-3">
+                                            <h3 className="text-white font-primary text-lg font-semibold">
+                                                Site Performance
+                                            </h3>
+                                            <button
+                                                onClick={() => window.open('https://guileless-douhua-b2ff53.netlify.app/karen-ortiz-portfolio/', '_blank')}
+                                                className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+                                                title="View detailed performance report"
+                                            >
+                                                <CircleArrowOutUpRight className="w-4 h-4 text-white group-hover:text-white/90" />
+                                            </button>
+                                        </div>
                                         <span className="text-white/50 text-sm font-primary">
                                             Powered by Speedlify
                                         </span>
