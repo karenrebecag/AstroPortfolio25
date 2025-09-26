@@ -309,8 +309,8 @@ const useDitheringStore = create<{
   speed: 0.3,
   width: 800,
   height: 800,
-  colorBack: "#e6d9fb",
-  colorFront: "#9D7FC1",
+  colorBack: "#010111",
+  colorFront: "#4523AE",
   shape: "warp",
   type: "8x8",
   pxSize: 2,
@@ -445,8 +445,8 @@ function createProgram(
 export function DitheringShader({
   width = 800,
   height = 800,
-  colorBack = "#e6d9fb",
-  colorFront = "#9D7FC1",
+  colorBack = "#010111",
+  colorFront = "#4523AE",
   shape = "warp",
   type = "8x8",
   pxSize = 2,
@@ -588,16 +588,16 @@ export function DitheringShader({
       context.clear(context.COLOR_BUFFER_BIT)
       context["useProgram"](shaderProgram)
 
-      // Set uniforms usando valores del store
+      // Set uniforms usando valores de props para garantizar consistencia
       const locations = uniformLocationsRef.current
 
       if (locations.u_time) context.uniform1f(locations.u_time, currentTime)
-      if (locations.u_resolution) context.uniform2f(locations.u_resolution, currentState.width, currentState.height)
-      if (locations.u_colorBack) context.uniform4fv(locations.u_colorBack, hexToRgba(currentState.colorBack))
-      if (locations.u_colorFront) context.uniform4fv(locations.u_colorFront, hexToRgba(currentState.colorFront))
-      if (locations.u_shape) context.uniform1f(locations.u_shape, DitheringShapes[currentState.shape])
-      if (locations.u_type) context.uniform1f(locations.u_type, DitheringTypes[currentState.type])
-      if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, currentState.pxSize)
+      if (locations.u_resolution) context.uniform2f(locations.u_resolution, width, height)
+      if (locations.u_colorBack) context.uniform4fv(locations.u_colorBack, hexToRgba(colorBack))
+      if (locations.u_colorFront) context.uniform4fv(locations.u_colorFront, hexToRgba(colorFront))
+      if (locations.u_shape) context.uniform1f(locations.u_shape, DitheringShapes[shape])
+      if (locations.u_type) context.uniform1f(locations.u_type, DitheringTypes[type])
+      if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, pxSize)
 
       context.drawArrays(context.TRIANGLES, 0, 6)
 

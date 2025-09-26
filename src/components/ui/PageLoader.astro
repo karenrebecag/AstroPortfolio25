@@ -23,6 +23,18 @@ const { loadingText = "Loading" } = Astro.props;
 </div>
 
 <style>
+  @font-face {
+    font-family: 'VideoGameFont';
+    src: url('/fonts/Video Game Font.otf') format('opentype');
+    font-display: swap;
+  }
+
+  /* Block scroll during preloader */
+  body.preloader-active {
+    overflow: hidden;
+    height: 100vh;
+  }
+
   .preloader {
     position: fixed;
     top: 0;
@@ -60,9 +72,9 @@ const { loadingText = "Loading" } = Astro.props;
 
   .load-text {
     font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 700;
+    font-weight: 400;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'VideoGameFont', monospace;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     animation: textFadeOut 0.5s ease-in 1.5s forwards;
@@ -131,12 +143,17 @@ const { loadingText = "Loading" } = Astro.props;
 </style>
 
 <script>
-  // No additional JavaScript needed - CSS animations handle everything
   document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.getElementById('preloader');
+    const body = document.body;
+
     if (preloader) {
-      // Remove the preloader from DOM after all animations complete
+      // Block scroll immediately
+      body.classList.add('preloader-active');
+
+      // Remove the preloader from DOM and restore scroll after all animations complete
       setTimeout(() => {
+        body.classList.remove('preloader-active');
         preloader.remove();
       }, 3400);
     }

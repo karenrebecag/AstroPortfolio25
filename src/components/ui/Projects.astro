@@ -57,6 +57,12 @@ import { motion } from 'motion/react';
 </section>
 
 <style>
+  @font-face {
+    font-family: 'VideoGameFont';
+    src: url('/fonts/Video Game Font.otf') format('opentype');
+    font-display: swap;
+  }
+
   .projects-section {
     width: 100%;
     min-height: 100vh;
@@ -369,15 +375,15 @@ import { motion } from 'motion/react';
     padding: 12px 24px;
     background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
     color: white;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+    border: 2px solid white;
+    border-radius: 0;
+    font-family: 'VideoGameFont', monospace;
+    font-size: 12px;
+    font-weight: 400;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
 
   :global(.read-more-btn:hover) {
