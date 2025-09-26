@@ -303,8 +303,8 @@
         if (element.classList.contains('field-input') || element.classList.contains('message-input')) return 'Type Here';
 
         // Para elementos específicos de StickyFooter
-        if (element.classList.contains('karen-ortiz-container') || element.classList.contains('karen-ortiz-flip-text')) return 'Interactive Name';
-        if (element.closest('.karen-ortiz-container')) return 'Interactive Name';
+        if (element.classList.contains('karen-ortiz-container') || element.classList.contains('karen-ortiz-flip-text')) return 'Hm? Somebody said 80s?';
+        if (element.closest('.karen-ortiz-container')) return 'Hm? Somebody said 80s?';
         
         // Para enlaces sociales en footer
         if (element.closest('a[href*="linkedin"]')) return 'Visit LinkedIn';
@@ -325,7 +325,7 @@
           if (parentProject) return 'Expand Project';
           if (parentService) return 'Expand Service';
           if (parentFAQ) return 'Read Answer';
-          if (parentFooter) return 'Interactive Name';
+          if (parentFooter) return 'Hm? Somebody said 80s?';
           return 'Interactive Text';
         }
 

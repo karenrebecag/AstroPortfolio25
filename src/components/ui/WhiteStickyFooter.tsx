@@ -86,6 +86,11 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
     };
 
     const activateEasterEgg = () => {
+        // Play game start sound
+        const gameStartSound = new Audio('/sounds/gameStart.mp3');
+        gameStartSound.volume = 0.4;
+        gameStartSound.play().catch(e => console.log('Audio play failed:', e));
+
         setShowSpaceInvaders(true);
     };
 
@@ -212,7 +217,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                                 onClick={activateEasterEgg}
-                                data-cursor-text="Activate Easter Egg"
+                                data-cursor-text="Hm? Somebody said 80s?"
                             >
                                 <FlipText 
                                     text="KAREN ORTIZ" 

@@ -13,6 +13,17 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
   const [level, setLevel] = useState(1);
   const [gameOver, setGameOver] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
+  const [isVictory, setIsVictory] = useState(false);
+
+  // Sound effects
+  const explosionSound = useRef<HTMLAudioElement | null>(null);
+  const laserSound = useRef<HTMLAudioElement | null>(null);
+  const shipMoveSound = useRef<HTMLAudioElement | null>(null);
+  const gameStartSound = useRef<HTMLAudioElement | null>(null);
+  const victorySound = useRef<HTMLAudioElement | null>(null);
+  const backgroundMusic = useRef<HTMLAudioElement | null>(null);
+  const nextLevelSound = useRef<HTMLAudioElement | null>(null);
+  const shipDestroyedSound = useRef<HTMLAudioElement | null>(null);
   const gameStateRef = useRef({
     gameRunning: true,
     animationFrame: 0,
@@ -48,6 +59,29 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Initialize sound effects
+    explosionSound.current = new Audio('/sounds/explotion.mp3');
+    laserSound.current = new Audio('/sounds/laserSound.mp3');
+    shipMoveSound.current = new Audio('/sounds/ShipMove.mp3');
+    gameStartSound.current = new Audio('/sounds/gameStart.mp3');
+    victorySound.current = new Audio('/sounds/victory.mp3');
+    backgroundMusic.current = new Audio('/sounds/spaceInvadersBackground.mp3');
+    nextLevelSound.current = new Audio('/sounds/nextLevel.mp3');
+    shipDestroyedSound.current = new Audio('/sounds/shipDestroyed.mp3');
+
+    // Set volume levels
+    if (explosionSound.current) explosionSound.current.volume = 0.3;
+    if (laserSound.current) laserSound.current.volume = 0.2;
+    if (shipMoveSound.current) shipMoveSound.current.volume = 0.2;
+    if (gameStartSound.current) gameStartSound.current.volume = 0.4;
+    if (victorySound.current) victorySound.current.volume = 0.3;
+    if (backgroundMusic.current) {
+      backgroundMusic.current.volume = 0.05;
+      backgroundMusic.current.loop = true;
+    }
+    if (nextLevelSound.current) nextLevelSound.current.volume = 0.3;
+    if (shipDestroyedSound.current) shipDestroyedSound.current.volume = 0.1;
 
     const gameState = gameStateRef.current;
 
@@ -223,8 +257,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
             }
           });
         }
+
       }
-      
+
       if (Math.random() < 0.015) {
         const aliveEnemies = gameState.enemies.filter(e => e.alive);
         if (aliveEnemies.length > 0) {
@@ -253,6 +288,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
               enemy.alive = false;
               gameState.bullets.splice(bIndex, 1);
               setScore(prev => prev + 10);
+
+              // Play ship destroyed sound when enemy is destroyed
+              if (shipDestroyedSound.current) {
+                shipDestroyedSound.current.currentTime = 0;
+                shipDestroyedSound.current.play().catch(e => console.log('Audio play failed:', e));
+              }
+
               bulletHit = true;
               break;
             }
@@ -269,6 +311,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
           gameState.enemyBullets.splice(index, 1);
           setLives(prev => {
             const newLives = prev - 1;
+
+            // Play ship move sound when losing a life
+            if (shipMoveSound.current) {
+              shipMoveSound.current.currentTime = 0;
+              shipMoveSound.current.play().catch(e => console.log('Audio play failed:', e));
+            }
+
             if (newLives <= 0) {
               endGame();
             }
@@ -285,8 +334,41 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       
       const aliveEnemies = gameState.enemies.filter(e => e.alive);
       if (aliveEnemies.length === 0) {
+        const newLevel = level + 1;
         setLevel(prev => prev + 1);
         gameState.enemyMoveDelay = Math.max(10, gameState.enemyMoveDelay - 3);
+
+        // Check for victory condition (level 10)
+        if (newLevel >= 10) {
+          gameState.gameRunning = false;
+          if (gameState.animationFrame) {
+            cancelAnimationFrame(gameState.animationFrame);
+          }
+
+          // Stop background music
+          if (backgroundMusic.current) {
+            backgroundMusic.current.pause();
+            backgroundMusic.current.currentTime = 0;
+          }
+
+          // Play victory sound
+          if (victorySound.current) {
+            victorySound.current.currentTime = 0;
+            victorySound.current.play().catch(e => console.log('Audio play failed:', e));
+          }
+
+          setFinalScore(score);
+          setIsVictory(true);
+          setGameOver(true);
+          return;
+        }
+
+        // Play next level sound
+        if (nextLevelSound.current) {
+          nextLevelSound.current.currentTime = 0;
+          nextLevelSound.current.play().catch(e => console.log('Audio play failed:', e));
+        }
+
         createEnemies();
       }
     }
@@ -296,6 +378,19 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       if (gameState.animationFrame) {
         cancelAnimationFrame(gameState.animationFrame);
       }
+
+      // Stop background music
+      if (backgroundMusic.current) {
+        backgroundMusic.current.pause();
+        backgroundMusic.current.currentTime = 0;
+      }
+
+      // Play explosion sound when game ends
+      if (explosionSound.current) {
+        explosionSound.current.currentTime = 0;
+        explosionSound.current.play().catch(e => console.log('Audio play failed:', e));
+      }
+
       setFinalScore(score);
       setGameOver(true);
     }
@@ -338,6 +433,12 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
             y: gameState.player.y
           });
           gameState.shootCooldown = 10;
+
+          // Play laser sound when shooting
+          if (laserSound.current) {
+            laserSound.current.currentTime = 0;
+            laserSound.current.play().catch(e => console.log('Audio play failed:', e));
+          }
         }
       }
     }
@@ -355,6 +456,12 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     }, 50);
 
     createEnemies();
+
+    // Start background music
+    if (backgroundMusic.current) {
+      backgroundMusic.current.play().catch(e => console.log('Background music play failed:', e));
+    }
+
     gameLoop();
 
     return () => {
@@ -364,6 +471,11 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       gameState.gameRunning = false;
       if (gameState.animationFrame) {
         cancelAnimationFrame(gameState.animationFrame);
+      }
+      // Stop background music
+      if (backgroundMusic.current) {
+        backgroundMusic.current.pause();
+        backgroundMusic.current.currentTime = 0;
       }
     };
   }, []); // Empty dependency array - run only once
@@ -375,11 +487,18 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Play game start sound when restarting
+    if (gameStartSound.current) {
+      gameStartSound.current.currentTime = 0;
+      gameStartSound.current.play().catch(e => console.log('Audio play failed:', e));
+    }
+
     // Reset React state
     setScore(0);
     setLives(5);
     setLevel(1);
     setGameOver(false);
+    setIsVictory(false);
     
     const gameState = gameStateRef.current;
     
@@ -502,8 +621,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
             }
           });
         }
+
       }
-      
+
       if (Math.random() < 0.015) {
         const aliveEnemies = gameState.enemies.filter(e => e.alive);
         if (aliveEnemies.length > 0) {
@@ -532,6 +652,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
               enemy.alive = false;
               gameState.bullets.splice(bIndex, 1);
               setScore(prev => prev + 10);
+
+              // Play ship destroyed sound when enemy is destroyed
+              if (shipDestroyedSound.current) {
+                shipDestroyedSound.current.currentTime = 0;
+                shipDestroyedSound.current.play().catch(e => console.log('Audio play failed:', e));
+              }
+
               bulletHit = true;
               break;
             }
@@ -548,6 +675,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
           gameState.enemyBullets.splice(index, 1);
           setLives(prev => {
             const newLives = prev - 1;
+
+            // Play ship move sound when losing a life
+            if (shipMoveSound.current) {
+              shipMoveSound.current.currentTime = 0;
+              shipMoveSound.current.play().catch(e => console.log('Audio play failed:', e));
+            }
+
             if (newLives <= 0) {
               gameState.gameRunning = false;
               setGameOver(true);
@@ -566,13 +700,42 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       
       const aliveEnemies = gameState.enemies.filter(e => e.alive);
       if (aliveEnemies.length === 0) {
+        const newLevel = level + 1;
         setLevel(prev => prev + 1);
         gameState.enemyMoveDelay = Math.max(10, gameState.enemyMoveDelay - 3);
+
+        // Check for victory condition (level 10)
+        if (newLevel >= 10) {
+          gameState.gameRunning = false;
+
+          // Stop background music
+          if (backgroundMusic.current) {
+            backgroundMusic.current.pause();
+            backgroundMusic.current.currentTime = 0;
+          }
+
+          // Play victory sound
+          if (victorySound.current) {
+            victorySound.current.currentTime = 0;
+            victorySound.current.play().catch(e => console.log('Audio play failed:', e));
+          }
+
+          setIsVictory(true);
+          setGameOver(true);
+          return;
+        }
+
+        // Play next level sound
+        if (nextLevelSound.current) {
+          nextLevelSound.current.currentTime = 0;
+          nextLevelSound.current.play().catch(e => console.log('Audio play failed:', e));
+        }
+
         // Recreate enemies for next level
         gameState.enemies.length = 0;
         const rows = 4 + Math.floor(1 / 3); // Start with level 1
         const cols = 10;
-        
+
         for (let row = 0; row < rows; row++) {
           for (let col = 0; col < cols; col++) {
             gameState.enemies.push({
@@ -664,6 +827,12 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       });
     }
 
+    // Restart background music
+    if (backgroundMusic.current) {
+      backgroundMusic.current.currentTime = 0;
+      backgroundMusic.current.play().catch(e => console.log('Background music play failed:', e));
+    }
+
     gameLoop();
   };
 
@@ -749,20 +918,25 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
             transition={{ duration: 0.3 }}
             className="space-invaders-modal"
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
+              position: 'fixed',
+              top: '49%',
+              left: '37%',
               transform: 'translate(-50%, -50%)',
               padding: '40px',
               borderRadius: '8px',
               textAlign: 'center',
               fontFamily: 'var(--font-game)',
-              zIndex: 20
+              zIndex: 1000,
+              maxWidth: '400px',
+              width: '90%'
             }}
           >
             <h2 className="space-invaders-modal-title" style={{ margin: '0 0 20px 0', fontSize: '24px' }}>
-              GAME OVER
+              {isVictory ? 'VICTORY!' : 'GAME OVER'}
             </h2>
+            <p className="space-invaders-modal-text" style={{ fontSize: '18px', margin: '20px 0' }}>
+              {isVictory ? 'Congratulations! You completed all levels!' : 'Try again!'}
+            </p>
             <p className="space-invaders-modal-text" style={{ fontSize: '18px', margin: '20px 0' }}>
               Final Score: <span className="space-invaders-final-score">{finalScore}</span>
             </p>
