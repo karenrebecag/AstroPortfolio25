@@ -1,6 +1,6 @@
 ---
 // CommentsSection.astro - Wrapper component for comments
-import RedditCommentsIsland from './RedditCommentsIsland.tsx';
+import CommentsWithToast from './CommentsWithToast.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 
 export interface Props {
@@ -30,7 +30,7 @@ const {
     
     <!-- Reddit-style Comments Island - loads only when visible -->
     <div class="comments-island-wrapper">
-      <RedditCommentsIsland client:visible storyId={storyId} />
+      <CommentsWithToast client:visible storyId={storyId} />
     </div>
   </div>
 </section>
