@@ -11,12 +11,7 @@ import TypeSound from './TypeSound.tsx';
 import { Heart, MessageSquare, MoreHorizontal, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload } from 'lucide-react';
 import { useCommentsStore } from '../../stores/commentsStore';
 import '../../styles/reddit-comments.css';
-// Temporary toast implementation
-const useToast = () => ({
-  showSuccess: (message: string) => console.log('Success:', message),
-  showError: (message: string) => console.error('Error:', message),
-  ToastContainer: () => null
-});
+import { useToast } from '../../hooks/useToast';
 import type { Comment } from '../../types/comments';
 
 // Props for individual comment component
@@ -241,7 +236,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
     likeComment
   } = useCommentsStore();
 
-  const { showSuccess, showError, ToastContainer } = useToast();
+  const { showSuccess, showError } = useToast();
   const [nestedComments, setNestedComments] = useState<Comment[]>([]);
 
   // Fetch comments on mount
@@ -503,8 +498,6 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
           )}
         </motion.div>
       </div>
-
-      <ToastContainer />
     </motion.div>
   );
 };

@@ -33,11 +33,26 @@ import '../styles/global.css';
 	<section id="projects">
 		<Projects />
 	</section>
-	<FAQs />
+	<div class="faqs-responsive-container">
+		<FAQs />
+	</div>
 	<section id="contact">
 		<div id="reviews"></div>
 		<GetInTouch />
 	</section>
 	<Footer />
 </Layout>
+
+<style>
+  /* Hide FAQs only on viewport < 480px */
+  @media (max-width: 479px) {
+    .faqs-responsive-container {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+</style>
 

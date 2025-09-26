@@ -1,11 +1,11 @@
 ---
-import ReviewsIsland from './ReviewsIsland.tsx';
+import ReviewsWithToast from './ReviewsWithToast.tsx';
 ---
 
 <section class="reviews-section">
   <!-- Reviews content -->
   <div class="reviews-content">
-    <ReviewsIsland client:visible />
+    <ReviewsWithToast client:visible />
   </div>
 </section>
 
@@ -85,25 +85,12 @@ import ReviewsIsland from './ReviewsIsland.tsx';
   /* Profile Section */
   :global(.profile-section) {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    align-items: start;
     margin-bottom: 1.5rem;
+    flex-direction: column;
   }
 
-  :global(.profile-pic) {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid #ffffff;
-    flex-shrink: 0;
-  }
 
-  :global(.profile-pic img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 
   :global(.reviewer-name) {
     font-family: var(--font-display); /* Median */
@@ -204,13 +191,8 @@ import ReviewsIsland from './ReviewsIsland.tsx';
       padding: 1.5rem;
     }
 
-    :global(.profile-pic) {
-      width: 50px;
-      height: 50px;
-    }
 
     :global(.profile-section) {
-      gap: 0.75rem;
       margin-bottom: 1.25rem;
     }
 

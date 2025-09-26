@@ -68,6 +68,17 @@ import { motion } from 'motion/react';
     align-items: flex-start;
   }
 
+  /* Hide entire FAQs section on viewport < 768px */
+  @media (max-width: 767px) {
+    :global(.faqs-section) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+
   .faqs-container {
     width: 100%;
     display: flex;

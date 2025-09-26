@@ -57,8 +57,8 @@ const experienceData = [
 <!-- Storytelling Scroll Container -->
 <div class="storytelling-scroll-container">
   <div class="story-grid w-full max-w-[1400px] mx-auto px-15 grid lg:grid-cols-2 gap-12">
-    
-    <!-- Left Column: 3D Cube -->
+
+    <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
     <div class="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl">
       <div class="w-full aspect-square relative overflow-hidden rounded-lg">
         <!-- Cube 3D Background -->
@@ -244,7 +244,7 @@ const experienceData = [
 
   .story-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Two column layout on desktop */
     gap: 3rem;
     width: 100%;
     max-width: 1400px;
@@ -324,13 +324,17 @@ const experienceData = [
       padding: 0 1.5rem;
       text-align: center;
     }
-    
+
+    .sticky-image-column {
+      display: none;
+    }
+
     .sticky-image {
       order: -1;
       max-width: 300px;
       margin: 0 auto;
     }
-    
+
     .story-content {
       order: 1;
     }

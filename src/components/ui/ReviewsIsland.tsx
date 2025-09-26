@@ -1,51 +1,277 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, User, MessageSquare, Star, Briefcase } from 'lucide-react';
+import { useReviewsStore } from '../../stores/reviewsStore';
+import { useToast } from '../../hooks/useToast';
+import '../../styles/review-popup.css';
 
-// Array de reviews
-const reviewsData = [
+// Fallback reviews data (will be replaced by dynamic data)
+const fallbackReviewsData = [
   {
-    id: 1,
+    id: "fallback-1",
     name: "Sarah Johnson",
-    profilePic: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
-    description: "Karen delivered an exceptional website that exceeded all our expectations. Her attention to detail and creative vision transformed our brand completely."
+    position: "CEO at TechStart",
+    review: "Karen delivered an exceptional website that exceeded all our expectations. Her attention to detail and creative vision transformed our brand completely.",
+    timestamp: new Date(),
+    status: 'approved' as const
   },
   {
-    id: 2,
+    id: "fallback-2",
     name: "Michael Chen",
-    profilePic: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-    description: "Working with Karen was a game-changer for our startup. She created a stunning UI/UX that our users absolutely love. Highly recommended!"
+    position: "Product Manager",
+    review: "Working with Karen was a game-changer for our startup. She created a stunning UI/UX that our users absolutely love. Highly recommended!",
+    timestamp: new Date(),
+    status: 'approved' as const
   },
   {
-    id: 3,
+    id: "fallback-3",
     name: "Emily Rodriguez",
-    profilePic: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
-    description: "Karen's motion design skills are incredible. She brought our static designs to life with beautiful animations that perfectly capture our brand essence."
-  },
-  {
-    id: 4,
-    name: "David Thompson",
-    profilePic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-    description: "Professional, creative, and reliable. Karen delivered our e-commerce platform on time and within budget. The results speak for themselves."
-  },
-  {
-    id: 5,
-    name: "Lisa Park",
-    profilePic: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
-    description: "Karen's art direction elevated our entire visual identity. She has an amazing eye for design and understands how to create compelling user experiences."
-  },
-  {
-    id: 6,
-    name: "James Wilson",
-    profilePic: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
-    description: "Exceptional work on our mobile app. Karen's technical skills combined with her design expertise resulted in a product our customers can't stop talking about."
+    position: "Creative Director",
+    review: "Karen's motion design skills are incredible. She brought our static designs to life with beautiful animations that perfectly capture our brand essence.",
+    timestamp: new Date(),
+    status: 'approved' as const
   }
 ];
+
+// Review Popup Component
+const ReviewPopup: React.FC = () => {
+  const {
+    formData,
+    isSubmitting,
+    error,
+    setFormField,
+    resetForm,
+    setShowPopup,
+    submitReview,
+    fetchReviews
+  } = useReviewsStore();
+  
+  const { showSuccess, showError } = useToast();
+  const [charCount, setCharCount] = useState(0);
+  const maxChars = 500;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const success = await submitReview();
+    if (success) {
+      showSuccess('Review submitted successfully! It will appear after moderation.');
+      // Refresh reviews after a short delay
+      setTimeout(() => {
+        fetchReviews();
+      }, 1000);
+    } else if (error) {
+      showError(error);
+    }
+  };
+
+
+
+  useEffect(() => {
+    setCharCount(formData.review.length);
+  }, [formData.review]);
+
+  // Block body scroll when popup is open
+  useEffect(() => {
+    // Get current scroll position
+    const scrollY = window.scrollY;
+    
+    // Disable scroll and maintain position
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    
+    // Re-enable scroll on unmount and restore position
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
+
+  // Handle Escape key to close popup
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [setShowPopup]);
+
+  return (
+    <motion.div
+      className="review-popup-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={(e) => e.target === e.currentTarget && setShowPopup(false)}
+    >
+      <motion.div
+        className="review-popup"
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
+        {/* Close Button */}
+        <button
+          className="review-popup-close"
+          onClick={() => setShowPopup(false)}
+          data-cursor-text="Close Popup"
+        >
+          <X size={20} />
+        </button>
+
+        {/* Header */}
+        <div className="review-popup-header">
+          <h2 className="review-popup-title">Submit a Review</h2>
+          <p className="review-popup-subtitle">
+            Share your experience working with Karen. Your review will be published after moderation.
+          </p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="review-popup-form">
+
+          {/* Name Field */}
+          <div className="review-form-field">
+            <label className="review-form-label">
+              <User size={16} />
+              Your Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={(e) => setFormField('name', e.target.value)}
+              className="review-form-input"
+              data-cursor-text="Enter Your Name"
+              required
+            />
+          </div>
+
+          {/* Position Field */}
+          <div className="review-form-field">
+            <label className="review-form-label">
+              <Briefcase size={16} />
+              Your Position <span style={{ color: '#9ca3af', fontWeight: 'normal' }}>(Optional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="e.g., CEO at TechStart, Product Manager, Freelancer..."
+              value={formData.position}
+              onChange={(e) => setFormField('position', e.target.value)}
+              className="review-form-input"
+              data-cursor-text="Enter Your Position"
+            />
+          </div>
+
+          {/* Review Field */}
+          <div className="review-form-field">
+            <label className="review-form-label">
+              <MessageSquare size={16} />
+              Your Review
+            </label>
+            <textarea
+              placeholder="Share your experience working with Karen..."
+              value={formData.review}
+              onChange={(e) => {
+                if (e.target.value.length <= maxChars) {
+                  setFormField('review', e.target.value);
+                }
+              }}
+              className="review-form-textarea"
+              data-cursor-text="Write Your Review"
+              required
+            />
+            <div className={`review-char-counter ${
+              charCount > maxChars * 0.9 ? 'warning' : ''
+            } ${
+              charCount === maxChars ? 'error' : ''
+            }`}>
+              {charCount}/{maxChars} characters
+            </div>
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="review-error-message">
+              <X size={16} />
+              {error}
+            </div>
+          )}
+
+          {/* Submit Section */}
+          <div className="review-submit-section">
+            <button
+              type="button"
+              onClick={() => setShowPopup(false)}
+              className="review-cancel-btn"
+              data-cursor-text="Cancel Review"
+            >
+              Cancel
+            </button>
+            
+            <div className="review-submit-btn-wrapper">
+              <button
+                type="submit"
+                disabled={isSubmitting || !formData.name.trim() || !formData.review.trim()}
+                className="review-submit-btn"
+                data-cursor-text="Submit Review"
+              >
+                <div className="review-btn-glow"></div>
+                <div className="review-btn-blob"></div>
+                <div className="review-btn-content">
+                  {isSubmitting ? (
+                    <>
+                      <div className="review-loading-spinner"></div>
+                      <span className="review-btn-text">Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Star size={16} />
+                      <span className="review-btn-text">Submit Review</span>
+                    </>
+                  )}
+                  <div className="review-btn-inner-glow"></div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const ReviewsIsland: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const {
+    reviews,
+    isLoading,
+    showPopup,
+    setShowPopup,
+    fetchReviews
+  } = useReviewsStore();
+
+  // Fetch reviews on mount
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Use dynamic reviews or fallback data
+    const reviewsData = reviews.length > 0 ? reviews : fallbackReviewsData;
 
     // Crear el marquee de reviews
     const createReviewsMarquee = () => {
@@ -74,15 +300,13 @@ const ReviewsIsland: React.FC = () => {
             
             <!-- Profile section -->
             <div class="profile-section">
-              <div class="profile-pic">
-                <img src="${review.profilePic}" alt="${review.name}" loading="lazy" />
-              </div>
               <h3 class="reviewer-name">${review.name}</h3>
+              ${review.position ? `<p class="reviewer-position" style="font-size: 0.75rem; color: #9ca3af; margin: 0.25rem 0 0 0; font-weight: 400;">${review.position}</p>` : ''}
             </div>
             
             <!-- Review description -->
             <p class="review-description">
-              ${review.description}
+              ${review.review}
             </p>
           </div>
         `;
@@ -150,12 +374,43 @@ const ReviewsIsland: React.FC = () => {
         containerRef.current.innerHTML = '';
       }
     };
-  }, []);
+  }, [reviews]); // Re-create marquee when reviews change
 
   return (
-    <div ref={containerRef} className="reviews-container">
-      {/* El contenido se genera dinámicamente con JavaScript vanilla */}
-    </div>
+    <>
+      <div ref={containerRef} className="reviews-container">
+        {/* El contenido se genera dinámicamente con JavaScript vanilla */}
+        {isLoading && (
+          <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
+            Loading reviews...
+          </div>
+        )}
+      </div>
+      
+      {/* Submit Review Button */}
+      <div className="submit-review-button">
+        <div className="submit-review-btn-main">
+          <button
+            onClick={() => setShowPopup(true)}
+            className="review-submit-btn"
+            data-cursor-text="Submit Your Review"
+          >
+            <div className="review-btn-glow"></div>
+            <div className="review-btn-blob"></div>
+            <div className="review-btn-content">
+              <Star size={16} />
+              <span className="review-btn-text">Submit a Review</span>
+              <div className="review-btn-inner-glow"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Review Popup */}
+      <AnimatePresence>
+        {showPopup && <ReviewPopup />}
+      </AnimatePresence>
+    </>
   );
 };
 

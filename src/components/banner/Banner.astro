@@ -13,7 +13,7 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
   <div id="banner-image-container" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%; z-index: 10; pointer-events: none; display: flex; justify-content: center; align-items: flex-end;">
     <img id="banner-image" src="/images/BannerImage.webp" alt="Banner Image" style="max-width: 600px; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block;" />
   </div>
-  <div class="w-full flex justify-center relative z-20">
+  <div id="banner-buttons-container" class="w-full flex justify-center relative z-20">
     <BannerButtonsWrapper />
   </div>
 </div>
@@ -28,6 +28,17 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
   @keyframes slideUp {
     to {
       transform: translateY(0px);
+    }
+  }
+
+  /* Mobile optimization - 30% smaller image and hide buttons */
+  @media (max-width: 768px) {
+    #banner-image {
+      max-width: 520px !important; /* 600px - 30% = 420px - Force override inline styles */
+    }
+
+    #banner-buttons-container {
+      display: none !important;
     }
   }
 </style>
