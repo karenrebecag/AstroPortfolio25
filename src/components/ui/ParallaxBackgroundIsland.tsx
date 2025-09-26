@@ -1,5 +1,6 @@
 // ParallaxBackgroundIsland.tsx - Background component replicando exactamente v0newslettertemplate
 import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 interface ParallaxBackgroundProps {
   backgroundSrc: string;
@@ -112,26 +113,83 @@ const ParallaxBackgroundIsland: React.FC<ParallaxBackgroundProps> = ({
 }) => {
   const extension = getFileExtension(backgroundSrc);
   const isVideoFile = isVideo(extension);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // useScroll para toda la página (más simple y confiable)
+  const { scrollYProgress } = useScroll();
+  
+  // Transformar el progreso del scroll a padding SÚPER EXAGERADO 
+  // Mapeo: scroll 0% = padding 0px, scroll 100% = padding 400px
+  const paddingValue = useTransform(scrollYProgress, [0, 1], [0, 800]);
+  
+  // Border-radius SÚPER EXAGERADO para debug
+  // Mapeo: scroll 0% = radius 0px, scroll 100% = radius 1200px
+  const borderRadius = useTransform(scrollYProgress, [0, 1], [0, 1200]);
+
+  // DEBUG: Log valores en consola
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on('change', (latest) => {
+      console.log('🔥 SCROLL PROGRESS:', latest);
+      console.log('📦 PADDING VALUE:', paddingValue.get());
+      console.log('🔵 BORDER RADIUS:', borderRadius.get());
+      console.log('🎯 CONTAINER REF:', containerRef.current);
+    });
+
+    return () => unsubscribe();
+  }, [scrollYProgress, paddingValue, borderRadius]);
 
   // Clases exactas del v0newslettertemplate
   const backgroundClasses = "absolute left-0 top-0 w-full h-full object-cover";
 
+  // DEBUG: Log cuando se monta el componente
+  useEffect(() => {
+    console.log('🚀 ParallaxBackgroundIsland MOUNTED');
+    console.log('🎬 Video file:', isVideoFile);
+    console.log('📁 Background src:', backgroundSrc);
+    console.log('🖼️ Placeholder:', placeholder);
+  }, []);
+
   return (
-    <div className={className}>
+    <div 
+      ref={containerRef}
+      className={className}
+      style={{ position: 'relative', width: '100%', height: '100%' }}
+    >
       {isVideoFile ? (
-        <VideoWithPlaceholder
-          src={backgroundSrc}
-          className={backgroundClasses}
-          placeholder={placeholder}
-        />
+        <motion.div
+          style={{
+            position: 'absolute',
+            top: paddingValue,
+            left: paddingValue,
+            right: paddingValue,
+            bottom: paddingValue,
+            borderRadius: borderRadius,
+            overflow: 'hidden',
+            backgroundColor: 'rgba(255, 0, 0, 0.2)', // DEBUG: fondo rojo semi-transparente
+            border: '5px solid yellow' // DEBUG: borde amarillo visible
+          }}
+        >
+          <VideoWithPlaceholder
+            src={backgroundSrc}
+            className="absolute left-0 top-0 w-full h-full object-cover"
+            placeholder={placeholder}
+          />
+        </motion.div>
       ) : (
-        <img
+        <motion.img
           src={backgroundSrc}
           alt="Background"
-          className={backgroundClasses}
           style={{
+            position: 'absolute',
+            top: paddingValue,
+            left: paddingValue,
+            right: paddingValue,
+            bottom: paddingValue,
+            borderRadius: borderRadius,
             objectFit: 'cover',
-            objectPosition: 'center'
+            objectPosition: 'center',
+            backgroundColor: 'rgba(255, 0, 0, 0.2)', // DEBUG: fondo rojo semi-transparente
+            border: '5px solid yellow' // DEBUG: borde amarillo visible
           }}
         />
       )}
