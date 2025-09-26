@@ -25,6 +25,25 @@ const ProjectsIsland: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
+      title1: "Aurin Task",
+      title2: "Manager",
+      description: "Enterprise-grade task management platform with AI integration, real-time collaboration, and advanced notification system.",
+      tags: ["Next.js", "TypeScript", "Firebase", "AI"],
+      images: [
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin1.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin2.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin3.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin4.webp"
+      ],
+      positions: [
+        { x: -45, y: -5, rotate: 5 },
+        { x: -15, y: 8, rotate: -3 },
+        { x: 15, y: -3, rotate: 8 },
+        { x: 45, y: 5, rotate: -5 }
+      ]
+    },
+    {
+      id: 2,
       title1: "E-Commerce",
       title2: "Platform",
       description: "Full-stack e-commerce solution with modern UI, payment integration, and inventory management system.",
@@ -43,7 +62,7 @@ const ProjectsIsland: React.FC = () => {
       ]
     },
     {
-      id: 2,
+      id: 3,
       title1: "Portfolio",
       title2: "Website",
       description: "Creative portfolio website with Three.js animations, responsive design, and optimized performance.",
@@ -62,7 +81,7 @@ const ProjectsIsland: React.FC = () => {
       ]
     },
     {
-      id: 3,
+      id: 4,
       title1: "Mobile",
       title2: "App",
       description: "Cross-platform mobile application with real-time features, push notifications, and offline capabilities.",
@@ -89,8 +108,13 @@ const ProjectsIsland: React.FC = () => {
   };
 
   const handleReadMore = (projectId: number) => {
-    // Aquí puedes agregar la lógica para "Read More"
-    console.log(`Read more about project ${projectId}`);
+    if (projectId === 1) {
+      // Navegar a la página del Aurin Task Manager
+      window.location.href = '/p_AurinTaskManager';
+    } else {
+      // Lógica para otros proyectos
+      console.log(`Read more about project ${projectId}`);
+    }
   };
 
   return (
@@ -134,6 +158,15 @@ const ProjectsIsland: React.FC = () => {
                   <p className="project-description">
                     {project.description}
                   </p>
+                  <button 
+                    className="read-more-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReadMore(project.id);
+                    }}
+                  >
+                    {project.id === 1 ? 'View Project' : 'Read More'}
+                  </button>
                 </div>
                 <div className="project-images">
                   <BounceCards
