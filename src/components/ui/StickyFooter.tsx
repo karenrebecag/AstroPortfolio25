@@ -86,6 +86,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
     };
 
     const activateEasterEgg = () => {
+        if (window.innerWidth < 768) return;
         // Play game start sound
         const gameStartSound = new Audio('/sounds/gameStart.mp3');
         gameStartSound.volume = 0.4;
@@ -154,7 +155,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.5 }}
-                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20"
+                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
                                 >
                                     <SpaceInvadersIsland onExit={exitSpaceInvaders} />
                                 </motion.div>

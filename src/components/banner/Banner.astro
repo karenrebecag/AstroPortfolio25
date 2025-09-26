@@ -12,7 +12,18 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
   </div>
   <BannerMarqueesWrapper />
   <div id="banner-image-container" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%; z-index: 10; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; height: 537px;">
-    <img id="banner-image" src="/images/BannerImage.webp" alt="Banner Image" fetchpriority="high" loading="eager" style="max-width: 600px; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block; width: 520px; height: 537px;" />
+    <img 
+      id="banner-image" 
+      src="/images/BannerImage.webp" 
+      srcset="/images/BannerImage-400.webp 400w, /images/BannerImage-600.webp 600w, /images/BannerImage.webp 800w"
+      sizes="(max-width: 480px) 400px, (max-width: 768px) 600px, 520px"
+      alt="Banner Image" 
+      fetchpriority="high" 
+      loading="eager" 
+      width="520"
+      height="537"
+      style="max-width: 600px; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block;" 
+    />
   </div>
   <div id="banner-buttons-container" class="w-full flex justify-center relative z-20">
     <BannerButtonsWrapper />

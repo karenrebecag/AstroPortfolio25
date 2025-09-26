@@ -888,7 +888,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         height={600}
         className="space-invaders-canvas"
         style={{
-          imageRendering: 'pixelated'
+          imageRendering: 'pixelated',
+          maxWidth: '100%',
+          height: 'auto'
         }}
       />
 

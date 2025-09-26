@@ -20,11 +20,11 @@ interface SpeedlifyData {
   speedIndex: number;
 }
 
-interface SpeedlifyStatsProps {
+interface SpeedlifyStatsLightProps {
   className?: string;
 }
 
-export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
+export function SpeedlifyStatsLight({ className }: SpeedlifyStatsLightProps) {
   const [stats, setStats] = useState<SpeedlifyData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -86,7 +86,7 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
         
         // Log real data in development to verify it's working
         if (process.env.NODE_ENV === 'development') {
-          console.group('✅ Speedlify Real Data Retrieved');
+          console.group('✅ Speedlify Real Data Retrieved (Light Mode)');
           console.log('Hash used:', urlEntry.hash);
           console.log('Timestamp:', new Date(data.timestamp).toLocaleString());
           console.log('Performance scores:', data.lighthouse);
@@ -122,7 +122,7 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
       } catch (err) {
         // Log detailed error information in development
         if (process.env.NODE_ENV === 'development') {
-          console.group('🚨 Speedlify API Error');
+          console.group('🚨 Speedlify API Error (Light Mode)');
           console.error('Error details:', err);
           console.log('Speedlify URL:', 'https://guileless-douhua-b2ff53.netlify.app');
           console.log('Target URL:', 'https://www.karenortiz.space/');
@@ -162,9 +162,9 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
   }, []);
 
   const getScoreColor = (score: number): string => {
-    if (score >= 90) return '#22c55e'; // Green
-    if (score >= 50) return '#f59e0b'; // Orange
-    return '#ef4444'; // Red
+    if (score >= 90) return '#16a34a'; // Green-600 (darker for light mode)
+    if (score >= 50) return '#ea580c'; // Orange-600 (darker for light mode)
+    return '#dc2626'; // Red-600 (darker for light mode)
   };
 
   const getScoreGrade = (score: number): string => {
@@ -178,15 +178,15 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
   if (loading) {
     return (
       <div className={`flex items-center gap-2 ${className || ''}`}>
-        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-        <span className="text-white/70 text-sm font-primary">Loading performance stats...</span>
+        <div className="w-4 h-4 border-2 border-gray-400 border-t-gray-700 rounded-full animate-spin"></div>
+        <span className="text-gray-600 text-sm font-primary">Loading performance stats...</span>
       </div>
     );
   }
 
   if (error || !stats) {
     return (
-      <div className={`text-white/50 text-sm font-primary ${className || ''}`}>
+      <div className={`text-gray-500 text-sm font-primary ${className || ''}`}>
         Performance stats unavailable
       </div>
     );
@@ -205,14 +205,14 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
           style={{ 
             backgroundColor: getScoreColor(stats.lighthouse.performance),
-            color: '#000'
+            color: '#fff'
           }}
         >
           {getScoreGrade(stats.lighthouse.performance)}
         </div>
         <div className="flex flex-col">
-          <span className="text-white text-sm font-medium font-primary">Performance</span>
-          <span className="text-white/70 text-xs font-primary">{stats.lighthouse.performance}/100</span>
+          <span className="text-gray-900 text-sm font-medium font-primary">Performance</span>
+          <span className="text-gray-600 text-xs font-primary">{stats.lighthouse.performance}/100</span>
         </div>
       </div>
 
@@ -222,14 +222,14 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
           style={{ 
             backgroundColor: getScoreColor(stats.lighthouse.accessibility),
-            color: '#000'
+            color: '#fff'
           }}
         >
           {getScoreGrade(stats.lighthouse.accessibility)}
         </div>
         <div className="flex flex-col">
-          <span className="text-white text-sm font-medium font-primary">Accessibility</span>
-          <span className="text-white/70 text-xs font-primary">{stats.lighthouse.accessibility}/100</span>
+          <span className="text-gray-900 text-sm font-medium font-primary">Accessibility</span>
+          <span className="text-gray-600 text-xs font-primary">{stats.lighthouse.accessibility}/100</span>
         </div>
       </div>
 
@@ -239,14 +239,14 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
           style={{ 
             backgroundColor: getScoreColor(stats.lighthouse.bestPractices),
-            color: '#000'
+            color: '#fff'
           }}
         >
           {getScoreGrade(stats.lighthouse.bestPractices)}
         </div>
         <div className="flex flex-col">
-          <span className="text-white text-sm font-medium font-primary">Best Practices</span>
-          <span className="text-white/70 text-xs font-primary">{stats.lighthouse.bestPractices}/100</span>
+          <span className="text-gray-900 text-sm font-medium font-primary">Best Practices</span>
+          <span className="text-gray-600 text-xs font-primary">{stats.lighthouse.bestPractices}/100</span>
         </div>
       </div>
 
@@ -256,42 +256,42 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
           style={{ 
             backgroundColor: getScoreColor(stats.lighthouse.seo),
-            color: '#000'
+            color: '#fff'
           }}
         >
           {getScoreGrade(stats.lighthouse.seo)}
         </div>
         <div className="flex flex-col">
-          <span className="text-white text-sm font-medium font-primary">SEO</span>
-          <span className="text-white/70 text-xs font-primary">{stats.lighthouse.seo}/100</span>
+          <span className="text-gray-900 text-sm font-medium font-primary">SEO</span>
+          <span className="text-gray-600 text-xs font-primary">{stats.lighthouse.seo}/100</span>
         </div>
       </div>
 
       {/* Core Web Vitals */}
-      <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
+      <div className="flex items-center gap-4 ml-4 pl-4 border-l border-gray-300">
         <div className="flex flex-col items-center" data-cursor-text="Time to load main content (lower is better)">
-          <span className="text-white text-xs font-primary">LCP</span>
+          <span className="text-gray-900 text-xs font-primary">LCP</span>
           <span 
             className="text-xs font-bold font-primary"
-            style={{ color: stats.largestContentfulPaint <= 2.5 ? '#22c55e' : '#f59e0b' }}
+            style={{ color: stats.largestContentfulPaint <= 2.5 ? '#16a34a' : '#ea580c' }}
           >
             {stats.largestContentfulPaint}s
           </span>
         </div>
         <div className="flex flex-col items-center" data-cursor-text="Time to show first text or image (lower is better)">
-          <span className="text-white text-xs font-primary">FCP</span>
+          <span className="text-gray-900 text-xs font-primary">FCP</span>
           <span 
             className="text-xs font-bold font-primary"
-            style={{ color: stats.firstContentfulPaint <= 1.8 ? '#22c55e' : '#f59e0b' }}
+            style={{ color: stats.firstContentfulPaint <= 1.8 ? '#16a34a' : '#ea580c' }}
           >
             {stats.firstContentfulPaint}s
           </span>
         </div>
         <div className="flex flex-col items-center" data-cursor-text="How much the page jumps while loading (lower is better)">
-          <span className="text-white text-xs font-primary">CLS</span>
+          <span className="text-gray-900 text-xs font-primary">CLS</span>
           <span 
             className="text-xs font-bold font-primary"
-            style={{ color: stats.cumulativeLayoutShift <= 0.1 ? '#22c55e' : '#f59e0b' }}
+            style={{ color: stats.cumulativeLayoutShift <= 0.1 ? '#16a34a' : '#ea580c' }}
           >
             {stats.cumulativeLayoutShift}
           </span>
@@ -302,27 +302,27 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
       <div className="flex items-center gap-2 ml-auto">
         {isRealData ? (
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-green-400 text-xs font-primary font-medium">
+            <div className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></div>
+            <span className="text-green-700 text-xs font-primary font-medium">
               Live Data
             </span>
           </div>
         ) : (
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-            <span className="text-yellow-400 text-xs font-primary font-medium">
+            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+            <span className="text-orange-600 text-xs font-primary font-medium">
               Demo Data
             </span>
           </div>
         )}
-        <span className="text-white/50 text-xs font-primary">
+        <span className="text-gray-500 text-xs font-primary">
           {new Date(stats.timestamp).toLocaleDateString()}
         </span>
         <a
           href="https://github.com/zachleat/speedlify/#deploy-to-netlify"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white/40 hover:text-white/70 text-xs font-primary transition-colors duration-300"
+          className="text-gray-400 hover:text-gray-600 text-xs font-primary transition-colors duration-300"
           data-cursor-text="Learn about Speedlify"
         >
           Powered by Speedlify

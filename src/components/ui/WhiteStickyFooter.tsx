@@ -10,7 +10,7 @@ import {
 import { DitheringShader } from '../three/DitheringShader';
 import { NoiseBackground } from './NoiseBackground';
 import FlipText from './FlipText';
-import { SpeedlifyStats } from './SpeedlifyStats';
+import { SpeedlifyStatsLight } from './SpeedlifyStatsLight';
 import Toast from './Toast';
 import { SpaceInvadersIsland } from './SpaceInvadersIsland';
 
@@ -86,6 +86,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
     };
 
     const activateEasterEgg = () => {
+        if (window.innerWidth < 768) return;
         // Play game start sound
         const gameStartSound = new Audio('/sounds/gameStart.mp3');
         gameStartSound.volume = 0.4;
@@ -154,7 +155,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.5 }}
-                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20"
+                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
                                 >
                                     <SpaceInvadersIsland onExit={exitSpaceInvaders} />
                                 </motion.div>
@@ -243,11 +244,8 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-gray-700 group-hover:text-gray-600" />
                                             </button>
                                         </div>
-                                        <span className="text-gray-500 text-sm font-primary">
-                                            Powered by Speedlify
-                                        </span>
                                     </div>
-                                    <SpeedlifyStats className="w-full" />
+                                    <SpeedlifyStatsLight className="w-full" />
                                 </div>
                             </AnimatedContainer>
                
