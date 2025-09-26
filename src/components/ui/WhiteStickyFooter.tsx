@@ -87,8 +87,8 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
 
     const activateEasterEgg = () => {
         if (window.innerWidth < 768) return;
-        // Play game start sound
-        const gameStartSound = new Audio('/sounds/gameStart.mp3');
+        // Play game start sound from Cloudflare R2 CDN
+        const gameStartSound = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/gameStart-1.mp3');
         gameStartSound.volume = 0.4;
         gameStartSound.play().catch(e => console.log('Audio play failed:', e));
 

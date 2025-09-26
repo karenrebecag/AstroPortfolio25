@@ -52,11 +52,11 @@ export const GemModel: React.FC<GemModelProps> = ({
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   , []);
 
-  // Load model with error handling
-  const object = useLoader(THREE.ObjectLoader, '/models/gem.json');
+  // Load model from Cloudflare R2 with error handling
+  const object = useLoader(THREE.ObjectLoader, 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/gem.json');
   
-  // Load HDR with optimized settings
-  const hdr = useLoader(RGBELoader, '/hdr/large_corridor_1k.hdr');
+  // Load HDR from Cloudflare R2 with optimized settings
+  const hdr = useLoader(RGBELoader, 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr');
 
   // Apply HDR mapping with performance optimization
   useEffect(() => {

@@ -60,15 +60,15 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Initialize sound effects
-    explosionSound.current = new Audio('/sounds/explotion.mp3');
-    laserSound.current = new Audio('/sounds/laserSound.mp3');
-    shipMoveSound.current = new Audio('/sounds/ShipMove.mp3');
-    gameStartSound.current = new Audio('/sounds/gameStart.mp3');
-    victorySound.current = new Audio('/sounds/victory.mp3');
-    backgroundMusic.current = new Audio('/sounds/spaceInvadersBackground.mp3');
-    nextLevelSound.current = new Audio('/sounds/nextLevel.mp3');
-    shipDestroyedSound.current = new Audio('/sounds/shipDestroyed.mp3');
+    // Initialize sound effects from Cloudflare R2 CDN
+    explosionSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/explotion.mp3');
+    laserSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/laserSound.mp3');
+    shipMoveSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ShipMove.mp3');
+    gameStartSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/gameStart-1.mp3');
+    victorySound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/victory.mp3');
+    backgroundMusic.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/spaceInvadersBackground.mp3');
+    nextLevelSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/nextLevel.mp3');
+    shipDestroyedSound.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/shipDestroyed.mp3');
 
     // Set volume levels
     if (explosionSound.current) explosionSound.current.volume = 0.3;

@@ -1,7 +1,10 @@
-/* Font Face Declarations */
+/* Google Fonts Import - InterTight */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Font Face Declarations - Cloudflare R2 CDN */
 @font-face {
   font-family: 'Boysen';
-  src: url('/fonts/Boysen.woff2') format('woff2');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -9,7 +12,7 @@
 
 @font-face {
   font-family: 'Boysen';
-  src: url('/fonts/Boysen-Light.woff2') format('woff2');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -17,23 +20,15 @@
 
 @font-face {
   font-family: 'Boysen';
-  src: url('/fonts/Boysen-Bold.woff2') format('woff2');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'InterTight';
-  src: url('/fonts/InterTight.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
   font-family: 'Median';
-  src: url('/fonts/Median.woff2') format('woff2');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -41,9 +36,8 @@
 
 @font-face {
   font-family: 'Karstar Signature';
-  src: url('/fonts/Karstar signature.woff2') format('woff2'),
-       url('/fonts/Karstar signature.ttf') format('truetype'),
-       url('/fonts/Karstar signature.otf') format('opentype');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Karstar signature.ttf') format('truetype'),
+       url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Karstar signature-1.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
@@ -51,19 +45,18 @@
 
 @font-face {
   font-family: 'Video Game Font';
-  src: url('/fonts/Video Game Font.otf') format('opentype'),
-       url('/fonts/Video Game Font.ttf') format('truetype');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video Game Font.otf') format('opentype'),
+       url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video Game Font.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
-  
 }
 
 /* CSS Custom Properties for Typography */
 :root {
   /* Font Families */
-  --font-primary: 'InterTight', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-secondary: 'Boysen', 'InterTight', sans-serif;
+  --font-primary: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-secondary: 'Boysen', 'Inter Tight', sans-serif;
   --font-display: 'Median', 'Boysen', serif;
   --font-signature: 'Karstar Signature', cursive;
   --font-game: 'Video Game Font', 'Courier New', monospace;

@@ -187,21 +187,51 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
 
     let cubeObject: THREE.Object3D | null = null;
 
-    // Load HDR environment - optimizado según calidad
+    // Load HDR environment from Cloudflare R2 with fallback - optimizado según calidad
     const hdrLoader = new RGBELoader();
-    hdrLoader.load('/hdr/large_corridor_1k.hdr', (hdr) => {
-      hdr.mapping = THREE.EquirectangularReflectionMapping;
-      hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
+    
+    // Configure loader for external URLs with CORS support
+    hdrLoader.setCrossOrigin('anonymous');
+    
+    const loadHDR = (url: string, isRetry = false) => {
+      console.log(`Loading HDR from: ${url}`);
       
-      try {
-        const pmrem = new THREE.PMREMGenerator(renderer);
-        const envMap = pmrem.fromEquirectangular(hdr).texture;
-        scene.environment = envMap;
-        pmrem.dispose();
-      } catch (error) {
-        console.error('Failed to create envMap:', error);
-      }
-    });
+      hdrLoader.load(
+        url,
+        (hdr) => {
+          console.log('HDR loaded successfully from:', url);
+          hdr.mapping = THREE.EquirectangularReflectionMapping;
+          hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
+          
+          try {
+            const pmrem = new THREE.PMREMGenerator(renderer);
+            const envMap = pmrem.fromEquirectangular(hdr).texture;
+            scene.environment = envMap;
+            pmrem.dispose();
+            console.log('HDR environment applied successfully');
+          } catch (error) {
+            console.error('Failed to create envMap:', error);
+          }
+        },
+        (progress) => {
+          console.log('HDR loading progress:', (progress.loaded / progress.total * 100) + '%');
+        },
+        (error) => {
+          console.error('Failed to load HDR from:', url, error);
+          
+          // Fallback to local HDR if Cloudflare fails
+          if (!isRetry) {
+            console.log('Attempting fallback to local HDR...');
+            loadHDR('/hdr/large_corridor_1k.hdr', true);
+          } else {
+            console.error('Both HDR sources failed to load');
+          }
+        }
+      );
+    };
+    
+    // Try Cloudflare R2 first, fallback to local
+    loadHDR('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr');
 
     // Crear material IDÉNTICO a la gema - mismos shaders, colores y texturas
     const createCubeMaterial = () => {
@@ -249,9 +279,9 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
       }
     };
 
-    // Load cube model - siguiendo patrón de carga optimizada igual que GemBackground
+    // Load cube model from Cloudflare R2 - siguiendo patrón de carga optimizada igual que GemBackground
     const objectLoader = new THREE.ObjectLoader();
-    objectLoader.load('/models/Cube.json', (object) => {
+    objectLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Cube.json', (object) => {
       cubeObject = object;
       const cubeMaterial = createCubeMaterial();
       

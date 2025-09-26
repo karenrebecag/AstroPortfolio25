@@ -1,0 +1,561 @@
+---
+export const prerender = false;
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Debug Tool - Karen Ortiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #00ff88;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .metric-value.good { color: #00ff88; }
+        .metric-value.needs-improvement { color: #ffaa00; }
+        .metric-value.poor { color: #ff4444; }
+
+        .debug-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .debug-section h2 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .resource-list {
+            list-style: none;
+        }
+
+        .resource-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+
+        .resource-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+
+        .resource-size {
+            color: #ffaa00;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .resource-time {
+            color: #ff4444;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .start-button, .download-button {
+            background: #00ff88;
+            color: #0f0f0f;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover, .download-button:hover {
+            background: #00cc6a;
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .warning {
+            background: #332200;
+            border: 1px solid #ffaa00;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #ffaa00;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #00ff88;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        pre {
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid #333;
+        }
+
+        .tab-container {
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            color: #888;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #00ff88;
+            border-bottom-color: #00ff88;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Performance Debug Tool</h1>
+
+        <div class="warning">
+            ⚠️ Esta herramienta analiza elementos que pueden estar afectando el performance de tu sitio.
+            Los datos se muestran en tiempo real y pueden ayudar a identificar recursos lentos.
+        </div>
+
+        <div class="controls">
+            <button class="start-button" onclick="startAnalysis()">🚀 Iniciar Análisis</button>
+            <a href="/debug-speedlify" class="download-button">📊 Ver Speedlify Results</a>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div>🔄 Analizando performance...</div>
+        </div>
+
+        <div id="results" class="hidden">
+            <!-- Core Web Vitals -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>LCP (Largest Contentful Paint)</h3>
+                    <div id="lcp-value" class="metric-value">-</div>
+                    <div>Objetivo: < 2.5s</div>
+                </div>
+                <div class="metric-card">
+                    <h3>FID (First Input Delay)</h3>
+                    <div id="fid-value" class="metric-value">-</div>
+                    <div>Objetivo: < 100ms</div>
+                </div>
+                <div class="metric-card">
+                    <h3>CLS (Cumulative Layout Shift)</h3>
+                    <div id="cls-value" class="metric-value">-</div>
+                    <div>Objetivo: < 0.1</div>
+                </div>
+                <div class="metric-card">
+                    <h3>TTFB (Time to First Byte)</h3>
+                    <div id="ttfb-value" class="metric-value">-</div>
+                    <div>Objetivo: < 600ms</div>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <button class="tab-button active" onclick="showTab('resources')">📦 Recursos Pesados</button>
+                <button class="tab-button" onclick="showTab('images')">🖼️ Imágenes</button>
+                <button class="tab-button" onclick="showTab('scripts')">📜 Scripts</button>
+                <button class="tab-button" onclick="showTab('fonts')">🔤 Fuentes</button>
+                <button class="tab-button" onclick="showTab('dom')">🌐 DOM Analysis</button>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources-tab" class="tab-content active">
+                <div class="debug-section">
+                    <h2>🐌 Recursos más lentos (>1MB o >2s)</h2>
+                    <ul id="slow-resources" class="resource-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Images Tab -->
+            <div id="images-tab" class="tab-content">
+                <div class="debug-section">
+                    <h2>🖼️ Imágenes grandes sin optimizar</h2>
+                    <ul id="large-images" class="resource-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Scripts Tab -->
+            <div id="scripts-tab" class="tab-content">
+                <div class="debug-section">
+                    <h2>📜 Scripts que bloquean el render</h2>
+                    <ul id="blocking-scripts" class="resource-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+
+                <div class="debug-section">
+                    <h2>⚡ Third-party scripts</h2>
+                    <ul id="third-party-scripts" class="resource-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fonts Tab -->
+            <div id="fonts-tab" class="tab-content">
+                <div class="debug-section">
+                    <h2>🔤 Fuentes web</h2>
+                    <ul id="web-fonts" class="resource-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DOM Tab -->
+            <div id="dom-tab" class="tab-content">
+                <div class="debug-section">
+                    <h2>🌐 Análisis del DOM</h2>
+                    <div id="dom-analysis">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let performanceData = {};
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatTime(milliseconds) {
+            if (milliseconds < 1000) {
+                return milliseconds.toFixed(0) + 'ms';
+            }
+            return (milliseconds / 1000).toFixed(2) + 's';
+        }
+
+        function getMetricClass(value, thresholds) {
+            if (value <= thresholds.good) return 'good';
+            if (value <= thresholds.needsImprovement) return 'needs-improvement';
+            return 'poor';
+        }
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function startAnalysis() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+
+            try {
+                // Get Core Web Vitals using PerformanceObserver
+                await measureCoreWebVitals();
+
+                // Analyze resources
+                analyzeResources();
+
+                // Analyze DOM
+                analyzeDom();
+
+                // Show results
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error during analysis:', error);
+                document.getElementById('loading').innerHTML = '<div style="color: #ff4444;">❌ Error during analysis: ' + error.message + '</div>';
+            }
+        }
+
+        async function measureCoreWebVitals() {
+            return new Promise((resolve) => {
+                // LCP
+                new PerformanceObserver((entryList) => {
+                    const entries = entryList.getEntries();
+                    const lastEntry = entries[entries.length - 1];
+                    const lcpValue = lastEntry.startTime;
+
+                    const lcpElement = document.getElementById('lcp-value');
+                    lcpElement.textContent = formatTime(lcpValue);
+                    lcpElement.className = 'metric-value ' + getMetricClass(lcpValue, {good: 2500, needsImprovement: 4000});
+
+                    performanceData.lcp = lcpValue;
+                }).observe({entryTypes: ['largest-contentful-paint']});
+
+                // CLS
+                new PerformanceObserver((entryList) => {
+                    let clsValue = 0;
+                    for (const entry of entryList.getEntries()) {
+                        if (!entry.hadRecentInput) {
+                            clsValue += entry.value;
+                        }
+                    }
+
+                    const clsElement = document.getElementById('cls-value');
+                    clsElement.textContent = clsValue.toFixed(3);
+                    clsElement.className = 'metric-value ' + getMetricClass(clsValue, {good: 0.1, needsImprovement: 0.25});
+
+                    performanceData.cls = clsValue;
+                }).observe({entryTypes: ['layout-shift']});
+
+                // FID (will only work with real user interaction)
+                new PerformanceObserver((entryList) => {
+                    for (const entry of entryList.getEntries()) {
+                        const fidValue = entry.processingStart - entry.startTime;
+
+                        const fidElement = document.getElementById('fid-value');
+                        fidElement.textContent = formatTime(fidValue);
+                        fidElement.className = 'metric-value ' + getMetricClass(fidValue, {good: 100, needsImprovement: 300});
+
+                        performanceData.fid = fidValue;
+                        break; // Only measure the first input
+                    }
+                }).observe({entryTypes: ['first-input']});
+
+                // TTFB
+                const navigation = performance.getEntriesByType('navigation')[0];
+                if (navigation) {
+                    const ttfbValue = navigation.responseStart - navigation.requestStart;
+
+                    const ttfbElement = document.getElementById('ttfb-value');
+                    ttfbElement.textContent = formatTime(ttfbValue);
+                    ttfbElement.className = 'metric-value ' + getMetricClass(ttfbValue, {good: 600, needsImprovement: 1500});
+
+                    performanceData.ttfb = ttfbValue;
+                }
+
+                // Set default values if no interaction
+                setTimeout(() => {
+                    if (!performanceData.fid) {
+                        document.getElementById('fid-value').textContent = 'No input yet';
+                        document.getElementById('fid-value').className = 'metric-value';
+                    }
+                    resolve();
+                }, 1000);
+            });
+        }
+
+        function analyzeResources() {
+            const resources = performance.getEntriesByType('resource');
+
+            // Slow resources
+            const slowResources = resources.filter(resource =>
+                resource.duration > 2000 || resource.transferSize > 1024 * 1024
+            ).sort((a, b) => b.duration - a.duration);
+
+            populateResourceList('slow-resources', slowResources);
+
+            // Large images
+            const images = resources.filter(resource =>
+                resource.name.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i) &&
+                resource.transferSize > 100 * 1024
+            ).sort((a, b) => b.transferSize - a.transferSize);
+
+            populateResourceList('large-images', images);
+
+            // Blocking scripts
+            const scripts = resources.filter(resource =>
+                resource.name.match(/\.js$/i)
+            ).sort((a, b) => b.duration - a.duration);
+
+            populateResourceList('blocking-scripts', scripts);
+
+            // Third-party scripts
+            const thirdPartyScripts = scripts.filter(resource =>
+                !resource.name.includes(window.location.hostname)
+            );
+
+            populateResourceList('third-party-scripts', thirdPartyScripts);
+
+            // Web fonts
+            const fonts = resources.filter(resource =>
+                resource.name.match(/\.(woff|woff2|ttf|otf)$/i)
+            ).sort((a, b) => b.transferSize - a.transferSize);
+
+            populateResourceList('web-fonts', fonts);
+        }
+
+        function populateResourceList(elementId, resources) {
+            const list = document.getElementById(elementId);
+            list.innerHTML = '';
+
+            if (resources.length === 0) {
+                list.innerHTML = '<li class="resource-item">✅ No issues found</li>';
+                return;
+            }
+
+            resources.slice(0, 10).forEach(resource => {
+                const item = document.createElement('li');
+                item.className = 'resource-item';
+
+                const name = document.createElement('div');
+                name.className = 'resource-name';
+                name.textContent = resource.name.split('/').pop() || resource.name;
+                name.title = resource.name;
+
+                const size = document.createElement('div');
+                size.className = 'resource-size';
+                size.textContent = resource.transferSize ? formatBytes(resource.transferSize) : 'Unknown';
+
+                const time = document.createElement('div');
+                time.className = 'resource-time';
+                time.textContent = formatTime(resource.duration);
+
+                item.appendChild(name);
+                item.appendChild(size);
+                item.appendChild(time);
+                list.appendChild(item);
+            });
+        }
+
+        function analyzeDom() {
+            const analysis = document.getElementById('dom-analysis');
+
+            const domSize = document.querySelectorAll('*').length;
+            const domDepth = getMaxDomDepth();
+            const hiddenElements = document.querySelectorAll('[style*="display: none"], [style*="visibility: hidden"]').length;
+            const unusedImages = document.querySelectorAll('img[loading="lazy"]').length;
+
+            analysis.innerHTML = `
+                <div class="resource-item">
+                    <div class="resource-name">Total DOM nodes</div>
+                    <div class="resource-size">${domSize}</div>
+                    <div class="resource-time">${domSize > 1500 ? '⚠️ Alto' : '✅ OK'}</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-name">DOM depth</div>
+                    <div class="resource-size">${domDepth}</div>
+                    <div class="resource-time">${domDepth > 32 ? '⚠️ Profundo' : '✅ OK'}</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-name">Hidden elements</div>
+                    <div class="resource-size">${hiddenElements}</div>
+                    <div class="resource-time">${hiddenElements > 50 ? '⚠️ Muchos' : '✅ OK'}</div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-name">Lazy-loaded images</div>
+                    <div class="resource-size">${unusedImages}</div>
+                    <div class="resource-time">✅ Optimized</div>
+                </div>
+            `;
+        }
+
+        function getMaxDomDepth(element = document.body, depth = 0) {
+            let maxDepth = depth;
+            for (const child of element.children) {
+                const childDepth = getMaxDomDepth(child, depth + 1);
+                maxDepth = Math.max(maxDepth, childDepth);
+            }
+            return maxDepth;
+        }
+
+        // Auto-start analysis when page loads
+        window.addEventListener('load', () => {
+            setTimeout(startAnalysis, 500);
+        });
+    </script>
+</body>
+</html>

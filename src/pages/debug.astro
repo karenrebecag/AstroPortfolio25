@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const components = [
+  "Layout",
+  "AdvancedSEO",
+  "Banner",
+  "Marquees",
+  "Me",
+  "Services",
+  "Projects",
+  "MyStack",
+  "FAQs",
+  "GetInTouch",
+  "Footer",
+  "Enterprises",
+  "GemSection",
+];
+
+const largeAssets = [
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ringSphere.json", size: "8.6 MB (Cloudflare R2)" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr", size: "1.6 MB (Cloudflare R2)" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/spaceInvadersBackground.mp3", size: "1.0 MB (Cloudflare R2)" },
+  { path: "public/favicon/android-chrome-512x512.png", size: "680 KB" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/gem.json", size: "619 KB (Cloudflare R2)" },
+  { path: "https://fonts.googleapis.com/css2?family=Inter+Tight", size: "~50 KB (Google Fonts)" },
+  { path: "public/images/MainImage.webp", size: "552 KB" },
+  { path: "public/images/Me.webp", size: "422 KB" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Cube.json", size: "377 KB (Cloudflare R2)" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCrafters.jpeg", size: "98 KB (Cloudflare R2)" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg", size: "50 KB (Cloudflare R2)" },
+  { path: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Aurin.jpeg", size: "30 KB (Cloudflare R2)" },
+];
+
+const cdnCandidates = largeAssets;
+
+---
+<Layout title="Debug Page">
+  <main class="container mx-auto px-4 py-8 text-white">
+    <h1 class="text-3xl font-bold my-4">Performance Debug</h1>
+    <p class="text-lg">This page is for identifying performance bottlenecks.</p>
+    
+    <div class="bg-gray-800 p-6 rounded-lg my-6">
+      <h2 class="text-2xl font-bold mb-4">Components on Main Page</h2>
+      <ul class="list-disc list-inside grid grid-cols-2 md:grid-cols-3 gap-2">
+        {components.map(name => <li>{name}</li>)}
+      </ul>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg my-6">
+      <h2 class="text-2xl font-bold mb-4">Large Asset Analysis (Updated)</h2>
+      <p>The following assets are suspiciously large and are very likely the main cause of the performance issues. They are loaded on the main page.</p>
+      <table class="w-full mt-4 text-left">
+        <thead>
+          <tr>
+            <th class="p-2">File Path</th>
+            <th class="p-2">Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          {largeAssets.map(asset => (
+            <tr class="border-t border-gray-700">
+              <td class="p-2">{asset.path}</td>
+              <td class="p-2">{asset.size}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg my-6">
+      <h2 class="text-2xl font-bold mb-4">Recommendations</h2>
+      <p>The highest priority is to reduce the size of the assets listed above.</p>
+      <ul class="list-disc list-inside space-y-2 mt-4">
+        <li><strong>3D Models:</strong> The `RingSphere.json` (8.6 MB) is extremely large. You should consider using a tool like `gltf-pipeline` to compress it, or simplify the model. The same applies to other models.</li>
+        <li><strong>Images:</strong> Other images like `MainImage.webp` and `Me.webp` should also be optimized. Tools like Squoosh or ImageOptim can help.</li>
+        <li><strong>Fonts:</strong> `InterTight.ttf` (580 KB) is a large font file. Consider using WOFF2 format, which is more compressed. Also, check if you are using all the font weights and characters included in the file. You can subset the font to include only the characters you need.</li>
+        <li><strong>Sounds:</strong> The `spaceInvadersBackground.mp3` (1MB) is large for a background sound that only plays in an easter egg. Consider reducing its bitrate or length.</li>
+      </ul>
+      <p class="mt-4">Addressing these large assets will have the biggest impact on your site's performance.</p>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg my-6">
+      <h2 class="text-2xl font-bold mb-4">CDN Candidates</h2>
+      <p>You asked about moving files to a CDN. All the files listed in the "Large Asset Analysis" table are excellent candidates for being moved to a CDN. Serving them from a CDN will improve download times for users around the world.</p>
+      <p class="mt-2">The process would be similar to what you did with the banner image:</p>
+      <ol class="list-decimal list-inside mt-2 space-y-1">
+        <li>Upload the asset to your CDN.</li>
+        <li>Find the reference to the local asset in the code.</li>
+        <li>Replace the local path with the new CDN URL.</li>
+        <li>(Optional but recommended) Delete the local file from your project.</li>
+      </ol>
+    </div>
+
+  </main>
+</Layout>

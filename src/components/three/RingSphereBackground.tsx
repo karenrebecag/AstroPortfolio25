@@ -247,9 +247,9 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
 
     let ringSphereObject: THREE.Object3D | null = null;
 
-    // Load HDR environment - optimizado según calidad - MISMO que gem
+    // Load HDR environment from Cloudflare R2 - optimizado según calidad - MISMO que gem
     const hdrLoader = new RGBELoader();
-    hdrLoader.load('/hdr/large_corridor_1k.hdr', (hdr) => {
+    hdrLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr', (hdr) => {
       hdr.mapping = THREE.EquirectangularReflectionMapping;
       hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
       
@@ -309,9 +309,9 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
       }
     };
 
-    // Load RingSphere model - siguiendo patrón de carga optimizada
+    // Load RingSphere model from Cloudflare R2 - siguiendo patrón de carga optimizada
     const objectLoader = new THREE.ObjectLoader();
-    objectLoader.load('/models/RingSphere.json', (object) => {
+    objectLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ringSphere.json', (object) => {
       ringSphereObject = object;
       const ringSphereMaterial = createRingSphereMaterial();
       

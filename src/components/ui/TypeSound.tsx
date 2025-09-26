@@ -11,7 +11,7 @@ export default function TypeSound({ volume = 0.15 }: TypeSoundProps) {
     // Inicializar el audio
     const initTypeAudio = () => {
       try {
-        typeAudioRef.current = new Audio('/sounds/Type.mp3');
+        typeAudioRef.current = new Audio('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Type.mp3');
         typeAudioRef.current.volume = volume;
         typeAudioRef.current.preload = 'auto';
       } catch (error) {
