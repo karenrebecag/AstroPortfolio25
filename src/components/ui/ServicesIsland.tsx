@@ -264,7 +264,7 @@ const ServicesIsland: React.FC = () => {
                     {service.description}
                   </p>
                   <div className="service-technologies">
-                    <h4 className="tech-title">Technologies & Tools:</h4>
+                    <h3 className="tech-title">Technologies & Tools:</h3>
                     <div className="tech-tags">
                       {service.technologies.map((tech, index) => (
                         <span key={index} className="tech-tag">
@@ -274,7 +274,7 @@ const ServicesIsland: React.FC = () => {
                     </div>
                   </div>
                   <div className="service-example">
-                    <h4 className="example-title">Example Project:</h4>
+                    <h3 className="example-title">Example Project:</h3>
                     <p className="example-text">{service.example}</p>
                   </div>
                 </div>

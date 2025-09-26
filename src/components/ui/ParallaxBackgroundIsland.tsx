@@ -70,6 +70,7 @@ const VideoWithPlaceholder: React.FC<{
         <img
           src={placeholder}
           loading="eager"
+          fetchPriority="high"
           alt="Background"
           className={`${className} ${videoLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-600`}
           style={{

@@ -17,14 +17,15 @@ export default function LenisIsland() {
       syncTouchLerp: 0.1,
     });
 
-    // Función de animación usando requestAnimationFrame para máximo rendimiento
+    // Función de animación optimizada para evitar forced reflows
+    let rafId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
     // Iniciar el loop de animación
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Detectar dispositivos de gama baja y ajustar configuración
     const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
@@ -51,6 +52,9 @@ export default function LenisIsland() {
     return () => {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimeout);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
       lenis.destroy();
     };
   }, []);

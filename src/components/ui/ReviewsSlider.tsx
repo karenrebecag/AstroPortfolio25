@@ -20,24 +20,42 @@ const ReviewsSlider: React.FC<ReviewsSliderProps> = ({ reviewsData }) => {
   const splideRef = useRef<Splide>(null);
 
   useEffect(() => {
-    // Initialize custom arrows
-    const prevButton = document.querySelector('.reviews-slider-prev');
-    const nextButton = document.querySelector('.reviews-slider-next');
+    // Initialize custom arrows with RAF to avoid forced reflows
+    const initializeArrows = () => {
+      const prevButton = document.querySelector('.reviews-slider-prev');
+      const nextButton = document.querySelector('.reviews-slider-next');
 
-    if (prevButton && nextButton && splideRef.current) {
-      const splideInstance = splideRef.current.splide;
+      if (prevButton && nextButton && splideRef.current) {
+        const splideInstance = splideRef.current.splide;
 
-      const handlePrev = () => splideInstance?.go('<');
-      const handleNext = () => splideInstance?.go('>');
+        const handlePrev = () => {
+          requestAnimationFrame(() => {
+            splideInstance?.go('<');
+          });
+        };
+        
+        const handleNext = () => {
+          requestAnimationFrame(() => {
+            splideInstance?.go('>');
+          });
+        };
 
-      prevButton.addEventListener('click', handlePrev);
-      nextButton.addEventListener('click', handleNext);
+        prevButton.addEventListener('click', handlePrev, { passive: true });
+        nextButton.addEventListener('click', handleNext, { passive: true });
 
-      return () => {
-        prevButton.removeEventListener('click', handlePrev);
-        nextButton.removeEventListener('click', handleNext);
-      };
-    }
+        return () => {
+          prevButton.removeEventListener('click', handlePrev);
+          nextButton.removeEventListener('click', handleNext);
+        };
+      }
+    };
+
+    // Delay initialization to avoid blocking main thread
+    const timeoutId = setTimeout(initializeArrows, 100);
+    
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
@@ -163,7 +181,7 @@ const ReviewsSlider: React.FC<ReviewsSliderProps> = ({ reviewsData }) => {
           transition: 'all 0.3s ease',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           backdropFilter: 'blur(10px)'
-        }} className="reviews-slider-prev">
+        }} className="reviews-slider-prev" aria-label="Previous review">
           <ChevronRight style={{ transform: 'rotate(180deg)', width: '18px', height: '18px', fill: '#333' }} />
         </button>
         <button style={{
@@ -179,7 +197,7 @@ const ReviewsSlider: React.FC<ReviewsSliderProps> = ({ reviewsData }) => {
           transition: 'all 0.3s ease',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           backdropFilter: 'blur(10px)'
-        }} className="reviews-slider-next">
+        }} className="reviews-slider-next" aria-label="Next review">
           <ChevronRight style={{ width: '18px', height: '18px', fill: '#333' }} />
         </button>
       </div>

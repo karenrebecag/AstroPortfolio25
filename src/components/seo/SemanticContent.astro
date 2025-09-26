@@ -1,0 +1,66 @@
+---
+// components/seo/SemanticContent.astro
+// Wrapper component to add semantic HTML5 and LLM-friendly classes
+export interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  semanticRole?: string;
+  llmContext?: string;
+  class?: string;
+  id?: string;
+}
+
+const {
+  as: Element = 'div',
+  semanticRole,
+  llmContext,
+  class: className = '',
+  id,
+  ...rest
+} = Astro.props;
+
+// Generate LLM-friendly attributes
+const semanticAttributes = {
+  ...(semanticRole && { 'data-semantic-role': semanticRole }),
+  ...(llmContext && { 'data-llm-context': llmContext }),
+  ...(id && { id }),
+  class: `semantic-content ${className}`.trim(),
+  ...rest
+};
+---
+
+<Element {...semanticAttributes}>
+  <slot />
+</Element>
+
+<style>
+  .semantic-content {
+    /* Ensure content is accessible to screen readers and crawlers */
+    position: relative;
+  }
+  
+  /* LLM-friendly content markers */
+  [data-semantic-role="hero"] {
+    /* Main hero content - high priority for LLMs */
+  }
+  
+  [data-semantic-role="about"] {
+    /* About/bio content - important for person entities */
+  }
+  
+  [data-semantic-role="services"] {
+    /* Services/offerings - key for business understanding */
+  }
+  
+  [data-semantic-role="portfolio"] {
+    /* Work examples - demonstrates capabilities */
+  }
+  
+  [data-semantic-role="contact"] {
+    /* Contact information - important for local SEO */
+  }
+  
+  [data-llm-context] {
+    /* Content with specific LLM context hints */
+    contain: content;
+  }
+</style>

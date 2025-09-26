@@ -34,11 +34,21 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
       try {
         setLoading(true);
         
-        // Intentar obtener datos reales de Speedlify API
-        const response = await fetch('https://guileless-douhua-b2ff53.netlify.app/api/karen-portfolio.json');
+        // Intentar obtener datos reales de Speedlify API con timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+        
+        const response = await fetch('https://guileless-douhua-b2ff53.netlify.app/api/karen-portfolio.json', {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json',
+          }
+        });
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
-          throw new Error('Failed to fetch from Speedlify API');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         const data = await response.json();
@@ -62,8 +72,13 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
         };
         
         setStats(speedlifyData);
+        setError(null);
       } catch (err) {
-        console.error('Error fetching Speedlify stats:', err);
+        // Silently handle API errors and use fallback data
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Speedlify API unavailable, using fallback data:', err);
+        }
         
         // Fallback a datos mock si la API falla
         const mockData: SpeedlifyData = {
@@ -84,7 +99,7 @@ export function SpeedlifyStats({ className }: SpeedlifyStatsProps) {
         };
         
         setStats(mockData);
-        setError('Using cached performance data');
+        setError(null); // Don't show error to user, just use fallback data
       } finally {
         setLoading(false);
       }

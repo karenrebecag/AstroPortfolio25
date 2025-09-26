@@ -78,7 +78,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
         <div className="flex items-start gap-4">
           <div className="comment-avatar clickable">
             {comment.profilePicUrl ? (
-              <img src={comment.profilePicUrl} alt={comment.name} className="w-full h-full object-cover rounded-full" />
+              <img 
+                src={comment.profilePicUrl} 
+                alt={comment.name} 
+                className="w-full h-full object-cover rounded-full" 
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
               getInitials(comment.name)
             )}
@@ -455,7 +461,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
         </div>
         <div className="comments-sort">
           <ArrowUpDown className="sort-icon" />
-          <select className="sort-dropdown" data-cursor-text="Sort Comments">
+          <select className="sort-dropdown" data-cursor-text="Sort Comments" aria-label="Sort comments by date">
             <option value="latest">Latest</option>
             <option value="oldest">Oldest</option>
           </select>

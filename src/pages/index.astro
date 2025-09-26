@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
+import AdvancedSEO from '../components/seo/AdvancedSEO.astro';
 import Banner from '../components/banner/Banner.astro';
 import Marquees from '../components/ui/Marquees.astro';
 import Me from '../components/ui/Me.astro';
@@ -13,10 +14,36 @@ import GetInTouch from '../components/ui/GetInTouch.astro';
 import Footer from '../components/ui/Footer.astro';
 import Enterprises from '../components/ui/Enterprises.astro';
 import GemSection from '../components/ui/GemSection.astro';
+import { getMainPageSchema, getFAQSchema } from '../utils/structuredData';
 import '../styles/global.css';
+
+// SEO Configuration optimized for LLMs and AI search
+const seoConfig = {
+  title: "Karen Ortiz - Design Engineer | UX/UI & Fullstack Development",
+  description: "Karen Ortiz is a Design Engineer specializing in UX/UI design, React development, and AI-driven web solutions. Expert in TypeScript, Three.js, Figma, and modern web technologies. Available for freelance projects and full-time opportunities.",
+  keywords: "Karen Ortiz, Design Engineer, UX Designer, UI Designer, Frontend Developer, React Developer, TypeScript, Three.js, Figma, Web Development, AI Integration, Portfolio, Freelance Designer, Mexico",
+  canonical: "https://karenortiz.space",
+  ogImage: "https://karenortiz.space/images/BannerImage.webp",
+  structuredData: getMainPageSchema(),
+  speakable: [".hero-title", ".services-title", ".about-description", ".contact-info"],
+  alternateLanguages: [
+    { hreflang: "en", href: "https://karenortiz.space" },
+    { hreflang: "es", href: "https://karenortiz.space/es" }
+  ]
+};
 ---
 
-<Layout title="Karen Ortiz - Portfolio" lang="en">
+<Layout title={seoConfig.title} lang="en">
+  <AdvancedSEO 
+    title={seoConfig.title}
+    description={seoConfig.description}
+    keywords={seoConfig.keywords}
+    canonical={seoConfig.canonical}
+    ogImage={seoConfig.ogImage}
+    structuredData={seoConfig.structuredData}
+    speakable={seoConfig.speakable}
+    alternateLanguages={seoConfig.alternateLanguages}
+  />
 	<Banner />
 	<Enterprises />
 	<GemSection />

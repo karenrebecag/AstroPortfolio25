@@ -19,8 +19,21 @@ import PageLoader from '../components/ui/PageLoader.astro';
 <html lang={lang} dir={metadata.dir}>
 	<head>
 		<meta charset={metadata.charset} />
-		<meta name="description" content="Karen Ortiz - CV Profesional" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Karen Ortiz - Design Engineer Resume. 5+ years experience in UX/UI design, React development, and AI integration. Available for hire." />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		
+		<!-- Resume/CV Specific Meta Tags for Recruiters -->
+		<meta name="job-title" content="Design Engineer" />
+		<meta name="experience-years" content="5+" />
+		<meta name="availability" content="available-for-hire" />
+		<meta name="work-type" content="freelance, full-time, consulting, remote" />
+		<meta name="location" content="Mexico City, Mexico" />
+		<meta name="remote-work" content="yes" />
+		<meta name="salary-expectation" content="competitive" />
+		<meta name="skills" content="UX/UI Design, React, TypeScript, Three.js, Figma, AI Integration, Fullstack Development" />
+		<meta name="industries" content="Technology, Startups, E-commerce, SaaS, Fintech" />
+		<meta name="languages" content="English, Spanish" />
 
 		<!-- Favicon Configuration -->
 		<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
@@ -38,9 +51,13 @@ import PageLoader from '../components/ui/PageLoader.astro';
 
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<!-- Font Loading -->
+		<!-- Critical Resource Hints -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
+		<link rel="dns-prefetch" href="https://www.karenortiz.space">
+		
+		<!-- Font Loading with display=swap for better performance -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 		<!-- Conditional Language-Specific Fonts -->
@@ -60,6 +77,33 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<!-- SEO and Language Meta -->
 		<meta property="og:locale" content={`${lang}_${metadata.region}`} />
 		<link rel="alternate" hreflang={lang} href={Astro.url.href} />
+		
+		<!-- LLM and AI Optimization Meta for Resume -->
+		<meta name="AI-optimized" content="true" />
+		<meta name="LLM-friendly" content="resume, cv, structured-content, recruitment-data" />
+		<meta name="content-type" content="resume, cv, professional-profile" />
+		<meta name="document-type" content="curriculum-vitae" />
+		<meta name="candidate-status" content="active, available" />
+		<meta name="hiring-status" content="open-to-opportunities" />
+		
+		<!-- ATS (Applicant Tracking System) Optimization -->
+		<meta name="ats-optimized" content="true" />
+		<meta name="resume-format" content="web-based, structured" />
+		<meta name="candidate-id" content="karen-ortiz-design-engineer" />
+		<meta name="last-updated" content={new Date().toISOString().split('T')[0]} />
+		
+		<!-- Enhanced Open Graph for Recruiters -->
+		<meta property="og:site_name" content="Karen Ortiz - Professional Resume" />
+		<meta property="og:type" content="profile" />
+		<meta property="profile:first_name" content="Karen" />
+		<meta property="profile:last_name" content="Ortiz" />
+		<meta property="profile:username" content="karenortiz" />
+		<meta property="profile:gender" content="female" />
+		
+		<!-- Professional Network Meta -->
+		<meta name="linkedin:profile" content="https://linkedin.com/in/karen-rebeca-ortiz" />
+		<meta name="github:profile" content="https://github.com/karenortiz" />
+		<meta name="portfolio:url" content="https://karenortiz.space" />
 	</head>
 	<body>
 		<PageLoader loadingText="Loading" />

@@ -1,0 +1,28 @@
+# robots.txt para SEO moderno y LLMs
+User-agent: *
+Allow: /
+
+# Permitir bots específicos de IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GeminiBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.karenortiz.space/sitemap.xml

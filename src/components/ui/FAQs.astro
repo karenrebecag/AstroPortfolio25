@@ -4,7 +4,14 @@ import FAQsIsland from './FAQsIsland.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
 import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
+import { getFAQSchema } from '../../utils/structuredData';
+
+// Add FAQ structured data for LLM optimization
+const faqStructuredData = getFAQSchema();
 ---
+
+<!-- FAQ Schema for LLM optimization -->
+<script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)}></script>
 
 <section class="faqs-section">
   <!-- Noise Background Effect -->

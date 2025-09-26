@@ -21,6 +21,7 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
+        <h2 class="sr-only">Services</h2>
         <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:idle />
       </motion.div>
       
@@ -514,6 +515,19 @@ Comprehensive digital solutions from design to deployment
       font-size: clamp(1rem, 12vw, 1.8rem) !important;
       line-height: 0.75 !important;
     }
+  }
+
+  /* Screen reader only class for accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
 

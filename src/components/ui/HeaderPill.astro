@@ -12,7 +12,7 @@ const lang = getLangFromUrl(Astro.url);
   <div class="header-wrapper" id="headerWrapper">
     <header class="header" id="mainHeader">
       <div class="logo-section">
-        <button class="back-btn" id="backBtn" data-cursor-text="Go Back">
+        <button class="back-btn" id="backBtn" data-cursor-text="Go Back" aria-label="Go back to home page">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m15 18-6-6 6-6"/>
           </svg>
@@ -101,6 +101,10 @@ const lang = getLangFromUrl(Astro.url);
     color: white;
     letter-spacing: 0.5px;
     padding-right: 0;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    contain: layout style;
   }
 
   .header-wrapper {
@@ -268,12 +272,18 @@ const lang = getLangFromUrl(Astro.url);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-width: 200px;
+    justify-content: flex-end;
+    contain: layout style;
   }
 
   .header-actions-wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
+    min-width: 150px;
+    justify-content: flex-end;
+    contain: layout style;
   }
 
   .contact-btn-wrapper {
