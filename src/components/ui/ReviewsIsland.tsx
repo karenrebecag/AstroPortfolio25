@@ -2,8 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, User, MessageSquare, Star, Briefcase } from 'lucide-react';
 import { useReviewsStore } from '../../stores/reviewsStore';
-import { useToast } from '../../hooks/useToast';
+import Toast from './Toast';
 import '../../styles/review-popup.css';
+
+interface ToastData {
+  id: string;
+  type: 'success' | 'error';
+  message: string;
+}
 
 // Fallback reviews data (will be replaced by dynamic data)
 const fallbackReviewsData = [
@@ -34,7 +40,7 @@ const fallbackReviewsData = [
 ];
 
 // Review Popup Component
-const ReviewPopup: React.FC = () => {
+const ReviewPopup: React.FC<{ onToast: (type: 'success' | 'error', message: string) => void }> = ({ onToast }) => {
   const {
     formData,
     isSubmitting,
@@ -46,7 +52,6 @@ const ReviewPopup: React.FC = () => {
     fetchReviews
   } = useReviewsStore();
   
-  const { showSuccess, showError } = useToast();
   const [charCount, setCharCount] = useState(0);
   const maxChars = 500;
 
@@ -55,13 +60,13 @@ const ReviewPopup: React.FC = () => {
     
     const success = await submitReview();
     if (success) {
-      showSuccess('Review submitted successfully! It will appear after moderation.');
+      onToast('success', 'Review submitted successfully! It will appear after moderation.');
       // Refresh reviews after a short delay
       setTimeout(() => {
         fetchReviews();
       }, 1000);
     } else if (error) {
-      showError(error);
+      onToast('error', error);
     }
   };
 
@@ -254,6 +259,7 @@ const ReviewPopup: React.FC = () => {
 const ReviewsIsland: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const [toasts, setToasts] = useState<ToastData[]>([]);
   const {
     reviews,
     isLoading,
@@ -261,6 +267,16 @@ const ReviewsIsland: React.FC = () => {
     setShowPopup,
     fetchReviews
   } = useReviewsStore();
+
+  // Toast functions
+  const addToast = (type: 'success' | 'error', message: string) => {
+    const id = Date.now().toString();
+    setToasts(prev => [...prev, { id, type, message }]);
+  };
+
+  const removeToast = (id: string) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+  };
 
   // Fetch reviews on mount
   useEffect(() => {
@@ -408,8 +424,33 @@ const ReviewsIsland: React.FC = () => {
 
       {/* Review Popup */}
       <AnimatePresence>
-        {showPopup && <ReviewPopup />}
+        {showPopup && <ReviewPopup onToast={addToast} />}
       </AnimatePresence>
+
+      {/* Toast Container */}
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: 10000,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        pointerEvents: 'none'
+      }}>
+        <AnimatePresence>
+          {toasts.map((toast) => (
+            <div key={toast.id} style={{ pointerEvents: 'auto' }}>
+              <Toast
+                id={toast.id}
+                type={toast.type}
+                message={toast.message}
+                onClose={removeToast}
+              />
+            </div>
+          ))}
+        </AnimatePresence>
+      </div>
     </>
   );
 };
