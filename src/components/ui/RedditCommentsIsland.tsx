@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from './Card.tsx';
 import { Avatar, AvatarFallback } from './Avatar.tsx';
 import { Badge } from './Badge.tsx';
 import { Textarea } from './Textarea.tsx';
+import TypeSound from './TypeSound.tsx';
 import { Heart, MessageSquare, MoreHorizontal, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload } from 'lucide-react';
 import { useCommentsStore } from '../../stores/commentsStore';
 import '../../styles/reddit-comments.css';
@@ -333,14 +334,14 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
 
 
   return (
-    <motion.div 
+    <motion.div
       className="reddit-comments-container"
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-    
+      <TypeSound />
 
       {/* Add Comment Title */}
       <motion.div 

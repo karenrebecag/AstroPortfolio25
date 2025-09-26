@@ -4,6 +4,7 @@ import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip, Send, Loader2
 import FlipText from './FlipText.tsx';
 import { useToast } from './ToastContainer.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
+import TypeSound from './TypeSound.tsx';
 import { useContactFormStore } from '../../stores/contactFormStore.ts';
 import { shallow } from 'zustand/shallow';
 
@@ -128,6 +129,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
 
   return (
     <div className="contact-form">
+      <TypeSound />
       {/* Header Section */}
       <motion.div 
         className="contact-header"
