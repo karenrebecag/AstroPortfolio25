@@ -51,11 +51,19 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
 		<link rel="dns-prefetch" href="https://www.karenortiz.space">
 		
-		<!-- Critical CSS Inline -->
+		<!-- Critical CSS Inline - Expanded for LCP optimization -->
 		<style>
-			/* Critical above-the-fold styles */
-			body{font-family:'Inter','Median',sans-serif;width:100vw;margin:0;padding:0;box-sizing:border-box}
+			/* Critical above-the-fold styles - Optimized for LCP */
+			body{font-family:'Inter','Median',sans-serif;width:100vw;margin:0;padding:0;box-sizing:border-box;background:#fff;overflow-x:hidden}
 			*{margin:0;padding:0;box-sizing:border-box}
+			/* Critical banner styles for faster LCP */
+			.banner-section{background:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+			/* Critical image styles */
+			#banner-image{width:520px;height:537px;max-width:600px;object-fit:contain;display:block}
+			/* Critical text styles */
+			h1,h2,h3{font-family:'Median','Boysen',serif;margin:0}
+			/* Critical layout containers */
+			.container{max-width:1200px;margin:0 auto;padding:0 24px}
 			.header-wrapper{position:fixed;top:32px;left:0;right:0;z-index:100;background:white;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
 			.header{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;max-width:1200px;margin:0 auto}
 			.logo{color:#060314;font-size:clamp(17px,3.5vw,28px);cursor:pointer}
@@ -63,9 +71,11 @@ import PageLoader from '../components/ui/PageLoader.astro';
 			.nav a{color:#131019;text-decoration:none;font-size:clamp(11px,2.1vw,17px)}
 			#banner-image{width:520px;height:537px;max-width:600px;object-fit:contain}
 			.cube-3d-container,.model-3d-container,.three-js-container{width:100%;height:100%;min-height:inherit;contain:layout style paint}
-			/* Marquee optimization */
-			#left-marquee,#right-marquee{height:clamp(163px,32.6vw,326px);line-height:1;will-change:transform;contain:layout style paint}
-			.marquee-content{display:inline-block}
+			/* Marquee optimization - Fixed dimensions to prevent layout shifts */
+			#left-marquee,#right-marquee{height:clamp(163px,32.6vw,326px);line-height:1;will-change:transform;contain:layout style paint;overflow:hidden}
+			.marquee-content{display:inline-block;width:max-content;min-width:100vw}
+			/* Fix ARIA role for Splide slides */
+			.splide__slide{role:tabpanel!important}
 			/* Font loading optimization */
 			.font-display{font-family:'Median','Boysen',serif}
 			.font-primary{font-family:'InterTight','Inter',system-ui,sans-serif}
@@ -81,7 +91,7 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<link rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev">
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
 		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png" fetchpriority="high">
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
 		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin>
 		
 		<!-- Font Loading - Optimized for performance -->
@@ -99,6 +109,19 @@ import PageLoader from '../components/ui/PageLoader.astro';
 				line-gap-override: 0%;
 			}
 		</style>
+
+		<!-- Defer non-critical JavaScript -->
+		<script>
+			// Defer heavy JavaScript until after LCP
+			window.addEventListener('load', () => {
+				// Defer Motion.dev and other heavy libraries
+				setTimeout(() => {
+					document.querySelectorAll('astro-island[client\\:idle]').forEach(island => {
+						island.setAttribute('client:load', '');
+					});
+				}, 100);
+			});
+		</script>
 
 		<!-- Conditional Language-Specific Fonts - Optimized -->
 		{(lang === 'hi') &&

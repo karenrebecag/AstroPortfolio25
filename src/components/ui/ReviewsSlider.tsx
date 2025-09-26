@@ -17,7 +17,7 @@ interface ReviewsSliderProps {
 }
 
 const ReviewsSlider: React.FC<ReviewsSliderProps> = ({ reviewsData }) => {
-  const splideRef = useRef<Splide>(null);
+  const splideRef = useRef<any>(null);
 
   useEffect(() => {
     // Initialize custom arrows with RAF to avoid forced reflows
@@ -73,10 +73,13 @@ const ReviewsSlider: React.FC<ReviewsSliderProps> = ({ reviewsData }) => {
           autoplay: false,
           pauseOnHover: true,
           resetProgress: false,
+          classes: {
+            slide: 'splide__slide reviews-slide-custom'
+          }
         }}
       >
         {reviewsData.map((review) => (
-          <SplideSlide key={review.id} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 10px' }}>
+          <SplideSlide key={review.id} role="tabpanel" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 10px' }}>
             <div style={{
               width: '100%',
               minHeight: '300px',
