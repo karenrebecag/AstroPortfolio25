@@ -80,26 +80,38 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev">
 		<link rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev">
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
-		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png">
+		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png" fetchpriority="high">
 		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin>
 		
-		<!-- Font Loading -->
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+		<!-- Font Loading - Optimized for performance -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+		
+		<!-- Font fallback to prevent layout shifts -->
+		<style>
+			@font-face {
+				font-family: 'Inter-fallback';
+				src: local('Arial'), local('Helvetica'), local('sans-serif');
+				font-display: swap;
+				ascent-override: 90%;
+				descent-override: 22%;
+				line-gap-override: 0%;
+			}
+		</style>
 
-		<!-- Conditional Language-Specific Fonts -->
+		<!-- Conditional Language-Specific Fonts - Optimized -->
 		{(lang === 'hi') &&
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 		}
 		{(lang === 'ja') &&
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 		}
 		{(lang === 'zh-cn') &&
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 		}
 		{(lang === 'zh-tw') &&
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 		}
 
 		<!-- SEO and Language Meta -->

@@ -21,7 +21,7 @@ export default function LenisIsland() {
     let rafId;
     let lastTime = 0;
     const targetFPS = 60;
-    const frameInterval = 1000 / targetFPS;
+    let frameInterval = 1000 / targetFPS;
     
     function raf(time) {
       // Throttle to target FPS to reduce forced reflows
@@ -40,8 +40,10 @@ export default function LenisIsland() {
                           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isLowEndDevice) {
-      lenis.options.lerp = 0.1; // Más responsivo en dispositivos lentos
-      lenis.options.duration = 0.8; // Duración más corta
+      lenis.options.lerp = 0.15; // Más responsivo en dispositivos lentos
+      lenis.options.duration = 0.6; // Duración más corta
+      // Reducir frecuencia de actualización en dispositivos lentos
+      frameInterval = 1000 / 30; // 30 FPS en lugar de 60
     }
 
     // Pausar Lenis durante redimensionamiento para evitar lag

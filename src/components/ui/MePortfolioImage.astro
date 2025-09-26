@@ -15,20 +15,29 @@ const {
 // URLs optimizadas para diferentes formatos y tamaños
 const baseUrl = "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio";
 const fallbackUrl = "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png";
+
+// Generar srcset para diferentes tamaños
+const generateSrcSet = (format: string) => {
+  return [
+    `${baseUrl}-520w.${format} 520w`,
+    `${baseUrl}-780w.${format} 780w`, 
+    `${baseUrl}-1040w.${format} 1040w`
+  ].join(', ');
+};
 ---
 
 <div class={`me-portfolio-image-container ${className}`}>
   <picture class="me-portfolio-picture">
     <!-- AVIF format for modern browsers (best compression) -->
     <source 
-      srcset={`${baseUrl}.avif`}
+      srcset={generateSrcSet('avif')}
       type="image/avif"
       sizes={sizes}
     />
     
     <!-- WebP format for most browsers -->
     <source 
-      srcset={`${baseUrl}.webp`}
+      srcset={generateSrcSet('webp')}
       type="image/webp"
       sizes={sizes}
     />
