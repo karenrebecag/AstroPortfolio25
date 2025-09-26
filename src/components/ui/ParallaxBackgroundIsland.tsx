@@ -126,28 +126,8 @@ const ParallaxBackgroundIsland: React.FC<ParallaxBackgroundProps> = ({
   // Mapeo: scroll 0% = radius 0px, scroll 100% = radius 1200px
   const borderRadius = useTransform(scrollYProgress, [0, 1], [0, 1200]);
 
-  // DEBUG: Log valores en consola
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
-      console.log('🔥 SCROLL PROGRESS:', latest);
-      console.log('📦 PADDING VALUE:', paddingValue.get());
-      console.log('🔵 BORDER RADIUS:', borderRadius.get());
-      console.log('🎯 CONTAINER REF:', containerRef.current);
-    });
-
-    return () => unsubscribe();
-  }, [scrollYProgress, paddingValue, borderRadius]);
-
   // Clases exactas del v0newslettertemplate
   const backgroundClasses = "absolute left-0 top-0 w-full h-full object-cover";
-
-  // DEBUG: Log cuando se monta el componente
-  useEffect(() => {
-    console.log('🚀 ParallaxBackgroundIsland MOUNTED');
-    console.log('🎬 Video file:', isVideoFile);
-    console.log('📁 Background src:', backgroundSrc);
-    console.log('🖼️ Placeholder:', placeholder);
-  }, []);
 
   return (
     <div 
@@ -164,9 +144,7 @@ const ParallaxBackgroundIsland: React.FC<ParallaxBackgroundProps> = ({
             right: paddingValue,
             bottom: paddingValue,
             borderRadius: borderRadius,
-            overflow: 'hidden',
-            backgroundColor: 'rgba(255, 0, 0, 0.2)', // DEBUG: fondo rojo semi-transparente
-            border: '5px solid yellow' // DEBUG: borde amarillo visible
+            overflow: 'hidden'
           }}
         >
           <VideoWithPlaceholder
@@ -187,9 +165,7 @@ const ParallaxBackgroundIsland: React.FC<ParallaxBackgroundProps> = ({
             bottom: paddingValue,
             borderRadius: borderRadius,
             objectFit: 'cover',
-            objectPosition: 'center',
-            backgroundColor: 'rgba(255, 0, 0, 0.2)', // DEBUG: fondo rojo semi-transparente
-            border: '5px solid yellow' // DEBUG: borde amarillo visible
+            objectPosition: 'center'
           }}
         />
       )}

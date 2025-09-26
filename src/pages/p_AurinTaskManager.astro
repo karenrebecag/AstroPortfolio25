@@ -293,9 +293,7 @@ const loadTestResults = {
 		height="100vh"
 	>
 		<div slot="actions" class="banner-actions">
-			<MainButton href="#features">
-				Read More
-			</MainButton>
+			<MainButton href="#project-summary" />
 
 		</div>
 	</ParallaxBanner>
@@ -307,8 +305,8 @@ const loadTestResults = {
 		<section class="content-section" id="overview">
 			<div class="section-container">
 				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Executive Summary" />
+					<h2 class="section-title" id="project-summary">
+						<TextDisperseBlack client:visible text="Project Summary" />
 					</h2>
 					<div class="section-label">Enterprise Success Story</div>
 				</div>
@@ -448,6 +446,8 @@ const loadTestResults = {
 						<div class="feature-card">
 							<div class="feature-icon">
 								<LucideIcon client:load name="bot" size={40} />
+								Real-world performance data demonstrating enterprise-grade reliability and optimization results.
+
 							</div>
 							<h3>Advanced Email System</h3>
 							<p>Professional email templates with Nodemailer, smart notification queuing, retry logic, and batch processing capabilities.</p>
@@ -957,8 +957,33 @@ const loadTestResults = {
 						/>
 					</div>
 				</InView>
+
+					<!-- Performance Metrics Code -->
+					<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+				>
+					<div class="code-section">
+						<h3 class="code-section-title">Production Performance Metrics</h3>
+						<p class="code-section-description">
+							Real-world performance data demonstrating enterprise-grade reliability and optimization results.
+						</p>
+						<CodeBlock 
+							code={performanceMetricsCode}
+							language="javascript"
+							theme="github-dark"
+							title="performance-metrics.js"
+							showLineNumbers={false}
+						/>
+					</div>
+				</InView>
 			</div>
 		</section>
+
 
 		<!-- Live Application Section -->
 		<section class="content-section" id="live-app">
@@ -1071,29 +1096,7 @@ const loadTestResults = {
 					</div>
 				</InView>
 
-				<!-- Performance Metrics Code -->
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-				>
-					<div class="code-section">
-						<h3 class="code-section-title">Production Performance Metrics</h3>
-						<p class="code-section-description">
-							Real-world performance data demonstrating enterprise-grade reliability and optimization results.
-						</p>
-						<CodeBlock 
-							code={performanceMetricsCode}
-							language="javascript"
-							theme="github-dark"
-							title="performance-metrics.js"
-							showLineNumbers={false}
-						/>
-					</div>
-				</InView>
+			
 			</div>
 		</section>
 
