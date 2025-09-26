@@ -87,7 +87,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelEnemy(x: number, y: number, frame: number, type: number) {
       const size = 8;
-      ctx!.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+
+      if (isDarkMode) {
+        ctx!.fillStyle = type === 0 ? '#8464ee' : type === 1 ? '#c1b9f9' : '#6431d0';
+      } else {
+        ctx!.fillStyle = type === 0 ? '#4a3293' : type === 1 ? '#6b46c1' : '#2d1b69';
+      }
       
       if (frame === 0) {
         ctx!.fillRect(x + size, y, size * 3, size);
@@ -106,7 +112,8 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelPlayer(x: number, y: number) {
       const size = 10;
-      ctx!.fillStyle = '#0f0';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+      ctx!.fillStyle = isDarkMode ? '#c1b9f9' : '#2d1b69';
       
       ctx!.fillRect(x + size, y, size, size);
       ctx!.fillRect(x, y + size, size * 3, size);
@@ -124,7 +131,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         if (star.brightness > 1) star.brightness = 0;
         
         const alpha = Math.abs(Math.sin(star.brightness * Math.PI));
-        ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        const isDarkMode = document.documentElement.classList.contains('dark-mode');
+        const starColor = isDarkMode ? '237, 234, 253' : '31, 41, 55';
+        ctx!.fillStyle = `rgba(${starColor}, ${alpha})`;
         ctx!.fillRect(star.x, star.y, star.size, star.size);
       });
     }
@@ -141,12 +150,14 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     }
 
     function drawBullets() {
-      ctx!.fillStyle = '#fff';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+
+      ctx!.fillStyle = isDarkMode ? '#edeafd' : '#1f2937';
       gameState.bullets.forEach(bullet => {
         ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
-      
-      ctx!.fillStyle = '#f00';
+
+      ctx!.fillStyle = isDarkMode ? '#8464ee' : '#4a3293';
       gameState.enemyBullets.forEach(bullet => {
         ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
@@ -581,7 +592,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         if (star.brightness > 1) star.brightness = 0;
         
         const alpha = Math.abs(Math.sin(star.brightness * Math.PI));
-        ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        const isDarkMode = document.documentElement.classList.contains('dark-mode');
+        const starColor = isDarkMode ? '237, 234, 253' : '31, 41, 55';
+        ctx!.fillStyle = `rgba(${starColor}, ${alpha})`;
         ctx!.fillRect(star.x, star.y, star.size, star.size);
       });
     }
@@ -593,7 +606,8 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelPlayer(x: number, y: number) {
       const size = 10;
-      ctx!.fillStyle = '#0f0';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+      ctx!.fillStyle = isDarkMode ? '#c1b9f9' : '#2d1b69';
       
       ctx!.fillRect(x + size, y, size, size);
       ctx!.fillRect(x, y + size, size * 3, size);
@@ -613,7 +627,13 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelEnemy(x: number, y: number, frame: number, type: number) {
       const size = 8;
-      ctx!.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+
+      if (isDarkMode) {
+        ctx!.fillStyle = type === 0 ? '#8464ee' : type === 1 ? '#c1b9f9' : '#6431d0';
+      } else {
+        ctx!.fillStyle = type === 0 ? '#4a3293' : type === 1 ? '#6b46c1' : '#2d1b69';
+      }
       
       if (frame === 0) {
         ctx!.fillRect(x + size, y, size * 3, size);
@@ -631,17 +651,19 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     }
 
     function drawBullets() {
-      ctx!.fillStyle = '#fff';
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+
+      ctx!.fillStyle = isDarkMode ? '#edeafd' : '#1f2937';
       gameState.bullets.forEach(bullet => {
         ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
-      
-      ctx!.fillStyle = '#f00';
+
+      ctx!.fillStyle = isDarkMode ? '#8464ee' : '#4a3293';
       gameState.enemyBullets.forEach(bullet => {
         ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
     }
-    
+
     gameLoop();
   };
 
@@ -651,6 +673,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="space-invaders-container"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -667,12 +690,11 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         onClick={onExit}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
+        className="space-invaders-exit-button"
         style={{
           position: 'absolute',
           top: '20px',
           left: '20px',
-          background: '#fdfaed',
-          color: '#000',
           border: 'none',
           padding: '10px',
           borderRadius: '4px',
@@ -695,14 +717,15 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         ref={canvasRef}
         width={800}
         height={600}
+        className="space-invaders-canvas"
         style={{
-          
           imageRendering: 'pixelated'
         }}
       />
 
       {/* Game Info */}
       <div
+        className="space-invaders-stats"
         style={{
           marginTop: '20px',
           fontSize: '20px',
@@ -711,9 +734,9 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
           fontFamily: 'var(--font-game)'
         }}
       >
-        <div>Score: <span>{score}</span></div>
-        <div>Lives: <span>{lives}</span></div>
-        <div>Level: <span>{level}</span></div>
+        <div>Score: <span className="space-invaders-score">{score}</span></div>
+        <div>Lives: <span className="space-invaders-lives">{lives}</span></div>
+        <div>Level: <span className="space-invaders-level">{level}</span></div>
       </div>
 
       {/* Game Over Modal */}
@@ -724,34 +747,34 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
+            className="space-invaders-modal"
             style={{
               position: 'absolute',
               top: '50%',
               left: '50%',
-              border: '#000000',
               transform: 'translate(-50%, -50%)',
-              background: '#fdfaed',
               padding: '40px',
+              borderRadius: '8px',
               textAlign: 'center',
               fontFamily: 'var(--font-game)',
               zIndex: 20
             }}
           >
-            <h2 style={{ margin: '0 0 20px 0', color: '#000000', fontSize: '24px' }}>
+            <h2 className="space-invaders-modal-title" style={{ margin: '0 0 20px 0', fontSize: '24px' }}>
               GAME OVER
             </h2>
-            <p style={{ color: '#000000', fontSize: '18px', margin: '20px 0' }}>
-              Final Score: <span>{finalScore}</span>
+            <p className="space-invaders-modal-text" style={{ fontSize: '18px', margin: '20px 0' }}>
+              Final Score: <span className="space-invaders-final-score">{finalScore}</span>
             </p>
             <motion.button
               onClick={restartGame}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className="space-invaders-restart-button"
               style={{
-                background: '#000000',
-                color: '#fdfaed',
                 border: 'none',
                 padding: '10px 30px',
+                borderRadius: '4px',
                 fontSize: '18px',
                 fontFamily: 'var(--font-game)',
                 cursor: 'pointer',
@@ -766,4 +789,124 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       </AnimatePresence>
     </motion.div>
   );
+}
+
+// CSS styles for Space Invaders light/dark mode following the exact same pattern as p_AurinTaskManager.astro
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Default light mode styles */
+    .space-invaders-container {
+      color: #1f2937;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-exit-button {
+      background: #f9fafb !important;
+      color: #1f2937 !important;
+      transition:
+        background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-stats {
+      color: #1f2937;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-score {
+      color: #4a3293;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-lives {
+      color: #6b46c1;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-level {
+      color: #2d1b69;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-modal {
+      background: #ffffff !important;
+      border: 1px solid #e5e7eb !important;
+      transition:
+        background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-modal-title {
+      color: #1f2937 !important;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-modal-text {
+      color: #6b46c1 !important;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-final-score {
+      color: #4a3293;
+      transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .space-invaders-restart-button {
+      background: #4a3293 !important;
+      color: #ffffff !important;
+      transition:
+        background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Dark mode styles - following exact same pattern as p_AurinTaskManager.astro */
+    :global(.dark-mode) .space-invaders-container {
+      color: #edeafd;
+    }
+
+    :global(.dark-mode) .space-invaders-exit-button {
+      background: #1f1f1f !important;
+      color: #edeafd !important;
+    }
+
+    :global(.dark-mode) .space-invaders-stats {
+      color: #edeafd;
+    }
+
+    :global(.dark-mode) .space-invaders-score {
+      color: #8464ee;
+    }
+
+    :global(.dark-mode) .space-invaders-lives {
+      color: #c1b9f9;
+    }
+
+    :global(.dark-mode) .space-invaders-level {
+      color: #6431d0;
+    }
+
+    :global(.dark-mode) .space-invaders-modal {
+      background: #1f1f1f !important;
+      border: 1px solid #333333 !important;
+    }
+
+    :global(.dark-mode) .space-invaders-modal-title {
+      color: #edeafd !important;
+    }
+
+    :global(.dark-mode) .space-invaders-modal-text {
+      color: #c1b9f9 !important;
+    }
+
+    :global(.dark-mode) .space-invaders-final-score {
+      color: #8464ee;
+    }
+
+    :global(.dark-mode) .space-invaders-restart-button {
+      background: #6431d0 !important;
+      color: #edeafd !important;
+    }
+  `;
+  document.head.appendChild(style);
 }
