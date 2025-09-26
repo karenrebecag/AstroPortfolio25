@@ -21,7 +21,25 @@ sitemap({
     })
   ],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Separate vendor chunks for better caching
+            'motion': ['motion/react', 'motion'],
+            'react-vendor': ['react', 'react-dom'],
+            'three': ['three'],
+            'lenis': ['lenis'],
+            'lucide': ['lucide-react']
+          }
+        }
+      }
+    },
+    ssr: {
+      // Optimize SSR performance
+      noExternal: ['motion']
+    }
   },
   i18n: {
     defaultLocale: "en",

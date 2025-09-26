@@ -2,11 +2,11 @@
 // Centralized SEO configuration optimized for LLMs and AI search engines
 
 export const siteConfig = {
-  name: "Karen Ortiz - Design Engineer Portfolio",
-  title: "Karen Ortiz - Design Engineer | UX/UI & Fullstack Development",
-  description: "Karen Ortiz is a Design Engineer specializing in UX/UI design, React development, and AI-driven web solutions. Expert in TypeScript, Three.js, Figma, and modern web technologies. Available for freelance projects and full-time opportunities.",
+  name: "Karen Rebeca Ortiz - Design Engineer Portfolio",
+  title: "Karen Rebeca Ortiz - Design Engineer | UX/UI & Fullstack Development",
+  description: "Karen Rebeca Ortiz is a passionate Design Engineer who bridges creativity and technology. Specializing in UX/UI design, React development, and AI-driven web solutions with expertise in TypeScript, Three.js, and modern web technologies. Transforming ideas into exceptional digital experiences.",
   url: "https://karenortiz.space",
-  ogImage: "https://karenortiz.space/images/BannerImage.webp",
+  ogImage: "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png",
   author: {
     name: "Karen Rebeca Ortiz",
     email: "hello@karenortiz.space",
@@ -15,24 +15,29 @@ export const siteConfig = {
     github: "https://github.com/karenortiz"
   },
   keywords: [
+    "Karen Rebeca Ortiz",
     "Karen Ortiz",
     "Design Engineer", 
-    "UX Designer",
-    "UI Designer",
+    "UX/UI Designer",
     "Frontend Developer",
     "React Developer",
-    "TypeScript",
-    "Three.js",
-    "Figma",
+    "TypeScript Expert",
+    "Three.js Developer",
+    "Figma Specialist",
     "Web Development",
     "AI Integration",
-    "Portfolio",
+    "Creative Technology",
+    "Digital Experiences",
+    "Interactive Design",
     "Freelance Designer",
-    "Mexico",
-    "Remote Work",
+    "Mexico Designer",
+    "Remote Developer",
     "Design Systems",
     "Web Art",
-    "Motion Design"
+    "Motion Design",
+    "WebGL",
+    "Next.js",
+    "Astro"
   ],
   languages: [
     { code: "en", name: "English", href: "https://karenortiz.space" },
@@ -53,8 +58,8 @@ export const pageConfigs = {
   
   cv: {
     title: "Karen Rebeca Ortiz - CV Profesional | Design Engineer",
-    description: "Professional CV of Karen Ortiz, Design Engineer with expertise in UX/UI design, fullstack development, and AI integration. Download PDF resume and view detailed work experience.",
-    keywords: "Karen Ortiz CV, Resume, Design Engineer CV, UX Designer Resume, Frontend Developer CV, Professional Experience",
+    description: "Professional CV of Karen Rebeca Ortiz, passionate Design Engineer bridging creativity and technology. Expertise in UX/UI design, fullstack development, and AI integration. Download comprehensive resume showcasing transformative digital experiences.",
+    keywords: "Karen Rebeca Ortiz CV, Karen Ortiz Resume, Design Engineer CV, UX Designer Resume, Frontend Developer CV, Creative Technology, Professional Experience",
     canonical: `${siteConfig.url}/cv`,
     ogType: "article",
     speakable: [".cv-title", ".professional-summary", ".experience-section", ".skills-section"]
@@ -62,17 +67,17 @@ export const pageConfigs = {
 
   resume: {
     title: "Karen Rebeca Ortiz - Professional Resume | Design Engineer Available for Hire",
-    description: "Experienced Design Engineer with 5+ years in UX/UI design, React development, and AI integration. Available for freelance, consulting, and full-time opportunities. View detailed professional experience, skills, and projects.",
-    keywords: "Karen Ortiz Resume, Design Engineer for Hire, UX UI Designer Available, React Developer Resume, TypeScript Expert, Three.js Developer, AI Integration Specialist, Freelance Designer Mexico, Remote Developer, Professional Experience",
+    description: "Experienced Design Engineer Karen Rebeca Ortiz with 5+ years transforming ideas into exceptional digital experiences. Specializing in UX/UI design, React development, and AI integration. Available for freelance, consulting, and full-time opportunities worldwide.",
+    keywords: "Karen Rebeca Ortiz Resume, Karen Ortiz for Hire, Design Engineer Available, UX UI Designer, React Developer, TypeScript Expert, Three.js Developer, AI Integration Specialist, Creative Technology, Freelance Designer Mexico, Remote Developer",
     canonical: `${siteConfig.url}/resume`,
     ogType: "profile",
     speakable: [".hero-title", ".hero-description", ".section-title", ".job-title", ".project-details", ".skills-container", ".contact-link"]
   },
   
   projects: {
-    title: "Projects | Karen Ortiz - Design Engineer Portfolio",
-    description: "Explore Karen Ortiz's portfolio of UX/UI design projects, web applications, and AI-driven solutions. See case studies and technical implementations.",
-    keywords: "Karen Ortiz Projects, UX UI Portfolio, Web Development Projects, Design Case Studies, React Projects",
+    title: "Projects | Karen Rebeca Ortiz - Design Engineer Portfolio",
+    description: "Explore Karen Rebeca Ortiz's exceptional portfolio showcasing transformative digital experiences. Discover innovative UX/UI design projects, interactive web applications, and AI-driven solutions with detailed case studies and technical implementations.",
+    keywords: "Karen Rebeca Ortiz Projects, Karen Ortiz Portfolio, UX UI Portfolio, Web Development Projects, Design Case Studies, React Projects, Interactive Design, Creative Technology, Digital Experiences",
     canonical: `${siteConfig.url}/projects`,
     ogType: "website",
     speakable: [".projects-title", ".project-description", ".tech-stack"]
@@ -106,20 +111,24 @@ export const llmOptimization = {
   // Question-answer pairs for FAQ optimization
   commonQuestions: [
     {
-      question: "What services does Karen Ortiz offer?",
-      answer: "Karen offers UX/UI design, frontend development, design systems, AI integration, and fullstack web development services."
+      question: "What services does Karen Rebeca Ortiz offer?",
+      answer: "Karen Rebeca Ortiz offers comprehensive design engineering services including UX/UI design, frontend development, design systems, AI integration, interactive web experiences, and fullstack web development solutions."
     },
     {
-      question: "What technologies does Karen specialize in?",
-      answer: "Karen specializes in React, TypeScript, Three.js, Figma, Astro, Next.js, and modern web technologies."
+      question: "What technologies does Karen Rebeca Ortiz specialize in?",
+      answer: "Karen specializes in React, TypeScript, Three.js, WebGL, Figma, Astro, Next.js, and cutting-edge web technologies for creating exceptional digital experiences."
     },
     {
-      question: "Is Karen available for freelance work?",
-      answer: "Yes, Karen is available for freelance projects, consulting, and full-time opportunities."
+      question: "Is Karen Rebeca Ortiz available for freelance work?",
+      answer: "Yes, Karen Rebeca Ortiz is available for freelance projects, consulting, and full-time opportunities worldwide, bringing creativity and technology together."
     },
     {
-      question: "Where is Karen located?",
-      answer: "Karen is based in Mexico and works remotely with clients globally."
+      question: "Where is Karen Rebeca Ortiz located?",
+      answer: "Karen Rebeca Ortiz is based in Mexico and works remotely with clients globally, delivering transformative digital experiences across different time zones."
+    },
+    {
+      question: "What makes Karen Rebeca Ortiz unique as a Design Engineer?",
+      answer: "Karen bridges creativity and technology, transforming ideas into exceptional digital experiences with expertise in both design and development, ensuring seamless user experiences."
     }
   ]
 };
@@ -150,17 +159,28 @@ export const technicalSEO = {
     lastmod: new Date().toISOString()
   },
   
-  // AI bot permissions
+  // AI bot permissions - Updated based on 2024/2025 crawler activity data
   aiBots: {
     allow: [
-      "GPTBot",
-      "OAI-SearchBot", 
-      "PerplexityBot",
-      "ClaudeBot",
-      "GeminiBot",
-      "Googlebot",
-      "Bingbot"
+      "GPTBot",             
+      "ChatGPT-User",        // OpenAI API - Very active 
+      "OAI-SearchBot",       // OpenAI Search
+      "PerplexityBot",       // Perplexity - Extremely active
+      "ClaudeBot",           // Anthropic - Reduced activity but still crawling
+      "Googlebot",           // Google - Dominant crawler 
+      "GoogleOther",         // Google's new crawler for AI purposes
+      "Bingbot",             // Microsoft Bing
+      "Meta-ExternalAgent",  // Meta - New major player 
+      "Amazonbot",           // Amazon Alexa
+      "Applebot"             // Apple Siri/Spotlight
     ],
-    disallow: []
+    disallow: [
+      "Bytespider"           // ByteDance 
+    ],
+    notes: {
+      grok: "xAI/Grok does not use a public crawler - relies on X/Twitter data and licensed sources",
+      gemini: "Google Gemini uses Googlebot, not a separate 'GeminiBot'",
+      claude: "ClaudeBot activity reduced significantly in 2024 (-46% requests)"
+    }
   }
 };

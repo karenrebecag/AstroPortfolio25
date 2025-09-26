@@ -1,0 +1,112 @@
+---
+// OptimizedImage.astro - Componente para imágenes optimizadas con lazy loading y responsive
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  className?: string;
+  loading?: 'lazy' | 'eager';
+  priority?: boolean;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+  className = "",
+  loading = "lazy",
+  priority = false
+} = Astro.props;
+
+// Generate responsive image URLs for Cloudflare R2
+const generateResponsiveUrls = (baseSrc: string) => {
+  // For Cloudflare R2, we'll use the original URL but suggest different formats
+  const baseUrl = baseSrc.replace(/\.[^/.]+$/, ""); // Remove extension
+  const extension = baseSrc.match(/\.[^/.]+$/)?.[0] || ".png";
+  
+  return {
+    webp: `${baseUrl}.webp`,
+    avif: `${baseUrl}.avif`,
+    original: baseSrc
+  };
+};
+
+const responsiveUrls = generateResponsiveUrls(src);
+---
+
+<picture class={`optimized-image ${className}`}>
+  <!-- AVIF format for modern browsers -->
+  <source 
+    srcset={responsiveUrls.avif} 
+    type="image/avif"
+    sizes={sizes}
+  />
+  
+  <!-- WebP format for most browsers -->
+  <source 
+    srcset={responsiveUrls.webp} 
+    type="image/webp"
+    sizes={sizes}
+  />
+  
+  <!-- Fallback to original format -->
+  <img 
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? "eager" : loading}
+    decoding="async"
+    class={className}
+    style="max-width: 100%; height: auto;"
+  />
+</picture>
+
+<style>
+  .optimized-image {
+    display: block;
+    contain: layout style paint;
+  }
+  
+  .optimized-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Prevent layout shift during loading */
+  .optimized-image img[loading="lazy"] {
+    min-height: 200px; /* Adjust based on expected image size */
+  }
+  
+  /* Fade in effect when image loads */
+  .optimized-image img {
+    opacity: 0;
+  }
+  
+  .optimized-image img.loaded {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Add loaded class when image loads to trigger fade-in
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.optimized-image img');
+    
+    images.forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+  });
+</script>

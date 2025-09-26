@@ -112,7 +112,7 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<!-- No Header here - CV pages use their own CVHeader -->
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
-		<LenisIsland client:load />
+		<LenisIsland client:idle />
 	</body>
 </html>
 

@@ -1,0 +1,117 @@
+---
+// MePortfolioImage.astro - Componente optimizado específicamente para la imagen principal del portfolio
+interface Props {
+  className?: string;
+  priority?: boolean;
+  sizes?: string;
+}
+
+const {
+  className = "",
+  priority = true,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 520px"
+} = Astro.props;
+
+// URLs optimizadas para diferentes formatos y tamaños
+const baseUrl = "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio";
+const fallbackUrl = "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png";
+---
+
+<div class={`me-portfolio-image-container ${className}`}>
+  <picture class="me-portfolio-picture">
+    <!-- AVIF format for modern browsers (best compression) -->
+    <source 
+      srcset={`${baseUrl}.avif`}
+      type="image/avif"
+      sizes={sizes}
+    />
+    
+    <!-- WebP format for most browsers -->
+    <source 
+      srcset={`${baseUrl}.webp`}
+      type="image/webp"
+      sizes={sizes}
+    />
+    
+    <!-- Fallback to PNG -->
+    <img 
+      src={fallbackUrl}
+      alt="Karen Rebeca Ortiz - Design Engineer Portfolio"
+      width="520"
+      height="537"
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={priority ? "high" : "auto"}
+      class="me-portfolio-img"
+    />
+  </picture>
+</div>
+
+<style>
+  .me-portfolio-image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    contain: layout style paint;
+  }
+  
+  .me-portfolio-picture {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .me-portfolio-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    /* Reserve space to prevent layout shift */
+    aspect-ratio: 520 / 537;
+    background-color: #f5f5f5; /* Placeholder color */
+  }
+  
+  /* Fade in effect when image loads */
+  .me-portfolio-img {
+    opacity: 0;
+  }
+  
+  .me-portfolio-img.loaded {
+    opacity: 1;
+  }
+  
+  /* Responsive sizing */
+  @media (max-width: 768px) {
+    .me-portfolio-img {
+      aspect-ratio: 1 / 1; /* Square on mobile */
+    }
+  }
+  
+  /* Optimize for LCP */
+  .me-portfolio-img[loading="eager"] {
+    content-visibility: auto;
+  }
+</style>
+
+<script>
+  // Add loaded class when image loads for fade-in effect
+  document.addEventListener('DOMContentLoaded', () => {
+    const img = document.querySelector('.me-portfolio-img') as HTMLImageElement;
+    
+    if (img) {
+      if (img.complete && img.naturalHeight !== 0) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+        
+        // Handle error case
+        img.addEventListener('error', () => {
+          console.warn('Failed to load optimized image, using fallback');
+          img.classList.add('loaded');
+        });
+      }
+    }
+  });
+</script>

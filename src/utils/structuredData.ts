@@ -9,7 +9,7 @@ export const personSchema = {
   "jobTitle": "Design Engineer",
   "description": "Design Engineer specializing in UX/UI design, fullstack development, and AI-driven web solutions. Expert in React, TypeScript, Three.js, and modern web technologies.",
   "url": "https://karenortiz.space",
-  "image": "https://karenortiz.space/images/BannerImage.webp",
+  "image": "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png",
   "sameAs": [
     "https://linkedin.com/in/karenortiz",
     "https://github.com/karenortiz",

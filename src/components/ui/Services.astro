@@ -39,6 +39,33 @@ Comprehensive digital solutions from design to deployment
     </div>
     
     <div class="services-content">
+      
+      <!-- Project Images Section -->
+      <motion.div
+        className="services-images-section"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        client:visible
+      >
+        <div class="project-images">
+          <div class="relative w-full h-full" style="min-height:140px;aspect-ratio:2.5/1">
+            <div class="absolute aspect-square rounded-[20px] overflow-hidden border-4 border-white dark:border-white/90 shadow-xl dark:shadow-black/30" style="left: 50%; top: 50%; width: 25%; margin-left: -12.5%; margin-top: -12.5%; transform: translateX(-45px) translateY(-5px) rotate(5deg);">
+              <img class="w-full h-full object-cover" src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin1.webp" alt="card-0" loading="lazy">
+            </div>
+            <div class="absolute aspect-square rounded-[20px] overflow-hidden border-4 border-white dark:border-white/90 shadow-xl dark:shadow-black/30" style="left: 50%; top: 50%; width: 25%; margin-left: -12.5%; margin-top: -12.5%; transform: translateX(-15px) translateY(8px) rotate(-3deg);">
+              <img class="w-full h-full object-cover" src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin2.webp" alt="card-1" loading="lazy">
+            </div>
+            <div class="absolute aspect-square rounded-[20px] overflow-hidden border-4 border-white dark:border-white/90 shadow-xl dark:shadow-black/30" style="left: 50%; top: 50%; width: 25%; margin-left: -12.5%; margin-top: -12.5%; transform: translateX(15px) translateY(-3px) rotate(8deg);">
+              <img class="w-full h-full object-cover" src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin3.webp" alt="card-2" loading="lazy">
+            </div>
+            <div class="absolute aspect-square rounded-[20px] overflow-hidden border-4 border-white dark:border-white/90 shadow-xl dark:shadow-black/30" style="left: 50%; top: 50%; width: 25%; margin-left: -12.5%; margin-top: -12.5%; transform: translateX(45px) translateY(5px) rotate(-5deg);">
+              <img class="w-full h-full object-cover" src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin4.webp" alt="card-3" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </motion.div>
     
       <!-- Services List - Optimized Island Component with scroll animation -->
       <motion.div
@@ -145,6 +172,20 @@ Comprehensive digital solutions from design to deployment
     justify-content: flex-start;
     align-items: center;
     gap: 80px;
+  }
+
+  /* Services Images Section */
+  :global(.services-images-section) {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .project-images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Header Styles */

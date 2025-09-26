@@ -19,8 +19,16 @@ export default function LenisIsland() {
 
     // Función de animación optimizada para evitar forced reflows
     let rafId;
+    let lastTime = 0;
+    const targetFPS = 60;
+    const frameInterval = 1000 / targetFPS;
+    
     function raf(time) {
-      lenis.raf(time);
+      // Throttle to target FPS to reduce forced reflows
+      if (time - lastTime >= frameInterval) {
+        lenis.raf(time);
+        lastTime = time;
+      }
       rafId = requestAnimationFrame(raf);
     }
 

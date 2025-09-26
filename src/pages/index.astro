@@ -17,15 +17,17 @@ import GemSection from '../components/ui/GemSection.astro';
 import { getMainPageSchema, getFAQSchema } from '../utils/structuredData';
 import '../styles/global.css';
 
+import { siteConfig, pageConfigs } from '../config/seo';
+
 // SEO Configuration optimized for LLMs and AI search
 const seoConfig = {
-  title: "Karen Ortiz - Design Engineer | UX/UI & Fullstack Development",
-  description: "Karen Ortiz is a Design Engineer specializing in UX/UI design, React development, and AI-driven web solutions. Expert in TypeScript, Three.js, Figma, and modern web technologies. Available for freelance projects and full-time opportunities.",
-  keywords: "Karen Ortiz, Design Engineer, UX Designer, UI Designer, Frontend Developer, React Developer, TypeScript, Three.js, Figma, Web Development, AI Integration, Portfolio, Freelance Designer, Mexico",
-  canonical: "https://karenortiz.space",
-  ogImage: "https://karenortiz.space/images/BannerImage.webp",
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: siteConfig.keywords.join(", "),
+  canonical: siteConfig.url,
+  ogImage: siteConfig.ogImage,
   structuredData: getMainPageSchema(),
-  speakable: [".hero-title", ".services-title", ".about-description", ".contact-info"],
+  speakable: pageConfigs.home.speakable,
   alternateLanguages: [
     { hreflang: "en", href: "https://karenortiz.space" },
     { hreflang: "es", href: "https://karenortiz.space/es" }

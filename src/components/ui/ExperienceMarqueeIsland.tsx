@@ -8,7 +8,7 @@ const experienceData = [
     company: "OPINATOR (Madrid, Spain)",
     description: "Led the UX/UI redesign of OPINATOR's live forms WebApp, collaborating with a team of five to enhance user experience, accessibility, and developer workflows.",
     highlight: "Designed a modular design system with Figma and implemented frontend with React, boosting form response rates by 30%.",
-    image: "/images/EnterprisesLogos/ExperienceCards/Opinator.webp"
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Opinator.jpeg"
   },
   {
     id: "02",
@@ -16,7 +16,7 @@ const experienceData = [
     company: "ANCIENT TECH (Houston, Texas & LATAM)",
     description: "Directed a four-month UX engineering process to design and develop Ancient Tech's main web platform in Webflow, emphasizing intuitive user interactions.",
     highlight: "Built an AI-driven interactive hero banner with WebGL animations, enhancing engagement and visual appeal.",
-    image: "/images/EnterprisesLogos/ExperienceCards/Ancient.png"
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Ancient.png"
   },
   {
     id: "03",
@@ -24,7 +24,7 @@ const experienceData = [
     company: "AURIN (SODIO) (Cuernavaca, México)",
     description: "Designed mobile and web UX/UI for MonexOne and web apps like Inglesindividual, Galicia MX, Dentol MX, and Fintpay Banking, while leading fullstack development and AI automations.",
     highlight: "Developed Aurin Task Manager with Next.js, Firestore, Clerk, and AI-powered task summaries, streamlining team workflows with temporary dynamic links.",
-    image: "/images/EnterprisesLogos/ExperienceCards/Aurin.webp"
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Aurin.jpeg"
   },
   {
     id: "04",
@@ -32,7 +32,7 @@ const experienceData = [
     company: "ATHENIS AI (LATAM & EU)",
     description: "Led UX/UI design for an AI-driven educational platform, creating intuitive interfaces and component libraries to enhance user engagement and developer efficiency.",
     highlight: "Crafted a Figma-to-React component library for Login and Dashboard, improving handoff efficiency by 25%.",
-    image: "/images/EnterprisesLogos/ExperienceCards/AthenisAI.webp"
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAI.jpeg"
   },
   {
     id: "05",
@@ -40,7 +40,7 @@ const experienceData = [
     company: "WEBCRAFTERS (Mexico City)",
     description: "Founded WebCrafters, a UX/UI and Web Art agency, delivering custom web applications with AI-driven features, 3D animations, and scalable architectures.",
     highlight: "Led design and deployment of visually stunning web solutions with Three.js and AI integrations, serving diverse industries.",
-    image: "/images/EnterprisesLogos/ExperienceCards/WebCrafters.webp"
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCrafters.jpeg"
   }
 ];
 

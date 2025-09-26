@@ -285,10 +285,11 @@
   font-family: 'InterTight', var(--font-primary);
   font-weight: 300;
   font-size: var(--text-sm);
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #d1d5db;
+  border: 1px solid #d1d5db4a;
+  background: #ffffff;
   color: #1f2937;
+  border-radius: 5px;
+  padding: 10px;
   transition: all 0.2s ease;
 }
 

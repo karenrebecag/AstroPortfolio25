@@ -77,11 +77,12 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<!-- Resource Hints -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev">
+		<link rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev">
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
-		<link rel="preload" href="/images/BannerImage.webp" as="image" type="image/webp">
-		<link rel="preload" href="/fonts/Median.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="preload" href="/fonts/InterTight.ttf" as="font" type="font/ttf" crossorigin>
-		<link rel="preload" href="/fonts/Boysen.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png">
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin>
 		
 		<!-- Font Loading -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -127,7 +128,7 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<ScrollIndicator />
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
-		<LenisIsland client:load />
+		<LenisIsland client:idle />
 		<Analytics />
 	</body>
 </html>

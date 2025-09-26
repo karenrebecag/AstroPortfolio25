@@ -116,7 +116,7 @@ export function ToastNotification({
                         className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20"
                       >
                         <img
-                          src="/images/MeToast.webp"
+                          src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png"
                           alt="Karen Ortiz"
                           className="w-full h-full object-cover"
                         />
@@ -174,7 +174,7 @@ export function ToastNotification({
                         className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-2 ring-white/20"
                       >
                         <img
-                          src="/images/MeToast.webp"
+                          src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png"
                           alt="Karen Ortiz"
                           className="w-full h-full object-cover"
                         />

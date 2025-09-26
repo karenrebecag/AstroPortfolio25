@@ -163,7 +163,7 @@ const SoftSkillsSlider: React.FC<SoftSkillsSliderProps> = ({ softSkillsData }) =
           left: 0;
           right: 0;
           bottom: 0;
-          background: url('/images/SilkCardFallback.webp');
+          background: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg');
           background-size: cover;
           background-position: center;
           border-radius: inherit;

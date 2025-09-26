@@ -1,0 +1,38 @@
+# Cache headers for static assets
+# Fonts - Cache for 1 year
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images - Cache for 1 year  
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS and JS - Cache for 1 year with immutable
+/_astro/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages - Cache for 1 hour
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Root page
+/
+  Cache-Control: public, max-age=3600
+
+# API routes - No cache
+/api/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Favicon and manifest - Cache for 1 week
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
+/site.webmanifest
+  Cache-Control: public, max-age=604800
+
+# Service worker - No cache
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate

@@ -9,7 +9,7 @@ const lang = getLangFromUrl(Astro.url);
   <LanguageSelectorPortal
     currentLang={lang}
     languages={languageOptions}
-    client:load
+    client:idle
   />
 </div>
 

@@ -9,7 +9,7 @@ export const resumePersonSchema = {
   "jobTitle": "Design Engineer",
   "description": "Experienced Design Engineer with 5+ years specializing in UX/UI design, fullstack development, and AI-driven web solutions. Expert in React, TypeScript, Three.js, and modern web technologies.",
   "url": "https://karenortiz.space/resume",
-  "image": "https://karenortiz.space/images/BannerImage.webp",
+  "image": "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png",
   "email": "karen.ortizg@yahoo.com",
   "telephone": "+525660014362",
   "address": {
