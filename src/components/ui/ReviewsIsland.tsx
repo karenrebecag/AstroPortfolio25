@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, User, MessageSquare, Star, Briefcase } from 'lucide-react';
 import { useReviewsStore } from '../../stores/reviewsStore';
 import Toast from './Toast';
+import ReviewsSlider from './ReviewsSlider';
 import '../../styles/review-popup.css';
 
 interface ToastData {
@@ -178,6 +179,7 @@ const ReviewPopup: React.FC<{ onToast: (type: 'success' | 'error', message: stri
             />
           </div>
 
+
           {/* Review Field */}
           <div className="review-form-field">
             <label className="review-form-label">
@@ -311,19 +313,67 @@ const ReviewsIsland: React.FC = () => {
         card.className = 'review-card-marquee';
         
         card.innerHTML = `
-          <div class="card-inner">
-            <div class="gradient-border"></div>
+          <div style="
+            position: relative;
+            border: 2px solid transparent;
+            border-radius: 45px;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #141020 0%, rgb(30, 26, 32) 50%, #141020 100%);
+            background-clip: padding-box;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+          ">
+            <div style="
+              position: absolute;
+              inset: 0;
+              border-radius: 45px;
+              background: linear-gradient(71deg, #333333, #ffffff, #333333);
+              z-index: -1;
+            "></div>
             
             <!-- Profile section -->
-            <div class="profile-section">
-              <h3 class="reviewer-name">${review.name}</h3>
-              ${review.position ? `<p class="reviewer-position" style="font-size: 0.75rem; color: #9ca3af; margin: 0.25rem 0 0 0; font-weight: 400;">${review.position}</p>` : ''}
+            <div style="
+              display: flex;
+              align-items: start;
+              margin-bottom: 1.5rem;
+              flex-direction: column;
+            ">
+              <h3 style="
+                font-family: var(--font-display);
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #ffffff;
+                margin: 0;
+                letter-spacing: -0.02em;
+              ">${review.name}</h3>
+              ${review.position ? `<p style="
+                font-size: 0.75rem;
+                color: #9ca3af;
+                margin: 0.25rem 0 0 0;
+                font-weight: 400;
+              ">${review.position}</p>` : ''}
             </div>
             
             <!-- Review description -->
-            <p class="review-description">
-              ${review.review}
-            </p>
+            <div style="
+              flex: 1;
+              overflow-y: auto;
+              max-height: 150px;
+            ">
+              <p style="
+                font-family: var(--font-primary);
+                font-size: 1rem;
+                text-align: left;
+                font-weight: 400;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.7);
+                margin: 0;
+                max-width: 100%;
+              ">
+                ${review.review}
+              </p>
+            </div>
           </div>
         `;
         
@@ -394,13 +444,21 @@ const ReviewsIsland: React.FC = () => {
 
   return (
     <>
-      <div ref={containerRef} className="reviews-container">
-        {/* El contenido se genera dinámicamente con JavaScript vanilla */}
-        {isLoading && (
-          <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
-            Loading reviews...
-          </div>
-        )}
+      {/* Desktop: Reviews Marquee (visible en vp >= 768px) */}
+      <div className="reviews-marquee-desktop">
+        <div ref={containerRef} className="reviews-container">
+          {/* El contenido se genera dinámicamente con JavaScript vanilla */}
+          {isLoading && (
+            <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
+              Loading reviews...
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile: Reviews Slider (visible en vp < 768px) */}
+      <div className="reviews-slider-mobile">
+        <ReviewsSlider reviewsData={reviews.length > 0 ? reviews : fallbackReviewsData} />
       </div>
       
       {/* Submit Review Button */}

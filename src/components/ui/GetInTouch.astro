@@ -56,12 +56,12 @@ import ReviewsIsland from './ReviewsIsland.tsx';
   .dithering-background {
     position: absolute;
     left: 0;
-    top: -100px;
+    top: 0;
     width: 100%;
     height: 100%;
     opacity: 0.08;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     mix-blend-mode: screen;
     transform: rotate(180deg);
   }
@@ -116,6 +116,7 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     display: flex;
     flex-direction: column;
     gap: 32px;
+    padding-bottom: 60px;
   }
 
   :global(.contact-subtitle) {
@@ -723,14 +724,6 @@ import ReviewsIsland from './ReviewsIsland.tsx';
     object-fit: cover;
   }
 
-  :global(.reviewer-name) {
-    font-family: var(--font-display); /* Median */
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
 
   /* Review Description */
   :global(.review-description) {
@@ -869,9 +862,6 @@ import ReviewsIsland from './ReviewsIsland.tsx';
       padding: 2rem;
     }
 
-    :global(.reviewer-name) {
-      font-size: 1.25rem;
-    }
 
     :global(.review-description) {
       font-size: 0.9rem;
@@ -918,9 +908,6 @@ import ReviewsIsland from './ReviewsIsland.tsx';
       margin-bottom: 1.25rem;
     }
 
-    :global(.reviewer-name) {
-      font-size: 1.1rem;
-    }
 
     :global(.review-description) {
       font-size: 0.85rem;
