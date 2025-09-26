@@ -1,6 +1,7 @@
 ---
 import ResumeLayout from '../layouts/ResumeLayout.astro';
-import ResumeHeader from '../components/ui/ResumeHeader.astro';
+import HeaderPill from '../components/ui/HeaderPill.astro';
+import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
 import { ResumeSection } from '../components/ui/ResumeSection.tsx';
 import { ResumeTag, ResumeTagGroup } from '../components/ui/ResumeTag.tsx';
 import { SkillTag, SkillGroup } from '../components/ui/SkillTag.tsx';
@@ -12,14 +13,17 @@ import SecondaryButton from '../components/ui/SecondaryButton.astro';
 import { TextDisperse } from '../components/ui/TextDisperse.tsx';
 import { InView } from '../components/ui/InView.tsx';
 import { getLangFromUrl, t } from '../i18n/utils.js';
+import '../styles/global.css';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
 <ResumeLayout title={t('resume.title', lang)}>
-  <ResumeHeader />
+  <HeaderPill />
+
+  <DarkModeContainer client:load>
   
-  <main class="resume-main">
+    <main class="resume-main main-content">
     <!-- Hero Section with Original CV Animations -->
     <section class="hero-section">
         <!-- DitheringShader Background Scene -->
@@ -28,12 +32,13 @@ const lang = getLangFromUrl(Astro.url);
             client:idle
             width={1920}
             height={1800}
-            colorBack="#dcdcdc"
+            colorBack="#ececec"
             colorFront="#ffffff"
             shape="wave"
             type="8x8"
             pxSize={3}
             speed={0.6}
+            className="dithering-shader"
           />
         </div>
 
@@ -378,14 +383,33 @@ const lang = getLangFromUrl(Astro.url);
       </div>
     </ResumeSection>
 
-  </main>
+    </main>
+
+  </DarkModeContainer>
 
 </ResumeLayout>
 
 <style>
   body{
+    background-color: #ececec;
+  }
 
-    background-color: #fffefe;
+  /* Dark Mode Global Styles */
+  :global(.dark-mode html) {
+    background-color: #050112;
+  }
+
+  :global(.dark-mode body) {
+    background-color: #050112;
+    color: #ffffff;
+  }
+
+  :global(.dark-mode) {
+    color-scheme: dark;
+  }
+
+  :global(.light-mode) {
+    color-scheme: light;
   }
   /* Footer Spacer for Sticky Footer */
   .footer-spacer {
@@ -394,7 +418,7 @@ const lang = getLangFromUrl(Astro.url);
 
   /* Main CV Styles - Dark Mode */
   .resume-main {
-    background: #fffefe;
+    background: #ececec;
     color: #000000;
     font-family: var(--font-primary);
     padding-top: 80px; /* Account for CV header (no TopMarquee) */
@@ -680,7 +704,7 @@ const lang = getLangFromUrl(Astro.url);
 
   .company {
     font-weight: 500;
-    color: ;
+    color: #0c0819;
   }
 
   .location {
@@ -706,7 +730,7 @@ const lang = getLangFromUrl(Astro.url);
   .project-card h4 {
     font-size: 1.125rem;
     font-weight: 500;
-    color: ;
+    color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
   }
 
@@ -777,7 +801,7 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   .project-item:hover .project-number {
-    color: ;
+    color: #0c0819;
   }
 
   .project-details {
@@ -1028,6 +1052,242 @@ const lang = getLangFromUrl(Astro.url);
       padding: 0 1rem;
     }
   }
+  /* DitheringShader Dark Mode - Canvas background blending */
+  :global(.dark-mode .hero-dithering-background) {
+    /* The DitheringShader will render with colors #050112 (dark) and #1a1a1a (lighter dark) */
+    background: #050112;
+  }
+
+  :global(.hero-dithering-background) {
+    background: #ececec;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* ========================================= */
+  /* DARK MODE STYLES FOR RESUME PAGE */
+  /* ========================================= */
+
+  /* Main Content Dark Mode */
+  :global(.dark-mode .resume-main) {
+    background: #050112;
+    color: #ffffff;
+  }
+
+  /* Hero Section Dark Mode */
+  :global(.dark-mode .hero-section) {
+    background: #050112;
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .hero-badge) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .hero-title) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .hero-subtitle) {
+    color: #cccccc;
+  }
+
+  :global(.dark-mode .hero-description p) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .highlight) {
+    color: #cccccc;
+  }
+
+  :global(.dark-mode .hero-status) {
+    color: #e5e5e5;
+  }
+
+  :global(.dark-mode .status-dot) {
+    background: #ffffff;
+  }
+
+  /* Contact Links Dark Mode */
+  :global(.dark-mode .contact-link) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  :global(.dark-mode .contact-link:hover) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .contact-link.primary) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .contact-link.small) {
+    color: #cccccc;
+  }
+
+  /* Section Labels Dark Mode */
+  :global(.dark-mode .section-label) {
+    color: #ffffff;
+  }
+
+  /* Section Titles Dark Mode */
+  :global(.dark-mode .section-title) {
+    color: #ffffff;
+  }
+
+  /* Summary Section Dark Mode */
+  :global(.dark-mode .summary-item h3),
+  :global(.dark-mode .summary-item h4) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .summary-item p) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Experience Section Dark Mode */
+  :global(.dark-mode .job-title) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .company) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .location) {
+    color: #cccccc;
+  }
+
+  :global(.dark-mode .project-card) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .project-card h4) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .project-card p) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Projects Section Dark Mode */
+  :global(.dark-mode .project-item) {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .project-item:hover) {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  :global(.dark-mode .project-number) {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  :global(.dark-mode .project-item:hover .project-number) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .project-details h3) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .project-subtitle) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  :global(.dark-mode .project-details p) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  :global(.dark-mode .benefits-label) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  :global(.dark-mode .project-benefits p) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Education Section Dark Mode */
+  :global(.dark-mode .education-item) {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .education-number) {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  :global(.dark-mode .education-details h3) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .education-duration) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  :global(.dark-mode .education-points li) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  :global(.dark-mode .education-points li::before) {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Learning Badge Dark Mode */
+  :global(.dark-mode .learning-badge) {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  :global(.dark-mode .badge-title) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .badge-subtitle) {
+    color: #cccccc;
+  }
+
+  /* Smooth Transitions for Dark Mode */
+  :global(.resume-main),
+  :global(.hero-section),
+  :global(.hero-badge),
+  :global(.hero-title),
+  :global(.hero-subtitle),
+  :global(.hero-description p),
+  :global(.highlight),
+  :global(.hero-status),
+  :global(.status-dot),
+  :global(.contact-link),
+  :global(.section-label),
+  :global(.section-title),
+  :global(.summary-item h3),
+  :global(.summary-item h4),
+  :global(.summary-item p),
+  :global(.job-title),
+  :global(.company),
+  :global(.location),
+  :global(.project-card),
+  :global(.project-item),
+  :global(.project-number),
+  :global(.project-details h3),
+  :global(.project-subtitle),
+  :global(.project-details p),
+  :global(.benefits-label),
+  :global(.project-benefits p),
+  :global(.education-item),
+  :global(.education-number),
+  :global(.education-details h3),
+  :global(.education-duration),
+  :global(.education-points li),
+  :global(.learning-badge),
+  :global(.badge-title),
+  :global(.badge-subtitle) {
+    transition:
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
 </style>
 
 <script>

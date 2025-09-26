@@ -12,6 +12,7 @@ import { NoiseBackground } from './NoiseBackground';
 import FlipText from './FlipText';
 import { SpeedlifyStats } from './SpeedlifyStats';
 import Toast from './Toast';
+import { SpaceInvadersIsland } from './SpaceInvadersIsland';
 
 interface FooterLink {
     title: string;
@@ -55,6 +56,7 @@ function Button({ children, size, variant, className, ...props }: {
 export function StickyFooter({ className, ...props }: StickyFooterProps) {
     const [isHovered, setIsHovered] = useState(false);
     const [toasts, setToasts] = useState<ToastData[]>([]);
+    const [showSpaceInvaders, setShowSpaceInvaders] = useState(false);
 
     const addToast = (type: 'success' | 'error', message: string) => {
         const id = Date.now().toString();
@@ -81,6 +83,14 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
             console.error('Failed to copy link:', err);
             addToast('error', 'Failed to copy link. Please try again.');
         }
+    };
+
+    const activateEasterEgg = () => {
+        setShowSpaceInvaders(true);
+    };
+
+    const exitSpaceInvaders = () => {
+        setShowSpaceInvaders(false);
     };
     
     return (
@@ -131,7 +141,27 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                         </div>
 
                         {/* Footer Content Container with max-width - Centered */}
-                        <div className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-between gap-5 py-8 relative z-20">
+                        <AnimatePresence mode="wait">
+                            {showSpaceInvaders ? (
+                                <motion.div
+                                    key="space-invaders"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20"
+                                >
+                                    <SpaceInvadersIsland onExit={exitSpaceInvaders} />
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="normal-footer"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-between gap-5 py-8 relative z-20"
+                                >
                             <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
                                 <AnimatedContainer className="w-full">
                                     {/* Main Title */}
@@ -181,6 +211,8 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 className="karen-ortiz-container text-white cursor-pointer"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
+                                onClick={activateEasterEgg}
+                                data-cursor-text="Activate Easter Egg"
                             >
                                 <FlipText 
                                     text="KAREN ORTIZ" 
@@ -214,7 +246,9 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 </div>
                             </AnimatedContainer>
                
-                        </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </div>
