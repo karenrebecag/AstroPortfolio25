@@ -13,6 +13,7 @@ import { WhiteStickyFooter } from '../components/ui/WhiteStickyFooter.tsx';
 import { LucideIcon } from '../components/ui/LucideIcon.tsx';
 import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { Carousel } from '../components/ui/Carousel.tsx';
+import CommentsSection from '../components/ui/CommentsSection.astro';
 import '../styles/global.css';
 
 // Code snippets for the technical documentation
@@ -626,8 +627,8 @@ const loadTestResults = {
 							<div class="metric-number">
 								<AnimatedNumber client:load value={500} suffix="+" />
 							</div>
-							<div class="metric-label">Active Users</div>
-							<div class="metric-description">Within first 3 months of launch</div>
+							<div class="metric-label">Made in</div>
+							<div class="metric-description">2025</div>
 						</div>
 
 						<div class="metric-card">
@@ -1097,6 +1098,9 @@ const loadTestResults = {
 			
 			</div>
 		</section>
+
+		<!-- Comments Section -->
+		<CommentsSection storyId="aurin-task-manager" />
 
 		</main>
 	</DarkModeContainer>

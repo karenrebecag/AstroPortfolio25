@@ -1,0 +1,145 @@
+---
+// CommentsSection.astro - Wrapper component for Comments Island
+import CommentsIsland from './CommentsIsland.tsx';
+
+export interface Props {
+  className?: string;
+  title?: string;
+  subtitle?: string;
+  storyId: string; // Required: ID of the success story
+}
+
+const { 
+  className = '',
+  title = 'Comments',
+  subtitle = 'Share your thoughts about my work and projects',
+  storyId
+} = Astro.props;
+---
+
+<section class={`comments-section ${className}`}>
+  <div class="comments-container">
+    <!-- Comments Island - loads only when visible -->
+    <div class="comments-island-wrapper">
+      <CommentsIsland client:visible storyId={storyId} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .comments-section {
+    width: 100%;
+    background: #ffffff;
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .comments-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .comments-island-wrapper {
+    width: 100%;
+    min-height: 200px; /* Prevent layout shift */
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .comments-section {
+      background: #171523;
+    }
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .comments-section {
+      padding: 80px 0;
+    }
+    
+    .comments-container {
+      padding: 0 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .comments-section {
+      padding: 60px 0;
+    }
+    
+    .comments-container {
+      padding: 0 1rem;
+    }
+  }
+
+  /* Loading state styles */
+  .comments-island-wrapper:empty::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(90deg, 
+      rgba(156, 163, 175, 0.1) 25%, 
+      rgba(156, 163, 175, 0.2) 50%, 
+      rgba(156, 163, 175, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Ensure proper spacing with other sections */
+  .comments-section + section,
+  section + .comments-section {
+    margin-top: 0;
+  }
+
+  /* Typography consistency */
+  .comments-section {
+    font-family: var(--font-primary);
+  }
+
+  /* Animation support */
+  .comments-section * {
+    box-sizing: border-box;
+  }
+
+  /* Accessibility improvements */
+  .comments-section:focus-within {
+    outline: none;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .comments-section {
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .comments-island-wrapper:empty::before {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Register the component for client-side hydration
+  if (typeof window !== 'undefined') {
+    // Component will be hydrated by Astro's client:visible directive
+    console.log('Comments section loaded');
+  }
+</script>
