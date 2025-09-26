@@ -2,13 +2,10 @@
 // Services.astro - Sección de servicios con funcionalidad colapsable optimizada
 import ServicesIsland from './ServicesIsland.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
-import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
 ---
 
 <section class="services-section">
-  <!-- Noise Background Effect -->
-  <NoiseBackground opacity={0.15} speed={0.25} className="light" client:visible />
   
   <div class="services-container">
     <!-- Giant Heading with TextDisperse -->

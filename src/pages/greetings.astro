@@ -1,0 +1,974 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import HeaderPill from '../components/ui/HeaderPill.astro';
+import ParallaxBanner from '../components/ui/ParallaxBanner.astro';
+import MainButton from '../components/ui/MainButton.astro';
+import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
+import { InView } from '../components/ui/InView.tsx';
+import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
+import { LucideIcon } from '../components/ui/LucideIcon.tsx';
+import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
+import ShareBar from '../components/ui/ShareBar.astro';
+import CommentsSection from '../components/ui/CommentsSection.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Karen Ortiz - Agradecimientos" lang="en">
+	<HeaderPill />
+
+	<!-- Parallax Banner Strip -->
+	<ParallaxBanner
+		title="Gracias"
+		subtitle="Un sincero agradecimiento a todos los que han sido parte de este increíble viaje"
+		backgroundSrc="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/greetings.mp4"
+		placeholder=""
+		height="100vh"
+	>
+		<div slot="actions" class="banner-actions">
+			<MainButton href="#gratitude-message" />
+		</div>
+	</ParallaxBanner>
+
+	<DarkModeContainer client:load>
+		<!-- Main Content Sections -->
+		<main class="main-content" id="main-content">
+		<!-- Gratitude Message Section -->
+		<section class="content-section" id="gratitude">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title" id="gratitude-message">
+						<TextDisperseBlack client:idle text="Mensaje de Gratitud" />
+					</h2>
+					<div class="section-label">Con el corazón lleno</div>
+				</div>
+
+				<InView client:idle
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="content-grid">
+						<div class="content-main">
+							<p class="content-description">
+								Quiero expresar mi más profundo agradecimiento a todas las personas que han sido parte fundamental de mi crecimiento profesional y personal. Este portafolio no es solo una muestra de trabajo, sino el resultado de un viaje lleno de aprendizajes, desafíos superados y sueños alcanzados gracias al apoyo incondicional de personas increíbles.
+							</p>
+
+							<div class="content-highlights">
+								<div class="highlight-item">
+									<div class="highlight-number">01</div>
+									<div class="highlight-content">
+										<h3>A mi familia</h3>
+										<p>Por creer en mis sueños desde el primer día, por su apoyo incondicional y por ser mi fortaleza en cada momento de duda.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">02</div>
+									<div class="highlight-content">
+										<h3>A mis mentores</h3>
+										<p>Por compartir su conocimiento, por guiarme en cada paso de mi carrera y por inspirarme a ser mejor cada día.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">03</div>
+									<div class="highlight-content">
+										<h3>A mi equipo</h3>
+										<p>Por cada proyecto compartido, por las lecciones aprendidas juntos y por hacer que el trabajo se sienta como colaboración entre amigos.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="content-sidebar">
+							<div class="info-card">
+								<div class="info-label">Años de Experiencia</div>
+								<div class="info-value">5+ Años</div>
+							</div>
+
+							<div class="info-card">
+								<div class="info-label">Proyectos Completados</div>
+								<div class="info-value">50+ Proyectos</div>
+							</div>
+
+							<div class="info-card">
+								<div class="info-label">Clientes Satisfechos</div>
+								<div class="info-value">100+ Clientes</div>
+							</div>
+
+			<div class="info-card">
+				<div class="info-label">Estado Actual</div>
+				<div class="info-value status-active">
+					<div class="status-dot"></div>
+					Siempre Agradecida
+				</div>
+			</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Special Thanks Section -->
+		<section class="content-section" id="special-thanks">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Agradecimientos Especiales" />
+					</h2>
+					<div class="section-label">Personas que marcan la diferencia</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+				>
+					<div class="features-grid">
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="heart" size={40} />
+							</div>
+							<h3>Comunidad de Desarrolladores</h3>
+							<p>Gracias a toda la comunidad open source, Stack Overflow, GitHub y Discord por ser mi segunda universidad.</p>
+						</div>
+
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="users" size={40} />
+							</div>
+							<h3>Clientes y Colaboradores</h3>
+							<p>Por confiar en mi trabajo, por los desafíos que me han hecho crecer y por permitirme ser parte de sus historias de éxito.</p>
+						</div>
+
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="book-open" size={40} />
+							</div>
+							<h3>Recursos de Aprendizaje</h3>
+							<p>A todas las plataformas, cursos, libros y contenido que han alimentado mi sed de conocimiento y crecimiento profesional.</p>
+						</div>
+
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="coffee" size={40} />
+							</div>
+							<h3>Compañeros de Camino</h3>
+							<p>A mis compañeros de trabajo, colegas de la industria y amigos desarrolladores por hacer este camino más divertido y enriquecedor.</p>
+						</div>
+
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="star" size={40} />
+							</div>
+							<h3>Futuros Colaboradores</h3>
+							<p>Gracias anticipadas a todas las personas increíbles con las que tendré la oportunidad de trabajar en el futuro.</p>
+						</div>
+
+						<div class="feature-card">
+							<div class="feature-icon">
+								<LucideIcon client:load name="gift" size={40} />
+							</div>
+							<h3>A Ti</h3>
+							<p>Sí, a ti que estás viendo este portafolio. Gracias por tu tiempo, por considerar mi trabajo y por ser parte de esta historia.</p>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Impact Numbers Section -->
+		<section class="content-section" id="impact">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Impacto Compartido" />
+					</h2>
+					<div class="section-label">Logros juntos</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+				>
+					<div class="metrics-grid">
+						<div class="metric-card">
+							<div class="metric-number">
+								<AnimatedNumber client:load value={1000} suffix="+" />
+							</div>
+							<div class="metric-label">Horas de Aprendizaje</div>
+							<div class="metric-description">Invertidas en crecimiento</div>
+						</div>
+
+						<div class="metric-card">
+							<div class="metric-number">
+								<AnimatedNumber client:load value={365} />
+							</div>
+							<div class="metric-label">Días de Gratitud</div>
+							<div class="metric-description">Por año, cada día cuenta</div>
+						</div>
+
+						<div class="metric-card">
+							<div class="metric-number">
+								<AnimatedNumber client:load value={100} suffix="%" />
+							</div>
+							<div class="metric-label">Compromiso</div>
+							<div class="metric-description">Con la excelencia</div>
+						</div>
+
+						<div class="metric-card">
+							<div class="metric-number">
+								<AnimatedNumber client:load value={999} suffix="+" />
+							</div>
+							<div class="metric-label">Razones para Sonreír</div>
+							<div class="metric-description">Gracias a cada uno de ustedes</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Personal Message Section -->
+		<section class="content-section" id="personal-message">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Un Mensaje Personal" />
+					</h2>
+					<div class="section-label">Desde el corazón</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="personal-message-content">
+						<div class="message-card">
+							<div class="message-icon">
+								<LucideIcon client:load name="message-heart" size={48} />
+							</div>
+							<div class="message-text">
+								<p>
+									"Cada línea de código que escribo, cada proyecto que termino, cada desafío que supero,
+									lleva consigo un pedacito de todos ustedes. Este portafolio no es solo mío; es nuestro.
+									Es el resultado de una comunidad increíble que me ha enseñado que el éxito individual
+									no existe sin el apoyo colectivo."
+								</p>
+								<p>
+									"Seguiré creando, aprendiendo y creciendo, llevando siempre conmigo las lecciones que
+									me han dado y el ejemplo de generosidad que han mostrado. El futuro está lleno de
+									posibilidades, y espero poder retribuir todo lo que he recibido."
+								</p>
+								<div class="signature">
+									<p><strong>Con infinita gratitud,</strong></p>
+									<p class="name">Karen Rebeca Ortiz</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Contact & Future Section -->
+		<section class="content-section" id="contact-future">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Sigamos Conectados" />
+					</h2>
+					<div class="section-label">El viaje continúa</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="contact-future-content">
+						<div class="future-message">
+							<h3>Construyamos Juntos el Futuro</h3>
+							<p>
+								Mi gratitud hacia ustedes se extiende hacia el futuro. Estoy emocionada por las
+								oportunidades que vendrán, los proyectos que crearemos juntos y las nuevas personas
+								increíbles que conoceré en este camino.
+							</p>
+
+							<div class="contact-links">
+								<div class="link-item">
+									<div class="link-label">
+										<LucideIcon client:load name="mail" size={16} />
+										Contacto
+									</div>
+									<a href="mailto:sodioinfo@gmail.com" class="link-url">
+										sodioinfo@gmail.com
+									</a>
+								</div>
+
+								<div class="link-item">
+									<div class="link-label">
+										<LucideIcon client:load name="linkedin" size={16} />
+										LinkedIn
+									</div>
+									<a href="https://linkedin.com/in/karenrebecaortiz" target="_blank" rel="noopener noreferrer" class="link-url">
+										linkedin.com/in/karenrebecaortiz
+									</a>
+								</div>
+
+								<div class="link-item">
+									<div class="link-label">
+										<LucideIcon client:load name="github" size={16} />
+										GitHub
+									</div>
+									<a href="https://github.com/KarenRebecaOrtiz" target="_blank" rel="noopener noreferrer" class="link-url">
+										github.com/KarenRebecaOrtiz
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Share Bar Section -->
+		<ShareBar />
+
+		<!-- Comments Section -->
+		<CommentsSection storyId="greetings-page" />
+
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Banner Actions */
+	.banner-actions {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	/* Main Content Layout */
+	.main-content {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+	}
+
+	.content-section {
+		padding: 6rem 2rem;
+		border-bottom: 1px solid #f0f0f0;
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+		position: relative;
+	}
+
+	.content-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	/* Section Headers */
+	.section-header {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	.section-title {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 400;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		color: #1B1B1B;
+	}
+
+	.section-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	/* Content Grid Layout */
+	.content-grid {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 4rem;
+		align-items: start;
+	}
+
+	.content-main {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.content-description {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.6;
+		color: #333;
+		margin: 0;
+	}
+
+	/* Content Highlights */
+	.content-highlights {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.highlight-item {
+		display: flex;
+		gap: 1.5rem;
+		align-items: flex-start;
+	}
+
+	.highlight-number {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.5rem;
+		font-weight: 400;
+		color: #4523AE;
+		min-width: 3rem;
+		text-align: center;
+	}
+
+	.highlight-content h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 0.5rem 0;
+	}
+
+	.highlight-content p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Sidebar Info Cards */
+	.content-sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.info-card {
+		padding: 1.5rem;
+		background: #f8f9fa;
+		border-radius: 12px;
+		border: 1px solid #e9ecef;
+	}
+
+	.info-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		margin-bottom: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.info-value {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		font-weight: 600;
+		color: #1B1B1B;
+	}
+
+	.status-active {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #22c55e;
+	}
+
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		background: #22c55e;
+		border-radius: 50%;
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.5; }
+	}
+
+	/* Features Grid */
+	.features-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 2rem;
+	}
+
+	.feature-card {
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		text-align: center;
+		transition: all 0.3s ease;
+	}
+
+	.feature-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+		border-color: #4523AE;
+	}
+
+	.feature-icon {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #4523AE;
+	}
+
+	.feature-card h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.feature-card p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Metrics Grid */
+	.metrics-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		margin-top: 2rem;
+	}
+
+	.metric-card {
+		text-align: center;
+		padding: 2rem 1.5rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.metric-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+		border-color: #4523AE;
+	}
+
+	.metric-number {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2rem, 5vw, 3rem);
+		font-weight: 400;
+		color: #4523AE;
+		margin-bottom: 0.5rem;
+	}
+
+	.metric-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin-bottom: 0.5rem;
+	}
+
+	.metric-description {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		color: #666;
+	}
+
+	/* Personal Message Styles */
+	.personal-message-content {
+		margin-top: 2rem;
+	}
+
+	.message-card {
+		display: grid;
+		gap: 2rem;
+		padding: 3rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 20px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+	}
+
+	@media (min-width: 768px) {
+		.message-card {
+			grid-template-columns: auto 1fr;
+			gap: 3rem;
+		}
+	}
+
+	.message-icon {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		color: #4523AE;
+		padding-top: 0.5rem;
+	}
+
+	.message-text p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.7;
+		color: #333;
+		margin-bottom: 1.5rem;
+	}
+
+	.signature {
+		margin-top: 2rem;
+		text-align: right;
+	}
+
+	.signature p {
+		margin-bottom: 0.5rem;
+	}
+
+	.name {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.25rem;
+		font-weight: 400;
+		color: #4523AE;
+	}
+
+	/* Contact Future Section */
+	.contact-future-content {
+		margin-top: 2rem;
+	}
+
+	.future-message {
+		background: white;
+		padding: 3rem;
+		border-radius: 20px;
+		border: 1px solid #e9ecef;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+	}
+
+	.future-message h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.future-message p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.6;
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.contact-links {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.link-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.link-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.link-url {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		font-weight: 500;
+		color: #4523AE;
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.link-url:hover {
+		color: #2D1B69;
+		text-decoration: underline;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.banner-actions {
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.content-section {
+			padding: 4rem 1rem;
+		}
+
+		.content-grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.section-header {
+			margin-bottom: 3rem;
+		}
+
+		.features-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.feature-card {
+			padding: 1.5rem;
+		}
+
+		.metrics-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+
+		.metric-card {
+			padding: 1.5rem 1rem;
+		}
+
+		.message-card {
+			padding: 2rem;
+		}
+
+		.future-message {
+			padding: 2rem;
+		}
+
+		.highlight-item {
+			gap: 1rem;
+		}
+
+		.highlight-number {
+			min-width: 2rem;
+			font-size: 1.25rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.content-section {
+			padding: 3rem 1rem;
+		}
+
+		.section-title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+
+		.metrics-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.metric-number {
+			font-size: 2rem;
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	/* Main Content Dark Mode */
+	:global(.dark-mode .main-content) {
+		background: #050112;
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .content-section) {
+		border-bottom-color: #333333;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	}
+
+	:global(.dark-mode .section-title) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .section-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .content-description) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .highlight-content h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .highlight-content p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .info-card) {
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
+	}
+
+	:global(.dark-mode .info-value) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .info-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .feature-card),
+	:global(.dark-mode .metric-card),
+	:global(.dark-mode .message-card),
+	:global(.dark-mode .future-message) {
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .feature-card:hover),
+	:global(.dark-mode .metric-card:hover) {
+		background: #0f0a1a;
+		border-color: rgba(69, 35, 174, 0.6);
+	}
+
+	:global(.dark-mode .feature-card h3),
+	:global(.dark-mode .metric-label),
+	:global(.dark-mode .future-message h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .feature-card p),
+	:global(.dark-mode .metric-description),
+	:global(.dark-mode .message-text p),
+	:global(.dark-mode .future-message p),
+	:global(.dark-mode .link-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .feature-icon) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .metric-number) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .link-url) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .link-url:hover) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .name) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .highlight-number) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .status-dot) {
+		background: #22c55e;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.main-content),
+	:global(.content-section),
+	:global(.section-title),
+	:global(.section-label),
+	:global(.content-description),
+	:global(.highlight-content h3),
+	:global(.highlight-content p),
+	:global(.info-card),
+	:global(.info-value),
+	:global(.info-label),
+	:global(.feature-card),
+	:global(.feature-card h3),
+	:global(.feature-card p),
+	:global(.metric-card),
+	:global(.metric-label),
+	:global(.metric-description),
+	:global(.message-card),
+	:global(.future-message),
+	:global(.link-url) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(.feature-card),
+	:global(.metric-card) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			transform 0.3s ease;
+	}
+
+	:global(body) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

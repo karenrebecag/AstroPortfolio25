@@ -2,7 +2,6 @@
 // FAQs.astro - Sección de preguntas frecuentes con funcionalidad de acordeón (Dark Mode)
 import FAQsIsland from './FAQsIsland.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
-import { NoiseBackground } from './NoiseBackground.tsx';
 import { motion } from 'motion/react';
 import { getFAQSchema } from '../../utils/structuredData';
 
@@ -14,8 +13,6 @@ const faqStructuredData = getFAQSchema();
 <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)}></script>
 
 <section class="faqs-section">
-  <!-- Noise Background Effect -->
-  <NoiseBackground opacity={0.12} speed={0.25} className="dark" client:visible />
   
   <div class="faqs-container">
     <!-- Giant Heading with TextDisperse -->

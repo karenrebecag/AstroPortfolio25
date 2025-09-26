@@ -8,7 +8,6 @@ import {
     Github,
 } from 'lucide-react';
 import { DitheringShader } from '../three/DitheringShader';
-import { NoiseBackground } from './NoiseBackground';
 import FlipText from './FlipText';
 import { SpeedlifyStats } from './SpeedlifyStats';
 import Toast from './Toast';
@@ -112,10 +111,6 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                         backgroundColor: '#111111',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
                     }}>
-                        {/* Noise Background Effect */}
-                        <div className="absolute inset-0 z-0">
-                            <NoiseBackground opacity={0.06} speed={0.15} className="dark" />
-                        </div>
                         
                         {/* DitheringShader Background Scene */}
                         <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)' }}>
@@ -225,6 +220,25 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     isHovered={isHovered}
                                     className="karen-ortiz-flip-text"
                                 />
+                            </div>
+                            
+                            {/* Nav Links pequeños debajo de KAREN ORTIZ */}
+                            <div className="flex items-center justify-center gap-8 mt-4 mb-8">
+                                <a 
+                                    href="/greetings" 
+                                    className="text-white/70 hover:text-white font-primary text-sm font-medium transition-colors duration-300"
+                                    data-cursor-text="View Greetings"
+                                >
+                                    Greetings
+                                </a>
+                                <span className="text-white/30 text-sm">•</span>
+                                <a 
+                                    href="#privacy" 
+                                    className="text-white/70 hover:text-white font-primary text-sm font-medium transition-colors duration-300"
+                                    data-cursor-text="Privacy Policy"
+                                >
+                                    Privacy Policy
+                                </a>
                             </div>
                             
                             {/* Performance Stats Section */}

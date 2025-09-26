@@ -1,0 +1,1243 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import HeaderPill from '../components/ui/HeaderPill.astro';
+import ParallaxBanner from '../components/ui/ParallaxBanner.astro';
+import MainButton from '../components/ui/MainButton.astro';
+import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
+import { InView } from '../components/ui/InView.tsx';
+import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
+import { LucideIcon } from '../components/ui/LucideIcon.tsx';
+import ShareBar from '../components/ui/ShareBar.astro';
+import CommentsSection from '../components/ui/CommentsSection.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Karen Ortiz - Términos y Condiciones" lang="en">
+	<HeaderPill />
+
+	<!-- Parallax Banner Strip -->
+	<ParallaxBanner
+		title="Términos y Condiciones"
+		subtitle="Condiciones de uso, políticas de privacidad y términos legales para el uso de este portafolio"
+		backgroundSrc="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/alt-g7Cv2QzqL3k6ey3igjNYkM32d8Fld7.mp4"
+		placeholder=""
+		height="100vh"
+	>
+		<div slot="actions" class="banner-actions">
+			<MainButton href="#terms-overview" />
+		</div>
+	</ParallaxBanner>
+
+	<DarkModeContainer client:load>
+		<!-- Main Content Sections -->
+		<main class="main-content" id="main-content">
+
+		<!-- Terms Overview Section -->
+		<section class="content-section" id="terms-overview">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title" id="terms-overview">
+						<TextDisperseBlack client:idle text="Información Legal" />
+					</h2>
+					<div class="section-label">Actualizado: Septiembre 2025</div>
+				</div>
+
+				<InView client:idle
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="content-grid">
+						<div class="content-main">
+							<p class="content-description">
+								Bienvenido al portafolio profesional de Karen Rebeca Ortiz. Al acceder y utilizar este sitio web, aceptas cumplir con los siguientes términos y condiciones. Este documento establece las reglas y regulaciones para el uso de este portafolio personal y profesional.
+							</p>
+
+							<div class="content-highlights">
+								<div class="highlight-item">
+									<div class="highlight-number">01</div>
+									<div class="highlight-content">
+										<h3>Uso Permitido</h3>
+										<p>Este sitio web es un portafolio profesional destinado a mostrar habilidades, proyectos y experiencia profesional con fines informativos y de networking.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">02</div>
+									<div class="highlight-content">
+										<h3>Propiedad Intelectual</h3>
+										<p>Todo el contenido, incluyendo código, diseños, textos e imágenes, está protegido por derechos de autor y es propiedad de Karen Rebeca Ortiz.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">03</div>
+									<div class="highlight-content">
+										<h3>Responsabilidad</h3>
+										<p>El uso de la información y recursos disponibles en este sitio es bajo tu propia responsabilidad y discreción.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="content-sidebar">
+							<div class="info-card">
+								<div class="info-label">Última Actualización</div>
+								<div class="info-value">Septiembre 2025</div>
+							</div>
+
+							<div class="info-card">
+								<div class="info-label">Jurisdicción</div>
+								<div class="info-value">Internacional</div>
+							</div>
+
+							<div class="info-card">
+								<div class="info-label">Idioma Principal</div>
+								<div class="info-value">Español/English</div>
+							</div>
+
+							<div class="info-card">
+								<div class="info-label">Estado</div>
+								<div class="info-value status-active">
+									<div class="status-dot"></div>
+									Vigente
+								</div>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Terms of Use Section -->
+		<section class="content-section" id="terms-of-use">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Términos de Uso" />
+					</h2>
+					<div class="section-label">Condiciones Generales</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+				>
+					<div class="terms-content">
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="file-text" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>1. Aceptación de Términos</h3>
+								<p>Al acceder a este sitio web, aceptas estar sujeto a estos términos y condiciones. Si no estás de acuerdo con alguno de estos términos, no debes usar este sitio.</p>
+							</div>
+						</div>
+
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="eye" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>2. Uso del Contenido</h3>
+								<p>El contenido de este sitio es para uso informativo únicamente. No puedes reproducir, distribuir o crear trabajos derivados sin permiso expreso por escrito.</p>
+							</div>
+						</div>
+
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="shield-check" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>3. Limitación de Responsabilidad</h3>
+								<p>Este sitio se proporciona "tal como está". No garantizamos que esté libre de errores o que satisfaga tus requisitos específicos.</p>
+							</div>
+						</div>
+
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="users" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>4. Conducta del Usuario</h3>
+								<p>Los usuarios deben comportarse de manera respetuosa y profesional al interactuar con este sitio y sus contenidos.</p>
+							</div>
+						</div>
+
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="refresh-cw" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>5. Modificaciones</h3>
+								<p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación.</p>
+							</div>
+						</div>
+
+						<div class="term-section">
+							<div class="term-icon">
+								<LucideIcon client:load name="mail" size={32} />
+							</div>
+							<div class="term-details">
+								<h3>6. Contacto</h3>
+								<p>Para preguntas sobre estos términos, contacta a: sodioinfo@gmail.com</p>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Privacy Policy Section -->
+		<section class="content-section" id="privacy-policy">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Política de Privacidad" />
+					</h2>
+					<div class="section-label">Protección de Datos</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+				>
+					<div class="privacy-content">
+						<div class="privacy-card">
+							<div class="privacy-header">
+								<LucideIcon client:load name="lock" size={40} />
+								<h3>Recopilación de Información</h3>
+							</div>
+							<div class="privacy-body">
+								<ul>
+									<li>No recopilamos información personal identificable sin tu consentimiento</li>
+									<li>Podemos usar cookies para mejorar la experiencia del usuario</li>
+									<li>Los datos de analytics son anónimos y agregados</li>
+									<li>No vendemos ni compartimos información personal con terceros</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="privacy-card">
+							<div class="privacy-header">
+								<LucideIcon client:load name="database" size={40} />
+								<h3>Uso de la Información</h3>
+							</div>
+							<div class="privacy-body">
+								<ul>
+									<li>Mejorar la funcionalidad y experiencia del sitio web</li>
+									<li>Responder a consultas y comunicaciones</li>
+									<li>Análisis de tráfico y comportamiento del usuario (anónimo)</li>
+									<li>Cumplimiento de obligaciones legales cuando sea necesario</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="privacy-card">
+							<div class="privacy-header">
+								<LucideIcon client:load name="shield" size={40} />
+								<h3>Seguridad de Datos</h3>
+							</div>
+							<div class="privacy-body">
+								<ul>
+									<li>Implementamos medidas de seguridad técnicas y organizativas</li>
+									<li>Acceso limitado a información personal</li>
+									<li>Cifrado de datos sensibles en tránsito y en reposo</li>
+									<li>Revisiones regulares de nuestras prácticas de seguridad</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="privacy-card">
+							<div class="privacy-header">
+								<LucideIcon client:load name="user-check" size={40} />
+								<h3>Tus Derechos</h3>
+							</div>
+							<div class="privacy-body">
+								<ul>
+									<li>Derecho de acceso a tu información personal</li>
+									<li>Derecho de rectificación de datos incorrectos</li>
+									<li>Derecho de eliminación de tus datos</li>
+									<li>Derecho de portabilidad de datos</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Intellectual Property Section -->
+		<section class="content-section" id="intellectual-property">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Propiedad Intelectual" />
+					</h2>
+					<div class="section-label">Derechos de Autor</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
+				>
+					<div class="ip-content">
+						<div class="ip-section">
+							<h3>Contenido Original</h3>
+							<p>Todo el contenido original de este sitio web, incluyendo pero no limitado a:</p>
+							<ul>
+								<li>Código fuente y arquitectura de software</li>
+								<li>Diseños, layouts y elementos visuales</li>
+								<li>Textos, artículos y documentación</li>
+								<li>Fotografías y materiales gráficos originales</li>
+								<li>Proyectos y casos de estudio presentados</li>
+							</ul>
+							<p>Están protegidos por derechos de autor y son propiedad exclusiva de Karen Rebeca Ortiz.</p>
+						</div>
+
+						<div class="ip-section">
+							<h3>Uso Permitido</h3>
+							<p>Se permite el uso limitado del contenido para:</p>
+							<ul>
+								<li>Visualización personal y profesional</li>
+								<li>Referencia en procesos de contratación</li>
+								<li>Evaluación de habilidades técnicas</li>
+								<li>Networking profesional</li>
+							</ul>
+						</div>
+
+						<div class="ip-section">
+							<h3>Uso Prohibido</h3>
+							<p>Está estrictamente prohibido:</p>
+							<ul>
+								<li>Copiar, reproducir o distribuir el contenido sin autorización</li>
+								<li>Crear trabajos derivados basados en el contenido</li>
+								<li>Usar el contenido con fines comerciales sin permiso</li>
+								<li>Remover o alterar avisos de derechos de autor</li>
+								<li>Hacerse pasar por el autor original del contenido</li>
+							</ul>
+						</div>
+
+						<div class="ip-section">
+							<h3>Contenido de Terceros</h3>
+							<p>Algunos elementos pueden incluir:</p>
+							<ul>
+								<li>Bibliotecas y frameworks de código abierto (licenciados apropiadamente)</li>
+								<li>Íconos y recursos bajo licencias Creative Commons</li>
+								<li>Imágenes de stock con licencia apropiada</li>
+								<li>Herramientas y servicios de terceros integrados</li>
+							</ul>
+							<p>Estos elementos mantienen sus licencias originales y derechos de sus respectivos propietarios.</p>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Disclaimer Section -->
+		<section class="content-section" id="disclaimer">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Descargo de Responsabilidad" />
+					</h2>
+					<div class="section-label">Información Importante</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }}
+				>
+					<div class="disclaimer-content">
+						<div class="disclaimer-card important">
+							<div class="disclaimer-header">
+								<LucideIcon client:load name="alert-triangle" size={32} />
+								<h3>Aviso General</h3>
+							</div>
+							<p>
+								La información en este sitio web se proporciona únicamente con fines informativos y de demostración profesional.
+								Aunque nos esforzamos por mantener la información actualizada y precisa, no hacemos declaraciones ni garantías
+								de ningún tipo, expresas o implícitas, sobre la integridad, precisión, confiabilidad, idoneidad o disponibilidad
+				del sitio web o la información contenida en él.
+							</p>
+						</div>
+
+						<div class="disclaimer-card">
+							<div class="disclaimer-header">
+								<LucideIcon client:load name="info" size={32} />
+								<h3>Proyectos y Casos de Estudio</h3>
+							</div>
+							<p>
+								Los proyectos presentados en este portafolio son ejemplos de trabajo profesional. Los resultados pasados
+								no garantizan resultados futuros similares. Cada proyecto es único y los resultados pueden variar según
+								las circunstancias específicas, recursos disponibles y objetivos del cliente.
+							</p>
+						</div>
+
+						<div class="disclaimer-card">
+							<div class="disclaimer-header">
+								<LucideIcon client:load name="external-link" size={32} />
+								<h3>Enlaces Externos</h3>
+							</div>
+							<p>
+								Este sitio web puede contener enlaces a otros sitios web que no están bajo nuestro control.
+								No tenemos control sobre la naturaleza, contenido y disponibilidad de esos sitios. La inclusión
+								de cualquier enlace no implica necesariamente una recomendación o respaldo de las opiniones expresadas en ellos.
+							</p>
+						</div>
+
+						<div class="disclaimer-card">
+							<div class="disclaimer-header">
+								<LucideIcon client:load name="clock" size={32} />
+								<h3>Disponibilidad del Servicio</h3>
+							</div>
+							<p>
+								Aunque nos esforzamos por mantener el sitio web funcionando sin problemas, no somos responsables
+				temporales por razones que están fuera de nuestro control, incluyendo pero no limitado a fallas técnicas,
+				mantenimiento, actualizaciones o causas de fuerza mayor.
+			</p>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Contact Legal Section -->
+		<section class="content-section" id="legal-contact">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:visible text="Contacto Legal" />
+					</h2>
+					<div class="section-label">Consultas y Soporte</div>
+				</div>
+
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
+				>
+					<div class="legal-contact-content">
+						<div class="contact-info">
+							<h3>Información de Contacto</h3>
+							<p>
+								Si tienes preguntas sobre estos Términos y Condiciones, Política de Privacidad,
+				o cualquier aspecto legal relacionado con este sitio web, no dudes en contactarnos:
+			</p>
+
+							<div class="contact-details">
+								<div class="contact-item">
+									<LucideIcon client:load name="mail" size={20} />
+									<div>
+										<strong>Email:</strong>
+										<a href="mailto:sodioinfo@gmail.com">sodioinfo@gmail.com</a>
+									</div>
+								</div>
+
+								<div class="contact-item">
+									<LucideIcon client:load name="globe" size={20} />
+									<div>
+										<strong>Sitio Web:</strong>
+										<span>karenortiz.dev</span>
+									</div>
+								</div>
+
+								<div class="contact-item">
+									<LucideIcon client:load name="clock" size={20} />
+									<div>
+										<strong>Tiempo de Respuesta:</strong>
+										<span>2-3 días hábiles</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="legal-note">
+								<p>
+									<strong>Nota:</strong> Este documento constituye un acuerdo legal entre tú y Karen Rebeca Ortiz.
+					Al utilizar este sitio web, confirmas que has leído, entendido y aceptado estar sujeto a estos términos.
+				</p>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Share Bar Section -->
+		<ShareBar />
+
+		<!-- Comments Section -->
+		<CommentsSection storyId="terms-and-conditions" />
+
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Banner Actions */
+	.banner-actions {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	/* Main Content Layout */
+	.main-content {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+	}
+
+	.content-section {
+		padding: 6rem 2rem;
+		border-bottom: 1px solid #f0f0f0;
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+		position: relative;
+	}
+
+	.content-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	/* Section Headers */
+	.section-header {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	.section-title {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 400;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		color: #1B1B1B;
+	}
+
+	.section-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	/* Content Grid Layout */
+	.content-grid {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 4rem;
+		align-items: start;
+	}
+
+	.content-main {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.content-description {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.6;
+		color: #333;
+		margin: 0;
+	}
+
+	/* Content Highlights */
+	.content-highlights {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.highlight-item {
+		display: flex;
+		gap: 1.5rem;
+		align-items: flex-start;
+	}
+
+	.highlight-number {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.5rem;
+		font-weight: 400;
+		color: #4523AE;
+		min-width: 3rem;
+		text-align: center;
+	}
+
+	.highlight-content h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 0.5rem 0;
+	}
+
+	.highlight-content p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Sidebar Info Cards */
+	.content-sidebar {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.info-card {
+		padding: 1.5rem;
+		background: #f8f9fa;
+		border-radius: 12px;
+		border: 1px solid #e9ecef;
+	}
+
+	.info-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		margin-bottom: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.info-value {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		font-weight: 600;
+		color: #1B1B1B;
+	}
+
+	.status-active {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #22c55e;
+	}
+
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		background: #22c55e;
+		border-radius: 50%;
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.5; }
+	}
+
+	/* Terms Content Styles */
+	.terms-content {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.term-section {
+		display: grid;
+		gap: 1.5rem;
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+	}
+
+	@media (min-width: 768px) {
+		.term-section {
+			grid-template-columns: auto 1fr;
+			gap: 2rem;
+		}
+	}
+
+	.term-section:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+		border-color: #4523AE;
+	}
+
+	.term-icon {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		color: #4523AE;
+		padding-top: 0.25rem;
+	}
+
+	.term-details h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.term-details p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Privacy Content Styles */
+	.privacy-content {
+		display: grid;
+		gap: 2rem;
+	}
+
+	@media (min-width: 768px) {
+		.privacy-content {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.privacy-card {
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.privacy-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+		border-color: #4523AE;
+	}
+
+	.privacy-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		color: #4523AE;
+	}
+
+	.privacy-header h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0;
+	}
+
+	.privacy-body ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.privacy-body li {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.95rem;
+		line-height: 1.5;
+		color: #666;
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+
+	.privacy-body li::before {
+		content: '';
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234523AE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M20 6 9 17l-5-5'/%3e%3c/svg%3e") no-repeat center;
+		background-size: contain;
+		margin-top: 0.1rem;
+		flex-shrink: 0;
+	}
+
+	/* Intellectual Property Styles */
+	.ip-content {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.ip-section {
+		padding: 2.5rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.ip-section:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+		border-color: #4523AE;
+	}
+
+	.ip-section h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.375rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1.5rem 0;
+	}
+
+	.ip-section p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0 0 1rem 0;
+	}
+
+	.ip-section ul {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.ip-section li {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.95rem;
+		line-height: 1.5;
+		color: #666;
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+
+	.ip-section li::before {
+		content: '•';
+		color: #4523AE;
+		font-weight: bold;
+		margin-top: 0.1rem;
+		flex-shrink: 0;
+	}
+
+	/* Disclaimer Styles */
+	.disclaimer-content {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.disclaimer-card {
+		padding: 2.5rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		transition: all 0.3s ease;
+	}
+
+	.disclaimer-card.important {
+		border-color: #f59e0b;
+		background: #fffbeb;
+	}
+
+	.disclaimer-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	}
+
+	.disclaimer-card.important:hover {
+		border-color: #d97706;
+	}
+
+	.disclaimer-card:not(.important):hover {
+		border-color: #4523AE;
+	}
+
+	.disclaimer-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.disclaimer-card.important .disclaimer-header {
+		color: #d97706;
+	}
+
+	.disclaimer-card:not(.important) .disclaimer-header {
+		color: #4523AE;
+	}
+
+	.disclaimer-header h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0;
+	}
+
+	.disclaimer-card p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Legal Contact Styles */
+	.legal-contact-content {
+		margin-top: 2rem;
+	}
+
+	.contact-info {
+		padding: 3rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 20px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+	}
+
+	.contact-info h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.contact-info p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.6;
+		color: #666;
+		margin-bottom: 2rem;
+	}
+
+	.contact-details {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.contact-item {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		background: #f8f9fa;
+		border-radius: 12px;
+		border: 1px solid #e9ecef;
+	}
+
+	.contact-item strong {
+		color: #1B1B1B;
+		min-width: 120px;
+	}
+
+	.contact-item a {
+		color: #4523AE;
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.contact-item a:hover {
+		color: #2D1B69;
+		text-decoration: underline;
+	}
+
+	.legal-note {
+		padding: 2rem;
+		background: #f8f9fa;
+		border-radius: 12px;
+		border-left: 4px solid #4523AE;
+	}
+
+	.legal-note p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.banner-actions {
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.content-section {
+			padding: 4rem 1rem;
+		}
+
+		.content-grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.section-header {
+			margin-bottom: 3rem;
+		}
+
+		.term-section {
+			padding: 1.5rem;
+		}
+
+		.privacy-content {
+			grid-template-columns: 1fr;
+		}
+
+		.privacy-card {
+			padding: 1.5rem;
+		}
+
+		.ip-section {
+			padding: 2rem;
+		}
+
+		.disclaimer-card {
+			padding: 2rem;
+		}
+
+		.contact-info {
+			padding: 2rem;
+		}
+
+		.highlight-item {
+			gap: 1rem;
+		}
+
+		.highlight-number {
+			min-width: 2rem;
+			font-size: 1.25rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.content-section {
+			padding: 3rem 1rem;
+		}
+
+		.section-title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+
+		.term-section {
+			padding: 1.25rem;
+		}
+
+		.privacy-card {
+			padding: 1.25rem;
+		}
+
+		.ip-section {
+			padding: 1.5rem;
+		}
+
+		.disclaimer-card {
+			padding: 1.5rem;
+		}
+
+		.contact-info {
+			padding: 1.5rem;
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	:global(.dark-mode .main-content) {
+		background: #050112;
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .content-section) {
+		border-bottom-color: #333333;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	}
+
+	:global(.dark-mode .section-title) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .section-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .content-description) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .highlight-content h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .highlight-content p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .info-card),
+	:global(.dark-mode .term-section),
+	:global(.dark-mode .privacy-card),
+	:global(.dark-mode .ip-section),
+	:global(.dark-mode .disclaimer-card),
+	:global(.dark-mode .contact-info) {
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
+	}
+
+	:global(.dark-mode .disclaimer-card.important) {
+		background: #1a1406;
+		border-color: rgba(245, 158, 11, 0.3);
+	}
+
+	:global(.dark-mode .info-value),
+	:global(.dark-mode .term-details h3),
+	:global(.dark-mode .privacy-header h3),
+	:global(.dark-mode .ip-section h3),
+	:global(.dark-mode .disclaimer-header h3),
+	:global(.dark-mode .contact-info h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .info-label),
+	:global(.dark-mode .term-details p),
+	:global(.dark-mode .privacy-body li),
+	:global(.dark-mode .ip-section p),
+	:global(.dark-mode .ip-section li),
+	:global(.dark-mode .disclaimer-card p),
+	:global(.dark-mode .contact-info p),
+	:global(.dark-mode .legal-note p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .term-icon),
+	:global(.dark-mode .privacy-header),
+	:global(.dark-mode .disclaimer-header:not(.important .disclaimer-header)) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .disclaimer-card.important .disclaimer-header) {
+		color: #f59e0b;
+	}
+
+	:global(.dark-mode .highlight-number) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .status-dot) {
+		background: #22c55e;
+	}
+
+	:global(.dark-mode .contact-item) {
+		background: #1f1f1f;
+		border-color: #333333;
+	}
+
+	:global(.dark-mode .contact-item strong) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .contact-item a) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .contact-item a:hover) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .legal-note) {
+		background: #1f1f1f;
+		border-left-color: #4523AE;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.main-content),
+	:global(.content-section),
+	:global(.section-title),
+	:global(.section-label),
+	:global(.content-description),
+	:global(.highlight-content h3),
+	:global(.highlight-content p),
+	:global(.info-card),
+	:global(.info-value),
+	:global(.info-label),
+	:global(.term-section),
+	:global(.privacy-card),
+	:global(.ip-section),
+	:global(.disclaimer-card),
+	:global(.contact-info),
+	:global(.contact-item),
+	:global(.legal-note) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(.term-section),
+	:global(.privacy-card),
+	:global(.ip-section),
+	:global(.disclaimer-card) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			transform 0.3s ease;
+	}
+
+	:global(body) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>
