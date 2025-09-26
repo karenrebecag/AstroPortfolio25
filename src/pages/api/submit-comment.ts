@@ -24,6 +24,7 @@ export const POST: APIRoute = async ({ request }) => {
     const name = formData.get('name') as string;
     const comment = formData.get('comment') as string;
     const storyId = formData.get('storyId') as string;
+    const parentId = formData.get('parentId') as string | null;
     const profilePic = formData.get('profilePic') as File | null;
 
     console.log('📋 Datos recibidos:', { 
@@ -84,10 +85,13 @@ export const POST: APIRoute = async ({ request }) => {
       name,
       comment,
       storyId,
+      parentId: parentId || null,
       profilePicUrl: profilePicUrl || null,
       timestamp: FieldValue.serverTimestamp(),
       status: 'pending',
-      moderationToken
+      moderationToken,
+      likes: 0,
+      likedBy: []
     };
 
     const docRef = await db.collection('comments').add(commentData);

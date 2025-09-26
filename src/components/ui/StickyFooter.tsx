@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import {
     InstagramIcon,
     LinkedinIcon,
     CircleArrowOutUpRight,
+    Link,
+    Github,
 } from 'lucide-react';
 import { DitheringShader } from '../three/DitheringShader';
 import { NoiseBackground } from './NoiseBackground';
 import FlipText from './FlipText';
 import { SpeedlifyStats } from './SpeedlifyStats';
+import Toast from './Toast';
 
 interface FooterLink {
     title: string;
@@ -19,6 +22,12 @@ interface FooterLink {
 interface FooterLinkGroup {
     label: string;
     links: FooterLink[];
+}
+
+interface ToastData {
+    id: string;
+    type: 'success' | 'error';
+    message: string;
 }
 
 type StickyFooterProps = React.ComponentProps<'footer'>;
@@ -45,9 +54,38 @@ function Button({ children, size, variant, className, ...props }: {
 
 export function StickyFooter({ className, ...props }: StickyFooterProps) {
     const [isHovered, setIsHovered] = useState(false);
+    const [toasts, setToasts] = useState<ToastData[]>([]);
+
+    const addToast = (type: 'success' | 'error', message: string) => {
+        const id = Date.now().toString();
+        console.log('Adding toast:', { id, type, message }); // Debug log
+        setToasts(prev => {
+            const newToasts = [...prev, { id, type, message }];
+            console.log('New toasts array:', newToasts); // Debug log
+            return newToasts;
+        });
+    };
+
+    const removeToast = (id: string) => {
+        setToasts(prev => prev.filter(toast => toast.id !== id));
+    };
+    
+    const copyToClipboard = async () => {
+        try {
+            const url = window.location.href;
+            console.log('Attempting to copy:', url); // Debug log
+            await navigator.clipboard.writeText(url);
+            console.log('Copy successful, adding toast'); // Debug log
+            addToast('success', 'Link copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy link:', err);
+            addToast('error', 'Failed to copy link. Please try again.');
+        }
+    };
     
     return (
-        <footer
+        <>
+            <footer
             className={`relative h-[720px] w-full ${className || ''}`}
             style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
             {...props}
@@ -112,7 +150,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                             </p>
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
-                                            {socialLinks.slice(0, 3).map((link, index) => (
+                                            {socialLinks.map((link, index) => (
                                                 <a
                                                     key={link.title}
                                                     href={link.href}
@@ -120,10 +158,19 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                                     rel="noopener noreferrer"
                                                     className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
                                                     title={link.title}
+                                                    data-cursor-text={`Visit ${link.title}`}
                                                 >
                                                     <link.icon className="w-6 h-6 text-white" />
                                                 </a>
                                             ))}
+                                            <button
+                                                onClick={copyToClipboard}
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
+                                                title="Copy Link"
+                                                data-cursor-text="Copy Link"
+                                            >
+                                                <Link className="w-6 h-6 text-white" />
+                                            </button>
                                         </div>
                                     </div>
                                 </AnimatedContainer>
@@ -154,6 +201,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                                 onClick={() => window.open('https://guileless-douhua-b2ff53.netlify.app/karen-ortiz-portfolio/', '_blank')}
                                                 className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
                                                 title="View detailed performance report"
+                                                data-cursor-text="View Report"
                                             >
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-white group-hover:text-white/90" />
                                             </button>
@@ -170,7 +218,36 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                     </div>
                 </div>
             </div>
-        </footer>
+            </footer>
+
+            {/* Toast Container */}
+            <div 
+                style={{
+                    position: 'fixed',
+                    top: '20px',
+                    right: '20px',
+                    zIndex: 9999,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    pointerEvents: 'none'
+                }}
+            >
+                <AnimatePresence>
+                    {toasts.map((toast) => (
+                        <div key={toast.id} style={{ pointerEvents: 'auto' }}>
+                            <Toast
+                                id={toast.id}
+                                type={toast.type}
+                                message={toast.message}
+                                onClose={removeToast}
+                                duration={3000}
+                            />
+                        </div>
+                    ))}
+                </AnimatePresence>
+            </div>
+        </>
     );
 }
 
@@ -184,6 +261,7 @@ const DribbbleIcon = ({ className }: { className?: string }) => (
 const socialLinks = [
     { title: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282', icon: LinkedinIcon },
     { title: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/', icon: InstagramIcon },
+    { title: 'GitHub', href: 'https://github.com/karenrebecag', icon: Github },
     { title: 'Dribbble', href: 'https://dribbble.com/krog11', icon: DribbbleIcon },
 ];
 

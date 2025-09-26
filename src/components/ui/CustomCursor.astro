@@ -307,10 +307,14 @@
         if (element.closest('.karen-ortiz-container')) return 'Interactive Name';
         
         // Para enlaces sociales en footer
-        if (element.closest('a[href*="linkedin"]')) return 'Go there!';
-        if (element.closest('a[href*="instagram"]')) return 'Instagram Profile';
-        if (element.closest('a[href*="dribbble"]')) return 'Dribbble Profile';
-        if (element.closest('a[href*="github"]')) return 'GitHub Profile';
+        if (element.closest('a[href*="linkedin"]')) return 'Visit LinkedIn';
+        if (element.closest('a[href*="instagram"]')) return 'Visit Instagram';
+        if (element.closest('a[href*="dribbble"]')) return 'Visit Dribbble';
+        if (element.closest('a[href*="github"]')) return 'Visit GitHub';
+        
+        // Para botones de copiar link
+        if (element.closest('button[data-cursor-text="Copy Link"]')) return 'Copy Link';
+        if (element.closest('button[title="Copy Link"]')) return 'Copy Link';
 
         // Para elementos FlipText
         if (element.classList.contains('flip-text') || element.closest('.flip-text')) {

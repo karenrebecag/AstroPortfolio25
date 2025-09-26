@@ -12,38 +12,35 @@ const lang = getLangFromUrl(Astro.url);
   <div class="header-wrapper" id="headerWrapper">
     <header class="header" id="mainHeader">
       <div class="logo-section">
-        <button class="back-btn" id="backBtn">
+        <button class="back-btn" id="backBtn" data-cursor-text="Go Back">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m15 18-6-6 6-6"/>
           </svg>
         </button>
-        <div class="logo" id="logoBtn">KAREN ORTIZ</div>
+        <div class="logo" id="logoBtn" data-cursor-text="Go Home">KAREN ORTIZ</div>
       </div>
 
-      <div class="header-actions-wrapper">
-        <div class="contact-btn-wrapper">
-          <a href="#contact" class="contact-link">
-            <MainButton text={t('nav.contact', lang)} />
-          </a>
+      <div class="header-right-section">
+        <div class="header-actions-wrapper">
+          <div class="contact-btn-wrapper">
+            <a href="/#contact" class="contact-link" data-cursor-text="Get In Touch">
+              <MainButton text={t('nav.contact', lang)} />
+            </a>
+          </div>
+          <LanguageSelectorWrapper />
         </div>
-        <LanguageSelectorWrapper />
+
         <div class="dark-mode-toggle-wrapper">
           <div id="darkModeToggle"></div>
         </div>
       </div>
-
-      <button class="menu-btn" id="menuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </header>
   </div>
 </div>
 
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-content">
-    <button class="mobile-close-btn" id="mobileCloseBtn">
+    <button class="mobile-close-btn" id="mobileCloseBtn" data-cursor-text="Close Menu">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
         <path d="m18 6-12 12"/>
         <path d="m6 6 12 12"/>
@@ -267,10 +264,16 @@ const lang = getLangFromUrl(Astro.url);
     width: 100%;
   }
 
+  .header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .header-actions-wrapper {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 1rem;
   }
 
   .contact-btn-wrapper {
@@ -321,6 +324,24 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   :global(.dark-mode .dark-mode-toggle-btn svg) {
+    color: #ffffff;
+  }
+
+  /* Dark mode styles for all SVGs in header */
+  :global(.dark-mode .back-btn svg) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .mobile-close-btn svg) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .header-pill) {
+    background: rgba(10, 8, 22, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .logo) {
     color: #ffffff;
   }
 
@@ -867,10 +888,18 @@ const lang = getLangFromUrl(Astro.url);
 
     const logoBtn = document.querySelector('.logo');
     logoBtn?.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      // Check if we're on the home page
+      const currentPath = window.location.pathname;
+      if (currentPath === '/' || currentPath === '/index.html') {
+        // We're on home page, scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      } else {
+        // We're on a different page, navigate to home
+        window.location.href = '/';
+      }
     });
 
     const backBtn = document.querySelector('.back-btn');
@@ -906,7 +935,16 @@ const lang = getLangFromUrl(Astro.url);
     const contactLink = document.querySelector('.contact-link');
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();
-      smoothScrollTo('contact');
+      
+      // Check if we're on the home page
+      const currentPath = window.location.pathname;
+      if (currentPath === '/' || currentPath === '/index.html') {
+        // We're on home page, scroll to contact section
+        smoothScrollTo('contact');
+      } else {
+        // We're on a different page, navigate to home with contact hash
+        window.location.href = '/#contact';
+      }
     });
 
     // Dark Mode Toggle Functionality
@@ -927,7 +965,7 @@ const lang = getLangFromUrl(Astro.url);
 
         // Update button content
         toggleContainer.innerHTML = `
-          <button class="dark-mode-toggle-btn" title="${isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}">
+          <button class="dark-mode-toggle-btn" title="${isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}" data-cursor-text="${isDark ? 'Light Mode' : 'Dark Mode'}">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${isDark ?
                 '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>' :

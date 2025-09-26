@@ -220,7 +220,7 @@ export const Carousel = memo(({ slides }: CarouselProps) => {
         ))}
       </ul>
 
-      <div className="absolute flex justify-center w-full top-[calc(100%+1rem)]">
+      <div className="absolute flex space-x-10  w-full top-[calc(100%+1rem)]">
         <CarouselControl
           type="previous"
           title="Go to previous slide"

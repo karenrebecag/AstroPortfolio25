@@ -28,6 +28,8 @@ interface CommentsState {
   // API actions
   fetchComments: (storyId: string) => Promise<void>;
   submitComment: (storyId: string) => Promise<boolean>;
+  submitReply: (storyId: string, parentId: string, content: string) => Promise<boolean>;
+  likeComment: (commentId: string) => Promise<boolean>;
 }
 
 const initialFormData: CommentFormData = {
@@ -137,6 +139,94 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
         error: 'Failed to submit comment. Please try again.', 
         isSubmitting: false 
       });
+      return false;
+    }
+  },
+
+  submitReply: async (storyId: string, parentId: string, content: string) => {
+    const { formData } = get();
+    
+    if (!content.trim()) {
+      set({ error: 'Reply content is required' });
+      return false;
+    }
+    
+    set({ isSubmitting: true, error: null });
+    
+    try {
+      const submitData = new FormData();
+      submitData.append('name', formData.name || 'Anonymous');
+      submitData.append('comment', content.trim());
+      submitData.append('storyId', storyId);
+      submitData.append('parentId', parentId);
+      
+      const response = await fetch('/api/submit-comment', {
+        method: 'POST',
+        body: submitData
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        set({ isSubmitting: false });
+        return true;
+      } else {
+        set({ 
+          error: result.message, 
+          isSubmitting: false 
+        });
+        return false;
+      }
+    } catch (error) {
+      console.error('Error submitting reply:', error);
+      set({ 
+        error: 'Failed to submit reply. Please try again.', 
+        isSubmitting: false 
+      });
+      return false;
+    }
+  },
+
+  likeComment: async (commentId: string) => {
+    try {
+      const response = await fetch('/api/like-comment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ commentId })
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Update local state optimistically
+        const { comments } = get();
+        const updateCommentLikes = (commentsList: Comment[]): Comment[] => {
+          return commentsList.map(comment => {
+            if (comment.id === commentId) {
+              const isLiked = comment.likedBy.includes('anonymous');
+              return {
+                ...comment,
+                likes: isLiked ? comment.likes - 1 : comment.likes + 1,
+                likedBy: isLiked 
+                  ? comment.likedBy.filter(id => id !== 'anonymous')
+                  : [...comment.likedBy, 'anonymous']
+              };
+            }
+            if (comment.replies.length > 0) {
+              return { ...comment, replies: updateCommentLikes(comment.replies) };
+            }
+            return comment;
+          });
+        };
+        
+        set({ comments: updateCommentLikes(comments) });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error liking comment:', error);
       return false;
     }
   }

@@ -21,8 +21,29 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Dark mode detection
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const savedTheme = localStorage.getItem('aurin-theme');
+      const hasDarkClass = document.documentElement.classList.contains('dark-mode');
+      setIsDarkMode(savedTheme === 'dark' || hasDarkClass);
+    };
+
+    checkDarkMode();
+
+    // Listen for theme changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Create portal container
@@ -211,14 +232,14 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       style={{
         position: 'absolute',
         minWidth: '220px',
-        background: 'rgba(255, 255, 255, 0.98)',
-        border: '1px solid rgba(204, 204, 204, 0.2)',
-        borderRadius: '8px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+        background: isDarkMode ? '#1f1f1f' : '#fefaec',
+        border: `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
+        borderRadius: '0px',
+        boxShadow: `4px 4px 0px ${isDarkMode ? '#333333' : '#000000'}`,
         overflow: 'hidden',
-        backdropFilter: 'blur(20px)',
         opacity: 0,
         pointerEvents: 'auto',
+        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       }}
     >
       {languages.map((language, index) => (
@@ -230,25 +251,25 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             alignItems: 'center',
             gap: '12px',
             padding: '14px 16px',
-            color: '#131019',
+            color: isDarkMode ? '#ffffff' : '#000000',
             textDecoration: 'none',
-            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            borderBottom: index === languages.length - 1 ? 'none' : '1px solid rgba(204, 204, 204, 0.08)',
+            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            borderBottom: index === languages.length - 1 ? 'none' : `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
             fontFamily: 'var(--font-primary)',
             position: 'relative',
             overflow: 'hidden',
             ...(language.code === currentLang && {
-              background: 'rgba(6, 3, 20, 0.06)',
-              borderLeft: '3px solid #060314',
-              fontWeight: 'var(--font-weight-semibold)',
+              background: isDarkMode ? '#333333' : '#f0f0f0',
+              borderLeft: `4px solid ${isDarkMode ? '#4523AE' : '#000000'}`,
+              fontWeight: 'var(--font-weight-bold)',
             }),
           }}
           onMouseEnter={(e) => {
             if (language.code !== currentLang) {
-              e.currentTarget.style.background = 'rgba(247, 248, 249, 0.9)';
-              e.currentTarget.style.transform = 'translateX(4px)';
-              e.currentTarget.style.paddingLeft = '20px';
-              e.currentTarget.style.boxShadow = 'inset 3px 0 0 rgba(6, 3, 20, 0.1)';
+              e.currentTarget.style.background = isDarkMode ? '#2a2a2a' : '#e0e0e0';
+              e.currentTarget.style.transform = 'translateX(2px)';
+              e.currentTarget.style.paddingLeft = '18px';
+              e.currentTarget.style.boxShadow = `inset 2px 0 0 ${isDarkMode ? '#4523AE' : '#000000'}`;
             }
           }}
           onMouseLeave={(e) => {
@@ -283,33 +304,36 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             gap: '2px'
           }}>
             <span style={{
-              fontWeight: language.code === currentLang ? 'var(--font-weight-semibold)' : 'var(--font-weight-medium)',
+              fontWeight: language.code === currentLang ? 'var(--font-weight-bold)' : 'var(--font-weight-normal)',
               fontSize: 'var(--text-sm)',
               lineHeight: 'var(--leading-tight)',
               letterSpacing: 'var(--tracking-normal)',
-              fontFamily: 'var(--font-primary)',
+              fontFamily: 'var(--font-game)',
+              textTransform: 'uppercase',
             }}>
               {language.name}
             </span>
             <span style={{
               fontSize: 'var(--text-xs)',
-              color: '#666',
+              color: isDarkMode ? '#e5e5e5' : '#666',
               fontWeight: 'var(--font-weight-normal)',
               letterSpacing: 'var(--tracking-normal)',
               opacity: 0.8,
               fontFamily: 'var(--font-primary)',
-              fontStyle: 'italic',
+              fontStyle: 'normal',
+              transition: 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}>
               {language.greeting}
             </span>
           </div>
           <span style={{
             fontSize: 'var(--text-xs)',
-            color: '#888',
+            color: isDarkMode ? '#999' : '#888',
             fontWeight: 'var(--font-weight-medium)',
             letterSpacing: 'var(--tracking-wider)',
             fontFamily: 'var(--font-display)',
             opacity: 0.7,
+            transition: 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           }}>
             {language.code.toUpperCase()}
           </span>
@@ -329,35 +353,35 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
           alignItems: 'center',
           gap: '6px',
           padding: '8px 12px',
-          border: '1px solid rgba(204, 204, 204, 0.3)',
-          borderRadius: '6px',
-          background: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
+          border: `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
+          borderRadius: '0px',
+          background: isDarkMode ? '#1f1f1f' : '#ffffff',
           cursor: 'pointer',
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'var(--font-game)',
           fontSize: 'var(--text-sm)',
-          fontWeight: 'var(--font-weight-semibold)',
-          color: '#131019',
-          transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          fontWeight: 'var(--font-weight-normal)',
+          color: isDarkMode ? '#ffffff' : '#000000',
+          transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           letterSpacing: 'var(--tracking-wide)',
+          textTransform: 'uppercase',
+          boxShadow: `2px 2px 0px ${isDarkMode ? '#333333' : '#000000'}`,
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = '#060314';
-          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
-          e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+          e.currentTarget.style.background = isDarkMode ? '#2a2a2a' : '#f0f0f0';
+          e.currentTarget.style.transform = 'translate(1px, 1px)';
+          e.currentTarget.style.boxShadow = `1px 1px 0px ${isDarkMode ? '#333333' : '#000000'}`;
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(204, 204, 204, 0.3)';
-          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
-          e.currentTarget.style.transform = 'translateY(0px)';
-          e.currentTarget.style.boxShadow = 'none';
+          e.currentTarget.style.background = isDarkMode ? '#1f1f1f' : '#ffffff';
+          e.currentTarget.style.transform = 'translate(0px, 0px)';
+          e.currentTarget.style.boxShadow = `2px 2px 0px ${isDarkMode ? '#333333' : '#000000'}`;
         }}
       >
         <span style={{
-          fontWeight: 'var(--font-weight-semibold)',
+          fontWeight: 'var(--font-weight-normal)',
           letterSpacing: 'var(--tracking-wider)',
-          fontSize: 'var(--text-sm)'
+          fontSize: 'var(--text-sm)',
+          fontFamily: 'var(--font-game)',
         }}>
           {currentLang.toUpperCase()}
         </span>

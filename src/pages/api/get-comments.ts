@@ -33,7 +33,12 @@ export const GET: APIRoute = async ({ url }) => {
         profilePicUrl: data.profilePicUrl || undefined,
         timestamp: data.timestamp?.toDate() || new Date(),
         status: data.status,
-        moderationToken: undefined // No incluir token en respuesta pública
+        moderationToken: undefined, // No incluir token en respuesta pública
+        parentId: data.parentId || undefined,
+        likes: data.likes || 0,
+        likedBy: data.likedBy || [],
+        replies: [], // Will be populated in frontend
+        depth: 0 // Will be calculated in frontend
       });
     });
 

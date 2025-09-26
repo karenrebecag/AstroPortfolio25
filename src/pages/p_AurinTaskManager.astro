@@ -9,10 +9,10 @@ import CodeBlock from '../components/ui/CodeBlock.astro';
 import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
 import { InView } from '../components/ui/InView.tsx';
 import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
-import { WhiteStickyFooter } from '../components/ui/WhiteStickyFooter.tsx';
 import { LucideIcon } from '../components/ui/LucideIcon.tsx';
 import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { Carousel } from '../components/ui/Carousel.tsx';
+import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import '../styles/global.css';
 
@@ -1017,8 +1017,8 @@ const loadTestResults = {
 											<LucideIcon client:load name="external-link" size={16} />
 											Live Application
 										</div>
-										<a href="https://aurin-task-manager.vercel.app" target="_blank" rel="noopener noreferrer" class="link-url">
-											aurin-task-manager.vercel.app
+										<a href="https://pm.aurincloud.com/sign-in" target="_blank" rel="noopener noreferrer" class="link-url">
+											pm.aurincloud.com
 										</a>
 									</div>
 
@@ -1032,13 +1032,7 @@ const loadTestResults = {
 										</a>
 									</div>
 
-									<div class="link-item">
-										<div class="link-label">
-											<LucideIcon client:load name="user" size={16} />
-											Developer
-										</div>
-										<div class="link-text">Karen Rebeca Ortiz</div>
-									</div>
+								
 
 									<div class="link-item">
 										<div class="link-label">
@@ -1098,6 +1092,9 @@ const loadTestResults = {
 			
 			</div>
 		</section>
+
+		<!-- Share Bar Section -->
+		<ShareBar />
 
 		<!-- Comments Section -->
 		<CommentsSection storyId="aurin-task-manager" />
@@ -2124,19 +2121,23 @@ const loadTestResults = {
 
 	/* Dark Mode Styles for New Sections */
 	:global(.dark-mode .metric-card),
+	:global(.dark-mode .feature-card),
+	:global(.dark-mode .info-card),
 	:global(.dark-mode .timeline-item),
 	:global(.dark-mode .achievement-item),
 	:global(.dark-mode .stat-item) {
-		background: #1f1f1f;
-		border-color: #333333;
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
 	}
 
 	:global(.dark-mode .metric-card:hover),
+	:global(.dark-mode .feature-card:hover),
+	:global(.dark-mode .info-card:hover),
 	:global(.dark-mode .timeline-item:hover),
 	:global(.dark-mode .achievement-item:hover),
 	:global(.dark-mode .stat-item:hover) {
-		background: #252525;
-		border-color: #4523AE;
+		background: #0f0a1a;
+		border-color: rgba(69, 35, 174, 0.6);
 	}
 
 	:global(.dark-mode .metric-label),
@@ -2162,9 +2163,12 @@ const loadTestResults = {
 	:global(.dark-mode .architecture-number),
 	:global(.dark-mode .architecture-subtitle),
 	:global(.dark-mode .timeline-phase),
-	:global(.dark-mode .link-url),
 	:global(.dark-mode .stat-value) {
 		color: #4523AE !important;
+	}
+
+	:global(.dark-mode .link-url) {
+		color: #ffffff !important;
 	}
 
 	:global(.dark-mode .stat-icon) {
@@ -2186,12 +2190,12 @@ const loadTestResults = {
 
 	/* Ensure link hover states work in dark mode */
 	:global(.dark-mode .link-url:hover) {
-		color: #6366f1 !important;
+		color: #e5e5e5 !important;
 	}
 
 	/* Make sure all list items and bullets are visible */
 	:global(.dark-mode .achievement-item li::before) {
-		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234523AE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M20 6 9 17l-5-5'/%3e%3c/svg%3e") no-repeat center !important;
+		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1' stroke-linecap='round' stroke-linejoin='round' opacity='0.4'%3e%3cpath d='M20 6 9 17l-5-5'/%3e%3c/svg%3e") no-repeat center !important;
 		background-size: contain !important;
 	}
 
@@ -2304,6 +2308,7 @@ const loadTestResults = {
 	@media (max-width: 768px) {
 		.code-section {
 			margin-bottom: 3rem;
+			padding: 100px 0px 0px 0px;
 		}
 
 		.code-section-title {

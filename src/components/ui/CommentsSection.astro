@@ -1,49 +1,113 @@
 ---
-// CommentsSection.astro - Wrapper component for Comments Island
-import CommentsIsland from './CommentsIsland.tsx';
+// CommentsSection.astro - Wrapper component for comments
+import RedditCommentsIsland from './RedditCommentsIsland.tsx';
+import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 
 export interface Props {
   className?: string;
   title?: string;
   subtitle?: string;
-  storyId: string; // Required: ID of the success story
+  storyId: string;
 }
 
 const { 
   className = '',
-  title = 'Comments',
-  subtitle = 'Share your thoughts about my work and projects',
+  title = 'Discussion',
+  subtitle = 'Share your thoughts and join the conversation',
   storyId
 } = Astro.props;
 ---
 
-<section class={`comments-section ${className}`}>
-  <div class="comments-container">
-    <!-- Comments Island - loads only when visible -->
+<!-- Comments Section with standardized styling -->
+<section class={`content-section comments-section ${className}`} id="comments">
+  <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <TextDisperseBlack text={title} client:load />
+        </h2>
+        <p class="section-subtitle">{subtitle}</p>
+      </div>
+    
+    <!-- Reddit-style Comments Island - loads only when visible -->
     <div class="comments-island-wrapper">
-      <CommentsIsland client:visible storyId={storyId} />
+      <RedditCommentsIsland client:visible storyId={storyId} />
     </div>
   </div>
 </section>
 
 <style>
   .comments-section {
-    width: 100%;
+    /* Use the same background pattern as other sections */
     background: #ffffff;
-    padding: 120px 0;
     position: relative;
+    overflow: hidden;
   }
 
-  .comments-container {
-    width: 100%;
-    max-width: 1400px;
+  .section-container {
+    padding: 3em 0px;
+    position: relative;
+    background-color: #ececec;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode Styles */
+  :global(.dark-mode .section-container) {
+    background-color: #0a0817;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-tight);
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .section-subtitle {
+    font-family: var(--font-primary);
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-relaxed);
+    color: #666666;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 0 2rem;
   }
 
   .comments-island-wrapper {
     width: 100%;
-    min-height: 200px; /* Prevent layout shift */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+
+  @media (max-width: 768px) {
+    .comments-island-wrapper {
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
+
+  /* Center Discussion title in all viewports */
+  :global(.comments-island-wrapper .relative.flex.cursor-pointer) {
+    justify-content: center !important;
   }
 
   /* Dark mode support */
@@ -51,30 +115,28 @@ const {
     .comments-section {
       background: #171523;
     }
+
+    .comments-section::before {
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+
+    .section-title {
+      color: #111111;
+    }
+
+    .section-subtitle {
+      color: #111111;
+    }
   }
 
-  /* Responsive design */
+  /* Mobile optimizations */
   @media (max-width: 768px) {
-    .comments-section {
-      padding: 80px 0;
-    }
-    
-    .comments-container {
-      padding: 0 1rem;
+    .section-header {
+      margin-bottom: clamp(30px, 8vw, 50px);
     }
   }
-
-  @media (max-width: 480px) {
-    .comments-section {
-      padding: 60px 0;
-    }
-    
-    .comments-container {
-      padding: 0 1rem;
-    }
-  }
-
-  /* Loading state styles */
   .comments-island-wrapper:empty::before {
     content: '';
     display: block;
