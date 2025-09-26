@@ -87,30 +87,30 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelEnemy(x: number, y: number, frame: number, type: number) {
       const size = 8;
-      ctx.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
+      ctx!.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
       
       if (frame === 0) {
-        ctx.fillRect(x + size, y, size * 3, size);
-        ctx.fillRect(x, y + size, size * 5, size);
-        ctx.fillRect(x, y + size * 2, size, size);
-        ctx.fillRect(x + size * 4, y + size * 2, size, size);
-        ctx.fillRect(x + size, y + size * 3, size * 3, size);
+        ctx!.fillRect(x + size, y, size * 3, size);
+        ctx!.fillRect(x, y + size, size * 5, size);
+        ctx!.fillRect(x, y + size * 2, size, size);
+        ctx!.fillRect(x + size * 4, y + size * 2, size, size);
+        ctx!.fillRect(x + size, y + size * 3, size * 3, size);
       } else {
-        ctx.fillRect(x + size, y, size * 3, size);
-        ctx.fillRect(x, y + size, size * 5, size);
-        ctx.fillRect(x, y + size * 2, size * 2, size);
-        ctx.fillRect(x + size * 3, y + size * 2, size * 2, size);
-        ctx.fillRect(x + size * 2, y + size * 3, size, size);
+        ctx!.fillRect(x + size, y, size * 3, size);
+        ctx!.fillRect(x, y + size, size * 5, size);
+        ctx!.fillRect(x, y + size * 2, size * 2, size);
+        ctx!.fillRect(x + size * 3, y + size * 2, size * 2, size);
+        ctx!.fillRect(x + size * 2, y + size * 3, size, size);
       }
     }
 
     function drawPixelPlayer(x: number, y: number) {
       const size = 10;
-      ctx.fillStyle = '#0f0';
+      ctx!.fillStyle = '#0f0';
       
-      ctx.fillRect(x + size, y, size, size);
-      ctx.fillRect(x, y + size, size * 3, size);
-      ctx.fillRect(x, y + size * 2, size * 3, size);
+      ctx!.fillRect(x + size, y, size, size);
+      ctx!.fillRect(x, y + size, size * 3, size);
+      ctx!.fillRect(x, y + size * 2, size * 3, size);
     }
 
     function drawPlayer() {
@@ -124,8 +124,8 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         if (star.brightness > 1) star.brightness = 0;
         
         const alpha = Math.abs(Math.sin(star.brightness * Math.PI));
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.fillRect(star.x, star.y, star.size, star.size);
+        ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx!.fillRect(star.x, star.y, star.size, star.size);
       });
     }
 
@@ -141,14 +141,14 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     }
 
     function drawBullets() {
-      ctx.fillStyle = '#fff';
+      ctx!.fillStyle = '#fff';
       gameState.bullets.forEach(bullet => {
-        ctx.fillRect(bullet.x - 2, bullet.y, 4, 12);
+        ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
       
-      ctx.fillStyle = '#f00';
+      ctx!.fillStyle = '#f00';
       gameState.enemyBullets.forEach(bullet => {
-        ctx.fillRect(bullet.x - 2, bullet.y, 4, 12);
+        ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
     }
 
@@ -159,7 +159,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
           gameState.player.gridX--;
           gameState.player.lastMove = currentTime;
         }
-        if (gameState.player.moveRight && gameState.player.gridX < Math.floor(canvas.width / GRID_SIZE) - 1) {
+        if (gameState.player.moveRight && gameState.player.gridX < Math.floor(canvas!.width / GRID_SIZE) - 1) {
           gameState.player.gridX++;
           gameState.player.lastMove = currentTime;
         }
@@ -176,7 +176,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       
       gameState.enemyBullets.forEach((bullet, index) => {
         bullet.y += enemyBulletSpeed;
-        if (bullet.y > canvas.height) {
+        if (bullet.y > canvas!.height) {
           gameState.enemyBullets.splice(index, 1);
         }
       });
@@ -192,7 +192,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         gameState.enemies.forEach(enemy => {
           if (enemy.alive) {
             const nextX = enemy.gridX + gameState.enemyDirection;
-            if (nextX < 0 || nextX >= Math.floor(canvas.width / GRID_SIZE)) {
+            if (nextX < 0 || nextX >= Math.floor(canvas!.width / GRID_SIZE)) {
               shouldMoveDown = true;
             }
           }
@@ -292,7 +292,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     function gameLoop() {
       if (!gameState.gameRunning) return;
       
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
       
       gameState.animationFrame++;
       gameState.enemyAnimFrame++;
@@ -410,7 +410,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
     function gameLoop() {
       if (!gameState.gameRunning) return;
       
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
       
       gameState.animationFrame++;
       gameState.enemyAnimFrame++;
@@ -438,7 +438,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
           gameState.player.gridX--;
           gameState.player.lastMove = currentTime;
         }
-        if (gameState.player.moveRight && gameState.player.gridX < Math.floor(canvas.width / GRID_SIZE) - 1) {
+        if (gameState.player.moveRight && gameState.player.gridX < Math.floor(canvas!.width / GRID_SIZE) - 1) {
           gameState.player.gridX++;
           gameState.player.lastMove = currentTime;
         }
@@ -455,7 +455,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
       
       gameState.enemyBullets.forEach((bullet, index) => {
         bullet.y += enemyBulletSpeed;
-        if (bullet.y > canvas.height) {
+        if (bullet.y > canvas!.height) {
           gameState.enemyBullets.splice(index, 1);
         }
       });
@@ -471,7 +471,7 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         gameState.enemies.forEach(enemy => {
           if (enemy.alive) {
             const nextX = enemy.gridX + gameState.enemyDirection;
-            if (nextX < 0 || nextX >= Math.floor(canvas.width / GRID_SIZE)) {
+            if (nextX < 0 || nextX >= Math.floor(canvas!.width / GRID_SIZE)) {
               shouldMoveDown = true;
             }
           }
@@ -581,8 +581,8 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
         if (star.brightness > 1) star.brightness = 0;
         
         const alpha = Math.abs(Math.sin(star.brightness * Math.PI));
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.fillRect(star.x, star.y, star.size, star.size);
+        ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx!.fillRect(star.x, star.y, star.size, star.size);
       });
     }
 
@@ -593,11 +593,11 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelPlayer(x: number, y: number) {
       const size = 10;
-      ctx.fillStyle = '#0f0';
+      ctx!.fillStyle = '#0f0';
       
-      ctx.fillRect(x + size, y, size, size);
-      ctx.fillRect(x, y + size, size * 3, size);
-      ctx.fillRect(x, y + size * 2, size * 3, size);
+      ctx!.fillRect(x + size, y, size, size);
+      ctx!.fillRect(x, y + size, size * 3, size);
+      ctx!.fillRect(x, y + size * 2, size * 3, size);
     }
 
     function drawEnemies() {
@@ -613,32 +613,32 @@ export function SpaceInvadersIsland({ onExit }: SpaceInvadersIslandProps) {
 
     function drawPixelEnemy(x: number, y: number, frame: number, type: number) {
       const size = 8;
-      ctx.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
+      ctx!.fillStyle = type === 0 ? '#f0f' : type === 1 ? '#ff0' : '#0ff';
       
       if (frame === 0) {
-        ctx.fillRect(x + size, y, size * 3, size);
-        ctx.fillRect(x, y + size, size * 5, size);
-        ctx.fillRect(x, y + size * 2, size, size);
-        ctx.fillRect(x + size * 4, y + size * 2, size, size);
-        ctx.fillRect(x + size, y + size * 3, size * 3, size);
+        ctx!.fillRect(x + size, y, size * 3, size);
+        ctx!.fillRect(x, y + size, size * 5, size);
+        ctx!.fillRect(x, y + size * 2, size, size);
+        ctx!.fillRect(x + size * 4, y + size * 2, size, size);
+        ctx!.fillRect(x + size, y + size * 3, size * 3, size);
       } else {
-        ctx.fillRect(x + size, y, size * 3, size);
-        ctx.fillRect(x, y + size, size * 5, size);
-        ctx.fillRect(x, y + size * 2, size * 2, size);
-        ctx.fillRect(x + size * 3, y + size * 2, size * 2, size);
-        ctx.fillRect(x + size * 2, y + size * 3, size, size);
+        ctx!.fillRect(x + size, y, size * 3, size);
+        ctx!.fillRect(x, y + size, size * 5, size);
+        ctx!.fillRect(x, y + size * 2, size * 2, size);
+        ctx!.fillRect(x + size * 3, y + size * 2, size * 2, size);
+        ctx!.fillRect(x + size * 2, y + size * 3, size, size);
       }
     }
 
     function drawBullets() {
-      ctx.fillStyle = '#fff';
+      ctx!.fillStyle = '#fff';
       gameState.bullets.forEach(bullet => {
-        ctx.fillRect(bullet.x - 2, bullet.y, 4, 12);
+        ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
       
-      ctx.fillStyle = '#f00';
+      ctx!.fillStyle = '#f00';
       gameState.enemyBullets.forEach(bullet => {
-        ctx.fillRect(bullet.x - 2, bullet.y, 4, 12);
+        ctx!.fillRect(bullet.x - 2, bullet.y, 4, 12);
       });
     }
     
