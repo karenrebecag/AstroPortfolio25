@@ -3,13 +3,14 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import HeaderPill from '../components/ui/HeaderPill.astro';
-import ParallaxBanner from '../components/ui/ParallaxBanner.astro';
+import MegaBanner from '../components/ui/MegaBanner.astro';
 import MainButton from '../components/ui/MainButton.astro';
 import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
 import { InView } from '../components/ui/InView.tsx';
 import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
 import { LucideIcon } from '../components/ui/LucideIcon.tsx';
 import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
+import { ArcGalleryHero } from '../components/ui/ArcGalleryHero.tsx';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import '../styles/global.css';
@@ -18,18 +19,37 @@ import '../styles/global.css';
 <Layout title="Karen Ortiz - Agradecimientos" lang="en">
 	<HeaderPill />
 
-	<!-- Parallax Banner Strip -->
-	<ParallaxBanner
-		title="Gracias"
-		subtitle="Un sincero agradecimiento a todos los que han sido parte de este increíble viaje"
-		backgroundSrc="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/greetings.mp4"
+	<!-- Mega Banner Strip with ArcGalleryHero -->
+	<MegaBanner
+		title=""
+		subtitle=""
+		backgroundSrc="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/assets_task_01jxdhja51e83ahdppm6v3f0dq_1749580091_img_1.jpeg"
 		placeholder=""
 		height="100vh"
+		className="low-opacity-bg"
 	>
-		<div slot="actions" class="banner-actions">
-			<MainButton href="#gratitude-message" />
+		<div slot="actions" class="arc-gallery-container">
+			<ArcGalleryHero 
+				client:load
+				className="background-override"
+				images={[
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.17.35%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.19.04%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.20.16%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/4bff168e-1c99-44b0-82e4-86bf82b7a125.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.22.12%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/IMG_0760.jpg',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.24.04%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.10%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.57%402x.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/1fd7fb34-b422-4cdf-bc3b-82be7a0e453c.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/6644db8d-9a37-43da-8e92-a9d49df28e4b.webp',
+					'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.31.40%402x.webp'
+				]}
+			/>
 		</div>
-	</ParallaxBanner>
+	</MegaBanner>
 
 	<DarkModeContainer client:load>
 		<!-- Main Content Sections -->
@@ -85,270 +105,15 @@ import '../styles/global.css';
 							</div>
 						</div>
 
-						<div class="content-sidebar">
-							<div class="info-card">
-								<div class="info-label">Años de Experiencia</div>
-								<div class="info-value">5+ Años</div>
-							</div>
-
-							<div class="info-card">
-								<div class="info-label">Proyectos Completados</div>
-								<div class="info-value">50+ Proyectos</div>
-							</div>
-
-							<div class="info-card">
-								<div class="info-label">Clientes Satisfechos</div>
-								<div class="info-value">100+ Clientes</div>
-							</div>
-
-			<div class="info-card">
-				<div class="info-label">Estado Actual</div>
-				<div class="info-value status-active">
-					<div class="status-dot"></div>
-					Siempre Agradecida
-				</div>
-			</div>
-						</div>
 					</div>
 				</InView>
 			</div>
 		</section>
 
-		<!-- Special Thanks Section -->
-		<section class="content-section" id="special-thanks">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Agradecimientos Especiales" />
-					</h2>
-					<div class="section-label">Personas que marcan la diferencia</div>
-				</div>
 
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
-				>
-					<div class="features-grid">
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="heart" size={40} />
-							</div>
-							<h3>Comunidad de Desarrolladores</h3>
-							<p>Gracias a toda la comunidad open source, Stack Overflow, GitHub y Discord por ser mi segunda universidad.</p>
-						</div>
 
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="users" size={40} />
-							</div>
-							<h3>Clientes y Colaboradores</h3>
-							<p>Por confiar en mi trabajo, por los desafíos que me han hecho crecer y por permitirme ser parte de sus historias de éxito.</p>
-						</div>
 
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="book-open" size={40} />
-							</div>
-							<h3>Recursos de Aprendizaje</h3>
-							<p>A todas las plataformas, cursos, libros y contenido que han alimentado mi sed de conocimiento y crecimiento profesional.</p>
-						</div>
-
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="coffee" size={40} />
-							</div>
-							<h3>Compañeros de Camino</h3>
-							<p>A mis compañeros de trabajo, colegas de la industria y amigos desarrolladores por hacer este camino más divertido y enriquecedor.</p>
-						</div>
-
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="star" size={40} />
-							</div>
-							<h3>Futuros Colaboradores</h3>
-							<p>Gracias anticipadas a todas las personas increíbles con las que tendré la oportunidad de trabajar en el futuro.</p>
-						</div>
-
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="gift" size={40} />
-							</div>
-							<h3>A Ti</h3>
-							<p>Sí, a ti que estás viendo este portafolio. Gracias por tu tiempo, por considerar mi trabajo y por ser parte de esta historia.</p>
-						</div>
-					</div>
-				</InView>
-			</div>
-		</section>
-
-		<!-- Impact Numbers Section -->
-		<section class="content-section" id="impact">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Impacto Compartido" />
-					</h2>
-					<div class="section-label">Logros juntos</div>
-				</div>
-
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
-				>
-					<div class="metrics-grid">
-						<div class="metric-card">
-							<div class="metric-number">
-								<AnimatedNumber client:load value={1000} suffix="+" />
-							</div>
-							<div class="metric-label">Horas de Aprendizaje</div>
-							<div class="metric-description">Invertidas en crecimiento</div>
-						</div>
-
-						<div class="metric-card">
-							<div class="metric-number">
-								<AnimatedNumber client:load value={365} />
-							</div>
-							<div class="metric-label">Días de Gratitud</div>
-							<div class="metric-description">Por año, cada día cuenta</div>
-						</div>
-
-						<div class="metric-card">
-							<div class="metric-number">
-								<AnimatedNumber client:load value={100} suffix="%" />
-							</div>
-							<div class="metric-label">Compromiso</div>
-							<div class="metric-description">Con la excelencia</div>
-						</div>
-
-						<div class="metric-card">
-							<div class="metric-number">
-								<AnimatedNumber client:load value={999} suffix="+" />
-							</div>
-							<div class="metric-label">Razones para Sonreír</div>
-							<div class="metric-description">Gracias a cada uno de ustedes</div>
-						</div>
-					</div>
-				</InView>
-			</div>
-		</section>
-
-		<!-- Personal Message Section -->
-		<section class="content-section" id="personal-message">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Un Mensaje Personal" />
-					</h2>
-					<div class="section-label">Desde el corazón</div>
-				</div>
-
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-				>
-					<div class="personal-message-content">
-						<div class="message-card">
-							<div class="message-icon">
-								<LucideIcon client:load name="message-heart" size={48} />
-							</div>
-							<div class="message-text">
-								<p>
-									"Cada línea de código que escribo, cada proyecto que termino, cada desafío que supero,
-									lleva consigo un pedacito de todos ustedes. Este portafolio no es solo mío; es nuestro.
-									Es el resultado de una comunidad increíble que me ha enseñado que el éxito individual
-									no existe sin el apoyo colectivo."
-								</p>
-								<p>
-									"Seguiré creando, aprendiendo y creciendo, llevando siempre conmigo las lecciones que
-									me han dado y el ejemplo de generosidad que han mostrado. El futuro está lleno de
-									posibilidades, y espero poder retribuir todo lo que he recibido."
-								</p>
-								<div class="signature">
-									<p><strong>Con infinita gratitud,</strong></p>
-									<p class="name">Karen Rebeca Ortiz</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</InView>
-			</div>
-		</section>
-
-		<!-- Contact & Future Section -->
-		<section class="content-section" id="contact-future">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Sigamos Conectados" />
-					</h2>
-					<div class="section-label">El viaje continúa</div>
-				</div>
-
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-				>
-					<div class="contact-future-content">
-						<div class="future-message">
-							<h3>Construyamos Juntos el Futuro</h3>
-							<p>
-								Mi gratitud hacia ustedes se extiende hacia el futuro. Estoy emocionada por las
-								oportunidades que vendrán, los proyectos que crearemos juntos y las nuevas personas
-								increíbles que conoceré en este camino.
-							</p>
-
-							<div class="contact-links">
-								<div class="link-item">
-									<div class="link-label">
-										<LucideIcon client:load name="mail" size={16} />
-										Contacto
-									</div>
-									<a href="mailto:sodioinfo@gmail.com" class="link-url">
-										sodioinfo@gmail.com
-									</a>
-								</div>
-
-								<div class="link-item">
-									<div class="link-label">
-										<LucideIcon client:load name="linkedin" size={16} />
-										LinkedIn
-									</div>
-									<a href="https://linkedin.com/in/karenrebecaortiz" target="_blank" rel="noopener noreferrer" class="link-url">
-										linkedin.com/in/karenrebecaortiz
-									</a>
-								</div>
-
-								<div class="link-item">
-									<div class="link-label">
-										<LucideIcon client:load name="github" size={16} />
-										GitHub
-									</div>
-									<a href="https://github.com/KarenRebecaOrtiz" target="_blank" rel="noopener noreferrer" class="link-url">
-										github.com/KarenRebecaOrtiz
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</InView>
-			</div>
-		</section>
+		
 
 		<!-- Share Bar Section -->
 		<ShareBar />
@@ -369,6 +134,48 @@ import '../styles/global.css';
 		align-items: center;
 		flex-wrap: wrap;
 	}
+
+	/* Arc Gallery Container */
+	.arc-gallery-container {
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Low Opacity Background - Reduced to 20% */
+	:global(.low-opacity-bg .mega-background-wrapper) {
+		opacity: 0.2 !important;
+	}
+
+	:global(.low-opacity-bg .mega-background-wrapper img),
+	:global(.low-opacity-bg .mega-background-wrapper video) {
+		opacity: 1 !important;
+		width: 100% !important;
+		height: 100% !important;
+		object-fit: cover !important;
+		object-position: center !important;
+	}
+
+	/* Ensure background container matches video behavior */
+	:global(.low-opacity-bg .mega-background-container) {
+		width: 100% !important;
+		height: 100vh !important;
+		overflow: hidden !important;
+		position: absolute !important;
+		top: 0 !important;
+		left: 0 !important;
+	}
+
+	/* Background Override for ArcGalleryHero */
+	:global(.background-override) {
+		background: transparent !important;
+		backdrop-filter: none !important;
+	}
+
 
 	/* Main Content Layout */
 	.main-content {
