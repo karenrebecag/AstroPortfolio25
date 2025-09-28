@@ -1,9 +1,24 @@
 ---
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
 export interface Props {
   loadingText?: string;
+  lang?: string;
 }
 
-const { loadingText = "Loading" } = Astro.props;
+// Detectar idioma de la URL actual o usar el prop lang
+const detectedLang = getLangFromUrl(Astro.url);
+const currentLang = Astro.props.lang || detectedLang;
+
+// Función de traducción local
+function getLoadingText(lang: string): string {
+  const langTranslations = translations[lang as keyof typeof translations];
+  return langTranslations?.common?.loading || translations.en.common.loading;
+}
+
+// Obtener texto de loading traducido
+const loadingText = Astro.props.loadingText || getLoadingText(currentLang);
 ---
 
 <div id="preloader" class="preloader">
@@ -15,7 +30,7 @@ const { loadingText = "Loading" } = Astro.props;
   </svg>
   <div class="preloader-heading">
     <div class="load-text">
-      {loadingText.split('').map((letter, index) => (
+      {loadingText.split('').map((letter: string, index: number) => (
         <span style={`animation-delay: ${index * 0.1}s`}>{letter}</span>
       ))}
     </div>

@@ -454,7 +454,6 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                   ) : (
                     <div className="avatar-placeholder">
                       <Upload size={20} />
-                      <span>Add Photo</span>
                     </div>
                   )}
                 </label>

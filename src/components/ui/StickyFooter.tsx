@@ -233,7 +233,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 </a>
                                 <span className="text-white/30 text-sm">•</span>
                                 <a 
-                                    href="#privacy" 
+                                    href="/privacy" 
                                     className="text-white/70 hover:text-white font-primary text-sm font-medium transition-colors duration-300"
                                     data-cursor-text="Privacy Policy"
                                 >

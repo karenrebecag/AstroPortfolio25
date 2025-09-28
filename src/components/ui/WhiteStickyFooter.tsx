@@ -233,7 +233,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                 </a>
                                 <span className="text-gray-400 text-sm">•</span>
                                 <a 
-                                    href="#privacy" 
+                                    href="/privacy" 
                                     className="text-gray-600 hover:text-gray-900 font-primary text-sm font-medium transition-colors duration-300"
                                     data-cursor-text="Privacy Policy"
                                 >
