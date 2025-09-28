@@ -102,11 +102,15 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className={`
                   ${colors.bg} ${colors.border} ${colors.text}
-                  border rounded-lg shadow-lg p-4 min-w-[320px] max-w-[400px]
+                  border rounded-lg shadow-lg min-w-[320px] max-w-[400px]
                   backdrop-blur-sm
                 `}
                 style={{
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)'
+                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
+                  paddingTop: '1rem',
+                  paddingBottom: '1rem',
+                  paddingLeft: '0.5rem',
+                  paddingRight: '0.5rem'
                 }}
               >
                 <div className="flex items-start gap-3">

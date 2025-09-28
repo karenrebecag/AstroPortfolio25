@@ -270,7 +270,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
       
       // Show success message about pre-filled data
       if (cachedData.name) {
-        showSuccess(`Welcome back, ${cachedData.name}! Your information has been pre-filled.`);
+        showSuccess(`Welcome back, ${cachedData.name}! Your information has been pre-filled. You can check my privacy policy for more details.`);
       }
     }
   }, [cachedData, hasCachedData, formData.name, formData.email, setFormField, isInitialized, showSuccess]);
