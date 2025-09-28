@@ -1,0 +1,496 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import HeaderPill from '../components/ui/HeaderPill.astro';
+import MegaBanner from '../components/ui/MegaBanner.astro';
+import MainButton from '../components/ui/MainButton.astro';
+import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
+import { InView } from '../components/ui/InView.tsx';
+import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
+import { LucideIcon } from '../components/ui/LucideIcon.tsx';
+import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
+import { ArcGalleryHero } from '../components/ui/ArcGalleryHero.tsx';
+import ShareBar from '../components/ui/ShareBar.astro';
+import CommentsSection from '../components/ui/CommentsSection.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Karen Ortiz - Privacy Policy" lang="en">
+	<HeaderPill />
+
+
+
+	<DarkModeContainer client:load>
+		<!-- Main Content Sections -->
+		<main class="main-content" id="main-content">
+		<!-- Privacy Policy Section -->
+		<section class="content-section privacy-section" id="privacy-policy">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title" id="privacy-message">
+						<TextDisperseBlack client:idle text="Privacy Policy" />
+					</h2>
+					<div class="section-label">Your privacy is our priority</div>
+				</div>
+
+				<InView client:idle
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="content-grid">
+						<div class="content-main">
+							<p class="content-description">
+								In this portfolio, your privacy is fundamental. This policy transparently explains how and when I collect personal information, always with your explicit consent and only when you actively choose to interact with my content.
+							</p>
+
+							<div class="content-highlights">
+								<div class="highlight-item">
+									<div class="highlight-number">01</div>
+									<div class="highlight-content">
+										<h3>When I collect information</h3>
+										<p>I collect personal information <strong>only</strong> when you voluntarily choose to submit a comment on my blog articles or write a review about my services. I do not collect data automatically, there is no user tracking, and I do not store information without your explicit action.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">02</div>
+									<div class="highlight-content">
+										<h3>What information I collect</h3>
+										<p>When you choose to interact, I collect: your name, email address, profile photo (optional), and the content of your comment or review. This information is provided voluntarily through specific forms.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">03</div>
+									<div class="highlight-content">
+										<h3>Temporary caching system</h3>
+										<p>During your active session, I temporarily store your information (name, email, photo) to facilitate multiple interactions without requiring you to re-enter the same data repeatedly. This cache is automatically deleted when your browsing session ends.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">04</div>
+									<div class="highlight-content">
+										<h3>Storage and moderation</h3>
+										<p>Comments and reviews are stored in Firestore, profile photos in Vercel Blobs. All content is subject to manual moderation before publication. Non-approved content is permanently deleted from my systems.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">05</div>
+									<div class="highlight-content">
+										<h3>No user tracking</h3>
+										<p>I do not maintain user profiles or login systems. Each comment or review is independent. I do not link interactions between sessions or create persistent profiles. Identification is solely by name in public comments.</p>
+									</div>
+								</div>
+
+								<div class="highlight-item">
+									<div class="highlight-number">06</div>
+									<div class="highlight-content">
+										<h3>Your rights and control</h3>
+										<p>You can edit your information before submission, request deletion of your published comments, and have complete control over what information you share. I comply with GDPR, CCPA, and other applicable privacy regulations.</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="privacy-details">
+								<div class="detail-section">
+									<h3>Detailed technical information</h3>
+									<p>My system is designed with privacy by design, implementing the principle of data minimization and consensual collection.</p>
+									
+									<h4>Data architecture</h4>
+									<p><strong>Firestore:</strong> Stores approved comments and reviews with fields: name, email, content, timestamp, moderation status.<br>
+									<strong>Vercel Blobs:</strong> Stores profile photos linked only to approved comments.<br>
+									<strong>Session cache:</strong> Temporary data automatically deleted when browser is closed.</p>
+									
+									<h4>Moderation process</h4>
+									<p>All comments go through manual review via email notification system and API routes. Content can be approved (field "approved": true) to appear publicly, or rejected for permanent deletion. There is no automatic publication.</p>
+									
+									<h4>Privacy principles</h4>
+									<p><strong>Explicit consent:</strong> I only collect data when you submit forms.<br>
+									<strong>Minimization:</strong> I only store what's necessary for functionality.<br>
+									<strong>Transparency:</strong> Clear and understandable process.<br>
+									<strong>User control:</strong> Information is editable and deletable.</p>
+									
+									<h4>Third-party services</h4>
+									<p><strong>Vercel:</strong> Hosting and file storage (privacy policy: vercel.com/legal/privacy-policy)<br>
+									<strong>Google Cloud/Firestore:</strong> Database (privacy policy: cloud.google.com/privacy)</p>
+									
+									<h4>Data retention</h4>
+									<p><strong>Approved comments:</strong> Stored indefinitely until deletion request.<br>
+									<strong>Rejected comments:</strong> Deleted immediately after moderation decision.<br>
+									<strong>Temporary cache:</strong> Automatically deleted when session ends.<br>
+									<strong>Profile photos:</strong> Linked to approved comments, deleted if comment is deleted.</p>
+									
+									<h4>Contact me to exercise rights</h4>
+									<p>To request access, rectification, deletion, or any inquiry about your personal data, contact me directly at <strong>karenrortizg@gmail.com</strong> or through other means available on the website. I will respond within a maximum of 30 days.</p>
+									
+									<p class="last-updated"><strong>Last updated:</strong> September 27, 2025</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Share Bar Section -->
+		<ShareBar />
+
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Banner Actions */
+	.banner-actions {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	/* Arc Gallery Container */
+	.arc-gallery-container {
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Low Opacity Background - Reduced to 20% */
+	:global(.low-opacity-bg .mega-background-wrapper) {
+		opacity: 0.2 !important;
+	}
+
+	:global(.low-opacity-bg .mega-background-wrapper img),
+	:global(.low-opacity-bg .mega-background-wrapper video) {
+		opacity: 1 !important;
+		width: 100% !important;
+		height: 100% !important;
+		object-fit: cover !important;
+		object-position: center !important;
+	}
+
+	/* Ensure background container matches video behavior */
+	:global(.low-opacity-bg .mega-background-container) {
+		width: 100% !important;
+		height: 100vh !important;
+		overflow: hidden !important;
+		position: absolute !important;
+		top: 0 !important;
+		left: 0 !important;
+	}
+
+	/* Background Override for ArcGalleryHero */
+	:global(.background-override) {
+		background: transparent !important;
+		backdrop-filter: none !important;
+	}
+
+	/* Main Content Layout */
+	.main-content {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+	}
+
+	.content-section {
+		padding: 6rem 2rem;
+		border-bottom: 1px solid #f0f0f0;
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+		position: relative;
+	}
+
+	.privacy-section {
+		padding-top: 8rem;
+	}
+
+	.content-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	/* Section Headers */
+	.section-header {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	.section-title {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 400;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		color: #1B1B1B;
+	}
+
+	.section-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	/* Content Grid Layout */
+	.content-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 4rem;
+		align-items: start;
+	}
+
+	.content-main {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.content-description {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		line-height: 1.6;
+		color: #333;
+		margin: 0;
+	}
+
+	/* Content Highlights */
+	.content-highlights {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.highlight-item {
+		display: flex;
+		gap: 1.5rem;
+		align-items: flex-start;
+	}
+
+	.highlight-number {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.5rem;
+		font-weight: 400;
+		color: #4523AE;
+		min-width: 3rem;
+		text-align: center;
+	}
+
+	.highlight-content h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 0.5rem 0;
+	}
+
+	.highlight-content p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Privacy Details Section */
+	.privacy-details {
+		margin-top: 3rem;
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+	}
+
+	.detail-section h3 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.detail-section h4 {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 2rem 0 0.75rem 0;
+	}
+
+	.detail-section p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0 0 1rem 0;
+	}
+
+	.last-updated {
+		margin-top: 2rem;
+		padding-top: 1rem;
+		border-top: 1px solid #e9ecef;
+		font-size: 0.875rem !important;
+		color: #999 !important;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.banner-actions {
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.content-section {
+			padding: 5.6rem 1.4rem;
+		}
+
+		.privacy-section {
+			padding-top: 11.2rem;
+		}
+
+		.content-grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.section-header {
+			margin-bottom: 3rem;
+		}
+
+		.highlight-item {
+			gap: 1rem;
+		}
+
+		.highlight-number {
+			min-width: 2rem;
+			font-size: 1.25rem;
+		}
+
+		.privacy-details {
+			padding: 1.5rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.content-section {
+			padding: 4.2rem 1.4rem;
+		}
+
+		.privacy-section {
+			padding-top: 11.2rem;
+		}
+
+		.section-title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	/* Main Content Dark Mode */
+	:global(.dark-mode .main-content) {
+		background: #050112;
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .content-section) {
+		border-bottom-color: #333333;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	}
+
+	:global(.dark-mode .section-title) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .section-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .content-description) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .highlight-content h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .highlight-content p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .highlight-number) {
+		color: #4523AE;
+	}
+
+	:global(.dark-mode .privacy-details) {
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
+	}
+
+	:global(.dark-mode .detail-section h3),
+	:global(.dark-mode .detail-section h4) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .detail-section p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .last-updated) {
+		border-top-color: #333333;
+		color: #999999 !important;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.main-content),
+	:global(.content-section),
+	:global(.section-title),
+	:global(.section-label),
+	:global(.content-description),
+	:global(.highlight-content h3),
+	:global(.highlight-content p),
+	:global(.privacy-details),
+	:global(.detail-section h3),
+	:global(.detail-section h4),
+	:global(.detail-section p) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(body) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>
