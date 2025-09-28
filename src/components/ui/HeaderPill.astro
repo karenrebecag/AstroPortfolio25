@@ -875,8 +875,10 @@ const lang = getLangFromUrl(Astro.url);
         setTimeout(() => {
           target = document.getElementById(targetId);
           if (target) {
-            const headerHeight = (headerPill as HTMLElement)?.offsetHeight || 0;
-            const targetPosition = (target as HTMLElement).offsetTop - headerHeight - 20;
+            // Use fixed header height to avoid forced reflow
+            const headerHeight = 80; // Fixed height instead of offsetHeight
+            const targetRect = target.getBoundingClientRect();
+            const targetPosition = window.pageYOffset + targetRect.top - headerHeight - 20;
 
             window.scrollTo({
               top: targetPosition,
@@ -887,8 +889,10 @@ const lang = getLangFromUrl(Astro.url);
         return;
       }
 
-      const headerHeight = (headerPill as HTMLElement)?.offsetHeight || 0;
-      const targetPosition = (target as HTMLElement).offsetTop - headerHeight - 20;
+      // Use fixed header height and getBoundingClientRect to minimize reflow
+      const headerHeight = 80; // Fixed height instead of offsetHeight
+      const targetRect = target.getBoundingClientRect();
+      const targetPosition = window.pageYOffset + targetRect.top - headerHeight - 20;
 
       window.scrollTo({
         top: targetPosition,

@@ -7,11 +7,30 @@
 /images/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Models and 3D assets - Cache for 1 year
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Audio files - Cache for 1 year
+/audio/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Video files - Cache for 6 months
+/videos/*
+  Cache-Control: public, max-age=15552000
+
 # CSS and JS - Cache for 1 year with immutable
 /_astro/*.css
   Cache-Control: public, max-age=31536000, immutable
 
 /_astro/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# WebP and optimized images - Cache for 1 year
+*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+*.avif
   Cache-Control: public, max-age=31536000, immutable
 
 # HTML pages - Cache for 1 hour

@@ -1,21 +1,22 @@
-import React from 'react';
-import {
-  Zap,
-  Flame,
-  Shield,
-  Bot,
-  TrendingUp,
-  DollarSign,
-  Check,
-  Github,
-  Mail,
-  ExternalLink,
-  User,
-  Calendar,
-  DollarSign as Dollar,
-  Percent,
-  Clock
-} from 'lucide-react';
+import React, { lazy, Suspense } from 'react';
+
+// Dynamic imports for better code splitting
+const iconComponents = {
+  zap: lazy(() => import('lucide-react').then(module => ({ default: module.Zap }))),
+  flame: lazy(() => import('lucide-react').then(module => ({ default: module.Flame }))),
+  shield: lazy(() => import('lucide-react').then(module => ({ default: module.Shield }))),
+  bot: lazy(() => import('lucide-react').then(module => ({ default: module.Bot }))),
+  'trending-up': lazy(() => import('lucide-react').then(module => ({ default: module.TrendingUp }))),
+  'dollar-sign': lazy(() => import('lucide-react').then(module => ({ default: module.DollarSign }))),
+  check: lazy(() => import('lucide-react').then(module => ({ default: module.Check }))),
+  github: lazy(() => import('lucide-react').then(module => ({ default: module.Github }))),
+  mail: lazy(() => import('lucide-react').then(module => ({ default: module.Mail }))),
+  'external-link': lazy(() => import('lucide-react').then(module => ({ default: module.ExternalLink }))),
+  user: lazy(() => import('lucide-react').then(module => ({ default: module.User }))),
+  calendar: lazy(() => import('lucide-react').then(module => ({ default: module.Calendar }))),
+  percent: lazy(() => import('lucide-react').then(module => ({ default: module.Percent }))),
+  clock: lazy(() => import('lucide-react').then(module => ({ default: module.Clock }))),
+};
 
 interface LucideIconProps {
   name: string;
@@ -24,37 +25,21 @@ interface LucideIconProps {
   color?: string;
 }
 
-const iconMap = {
-  'zap': Zap,
-  'flame': Flame,
-  'shield': Shield,
-  'bot': Bot,
-  'trending-up': TrendingUp,
-  'dollar-sign': DollarSign,
-  'check': Check,
-  'github': Github,
-  'mail': Mail,
-  'external-link': ExternalLink,
-  'user': User,
-  'calendar': Calendar,
-  'dollar': Dollar,
-  'percent': Percent,
-  'clock': Clock
-};
-
 export function LucideIcon({ name, size = 24, className = '', color }: LucideIconProps) {
-  const IconComponent = iconMap[name as keyof typeof iconMap];
+  const IconComponent = iconComponents[name as keyof typeof iconComponents];
 
   if (!IconComponent) {
-    console.warn(`Icon "${name}" not found in iconMap`);
+    console.warn(`Icon "${name}" not found in iconComponents`);
     return null;
   }
 
   return (
-    <IconComponent
-      size={size}
-      className={className}
-      color={color}
-    />
+    <Suspense fallback={<div style={{ width: size, height: size }} />}>
+      <IconComponent
+        size={size}
+        className={className}
+        color={color}
+      />
+    </Suspense>
   );
 }

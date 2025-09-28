@@ -79,9 +79,24 @@ import PageLoader from '../components/ui/PageLoader.astro';
 			/* Font loading optimization */
 			.font-display{font-family:'Median','Boysen',serif}
 			.font-primary{font-family:'InterTight','Inter',system-ui,sans-serif}
-			/* Prevent layout shifts */
+			/* Prevent layout shifts - Enhanced */
 			img{max-width:100%;height:auto}
 			.reviews-slider-container{contain:layout style}
+			/* ParallaxBanner optimization - Fixed dimensions */
+			.parallax-banner-section{min-height:100vh;contain:layout style paint}
+			.parallax-title{min-height:clamp(3rem,8vw,6rem);display:flex;align-items:center;justify-content:center}
+			.parallax-subtitle{min-height:clamp(1rem,2.5vw,1.5rem);display:flex;align-items:center;justify-content:center}
+			/* Executive summary image container */
+			.executive-summary-image{min-height:400px;display:flex;align-items:center;justify-content:center}
+			.executive-summary-image img{width:100%;max-width:1200px;height:auto}
+			/* Header pill optimization */
+			.header-pill{height:80px;contain:layout style}
+			.header-wrapper{height:80px}
+			/* Code blocks optimization */
+			.code-section{contain:layout style}
+			/* Features grid optimization */
+			.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;contain:layout}
+			.feature-card{min-height:200px;contain:layout style}
 		</style>
 		
 		<!-- Resource Hints -->

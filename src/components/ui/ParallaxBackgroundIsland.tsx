@@ -92,6 +92,7 @@ const VideoWithPlaceholder: React.FC<{
         loop
         controls={false}
         preload="auto"
+        aria-label="Aurin Task Manager interface demonstration video"
         className={`${className} ${!videoLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-600`}
         style={{
           position: 'absolute',
@@ -102,7 +103,9 @@ const VideoWithPlaceholder: React.FC<{
           objectFit: 'cover',
           objectPosition: 'center'
         }}
-      />
+      >
+        Your browser does not support the video tag.
+      </video>
     </>
   );
 };

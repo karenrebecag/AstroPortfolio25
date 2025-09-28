@@ -283,6 +283,11 @@ const loadTestResults = {
 ---
 
 <Layout title="Karen Ortiz - Aurin Task Manager" lang="en">
+	<!-- Critical Resource Preloads for this page -->
+	<link slot="head" rel="preload" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/alt-g7Cv2QzqL3k6ey3igjNYkM32d8Fld7.mp4" as="video" type="video/mp4" fetchpriority="high">
+	<link slot="head" rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-25%20at%2013.56.30%402x.webp" as="image" type="image/webp" fetchpriority="high">
+	<link slot="head" rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
+	
 	<HeaderPill />
 
 	<!-- Parallax Banner Strip -->
@@ -392,9 +397,12 @@ const loadTestResults = {
 					<div class="executive-summary-image">
 						<img
 							src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-25%20at%2013.56.30%402x.webp"
-							alt="Aurin Task Manager Executive Summary"
-							loading="lazy"
+							alt="Aurin Task Manager Executive Summary Dashboard showing task management interface with AI-powered features"
+							loading="eager"
 							decoding="async"
+							fetchpriority="high"
+							width="1200"
+							height="800"
 						/>
 					</div>
 				</InView>
