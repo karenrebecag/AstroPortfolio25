@@ -1,4 +1,4 @@
-# robots.txt para SEO moderno y LLMs
+# robots.txt - Override Cloudflare managed content
 User-agent: *
 Allow: /
 
@@ -26,3 +26,5 @@ Allow: /
 
 # Sitemap
 Sitemap: https://www.karenortiz.space/sitemap.xml
+
+# Note: Disable Cloudflare managed robots.txt in dashboard

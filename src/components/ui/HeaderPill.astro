@@ -868,6 +868,9 @@ const lang = getLangFromUrl(Astro.url);
       }
     });
 
+    // Cache scroll positions to avoid repeated calculations
+    const scrollCache = new Map();
+    
     const smoothScrollTo = (targetId: string) => {
       let target = document.getElementById(targetId);
 
@@ -875,25 +878,34 @@ const lang = getLangFromUrl(Astro.url);
         setTimeout(() => {
           target = document.getElementById(targetId);
           if (target) {
-            // Use fixed header height to avoid forced reflow
-            const headerHeight = 80; // Fixed height instead of offsetHeight
-            const targetRect = target.getBoundingClientRect();
-            const targetPosition = window.pageYOffset + targetRect.top - headerHeight - 20;
-
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
+            scrollToTarget(target);
           }
         }, 100);
         return;
       }
 
-      // Use fixed header height and getBoundingClientRect to minimize reflow
-      const headerHeight = 80; // Fixed height instead of offsetHeight
-      const targetRect = target.getBoundingClientRect();
-      const targetPosition = window.pageYOffset + targetRect.top - headerHeight - 20;
+      scrollToTarget(target);
+    };
 
+    const scrollToTarget = (target: HTMLElement) => {
+      // Use cached position if available
+      const cacheKey = target.id;
+      if (scrollCache.has(cacheKey)) {
+        const cachedPosition = scrollCache.get(cacheKey);
+        window.scrollTo({
+          top: cachedPosition,
+          behavior: 'smooth'
+        });
+        return;
+      }
+
+      // Calculate once and cache - use offsetTop for better performance
+      const headerHeight = 80;
+      const targetPosition = target.offsetTop - headerHeight - 20;
+      
+      // Cache the position
+      scrollCache.set(cacheKey, targetPosition);
+      
       window.scrollTo({
         top: targetPosition,
         behavior: 'smooth'

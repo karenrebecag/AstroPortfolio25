@@ -97,14 +97,18 @@ import PageLoader from '../components/ui/PageLoader.astro';
 			/* Features grid optimization */
 			.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;contain:layout}
 			.feature-card{min-height:200px;contain:layout style}
+			/* Prevent forced reflows with GPU acceleration */
+			.parallax-banner-section,.executive-summary-image,.content-section{will-change:transform;transform:translateZ(0)}
+			.motion-container{contain:layout style paint;will-change:transform}
 		</style>
 		
-		<!-- Resource Hints -->
+		<!-- Resource Hints - Optimized for LCP -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev">
-		<link rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev">
+		<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev" crossorigin>
+		<link rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev" crossorigin>
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
+		<link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
 		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png" fetchpriority="high">
 		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
 		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin>

@@ -283,10 +283,55 @@ const loadTestResults = {
 ---
 
 <Layout title="Karen Ortiz - Aurin Task Manager" lang="en">
+	<!-- Critical Preconnects - Must be first -->
+	<link slot="head" rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev" crossorigin>
+	<link slot="head" rel="preconnect" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev" crossorigin>
+	<link slot="head" rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
+	<link slot="head" rel="preconnect" href="https://fonts.googleapis.com">
+	<link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	
 	<!-- Critical Resource Preloads for this page -->
 	<link slot="head" rel="preload" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/alt-g7Cv2QzqL3k6ey3igjNYkM32d8Fld7.mp4" as="video" type="video/mp4" fetchpriority="high">
 	<link slot="head" rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-25%20at%2013.56.30%402x.webp" as="image" type="image/webp" fetchpriority="high">
-	<link slot="head" rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
+	
+	<!-- Cache optimization meta tags -->
+	<meta slot="head" http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+	<meta slot="head" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	
+	<!-- Critical CSS for this page - Inline for faster LCP -->
+	<style slot="head">
+		/* Critical page-specific styles */
+		.parallax-banner-section{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+		.executive-summary-image{min-height:400px;display:flex;align-items:center;justify-content:center}
+		.executive-summary-image img{width:100%;max-width:1200px;height:auto;object-fit:contain}
+		.content-section{padding:4rem 0;contain:layout style}
+		.section-container{max-width:1200px;margin:0 auto;padding:0 2rem}
+		/* Prevent layout shifts */
+		.info-card{min-height:80px;contain:layout style}
+		.feature-card{min-height:200px;contain:layout style}
+		/* GPU acceleration for performance */
+		.parallax-banner-section,.executive-summary-image,.content-section{will-change:transform;transform:translateZ(0)}
+		/* Lazy loading optimization */
+		.lazy-section{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+		.lazy-section.loaded{opacity:1;transform:translateY(0)}
+	</style>
+	
+	<!-- Defer non-critical JavaScript -->
+	<script slot="head" type="module">
+		// Lazy load non-critical components
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('loaded');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, { rootMargin: '50px' });
+		
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelectorAll('.lazy-section').forEach(el => observer.observe(el));
+		});
+	</script>
 	
 	<HeaderPill />
 
@@ -370,8 +415,8 @@ const loadTestResults = {
 							</div>
 							
 							<div class="info-card">
-								<div class="info-label">Active Users</div>
-								<div class="info-value">500+ Users</div>
+								<div class="info-label">Client</div>
+								<div class="info-value">Aurin</div>
 							</div>
 							
 							<div class="info-card">
@@ -402,7 +447,7 @@ const loadTestResults = {
 							decoding="async"
 							fetchpriority="high"
 							width="1200"
-							height="800"
+							height="269"
 						/>
 					</div>
 				</InView>
