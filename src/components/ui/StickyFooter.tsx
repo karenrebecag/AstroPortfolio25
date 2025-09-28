@@ -101,12 +101,12 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
     return (
         <>
             <footer
-            className={`relative h-[720px] w-full ${className || ''}`}
+            className={`relative h-[800px] w-full ${className || ''}`}
             style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
             {...props}
         >
-            <div className="fixed bottom-0 h-[720px] w-full">
-                <div className="sticky top-[calc(100vh-720px)] h-full overflow-y-auto">
+            <div className="fixed bottom-0 h-[800px] w-full">
+                <div className="sticky top-[calc(100vh-800px)] h-full overflow-y-auto">
                     <div className="footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-white" style={{ 
                         backgroundColor: '#111111',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
@@ -116,7 +116,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                         <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)' }}>
                             <DitheringShader
                                 width={1920}
-                                height={720}
+                                height={800}
                                 colorBack="#010111"
                                 colorFront="#4523AE"
                                 shape="wave"
@@ -243,7 +243,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             
                             {/* Performance Stats Section */}
                             <AnimatedContainer delay={0.4} className="w-full">
-                                <div className="w-full flex flex-col gap-4 py-10 border-t border-white/10">
+                                <div className="w-full flex flex-col gap-4 py-16 border-t border-white/10">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h3 className="text-white font-primary text-lg font-semibold">
