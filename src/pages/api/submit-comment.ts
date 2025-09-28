@@ -9,8 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Comment } from '../../types/comments';
 
 export const POST: APIRoute = async ({ request }) => {
-  console.log('🚀 Submit Comment API Route iniciado');
-  
   try {
     // Verificar variables de entorno
     if (!import.meta.env.RESEND_API_KEY) {
@@ -18,7 +16,6 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Obtener datos del formulario
-    console.log('📝 Procesando datos del comentario...');
     const formData = await request.formData();
     
     const name = formData.get('name') as string;
@@ -26,12 +23,6 @@ export const POST: APIRoute = async ({ request }) => {
     const storyId = formData.get('storyId') as string;
     const parentId = formData.get('parentId') as string | null;
     const profilePic = formData.get('profilePic') as File | null;
-
-    console.log('📋 Datos recibidos:', { 
-      name: !!name, 
-      comment: !!comment,
-      hasProfilePic: !!(profilePic && profilePic.size > 0)
-    });
 
     // Validación básica
     if (!name || !comment || !storyId) {
@@ -42,8 +33,6 @@ export const POST: APIRoute = async ({ request }) => {
     let profilePicUrl = '';
     
     if (profilePic && profilePic.size > 0) {
-      console.log('📸 Procesando foto de perfil...');
-      
       // Validar tamaño (máximo 5MB)
       if (profilePic.size > 5 * 1024 * 1024) {
         throw new Error('Profile picture is too large. Maximum size is 5MB.');
@@ -56,8 +45,6 @@ export const POST: APIRoute = async ({ request }) => {
       }
       
       try {
-        console.log('📤 Subiendo foto de perfil a Vercel Blob...');
-        
         // Generar nombre único para la imagen
         const fileExtension = profilePic.name.split('.').pop();
         const uniqueFileName = `profile-pics/${uuidv4()}.${fileExtension}`;
@@ -68,10 +55,9 @@ export const POST: APIRoute = async ({ request }) => {
         });
         
         profilePicUrl = blob.url;
-        console.log('✅ Foto de perfil subida a:', profilePicUrl);
         
       } catch (uploadError) {
-        console.error('❌ Error subiendo foto de perfil:', uploadError);
+        console.error('Error uploading profile picture:', uploadError);
         // No fallar completamente si no se puede subir la imagen
       }
     }
@@ -80,7 +66,6 @@ export const POST: APIRoute = async ({ request }) => {
     const moderationToken = uuidv4();
     
     // Crear documento del comentario en Firestore
-    console.log('💾 Guardando comentario en Firestore...');
     const commentData = {
       name,
       comment,
@@ -90,22 +75,18 @@ export const POST: APIRoute = async ({ request }) => {
       timestamp: FieldValue.serverTimestamp(),
       status: 'pending',
       moderationToken,
-      likes: 0,
       likedBy: []
     };
 
     const docRef = await db.collection('comments').add(commentData);
 
-    console.log('✅ Comentario guardado con ID:', docRef.id);
-
-    // Configurar Resend para email de moderación
-    console.log('📧 Enviando email de moderación...');
+    // Enviar email de moderación
     const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
     // URLs para moderación
     const baseUrl = import.meta.env.SITE_URL || 'http://localhost:4321';
-    const approveUrl = `${baseUrl}/api/moderate-comment?action=approve&token=${moderationToken}&id=${docRef.id}`;
-    const rejectUrl = `${baseUrl}/api/moderate-comment?action=reject&token=${moderationToken}&id=${docRef.id}`;
+    const approveUrl = `${baseUrl}/api/moderate-comment?action=approve&token=${encodeURIComponent(moderationToken)}&id=${docRef.id}`;
+    const rejectUrl = `${baseUrl}/api/moderate-comment?action=reject&token=${encodeURIComponent(moderationToken)}&id=${docRef.id}`;
 
     // Template de email para moderación
     const emailContent = `
@@ -210,13 +191,13 @@ MODERATION ACTIONS:
       throw new Error(`Email error: ${error.message}`);
     }
     
-    console.log('✅ Email de moderación enviado:', data?.id);
 
     return new Response(
       JSON.stringify({
         success: true,
         message: 'Comment submitted successfully! It will appear after moderation.',
-        commentId: docRef.id
+        commentId: docRef.id,
+        profilePicUrl: profilePicUrl || null
       }),
       { 
         status: 200,

@@ -252,6 +252,15 @@ const ReviewPopup: React.FC<{ onToast: (type: 'success' | 'error', message: stri
               </button>
             </div>
           </div>
+          
+          {/* Privacy Policy Notice */}
+          <p className="privacy-notice">
+            By submitting a review, you agree to my{' '}
+            <a href="/privacy" className="privacy-link" target="_blank" rel="noopener noreferrer">
+              Privacy Policy
+            </a>
+            . Your data is handled with care and only used for moderation purposes.
+          </p>
         </form>
       </motion.div>
     </motion.div>

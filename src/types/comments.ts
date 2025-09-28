@@ -18,6 +18,7 @@ export interface Comment {
 
 export interface CommentFormData {
   name: string;
+  email: string;
   comment: string;
   profilePic?: File | null;
 }

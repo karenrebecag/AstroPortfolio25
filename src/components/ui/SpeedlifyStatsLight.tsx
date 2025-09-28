@@ -84,19 +84,6 @@ export function SpeedlifyStatsLight({ className }: SpeedlifyStatsLightProps) {
         
         const data = await dataResponse.json();
         
-        // Log real data in development to verify it's working
-        if (process.env.NODE_ENV === 'development') {
-          console.group('✅ Speedlify Real Data Retrieved (Light Mode)');
-          console.log('Hash used:', urlEntry.hash);
-          console.log('Timestamp:', new Date(data.timestamp).toLocaleString());
-          console.log('Performance scores:', data.lighthouse);
-          console.log('Core Web Vitals:', {
-            LCP: data.largestContentfulPaint,
-            FCP: data.firstContentfulPaint,
-            CLS: data.cumulativeLayoutShift
-          });
-          console.groupEnd();
-        }
         
         // Transform Speedlify data to our expected format
         const speedlifyData: SpeedlifyData = {
@@ -120,17 +107,6 @@ export function SpeedlifyStatsLight({ className }: SpeedlifyStatsLightProps) {
         setError(null);
         setIsRealData(true); // Mark as real data
       } catch (err) {
-        // Log detailed error information in development
-        if (process.env.NODE_ENV === 'development') {
-          console.group('🚨 Speedlify API Error (Light Mode)');
-          console.error('Error details:', err);
-          console.log('Speedlify URL:', 'https://guileless-douhua-b2ff53.netlify.app');
-          console.log('Target URL:', 'https://www.karenortiz.space/');
-          console.log('Expected API endpoints:');
-          console.log('  - URLs: https://guileless-douhua-b2ff53.netlify.app/api/urls.json');
-          console.log('  - Data: https://guileless-douhua-b2ff53.netlify.app/api/{hash}.json');
-          console.groupEnd();
-        }
         
         // Fallback a datos mock si la API falla
         const mockData: SpeedlifyData = {

@@ -1,5 +1,96 @@
 /* Reddit Comments Styles */
 
+/* Avatar Upload - Simple and Functional */
+.avatar-upload-container {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.avatar-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.avatar-upload-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 2px solid #e5e7eb;
+}
+
+.avatar-upload-label:hover {
+  transform: scale(1.05);
+  border-color: #9D7FC1;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.avatar-upload-label:hover .avatar-placeholder {
+  background: #f3f4f6;
+  color: #9D7FC1;
+}
+
+/* Clear Cache Button */
+.clear-cache-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.7;
+}
+
+.clear-cache-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.clear-cache-btn:active {
+  transform: translateY(0);
+}
+
 /* Container */
 .reddit-comments-container {
   margin: 0 auto;
@@ -1034,4 +1125,72 @@
 
 .dark-mode .add-comment-hint {
   color: #9ca3af;
+}
+
+.dark-mode .clear-cache-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.dark-mode .clear-cache-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+/* Privacy Policy Notice */
+.privacy-notice {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid #9D7FC1;
+  line-height: 1.5;
+}
+
+.privacy-link {
+  color: #9D7FC1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.privacy-link:hover {
+  color: #7c3aed;
+  text-decoration: underline;
+}
+
+.dark-mode .privacy-notice {
+  color: #9ca3af;
+  background: rgba(31, 41, 55, 0.5);
+  border-left-color: #9D7FC1;
+}
+
+.dark-mode .privacy-link {
+  color: #a78bfa;
+}
+
+.dark-mode .privacy-link:hover {
+  color: #c4b5fd;
+}
+
+.dark-mode .avatar-upload-label {
+  border-color: #374151;
+}
+
+.dark-mode .avatar-upload-label:hover {
+  border-color: #9D7FC1;
+}
+
+.dark-mode .avatar-placeholder {
+  background: #1f2937;
+  color: #9ca3af;
+}
+
+.dark-mode .avatar-upload-label:hover .avatar-placeholder {
+  background: #374151;
+  color: #9D7FC1;
 }

@@ -8,10 +8,11 @@ import { Avatar, AvatarFallback } from './Avatar.tsx';
 import { Badge } from './Badge.tsx';
 import { Textarea } from './Textarea.tsx';
 import TypeSound from './TypeSound.tsx';
-import { Heart, MessageSquare, MoreHorizontal, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload } from 'lucide-react';
+import { Heart, MessageSquare, MoreHorizontal, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload, Trash2 } from 'lucide-react';
 import { useCommentsStore } from '../../stores/commentsStore';
 import '../../styles/reddit-comments.css';
 import { useToast } from '../../hooks/useToast';
+import { useUserCache } from '../../hooks/useUserCache';
 import type { Comment } from '../../types/comments';
 
 // Props for individual comment component
@@ -243,12 +244,36 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
   } = useCommentsStore();
 
   const { showSuccess, showError } = useToast();
+  const { cachedData, saveUserData, clearUserData, hasCachedData } = useUserCache();
   const [nestedComments, setNestedComments] = useState<Comment[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Fetch comments on mount
   useEffect(() => {
     fetchComments(storyId);
   }, [fetchComments, storyId]);
+
+  // Pre-fill form with cached data
+  useEffect(() => {
+    if (hasCachedData && !isInitialized) {
+      // Pre-fill name if cached
+      if (cachedData.name && !formData.name) {
+        setFormField('name', cachedData.name);
+      }
+      
+      // Pre-fill email if cached
+      if (cachedData.email && !formData.email) {
+        setFormField('email', cachedData.email);
+      }
+      
+      setIsInitialized(true);
+      
+      // Show success message about pre-filled data
+      if (cachedData.name) {
+        showSuccess(`Welcome back, ${cachedData.name}! Your information has been pre-filled.`);
+      }
+    }
+  }, [cachedData, hasCachedData, formData.name, formData.email, setFormField, isInitialized, showSuccess]);
 
   // Transform flat comments into nested structure
   useEffect(() => {
@@ -289,8 +314,19 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const success = await submitComment(storyId);
-    if (success) {
+    const result = await submitComment(storyId);
+    
+    if (result && typeof result === 'object' && result.success) {
+      // Cache user data for future interactions with the permanent URL from Vercel Blob
+      const dataToCache = {
+        name: formData.name,
+        email: formData.email,
+        // ONLY cache the permanent Vercel Blob URL, not the temporary blob URL
+        profilePicUrl: result.profilePicUrl || (cachedData.profilePicUrl && !cachedData.profilePicUrl.startsWith('blob:') ? cachedData.profilePicUrl : '')
+      };
+      
+      saveUserData(dataToCache);
+      
       showSuccess('Comment submitted successfully! It will appear after moderation.');
       setTimeout(() => {
         fetchComments(storyId);
@@ -333,6 +369,13 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
     setFormField('profilePic', file);
   };
 
+  const handleClearCache = () => {
+    clearUserData();
+    resetForm();
+    setIsInitialized(false);
+    showSuccess('User data cleared. Form has been reset.');
+  };
+
 
   return (
     <motion.div
@@ -352,10 +395,27 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <span>Add Comment</span>
-        <p className="add-comment-hint">
-          Share your thoughts and join the discussion. Click on the avatar to add your profile picture and make your comment stand out.
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <span>Add Comment</span>
+            <p className="add-comment-hint">
+              Share your thoughts and join the discussion. Click on the avatar to add your profile picture and make your comment stand out.
+            </p>
+          </div>
+          
+          {/* Clear Cache Button - only show if there's cached data */}
+          {hasCachedData && (
+            <button
+              onClick={handleClearCache}
+              className="clear-cache-btn"
+              data-cursor-text="Clear Saved Data"
+              title="Clear your saved information"
+            >
+              <Trash2 size={16} />
+              <span>Clear Data</span>
+            </button>
+          )}
+        </div>
       </motion.div>
 
       {/* New comment form */}
@@ -368,39 +428,36 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
         <div className="comment-form-card">
           <form onSubmit={handleSubmit}>
             <div className="comment-form-row">
-              {/* Clickeable Avatar for photo upload */}
-              <div className="relative">
+              {/* Simple Avatar Upload */}
+              <div className="avatar-upload-container">
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  title="Click to upload profile picture"
+                  className="avatar-file-input"
+                  id="avatar-upload"
                   data-cursor-text="Upload Profile Pic"
                 />
-                <div 
-                  className={`comment-avatar clickable ${!formData.profilePic ? 'comment-avatar-empty' : ''}`}
-                  style={{
-                    background: !formData.profilePic ? '#f3f4f6' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    border: !formData.profilePic ? '2px dashed #d1d5db' : '2px solid #ffffff'
-                  }}
-                  data-cursor-text="Add Profile Pic"
-                >
+                <label htmlFor="avatar-upload" className="avatar-upload-label">
                   {formData.profilePic ? (
                     <img 
                       src={URL.createObjectURL(formData.profilePic)} 
                       alt="Profile" 
-                      className="w-full h-full object-cover rounded-full" 
+                      className="avatar-image"
+                    />
+                  ) : cachedData.profilePicUrl ? (
+                    <img 
+                      src={cachedData.profilePicUrl} 
+                      alt="Cached Profile" 
+                      className="avatar-image"
                     />
                   ) : (
-                    <Upload style={{ width: '16px', height: '16px', color: '#9ca3af' }} />
+                    <div className="avatar-placeholder">
+                      <Upload size={20} />
+                      <span>Add Photo</span>
+                    </div>
                   )}
-                </div>
-                {!formData.profilePic && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-10 rounded-full transition-all">
-                    <span className="text-xs text-purple-600 dark:text-purple-400 opacity-0 hover:opacity-100 transition-opacity">+</span>
-                  </div>
-                )}
+                </label>
               </div>
               
               <div className="comment-form-content">
@@ -412,6 +469,15 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                   className="comment-input"
                   data-cursor-text="Add Your Name"
                   required
+                />
+                
+                <input
+                  type="email"
+                  placeholder="Your email (optional)"
+                  value={formData.email}
+                  onChange={(e) => setFormField('email', e.target.value)}
+                  className="comment-input"
+                  data-cursor-text="Add Your Email"
                 />
                 
                 <textarea
@@ -441,6 +507,15 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                     </button>
                   </div>
                 </div>
+                
+                {/* Privacy Policy Notice */}
+                <p className="privacy-notice">
+                  By submitting a comment, you agree to my{' '}
+                  <a href="/privacy" className="privacy-link" target="_blank" rel="noopener noreferrer">
+                    Privacy Policy
+                  </a>
+                  . Your data is handled with care and only used for moderation purposes.
+                </p>
               </div>
             </div>
           </form>

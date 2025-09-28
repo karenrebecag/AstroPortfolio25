@@ -1,15 +1,12 @@
-/* Review Popup Styles */
-
-/* Overlay */
+/* Review Popup Overlay */
 .review-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -700,8 +697,42 @@
     box-shadow: 0 0 0 3px rgba(157, 127, 193, 0.2);
     background: #4b5563;
   }
-  
-  .review-form-label {
-    color: #e5e7eb;
-  }
+}
+
+/* Privacy Policy Notice */
+.privacy-notice {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid #9D7FC1;
+  line-height: 1.5;
+}
+
+.privacy-link {
+  color: #9D7FC1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.privacy-link:hover {
+  color: #7c3aed;
+  text-decoration: underline;
+}
+
+:global(.dark-mode) .privacy-notice {
+  color: #9ca3af;
+  background: rgba(31, 41, 55, 0.5);
+  border-left-color: #9D7FC1;
+}
+
+:global(.dark-mode) .privacy-link {
+  color: #a78bfa;
+}
+
+:global(.dark-mode) .privacy-link:hover {
+  color: #c4b5fd;
 }

@@ -1,6 +1,11 @@
 import { create } from 'zustand';
 import type { Comment, CommentFormData } from '../types/comments';
 
+interface SubmitCommentResult {
+  success: boolean;
+  profilePicUrl?: string;
+}
+
 interface CommentsState {
   // Comments data
   comments: Comment[];
@@ -27,13 +32,14 @@ interface CommentsState {
   
   // API actions
   fetchComments: (storyId: string) => Promise<void>;
-  submitComment: (storyId: string) => Promise<boolean>;
+  submitComment: (storyId: string) => Promise<SubmitCommentResult | false>;
   submitReply: (storyId: string, parentId: string, content: string) => Promise<boolean>;
   likeComment: (commentId: string) => Promise<boolean>;
 }
 
 const initialFormData: CommentFormData = {
   name: '',
+  email: '',
   comment: '',
   profilePic: null
 };
@@ -125,7 +131,7 @@ export const useCommentsStore = create<CommentsState>((set, get) => ({
           showForm: false,
           formData: { ...initialFormData }
         });
-        return true;
+        return { success: true, profilePicUrl: result.profilePicUrl };
       } else {
         set({ 
           error: result.message, 

@@ -56,10 +56,52 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
       }
     };
 
-    handleResize(); // Set initial size
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    // Only run on client side to avoid hydration mismatch
+    if (typeof window !== 'undefined') {
+      handleResize(); // Set initial size
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, [radiusLg, radiusMd, radiusSm, cardSizeLg, cardSizeMd, cardSizeSm]);
+
+  // Don't render dynamic content until client-side hydration is complete
+  if (!screenSize.isMounted) {
+    return (
+      <section 
+        className={className}
+        style={{ 
+          position: 'relative',
+          overflow: 'visible',
+          backgroundColor: 'transparent',
+          color: 'black',
+          width: '100%',
+          minWidth: '100%',
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 20,
+          pointerEvents: 'none'
+        }}
+      >
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          height: '100%'
+        }}>
+          <div style={{ 
+            fontSize: '1.125rem', 
+            color: 'rgba(0, 0, 0, 0.6)',
+            textAlign: 'center'
+          }}>
+            Loading gallery...
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   // Ensure at least 2 points to distribute angles for the arc calculation
   const count = Math.max(images.length, 2);
@@ -109,9 +151,9 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
             const angle = startAngle + step * i; // degrees
             const angleRad = (angle * Math.PI) / 180;
             
-            // Calculate x and y positions on the arc
-            const x = Math.cos(angleRad) * dimensions.radius;
-            const y = Math.sin(angleRad) * dimensions.radius;
+            // Calculate x and y positions on the arc with consistent precision
+            const x = Math.round(Math.cos(angleRad) * dimensions.radius * 1000) / 1000;
+            const y = Math.round(Math.sin(angleRad) * dimensions.radius * 1000) / 1000;
             
             return (
               <div
@@ -119,17 +161,17 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
                 style={{
                   position: 'absolute',
                   opacity: 0,
-                  width: dimensions.cardSize,
-                  height: dimensions.cardSize,
+                  width: `${dimensions.cardSize}px`,
+                  height: `${dimensions.cardSize}px`,
                   left: `calc(50% + ${x}px)`,
                   bottom: `${y}px`,
-                  transform: `translate(-50%, 50%)`,
+                  transform: 'translate(-50%, 50%)',
                   animationName: 'fade-in-up',
                   animationDuration: '0.8s',
                   animationTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                   animationDelay: `${i * 100}ms`,
                   animationFillMode: 'forwards',
-                  zIndex: count - i,
+                  zIndex: `${count - i}`,
                 }}
               >
                 <div 
@@ -222,7 +264,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
           justifyContent: 'center !important' as any,
           paddingLeft: '1.5rem !important' as any,
           paddingRight: '1.5rem !important' as any,
-          marginTop: (screenSize.width >= 1024 ? '-6rem' : screenSize.width >= 768 ? '-5rem' : '-4rem') + ' !important' as any,
+          marginTop: `${screenSize.width >= 1024 ? '-6rem' : screenSize.width >= 768 ? '-5rem' : '-4rem'} !important` as any,
           pointerEvents: 'auto !important' as any
         }}
       >
@@ -242,7 +284,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
         >
           <h1 
             style={{
-              fontSize: screenSize.width >= 1024 ? '3.75rem' : screenSize.width >= 640 ? '3rem' : '1.875rem',
+              fontSize: `${screenSize.width >= 1024 ? '3.75rem' : screenSize.width >= 640 ? '3rem' : '1.875rem'}`,
               fontWeight: 'bold',
               letterSpacing: '-0.025em',
               color: 'black',
@@ -264,7 +306,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
             style={{
               marginTop: '2rem',
               display: 'flex',
-              flexDirection: screenSize.width >= 640 ? 'row' : 'column',
+              flexDirection: `${screenSize.width >= 640 ? 'row' : 'column'}`,
               alignItems: 'center',
               justifyContent: 'center',
               gap: '1rem'
@@ -278,7 +320,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
                 }
               }}
               style={{
-                width: screenSize.width >= 640 ? 'auto' : '100%',
+                width: `${screenSize.width >= 640 ? 'auto' : '100%'}`,
                 paddingLeft: '1.5rem',
                 paddingRight: '1.5rem',
                 paddingTop: '0.75rem',
