@@ -40,12 +40,12 @@ const projectData = [
   },
   {
     id: "05",
-    title: "Galicia 30 Años",
-    description: "30th anniversary website design for prestigious Mexican law firm with disruptive approach",
-    tags: ["Figma", "Web Design", "Anniversary"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Galicia30An%CC%83os.webp",
+    title: "Metaverse BEDU",
+    description: "Data Science dashboard UI design for BEDU diplomado featuring modern analytics interface",
+    tags: ["Figma", "UI Design", "Data Science"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/metaverse.webp",
     url: "https://www.figma.com/design/2EkRHWv6kzGtflVeymrd52/Galicia?node-id=0-1&t=NG8PRVK7ZRsTVaAa-1", 
-    type: "Anniversary Site"
+    type: "Dashboard UI"
   },
   {
     id: "06",

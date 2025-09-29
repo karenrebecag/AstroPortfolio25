@@ -145,3 +145,165 @@ Sources
 [18] Build wicked fast sites with Astro: An Introduction https://www.netlify.com/blog/2021/07/08/build-wicked-fast-sites-with-astro-an-introduction/
 [19] Use Speedlify to Continuously Measure Site Performance https://nicolas-hoizey.com/links/2020/07/02/use-speedlify-to-continuously-measure-site-performance/
 [20] Deploy overview | Netlify Docs https://docs.netlify.com/deploy/deploy-overview/
+
+
+# Guía Mejorada: Conexión de Speedlify a un Portafolio Astro para Métricas de Rendimiento Continuas
+
+¡Hola! He revisado tu guía original y la he mejorado con una investigación exhaustiva basada en documentación oficial de Speedlify, tutoriales detallados de desarrolladores (como los de Zach Leatherman y Agustinus Nathaniel), guías de Netlify y Vercel, y mejores prácticas para automatización y exposición de datos. Agregué detalles sobre configuración para múltiples URLs (incluyendo las de tu portafolio: `https://karenortiz.space/`, `/resume` y `/p_AurinTaskManager`), exposición de APIs para análisis continuos (Speedlify genera JSON accesibles), manejo de límites de builds en Netlify, troubleshooting común, y tips para integración avanzada como embedding de scores en tu sitio Astro. También incorporé actualizaciones recientes (hasta 2025) sobre compatibilidad con Node.js y optimizaciones para evitar timeouts.
+
+La guía mantiene la estructura original pero es más completa, con pasos más precisos y ejemplos adaptados a tu setup. Si necesitas expandirla a un documento más largo o agregar secciones específicas, avísame.
+
+***
+
+## Introducción a la Integración de Speedlify y Astro
+
+Speedlify es una herramienta open-source de Zach Leatherman para medir y monitorear el rendimiento de sitios web usando métricas de Lighthouse (como Performance, Accessibility, Best Practices y SEO). Automatiza pruebas programadas y muestra resultados en un dashboard dedicado, ayudando a mantener el sitio rápido a lo largo del tiempo. Es ideal para sitios estáticos como los construidos con Astro, ya que mide métricas reales en producción.
+
+Astro es un framework frontend optimizado para sitios estáticos rápidos. En tu caso, desplegarás el portafolio Astro en Vercel (para previews rápidos y escalabilidad) y Speedlify en Netlify (para builds automatizados y hosting estático). Esta separación evita mezclar código y permite que Speedlify pruebe tu sitio en producción de forma independiente. Speedlify no "se conecta" directamente al código de tu portafolio; en cambio, configura URLs para monitorear y expone datos via JSON para análisis continuos.
+
+**Beneficios clave:**
+- Métricas históricas para detectar regresiones en rendimiento.
+- Exposición de datos via API (JSON) para integraciones externas, como dashboards personalizados o alertas.
+- Automatización sin costo adicional en tiers gratuitos, con límites manejables.
+
+**Requisitos previos:**
+- Node.js v12 o superior (recomendado v18+ para mejor compatibilidad en 2025).
+- Cuentas en GitHub, Netlify y Vercel.
+- Tu portafolio Astro ya en un repo de GitHub.
+
+***
+
+## Paso 1: Configuración de Speedlify para Métricas de Rendimiento
+
+- Clona el repositorio de Speedlify desde GitHub:
+  ```bash
+  git clone https://github.com/zachleat/speedlify.git
+  cd speedlify
+  npm install
+  ```
+- Elimina los archivos predeterminados en `_data/sites/` para evitar configuraciones de ejemplo.
+- Crea un archivo por categoría en `_data/sites/`, por ejemplo, `portfolio.js`. Configura las URLs de tu portafolio (agrega múltiples para páginas específicas). Formato de ejemplo adaptado a tu sitio:
+  ```js
+  // _data/sites/portfolio.js
+  module.exports = {
+    name: "Mi Portafolio Astro",
+    description: "Métricas de rendimiento para karenortiz.space y sus páginas clave",
+    options: {
+      frequency: 60 * 23, // 23 horas para evitar builds excesivos y respetar límites de Netlify
+      freshChrome: "site", // Usa "site" si las páginas comparten assets en el mismo dominio; "run" para resets completos
+      runs: 3, // Número de ejecuciones por prueba (default: 3; reduce a 1 para builds más rápidos)
+    },
+    urls: [
+      "https://karenortiz.space/",
+      "https://karenortiz.space/resume",
+      "https://karenortiz.space/p_AurinTaskManager",
+    ],
+  };
+  ```
+  - **Opciones clave:**
+    - `frequency`: Intervalo mínimo en minutos antes de repetir mediciones (evita builds innecesarios).
+    - `freshChrome`: "run" resetea Chrome por completo; "site" lo hace por sitio para optimizar si hay assets compartidos.
+    - Limita URLs a 5-10 para evitar timeouts de 15 minutos en builds gratuitos de Netlify.
+- Prueba la configuración ejecutando `npm run test-pages` para validar URLs sin correr Lighthouse completo.
+
+***
+
+## Paso 2: Pruebas Locales de Speedlify
+
+- Ejecuta Speedlify localmente para verificar la UI y categorías (sin métricas, ya que se generan en build):
+  ```bash
+  npm run start
+  ```
+- Abre `http://localhost:8080/` en tu navegador. Verás las categorías y URLs listadas, pero scores vacíos. Usa esto para depurar configuraciones antes de deploy.
+- Tip: Si hay errores, revisa la consola para issues con Node o dependencias. Actualiza a Node v20 si usas features modernas.
+
+***
+
+## Paso 3: Despliegue de Speedlify en Netlify
+
+- Sube tu repositorio configurado a GitHub (crea un nuevo repo o push a uno existente).
+- En Netlify, crea un nuevo sitio desde GitHub: selecciona tu repo de Speedlify.
+- Configura las settings de build:
+  - Build command: `npm run build`
+  - Publish directory: `_site`
+- Despliega. En el primer build, Speedlify ejecuta pruebas Lighthouse y genera métricas. Accede al dashboard en tu URL de Netlify (e.g., `tu-speedlify.netlify.app`).
+- Netlify usa build plugins para cachear datos previos (en `/results.zip`), evitando perder historial si el cache se borra.
+- Troubleshooting: Si el build falla por timeout, reduce `runs` a 1 o limita URLs. Monitorea logs en Netlify para errores.
+
+***
+
+## Paso 4: Automatización de Chequeos de Rendimiento con Build Hooks de Netlify y GitHub Actions
+
+- Las pruebas solo corren en builds. Automatiza builds programados para métricas continuas.
+- En Netlify (Site settings > Build & deploy > Build hooks), crea un hook nuevo. Copia la URL generada (e.g., `https://api.netlify.com/build_hooks/TU_ID`).
+- En tu repo de GitHub, crea `.github/workflows/main.yml` para triggering diario (ajusta el cron para weekdays a las 22:00 UTC, ~5pm en muchas zonas):
+  ```yaml
+  name: Trigger Netlify Build diario en weekdays
+  
+  on:
+    schedule:
+      - cron: "0 22 * * MON-FRI"  # Diariamente de lunes a viernes a las 22:00 UTC
+  
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Trigger Netlify Build Hook
+          run: curl -X POST -d {} https://api.netlify.com/build_hooks/TU_BUILD_HOOK_ID
+  ```
+- Push el archivo y verifica en GitHub Actions. Cada trigger inicia un build, actualiza métricas y expone datos nuevos.
+- Tip para límites: Con 5-10 URLs y builds de 4-7 min, ~20 builds/mes usan <300 min gratuitos. Usa parámetros en el hook como `?clear_cache=true` para resets ocasionales.
+
+***
+
+## Paso 5: Despliegue de tu Portafolio Astro en Vercel
+
+- Mantén tu proyecto Astro separado en su propio repo de GitHub.
+- Conecta el repo a Vercel: para sitios estáticos, zero-config; build command: `npm run build`, output: `dist`.
+- Para features como Image Optimization o Analytics, agrega el adapter Vercel en `astro.config.mjs`:
+  ```js
+  import { defineConfig } from 'astro/config';
+  import vercel from '@astrojs/vercel/static';
+
+  export default defineConfig({
+    output: 'static',
+    adapter: vercel({
+      webAnalytics: { enabled: true },
+    }),
+  });
+  ```
+- Vercel genera previews automáticos y URLs de producción. Speedlify monitoreará estas URLs independientes.
+
+***
+
+## Exposición de APIs y Workflow para Análisis Continuos
+
+- Speedlify expone datos via JSON para análisis externos: accede a `/api/[categoria].json` (e.g., `tu-speedlify.netlify.app/api/portfolio.json`). Contiene scores históricos, timestamps y métricas detalladas.
+- Workflow: Builds programados actualizan JSON automáticamente. Usa fetch en scripts personalizados para análisis (e.g., en Node.js: `fetch('.../api/portfolio.json').then(res => res.json())`).
+- Para análisis continuos: Integra con tools como Google Sheets, Slack (via webhooks para alerts si scores bajan) o dashboards custom. Ejemplo: Script que chequea JSON diario y envía emails si Performance <90.
+- Embedding: Agrega `<speedlify-score>` en tu Astro para mostrar scores realtime (ver docs de Speedlify para setup).
+
+***
+
+## Tips Avanzados y Consejos de Desarrolladores
+
+- **Optimizaciones:** Reduce `runs` para builds más rápidos; usa "freshChrome: 'site'" para dominios compartidos. Monitorea quotas en Netlify (300 min/mes gratis).
+- **Troubleshooting:**
+  - Timeout: Limita URLs/runs; revisa logs.
+  - Datos perdidos: Descarga `/results.zip` de builds previos.
+  - Errores en Actions: Verifica cron en crontab.guru; prueba curl manual.
+- **Integraciones:** Agrega notificaciones Slack para scores (usa Lighthouse plugin en Netlify o custom hooks). Para escalabilidad, migra a tools pagos como WebPageTest si superas límites.
+- **Mejores prácticas:** Repos separados para claridad; revisa métricas semanalmente para optimizar Astro (e.g., lazy-loading en componentes).
+- **Escalabilidad:** Si necesitas más frecuencia, usa tiers pagos de Netlify o integra con Vercel Speed Insights para métricas adicionales.
+
+***
+
+## Referencias y Enlaces de Documentación
+
+- Repositorio de Speedlify (configuración detallada): https://github.com/zachleat/speedlify 
+- Tutorial completo de setup y automatización: https://agustinusnathaniel.com/blog/monitor-and-measure-site-performance-with-speedlify/ 
+- Despliegue de Astro en Vercel: https://docs.astro.build/en/guides/deploy/vercel/ 
+- Build Hooks de Netlify y Actions: https://docs.netlify.com/configure-builds/build-hooks/ 
+- Embedding scores: https://www.zachleat.com/web/lighthouse-in-footer/ 
+
+***

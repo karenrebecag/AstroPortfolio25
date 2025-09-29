@@ -62,15 +62,15 @@ const ProjectsIsland: React.FC = () => {
     },
     {
       id: 3,
-      title1: "E-Commerce",
-      title2: "Platform",
-      description: "Full-stack e-commerce solution with modern UI, payment integration, and inventory management system.",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      title1: "OPINATOR Platform",
+      title2: "Redesign",
+      description: "Complete UX/UI redesign of OPINATOR's live forms platform, enhancing user experience and accessibility for better form response rates. Led a collaborative team of five to redesign the entire WebApp interface, implementing a modular design system in Figma and developing the frontend with React. The redesign resulted in a 30% boost in form response rates and significantly improved developer workflows.",
+      tags: ["Figma", "React", "UX/UI Design", "Design System", "Frontend"],
       images: [
-        "https://picsum.photos/300/300?random=13",
-        "https://picsum.photos/300/300?random=14",
-        "https://picsum.photos/300/300?random=15",
-        "https://picsum.photos/300/300?random=16"
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/opinator1.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/opinator2.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/opinator3.webp",
+        "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/opinator4.webp"
       ],
       positions: [
         { x: -45, y: -5, rotate: 5 },
@@ -81,8 +81,8 @@ const ProjectsIsland: React.FC = () => {
     },
     {
       id: 4,
-      title1: "Portfolio",
-      title2: "Website",
+      title1: "AI",
+      title2: "INTEGRATIONS",
       description: "Creative portfolio website with Three.js animations, responsive design, and optimized performance.",
       tags: ["Astro", "Three.js", "TypeScript", "Tailwind"],
       images: [
@@ -101,7 +101,7 @@ const ProjectsIsland: React.FC = () => {
     {
       id: 5,
       title1: "Mobile",
-      title2: "App",
+      title2: "Apps",
       description: "Cross-platform mobile application with real-time features, push notifications, and offline capabilities.",
       tags: ["React Native", "Firebase", "Redux", "Expo"],
       images: [
