@@ -85,7 +85,7 @@ const projectData = [
   }
 ];
 
-const ProjectMarqueeIsland: React.FC = () => {
+const ProjectMarqueeIsland: React.FC = React.memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -258,9 +258,9 @@ const ProjectMarqueeIsland: React.FC = () => {
 
   return (
     <div ref={containerRef} className="project-marquee-container">
-      {/* El contenido se genera dinámicamente con JavaScript vanilla */}
+      {/* Container will be populated by vanilla JS */}
     </div>
   );
-};
+});
 
 export default ProjectMarqueeIsland;

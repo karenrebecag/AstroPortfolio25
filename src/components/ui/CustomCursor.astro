@@ -304,6 +304,15 @@
         if (element.classList.contains('project-title')) return 'View Details';
         if (element.classList.contains('tag') && element.closest('.project-item')) return 'Tech Stack';
         if (element.classList.contains('read-more-btn')) return 'Read More';
+        
+        // Para project cards del marquee - mostrar nombre del proyecto
+        if (element.classList.contains('project-card-marquee')) {
+          const titleElement = element.querySelector('.project-card-title');
+          if (titleElement) {
+            return titleElement.textContent?.trim() || 'View Project';
+          }
+          return 'View Project';
+        }
 
         // Para elementos específicos de Services
         if (element.classList.contains('service-item')) return 'Expand Service';
@@ -375,7 +384,7 @@
           a, button, [role="button"], input, textarea, select, label,
           .realism-button, .main-button, .secondary-button,
           .experience-card-marquee, .review-card-marquee,
-          .project-card, .service-card,
+          .project-card, .service-card, .project-card-marquee,
           .project-item, .project-title, .service-item, .service-title,
           .tag, .tech-tag, .read-more-btn,
           .faq-item, .faq-question, .faq-icon, .icon,

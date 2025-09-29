@@ -163,7 +163,15 @@ Showcasing my latest work and creative solutions
     
     <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
     <div class="project-marquee-desktop">
-      <ProjectMarqueeIsland client:visible />
+      <ProjectMarqueeIsland client:visible>
+        <div slot="fallback" class="marquee-loading">
+          <div class="loading-cards">
+            <div class="loading-card"></div>
+            <div class="loading-card"></div>
+            <div class="loading-card"></div>
+          </div>
+        </div>
+      </ProjectMarqueeIsland>
     </div>
     
     <!-- Mobile: Slider Manual (visible en vp < 768px) -->
@@ -707,7 +715,7 @@ Showcasing my latest work and creative solutions
     filter: brightness(1.1) contrast(1.05);
     transform: scale(1.1);
     z-index: -1;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Base state for smooth transition */
@@ -725,13 +733,13 @@ Showcasing my latest work and creative solutions
     opacity: 0;
     transform: scale(1);
     z-index: -1;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Hide all content except visit button on hover */
   :global(.project-card-marquee:hover .project-card-content) {
     background: transparent;
-    transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   :global(.project-card-marquee:hover .project-card-header),
@@ -761,7 +769,7 @@ Showcasing my latest work and creative solutions
     justify-content: flex-end;
     position: relative;
     z-index: 1;
-    transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   :global(.project-card-header) {
@@ -911,6 +919,32 @@ Showcasing my latest work and creative solutions
 
   :global(.project-marquee-opposite) {
     animation: projectMarqueeScrollReverse 50s linear infinite;
+  }
+
+  /* Loading State */
+  .marquee-loading {
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  .loading-cards {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loading-card {
+    width: 320px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
   }
 
   /* Dual System: Desktop Marquee + Mobile Slider */
