@@ -34,6 +34,23 @@ import { motion } from 'motion/react';
       >
         <TextDisperseBlack text="MY STACK" className="title-disperse-black" client:idle />
       </motion.div>
+      
+      <!-- Check my Stack Button -->
+      <motion.div
+        className="stack-button-container"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+        client:idle
+      >
+        <button class="check-stack-btn" onclick="window.location.href='/resume#skills'">
+          <span class="btn-text">Check my Stack</span>
+          <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </button>
+      </motion.div>
     </div>
     <!-- Island optimizado para 3D + Marquees -->
     <MyStackIsland client:visible />
@@ -89,9 +106,13 @@ import { motion } from 'motion/react';
     width: 100%;
     max-width: 1400px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     position: relative;
-    z-index: 2;
+    z-index: 50; /* Aumentado significativamente */
+    gap: 40px;
+    pointer-events: none; /* Permitir que los clicks pasen a través del contenedor */
   }
 
   /* Estilos globales para el Island */
@@ -289,6 +310,7 @@ import { motion } from 'motion/react';
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: auto; /* Permitir interacción con el título */
   }
 
   :global(.title-disperse-black) {
@@ -310,6 +332,85 @@ import { motion } from 'motion/react';
     color: #060314 !important;
   }
 
+  /* Check my Stack Button Styles */
+  :global(.stack-button-container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 100; /* Muy alto para estar sobre todo */
+  }
+
+  .check-stack-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-family: "VideoGameFont", monospace;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(69, 35, 174, 0.25);
+    position: relative;
+    z-index: 101; /* Aún más alto que el contenedor */
+    overflow: hidden;
+    pointer-events: auto; /* Asegurar que sea clickeable */
+  }
+
+  .check-stack-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .check-stack-btn:hover::before {
+    left: 100%;
+  }
+
+  .check-stack-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(69, 35, 174, 0.35);
+    background: linear-gradient(135deg, #5a2cc5 0%, #7c5ce0 100%);
+  }
+
+  .check-stack-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.3);
+  }
+
+  .check-stack-btn .btn-text {
+    color: white;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .check-stack-btn .btn-icon {
+    width: 14px;
+    height: 14px;
+    stroke: white;
+    stroke-width: 2.5;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .check-stack-btn:hover .btn-icon {
+    transform: translate(2px, -2px);
+  }
+
   @media (max-width: 768px) {
     .my-stack-section {
       background-size: 20px 20px;
@@ -320,6 +421,18 @@ import { motion } from 'motion/react';
       margin: 0 auto -80px auto;
       width: 100%;
       max-width: 100%;
+      gap: 30px;
+    }
+
+    .check-stack-btn {
+      padding: 10px 16px;
+      font-size: 11px;
+      border-radius: 20px;
+    }
+
+    .check-stack-btn .btn-icon {
+      width: 12px;
+      height: 12px;
     }
 
     :global(.title-container) {

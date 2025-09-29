@@ -436,13 +436,20 @@ const resumeSEOConfig = {
     height: 720px;
   }
 
-  /* Main CV Styles - Dark Mode */
+  /* Main CV Styles - Light Mode */
   .resume-main {
     background: #ececec;
     color: #000000;
     font-family: var(--font-primary);
     padding-top: 80px; /* Account for CV header (no TopMarquee) */
     min-height: 100vh;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode Styles for Main */
+  :global(.dark-mode .resume-main) {
+    background: #050112;
+    color: #ffffff;
   }
 
   /* Hero Section */
@@ -473,6 +480,11 @@ const resumeSEOConfig = {
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .hero-badge) {
+    color: #ffffff;
   }
 
   .hero-title {
@@ -487,26 +499,58 @@ const resumeSEOConfig = {
     flex-direction: column;
     justify-content: center;
     contain: layout style;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .hero-title) {
+    color: #ffffff;
   }
 
   .hero-subtitle {
     color: #888888;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .hero-description {
+  :global(.dark-mode .hero-subtitle) {
+    color: #cccccc;
+  }
+
+  /* Hero Description Styles - Following DarkMode.md pattern exactly */
+  :global(.hero-description) {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
 
-  .hero-description p {
+  :global(.hero-description p) {
     font-size: clamp(1.125rem, 3vw, 1.25rem);
     line-height: 1.6;
     color: #000000;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .hero-description p) {
+    color: #ffffff;
+  }
+
+  :global(.hero-description *) {
+    color: #000000;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .hero-description *) {
+    color: #ffffff;
   }
 
   .highlight {
     color: #7a7a7a;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .highlight) {
+    color: #cccccc;
   }
 
   /* Hero Action Buttons */
@@ -530,6 +574,11 @@ const resumeSEOConfig = {
     gap: 0.75rem;
     font-size: 0.875rem;
     color: #363636;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .hero-status) {
+    color: #cccccc;
   }
 
   @media (min-width: 640px) {
@@ -585,6 +634,11 @@ const resumeSEOConfig = {
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .section-label) {
+    color: #ffffff;
   }
 
   .contact-links {
@@ -599,8 +653,16 @@ const resumeSEOConfig = {
     transition: color 0.3s ease;
   }
 
+  :global(.dark-mode .contact-link) {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   .contact-link:hover {
     color: rgb(0, 0, 0);
+  }
+
+  :global(.dark-mode .contact-link:hover) {
+    color: #ffffff;
   }
 
   .contact-link.primary {
@@ -610,6 +672,11 @@ const resumeSEOConfig = {
   .contact-link.small {
     font-size: 0.75rem;
     color: #222222;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .contact-link.small) {
+    color: #cccccc;
   }
 
   /* Section Styles */
@@ -653,6 +720,11 @@ const resumeSEOConfig = {
     font-weight: 300;
     font-family: var(--font-display); /* Median font */
     color: #0c0819;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .section-title) {
+    color: #ffffff;
   }
 
   /* TextDisperse styles for section titles */
@@ -663,6 +735,11 @@ const resumeSEOConfig = {
     font-weight: inherit;
     line-height: inherit;
     letter-spacing: inherit;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+
+  :global(.dark-mode .section-title .relative) {
+    color: #ffffff !important;
   }
 
   /* Summary Styles */
@@ -672,25 +749,44 @@ const resumeSEOConfig = {
     gap: 2rem;
   }
 
-  .summary-item h3 {
+  /* Summary Item Styles - Following DarkMode.md pattern exactly */
+  :global(.summary-item h3) {
     font-size: 1.25rem;
     font-weight: 500;
     margin-bottom: 1rem;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .summary-item h4 {
+  :global(.dark-mode .summary-item h3) {
+    color: #ffffff;
+  }
+
+  :global(.summary-item h4) {
     font-size: 1.125rem;
     font-weight: 500;
     margin-bottom: 1rem;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .summary-item p {
+  :global(.dark-mode .summary-item h4) {
+    color: #ffffff;
+  }
+
+  :global(.summary-item p) {
     color: #0c08198c;
     line-height: 1.6;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .summary-item p) {
+    color: #ffffff;
   }
 
   /* Experience Styles */
@@ -711,6 +807,11 @@ const resumeSEOConfig = {
     font-weight: 500;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .job-title) {
+    color: #ffffff;
   }
 
   .job-header {
@@ -730,11 +831,21 @@ const resumeSEOConfig = {
   .company {
     font-weight: 500;
     color: #0c0819;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .company) {
+    color: #ffffff;
   }
 
   .location {
     font-size: 0.875rem;
     color: #cccccc;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .location) {
+    color: #999999;
   }
 
   .projects-grid {
@@ -742,7 +853,8 @@ const resumeSEOConfig = {
     gap: 1.5rem;
   }
 
-  .project-card {
+  /* Project Card Styles - Following DarkMode.md pattern exactly */
+  :global(.project-card) {
     padding: 1.5rem;
     border: 1px solid #f9f9f941;
     border-radius: 0.5rem;
@@ -750,18 +862,41 @@ const resumeSEOConfig = {
     flex-direction: column;
     gap: 1rem;
     background: rgba(183, 183, 183, 0.069);
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-card h4 {
+  :global(.dark-mode .project-card) {
+    background: #1f1f1f;
+    border-color: #333333;
+    color: #ffffff;
+  }
+
+  :global(.project-card h4) {
     font-size: 1.125rem;
     font-weight: 500;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-card p {
+  :global(.dark-mode .project-card h4) {
+    color: #ffffff;
+  }
+
+  :global(.project-card p) {
     color: #0c08198c;
     line-height: 1.6;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .project-card p) {
+    color: #ffffff;
   }
 
   /* Skills Styles */
@@ -799,16 +934,30 @@ const resumeSEOConfig = {
     gap: 2rem;
   }
 
-  .project-item {
+  /* Project Item Styles - Following DarkMode.md pattern exactly */
+  :global(.project-item) {
     display: grid;
     gap: 1rem;
     padding: 1.5rem 0;
     border-bottom: 1px solid #e2e2e2;
-    transition: border-color 0.5s ease;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .project-item) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
   }
 
   .project-item:hover {
     border-color: #555555;
+  }
+
+  :global(.dark-mode .project-item:hover) {
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   @media (min-width: 1024px) {
@@ -818,39 +967,67 @@ const resumeSEOConfig = {
     }
   }
 
-  .project-number {
+  /* Project Item Text Elements - Following DarkMode.md pattern exactly */
+  :global(.project-number) {
     font-size: 1.5rem;
     font-weight: 300;
     color: #0c08198c;
-    transition: color 0.5s ease;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-item:hover .project-number {
+  :global(.dark-mode .project-number) {
+    color: #ffffff;
+  }
+
+  :global(.project-item:hover .project-number) {
     color: #0c0819;
   }
 
-  .project-details {
+  :global(.dark-mode .project-item:hover .project-number) {
+    color: #ffffff;
+  }
+
+  :global(.project-details) {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  .project-details h3 {
+  :global(.project-details h3) {
     font-size: 1.125rem;
     font-weight: 500;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-subtitle {
+  :global(.dark-mode .project-details h3) {
+    color: #ffffff;
+  }
+
+  :global(.project-subtitle) {
     color: #0c08198c;
     font-size: 0.875rem;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-details p {
+  :global(.dark-mode .project-subtitle) {
+    color: #ffffff;
+  }
+
+  :global(.project-details p) {
     color: #0c08198c;
     line-height: 1.6;
     max-width: 32rem;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .project-details p) {
+    color: #ffffff;
   }
 
   .project-benefits {
@@ -863,19 +1040,31 @@ const resumeSEOConfig = {
     }
   }
 
-  .benefits-label {
+  :global(.benefits-label) {
     font-size: 0.875rem;
     color: #0c08198c;
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .project-benefits p {
+  :global(.dark-mode .benefits-label) {
+    color: #ffffff;
+  }
+
+  :global(.project-benefits p) {
     font-size: 0.875rem;
     color: #0c08198c;
     line-height: 1.6;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .project-benefits p) {
+    color: #ffffff;
   }
 
   /* Education Styles */
@@ -885,11 +1074,22 @@ const resumeSEOConfig = {
     gap: 2rem;
   }
 
-  .education-item {
+  /* Education Item Styles - Following DarkMode.md pattern exactly */
+  :global(.education-item) {
     display: grid;
     gap: 1rem;
     padding: 1.5rem 0;
     border-bottom: 1px solid #e3e3e3;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .education-item) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
   }
 
   @media (min-width: 1024px) {
@@ -899,26 +1099,51 @@ const resumeSEOConfig = {
     }
   }
 
-  .education-number {
+  /* Education Item Text Elements - Following DarkMode.md pattern exactly */
+  :global(.education-number) {
     font-size: 1.5rem;
     font-weight: 300;
     color: #cccccc;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .education-details h3 {
+  :global(.dark-mode .education-number) {
+    color: #ffffff;
+  }
+
+  :global(.education-details) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  :global(.education-details h3) {
     font-size: 1.125rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .education-duration {
+  :global(.dark-mode .education-details h3) {
+    color: #ffffff;
+  }
+
+  :global(.education-duration) {
     color: #0c08198c;
     margin-bottom: 1rem;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .education-points {
+  :global(.dark-mode .education-duration) {
+    color: #ffffff;
+  }
+
+  :global(.education-points) {
     list-style: none;
     padding: 0;
     display: flex;
@@ -926,15 +1151,21 @@ const resumeSEOConfig = {
     gap: 0.5rem;
   }
 
-  .education-points li {
+  :global(.education-points li) {
     font-size: 0.875rem;
     color: #0c08198c;
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .education-points li::before {
+  :global(.dark-mode .education-points li) {
+    color: #ffffff;
+  }
+
+  :global(.education-points li::before) {
     content: '';
     width: 0.25rem;
     height: 0.25rem;
@@ -942,6 +1173,12 @@ const resumeSEOConfig = {
     border-radius: 50%;
     margin-top: 0.5rem;
     flex-shrink: 0;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .education-points li::before) {
+    background: #ffffff;
   }
 
   .learning-badge {
@@ -951,6 +1188,12 @@ const resumeSEOConfig = {
     border-radius: 0.5rem;
     margin-top: 2rem;
     background: rgba(255, 255, 255, 0.02);
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .learning-badge) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #555555;
   }
 
   .badge-title {
@@ -959,11 +1202,133 @@ const resumeSEOConfig = {
     margin-bottom: 0.5rem;
     color: #0c0819;
     font-family: var(--font-secondary); /* Boysen font */
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .badge-title) {
+    color: #ffffff;
   }
 
   .badge-subtitle {
     font-size: 1.125rem;
     color: #cccccc;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .badge-subtitle) {
+    color: #999999;
+  }
+
+  /* Skill Tags Styles - Following DarkMode.md pattern */
+  :global(.skill-group) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  :global(.skill-group-title) {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-family: var(--font-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode .skill-group-title) {
+    color: #ffffff;
+  }
+
+  :global(.skill-tags-container) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Skill Tag Base Styles */
+  :global(.skill-tag) {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    cursor: default;
+    user-select: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Primary Variant */
+  :global(.skill-tag-primary) {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #1a1a1a;
+  }
+
+  :global(.dark-mode .skill-tag-primary) {
+    background: #1f1f1f;
+    border: 1px solid #333333;
+    color: #ffffff;
+  }
+
+  :global(.skill-tag-primary:hover) {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.dark-mode .skill-tag-primary:hover) {
+    background: #2a2a2a;
+    border: 1px solid #444444;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Secondary Variant */
+  :global(.skill-tag-secondary) {
+    background: rgba(69, 35, 174, 0.08);
+    border: 1px solid rgba(69, 35, 174, 0.2);
+    color: #4523AE;
+  }
+
+  :global(.dark-mode .skill-tag-secondary) {
+    background: rgba(69, 35, 174, 0.15);
+    border: 1px solid rgba(69, 35, 174, 0.4);
+    color: #ffffff;
+  }
+
+  :global(.skill-tag-secondary:hover) {
+    background: rgba(69, 35, 174, 0.12);
+    border: 1px solid rgba(69, 35, 174, 0.35);
+  }
+
+  :global(.dark-mode .skill-tag-secondary:hover) {
+    background: rgba(69, 35, 174, 0.25);
+    border: 1px solid rgba(69, 35, 174, 0.6);
+  }
+
+  /* Accent Variant */
+  :global(.skill-tag-accent) {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #059669;
+  }
+
+  :global(.dark-mode .skill-tag-accent) {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #ffffff;
+  }
+
+  :global(.skill-tag-accent:hover) {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+  }
+
+  :global(.dark-mode .skill-tag-accent:hover) {
+    background: rgba(16, 185, 129, 0.25);
+    border: 1px solid rgba(16, 185, 129, 0.6);
   }
 
   /* CV Footer Styles */
@@ -1107,229 +1472,23 @@ const resumeSEOConfig = {
     transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* ========================================= */
-  /* DARK MODE STYLES FOR RESUME PAGE */
-  /* ========================================= */
-
-  /* Main Content Dark Mode */
-  :global(.dark-mode .resume-main) {
-    background: #050112;
-    color: #ffffff;
-  }
-
-  /* Hero Section Dark Mode */
-  :global(.dark-mode .hero-section) {
-    background: #050112;
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .hero-badge) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .hero-title) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .hero-subtitle) {
-    color: #cccccc;
-  }
-
-  :global(.dark-mode .hero-description p) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .highlight) {
-    color: #cccccc;
-  }
-
-  :global(.dark-mode .hero-status) {
-    color: #e5e5e5;
+  /* Status Dot Dark Mode */
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #000000;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   :global(.dark-mode .status-dot) {
     background: #ffffff;
   }
 
-  /* Contact Links Dark Mode */
-  :global(.dark-mode .contact-link) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  :global(.dark-mode .contact-link:hover) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .contact-link.primary) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .contact-link.small) {
-    color: #cccccc;
-  }
-
-  /* Section Labels Dark Mode */
-  :global(.dark-mode .section-label) {
-    color: #ffffff;
-  }
-
-  /* Section Titles Dark Mode */
-  :global(.dark-mode .section-title) {
-    color: #ffffff;
-  }
-
-  /* Summary Section Dark Mode */
-  :global(.dark-mode .summary-item h3),
-  :global(.dark-mode .summary-item h4) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .summary-item p) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  /* Experience Section Dark Mode */
-  :global(.dark-mode .job-title) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .company) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .location) {
-    color: #cccccc;
-  }
-
-  :global(.dark-mode .project-card) {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .project-card h4) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .project-card p) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  /* Projects Section Dark Mode */
-  :global(.dark-mode .project-item) {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .project-item:hover) {
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  :global(.dark-mode .project-number) {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  :global(.dark-mode .project-item:hover .project-number) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .project-details h3) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .project-subtitle) {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  :global(.dark-mode .project-details p) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  :global(.dark-mode .benefits-label) {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  :global(.dark-mode .project-benefits p) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  /* Education Section Dark Mode */
-  :global(.dark-mode .education-item) {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .education-number) {
-    color: rgba(255, 255, 255, 0.3);
-  }
-
-  :global(.dark-mode .education-details h3) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .education-duration) {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  :global(.dark-mode .education-points li) {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  :global(.dark-mode .education-points li::before) {
-    background: rgba(255, 255, 255, 0.6);
-  }
-
-  /* Learning Badge Dark Mode */
-  :global(.dark-mode .learning-badge) {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  :global(.dark-mode .badge-title) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .badge-subtitle) {
-    color: #cccccc;
-  }
-
-  /* Smooth Transitions for Dark Mode */
-  :global(.resume-main),
-  :global(.hero-section),
-  :global(.hero-badge),
-  :global(.hero-title),
-  :global(.hero-subtitle),
-  :global(.hero-description p),
-  :global(.highlight),
-  :global(.hero-status),
-  :global(.status-dot),
-  :global(.contact-link),
-  :global(.section-label),
-  :global(.section-title),
-  :global(.summary-item h3),
-  :global(.summary-item h4),
-  :global(.summary-item p),
-  :global(.job-title),
-  :global(.company),
-  :global(.location),
-  :global(.project-card),
-  :global(.project-item),
-  :global(.project-number),
-  :global(.project-details h3),
-  :global(.project-subtitle),
-  :global(.project-details p),
-  :global(.benefits-label),
-  :global(.project-benefits p),
-  :global(.education-item),
-  :global(.education-number),
-  :global(.education-details h3),
-  :global(.education-duration),
-  :global(.education-points li),
-  :global(.learning-badge),
-  :global(.badge-title),
-  :global(.badge-subtitle) {
-    transition:
-      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
 </style>

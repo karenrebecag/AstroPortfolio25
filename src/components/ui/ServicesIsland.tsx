@@ -28,16 +28,16 @@ const ServicesIsland: React.FC = () => {
     {
       id: 1,
       title1: "UX/UI Design",
-      title2: "& Mobile Prototyping",
-      description: "I craft intuitive, user-centered interfaces and interactive prototypes for web and mobile applications, ensuring seamless experiences across devices. Using tools like Figma and Sketch, I design visually compelling layouts that prioritize usability, accessibility, and mobile-first principles.",
-      tags: ["User Interface", "User Experience", "Mobile Design", "Prototyping"],
-      technologies: ["Figma", "Sketch", "Zeplin", "Adobe XD"],
-      example: "Led UX/UI redesign for MonexOne app at Aurin (Sodio), improving form response rates by 30% through mobile-optimized design.",
+      title2: "& Engineering",
+      description: "I craft intuitive, user-centered interfaces and bridge design with development through technical UX engineering. From mobile prototypes in Figma to developer-friendly design systems with React components, I ensure seamless handoff and implementation.",
+      tags: ["User Interface", "User Experience", "Design Systems", "Component Libraries", "Mobile Design", "Developer Handoff"],
+      technologies: ["Figma", "Sketch", "Webflow", "Framer", "React", "TypeScript", "Storybook", "Tailwind", "Zeplin"],
+      example: "Led UX/UI redesign for MonexOne app and developed reusable component library for Athenis AI, improving form response rates by 30% and developer efficiency by 25%.",
       images: [
         "https://picsum.photos/300/300?random=1",
         "https://picsum.photos/300/300?random=2",
-        "https://picsum.photos/300/300?random=3",
-        "https://picsum.photos/300/300?random=4"
+        "https://picsum.photos/300/300?random=5",
+        "https://picsum.photos/300/300?random=6"
       ],
       positions: [
         { x: -45, y: -5, rotate: 5 },
@@ -48,38 +48,17 @@ const ServicesIsland: React.FC = () => {
     },
     {
       id: 2,
-      title1: "Technical UX",
-      title2: "Design Engineering",
-      description: "I bridge design and development by creating developer-friendly design systems and interactive components that align with technical requirements. Combining Figma for seamless design handoff with React and TypeScript for functional prototypes.",
-      tags: ["Design Systems", "Component Libraries", "Developer Handoff"],
-      technologies: ["Figma", "Zeplin", "React", "TypeScript", "Storybook", "Tailwind"],
-      example: "Developed a reusable component library for Athenis AI's educational platform, integrating Figma designs with React for efficient developer workflows.",
-      images: [
-        "https://picsum.photos/300/300?random=5",
-        "https://picsum.photos/300/300?random=6",
-        "https://picsum.photos/300/300?random=7",
-        "https://picsum.photos/300/300?random=8"
-      ],
-      positions: [
-        { x: -42, y: 3, rotate: -5 },
-        { x: -14, y: -8, rotate: 2 },
-        { x: 14, y: 5, rotate: -8 },
-        { x: 42, y: -3, rotate: 3 }
-      ]
-    },
-    {
-      id: 3,
-      title1: "Web Art &",
-      title2: "Creative Visualizations",
-      description: "I create visually stunning, interactive web experiences that blend art and technology. Using CSS animations, WebGL, and JavaScript libraries like Three.js, I design immersive digital visuals that captivate users while ensuring performance and accessibility.",
-      tags: ["WebGL", "3D Graphics", "Interactive Art", "Creative Coding"],
-      technologies: ["CSS Animations", "WebGL", "Three.js", "GSAP", "Canvas API"],
-      example: "Built an interactive landing page for Athenis AI, featuring dynamic 3D visualizations of AI-driven insights.",
+      title1: "Creative Frontend",
+      title2: "Development",
+      description: "I build fast, scalable web interfaces that blend art and technology. Using React, Next.js, and WebGL, I create visually stunning, interactive experiences with Three.js animations while ensuring optimal performance and responsive design.",
+      tags: ["React", "Next.js", "WebGL", "3D Graphics", "Interactive Art", "Responsive Design"],
+      technologies: ["JavaScript", "React", "TypeScript", "Next.js", "Astro", "Three.js", "WebGL", "GSAP", "SASS", "Tailwind"],
+      example: "Built interactive landing page for Athenis AI with 3D visualizations and developed Aurin Task Manager with dynamic UI components and WebGL effects.",
       images: [
         "https://picsum.photos/300/300?random=9",
-        "https://picsum.photos/300/300?random=10",
+        "https://picsum.photos/300/300?random=13",
         "https://picsum.photos/300/300?random=11",
-        "https://picsum.photos/300/300?random=12"
+        "https://picsum.photos/300/300?random=15"
       ],
       positions: [
         { x: -43, y: -3, rotate: 3 },
@@ -89,60 +68,18 @@ const ServicesIsland: React.FC = () => {
       ]
     },
     {
-      id: 4,
-      title1: "Modern Frontend",
-      title2: "Development",
-      description: "I build fast, scalable, and responsive web interfaces using modern frameworks like React and Next.js. Leveraging TypeScript for type safety and Sass/Tailwind for modular styling, I deliver clean, optimized code that ensures engaging user experiences.",
-      tags: ["React", "Next.js", "TypeScript", "Responsive Design"],
-      technologies: ["JavaScript", "React", "TypeScript", "Next.js", "Sass", "Tailwind"],
-      example: "Developed Aurin Task Manager at Aurin (Sodio), a fullstack Next.js app with Clerk authentication and dynamic UI components.",
-      images: [
-        "https://picsum.photos/300/300?random=13",
-        "https://picsum.photos/300/300?random=14",
-        "https://picsum.photos/300/300?random=15",
-        "https://picsum.photos/300/300?random=16"
-      ],
-      positions: [
-        { x: -40, y: 2, rotate: -3 },
-        { x: -12, y: -6, rotate: 5 },
-        { x: 12, y: 3, rotate: -7 },
-        { x: 40, y: -2, rotate: 4 }
-      ]
-    },
-    {
-      id: 5,
-      title1: "Backend Development",
-      title2: "& Data Management",
-      description: "I develop secure, scalable backend systems with Node.js, Python, and Firestore, creating efficient APIs and managing complex data structures. Integrating Clerk for authentication and serverless deployments on Vercel.",
-      tags: ["Node.js", "Python", "APIs", "Database Design"],
-      technologies: ["Node.js", "Python", "FastAPI", "Firestore", "MongoDB", "Redis", "Clerk"],
-      example: "Implemented temporary dynamic link system for guest access in Aurin Task Manager, built with Firestore.",
-      images: [
-        "https://picsum.photos/300/300?random=17",
-        "https://picsum.photos/300/300?random=18",
-        "https://picsum.photos/300/300?random=19",
-        "https://picsum.photos/300/300?random=20"
-      ],
-      positions: [
-        { x: -38, y: -4, rotate: 6 },
-        { x: -13, y: 7, rotate: -2 },
-        { x: 13, y: -5, rotate: 4 },
-        { x: 38, y: 3, rotate: -6 }
-      ]
-    },
-    {
-      id: 6,
-      title1: "AI Integration",
-      title2: "& Innovation",
-      description: "I enhance applications with AI-driven features, such as contextual chatbots, automated summaries, and data analysis. Using APIs like Gemini and OpenAI, combined with LangChain, I deliver intelligent solutions that boost productivity.",
-      tags: ["AI Integration", "Chatbots", "Machine Learning", "Automation"],
-      technologies: ["Gemini API", "OpenAI API", "LangChain", "Google Cloud AI"],
-      example: "Integrated AI-powered chatbot and task summaries in Aurin Task Manager, enhancing team collaboration.",
+      id: 3,
+      title1: "AI-Powered",
+      title2: "Automation",
+      description: "I design intelligent automation systems that enhance productivity through AI integration. Using tools like N8N and Make combined with Gemini/OpenAI APIs, I create smart workflows, chatbots, and automated processes that streamline operations.",
+      tags: ["AI Integration", "Process Automation", "Chatbots", "Machine Learning", "Workflow Design", "Efficiency"],
+      technologies: ["Gemini API", "OpenAI API", "Anthropic API", "LangChain", "N8N", "Make", "Zapier", "Cursor", "Claude.ai", "Google Cloud AI"],
+      example: "Integrated AI-powered chatbot and task summaries in Aurin Task Manager, plus automated task reporting reducing manual workload by 40%.",
       images: [
         "https://picsum.photos/300/300?random=21",
-        "https://picsum.photos/300/300?random=22",
+        "https://picsum.photos/300/300?random=29",
         "https://picsum.photos/300/300?random=23",
-        "https://picsum.photos/300/300?random=24"
+        "https://picsum.photos/300/300?random=31"
       ],
       positions: [
         { x: -41, y: 1, rotate: -4 },
@@ -152,12 +89,33 @@ const ServicesIsland: React.FC = () => {
       ]
     },
     {
-      id: 7,
+      id: 4,
+      title1: "Full-Stack",
+      title2: "& DevOps",
+      description: "I develop complete backend systems with Node.js, Python, and Firestore, then deploy them with robust CI/CD pipelines. From secure APIs and database design to automated deployments on Vercel with monitoring via Sentry.",
+      tags: ["Node.js", "Python", "APIs", "Database Design", "DevOps", "CI/CD", "Monitoring"],
+      technologies: ["Node.js", "Python", "FastAPI", "Prisma", "Firestore", "Supabase", "PostgreSQL", "MongoDB", "Git", "Docker", "Vercel", "GitHub", "GitHub Actions", "Sentry", "Clerk"],
+      example: "Implemented dynamic link system for Aurin Task Manager with Firestore and deployed with automated CI/CD pipelines for seamless updates.",
+      images: [
+        "https://picsum.photos/300/300?random=17",
+        "https://picsum.photos/300/300?random=33",
+        "https://picsum.photos/300/300?random=19",
+        "https://picsum.photos/300/300?random=35"
+      ],
+      positions: [
+        { x: -38, y: -4, rotate: 6 },
+        { x: -13, y: 7, rotate: -2 },
+        { x: 13, y: -5, rotate: 4 },
+        { x: 38, y: 3, rotate: -6 }
+      ]
+    },
+    {
+      id: 5,
       title1: "Vibe Coding",
       title2: "Creative Development",
       description: "I blend creative problem-solving with disciplined coding to deliver innovative, reliable solutions. Rooted in JavaScript and Python, my 'vibe coding' approach infuses personality into clean, maintainable code, ensuring projects are functional and uniquely expressive.",
       tags: ["Creative Coding", "Innovation", "Problem Solving", "Clean Code"],
-      technologies: ["JavaScript", "Python", "TypeScript", "React", "Node.js"],
+      technologies: ["JavaScript", "Python", "TypeScript", "React", "Node.js", "Wix Studio", "Shopify", "WordPress"],
       example: "Crafted custom animated UI components for MonexOne, combining creativity with robust functionality.",
       images: [
         "https://picsum.photos/300/300?random=25",
@@ -170,48 +128,6 @@ const ServicesIsland: React.FC = () => {
         { x: -11, y: 5, rotate: -3 },
         { x: 11, y: -6, rotate: 7 },
         { x: 39, y: 2, rotate: -4 }
-      ]
-    },
-    {
-      id: 8,
-      title1: "Workflow",
-      title2: "Automation",
-      description: "I design custom automation workflows to streamline processes, connecting apps with tools like N8N and Make. By integrating AI for tasks like data analysis or content generation, I create efficient systems that save time and enhance productivity.",
-      tags: ["Process Automation", "Workflow Design", "Integration", "Efficiency"],
-      technologies: ["N8N", "Make", "Zapier", "TensorFlow", "PyTorch"],
-      example: "Automated task reporting in Aurin Task Manager, reducing manual workload by 40%.",
-      images: [
-        "https://picsum.photos/300/300?random=29",
-        "https://picsum.photos/300/300?random=30",
-        "https://picsum.photos/300/300?random=31",
-        "https://picsum.photos/300/300?random=32"
-      ],
-      positions: [
-        { x: -37, y: 3, rotate: -2 },
-        { x: -12, y: -4, rotate: 4 },
-        { x: 12, y: 6, rotate: -6 },
-        { x: 37, y: -3, rotate: 3 }
-      ]
-    },
-    {
-      id: 9,
-      title1: "Deployment & CI/CD",
-      title2: "Maintenance",
-      description: "I ensure reliable deployments and ongoing maintenance using platforms like Vercel and Netlify, with CI/CD pipelines via GitHub Actions. Leveraging monitoring tools like Sentry, I deliver production-ready applications with optimal performance.",
-      tags: ["DevOps", "CI/CD", "Monitoring", "Performance"],
-      technologies: ["Vercel", "Netlify", "GitHub Actions", "Sentry", "LogRocket"],
-      example: "Deployed Aurin Task Manager on Vercel with automated CI/CD pipelines for seamless updates.",
-      images: [
-        "https://picsum.photos/300/300?random=33",
-        "https://picsum.photos/300/300?random=34",
-        "https://picsum.photos/300/300?random=35",
-        "https://picsum.photos/300/300?random=36"
-      ],
-      positions: [
-        { x: -36, y: -1, rotate: 3 },
-        { x: -10, y: 4, rotate: -5 },
-        { x: 10, y: -3, rotate: 6 },
-        { x: 36, y: 1, rotate: -2 }
       ]
     }
   ];

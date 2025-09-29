@@ -150,7 +150,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.5 }}
-                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
+                                    className="white-footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
                                 >
                                     <SpaceInvadersIsland onExit={exitSpaceInvaders} />
                                 </motion.div>
@@ -161,7 +161,7 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.5 }}
-                                    className="w-full max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 flex flex-col justify-between gap-5 py-8 relative z-20"
+                                    className="white-footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-between gap-5 py-8 relative z-20"
                                 >
                             <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
                                 <AnimatedContainer className="w-full">
@@ -463,9 +463,30 @@ if (typeof document !== 'undefined') {
             .white-karen-ortiz-flip-text {
                 font-size: clamp(30px, 10vw, 80px) !important;
             }
-            
+
             .white-karen-ortiz-flip-text .flip-text-container {
                 font-size: clamp(30px, 10vw, 80px) !important;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .white-footer-content-container {
+                padding-left: 2rem !important;
+                padding-right: 2rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .white-footer-content-container {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .white-footer-content-container {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
             }
         }
     `;

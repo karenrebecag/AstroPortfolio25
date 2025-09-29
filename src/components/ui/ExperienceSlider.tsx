@@ -11,6 +11,7 @@ interface ExperienceData {
   description: string;
   highlight: string;
   image: string;
+  resumeAnchor?: string;
 }
 
 interface ExperienceSliderProps {
@@ -118,6 +119,21 @@ const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) =
                 <p className="description-highlight-slider">
                   {experience.highlight}
                 </p>
+              </div>
+
+              {/* Read More Button */}
+              <div className="experience-actions">
+                <button 
+                  className="read-more-btn"
+                  onClick={() => {
+                    window.location.href = `/resume#experience`;
+                  }}
+                >
+                  <span className="btn-text">Read More</span>
+                  <svg className="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                  </svg>
+                </button>
               </div>
             </motion.div>
           </SplideSlide>

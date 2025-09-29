@@ -713,6 +713,60 @@ const experienceData = [
     word-wrap: break-word;
   }
 
+  /* Experience Actions - Read More Button */
+  :global(.experience-actions) {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  :global(.read-more-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: "VideoGameFont", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(69, 35, 174, 0.2);
+  }
+
+  :global(.read-more-btn:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.3);
+    background: linear-gradient(135deg, #5a2cc5 0%, #7c5ce0 100%);
+  }
+
+  :global(.read-more-btn:active) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(69, 35, 174, 0.25);
+  }
+
+  :global(.btn-text) {
+    color: white;
+    line-height: 1;
+  }
+
+  :global(.btn-icon) {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    stroke-width: 2.5;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.read-more-btn:hover .btn-icon) {
+    transform: translate(1px, -1px);
+  }
+
   /* Marquee Animation */
   @keyframes experienceMarqueeScroll {
     0% {
