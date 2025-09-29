@@ -644,8 +644,8 @@ export function DitheringShader({
       className={className}
       style={{
         position: "relative",
-        width,
-        height,
+        width: style?.width || width,
+        height: style?.height || height,
         ...style,
       }}
     >

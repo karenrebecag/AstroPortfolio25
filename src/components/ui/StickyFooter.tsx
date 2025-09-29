@@ -123,6 +123,13 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 type="8x8"
                                 pxSize={3}
                                 speed={0.6}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0
+                                }}
                             />
                         </div>
                         
@@ -243,7 +250,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             
                             {/* Performance Stats Section */}
                             <AnimatedContainer delay={0.4} className="w-full">
-                                <div className="w-full flex flex-col gap-4 py-16 border-t border-white/10">
+                                <div className="w-full flex flex-col gap-4 py-16 border-t border-white/10" style={{ paddingTop: '1rem' }}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h3 className="text-white font-primary text-lg font-semibold">
@@ -258,9 +265,6 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-white group-hover:text-white/90" />
                                             </button>
                                         </div>
-                                        <span className="text-white/50 text-sm font-primary">
-                                            Powered by Speedlify
-                                        </span>
                                     </div>
                                     <SpeedlifyStats className="w-full" />
                                 </div>
@@ -425,7 +429,7 @@ if (typeof document !== 'undefined') {
         
         .karen-ortiz-flip-text .flip-text-container {
             font-family: var(--font-display) !important;
-            font-size: clamp(60px, 30vw, 200px) !important;
+            font-size: clamp(60px, 12vw, 300px) !important;
             font-weight: 400 !important;
             color: white !important;
             text-align: center !important;
@@ -435,6 +439,22 @@ if (typeof document !== 'undefined') {
             display: flex !important;
             height: auto !important;
             min-height: fit-content !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        /* Responsive adjustments for large screens */
+        @media (min-width: 1200px) {
+            .karen-ortiz-container {
+                padding: 0 2rem;
+                max-width: 100%;
+            }
+            
+            .karen-ortiz-flip-text .flip-text-container {
+                font-size: clamp(120px, 15vw, 400px) !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
         }
         
         .footer-grid-texture::before {

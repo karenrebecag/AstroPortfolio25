@@ -226,7 +226,11 @@ const experienceData = [
   
   <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
   <div class="experience-marquee-desktop">
-    <ExperienceMarqueeIsland client:visible />
+    <div class="experience-marquee-container">
+      <div class="experience-marquee-wrapper-limited">
+        <ExperienceMarqueeIsland client:visible />
+      </div>
+    </div>
   </div>
   
   <!-- Mobile: Slider Manual (visible en vp < 768px) -->
@@ -337,6 +341,10 @@ const experienceData = [
 
     .story-content {
       order: 1;
+    }
+
+    .content-section {
+      min-height: 60vh;
     }
   }
 
@@ -449,7 +457,7 @@ const experienceData = [
     justify-content: center;
     align-items: center;
     position: relative;
-    min-height: 50vh;
+    /* min-height: 50vh; */
   }
 
   .globe-container {
@@ -975,6 +983,43 @@ const experienceData = [
   /* Dual System: Desktop Marquee + Mobile Slider */
   .experience-marquee-desktop {
     display: block;
+  }
+
+  .experience-marquee-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .experience-marquee-wrapper-limited {
+    width: 100%;
+    max-width: 1800px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .experience-marquee-wrapper-limited::before,
+    .experience-marquee-wrapper-limited::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .experience-marquee-wrapper-limited::before {
+      left: 0;
+      background: linear-gradient(to right, #f9f9f9, transparent);
+    }
+
+    .experience-marquee-wrapper-limited::after {
+      right: 0;
+      background: linear-gradient(to left, #f9f9f9, transparent);
+    }
   }
 
   .experience-slider-mobile {

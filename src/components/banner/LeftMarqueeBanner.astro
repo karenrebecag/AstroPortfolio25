@@ -3,25 +3,34 @@
 ---
 
 <!-- Wrapper para prevenir layout shift -->
-<div class="left-marquee-wrapper">
-  <div 
-    id="left-marquee" 
-    class="whitespace-nowrap font-display font-bold select-none text-right" 
-    style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
-  >
-    <span class="marquee-content">
-      CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
-    </span>
-    <span class="marquee-content">
-      CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
-    </span>
+<div class="left-marquee-container">
+  <div class="left-marquee-wrapper">
+    <div 
+      id="left-marquee" 
+      class="whitespace-nowrap font-display font-bold select-none text-right" 
+      style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
+    >
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
+    </div>
   </div>
 </div>
 
 <style>
+  .left-marquee-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   .left-marquee-wrapper {
     /* Reserve space to prevent layout shift */
     width: 100%;
+    max-width: 1800px;
     height: clamp(163px, 32.6vw, 326px);
     min-height: 163px;
     overflow: hidden;
@@ -35,6 +44,30 @@
     left: 0;
     /* Allow infinite width for marquee animation */
     width: max-content !important;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .left-marquee-wrapper::before,
+    .left-marquee-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .left-marquee-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, white, transparent);
+    }
+
+    .left-marquee-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, white, transparent);
+    }
   }
 </style>
 

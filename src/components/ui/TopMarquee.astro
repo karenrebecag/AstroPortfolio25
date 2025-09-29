@@ -3,13 +3,15 @@
 ---
 
 <div class="top-marquee-container">
-  <div id="top-marquee" class="top-marquee">
-    <span class="marquee-text">
-      UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
-    </span>
-    <span class="marquee-text">
-      UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
-    </span>
+  <div class="top-marquee-wrapper">
+    <div id="top-marquee" class="top-marquee">
+      <span class="marquee-text">
+        UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
+      </span>
+      <span class="marquee-text">
+        UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
+      </span>
+    </div>
   </div>
 </div>
 
@@ -24,6 +26,16 @@
     left: 0;
     right: 0;
     z-index: 101;
+    display: flex;
+    justify-content: center;
+  }
+
+  .top-marquee-wrapper {
+    width: 100%;
+    max-width: 1800px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
   }
 
   .top-marquee {
@@ -52,6 +64,30 @@
     align-items: center;
     contain: layout style;
     will-change: transform;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .top-marquee-wrapper::before,
+    .top-marquee-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .top-marquee-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, #7256c6, transparent);
+    }
+
+    .top-marquee-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, #7256c6, transparent);
+    }
   }
 
   @media (max-width: 768px) {

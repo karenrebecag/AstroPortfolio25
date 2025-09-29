@@ -12,12 +12,16 @@ const logos = [
 ---
 
 <section class="enterprises">
-  <div class="container">
-    <h2 class="title">Trusted by Leading Brands to Deliver Exceptional Design Solutions</h2>
-    <div class="slider">
-      {[...logos, ...logos].map((logo) => (
-        <img src={logo.src} alt={logo.alt} class="logo" width="90" height="12" loading="lazy" />
-      ))}
+  <div class="enterprises-container">
+    <div class="enterprises-wrapper">
+      <div class="container">
+        <h2 class="title">Trusted by Leading Brands to Deliver Exceptional Design Solutions</h2>
+        <div class="slider">
+          {[...logos, ...logos].map((logo) => (
+            <img src={logo.src} alt={logo.alt} class="logo" width="90" height="12" loading="lazy" />
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -27,6 +31,19 @@ const logos = [
   .enterprises {
     background: #000;
     padding: 44px 0;
+    overflow: hidden;
+  }
+
+  .enterprises-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .enterprises-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
     overflow: hidden;
   }
 
@@ -56,11 +73,34 @@ const logos = [
     filter: grayscale(1) brightness(1.2);
     opacity: 0.8;
     object-fit: contain;
-
   }
 
   @keyframes scroll {
     to { transform: translateX(-50%); }
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .enterprises-wrapper::before,
+    .enterprises-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .enterprises-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, #000, transparent);
+    }
+
+    .enterprises-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, #000, transparent);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -163,15 +163,19 @@ Showcasing my latest work and creative solutions
     
     <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
     <div class="project-marquee-desktop">
-      <ProjectMarqueeIsland client:visible>
-        <div slot="fallback" class="marquee-loading">
-          <div class="loading-cards">
-            <div class="loading-card"></div>
-            <div class="loading-card"></div>
-            <div class="loading-card"></div>
-          </div>
+      <div class="project-marquee-container">
+        <div class="project-marquee-wrapper-limited">
+          <ProjectMarqueeIsland client:visible>
+            <div slot="fallback" class="marquee-loading">
+              <div class="loading-cards">
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+                <div class="loading-card"></div>
+              </div>
+            </div>
+          </ProjectMarqueeIsland>
         </div>
-      </ProjectMarqueeIsland>
+      </div>
     </div>
     
     <!-- Mobile: Slider Manual (visible en vp < 768px) -->
@@ -950,6 +954,43 @@ Showcasing my latest work and creative solutions
   /* Dual System: Desktop Marquee + Mobile Slider */
   .project-marquee-desktop {
     display: block;
+  }
+
+  .project-marquee-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .project-marquee-wrapper-limited {
+    width: 100%;
+    max-width: 1800px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .project-marquee-wrapper-limited::before,
+    .project-marquee-wrapper-limited::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .project-marquee-wrapper-limited::before {
+      left: 0;
+      background: linear-gradient(to right, #040111, transparent);
+    }
+
+    .project-marquee-wrapper-limited::after {
+      right: 0;
+      background: linear-gradient(to left, #040111, transparent);
+    }
   }
 
   .project-slider-mobile {

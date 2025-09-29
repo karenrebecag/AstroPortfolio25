@@ -53,22 +53,24 @@ const softSkillsData = [
 
     <!-- Desktop: Cards Container con scroll horizontal (visible en vp >= 768px) -->
     <div class="skills-container-desktop">
-      <div class="skills-scroll">
-        {softSkillsData.map((skill) => (
-          <div class="skill-card">
-            <SilkBackground client:visible className="skill-card-silk-bg" />
-            <div class="skill-header">
-              <div class="skill-number">{skill.id}</div>
+      <div class="skills-container-wrapper">
+        <div class="skills-scroll">
+          {softSkillsData.map((skill) => (
+            <div class="skill-card">
+              <SilkBackground client:visible className="skill-card-silk-bg" />
+              <div class="skill-header">
+                <div class="skill-number">{skill.id}</div>
+              </div>
+              <div class="skill-content">
+                <div class="skill-title">{skill.title}</div>
+              </div>
+              <div class="skill-description">
+                <span class="description-normal">{skill.description}</span>
+                <span class="description-highlight">{skill.highlight}</span>
+              </div>
             </div>
-            <div class="skill-content">
-              <div class="skill-title">{skill.title}</div>
-            </div>
-            <div class="skill-description">
-              <span class="description-normal">{skill.description}</span>
-              <span class="description-highlight">{skill.highlight}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
     
@@ -173,8 +175,14 @@ const softSkillsData = [
 
   /* Dual System: Desktop Scroll + Mobile Slider */
   .skills-container-desktop {
-    display: block;
+    display: flex;
     width: 100%;
+    justify-content: center;
+  }
+
+  .skills-container-wrapper {
+    width: 100%;
+    max-width: 1800px;
     overflow: hidden;
     position: relative;
     min-height: 25rem;
@@ -201,7 +209,7 @@ const softSkillsData = [
     }
   }
 
-  .skills-container-desktop::before {
+  .skills-container-wrapper::before {
     content: '';
     position: absolute;
     top: 0;
@@ -211,6 +219,21 @@ const softSkillsData = [
     background: linear-gradient(to right,#f9f9f9 0%, transparent 10%, transparent 90%,#f9f9f9 100%);
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .skills-container-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to right, white 0%, transparent 120px, transparent calc(100% - 120px), white 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
   }
 
   .skills-scroll {
@@ -357,7 +380,7 @@ const softSkillsData = [
       font-size: clamp(60px, 12vw, 120px);
     }
 
-    .skills-container-desktop {
+    .skills-container-wrapper {
       min-height: 20rem; /* 320px mínimo */
     }
 
@@ -403,7 +426,7 @@ const softSkillsData = [
       font-size: clamp(50px, 10vw, 80px);
     }
 
-    .skills-container-desktop {
+    .skills-container-wrapper {
       min-height: 18.75rem; /* 300px mínimo */
     }
 

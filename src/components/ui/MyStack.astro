@@ -8,18 +8,29 @@ import { motion } from 'motion/react';
 
 <section class="my-stack-section">
   <!-- DitheringShader Background - Replicado del Footer con opacidad muy baja -->
-  <div class="dithering-background">
-    <DitheringShader
-      client:visible
-      width={1920}
-      height={1080}
-      colorBack="#ffffff"
-      colorFront="#141223"
-      shape="wave"
-      type="8x8"
-      pxSize={4}
-      speed={0.3}
-    />
+  <div class="dithering-background-container">
+    <div class="dithering-background-wrapper">
+      <div class="dithering-background">
+        <DitheringShader
+          client:visible
+          width={1920}
+          height={1080}
+          colorBack="#ffffff"
+          colorFront="#141223"
+          shape="wave"
+          type="8x8"
+          pxSize={4}
+          speed={0.3}
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0
+          }}
+        />
+      </div>
+    </div>
   </div>
   
   <div class="container">
@@ -73,6 +84,26 @@ import { motion } from 'motion/react';
   }
 
   /* DitheringShader Background con opacidad muy baja */
+  .dithering-background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dithering-background-wrapper {
+    width: 100%;
+    max-width: 1800px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
   .dithering-background {
     position: absolute;
     top: 180px;
@@ -83,6 +114,30 @@ import { motion } from 'motion/react';
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: multiply;
+  }
+
+  /* Gradientes para el background DitheringShader en pantallas grandes */
+  @media (min-width: 2560px) {
+    .dithering-background-wrapper::before,
+    .dithering-background-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .dithering-background-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, white, transparent);
+    }
+
+    .dithering-background-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, white, transparent);
+    }
   }
 
   @media (max-width: 768px) {
@@ -99,6 +154,7 @@ import { motion } from 'motion/react';
     position: relative;
     z-index: 1;
   }
+
 
   .title-wrapper {
     padding: 0px 60px 0px 60px;
@@ -268,6 +324,25 @@ import { motion } from 'motion/react';
     100% { transform: rotate(360deg); }
   }
 
+  :global(.tech-marquees-container) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  :global(.tech-marquees-wrapper-limited) {
+    width: 100%;
+    max-width: 1800px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
   :global(.tech-marquees-wrapper) {
     position: absolute;
     bottom: 0;
@@ -279,6 +354,7 @@ import { motion } from 'motion/react';
     justify-content: end;
     z-index: 1;
   }
+
 
   :global(.tech-marquee-item) {
     width: 100%;
@@ -452,6 +528,10 @@ import { motion } from 'motion/react';
       height: min(500px, 60vh); /* Usar el menor entre 500px y 60% del viewport height */
       max-width: 90vw;
       max-height: 60vh;
+    }
+
+    :global(.tech-marquees-container) {
+      height: 360px;
     }
 
     :global(.tech-marquees-wrapper) {
