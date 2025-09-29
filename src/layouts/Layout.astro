@@ -1,6 +1,7 @@
 ---
 import { getLanguageMetadata } from '../i18n/utils.js';
 import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 export interface Props {
 	title: string;
@@ -184,6 +185,7 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:idle />
 		<Analytics />
+		<SpeedInsights />
 	</body>
 </html>
 
