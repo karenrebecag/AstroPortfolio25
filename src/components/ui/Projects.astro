@@ -24,44 +24,71 @@ const projectData = [
     description: "Fintech waitlist landing page with $100 signup bonus and premium banking features",
     tags: ["Webflow", "UI Design", "Fintech"],
     image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Zachariel.webp",
-    url: "#",
+    url: "https://www.figma.com/design/B5hLcZbHpNdXNf0KZDcNEL/Zachariel?node-id=0-1&t=1XoEGZ6UT6SXB8T8-1",
     type: "Landing Page"
   },
   {
     id: "03",
-    title: "Vibe Music App",
-    description: "Creative music streaming interface with particle effects",
-    tags: ["React", "Three.js", "Vibe Code"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-music.jpg", 
-    url: "https://vibe-music-app.netlify.app",
-    type: "Vibe Code"
+    title: "Ancient Tech Redesign",
+    description: "UI/UX redesign for AI-powered tech consulting platform with modern interface",
+    tags: ["Figma", "Webflow", "UI Redesign"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientTech.webp", 
+    url: "https://www.figma.com/design/wOLxrlsIUMvcRJyOzgjIoD/AncientTech--Redesign-%F0%9F%9A%80?node-id=13-4752&t=NWKMSZ7OjeZrgLd7-1",
+    type: "UI Redesign"
   },
   {
     id: "04",
-    title: "E-commerce Store",
-    description: "Minimalist fashion store with smooth animations",
-    tags: ["Shopify", "Liquid", "GSAP"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-ecommerce.jpg",
-    url: "https://fashion-store-demo.myshopify.com",
+    title: "Health-Ade Kombucha",
+    description: "E-commerce redesign for premium probiotic kombucha brand with gut health focus",
+    tags: ["Figma", "Shopify", "E-commerce"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/HealtAde.webp",
+    url: "https://health-ade.com/",
     type: "E-commerce"
   },
   {
     id: "05",
-    title: "Portfolio Template",
-    description: "Creative portfolio template with custom cursor effects",
-    tags: ["Astro", "TypeScript", "Motion"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-portfolio.jpg",
-    url: "https://portfolio-template-demo.vercel.app", 
-    type: "Template"
+    title: "Galicia 30 Años",
+    description: "30th anniversary website design for prestigious Mexican law firm with disruptive approach",
+    tags: ["Figma", "Web Design", "Anniversary"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Galicia30An%CC%83os.webp",
+    url: "https://www.figma.com/design/2EkRHWv6kzGtflVeymrd52/Galicia?node-id=0-1&t=NG8PRVK7ZRsTVaAa-1", 
+    type: "Anniversary Site"
   },
   {
     id: "06",
-    title: "Restaurant Menu",
-    description: "Interactive digital menu with QR code integration",
-    tags: ["Vue.js", "PWA", "QR Code"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-restaurant.jpg",
-    url: "https://restaurant-menu-pwa.netlify.app",
-    type: "PWA"
+    title: "Cadence OTC",
+    description: "E-commerce platform for affordable emergency contraception with nationwide store locator",
+    tags: ["Figma", "Shopify", "Healthcare"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/cadenceotp.webp",
+    url: "https://www.figma.com/proto/DL7gTFQHcZpLk9qdMLnPjF/Cadence_?page-id=0%3A1&node-id=0-2053&starting-point-node-id=0%3A2053&scaling=scale-down&content-scaling=fixed&t=36j4E3j6RBpvITq2-1",
+    type: "Healthcare E-commerce"
+  },
+  {
+    id: "07",
+    title: "ToTou Energy Bars",
+    description: "UI redesign for Mexican energy bar company with modern branding and product showcase",
+    tags: ["Figma", "UI Redesign", "Food & Beverage"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ToYou.webp",
+    url: "https://www.figma.com/proto/XrmpPR40YlSaTVcTuNR4Hr/ToYou--Redesign-?page-id=51%3A24&node-id=51-36&scaling=scale-down-width&content-scaling=fixed&t=yYI0ETCoFxSK3m01-1",
+    type: "UI Redesign"
+  },
+  {
+    id: "08",
+    title: "JarvioAI Canvas Prototype",
+    description: "Vibe Code prototype for AI-powered Amazon seller management platform with interactive canvas",
+    tags: ["Next.js", "Vibe Code", "AI Platform"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ChatGPT%20Image%20Sep%2029%2C%202025%2C%2011_13_13%20AM.webp",
+    url: "https://github.com/karenrebecag/JarvioPrototype",
+    type: "Vibe Code"
+  },
+  {
+    id: "09",
+    title: "Inglés Individual Platform",
+    description: "Full-stack educational platform for 50+ franchise locations managing students, teachers and payments",
+    tags: ["Laravel", "Anime.js", "Bootstrap"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InglesIndividualFrontend.webp",
+    url: "#",
+    type: "Educational Platform"
   }
 ];
 ---
@@ -660,8 +687,63 @@ Showcasing my latest work and creative solutions
   }
 
   :global(.project-card-marquee:hover) {
-    transform: translateY(-8px);
+    /* Remove transform effect */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Make background image fully opaque and bright on hover with zoom effect */
+  :global(.project-card-marquee:hover)::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    right: -5%;
+    bottom: -5%;
+    background: inherit;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    opacity: 1;
+    filter: brightness(1.1) contrast(1.05);
+    transform: scale(1.1);
+    z-index: -1;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Base state for smooth transition */
+  :global(.project-card-marquee)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    opacity: 0;
+    transform: scale(1);
+    z-index: -1;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hide all content except visit button on hover */
+  :global(.project-card-marquee:hover .project-card-content) {
+    background: transparent;
+    transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(.project-card-marquee:hover .project-card-header),
+  :global(.project-card-marquee:hover .project-card-body),
+  :global(.project-card-marquee:hover .project-tags) {
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(.project-card-marquee:hover .project-visit-btn) {
+    opacity: 1;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   :global(.project-card-content) {
@@ -677,12 +759,16 @@ Showcasing my latest work and creative solutions
     gap: 16px;
     height: 100%;
     justify-content: flex-end;
+    position: relative;
+    z-index: 1;
+    transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   :global(.project-card-header) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   :global(.project-number) {
@@ -708,6 +794,7 @@ Showcasing my latest work and creative solutions
     display: flex;
     flex-direction: column;
     gap: 8px;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   :global(.project-card-title) {
@@ -740,6 +827,7 @@ Showcasing my latest work and creative solutions
     flex-wrap: wrap;
     gap: 6px;
     flex: 1;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   :global(.project-tag) {
@@ -807,6 +895,24 @@ Showcasing my latest work and creative solutions
     }
   }
 
+  @keyframes projectMarqueeScrollReverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Second Marquee - Opposite Direction */
+  :global(.project-marquee-reverse) {
+    margin-top: 2rem;
+  }
+
+  :global(.project-marquee-opposite) {
+    animation: projectMarqueeScrollReverse 50s linear infinite;
+  }
+
   /* Dual System: Desktop Marquee + Mobile Slider */
   .project-marquee-desktop {
     display: block;
@@ -814,6 +920,11 @@ Showcasing my latest work and creative solutions
 
   .project-slider-mobile {
     display: none;
+  }
+
+  /* Second Marquee - Only visible on desktop */
+  :global(.project-marquee-reverse) {
+    display: block;
   }
 
   @media (max-width: 767px) {
@@ -824,6 +935,11 @@ Showcasing my latest work and creative solutions
     .project-slider-mobile {
       display: block;
       padding: 0 20px;
+    }
+
+    /* Hide second marquee completely on mobile */
+    :global(.project-marquee-reverse) {
+      display: none !important;
     }
   }
 
@@ -998,7 +1114,8 @@ Showcasing my latest work and creative solutions
       gap: 1.5rem;
     }
 
-    :global(.project-marquee) {
+    :global(.project-marquee),
+    :global(.project-marquee-opposite) {
       animation-duration: 40s;
     }
   }
@@ -1021,14 +1138,16 @@ Showcasing my latest work and creative solutions
       gap: 1rem;
     }
 
-    :global(.project-marquee) {
+    :global(.project-marquee),
+    :global(.project-marquee-opposite) {
       animation-duration: 35s;
     }
   }
 
   /* Reduce motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
-    :global(.project-marquee) {
+    :global(.project-marquee),
+    :global(.project-marquee-opposite) {
       animation: none;
     }
     
@@ -1037,7 +1156,8 @@ Showcasing my latest work and creative solutions
       scroll-behavior: smooth;
     }
     
-    :global(.project-marquee) {
+    :global(.project-marquee),
+    :global(.project-marquee-opposite) {
       justify-content: flex-start;
       gap: 2rem;
     }
