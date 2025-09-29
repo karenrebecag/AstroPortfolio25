@@ -86,12 +86,20 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       }
     };
 
+    const handleScroll = () => {
+      if (isOpen) {
+        closeDropdown();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
+    document.addEventListener('scroll', handleScroll, true);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('scroll', handleScroll, true);
     };
   }, [isOpen]);
 
@@ -106,10 +114,11 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
 
-      dropdown.style.position = 'absolute';
+      dropdown.style.position = 'fixed';
       dropdown.style.top = `${triggerRect.bottom + 8}px`;
       dropdown.style.right = `${window.innerWidth - triggerRect.right}px`;
       dropdown.style.pointerEvents = 'auto';
+      dropdown.style.zIndex = '10001';
 
       // Animate in with stagger effect
       animate(
@@ -232,10 +241,10 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       style={{
         position: 'absolute',
         minWidth: '220px',
-        background: isDarkMode ? '#1f1f1f' : '#fefaec',
-        border: `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
+        background: '#ffffff',
+        border: '2px solid #000000',
         borderRadius: '0px',
-        boxShadow: `4px 4px 0px ${isDarkMode ? '#333333' : '#000000'}`,
+        boxShadow: '4px 4px 0px #000000',
         overflow: 'hidden',
         opacity: 0,
         pointerEvents: 'auto',
@@ -251,25 +260,25 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             alignItems: 'center',
             gap: '12px',
             padding: '14px 16px',
-            color: isDarkMode ? '#ffffff' : '#000000',
+            color: '#000000',
             textDecoration: 'none',
             transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            borderBottom: index === languages.length - 1 ? 'none' : `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
+            borderBottom: index === languages.length - 1 ? 'none' : '2px solid #000000',
             fontFamily: 'var(--font-primary)',
             position: 'relative',
             overflow: 'hidden',
             ...(language.code === currentLang && {
-              background: isDarkMode ? '#333333' : '#f0f0f0',
-              borderLeft: `4px solid ${isDarkMode ? '#4523AE' : '#000000'}`,
+              background: '#f0f0f0',
+              borderLeft: '4px solid #000000',
               fontWeight: 'var(--font-weight-bold)',
             }),
           }}
           onMouseEnter={(e) => {
             if (language.code !== currentLang) {
-              e.currentTarget.style.background = isDarkMode ? '#2a2a2a' : '#e0e0e0';
+              e.currentTarget.style.background = '#e0e0e0';
               e.currentTarget.style.transform = 'translateX(2px)';
               e.currentTarget.style.paddingLeft = '18px';
-              e.currentTarget.style.boxShadow = `inset 2px 0 0 ${isDarkMode ? '#4523AE' : '#000000'}`;
+              e.currentTarget.style.boxShadow = 'inset 2px 0 0 #000000';
             }
           }}
           onMouseLeave={(e) => {
@@ -315,7 +324,7 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             </span>
             <span style={{
               fontSize: 'var(--text-xs)',
-              color: isDarkMode ? '#e5e5e5' : '#666',
+              color: '#666',
               fontWeight: 'var(--font-weight-normal)',
               letterSpacing: 'var(--tracking-normal)',
               opacity: 0.8,
@@ -328,7 +337,7 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
           </div>
           <span style={{
             fontSize: 'var(--text-xs)',
-            color: isDarkMode ? '#999' : '#888',
+            color: '#888',
             fontWeight: 'var(--font-weight-medium)',
             letterSpacing: 'var(--tracking-wider)',
             fontFamily: 'var(--font-display)',
@@ -353,28 +362,28 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
           alignItems: 'center',
           gap: '6px',
           padding: '8px 12px',
-          border: `2px solid ${isDarkMode ? '#333333' : '#000000'}`,
+          border: '2px solid #000000',
           borderRadius: '0px',
-          background: isDarkMode ? '#1f1f1f' : '#ffffff',
+          background: '#ffffff',
           cursor: 'pointer',
           fontFamily: 'var(--font-game)',
           fontSize: 'var(--text-sm)',
           fontWeight: 'var(--font-weight-normal)',
-          color: isDarkMode ? '#ffffff' : '#000000',
+          color: '#000000',
           transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           letterSpacing: 'var(--tracking-wide)',
           textTransform: 'uppercase',
-          boxShadow: `2px 2px 0px ${isDarkMode ? '#333333' : '#000000'}`,
+          boxShadow: '2px 2px 0px #000000',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.background = isDarkMode ? '#2a2a2a' : '#f0f0f0';
+          e.currentTarget.style.background = '#f0f0f0';
           e.currentTarget.style.transform = 'translate(1px, 1px)';
-          e.currentTarget.style.boxShadow = `1px 1px 0px ${isDarkMode ? '#333333' : '#000000'}`;
+          e.currentTarget.style.boxShadow = '1px 1px 0px #000000';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.background = isDarkMode ? '#1f1f1f' : '#ffffff';
+          e.currentTarget.style.background = '#ffffff';
           e.currentTarget.style.transform = 'translate(0px, 0px)';
-          e.currentTarget.style.boxShadow = `2px 2px 0px ${isDarkMode ? '#333333' : '#000000'}`;
+          e.currentTarget.style.boxShadow = '2px 2px 0px #000000';
         }}
       >
         <span style={{

@@ -3,6 +3,7 @@
 import TopMarquee from './TopMarquee.astro';
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
+import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
 
 const lang = getLangFromUrl(Astro.url);
@@ -17,7 +18,7 @@ const lang = getLangFromUrl(Astro.url);
     <nav class="nav">
       <a href="#about">{t('nav.about', lang)}</a>
       <a href="#services">{t('nav.services', lang)}</a>
-      <a href="#projects">{t('nav.projects', lang)}</a>
+      <button type="button" id="projectsNavLink" class="nav-button">{t('nav.projects', lang)}</button>
       <a href="#reviews">{t('nav.reviews', lang)}</a>
     </nav>
     
@@ -28,6 +29,7 @@ const lang = getLangFromUrl(Astro.url);
         </a>
       </div>
       <LanguageSelectorWrapper />
+      <ProjectsDropdownWrapper />
     </div>
     
     <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
@@ -182,6 +184,63 @@ const lang = getLangFromUrl(Astro.url);
 
   .nav a:hover::after {
     width: 100%;
+  }
+
+  /* Nav button styles - same as nav links */
+  .nav-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #131019;
+    font-family: var(--font-display);
+    text-decoration: none;
+    font-size: clamp(11px, 2.1vw, 17px);
+    transition: color 0.3s ease, transform 0.2s ease;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-button:hover {
+    color: #060314;
+    transform: translateY(-2px);
+  }
+
+  .nav-button::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #060314;
+    transition: width 0.3s ease;
+  }
+
+  .nav-button:hover::after {
+    width: 100%;
+  }
+
+  /* Projects dropdown indicator */
+  #projectsNavLink::before {
+    content: '▼';
+    font-size: 8px;
+    opacity: 0.6;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: rotate(0deg);
+  }
+
+  #projectsNavLink:hover::before {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+
+  #projectsNavLink.dropdown-open::before {
+    transform: rotate(180deg);
+    opacity: 1;
   }
 
   .header-actions-wrapper {
@@ -529,6 +588,23 @@ const lang = getLangFromUrl(Astro.url);
     }
   }
 
+  /* Dark mode styles */
+  :global(.dark-mode) #projectsNavLink::before {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode) .nav a {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode) .nav a:hover {
+    color: #e5e5e5;
+  }
+
+  :global(.dark-mode) .nav a::after {
+    background: #ffffff;
+  }
+
   @media (max-width: 768px) {
     .header-actions-wrapper {
       display: none;
@@ -824,6 +900,73 @@ const lang = getLangFromUrl(Astro.url);
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();
       smoothScrollTo('contact');
+    });
+
+    // Projects dropdown functionality
+    const projectsNavLink = document.querySelector('#projectsNavLink');
+    let projectsDropdownTrigger: HTMLButtonElement | null = null;
+    let isProjectsDropdownOpen = false;
+    
+    // Wait for the ProjectsDropdownPortal to load and find its trigger
+    const findProjectsDropdownTrigger = () => {
+      projectsDropdownTrigger = document.querySelector('.projects-dropdown-wrapper button');
+      return projectsDropdownTrigger !== null;
+    };
+    
+    // Monitor dropdown state changes
+    const monitorDropdownState = () => {
+      const dropdownPortal = document.querySelector('#projects-dropdown-portal');
+      if (dropdownPortal) {
+        const observer = new MutationObserver(() => {
+          const dropdown = dropdownPortal.querySelector('div[style*="opacity"]') as HTMLElement;
+          const isOpen = dropdown && dropdown.style.opacity !== '0' && dropdown.style.opacity !== '';
+          
+          if (isOpen !== isProjectsDropdownOpen) {
+            isProjectsDropdownOpen = !!isOpen;
+            if (projectsNavLink) {
+              if (isOpen) {
+                projectsNavLink.classList.add('dropdown-open');
+              } else {
+                projectsNavLink.classList.remove('dropdown-open');
+              }
+            }
+          }
+        });
+        
+        observer.observe(dropdownPortal, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['style']
+        });
+      }
+    };
+    
+    // Try to find the trigger immediately, then retry if not found
+    if (!findProjectsDropdownTrigger()) {
+      // Retry after a short delay to allow React component to mount
+      setTimeout(() => {
+        if (findProjectsDropdownTrigger()) {
+          monitorDropdownState();
+        }
+      }, 100);
+    } else {
+      monitorDropdownState();
+    }
+    
+    projectsNavLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Try to find the trigger if we haven't found it yet
+      if (!projectsDropdownTrigger) {
+        findProjectsDropdownTrigger();
+      }
+      
+      if (projectsDropdownTrigger) {
+        // Trigger the dropdown
+        projectsDropdownTrigger.click();
+      }
+      // Removed fallback scroll - now it's only a dropdown trigger
     });
   });
 </script>

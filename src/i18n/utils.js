@@ -96,6 +96,7 @@ export const languageOptions = [
     name: 'English',
     flag: '🇬🇧',
     greeting: 'Hello there!',
+    market: 'Global',
     growth: 'Stable'
   },
   {
@@ -103,6 +104,7 @@ export const languageOptions = [
     name: 'Español',
     flag: '🇪🇸',
     greeting: '¡Hola, qué tal!',
+    market: 'Spain & LATAM',
     growth: '+25%'
   },
   {
@@ -110,6 +112,7 @@ export const languageOptions = [
     name: 'Français',
     flag: '🇫🇷',
     greeting: 'Salut, ça va?',
+    market: 'France & Canada',
     growth: '+15%'
   },
   {
@@ -117,6 +120,7 @@ export const languageOptions = [
     name: 'हिन्दी',
     flag: '🇮🇳',
     greeting: 'नमस्ते जी!',
+    market: 'India',
     growth: '+30%'
   },
   {
@@ -124,6 +128,7 @@ export const languageOptions = [
     name: '日本語',
     flag: '🇯🇵',
     greeting: 'こんにちは！',
+    market: 'Japan',
     growth: '+20%'
   },
   {
@@ -131,6 +136,7 @@ export const languageOptions = [
     name: '简体中文',
     flag: '🇨🇳',
     greeting: '你好！',
+    market: 'Mainland China',
     growth: '+35%'
   },
   {
@@ -138,6 +144,7 @@ export const languageOptions = [
     name: '繁體中文',
     flag: '🇹🇼',
     greeting: '您好！',
+    market: 'Taiwan & HK',
     growth: '+12%'
   }
 ];

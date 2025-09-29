@@ -112,7 +112,7 @@ export function BounceCards({
             }}
           >
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               src={src}
               alt={`card-${idx}`}
               loading="lazy"

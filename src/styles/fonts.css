@@ -1,5 +1,11 @@
-/* Google Fonts Import - InterTight */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+/* Inter Tight Variable Font - Self-hosted from R2 CDN */
+@font-face {
+  font-family: 'Inter Tight';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* Font Face Declarations - Cloudflare R2 CDN */
 @font-face {

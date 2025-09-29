@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import FlipText from './FlipText';
-import { BounceCards } from './BounceCards';
 
 interface Position {
   x: number;
@@ -25,10 +24,29 @@ const ProjectsIsland: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
+      title1: "THIS",
+      title2: "PORTFOLIO",
+      description: "The very portfolio you're experiencing right now! A self-referential showcase built with Astro, React, and Three.js featuring custom cursor effects, magnetic buttons, flip text animations, and seamless interactions. This meta-project demonstrates modern web development capabilities through creative coding techniques and innovative design patterns. Every animation and visual element has been carefully crafted to create an immersive, performance-optimized experience.",
+      tags: ["Astro", "React", "TypeScript", "Three.js", "Tailwind", "Motion", "Creative Coding"],
+      images: [
+        "https://picsum.photos/300/300?random=25",
+        "https://picsum.photos/300/300?random=26",
+        "https://picsum.photos/300/300?random=27",
+        "https://picsum.photos/300/300?random=28"
+      ],
+      positions: [
+        { x: -42, y: 3, rotate: -5 },
+        { x: -14, y: -8, rotate: 2 },
+        { x: 14, y: 5, rotate: -8 },
+        { x: 42, y: -3, rotate: 3 }
+      ]
+    },
+    {
+      id: 2,
       title1: "Aurin Task",
       title2: "Manager",
-      description: "Enterprise-grade task management platform with AI integration, real-time collaboration, and advanced notification system.",
-      tags: ["Next.js", "TypeScript", "Firebase", "AI"],
+      description: "Enterprise task management platform revolutionizing team collaboration with AI-powered automation and real-time synchronization. Features intelligent task assignment suggestions, smart notifications, collaborative editing, advanced analytics, and bottleneck detection. Built with Next.js 15, React 19, and dual AI integration (Google Gemini + OpenAI) for optimal team productivity and scalability.",
+      tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Google Gemini", "OpenAI", "Vercel"],
       images: [
         "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin1.webp",
         "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin2.webp",
@@ -43,7 +61,7 @@ const ProjectsIsland: React.FC = () => {
       ]
     },
     {
-      id: 2,
+      id: 3,
       title1: "E-Commerce",
       title2: "Platform",
       description: "Full-stack e-commerce solution with modern UI, payment integration, and inventory management system.",
@@ -62,7 +80,7 @@ const ProjectsIsland: React.FC = () => {
       ]
     },
     {
-      id: 3,
+      id: 4,
       title1: "Portfolio",
       title2: "Website",
       description: "Creative portfolio website with Three.js animations, responsive design, and optimized performance.",
@@ -81,7 +99,7 @@ const ProjectsIsland: React.FC = () => {
       ]
     },
     {
-      id: 4,
+      id: 5,
       title1: "Mobile",
       title2: "App",
       description: "Cross-platform mobile application with real-time features, push notifications, and offline capabilities.",
@@ -109,6 +127,9 @@ const ProjectsIsland: React.FC = () => {
 
   const handleReadMore = (projectId: number) => {
     if (projectId === 1) {
+      // Navegar a la página de THIS PORTFOLIO
+      window.location.href = '/p_ThisPortfolio';
+    } else if (projectId === 2) {
       // Navegar a la página del Aurin Task Manager
       window.location.href = '/p_AurinTaskManager';
     } else {
@@ -165,17 +186,10 @@ const ProjectsIsland: React.FC = () => {
                       handleReadMore(project.id);
                     }}
                   >
-                    {project.id === 1 ? 'View Project' : 'Read More'}
+                    {(project.id === 1 || project.id === 2) ? 'View Project' : 'Read More'}
                   </button>
                 </div>
-                <div className="project-images">
-                  <BounceCards
-                    images={project.images}
-                    animationDelay={0.2}
-                    animationStagger={0.15}
-                    positions={project.positions}
-                  />
-                </div>
+                {/* Images now handled by ProjectImageCursor component */}
               </div>
             </div>
           </div>

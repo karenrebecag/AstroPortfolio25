@@ -2,6 +2,7 @@
 // Projects.astro - Sección de proyectos con funcionalidad colapsable optimizada (Dark Mode)
 import ProjectsIsland from './ProjectsIsland.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
+import { ProjectImageCursor } from './ProjectImageCursor.tsx';
 import { motion } from 'motion/react';
 ---
 
@@ -47,6 +48,9 @@ import { motion } from 'motion/react';
       >
         <ProjectsIsland client:visible />
       </motion.div>
+
+      <!-- Project Image Cursor Component -->
+      <ProjectImageCursor client:load />
 
     </div>
   </div>
@@ -304,11 +308,10 @@ import { motion } from 'motion/react';
   :global(.project-details) {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 40px;
     opacity: 1;
-    max-height: 200px;
     overflow: hidden;
     transition: all 0.4s ease;
   }
@@ -318,8 +321,8 @@ import { motion } from 'motion/react';
     display: flex;
     flex-direction: column;
     gap: 21px;
-    width: 60%;
-    max-width: 60%;
+    width: 100%;
+    max-width: 100%;
   }
 
   :global(.project-tags) {
@@ -336,7 +339,7 @@ import { motion } from 'motion/react';
     border: 0.55px solid rgba(255, 255, 255, 0.20);
     color: #ffffff;
     background-color: rgba(255, 255, 255, 0.05);
-    font-family: 'Poppins', sans-serif;
+    font-family: "VideoGameFont", monospace;
     font-size: 12px;
     font-weight: 400;
     text-transform: uppercase;
@@ -354,21 +357,15 @@ import { motion } from 'motion/react';
 
   :global(.project-description) {
     color: #cccccc;
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
     margin: 0;
   }
 
+  /* Project images now handled by cursor component */
   :global(.project-images) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 140px;
-    width: 40%;
-    max-width: 40%;
-    flex-shrink: 0;
+    display: none;
   }
 
   /* Collapsed State */

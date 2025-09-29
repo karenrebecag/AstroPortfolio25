@@ -13,7 +13,9 @@ import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { ArcGalleryHero } from '../components/ui/ArcGalleryHero.tsx';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
+import { KarenProfileCard } from '../components/ui/ProfileCard.tsx';
 import '../styles/global.css';
+import '../styles/ProfileCard.css';
 ---
 
 <Layout title="Karen Ortiz - Privacy Policy" lang="en">
@@ -136,6 +138,13 @@ import '../styles/global.css';
 						</div>
 					</div>
 				</InView>
+			</div>
+		</section>
+
+		<!-- Profile Card Section -->
+		<section class="profile-card-section">
+			<div class="profile-card-wrapper">
+				<KarenProfileCard client:load />
 			</div>
 		</section>
 
@@ -492,5 +501,35 @@ import '../styles/global.css';
 
 	:global(html) {
 		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Profile Card Section Styles */
+	.profile-card-section {
+		padding: 4rem 2rem;
+		background: transparent;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.profile-card-wrapper {
+		width: 100%;
+		max-width: 800px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/* Dark mode styles for profile card section */
+	:global(.dark-mode .profile-card-section) {
+		border-bottom-color: #333333;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.profile-card-section {
+			padding: 3rem 1rem;
+		}
 	}
 </style>
