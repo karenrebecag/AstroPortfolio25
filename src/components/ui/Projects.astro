@@ -1,9 +1,69 @@
 ---
-// Projects.astro - Sección de proyectos con funcionalidad colapsable optimizada (Dark Mode)
+// Projects.astro - Sección de case studies con funcionalidad colapsable optimizada (Dark Mode)
 import ProjectsIsland from './ProjectsIsland.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
 import { ProjectImageCursor } from './ProjectImageCursor.tsx';
+import ProjectMarqueeIsland from './ProjectMarqueeIsland.tsx';
+import ProjectSlider from './ProjectSlider.tsx';
 import { motion } from 'motion/react';
+
+// Project data para el marquee de proyectos rápidos
+const projectData = [
+  {
+    id: "01",
+    title: "AWE MX",
+    description: "Global XR community platform promoting spatial computing and AI innovation in Mexico",
+    tags: ["Astro", "XR Community", "Events Platform"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AWEMX.webp",
+    url: "https://awexr.mx/",
+    type: "Community Platform"
+  },
+  {
+    id: "02", 
+    title: "Zachariel Banking",
+    description: "Fintech waitlist landing page with $100 signup bonus and premium banking features",
+    tags: ["Webflow", "UI Design", "Fintech"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Zachariel.webp",
+    url: "#",
+    type: "Landing Page"
+  },
+  {
+    id: "03",
+    title: "Vibe Music App",
+    description: "Creative music streaming interface with particle effects",
+    tags: ["React", "Three.js", "Vibe Code"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-music.jpg", 
+    url: "https://vibe-music-app.netlify.app",
+    type: "Vibe Code"
+  },
+  {
+    id: "04",
+    title: "E-commerce Store",
+    description: "Minimalist fashion store with smooth animations",
+    tags: ["Shopify", "Liquid", "GSAP"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-ecommerce.jpg",
+    url: "https://fashion-store-demo.myshopify.com",
+    type: "E-commerce"
+  },
+  {
+    id: "05",
+    title: "Portfolio Template",
+    description: "Creative portfolio template with custom cursor effects",
+    tags: ["Astro", "TypeScript", "Motion"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-portfolio.jpg",
+    url: "https://portfolio-template-demo.vercel.app", 
+    type: "Template"
+  },
+  {
+    id: "06",
+    title: "Restaurant Menu",
+    description: "Interactive digital menu with QR code integration",
+    tags: ["Vue.js", "PWA", "QR Code"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/project-restaurant.jpg",
+    url: "https://restaurant-menu-pwa.netlify.app",
+    type: "PWA"
+  }
+];
 ---
 
 <section class="projects-section">
@@ -19,7 +79,7 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <TextDisperse text="PROJECTS" className="giant-heading-disperse" client:idle />
+        <TextDisperse text="CASE STUDIES" className="giant-heading-disperse" client:idle />
       </motion.div>
       
       <motion.p
@@ -30,7 +90,7 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         client:idle
       >
-        Showcasing my latest work and creative solutions
+Showcasing my latest work and creative solutions
       </motion.p>
     </div>
     
@@ -38,7 +98,7 @@ import { motion } from 'motion/react';
       
    
 
-      <!-- Projects List - Optimized Island Component with scroll animation -->
+      <!-- Case Studies List - Optimized Island Component with scroll animation -->
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -52,6 +112,36 @@ import { motion } from 'motion/react';
       <!-- Project Image Cursor Component -->
       <ProjectImageCursor client:load />
 
+    </div>
+  </div>
+  
+  <!-- Quick Projects Section - Dual System: Marquee (Desktop) + Slider (Mobile) -->
+  <div class="quick-projects-container">
+    <!-- Text Above Project Cards -->
+    <div class="quick-projects-text-container">
+      <motion.div
+        className="quick-projects-text-wrapper"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        client:idle
+      >
+        <h3 class="quick-projects-subtitle">Quick Projects</h3>
+        <p class="quick-projects-description-text">
+          Explore my collection of landing pages, no-code solutions, and creative experiments.
+        </p>
+      </motion.div>
+    </div>
+    
+    <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
+    <div class="project-marquee-desktop">
+      <ProjectMarqueeIsland client:visible />
+    </div>
+    
+    <!-- Mobile: Slider Manual (visible en vp < 768px) -->
+    <div class="project-slider-mobile">
+      <ProjectSlider projectData={projectData} client:visible />
     </div>
   </div>
 </section>
@@ -469,6 +559,487 @@ import { motion } from 'motion/react';
 
     :global(.project-content) {
       gap: 30px;
+    }
+  }
+
+  /* Quick Projects Section Styles */
+  .quick-projects-container {
+    width: 100%;
+    position: relative;
+    margin-top: 80px;
+    background: #050112;
+    padding: 80px 0;
+  }
+
+  /* Quick Projects Text Styles */
+  .quick-projects-text-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px 60px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .quick-projects-text-wrapper {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .quick-projects-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    color: #9D7FC1;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .quick-projects-description-text {
+    font-family: var(--font-primary);
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+
+  /* Project Marquee Styles */
+  :global(.project-marquee-wrapper) {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  :global(.project-marquee) {
+    display: flex;
+    animation: projectMarqueeScroll 50s linear infinite;
+    will-change: transform;
+  }
+
+  :global(.project-set) {
+    display: flex;
+    gap: 2rem;
+    flex-shrink: 0;
+  }
+
+  /* Project Card Marquee */
+  :global(.project-card-marquee) {
+    width: 320px;
+    height: 400px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  :global(.project-card-marquee:hover) {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.project-card-content) {
+    padding: 24px;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 100%
+    );
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  :global(.project-card-header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  :global(.project-number) {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: 500;
+  }
+
+  :global(.project-type) {
+    color: #9D7FC1;
+    font-size: 12px;
+    font-family: "VideoGameFont", monospace;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(157, 127, 193, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+  }
+
+  :global(.project-card-body) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  :global(.project-card-title) {
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  :global(.project-card-description) {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  :global(.project-card-footer) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  :global(.project-tags) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+
+  :global(.project-tag) {
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: "VideoGameFont", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  :global(.project-visit-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: "VideoGameFont", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(69, 35, 174, 0.3);
+    flex-shrink: 0;
+  }
+
+  :global(.project-visit-btn:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.4);
+    background: linear-gradient(135deg, #5a2cc5 0%, #7c5ce0 100%);
+  }
+
+  :global(.visit-text) {
+    color: white;
+    line-height: 1;
+  }
+
+  :global(.visit-icon) {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    stroke-width: 2.5;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.project-visit-btn:hover .visit-icon) {
+    transform: translate(1px, -1px);
+  }
+
+  /* Project Marquee Animation */
+  @keyframes projectMarqueeScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Dual System: Desktop Marquee + Mobile Slider */
+  .project-marquee-desktop {
+    display: block;
+  }
+
+  .project-slider-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .project-marquee-desktop {
+      display: none;
+    }
+
+    .project-slider-mobile {
+      display: block;
+      padding: 0 20px;
+    }
+  }
+
+  /* Project Slider Styles */
+  :global(.project-slider-container) {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+
+  :global(.project-splide) {
+    padding: 0;
+  }
+
+  :global(.project-slide) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  /* Project Card Slider - Idéntico al marquee pero adaptado */
+  :global(.project-card-slider) {
+    width: 100%;
+    max-width: 320px;
+    height: 400px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  /* Slider-specific classes */
+  :global(.project-number-slider) {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: 500;
+  }
+
+  :global(.project-type-slider) {
+    color: #9D7FC1;
+    font-size: 12px;
+    font-family: "VideoGameFont", monospace;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(157, 127, 193, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+  }
+
+  :global(.project-card-title-slider) {
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  :global(.project-card-description-slider) {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  :global(.project-tags-slider) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+
+  :global(.project-tag-slider) {
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: "VideoGameFont", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  :global(.project-visit-btn-slider) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #4523AE 0%, #6B46C1 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: "VideoGameFont", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(69, 35, 174, 0.3);
+    flex-shrink: 0;
+  }
+
+  :global(.project-visit-btn-slider:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.4);
+    background: linear-gradient(135deg, #5a2cc5 0%, #7c5ce0 100%);
+  }
+
+  :global(.visit-text-slider) {
+    color: white;
+    line-height: 1;
+  }
+
+  :global(.visit-icon-slider) {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    stroke-width: 2.5;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.project-visit-btn-slider:hover .visit-icon-slider) {
+    transform: translate(1px, -1px);
+  }
+
+  /* Fullwidth cards en móvil */
+  @media (max-width: 767px) {
+    :global(.project-card-slider) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  /* Responsive styles for quick projects text */
+  @media (max-width: 1024px) {
+    .quick-projects-text-container {
+      padding: 0 40px 50px 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .quick-projects-container {
+      padding: 60px 0;
+    }
+
+    .quick-projects-text-container {
+      padding: 0 30px 40px 30px;
+    }
+
+    :global(.project-card-marquee) {
+      width: 280px;
+      height: 360px;
+    }
+
+    :global(.project-set) {
+      gap: 1.5rem;
+    }
+
+    :global(.project-marquee) {
+      animation-duration: 40s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quick-projects-container {
+      padding: 40px 0;
+    }
+
+    .quick-projects-text-container {
+      padding: 0 20px 30px 20px;
+    }
+
+    :global(.project-card-marquee) {
+      width: 260px;
+      height: 340px;
+    }
+
+    :global(.project-set) {
+      gap: 1rem;
+    }
+
+    :global(.project-marquee) {
+      animation-duration: 35s;
+    }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.project-marquee) {
+      animation: none;
+    }
+    
+    :global(.project-marquee-wrapper) {
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+    
+    :global(.project-marquee) {
+      justify-content: flex-start;
+      gap: 2rem;
     }
   }
 </style>
