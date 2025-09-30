@@ -336,6 +336,12 @@
   padding: 0 0.5rem;
 }
 
+@media (max-width: 767px) {
+  .add-comment-title {
+    padding-top: 50px;
+  }
+}
+
 .add-comment-hint {
   font-family: 'InterTight', var(--font-primary);
   font-weight: 300;

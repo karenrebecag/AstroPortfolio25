@@ -41,6 +41,7 @@ export const translations = {
         family: 'my family',
         parents: 'my parents',
         sisters: 'my sisters',
+        boyfriend: 'my boyfriend',
         grandparents: 'my grandparents',
         pets: 'my pets',
         coworkers: 'my coworkers and colleagues',
@@ -393,7 +394,7 @@ export const translations = {
       paragraphs: [
         "Me tomó mucho más tiempo del que esperaba hacer esta página. Siempre ha sido una meta mía tener una carta de presentación que me permita mostrar las cosas que más me gustan de mi trabajo, pero honestamente, nunca pensé que tendría la fortuna de que mi trabajo me llenara de tantas experiencias buenas. Tengo la fortuna de tener un trabajo que amo, y esto no sería posible sin el apoyo de todas las personas que están conmigo todos los días, acompañándome y motivándome a seguir adelante.",
         "Gracias a todas esas personas que, a sabiendas o no, siempre han estado ahí para escucharme durante mis crisis existenciales, para empujarme cada vez que dudo, para motivarme cada vez que siento que ya no puedo aprender más, y sobre todo, para desafiarme a ser mejor cada vez que puedo. No podría seguir intentando sin su apoyo. Gracias por siempre recibirme con una sonrisa cada vez que vengo emocionada a mostrarles alguna cosa nerd que aprendí, gracias por escucharme cada vez que me quejo o me quiebro cuando me frustro, y sobre todo, gracias por seguir aquí.",
-        "Porque quiero inmortalizar la gratitud por su compañía y amor de la manera más sensata a mi alcance, y aunque pueda parecer pequeño, lo he cultivado con mucho esfuerzo y amor para ustedes. Gracias a mi familia por siempre apoyarme y empujarme a crecer, por darme ambición y ponerme metas. Gracias a mi padre por siempre volver a mi vida y nunca fallar en sacar esas buenas conversaciones que tanto me gustan y que tanto me enseñan. Gracias a mi madre por mostrarme lo mejor de mí y enseñarme lo mejor de ella. Gracias a ambos porque la mayor lección que me han dado ha sido ponerme mis propias expectativas y siempre creer en lo que hago. Gracias a mis hermanas, a quienes amo tanto, por siempre estar ahí para alegrar mi día y darme feedback de mi trabajo jaja. Gracias a mi novio por siempre empujarme a ser mejor.",
+        "Porque quiero inmortalizar la gratitud por su compañía y amor de la manera más sensata a mi alcance, y aunque pueda parecer pequeño, lo he cultivado con mucho esfuerzo y amor para ustedes. Gracias a mi familia por siempre apoyarme y empujarme a crecer, por darme ambición y ponerme metas. Gracias a mi padre por siempre volver a mi vida y nunca fallar en sacar esas buenas conversaciones que tanto me gustan y que tanto me enseñan. Gracias a mi madre por mostrarme lo mejor de mí y enseñarme lo mejor de ella. Gracias a ambos porque la mayor lección que me han dado ha sido ponerme mis propias expectativas y siempre creer en lo que hago. Gracias a mis hermanas, a quienes amo tanto, por siempre estar ahí para alegrar mi día y darme feedback de mi trabajo jaja. Gracias a mi novio por siempre impulsarme a ser mejor y quererme mucho, valoro cada minuto que dedicas a escucharme y entenderme.",
         "Eterno agradecimiento a mis abuelos porque aunque no les correspondo, siempre han sido mis segundos padres y estoy agradecida por todo el apoyo que siempre me dan durante toda mi vida, porque gracias a ellos, esto es posible. Gracias a mis mascotas, que siempre me acompañan durante mis noches largas, alegrías y tristezas.",
         "Gracias a todas las personas que he conocido en el camino, a todos mis compañeros de trabajo, a todos los que se unen a mis proyectos, a todos los que me dan feedback, a todos los que me ponen esos desafíos, y sobre todo, un millón de gracias a todas esas personas que creen en mí y en mi capacidad. Me enorgullece mucho decir que algunos de ellos se han vuelto mis amigos y es gracias a eso que todo esto vale la pena. Siempre es un honor mezclarme con sus proyectos y pasiones, pero también con sus culturas a través de diferentes países y ambientes. Gracias por permitirme estar ahí. Hoy es un portafolio, pero los llevo en mi corazón en todo lo que hago, porque son una parte intangible de mi historia. Los amo mucho a todos."
       ],
@@ -401,6 +402,7 @@ export const translations = {
         family: 'mi familia',
         parents: 'mis padres',
         sisters: 'mis hermanas',
+        boyfriend: 'mi novio',
         grandparents: 'mis abuelos',
         pets: 'mis mascotas',
         coworkers: 'mis compañeros de trabajo y colegas',
@@ -761,6 +763,7 @@ export const translations = {
         family: 'ma famille',
         parents: 'mes parents',
         sisters: 'mes sœurs',
+        boyfriend: 'mon copain',
         grandparents: 'mes grands-parents',
         pets: 'mes animaux de compagnie',
         coworkers: 'mes collègues et collaborateurs',
@@ -994,6 +997,7 @@ export const translations = {
         family: 'मेरा परिवार',
         parents: 'मेरे माता-पिता',
         sisters: 'मेरी बहनें',
+        boyfriend: 'मेरे प्रेमी',
         grandparents: 'मेरे दादा-दादी',
         pets: 'मेरे पालतू जानवर',
         coworkers: 'मेरे सहकर्मी और सहयोगी',
@@ -1227,6 +1231,7 @@ export const translations = {
         family: '私の家族',
         parents: '私の両親',
         sisters: '私の姉妹',
+        boyfriend: '私の彼氏',
         grandparents: '私の祖父母',
         pets: '私のペット',
         coworkers: '私の同僚と協力者',
@@ -1452,7 +1457,7 @@ export const translations = {
       paragraphs: [
         "制作这个页面花费的时间比我预期的要长得多。拥有一份能让我展示工作中最喜欢的事情的求职信一直是我的目标，但说实话，我从未想过我会如此幸运，我的工作能给我带来如此多的美好经历。我很幸运有一份我热爱的工作，如果没有每天与我同在、陪伴我并激励我继续前进的所有人的支持，这是不可能的。",
         "感谢所有那些有意或无意地一直在那里倾听我的存在危机、在我怀疑时推动我、在我觉得无法再学习时激励我，最重要的是，在我能够时挑战我变得更好的人们。没有你们的支持，我无法继续尝试。感谢你们每次我兴奋地来向你们展示我学到的一些书呆子的东西时总是微笑着欢迎我，感谢你们每次我抱怨或在沮丧时崩溃时倾听我，最重要的是，感谢你们仍然在这里。",
-        "因为我想以我力所能及的最明智的方式将对你们陪伴和爱的感激永恒化，虽然它可能看起来很小，但我已经用很多努力和爱为你们培养了它。感谢我的家人总是支持我并推动我成长，给我雄心并为我设定目标。感谢我的父亲总是回到我的生活中，从不忘记引出那些我非常喜欢并教会我很多的美好对话。感谢我的母亲向我展示了我最好的一面并教给我她最好的一面。感谢他们两个，因为他们给我的最大教训是设定自己的期望并始终相信我所做的。感谢我非常爱的姐妹们，总是在那里照亮我的一天并对我的工作给出反馈哈哈。感谢我的男朋友总是推动我变得更好。",
+        "因为我想以我力所能及的最明智的方式将对你们陪伴和爱的感激永恒化，虽然它可能看起来很小，但我已经用很多努力和爱为你们培养了它。感谢我的家人总是支持我并推动我成长，给我雄心并为我设定目标。感谢我的父亲总是回到我的生活中，从不忘记引出那些我非常喜欢并教会我很多的美好对话。感谢我的母亲向我展示了我最好的一面并教给我她最好的一面。感谢他们两个，因为他们给我的最大教训是设定自己的期望并始终相信我所做的。感谢我非常爱的姐妹们，总是在那里照亮我的一天并对我的工作给出反馈哈哈。感谢我的男朋友总是推动我变得更好，深深爱着我，我珍惜你用来倾听和理解我的每一分钟。",
         "永远感谢我的祖父母，因为尽管我没有回报他们，但他们一直是我的第二父母，我感谢他们在我的整个生活中总是给我的所有支持，因为有了他们，这才成为可能。感谢我的宠物，它们总是在我的深夜、快乐和悲伤中陪伴我。",
         "感谢我一路上遇到的所有人，感谢我所有的同事，感谢所有加入我项目的人，感谢所有给我反馈的人，感谢所有为我设定挑战的人，最重要的是，百万次感谢所有相信我和我能力的人。我非常自豪地说，他们中的一些人已经成为我的朋友，正是因为这样，所有这一切都是值得的。与你们的项目和激情融合总是一种荣誉，但也与你们在不同国家和环境中的文化融合。感谢你们让我在那里。今天它是一个作品集，但我在我所做的一切中都把你们放在心里，因为你们是我故事中无形的一部分。我非常爱你们所有人。"
       ],
@@ -1460,6 +1465,7 @@ export const translations = {
         family: '我的家人',
         parents: '我的父母',
         sisters: '我的姐妹',
+        boyfriend: '我的男朋友',
         grandparents: '我的祖父母',
         pets: '我的宠物',
         coworkers: '我的同事和同僚',
@@ -1685,7 +1691,7 @@ export const translations = {
       paragraphs: [
         "製作這個頁面花費的時間比我預期的要長得多。擁有一份能讓我展示工作中最喜歡的事情的求職信一直是我的目標，但說實話，我從未想過我會如此幸運，我的工作能給我帶來如此多的美好經歷。我很幸運有一份我熱愛的工作，如果沒有每天與我同在、陪伴我並激勵我繼續前進的所有人的支持，這是不可能的。",
         "感謝所有那些有意或無意地一直在那裡傾聽我的存在危機、在我懷疑時推動我、在我覺得無法再學習時激勵我，最重要的是，在我能夠時挑戰我變得更好的人們。沒有你們的支持，我無法繼續嘗試。感謝你們每次我興奮地來向你們展示我學到的一些書呆子的東西時總是微笑著歡迎我，感謝你們每次我抱怨或在沮喪時崩潰時傾聽我，最重要的是，感謝你們仍然在這裡。",
-        "因為我想以我力所能及的最明智的方式將對你們陪伴和愛的感激永恆化，雖然它可能看起來很小，但我已經用很多努力和愛為你們培養了它。感謝我的家人總是支持我並推動我成長，給我雄心並為我設定目標。感謝我的父親總是回到我的生活中，從不忘記引出那些我非常喜歡並教會我很多的美好對話。感謝我的母親向我展示了我最好的一面並教給我她最好的一面。感謝他們兩個，因為他們給我的最大教訓是設定自己的期望並始終相信我所做的。感謝我非常愛的姐妹們，總是在那裡照亮我的一天並對我的工作給出回饋哈哈。感謝我的男朋友總是推動我變得更好。",
+        "因為我想以我力所能及的最明智的方式將對你們陪伴和愛的感激永恆化，雖然它可能看起來很小，但我已經用很多努力和愛為你們培養了它。感謝我的家人總是支持我並推動我成長，給我雄心並為我設定目標。感謝我的父親總是回到我的生活中，從不忘記引出那些我非常喜歡並教會我很多的美好對話。感謝我的母親向我展示了我最好的一面並教給我她最好的一面。感謝他們兩個，因為他們給我的最大教訓是設定自己的期望並始終相信我所做的。感謝我非常愛的姐妹們，總是在那裡照亮我的一天並對我的工作給出回饋哈哈。感謝我的男朋友總是推動我變得更好，深深愛著我，我珍惜你用來傾聽和理解我的每一分鐘。",
         "永遠感謝我的祖父母，因為儘管我沒有回報他們，但他們一直是我的第二父母，我感謝他們在我的整個生活中總是給我的所有支持，因為有了他們，這才成為可能。感謝我的寵物，牠們總是在我的深夜、快樂和悲傷中陪伴我。",
         "感謝我一路上遇到的所有人，感謝我所有的同事，感謝所有加入我專案的人，感謝所有給我回饋的人，感謝所有為我設定挑戰的人，最重要的是，百萬次感謝所有相信我和我能力的人。我非常自豪地說，他們中的一些人已經成為我的朋友，正是因為這樣，所有這一切都是值得的。與你們的專案和熱情融合總是一種榮譽，但也與你們在不同國家和環境中的文化融合。感謝你們讓我在那裡。今天它是一個作品集，但我在我所做的一切中都把你們放在心裡，因為你們是我故事中無形的一部分。我非常愛你們所有人。"
       ],
@@ -1693,6 +1699,7 @@ export const translations = {
         family: '我的家人',
         parents: '我的父母',
         sisters: '我的姐妹',
+        boyfriend: '我的男朋友',
         grandparents: '我的祖父母',
         pets: '我的寵物',
         coworkers: '我的同事和同僚',
