@@ -266,7 +266,11 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                             </button>
                                         </div>
                                     </div>
-                                    <SpeedlifyStatsLight className="w-full" />
+                                    <SpeedlifyStatsLight 
+                                        className="w-full" 
+                                        hidePerformance={false}
+                                        hideAccessibility={false}
+                                    />
                                 </div>
                             </AnimatedContainer>
                

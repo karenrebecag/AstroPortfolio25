@@ -266,7 +266,11 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                             </button>
                                         </div>
                                     </div>
-                                    <SpeedlifyStats className="w-full" />
+                                    <SpeedlifyStats 
+                                        className="w-full" 
+                                        hidePerformance={false}
+                                        hideAccessibility={false}
+                                    />
                                 </div>
                             </AnimatedContainer>
                
