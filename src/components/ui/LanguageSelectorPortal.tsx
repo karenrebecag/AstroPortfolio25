@@ -230,7 +230,25 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       return resumeRoutes[langCode as keyof typeof resumeRoutes] || '/resume';
     }
 
-    // Default behavior for other pages
+    // Check if we're on the greetings page (include ALL language variations)
+    const greetingsPages = ['/greetings', '/agradecimientos', '/remerciements', '/dhanyavaad', '/kansha', '/ganxie'];
+    const isGreetingsPage = greetingsPages.some(page => currentPath.includes(page));
+
+    if (isGreetingsPage) {
+      const greetingsRoutes = {
+        'en': '/greetings',
+        'es': '/es/agradecimientos',
+        'fr': '/fr/remerciements',
+        'hi': '/hi/dhanyavaad',
+        'ja': '/ja/kansha',
+        'zh-cn': '/zh-cn/ganxie',
+        'zh-tw': '/zh-tw/ganxie'
+      };
+
+      return greetingsRoutes[langCode as keyof typeof greetingsRoutes] || '/greetings';
+    }
+
+    // Default behavior for other pages (home)
     if (langCode === 'en') return '/';
     return `/${langCode}/`;
   };

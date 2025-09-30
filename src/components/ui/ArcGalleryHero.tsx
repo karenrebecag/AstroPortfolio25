@@ -67,22 +67,24 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
   // Don't render dynamic content until client-side hydration is complete
   if (!screenSize.isMounted) {
     return (
-      <section 
+      <section
         className={className}
-        style={{ 
+        style={{
           position: 'relative',
           overflow: 'visible',
           backgroundColor: 'transparent',
           color: 'black',
           width: '100%',
           minWidth: '100%',
-          height: '100vh',
+          height: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 20,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          paddingTop: '2rem',
+          paddingBottom: '2rem'
         }}
       >
         <div style={{ 
@@ -108,22 +110,24 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
   const step = (endAngle - startAngle) / (count - 1);
 
   return (
-    <section 
+    <section
       className={className}
-      style={{ 
+      style={{
         position: 'relative !important' as any,
         overflow: 'visible !important' as any,
         backgroundColor: 'transparent !important' as any,
         color: 'black !important' as any,
         width: '100% !important' as any,
         minWidth: '100% !important' as any,
-        height: '100vh !important' as any,
+        height: 'auto !important' as any,
         display: 'flex !important' as any,
         flexDirection: 'column !important' as any,
         alignItems: 'center !important' as any,
         justifyContent: 'center !important' as any,
         zIndex: '20 !important' as any,
-        pointerEvents: 'none !important' as any
+        pointerEvents: 'none !important' as any,
+        paddingTop: '2rem !important' as any,
+        paddingBottom: '2rem !important' as any
       }}
     >
       {/* Background ring container that controls geometry */}
@@ -251,103 +255,6 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Content positioned below the arc - much closer */}
-      <div 
-        style={{
-          position: 'relative !important' as any,
-          zIndex: '30 !important' as any,
-          display: 'flex !important' as any,
-          alignItems: 'center !important' as any,
-          justifyContent: 'center !important' as any,
-          paddingLeft: '1.5rem !important' as any,
-          paddingRight: '1.5rem !important' as any,
-          marginTop: `${screenSize.width >= 1024 ? '-6rem' : screenSize.width >= 768 ? '-5rem' : '-4rem'} !important` as any,
-          pointerEvents: 'auto !important' as any
-        }}
-      >
-        <div 
-          style={{ 
-            textAlign: 'center',
-            maxWidth: '42rem',
-            paddingLeft: '1.5rem',
-            paddingRight: '1.5rem',
-            opacity: 0,
-            animationName: 'fade-in',
-            animationDuration: '0.8s',
-            animationTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            animationDelay: '800ms',
-            animationFillMode: 'forwards'
-          }}
-        >
-          <h1 
-            style={{
-              fontSize: `${screenSize.width >= 1024 ? '3.75rem' : screenSize.width >= 640 ? '3rem' : '1.875rem'}`,
-              fontWeight: 'bold',
-              letterSpacing: '-0.025em',
-              color: 'black',
-              lineHeight: 1
-            }}
-          >
-            Gracias
-          </h1>
-          <p 
-            style={{
-              marginTop: '1rem',
-              fontSize: '1.125rem',
-              color: 'rgba(0, 0, 0, 0.8)'
-            }}
-          >
-            Un sincero agradecimiento a todos los que han sido parte de este increíble viaje
-          </p>
-          <div 
-            style={{
-              marginTop: '2rem',
-              display: 'flex',
-              flexDirection: `${screenSize.width >= 640 ? 'row' : 'column'}`,
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1rem'
-            }}
-          >
-            <button 
-              onClick={() => {
-                const element = document.getElementById('gratitude-message');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              style={{
-                width: `${screenSize.width >= 640 ? 'auto' : '100%'}`,
-                paddingLeft: '1.5rem',
-                paddingRight: '1.5rem',
-                paddingTop: '0.75rem',
-                paddingBottom: '0.75rem',
-                borderRadius: '9999px',
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                backdropFilter: 'blur(4px)',
-                color: 'black',
-                border: '1px solid rgba(0, 0, 0, 0.2)',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              Read More
-            </button>
-          </div>
         </div>
       </div>
       

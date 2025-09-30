@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Toast from './Toast';
+import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl } from '../../i18n/utils.js';
 
 interface ToastData {
   id: string;
@@ -10,6 +12,20 @@ interface ToastData {
 
 export function ShareBarIsland() {
   const [toasts, setToasts] = useState<ToastData[]>([]);
+
+  // Get current language from URL
+  const getCurrentLang = () => {
+    if (typeof window !== 'undefined') {
+      return getLangFromUrl(new URL(window.location.href));
+    }
+    return 'en';
+  };
+
+  // Get translations for current language
+  const getTranslations = () => {
+    const lang = getCurrentLang();
+    return translations[lang as keyof typeof translations]?.shareBar || translations.en.shareBar;
+  };
 
   const addToast = (type: 'success' | 'error', message: string) => {
     const id = Date.now().toString();
@@ -39,77 +55,83 @@ export function ShareBarIsland() {
   };
 
   const copyToClipboard = async () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       await navigator.clipboard.writeText(url);
-      addToast('success', 'Link copied to clipboard!');
+      addToast('success', t.linkCopied);
     } catch (err) {
       console.error('Failed to copy link:', err);
-      addToast('error', 'Failed to copy link. Please try again.');
+      addToast('error', t.copyFailed);
     }
   };
 
   const shareOnTwitter = () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       const text = `${getPageTitle()} - ${getDescription()}`;
       const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
       window.open(twitterUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', 'Opening X (Twitter) share dialog...');
+      addToast('success', t.openingTwitter);
     } catch (err) {
       console.error('Failed to share on Twitter:', err);
-      addToast('error', 'Failed to open Twitter share dialog.');
+      addToast('error', t.twitterFailed);
     }
   };
 
   const shareOnLinkedIn = () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
       window.open(linkedInUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', 'Opening LinkedIn share dialog...');
+      addToast('success', t.openingLinkedIn);
     } catch (err) {
       console.error('Failed to share on LinkedIn:', err);
-      addToast('error', 'Failed to open LinkedIn share dialog.');
+      addToast('error', t.linkedInFailed);
     }
   };
 
   const shareOnReddit = () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       const title = getPageTitle();
       const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
       window.open(redditUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', 'Opening Reddit share dialog...');
+      addToast('success', t.openingReddit);
     } catch (err) {
       console.error('Failed to share on Reddit:', err);
-      addToast('error', 'Failed to open Reddit share dialog.');
+      addToast('error', t.redditFailed);
     }
   };
 
   const shareOnThreads = () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       const text = `${getPageTitle()} - ${getDescription()} ${url}`;
       const threadsUrl = `https://threads.net/intent/post?text=${encodeURIComponent(text)}`;
       window.open(threadsUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', 'Opening Threads share dialog...');
+      addToast('success', t.openingThreads);
     } catch (err) {
       console.error('Failed to share on Threads:', err);
-      addToast('error', 'Failed to open Threads share dialog.');
+      addToast('error', t.threadsFailed);
     }
   };
 
   const shareOnWhatsApp = () => {
+    const t = getTranslations();
     try {
       const url = getCurrentUrl();
       const text = `${getPageTitle()} - ${getDescription()} ${url}`;
       const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, '_blank');
-      addToast('success', 'Opening WhatsApp share dialog...');
+      addToast('success', t.openingWhatsApp);
     } catch (err) {
       console.error('Failed to share on WhatsApp:', err);
-      addToast('error', 'Failed to open WhatsApp share dialog.');
+      addToast('error', t.whatsAppFailed);
     }
   };
 
@@ -117,14 +139,14 @@ export function ShareBarIsland() {
     <>
       <div className="share-container">
         <div className="share-content">
-          <span className="share-label">Share this project</span>
+          <span className="share-label">{getTranslations().label}</span>
           
           <div className="share-buttons">
             <motion.button 
               className="share-btn copy-btn" 
               onClick={copyToClipboard}
-              title="Copy Link"
-              data-cursor-text="Copy Link"
+              title={getTranslations().copyLink}
+              data-cursor-text={getTranslations().copyLink}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -137,8 +159,8 @@ export function ShareBarIsland() {
             <motion.button 
               className="share-btn twitter-btn" 
               onClick={shareOnTwitter}
-              title="Share on X (Twitter)"
-              data-cursor-text="Share on X"
+              title={getTranslations().shareOnTwitter}
+              data-cursor-text={getTranslations().shareOnTwitter}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -151,8 +173,8 @@ export function ShareBarIsland() {
             <motion.button 
               className="share-btn linkedin-btn" 
               onClick={shareOnLinkedIn}
-              title="Share on LinkedIn"
-              data-cursor-text="Share on LinkedIn"
+              title={getTranslations().shareOnLinkedIn}
+              data-cursor-text={getTranslations().shareOnLinkedIn}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -166,8 +188,8 @@ export function ShareBarIsland() {
             <motion.button 
               className="share-btn reddit-btn" 
               onClick={shareOnReddit}
-              title="Share on Reddit"
-              data-cursor-text="Share on Reddit"
+              title={getTranslations().shareOnReddit}
+              data-cursor-text={getTranslations().shareOnReddit}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -179,8 +201,8 @@ export function ShareBarIsland() {
             <motion.button 
               className="share-btn threads-btn" 
               onClick={shareOnThreads}
-              title="Share on Threads"
-              data-cursor-text="Share on Threads"
+              title={getTranslations().shareOnThreads}
+              data-cursor-text={getTranslations().shareOnThreads}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -192,8 +214,8 @@ export function ShareBarIsland() {
             <motion.button 
               className="share-btn whatsapp-btn" 
               onClick={shareOnWhatsApp}
-              title="Share on WhatsApp"
-              data-cursor-text="Share on WhatsApp"
+              title={getTranslations().shareOnWhatsApp}
+              data-cursor-text={getTranslations().shareOnWhatsApp}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >

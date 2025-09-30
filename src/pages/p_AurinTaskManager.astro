@@ -14,9 +14,8 @@ import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { Carousel } from '../components/ui/Carousel.tsx';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
-import { KarenProfileCard } from '../components/ui/ProfileCard.tsx';
+import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
 import '../styles/global.css';
-import '../styles/ProfileCard.css';
 
 // Code snippets for the technical documentation
 const firestoreCollectionCode = `// Firebase Firestore Collection Architecture
@@ -957,12 +956,7 @@ const loadTestResults = {
 			</div>
 		</section>
 
-		<!-- Profile Card Section -->
-		<section class="profile-card-section">
-			<div class="profile-card-wrapper">
-				<KarenProfileCard client:load />
-			</div>
-		</section>
+		<ProfileCardSection />
 
 		<!-- Share Bar Section -->
 		<ShareBar />

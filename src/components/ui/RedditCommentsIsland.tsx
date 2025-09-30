@@ -13,16 +13,33 @@ import { useCommentsStore } from '../../stores/commentsStore';
 import '../../styles/reddit-comments.css';
 import { useToast } from '../../hooks/useToast';
 import { useUserCache } from '../../hooks/useUserCache';
+import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl } from '../../i18n/utils.js';
 import type { Comment } from '../../types/comments';
 
 // Props for individual comment component
 interface CommentItemProps {
+  
   comment: Comment;
   depth?: number;
   onReply: (parentId: string, content: string) => void;
   onLike: (commentId: string) => void;
   currentUserId?: string;
 }
+
+// Get current language from URL
+const getCurrentLang = () => {
+  if (typeof window !== 'undefined') {
+    return getLangFromUrl(new URL(window.location.href));
+  }
+  return 'en';
+};
+
+// Get translations for current language
+const getTranslations = () => {
+  const lang = getCurrentLang();
+  return translations[lang as keyof typeof translations]?.comments || translations.en.comments;
+};
 
 // Individual comment component with Reddit-style design
 const CommentItem: React.FC<CommentItemProps> = ({ 
@@ -36,6 +53,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [userLiked, setUserLiked] = useState(comment.likedBy.includes(currentUserId));
+  const t = getTranslations();
 
   const handleLike = () => {
     setUserLiked(!userLiked);
@@ -60,10 +78,17 @@ const CommentItem: React.FC<CommentItemProps> = ({
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
+    const weeks = Math.floor(diff / 604800000);
+    const months = Math.floor(diff / 2629746000);
+    const years = Math.floor(diff / 31556952000);
     
-    if (minutes < 60) return `${minutes}m`;
-    if (hours < 24) return `${hours}h`;
-    return `${days}d`;
+    if (minutes < 1) return t.justNow;
+    if (minutes < 60) return `${minutes} ${t.minutesAgo}`;
+    if (hours < 24) return `${hours} ${t.hoursAgo}`;
+    if (days < 7) return `${days} ${t.daysAgo}`;
+    if (weeks < 4) return `${weeks} ${t.weeksAgo}`;
+    if (months < 12) return `${months} ${t.monthsAgo}`;
+    return `${years} ${t.yearsAgo}`;
   };
 
   const likesCount = comment.likes + (userLiked && !comment.likedBy.includes(currentUserId) ? 1 : 0) - (comment.likedBy.includes(currentUserId) && !userLiked ? 1 : 0);
@@ -106,7 +131,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               <button
                 className={`comment-action-btn like-button ${userLiked ? 'liked' : ''}`}
                 onClick={handleLike}
-                data-cursor-text={userLiked ? 'Unlike' : 'Like Comment'}
+                data-cursor-text={userLiked ? t.like : t.like}
               >
                 <Heart className={`${userLiked ? 'fill-current' : ''}`} />
                 <span>{likesCount}</span>
@@ -116,10 +141,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
               <button 
                 className="comment-action-btn"
                 onClick={() => setShowReplyBox(!showReplyBox)}
-                data-cursor-text="Reply to Comment"
+                data-cursor-text={t.reply}
               >
                 <Reply />
-                Reply
+                {t.reply}
               </button>
 
           
@@ -129,10 +154,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
                   className="comment-action-btn"
                   onClick={() => setIsExpanded(!isExpanded)}
                   style={{ marginLeft: 'auto' }}
-                  data-cursor-text={isExpanded ? 'Hide Replies' : 'Show Replies'}
+                  data-cursor-text={isExpanded ? t.hideReplies : t.showReplies}
                 >
                   {isExpanded ? <ChevronUp /> : <ChevronDown />}
-                  {isExpanded ? 'Collapse' : `Show ${comment.replies.length} replies`}
+                  {isExpanded ? t.hideReplies : `${t.showReplies} (${comment.replies.length})`}
                 </button>
               )}
             </div>
@@ -159,11 +184,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
               </div>
               <div className="reply-form-content">
                 <textarea
-                  placeholder="What are your thoughts?"
+                  placeholder={t.placeholder}
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
                   className="comment-input reply-textarea"
-                  data-cursor-text="Write Reply"
+                  data-cursor-text={t.reply}
                 />
                 <div className="reply-buttons">
                   {/* Cancel Button - SecondaryButton style */}
@@ -171,9 +196,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
                     <button 
                       className="glass-button"
                       onClick={() => { setShowReplyBox(false); setReplyText(''); }}
-                      data-cursor-text="Cancel Reply"
+                      data-cursor-text={t.cancel}
                     >
-                      <span className="glass-button-text">Discard</span>
+                      <span className="glass-button-text">{t.cancel}</span>
                       <div className="glass-button-shadow"></div>
                     </button>
                   </div>
@@ -184,12 +209,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
                       className="realism-button"
                       onClick={handleReplySubmit} 
                       disabled={!replyText.trim()}
-                      data-cursor-text="Submit Reply"
+                      data-cursor-text={t.submit}
                     >
                       <div className="button-glow"></div>
                       <div className="button-blob"></div>
                       <div className="button-content">
-                        <span className="button-text">Submit</span>
+                        <span className="button-text">{t.submit}</span>
                         <div className="inner-glow"></div>
                       </div>
                     </button>
@@ -247,6 +272,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
   const { cachedData, saveUserData, clearUserData, hasCachedData } = useUserCache();
   const [nestedComments, setNestedComments] = useState<Comment[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
+  const t = getTranslations();
 
   // Fetch comments on mount
   useEffect(() => {
@@ -270,7 +296,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
       
       // Show success message about pre-filled data
       if (cachedData.name) {
-        showSuccess(`Welcome back, ${cachedData.name}! Your information has been pre-filled. You can check my privacy policy for more details.`);
+        showSuccess(t.welcomeBack.replace('{name}', cachedData.name));
       }
     }
   }, [cachedData, hasCachedData, formData.name, formData.email, setFormField, isInitialized, showSuccess]);
@@ -327,7 +353,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
       
       saveUserData(dataToCache);
       
-      showSuccess('Comment submitted successfully! It will appear after moderation.');
+      showSuccess(t.commentPosted);
       setTimeout(() => {
         fetchComments(storyId);
       }, 1000);
@@ -339,7 +365,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
   const handleReply = async (parentId: string, content: string) => {
     const success = await submitReply(storyId, parentId, content);
     if (success) {
-      showSuccess('Reply submitted! It will appear after moderation.');
+      showSuccess(t.commentPosted);
       setTimeout(() => {
         fetchComments(storyId);
       }, 1000);
@@ -351,7 +377,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
   const handleLike = async (commentId: string) => {
     const success = await likeComment(commentId);
     if (!success) {
-      showError('Failed to update like. Please try again.');
+      showError(t.commentFailed);
     }
   };
 
@@ -397,9 +423,9 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
       >
         <div className="flex items-center justify-between">
           <div>
-            <span>Add Comment</span>
+            <span>{t.title}</span>
             <p className="add-comment-hint">
-              Share your thoughts and join the discussion. Click on the avatar to add your profile picture and make your comment stand out.
+              {t.subtitle}
             </p>
           </div>
           
@@ -408,11 +434,10 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
             <button
               onClick={handleClearCache}
               className="clear-cache-btn"
-              data-cursor-text="Clear Saved Data"
-              title="Clear your saved information"
+              data-cursor-text={t.delete}
+              title={t.delete}
             >
               <Trash2 size={16} />
-              <span>Clear Data</span>
             </button>
           )}
         </div>
@@ -462,11 +487,11 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
               <div className="comment-form-content">
                 <input
                   type="text"
-                  placeholder="Your name"
+                  placeholder={t.enterName}
                   value={formData.name}
                   onChange={(e) => setFormField('name', e.target.value)}
                   className="comment-input"
-                  data-cursor-text="Add Your Name"
+                  data-cursor-text={t.enterName}
                   required
                 />
                 
@@ -480,11 +505,11 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                 />
                 
                 <textarea
-                  placeholder="Start a discussion..."
+                  placeholder={t.placeholder}
                   value={formData.comment}
                   onChange={(e) => setFormField('comment', e.target.value)}
                   className="comment-input comment-textarea"
-                  data-cursor-text="Write Your Comment"
+                  data-cursor-text={t.placeholder}
                   required
                 />
                 
@@ -495,12 +520,12 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                       type="submit" 
                       disabled={isSubmitting || !formData.name.trim() || !formData.comment.trim()}
                       className="realism-button"
-                      data-cursor-text="Post Comment"
+                      data-cursor-text={t.submit}
                     >
                       <div className="button-glow"></div>
                       <div className="button-blob"></div>
                       <div className="button-content">
-                        <span className="button-text">{isSubmitting ? 'Posting...' : 'Submit'}</span>
+                        <span className="button-text">{isSubmitting ? t.posting : t.submit}</span>
                         <div className="inner-glow"></div>
                       </div>
                     </button>
@@ -509,11 +534,11 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                 
                 {/* Privacy Policy Notice */}
                 <p className="privacy-notice">
-                  By submitting a comment, you agree to my{' '}
+                  {t.privacyNotice}{' '}
                   <a href="/privacy" className="privacy-link" target="_blank" rel="noopener noreferrer">
-                    Privacy Policy
+                    {t.privacyPolicy}
                   </a>
-                  . Your data is handled with care and only used for moderation purposes.
+                  {t.privacyDetails}
                 </p>
               </div>
             </div>
@@ -530,7 +555,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
         transition={{ duration: 0.4, delay: 0.1 }}
       >
         <div className="comments-title">
-          <span>Comments</span>
+          <span>{t.title}</span>
           <span className="comments-count-pill">{nestedComments.length}</span>
         </div>
         <div className="comments-sort">
@@ -557,7 +582,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
           {isLoading ? (
             <div className="comments-loading">
               <div className="loading-spinner"></div>
-              <p className="loading-text">Loading comments...</p>
+              <p className="loading-text">{t.loadingComments}</p>
             </div>
           ) : nestedComments.length > 0 ? (
             nestedComments.map((comment, index) => (
@@ -573,7 +598,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
           ) : (
             <div className="comments-empty">
               <MessageSquare />
-              <p>No comments yet. Be the first to start the discussion!</p>
+              <p>{t.noComments}</p>
             </div>
           )}
         </motion.div>

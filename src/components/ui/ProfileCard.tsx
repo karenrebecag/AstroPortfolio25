@@ -1,54 +1,62 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, Instagram } from 'lucide-react';
+import { 
+  KAREN_PROFILE_DATA, 
+  generateFallbackAvatar, 
+  PROFILE_CARD_CLASSES,
+  type SocialLink as BaseSocialLink 
+} from '../../config/profileData';
+import { useProfileTranslations } from '../../hooks/useProfileTranslations';
+import { createSocialLinksWithLabels, getProfileCardClasses } from '../../utils/profileUtils';
 
-interface SocialLink {
-  id: string;
-  icon: React.ComponentType<any>;
+interface SocialLink extends BaseSocialLink {
   label: string;
-  href: string;
 }
 
 interface ProfileCardProps {
-  avatarUrl: string;
-  name: string;
-  bio: string;
+  avatarUrl?: string;
+  name?: string;
+  bio?: string;
   socialLinks?: SocialLink[];
+  className?: string;
+  variant?: 'default' | 'compact' | 'minimal';
 }
 
 const ProfileCard = ({
-  avatarUrl,
-  name,
+  avatarUrl = KAREN_PROFILE_DATA.avatarUrl,
+  name = KAREN_PROFILE_DATA.name,
   bio,
   socialLinks = [],
+  className = '',
+  variant = 'default',
 }: ProfileCardProps) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
-    <div className="profile-card-container">
-      <div className="profile-card">
-        <div className="profile-content-wrapper">
-          <div className="profile-avatar">
+    <div className={getProfileCardClasses(className, variant)}>
+      <div className={PROFILE_CARD_CLASSES.card}>
+        <div className={PROFILE_CARD_CLASSES.contentWrapper}>
+          <div className={PROFILE_CARD_CLASSES.avatar}>
             <img
               src={avatarUrl}
               alt={`${name}'s Avatar`}
-              className="avatar-image"
+              className={PROFILE_CARD_CLASSES.avatarImage}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
-                target.src = `https://placehold.co/96x96/6366f1/white?text=${name.charAt(0)}`;
+                target.src = generateFallbackAvatar(name);
               }}
             />
           </div>
 
-          <div className="profile-info-container">
-            <h2 className="profile-name">{name}</h2>
-            <p className="profile-bio">{bio}</p>
+          <div className={PROFILE_CARD_CLASSES.infoContainer}>
+            <h2 className={PROFILE_CARD_CLASSES.name}>{name}</h2>
+            <p className={PROFILE_CARD_CLASSES.bio}>{bio}</p>
           </div>
         </div>
 
-        <div className="profile-divider" />
+        <div className={PROFILE_CARD_CLASSES.divider} />
 
-        <div className="social-links">
+        <div className={PROFILE_CARD_CLASSES.socialLinks}>
           {socialLinks.map((item) => (
             <SocialButton
               key={item.id}
@@ -60,7 +68,7 @@ const ProfileCard = ({
         </div>
       </div>
 
-      <div className="profile-card-backdrop" />
+      <div className={PROFILE_CARD_CLASSES.backdrop} />
     </div>
   );
 };
@@ -70,17 +78,17 @@ const SocialButton = ({ item, setHoveredItem, hoveredItem }: {
   setHoveredItem: (id: string | null) => void;
   hoveredItem: string | null;
 }) => (
-  <div className="social-button-wrapper">
+  <div className={PROFILE_CARD_CLASSES.socialButtonWrapper}>
     <a
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="social-button"
+      className={PROFILE_CARD_CLASSES.socialButton}
       onMouseEnter={() => setHoveredItem(item.id)}
       onMouseLeave={() => setHoveredItem(null)}
       aria-label={item.label}
     >
-      <div className="social-icon">
+      <div className={PROFILE_CARD_CLASSES.socialIcon}>
         <item.icon />
       </div>
     </a>
@@ -95,28 +103,31 @@ const Tooltip = ({ item, hoveredItem }: {
 }) => (
   <div
     role="tooltip"
-    className={`tooltip ${hoveredItem === item.id ? 'tooltip-visible' : ''}`}
+    className={`${PROFILE_CARD_CLASSES.tooltip} ${
+      hoveredItem === item.id ? PROFILE_CARD_CLASSES.tooltipVisible : ''
+    }`}
   >
     {item.label}
-    <div className="tooltip-arrow" />
+    <div className={PROFILE_CARD_CLASSES.tooltipArrow} />
   </div>
 );
 
 export { ProfileCard };
 
-// Profile Card personalizada para Karen con datos del StickyFooter
+// Profile Card personalizada para Karen - DRY implementation
 export const KarenProfileCard = () => {
-  const cardProps = {
-    avatarUrl: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/A5A05E33-1DDD-4041-BCF4-4522767BFCEE.webp',
-    name: 'Karen Rebeca Ortiz',
-    bio: 'Building beautiful and intuitive digital experiences. Passionate about design systems and web animation.',
-    socialLinks: [
-      { id: 'linkedin', icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282' },
-      { id: 'instagram', icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/' },
-      { id: 'github', icon: Github, label: 'GitHub', href: 'https://github.com/karenrebecag' },
-      { id: 'email', icon: Mail, label: 'Email', href: 'mailto:sodioinfo@gmail.com' },
-    ],
-  };
+  const translations = useProfileTranslations();
 
-  return <ProfileCard {...cardProps} />;
+  // Create social links with translations using utility function
+  const socialLinksWithLabels = createSocialLinksWithLabels(
+    KAREN_PROFILE_DATA.socialLinks,
+    translations
+  );
+
+  return (
+    <ProfileCard
+      bio={translations.bio}
+      socialLinks={socialLinksWithLabels}
+    />
+  );
 };

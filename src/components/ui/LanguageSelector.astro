@@ -239,29 +239,25 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  // TypeScript assertions after null check
-  const toggleEl = toggle as HTMLElement;
-  const dropdownEl = dropdown as HTMLElement;
-
   let isOpen = false;
 
   function openDropdown() {
     console.log('Opening dropdown');
     isOpen = true;
-    toggleEl.classList.add('open');
-    dropdownEl.classList.add('show');
-    dropdownEl.style.display = 'block'; // Force display
+    toggle.classList.add('open');
+    dropdown.classList.add('show');
+    dropdown.style.display = 'block';
   }
 
   function closeDropdown() {
     console.log('Closing dropdown');
     isOpen = false;
-    toggleEl.classList.remove('open');
-    dropdownEl.classList.remove('show');
+    toggle.classList.remove('open');
+    dropdown.classList.remove('show');
   }
 
   // Simple click handler
-  toggleEl.addEventListener('click', function(e) {
+  toggle.addEventListener('click', function(e) {
     console.log('Toggle clicked, current state:', isOpen);
     e.preventDefault();
     e.stopPropagation();
@@ -275,16 +271,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Close when clicking outside
   document.addEventListener('click', function(e) {
-    const target = e.target as Node;
-    if (isOpen && target && !toggleEl.contains(target) && !dropdownEl.contains(target)) {
+    const target = e.target;
+    if (isOpen && target && !toggle.contains(target) && !dropdown.contains(target)) {
       closeDropdown();
     }
   });
 
   // Language option clicks
-  dropdownEl.addEventListener('click', function(e) {
-    const target = e.target as HTMLElement;
-    const option = target?.closest('.language-option');
+  dropdown.addEventListener('click', function(e) {
+    const target = e.target;
+    const option = target.closest('.language-option');
     if (option) {
       console.log('Language option clicked');
       closeDropdown();

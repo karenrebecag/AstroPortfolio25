@@ -1,0 +1,433 @@
+---
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import HeaderPill from '../../components/ui/HeaderPill.astro';
+import { TextDisperseBlack } from '../../components/ui/TextDisperseBlack.tsx';
+import { DarkModeContainer } from '../../components/ui/DarkModeContainer.tsx';
+import Highlight from '../../components/ui/Highlight.astro';
+import { DecorativeFlower } from '../../components/ui/DecorativeFlower.tsx';
+import { SignatureText } from '../../components/ui/SignatureText.tsx';
+import { ArcGalleryHero } from '../../components/ui/ArcGalleryHero.tsx';
+import ShareBar from '../../components/ui/ShareBar.astro';
+import CommentsSection from '../../components/ui/CommentsSection.astro';
+import ProfileCardSection from '../../components/sections/ProfileCardSection.astro';
+import { translations } from '../../i18n/translations.js';
+import '../../styles/global.css';
+
+const lang = 'hi';
+const t = translations[lang].greetings;
+---
+
+<Layout title={t.title} lang={lang}>
+	<HeaderPill />
+
+	<DarkModeContainer client:load>
+		<main class="main-content" id="main-content">
+			<section class="content-section gratitude-section" id="gratitude">
+				<!-- Arc Gallery Hero -->
+				<div class="arc-gallery-wrapper">
+					<ArcGalleryHero
+						client:visible
+						images={[
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/lastImage.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.19.04%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.20.16%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/4bff168e-1c99-44b0-82e4-86bf82b7a125.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.22.12%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/IMG_0760.jpg',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.24.04%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.10%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.57%402x.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/1fd7fb34-b422-4cdf-bc3b-82be7a0e453c.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/6644db8d-9a37-43da-8e92-a9d49df28e4b.webp',
+							'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.31.40%402x.webp'
+						]}
+					/>
+				</div>
+				<DecorativeFlower client:visible position={{ top: '50%', right: '-15%' }} size={600} />
+				<div style="transform: scaleX(-1);">
+					<DecorativeFlower client:visible position={{ top: '30%', right: '-30%' }} size={600} />
+				</div>
+
+				<div class="section-container">
+					<div class="section-header">
+						<h2 class="section-title" id="gratitude-message">
+							<TextDisperseBlack client:idle text={t.pageTitle} />
+						</h2>
+						<div class="section-label">{t.subtitle}</div>
+					</div>
+
+					<div class="gratitude-text-container">
+						<p class="gratitude-paragraph">
+							<Highlight text={t.paragraphs[0]} highlights={[t.highlights.allPeople]} />
+						</p>
+						<p class="gratitude-paragraph">
+							{t.paragraphs[1]}
+						</p>
+						<p class="gratitude-paragraph">
+							<Highlight text={t.paragraphs[2]} highlights={[t.highlights.family, t.highlights.parents, t.highlights.sisters]} />
+						</p>
+						<p class="gratitude-paragraph">
+							<Highlight text={t.paragraphs[3]} highlights={[t.highlights.grandparents, t.highlights.pets]} />
+						</p>
+						<p class="gratitude-paragraph">
+							<Highlight text={t.paragraphs[4]} highlights={[t.highlights.coworkers, t.highlights.projects]} />
+						</p>
+
+						<div class="love-image-container">
+							<img
+								src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/love%20(3).webp"
+								alt="Love"
+								class="love-image"
+								loading="lazy"
+							/>
+							<div class="signature-name">
+								<SignatureText client:visible text={t.signature} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<ProfileCardSection />
+
+			<ShareBar />
+			<CommentsSection storyId="greetings-page" />
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Banner Actions */
+	.banner-actions {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	/* Arc Gallery Container */
+	.arc-gallery-container {
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Low Opacity Background - Reduced to 20% */
+	:global(.low-opacity-bg .mega-background-wrapper) {
+		opacity: 0.2 !important;
+	}
+
+	:global(.low-opacity-bg .mega-background-wrapper img),
+	:global(.low-opacity-bg .mega-background-wrapper video) {
+		opacity: 1 !important;
+		width: 100% !important;
+		height: 100% !important;
+		object-fit: cover !important;
+		object-position: center !important;
+	}
+
+	/* Ensure background container matches video behavior */
+	:global(.low-opacity-bg .mega-background-container) {
+		width: 100% !important;
+		height: 100vh !important;
+		overflow: hidden !important;
+		position: absolute !important;
+		top: 0 !important;
+		left: 0 !important;
+	}
+
+	/* Background Override for ArcGalleryHero */
+	:global(.background-override) {
+		background: transparent !important;
+		backdrop-filter: none !important;
+	}
+
+
+	/* Main Content Layout */
+	.main-content {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+	}
+
+	.content-section {
+		padding: 6rem 2rem;
+		border-bottom: 1px solid #f0f0f0;
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+		position: relative;
+	}
+
+	.gratitude-section {
+		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
+	}
+
+	.content-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+		background: transparent !important;
+	}
+
+	/* Section Headers */
+	.section-header {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	.section-title {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 400;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		color: #1B1B1B;
+	}
+
+	.section-label {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	/* Gratitude Text Container */
+	.gratitude-text-container {
+		width: 100%;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
+
+	.gratitude-paragraph {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: clamp(1.125rem, 2.5vw, 1.4rem);
+		line-height: 1.8;
+		color: #333;
+		text-align: center;
+		margin: 2rem 0;
+	}
+
+	/* Love Image and Signature */
+	.love-image-container {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin-top: 0rem;
+		margin-bottom: 2rem;
+		gap: 1rem;
+	}
+
+	.love-image {
+		max-width: 44px;
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+	}
+
+	.signature-name {
+		font-family: var(--font-signature, 'Karstar Signature', cursive);
+		font-size: clamp(2.6rem, 5.2vw, 3.9rem);
+		color: #1B1B1B;
+		margin: 0;
+		text-align: center;
+		position: relative;
+		display: inline-block;
+	}
+
+	:global(.signature-text-wrapper) {
+		position: relative;
+		display: inline-block;
+	}
+
+	:global(.signature-letter) {
+		position: relative;
+		z-index: 1;
+	}
+
+	:global(.signature-name::before) {
+		content: '';
+		position: absolute;
+		bottom: 10%;
+		left: -5%;
+		right: -5%;
+		height: 35%;
+		background: linear-gradient(90deg, #dbd8fc 0%, #f0eeff 100%);
+		z-index: -1;
+		border-radius: 8px;
+		transform: skewX(-5deg);
+		opacity: 0.7;
+	}
+
+	/* Arc Gallery Wrapper */
+	.arc-gallery-wrapper {
+		width: 100%;
+		margin-top: 0;
+		margin-bottom: 4rem;
+		position: relative;
+		z-index: 2;
+	}
+
+	:global(.text-highlight) {
+		all: unset;
+		background-repeat: no-repeat;
+		background-size: 0% 100%;
+		background-image: linear-gradient(
+			transparent calc(100% - 0.5em),
+			#dbd8fc 0.5em
+		) !important;
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	/* Main Content Dark Mode */
+	:global(.dark-mode .main-content) {
+		background: #050112;
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .content-section) {
+		border-bottom-color: #333333;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	}
+
+	:global(.dark-mode .section-title) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .section-label) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .content-description) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .gratitude-paragraph) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .signature-name) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .signature-name::before) {
+		background: linear-gradient(90deg, #4523AE 0%, #6B46C1 100%);
+		opacity: 0.5;
+	}
+
+	:global(.dark-mode .text-highlight) {
+		background-image: linear-gradient(
+			transparent calc(100% - 0.5em),
+			#dbd8fc 0.5em
+		) !important;
+	}
+
+	/* Decorative Flowers */
+	:global(.decorative-flower) {
+		filter: blur(2px);
+		transition: opacity 0.5s ease;
+		transform: rotate(-25deg) translateY(-50%);
+	}
+
+	:global(.dark-mode .decorative-flower) {
+		opacity: 0.15 !important;
+	}
+
+	:global(.dark-mode .profile-card-section) {
+		border-bottom-color: #333333;
+	}
+
+	:global(.main-content),
+	:global(.content-section),
+	:global(.section-title),
+	:global(.section-label) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(body) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Profile Card Section Styles */
+	.profile-card-section {
+		padding: 4rem 2rem;
+		background: transparent;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.profile-card-wrapper {
+		width: 100%;
+		max-width: 800px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.profile-card-section {
+			padding: 3rem 1rem;
+		}
+
+		.gratitude-paragraph {
+			font-size: 1.125rem;
+		}
+
+		.content-section {
+			padding: 4rem 1rem;
+		}
+
+		.section-header {
+			margin-bottom: 3rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.content-section {
+			padding: 3rem 1rem;
+		}
+
+		.section-title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+	}
+</style>

@@ -2,6 +2,8 @@
 // CommentsSection.astro - Wrapper component for comments
 import CommentsWithToast from './CommentsWithToast.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 export interface Props {
   className?: string;
@@ -10,10 +12,14 @@ export interface Props {
   storyId: string;
 }
 
+// Get current language and translations
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations]?.commentsSection || translations.en.commentsSection;
+
 const { 
   className = '',
-  title = 'Discussion',
-  subtitle = 'Share your thoughts and join the conversation',
+  title = t.title,
+  subtitle = t.subtitle,
   storyId
 } = Astro.props;
 ---

@@ -42,11 +42,10 @@
 
 @font-face {
   font-family: 'Karstar Signature';
-  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Karstar signature.ttf') format('truetype'),
-       url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Karstar signature-1.otf') format('opentype');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Karstar%20signature.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @font-face {

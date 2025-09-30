@@ -1,125 +1,3 @@
----
-export const prerender = true;
-
-import Layout from '../layouts/Layout.astro';
-import HeaderPill from '../components/ui/HeaderPill.astro';
-import MegaBanner from '../components/ui/MegaBanner.astro';
-import MainButton from '../components/ui/MainButton.astro';
-import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
-import { InView } from '../components/ui/InView.tsx';
-import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
-import { ScrollReveal } from '../components/ui/ScrollReveal.tsx';
-import Highlight from '../components/ui/Highlight.astro';
-import { DecorativeFlower } from '../components/ui/DecorativeFlower.tsx';
-import { SignatureText } from '../components/ui/SignatureText.tsx';
-import { LucideIcon } from '../components/ui/LucideIcon.tsx';
-import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
-import { ArcGalleryHero } from '../components/ui/ArcGalleryHero.tsx';
-import ShareBar from '../components/ui/ShareBar.astro';
-import CommentsSection from '../components/ui/CommentsSection.astro';
-import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
-import { translations } from '../i18n/translations.js';
-import '../styles/global.css';
-
-const lang = 'en';
-const t = translations[lang].greetings;
----
-
-<Layout title={t.title} lang={lang}>
-	<HeaderPill />
-
-
-					<DarkModeContainer client:load>
-		<!-- Main Content Sections -->
-		<main class="main-content" id="main-content">
-		<!-- Gratitude Message Section -->
-		<section class="content-section gratitude-section" id="gratitude">
-					<!-- Arc Gallery Hero -->
-					<div class="arc-gallery-wrapper">
-						<ArcGalleryHero
-							client:visible
-							images={[
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/lastImage.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.19.04%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.20.16%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/4bff168e-1c99-44b0-82e4-86bf82b7a125.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.22.12%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/IMG_0760.jpg',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.24.04%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.10%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.57%402x.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/1fd7fb34-b422-4cdf-bc3b-82be7a0e453c.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/6644db8d-9a37-43da-8e92-a9d49df28e4b.webp',
-								'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.31.40%402x.webp'
-							]}
-						/>
-					</div>
-			<!-- Decorative Flowers Background -->
-			<DecorativeFlower client:visible position={{ top: '50%', right: '-15%' }} size={600} />
-			<div style="transform: scaleX(-1);">
-				<DecorativeFlower client:visible position={{ top: '30%', right: '-30%' }} size={600} />
-			</div>
-
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title" id="gratitude-message">
-						<TextDisperseBlack client:idle text={t.pageTitle} />
-					</h2>
-					<div class="section-label">{t.subtitle}</div>
-				</div>
-
-				<div class="gratitude-text-container">
-					<p class="gratitude-paragraph">
-						<Highlight text={t.paragraphs[0]} highlights={[t.highlights.allPeople]} />
-					</p>
-					<p class="gratitude-paragraph">
-						{t.paragraphs[1]}
-					</p>
-					<p class="gratitude-paragraph">
-						<Highlight text={t.paragraphs[2]} highlights={[t.highlights.family, t.highlights.parents, t.highlights.sisters]} />
-					</p>
-					<p class="gratitude-paragraph">
-						<Highlight text={t.paragraphs[3]} highlights={[t.highlights.grandparents, t.highlights.pets]} />
-					</p>
-					<p class="gratitude-paragraph">
-						<Highlight text={t.paragraphs[4]} highlights={[t.highlights.coworkers, t.highlights.projects]} />
-					</p>
-
-					<!-- Love Image and Signature -->
-					<div class="love-image-container">
-						<img
-							src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/love%20(3).webp"
-							alt="Love"
-							class="love-image"
-							loading="lazy"
-						/>
-						<div class="signature-name">
-							<SignatureText client:visible text={t.signature} />
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</section>
-
-
-
-
-		
-
-		<ProfileCardSection />
-
-		<!-- Share Bar Section -->
-		<ShareBar />
-
-		<!-- Comments Section -->
-		<CommentsSection storyId="greetings-page" />
-
-		</main>
-	</DarkModeContainer>
-</Layout>
-
 <style>
 	/* Banner Actions */
 	.banner-actions {
@@ -205,7 +83,6 @@ const t = translations[lang].greetings;
 		width: 100%;
 		position: relative;
 		z-index: 1;
-		background: transparent !important;
 	}
 
 	/* Section Headers */
@@ -328,8 +205,7 @@ const t = translations[lang].greetings;
 	/* Arc Gallery Wrapper */
 	.arc-gallery-wrapper {
 		width: 100%;
-		margin-top: 0;
-		margin-bottom: 4rem;
+		margin-top: 6rem;
 		position: relative;
 		z-index: 2;
 	}
@@ -931,28 +807,12 @@ const t = translations[lang].greetings;
 
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
-
-
-		.gratitude-paragraph {
-			font-size: 1.125rem;
-		}
-
-		.content-section {
-			padding: 4rem 1rem;
-		}
-
-		.section-header {
-			margin-bottom: 3rem;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.content-section {
+		.profile-card-section {
 			padding: 3rem 1rem;
 		}
 
-		.section-title {
-			font-size: clamp(2rem, 8vw, 3rem);
+		.gratitude-paragraph {
+			font-size: 1.125rem;
 		}
 	}
 </style>

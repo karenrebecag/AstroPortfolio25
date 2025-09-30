@@ -12,6 +12,8 @@ import FlipText from './FlipText';
 import { SpeedlifyStats } from './SpeedlifyStats';
 import Toast from './Toast';
 import { SpaceInvadersIsland } from './SpaceInvadersIsland';
+import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl } from '../../i18n/utils.js';
 
 interface FooterLink {
     title: string;
@@ -52,10 +54,25 @@ function Button({ children, size, variant, className, ...props }: {
     );
 }
 
+// Get current language from URL
+const getCurrentLang = () => {
+    if (typeof window !== 'undefined') {
+        return getLangFromUrl(new URL(window.location.href));
+    }
+    return 'en';
+};
+
+// Get translations for current language
+const getTranslations = () => {
+    const lang = getCurrentLang();
+    return translations[lang as keyof typeof translations]?.stickyFooter || translations.en.stickyFooter;
+};
+
 export function StickyFooter({ className, ...props }: StickyFooterProps) {
     const [isHovered, setIsHovered] = useState(false);
     const [toasts, setToasts] = useState<ToastData[]>([]);
     const [showSpaceInvaders, setShowSpaceInvaders] = useState(false);
+    const t = getTranslations();
 
     const addToast = (type: 'success' | 'error', message: string) => {
         const id = Date.now().toString();
@@ -77,10 +94,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
             console.log('Attempting to copy:', url); // Debug log
             await navigator.clipboard.writeText(url);
             console.log('Copy successful, adding toast'); // Debug log
-            addToast('success', 'Link copied to clipboard!');
+            addToast('success', t.linkCopied);
         } catch (err) {
             console.error('Failed to copy link:', err);
-            addToast('error', 'Failed to copy link. Please try again.');
+            addToast('error', t.copyFailed);
         }
     };
 
@@ -174,17 +191,22 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 <AnimatedContainer className="w-full">
                                     {/* Main Title */}
                                     <h2 className="text-white font-secondary text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-16" >
-                                        Let's make Something<br />Extraordinary, together.
+                                        {t.mainTitle.split('\n').map((line, index) => (
+                                            <React.Fragment key={index}>
+                                                {line}
+                                                {index < t.mainTitle.split('\n').length - 1 && <br />}
+                                            </React.Fragment>
+                                        ))}
                                     </h2>
                                     
                                     {/* Follow Me Section */}
                                     <div className="w-full flex flex-col justify-start items-start gap-6" >
                                         <div className="w-full flex flex-col justify-start items-start gap-3">
                                             <h3 className="text-white font-primary text-2xl font-semibold leading-tight">
-                                                Follow Me
+                                                {t.followMe}
                                             </h3>
                                             <p className="w-full max-w-lg text-white font-primary text-lg font-medium leading-relaxed">
-                                                Stay connected and inspired! Follow us on our social media platforms to keep up with the latest design trends, project updates, and behind-the-scenes insights
+                                                {t.followDescription}
                                             </p>
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
@@ -196,7 +218,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                                     rel="noopener noreferrer"
                                                     className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
                                                     title={link.title}
-                                                    data-cursor-text={`Visit ${link.title}`}
+                                                    data-cursor-text={t.visitSocial.replace('{platform}', link.title)}
                                                 >
                                                     <link.icon className="w-6 h-6 text-white" />
                                                 </a>
@@ -204,8 +226,8 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                             <button
                                                 onClick={copyToClipboard}
                                                 className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
-                                                title="Copy Link"
-                                                data-cursor-text="Copy Link"
+                                                title={t.copyLink}
+                                                data-cursor-text={t.copyLink}
                                             >
                                                 <Link className="w-6 h-6 text-white" />
                                             </button>
@@ -220,7 +242,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                                 onClick={activateEasterEgg}
-                                data-cursor-text="Hm? Somebody said 80s?"
+                                data-cursor-text={t.easterEggHint}
                             >
                                 <FlipText 
                                     text="KAREN ORTIZ" 
@@ -234,17 +256,17 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                 <a 
                                     href="/greetings" 
                                     className="text-white/70 hover:text-white font-primary text-sm font-medium transition-colors duration-300"
-                                    data-cursor-text="View Greetings"
+                                    data-cursor-text={t.greetings}
                                 >
-                                    Greetings
+                                    {t.greetings}
                                 </a>
                                 <span className="text-white/30 text-sm">•</span>
                                 <a 
                                     href="/privacy" 
                                     className="text-white/70 hover:text-white font-primary text-sm font-medium transition-colors duration-300"
-                                    data-cursor-text="Privacy Policy"
+                                    data-cursor-text={t.privacyPolicy}
                                 >
-                                    Privacy Policy
+                                    {t.privacyPolicy}
                                 </a>
                             </div>
                             
@@ -254,13 +276,13 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <h3 className="text-white font-primary text-lg font-semibold">
-                                                Site Performance
+                                                {t.sitePerformance}
                                             </h3>
                                             <button
                                                 onClick={() => window.open('https://guileless-douhua-b2ff53.netlify.app/karen-ortiz-portfolio/', '_blank')}
                                                 className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
-                                                title="View detailed performance report"
-                                                data-cursor-text="View Report"
+                                                title={t.viewReportTitle}
+                                                data-cursor-text={t.viewReport}
                                             >
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-white group-hover:text-white/90" />
                                             </button>

@@ -1,0 +1,38 @@
+---
+import { TextHighlight } from './TextHighlight.tsx';
+
+interface Props {
+	text: string;
+	highlights: string[];
+}
+
+const { text, highlights } = Astro.props;
+
+// Función para dividir el texto por múltiples palabras clave
+function getHighlightedParts(text: string, highlights: string[]) {
+	if (!text) return [];
+	let remainingText = text;
+	const parts: (string | { highlight: string })[] = [];
+
+	// Crear una expresión regular para encontrar cualquiera de las palabras clave
+	const regex = new RegExp(`(${highlights.join('|')})`, 'g');
+	const matches = text.match(regex) || [];
+	const splits = text.split(regex);
+
+	return splits.map((part) => {
+		if (highlights.includes(part)) {
+			return { highlight: part };
+		} else {
+			return part;
+		}
+	});
+}
+
+const parts = getHighlightedParts(text, highlights);
+---
+
+<Fragment>
+	{parts.map(part => (
+		typeof part === 'string' ? part : <TextHighlight client:visible>{part.highlight}</TextHighlight>
+	))}
+</Fragment>

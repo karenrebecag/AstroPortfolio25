@@ -1,0 +1,57 @@
+---
+// ProfileCardSection - DRY component for profile card sections
+import { KarenProfileCard } from '../ui/ProfileCard.tsx';
+import '../../styles/ProfileCard.css';
+
+export interface Props {
+  className?: string;
+  variant?: 'default' | 'compact' | 'minimal';
+}
+
+const { className = '', variant = 'default' } = Astro.props;
+---
+
+<!-- Profile Card Section -->
+<section class={`profile-card-section ${className}`}>
+  <div class="profile-card-wrapper">
+    <KarenProfileCard client:load />
+  </div>
+</section>
+
+<style>
+  /* Profile Card Section Styles - DRY implementation */
+  .profile-card-section {
+    padding: 4rem 2rem;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    transition: border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .profile-card-wrapper {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Dark mode styles */
+  :global(.dark-mode .profile-card-section) {
+    border-bottom-color: #333333;
+  }
+
+
+
+  /* Variants */
+  .profile-card-section.compact {
+    padding: 2rem 1rem;
+  }
+
+  .profile-card-section.minimal {
+    padding: 1rem;
+    border-bottom: none;
+  }
+</style>

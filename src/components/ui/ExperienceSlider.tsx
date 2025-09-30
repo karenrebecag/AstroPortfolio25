@@ -19,23 +19,15 @@ interface ExperienceSliderProps {
 }
 
 const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) => {
-  const splideRef = useRef<Splide>(null);
+  const splideRef = useRef<typeof Splide>(null);
 
   useEffect(() => {
-    // Inicialización del slider
-    if (splideRef.current) {
-      const splideInstance = splideRef.current.splide;
-      
-      // Event listeners para animaciones personalizadas
-      splideInstance?.on('moved', (newIndex: number) => {
-        // Animaciones personalizadas cuando cambia de slide
-        console.log('Moved to slide:', newIndex);
-      });
-    }
+    // Inicialización del slider - simplificado para evitar errores de tipos
+    console.log('Experience slider initialized');
   }, []);
 
   const splideOptions = {
-    type: 'slide',
+    type: 'slide' as const,
     perPage: 1,
     perMove: 1,
     gap: '1rem',
@@ -82,7 +74,7 @@ const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) =
         aria-label="Experience Cards Slider"
       >
         {experienceData.map((experience, index) => (
-          <SplideSlide key={experience.id} className="experience-slide">
+          <SplideSlide key={experience.id}>
             <motion.div
               className="experience-card-slider"
               initial={{ opacity: 0, scale: 0.95 }}
