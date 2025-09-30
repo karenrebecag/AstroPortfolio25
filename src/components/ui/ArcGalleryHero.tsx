@@ -11,10 +11,12 @@ type ArcGalleryHeroProps = {
   radiusLg?: number;
   radiusMd?: number;
   radiusSm?: number;
+  radiusXs?: number;
   // size of each card for different screen sizes
   cardSizeLg?: number;
   cardSizeMd?: number;
   cardSizeSm?: number;
+  cardSizeXs?: number;
   // optional extra class on outer section
   className?: string;
 };
@@ -26,9 +28,11 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
   radiusLg = 480,
   radiusMd = 360,
   radiusSm = 260,
+  radiusXs = 180,
   cardSizeLg = 120,
   cardSizeMd = 100,
   cardSizeSm = 80,
+  cardSizeXs = 60,
   className = '',
 }) => {
   const [dimensions, setDimensions] = useState({
@@ -47,7 +51,9 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
       const width = window.innerWidth;
       setScreenSize({ width, isMounted: true });
       
-      if (width < 640) {
+      if (width < 520) {
+        setDimensions({ radius: radiusXs, cardSize: cardSizeXs });
+      } else if (width < 640) {
         setDimensions({ radius: radiusSm, cardSize: cardSizeSm });
       } else if (width < 1024) {
         setDimensions({ radius: radiusMd, cardSize: cardSizeMd });
@@ -62,7 +68,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }
-  }, [radiusLg, radiusMd, radiusSm, cardSizeLg, cardSizeMd, cardSizeSm]);
+  }, [radiusLg, radiusMd, radiusSm, radiusXs, cardSizeLg, cardSizeMd, cardSizeSm, cardSizeXs]);
 
   // Don't render dynamic content until client-side hydration is complete
   if (!screenSize.isMounted) {
@@ -126,8 +132,8 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
         justifyContent: 'center !important' as any,
         zIndex: '20 !important' as any,
         pointerEvents: 'none !important' as any,
-        paddingTop: '2rem !important' as any,
-        paddingBottom: '2rem !important' as any
+        paddingTop: screenSize.width < 520 ? '1rem !important' : '2rem !important' as any,
+        paddingBottom: screenSize.width < 520 ? '1rem !important' : '2rem !important' as any
       }}
     >
       {/* Background ring container that controls geometry */}
@@ -137,7 +143,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
           width: '100% !important' as any,
           display: 'flex !important' as any,
           justifyContent: 'center !important' as any,
-          height: dimensions.radius * 1.1,
+          height: screenSize.width < 520 ? dimensions.radius * 0.9 : dimensions.radius * 1.1,
           pointerEvents: 'auto !important' as any
         }}
       >
@@ -188,7 +194,7 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
                       inset 0 0 0 1px rgba(255, 255, 255, 0.1)
                     `,
                     overflow: 'visible',
-                    border: '8px solid white',
+                    border: screenSize.width < 520 ? '4px solid white' : '8px solid white',
                     backgroundColor: 'white',
                     transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     width: '100%',
@@ -210,8 +216,8 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
                       top: i % 2 === 0 ? '-12px' : '-8px',
                       right: i % 3 === 0 ? '-12px' : '-8px',
                       left: i % 4 === 0 ? '-8px' : 'auto',
-                      width: '40px',
-                      height: '20px',
+                      width: screenSize.width < 520 ? '30px' : '40px',
+                      height: screenSize.width < 520 ? '15px' : '20px',
                       zIndex: 10,
                       transform: `rotate(${i % 2 === 0 ? 45 : -45}deg)`
                     }}
