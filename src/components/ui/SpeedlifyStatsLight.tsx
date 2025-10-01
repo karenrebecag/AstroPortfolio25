@@ -25,13 +25,15 @@ interface SpeedlifyStatsLightProps {
   hidePerformance?: boolean;
   hideAccessibility?: boolean;
   showOnlyTopScores?: boolean;
+  currentUrl?: string; // Optional prop to override URL detection
 }
 
 export function SpeedlifyStatsLight({ 
   className, 
   hidePerformance = false, 
   hideAccessibility = false, 
-  showOnlyTopScores = false 
+  showOnlyTopScores = false,
+  currentUrl
 }: SpeedlifyStatsLightProps) {
   const [stats, setStats] = useState<SpeedlifyData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,7 +47,26 @@ export function SpeedlifyStatsLight({
         
         // Speedlify API base URL
         const speedlifyBaseUrl = 'https://guileless-douhua-b2ff53.netlify.app';
-        const targetUrl = 'https://www.karenortiz.space/'; // URL que queremos monitorear
+        
+        // Detect current page URL or use provided prop
+        let targetUrl = currentUrl;
+        if (!targetUrl && typeof window !== 'undefined') {
+          // Get current page URL and normalize it
+          const currentPath = window.location.pathname;
+          const baseUrl = 'https://www.karenortiz.space';
+          
+          // Normalize URL: remove trailing slash except for root
+          if (currentPath === '/' || currentPath === '') {
+            targetUrl = baseUrl + '/';
+          } else {
+            targetUrl = baseUrl + currentPath.replace(/\/$/, '');
+          }
+        }
+        
+        // Fallback to home if no URL detected
+        if (!targetUrl) {
+          targetUrl = 'https://www.karenortiz.space/';
+        }
         
         // Step 1: Get URLs list to find the hash for our target URL
         const controller = new AbortController();
@@ -93,22 +114,22 @@ export function SpeedlifyStatsLight({
         const data = await dataResponse.json();
         
         
-        // Transform Speedlify data to our expected format - Override with real PageSpeed values
+        // Transform Speedlify data to our expected format - Use real Speedlify values
         const speedlifyData: SpeedlifyData = {
           url: data.url || targetUrl,
           lighthouse: {
-            performance: hidePerformance ? 0 : 88, // Hardcoded real PageSpeed score
-            accessibility: hideAccessibility ? 0 : 100, // Hardcoded real PageSpeed score
-            bestPractices: 100, // Hardcoded real PageSpeed score
-            seo: 92, // Hardcoded real PageSpeed score
-            pwa: Math.round((data.lighthouse?.pwa || 0.85) * 100)
+            performance: hidePerformance ? 0 : Math.round((data.lighthouse?.performance || 0) * 100),
+            accessibility: hideAccessibility ? 0 : Math.round((data.lighthouse?.accessibility || 0) * 100),
+            bestPractices: Math.round((data.lighthouse?.['best-practices'] || 0) * 100),
+            seo: Math.round((data.lighthouse?.seo || 0) * 100),
+            pwa: Math.round((data.lighthouse?.pwa || 0) * 100)
           },
           timestamp: data.timestamp || Date.now(),
-          firstContentfulPaint: 0.8, // Real value from PageSpeed
-          largestContentfulPaint: 1.7, // Real value from PageSpeed
-          cumulativeLayoutShift: 0.082, // Real value from PageSpeed
-          totalBlockingTime: 0, // Real value from PageSpeed
-          speedIndex: 1.8 // Real value from PageSpeed
+          firstContentfulPaint: parseFloat((data.firstContentfulPaint / 1000).toFixed(1)) || 0,
+          largestContentfulPaint: parseFloat((data.largestContentfulPaint / 1000).toFixed(1)) || 0,
+          cumulativeLayoutShift: parseFloat((data.cumulativeLayoutShift || 0).toFixed(3)) || 0,
+          totalBlockingTime: parseFloat((data.totalBlockingTime / 1000).toFixed(1)) || 0,
+          speedIndex: parseFloat((data.speedIndex / 1000).toFixed(1)) || 0
         };
         
         setStats(speedlifyData);
@@ -143,7 +164,7 @@ export function SpeedlifyStatsLight({
     };
 
     fetchStats();
-  }, []);
+  }, [currentUrl]); // Re-fetch when currentUrl prop changes
 
   const getScoreColor = (score: number): string => {
     if (score >= 90) return '#16a34a'; // Green-600 (darker for light mode)

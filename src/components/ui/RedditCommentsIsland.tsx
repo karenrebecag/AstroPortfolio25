@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback } from './Avatar.tsx';
 import { Badge } from './Badge.tsx';
 import { Textarea } from './Textarea.tsx';
 import TypeSound from './TypeSound.tsx';
-import { Heart, MessageSquare, MoreHorizontal, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload, Trash2 } from 'lucide-react';
+import { Heart, MessageSquare, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload, Trash2 } from 'lucide-react';
 import { useCommentsStore } from '../../stores/commentsStore';
 import '../../styles/reddit-comments.css';
 import { useToast } from '../../hooks/useToast';
