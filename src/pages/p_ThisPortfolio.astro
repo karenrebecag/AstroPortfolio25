@@ -443,19 +443,7 @@ const loadTestResults = {
 					</div>
 				</InView>
 
-				<!-- Executive Summary Image -->
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 20, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -50px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-				>
-					<div class="executive-summary-image">
-						<img src="/images/portfolio-executive-summary.webp" alt="Portfolio Executive Summary" loading="lazy" />
-					</div>
-				</InView>
+	
 			</div>
 		</section>
 
@@ -3616,6 +3604,178 @@ const TextDisperse = ({ text, trigger }) => {
 		.typography-usage {
 			font-size: 0.9rem;
 			padding: 1rem;
+		}
+	}
+
+	/* Digital Poetry Manifesto Section Styles */
+	.conclusion-content {
+		max-width: 900px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.manifesto-text {
+		display: flex;
+		flex-direction: column;
+		gap: 5rem; /* Espaciado generoso entre secciones */
+	}
+
+	.manifesto-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		padding: 3rem 2rem;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 20px;
+		border: 1px solid rgba(0, 0, 0, 0.06);
+		transition: all 0.3s ease;
+	}
+
+	.manifesto-section:hover {
+		background: rgba(255, 255, 255, 0.7);
+		transform: translateY(-4px);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+	}
+
+	.manifesto-section h3 {
+		font-family: var(--font-secondary, 'Boysen', serif);
+		font-size: clamp(1.75rem, 4vw, 2.25rem);
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0;
+		line-height: 1.2;
+		text-align: center;
+	}
+
+	.manifesto-description {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: clamp(1rem, 2vw, 1.125rem);
+		line-height: 1.8;
+		color: #333;
+		margin: 0;
+		text-align: center;
+		max-width: 800px;
+	}
+
+	.manifesto-conclusion {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: clamp(1.125rem, 2.2vw, 1.25rem);
+		line-height: 1.8;
+		color: #1B1B1B;
+		margin: 0;
+		text-align: center;
+		max-width: 800px;
+		font-weight: 500;
+		font-style: italic;
+	}
+
+	.innovation-highlights {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		width: 100%;
+		max-width: 700px;
+	}
+
+	.highlight-point {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+		line-height: 1.6;
+		color: #4A4A4A;
+		text-align: center;
+		padding: 1.25rem 1.5rem;
+		background: rgba(245, 245, 245, 0.6);
+		border-radius: 12px;
+		border-left: 3px solid #4523AE;
+		transition: all 0.3s ease;
+	}
+
+	.highlight-point:hover {
+		background: rgba(245, 245, 245, 1);
+		transform: translateX(8px);
+		border-left-width: 4px;
+	}
+
+	.highlight-point strong {
+		color: #4523AE;
+		font-weight: 600;
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	/* Dark mode styles para manifesto */
+	:global(.dark-mode .manifesto-section) {
+		background: rgba(20, 20, 20, 0.5);
+		border-color: rgba(255, 255, 255, 0.08);
+	}
+
+	:global(.dark-mode .manifesto-section:hover) {
+		background: rgba(20, 20, 20, 0.7);
+	}
+
+	:global(.dark-mode .manifesto-section h3) {
+		color: #E5E5E5;
+	}
+
+	:global(.dark-mode .manifesto-description) {
+		color: #CCCCCC;
+	}
+
+	:global(.dark-mode .manifesto-conclusion) {
+		color: #E5E5E5;
+	}
+
+	:global(.dark-mode .highlight-point) {
+		background: rgba(30, 30, 30, 0.6);
+		color: #B5B5B5;
+		border-left-color: #9D7FC1;
+	}
+
+	:global(.dark-mode .highlight-point:hover) {
+		background: rgba(30, 30, 30, 0.8);
+	}
+
+	:global(.dark-mode .highlight-point strong) {
+		color: #9D7FC1;
+	}
+
+	/* Responsive design para manifesto */
+	@media (max-width: 768px) {
+		.manifesto-text {
+			gap: 3.5rem;
+		}
+
+		.manifesto-section {
+			padding: 2rem 1.5rem;
+			gap: 1.5rem;
+		}
+
+		.innovation-highlights {
+			gap: 1rem;
+		}
+
+		.highlight-point {
+			padding: 1rem 1.25rem;
+			text-align: left;
+		}
+
+		.highlight-point strong {
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.manifesto-text {
+			gap: 2.5rem;
+		}
+
+		.manifesto-section {
+			padding: 1.5rem 1rem;
+		}
+
+		.highlight-point {
+			padding: 0.875rem 1rem;
 		}
 	}
 </style>
