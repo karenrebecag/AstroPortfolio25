@@ -328,12 +328,38 @@ if (!isClient) {
 ```
 
 #### Elementos no cambian color
-**Solución**: Agregar a las transiciones CSS globales
+**Causa**: Las clases CSS locales de Astro no son accesibles por los selectores `:global(.dark-mode ...)` debido al scope aislado.
+
+**Solución**: Convertir las clases locales a `:global()` para que los estilos dark mode puedan seleccionarlas correctamente.
+
+**Ejemplo incorrecto**:
 ```css
-:global(.dark-mode .your-element) {
-  color: #ffffff;
+.section-title {
+  color: #1B1B1B;
+}
+
+:global(.dark-mode .section-title) {
+  color: #ffffff;  /* ❌ NO FUNCIONA - no puede seleccionar la clase local */
 }
 ```
+
+**Ejemplo correcto**:
+```css
+:global(.section-title) {
+  color: #1B1B1B;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:global(.dark-mode .section-title) {
+  color: #ffffff;  /* ✅ FUNCIONA - ambos usan :global() */
+}
+```
+
+**Clases que requieren :global()**:
+- Todas las clases que necesitan cambiar en dark mode
+- Elementos de texto: `.section-title`, `.section-label`, `.content-description`
+- Contenedores con fondos: `.privacy-details`, `.feature-card`
+- Elementos anidados: `.highlight-content h3`, `.detail-section p`
 
 #### Footer no transiciona suavemente
 **Solución**: Verificar AnimatePresence con `mode="wait"`
@@ -396,6 +422,9 @@ transition={{ duration: 0.7 }} // Más lento
 4. **Persistence**: Siempre guardar preferencia del usuario
 5. **Fallbacks**: Proveer estados por defecto para SSR
 6. **Testing**: Probar todos los elementos en ambos modos
+7. **Scoping CSS**: **SIEMPRE usar `:global()` en clases que necesitan dark mode**
+   - ❌ `.my-class { color: #000; }` con `:global(.dark-mode .my-class)`
+   - ✅ `:global(.my-class) { color: #000; }` con `:global(.dark-mode .my-class)`
 
 ---
 

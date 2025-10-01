@@ -83,6 +83,38 @@ const currentLanguage = languageOptions.find(l => l.code === lang);
 .lang-option:hover {
   background: #f5f5f5;
 }
+
+/* Dark Mode Styles */
+:global(.dark-mode) .lang-trigger {
+  background: rgba(10, 8, 22, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:global(.dark-mode) .lang-trigger:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(10, 8, 22, 0.95);
+}
+
+:global(.dark-mode) .arrow {
+  color: #ffffff;
+}
+
+:global(.dark-mode) .lang-dropdown {
+  background: rgba(10, 8, 22, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+:global(.dark-mode) .lang-option {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-mode) .lang-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 </style>
 
 <script>

@@ -227,6 +227,55 @@ const currentLanguage = languageOptions.find(l => l.code === lang);
 .selector-dropdown::-webkit-scrollbar-thumb:hover {
   background: rgba(204, 204, 204, 0.7);
 }
+
+/* Dark Mode Styles */
+:global(.dark-mode) .selector-trigger {
+  background: rgba(10, 8, 22, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:global(.dark-mode) .selector-trigger:hover {
+  background: rgba(10, 8, 22, 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+:global(.dark-mode) .chevron {
+  color: #ffffff;
+}
+
+:global(.dark-mode) .lang-code {
+  color: #ffffff;
+}
+
+:global(.dark-mode) .selector-dropdown {
+  background: rgba(10, 8, 22, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+:global(.dark-mode) .language-option {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-mode) .language-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-mode) .language-option.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: #ffffff;
+}
+
+:global(.dark-mode) .name {
+  color: #ffffff;
+}
+
+:global(.dark-mode) .market {
+  color: #cccccc;
+}
 </style>
 
 <script>

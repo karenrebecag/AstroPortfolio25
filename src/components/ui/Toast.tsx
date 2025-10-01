@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, XCircle, X } from 'lucide-react';
 
@@ -10,13 +10,32 @@ interface ToastProps {
   duration?: number;
 }
 
-const Toast: React.FC<ToastProps> = ({ 
-  id, 
-  type, 
-  message, 
-  onClose, 
-  duration = 5000 
+const Toast: React.FC<ToastProps> = ({
+  id,
+  type,
+  message,
+  onClose,
+  duration = 5000
 }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check initial dark mode
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark-mode'));
+    };
+    checkDarkMode();
+
+    // Listen for dark mode changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose(id);
@@ -31,22 +50,40 @@ const Toast: React.FC<ToastProps> = ({
 
   const toastStyles = {
     success: {
-      background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-      border: '1px solid rgba(34, 197, 94, 0.2)',
-      color: '#166534',
-      iconColor: '#22c55e',
-      shadowColor: 'rgba(34, 197, 94, 0.15)'
+      light: {
+        background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+        border: '1px solid rgba(34, 197, 94, 0.2)',
+        color: '#166534',
+        iconColor: '#22c55e',
+        shadowColor: 'rgba(34, 197, 94, 0.15)'
+      },
+      dark: {
+        background: 'linear-gradient(135deg, rgba(10, 8, 22, 0.95) 0%, rgba(20, 18, 32, 0.95) 100%)',
+        border: '1px solid rgba(34, 197, 94, 0.3)',
+        color: '#86efac',
+        iconColor: '#4ade80',
+        shadowColor: 'rgba(34, 197, 94, 0.2)'
+      }
     },
     error: {
-      background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
-      border: '1px solid rgba(239, 68, 68, 0.2)',
-      color: '#991b1b',
-      iconColor: '#ef4444',
-      shadowColor: 'rgba(239, 68, 68, 0.15)'
+      light: {
+        background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
+        border: '1px solid rgba(239, 68, 68, 0.2)',
+        color: '#991b1b',
+        iconColor: '#ef4444',
+        shadowColor: 'rgba(239, 68, 68, 0.15)'
+      },
+      dark: {
+        background: 'linear-gradient(135deg, rgba(10, 8, 22, 0.95) 0%, rgba(30, 18, 22, 0.95) 100%)',
+        border: '1px solid rgba(239, 68, 68, 0.3)',
+        color: '#fca5a5',
+        iconColor: '#f87171',
+        shadowColor: 'rgba(239, 68, 68, 0.2)'
+      }
     }
   };
 
-  const currentStyle = toastStyles[type];
+  const currentStyle = toastStyles[type][isDarkMode ? 'dark' : 'light'];
 
   return (
     <motion.div
@@ -73,7 +110,8 @@ const Toast: React.FC<ToastProps> = ({
         alignItems: 'center',
         gap: '12px',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       }}
       className="toast-container"
     >
@@ -134,11 +172,11 @@ const Toast: React.FC<ToastProps> = ({
           justifyContent: 'center',
           color: currentStyle.color,
           opacity: 0.7,
-          transition: 'opacity 0.2s ease'
+          transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.opacity = '1';
-          e.currentTarget.style.background = 'rgba(0, 0, 0, 0.05)';
+          e.currentTarget.style.background = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.opacity = '0.7';
