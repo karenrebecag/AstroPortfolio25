@@ -248,6 +248,24 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       return greetingsRoutes[langCode as keyof typeof greetingsRoutes] || '/greetings';
     }
 
+    // Check if we're on the privacy policy page (include ALL language variations)
+    const privacyPages = ['/privacy', '/privacidad', '/confidentialite', '/guptataa', '/puraibashii', '/yinsi', '/yinsi-zhengce'];
+    const isPrivacyPage = privacyPages.some(page => currentPath.includes(page));
+
+    if (isPrivacyPage) {
+      const privacyRoutes = {
+        'en': '/privacy',
+        'es': '/es/privacidad',
+        'fr': '/fr/confidentialite',
+        'hi': '/hi/guptataa',
+        'ja': '/ja/puraibashii',
+        'zh-cn': '/zh-cn/yinsi',
+        'zh-tw': '/zh-tw/yinsi-zhengce'
+      };
+
+      return privacyRoutes[langCode as keyof typeof privacyRoutes] || '/privacy';
+    }
+
     // Default behavior for other pages (home)
     if (langCode === 'en') return '/';
     return `/${langCode}/`;

@@ -1,0 +1,99 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import HeaderPill from '../../components/ui/HeaderPill.astro';
+import { TextDisperseBlack } from '../../components/ui/TextDisperseBlack.tsx';
+import { InView } from '../../components/ui/InView.tsx';
+import { DarkModeContainer } from '../../components/ui/DarkModeContainer.tsx';
+import ShareBar from '../../components/ui/ShareBar.astro';
+import ProfileCardSection from '../../components/sections/ProfileCardSection.astro';
+import '../../styles/global.css';
+
+const privacyData = {
+  title: 'プライバシーポリシー',
+  subtitle: 'あなたのプライバシーは私たちの優先事項です',
+  description: 'このポートフォリオでは、あなたのプライバシーが基本です。',
+  sections: [
+    { number: '01', title: '情報を収集するとき', content: '私は、あなたが自発的にコメントやレビューを送信する場合にのみ個人情報を収集します。' },
+    { number: '02', title: '収集する情報', content: 'やり取りを選択すると、お名前、メールアドレス、プロフィール写真を収集します。' },
+    { number: '03', title: '一時キャッシュシステム', content: 'アクティブなセッション中、情報を一時的に保存します。' },
+    { number: '04', title: 'ストレージとモデレーション', content: 'コメントはFirestoreに、プロフィール写真はVercel Blobsに保存されます。' },
+    { number: '05', title: 'ユーザートラッキングなし', content: 'ユーザープロファイルやログインシステムは維持していません。' },
+    { number: '06', title: 'あなたの権利と制御', content: '送信前に情報を編集でき、公開されたコメントの削除を要求できます。' }
+  ],
+  details: {
+    title: '詳細な技術情報',
+    lastUpdated: '最終更新: 2025年9月27日'
+  }
+};
+---
+
+<Layout title="Karen Ortiz - プライバシーポリシー" lang="ja">
+	<HeaderPill />
+	<DarkModeContainer client:load>
+		<main class="main-content">
+		<section class="content-section privacy-section">
+			<div class="section-container">
+				<div class="section-header">
+					<h2 class="section-title">
+						<TextDisperseBlack client:idle text={privacyData.title} />
+					</h2>
+					<div class="section-label">{privacyData.subtitle}</div>
+				</div>
+				<InView client:idle
+					variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+				>
+					<div class="content-grid">
+						<div class="content-main">
+							<p class="content-description">{privacyData.description}</p>
+							<div class="content-highlights">
+								{privacyData.sections.map((section) => (
+									<div class="highlight-item">
+										<div class="highlight-number">{section.number}</div>
+										<div class="highlight-content">
+											<h3>{section.title}</h3>
+											<p>{section.content}</p>
+										</div>
+									</div>
+								))}
+							</div>
+							<div class="privacy-details">
+								<div class="detail-section">
+									<h3>{privacyData.details.title}</h3>
+									<p class="last-updated"><strong>{privacyData.details.lastUpdated}</strong></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+		<ProfileCardSection />
+		<ShareBar />
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	.main-content { background: #ececec; width: 100%; padding: 0; }
+	.content-section { padding: 6rem 2rem; background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px); background-size: 20px 20px; }
+	.privacy-section { padding-top: 8rem; }
+	.section-container { max-width: 1200px; margin: 0 auto; }
+	.section-header { margin-bottom: 4rem; text-align: center; }
+	.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem); color: #1B1B1B; margin-bottom: 1rem; }
+	.section-label { font-size: 0.875rem; color: #666; text-transform: uppercase; }
+	.content-main { display: flex; flex-direction: column; gap: 3rem; }
+	.content-description { font-size: 1.125rem; line-height: 1.6; color: #333; }
+	.content-highlights { display: flex; flex-direction: column; gap: 2rem; }
+	.highlight-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+	.highlight-number { font-size: 1.5rem; color: #4523AE; min-width: 3rem; text-align: center; }
+	.highlight-content h3 { font-size: 1.125rem; font-weight: 600; color: #1B1B1B; margin: 0 0 0.5rem 0; }
+	.highlight-content p { font-size: 1rem; color: #666; margin: 0; }
+	.privacy-details { margin-top: 3rem; padding: 2rem; background: white; border-radius: 16px; }
+	.last-updated { margin-top: 2rem; font-size: 0.875rem; color: #999; }
+	@media (max-width: 768px) { .content-section { padding: 5.6rem 1.4rem; } .privacy-section { padding-top: 11.2rem; } }
+	:global(.dark-mode .main-content) { background: #050112; color: #ffffff; }
+	:global(.dark-mode .section-title) { color: #ffffff; }
+	:global(.dark-mode .privacy-details) { background: #0a0816; }
+</style>

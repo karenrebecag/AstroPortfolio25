@@ -1,25 +1,23 @@
 ---
 export const prerender = true;
 
-import Layout from '../layouts/Layout.astro';
-import HeaderPill from '../components/ui/HeaderPill.astro';
-import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
-import { InView } from '../components/ui/InView.tsx';
-import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
-import ShareBar from '../components/ui/ShareBar.astro';
-import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
-import { translations } from '../i18n/translations.js';
-import '../styles/global.css';
+import Layout from '../../layouts/Layout.astro';
+import HeaderPill from '../../components/ui/HeaderPill.astro';
+import { TextDisperseBlack } from '../../components/ui/TextDisperseBlack.tsx';
+import { InView } from '../../components/ui/InView.tsx';
+import { DarkModeContainer } from '../../components/ui/DarkModeContainer.tsx';
+import ShareBar from '../../components/ui/ShareBar.astro';
+import ProfileCardSection from '../../components/sections/ProfileCardSection.astro';
+import { translations } from '../../i18n/translations.js';
+import '../../styles/global.css';
 
-// Obtener traducciones en inglés
-const t = translations.en;
+// Obtener traducciones en español
+const t = translations.es;
 const privacyData = t.privacy;
 ---
 
-<Layout title="Karen Ortiz - Privacy Policy" lang="en">
+<Layout title="Karen Ortiz - Política de Privacidad" lang="es">
 	<HeaderPill />
-
-
 
 	<DarkModeContainer client:load>
 		<!-- Main Content Sections -->

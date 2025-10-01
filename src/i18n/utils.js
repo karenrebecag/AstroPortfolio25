@@ -21,6 +21,91 @@ export function getLangFromUrl(url) {
 export function useTranslatedPath(lang, path = '') {
   const pathWithoutLang = path.replace(/^\/[a-z]{2}(-[a-z]{2})?/, '');
 
+  // Handle specific page mappings
+  const pageRoutes = {
+    // Privacy policy pages
+    '/privacy': {
+      'en': '/privacy',
+      'es': '/es/privacidad',
+      'fr': '/fr/confidentialite',
+      'hi': '/hi/guptataa',
+      'ja': '/ja/puraibashii',
+      'zh-cn': '/zh-cn/yinsi',
+      'zh-tw': '/zh-tw/yinsi-zhengce'
+    },
+    '/privacidad': {
+      'en': '/privacy',
+      'es': '/es/privacidad',
+      'fr': '/fr/confidentialite',
+      'hi': '/hi/guptataa',
+      'ja': '/ja/puraibashii',
+      'zh-cn': '/zh-cn/yinsi',
+      'zh-tw': '/zh-tw/yinsi-zhengce'
+    },
+    '/confidentialite': {
+      'en': '/privacy',
+      'es': '/es/privacidad',
+      'fr': '/fr/confidentialite',
+      'hi': '/hi/guptataa',
+      'ja': '/ja/puraibashii',
+      'zh-cn': '/zh-cn/yinsi',
+      'zh-tw': '/zh-tw/yinsi-zhengce'
+    },
+    // Resume/CV pages
+    '/resume': {
+      'en': '/resume',
+      'es': '/es/curriculum',
+      'fr': '/fr/resume',
+      'hi': '/hi/biodata',
+      'ja': '/ja/rirekisho',
+      'zh-cn': '/zh-cn/jianli',
+      'zh-tw': '/zh-tw/jianli'
+    },
+    '/curriculum': {
+      'en': '/resume',
+      'es': '/es/curriculum',
+      'fr': '/fr/resume',
+      'hi': '/hi/biodata',
+      'ja': '/ja/rirekisho',
+      'zh-cn': '/zh-cn/jianli',
+      'zh-tw': '/zh-tw/jianli'
+    },
+    // Greetings pages
+    '/greetings': {
+      'en': '/greetings',
+      'es': '/es/agradecimientos',
+      'fr': '/fr/remerciements',
+      'hi': '/hi/dhanyavaad',
+      'ja': '/ja/kansha',
+      'zh-cn': '/zh-cn/ganxie',
+      'zh-tw': '/zh-tw/ganxie'
+    },
+    '/agradecimientos': {
+      'en': '/greetings',
+      'es': '/es/agradecimientos',
+      'fr': '/fr/remerciements',
+      'hi': '/hi/dhanyavaad',
+      'ja': '/ja/kansha',
+      'zh-cn': '/zh-cn/ganxie',
+      'zh-tw': '/zh-tw/ganxie'
+    },
+    '/remerciements': {
+      'en': '/greetings',
+      'es': '/es/agradecimientos',
+      'fr': '/fr/remerciements',
+      'hi': '/hi/dhanyavaad',
+      'ja': '/ja/kansha',
+      'zh-cn': '/zh-cn/ganxie',
+      'zh-tw': '/zh-tw/ganxie'
+    }
+  };
+
+  // Check if current path has a specific route mapping
+  if (pageRoutes[pathWithoutLang]) {
+    return pageRoutes[pathWithoutLang][lang] || pageRoutes[pathWithoutLang][defaultLang];
+  }
+
+  // Default behavior for home and other pages
   if (lang === defaultLang) {
     return pathWithoutLang || '/';
   }

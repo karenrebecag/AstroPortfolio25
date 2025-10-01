@@ -3,45 +3,13 @@ import SilkBackground from '../three/SilkBackground.tsx';
 import GemBackground from '../three/GemBackground.tsx';
 import SoftSkillsSlider from './SoftSkillsSlider.tsx';
 import { motion, transform } from 'motion/react';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
-const softSkillsData = [
-  {
-    id: "01",
-    title: "DESIGN MATTERS",
-    description: "Good UX isn't magic—it's iteration.",
-    highlight: "I look at spacing, hierarchy, content, motion... everything users feel but can't explain."
-  },
-  {
-    id: "02", 
-    title: "building my own",
-    description: "Founding WebCrafters gave me the space to lead full processes—from first call to delivery.",
-    highlight: "I work with teams that value clarity, ownership, and honest feedback."
-  },
-  {
-    id: "03",
-    title: "EVOLVING WITH INTENTION",
-    description: "Design and dev move fast—but not everything should be rushed.",
-    highlight: "I adapt, but I stay grounded in usability, accessibility, and real needs."
-  },
-  {
-    id: "04",
-    title: "PRODUCT THINKING",
-    description: "I design with users in mind, but I also think about dev time, scalability, and business goals.",
-    highlight: "Each screen is a decision—and I care about all of them."
-  },
-  {
-    id: "05",
-    title: "Curiosity First",
-    description: "I've always been curious about how things work. Design came as a way to solve problems—not just make things pretty.",
-    highlight: "Understanding both the visual and the structural side has always made sense to me."
-  },
-  {
-    id: "06",
-    title: "Bringing Design AND CODE",
-    description: "I'm both a developer and a designer, which means I don't just make it look good—I make it work.",
-    highlight: "This mindset helps me build faster, cleaner, and with fewer handoffs."
-  }
-];
+// Detectar idioma de la URL actual
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations] || translations.en;
+const softSkillsData = t.aboutMe.skills;
 ---
 
 <section class="gem-section">
@@ -93,7 +61,7 @@ const softSkillsData = [
         class="soft-skills-title-normal" 
         data-title="about-me"
       >
-        ABOUT ME
+        {t.aboutMe.title}
       </h2>
     </motion.div>
 

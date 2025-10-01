@@ -174,9 +174,9 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
   const { scrollYProgress } = useScroll();
   
   // Transform scroll progress to rotation values (more evident, rotating right)
-  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.2]); // 36 degrees max
-  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 0.4]); // 72 degrees max (right rotation)  
-  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.12]); // 21.6 degrees max
+  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.35]); // 63 degrees max
+  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 0.6]); // 108 degrees max (right rotation)  
+  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.25]); // 45 degrees max
 
   // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {

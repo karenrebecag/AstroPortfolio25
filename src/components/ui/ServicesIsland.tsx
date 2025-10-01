@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FlipText from './FlipText';
 import { BounceCards } from './BounceCards';
+import { translations } from '../../i18n/translations.js';
 
 interface Position {
   x: number;
@@ -20,11 +21,36 @@ interface Service {
   positions: Position[];
 }
 
-const ServicesIsland: React.FC = () => {
+interface ServicesIslandProps {
+  lang?: string;
+}
+
+const ServicesIsland: React.FC<ServicesIslandProps> = ({ lang = 'en' }) => {
   const [activeService, setActiveService] = useState<number>(1); // Primer servicio activo por defecto
   const [hoveredService, setHoveredService] = useState<number | null>(null);
 
-  const services: Service[] = [
+  // Obtener traducciones para el idioma actual
+  const t = translations[lang as keyof typeof translations] || translations.en;
+  const servicesData = t.services?.items || translations.en.services.items;
+
+  const services: Service[] = servicesData.map((service: any, index: number) => ({
+    ...service,
+    images: [
+      `https://picsum.photos/300/300?random=${index * 4 + 1}`,
+      `https://picsum.photos/300/300?random=${index * 4 + 2}`,
+      `https://picsum.photos/300/300?random=${index * 4 + 3}`,
+      `https://picsum.photos/300/300?random=${index * 4 + 4}`
+    ],
+    positions: [
+      { x: -45 + (index * 2), y: -5 + (index % 2), rotate: 5 - (index % 3) },
+      { x: -15 + (index % 3), y: 8 - (index % 2), rotate: -3 + (index % 4) },
+      { x: 15 - (index % 2), y: -3 + (index % 3), rotate: 8 - (index % 2) },
+      { x: 45 - (index % 4), y: 5 - (index % 2), rotate: -5 + (index % 3) }
+    ]
+  }));
+
+  // Fallback services array (keeping original structure for reference)
+  const fallbackServices: Service[] = [
     {
       id: 1,
       title1: "UX/UI Design",

@@ -3,6 +3,12 @@
 import ServicesIsland from './ServicesIsland.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 import { motion } from 'motion/react';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detectar idioma de la URL actual
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations] || translations.en;
 ---
 
 <section class="services-section">
@@ -19,7 +25,7 @@ import { motion } from 'motion/react';
         client:idle
       >
         <h2 class="sr-only">Services</h2>
-        <TextDisperseBlack text="SERVICES" className="giant-heading-disperse-black" client:idle />
+        <TextDisperseBlack text={t.services.title} className="giant-heading-disperse-black" client:idle />
       </motion.div>
       
       <motion.p
@@ -31,7 +37,7 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         client:idle
       >
-Comprehensive digital solutions from design to deployment
+        {t.services.subtitle}
       </motion.p>
     </div>
     
@@ -46,7 +52,7 @@ Comprehensive digital solutions from design to deployment
         transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
         client:visible
       >
-        <ServicesIsland client:visible />
+        <ServicesIsland client:visible lang={lang} />
       </motion.div>
 
     </div>

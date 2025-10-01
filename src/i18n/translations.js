@@ -34,7 +34,7 @@ export const translations = {
         "It took me a lot longer than I expected to make this page. It has always been a goal of mine to have a cover letter that allows me to showcase the things I like most about my work, but honestly, I never thought I would be fortunate enough for my work to fill me with so many good experiences. I am fortunate to have a job that I love, and this would not be possible without the support of all the people who are with me every day, accompanying me and motivating me to keep going.",
         "Thanks to all those people who, knowingly or not, have always been there to listen to me during my existential crises, to push me whenever I doubt, to motivate me every time I feel I can't learn anymore, and above all, to challenge me to be better whenever I can. I couldn't keep trying without your support. Thank you for always welcoming me with a smile every time I excitedly come to show you some nerdy thing I learned, thank you for listening to me every time I complain or break down when I get frustrated, and above all, thank you for still being here.",
         "Because I want to immortalize the gratitude for your company and love in the most sensible way within my reach, and although it may seem small, I have cultivated it with a lot of effort and love for you. Thanks to my family for always supporting me and pushing me to grow, for giving me ambition and setting goals for me. Thanks to my father for always coming back into my life and never failing to draw out those good conversations that I like so much and that teach me so much. Thanks to my mother for showing me the best in me and teaching me the best of her. Thanks to both of them because the greatest lesson they have given me has been to set my own expectations and always believe in what I do. Thanks to my sisters, whom I love so much, for always being there to brighten my day and give me feedback on my work haha. Thanks to my boyfriend for always pushing me to be better.",
-        "Eternal thanks to my grandparents because even though I don't correspond to them, they have always been my second parents and I am grateful for all the support they always give me for my whole life, because thanks to them, this is possible. Thanks to my pets, who always keep me company during my late nights, joys, and sorrows.",
+        "Eternal thanks to my grandparents because even though I don't correspond to them, they have always been my second parents and I am grateful for all the support they always give me for my whole life, because thanks to them, this is possible. Thanks to my pets Petronila, Bruno y Guacamolo, who always keep me company during my late nights, joys, and sorrows.",
         "Thanks to all the people I have met along the way, to all my coworkers, to everyone who joins my projects, to everyone who gives me feedback, to everyone who sets those challenges for me, and above all, a million thanks to all those people who believe in me and my ability. I am very proud to say that some of them have become my friends and it is thanks to that that all this is worthwhile. It is always an honor to mix with your projects and passions, but also with your cultures across different countries and environments. Thank you for allowing me to be there. Today it is a portfolio, but I carry you in my heart throughout everything I do, because you are an intangible part of my story. I love you all very much."
       ],
       highlights: {
@@ -132,6 +132,220 @@ export const translations = {
         instagram: 'Instagram',
         github: 'GitHub',
         email: 'Email'
+      }
+    },
+    contact: {
+      title: 'Get In Touch',
+      subtitle: 'Ready to bring your ideas to life? Let\'s discuss your project',
+      form: {
+        name: {
+          label: 'Your Name',
+          placeholder: 'John Smith'
+        },
+        email: {
+          label: 'Your Email',
+          placeholder: 'john@company.com'
+        },
+        phone: {
+          label: 'Your Phone',
+          placeholder: '+1 123 456 7890'
+        },
+        country: {
+          label: 'Country',
+          placeholder: 'United States, Canada, Mexico'
+        },
+        interests: {
+          label: 'I\'m interested in...',
+          options: [
+            'UX/UI Design & Engineering',
+            'Creative Frontend Development',
+            'AI-Powered Automation',
+            'Full-Stack & DevOps'
+          ]
+        },
+        budget: {
+          label: 'Your Budget (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: 'More About The Project',
+          placeholder: 'Tell me more about your project...'
+        },
+        attachment: {
+          label: 'Add an Attachment',
+          specs: 'Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: 'Remove'
+        },
+        submit: {
+          label: 'Send Request',
+          sending: 'Sending...'
+        }
+      },
+      messages: {
+        success: 'Message sent successfully! I will contact you soon.',
+        error: 'Failed to send message. Please try again.',
+        validation: 'Please complete name, email and message fields',
+        fileTooBig: 'File is too large. Maximum size is 10MB.',
+        connectionError: 'Connection error. Please check your internet and try again.'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: 'SERVICES',
+      subtitle: 'Comprehensive digital solutions from design to deployment',
+      items: [
+        {
+          id: 1,
+          title1: 'UX/UI Design',
+          title2: '& Engineering',
+          description: 'I craft intuitive, user-centered interfaces and bridge design with development through technical UX engineering. From mobile prototypes in Figma to developer-friendly design systems with React components, I ensure seamless handoff and implementation.',
+          tags: ['User Interface', 'User Experience', 'Design Systems', 'Component Libraries', 'Mobile Design', 'Developer Handoff'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: 'Led UX/UI redesign for MonexOne app and developed reusable component library for Athenis AI, improving form response rates by 30% and developer efficiency by 25%.'
+        },
+        {
+          id: 2,
+          title1: 'Creative Frontend',
+          title2: 'Development',
+          description: 'I build fast, scalable web interfaces that blend art and technology. Using React, Next.js, and WebGL, I create visually stunning, interactive experiences with Three.js animations while ensuring optimal performance and responsive design.',
+          tags: ['React', 'Next.js', 'WebGL', '3D Graphics', 'Interactive Art', 'Responsive Design'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: 'Built interactive landing page for Athenis AI with 3D visualizations and developed Aurin Task Manager with dynamic UI components and WebGL effects.'
+        },
+        {
+          id: 3,
+          title1: 'AI-Powered',
+          title2: 'Automation',
+          description: 'I design intelligent automation systems that enhance productivity through AI integration. Using tools like N8N and Make combined with Gemini/OpenAI APIs, I create smart workflows, chatbots, and automated processes that streamline operations.',
+          tags: ['AI Integration', 'Process Automation', 'Chatbots', 'Machine Learning', 'Workflow Design', 'Efficiency'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: 'Integrated AI-powered chatbot and task summaries in Aurin Task Manager, plus automated task reporting reducing manual workload by 40%.'
+        },
+        {
+          id: 4,
+          title1: 'Full-Stack',
+          title2: '& DevOps',
+          description: 'I develop complete backend systems with Node.js, Python, and Firestore, then deploy them with robust CI/CD pipelines. From secure APIs and database design to automated deployments on Vercel with monitoring via Sentry.',
+          tags: ['Node.js', 'Python', 'APIs', 'Database Design', 'DevOps', 'CI/CD', 'Monitoring'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: 'Implemented dynamic link system for Aurin Task Manager with Firestore and deployed with automated CI/CD pipelines for seamless updates.'
+        }
+      ]
+    },
+    aboutMe: {
+      title: 'ABOUT ME',
+      skills: [
+        {
+          id: '01',
+          title: 'DESIGN MATTERS',
+          description: 'Good UX isn\'t magic—it\'s iteration.',
+          highlight: 'I look at spacing, hierarchy, content, motion... everything users feel but can\'t explain.'
+        },
+        {
+          id: '02',
+          title: 'building my own',
+          description: 'Founding WebCrafters gave me the space to lead full processes—from first call to delivery.',
+          highlight: 'I work with teams that value clarity, ownership, and honest feedback.'
+        },
+        {
+          id: '03',
+          title: 'EVOLVING WITH INTENTION',
+          description: 'Design and dev move fast—but not everything should be rushed.',
+          highlight: 'I adapt, but I stay grounded in usability, accessibility, and real needs.'
+        },
+        {
+          id: '04',
+          title: 'PRODUCT THINKING',
+          description: 'I design with users in mind, but I also think about dev time, scalability, and business goals.',
+          highlight: 'Each screen is a decision—and I care about all of them.'
+        },
+        {
+          id: '05',
+          title: 'Curiosity First',
+          description: 'I\'ve always been curious about how things work. Design came as a way to solve problems—not just make things pretty.',
+          highlight: 'Understanding both the visual and the structural side has always made sense to me.'
+        },
+        {
+          id: '06',
+          title: 'Bringing Design AND CODE',
+          description: 'I\'m both a developer and a designer, which means I don\'t just make it look good—I make it work.',
+          highlight: 'This mindset helps me build faster, cleaner, and with fewer handoffs.'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • '
+    },
+    privacy: {
+      title: 'Privacy Policy',
+      subtitle: 'Your privacy is my priority',
+      description: 'In this portfolio, your privacy is fundamental. This policy transparently explains how and when I collect personal information, always with your explicit consent and only when you actively choose to interact with my content.',
+      sections: [
+        {
+          number: '01',
+          title: 'When I collect information',
+          content: 'I collect personal information only when you voluntarily choose to submit a comment on my blog articles or write a review about my services. I do not collect data automatically, there is no user tracking, and I do not store information without your explicit action.'
+        },
+        {
+          number: '02',
+          title: 'What information I collect',
+          content: 'When you choose to interact, I collect: your name, email address, profile photo (optional), and the content of your comment or review. This information is provided voluntarily through specific forms.'
+        },
+        {
+          number: '03',
+          title: 'Temporary caching system',
+          content: 'During your active session, I temporarily store your information (name, email, photo) to facilitate multiple interactions without requiring you to re-enter the same data repeatedly. This cache is automatically deleted when your browsing session ends.'
+        },
+        {
+          number: '04',
+          title: 'Storage and moderation',
+          content: 'Comments and reviews are stored in Firestore, profile photos in Vercel Blobs. All content is subject to manual moderation before publication. Non-approved content is permanently deleted from my systems.'
+        },
+        {
+          number: '05',
+          title: 'No user tracking',
+          content: 'I do not maintain user profiles or login systems. Each comment or review is independent. I do not link interactions between sessions or create persistent profiles. Identification is solely by name in public comments.'
+        },
+        {
+          number: '06',
+          title: 'Your rights and control',
+          content: 'You can edit your information before submission, request deletion of your published comments, and have complete control over what information you share. I comply with GDPR, CCPA, and other applicable privacy regulations.'
+        }
+      ],
+      details: {
+        title: 'Detailed technical information',
+        intro: 'My system is designed with privacy by design, implementing the principle of data minimization and consensual collection.',
+        architecture: {
+          title: 'Data architecture',
+          content: 'Firestore: Stores approved comments and reviews with fields: name, email, content, timestamp, moderation status.\nVercel Blobs: Stores profile photos linked only to approved comments.\nSession cache: Temporary data automatically deleted when browser is closed.'
+        },
+        moderation: {
+          title: 'Moderation process',
+          content: 'All comments go through manual review via email notification system and API routes. Content can be approved (field "approved": true) to appear publicly, or rejected for permanent deletion. There is no automatic publication.'
+        },
+        principles: {
+          title: 'Privacy principles',
+          content: 'Explicit consent: I only collect data when you submit forms.\nMinimization: I only store what\'s necessary for functionality.\nTransparency: Clear and understandable process.\nUser control: Information is editable and deletable.'
+        },
+        thirdParty: {
+          title: 'Third-party services',
+          content: 'Vercel: Hosting and file storage (privacy policy: vercel.com/legal/privacy-policy)\nGoogle Cloud/Firestore: Database (privacy policy: cloud.google.com/privacy)'
+        },
+        retention: {
+          title: 'Data retention',
+          content: 'Approved comments: Stored indefinitely until deletion request.\nRejected comments: Deleted immediately after moderation decision.\nTemporary cache: Automatically deleted when session ends.\nProfile photos: Linked to approved comments, deleted if comment is deleted.'
+        },
+        contact: {
+          title: 'Contact me to exercise rights',
+          content: 'To request access, rectification, deletion, or any inquiry about your personal data, contact me directly at karenrortizg@gmail.com or through other means available on the website. I will respond within a maximum of 30 days.'
+        },
+        lastUpdated: 'Last updated: September 27, 2025'
       }
     },
     resume: {
@@ -395,7 +609,7 @@ export const translations = {
         "Me tomó mucho más tiempo del que esperaba hacer esta página. Siempre ha sido una meta mía tener una carta de presentación que me permita mostrar las cosas que más me gustan de mi trabajo, pero honestamente, nunca pensé que tendría la fortuna de que mi trabajo me llenara de tantas experiencias buenas. Tengo la fortuna de tener un trabajo que amo, y esto no sería posible sin el apoyo de todas las personas que están conmigo todos los días, acompañándome y motivándome a seguir adelante.",
         "Gracias a todas esas personas que, a sabiendas o no, siempre han estado ahí para escucharme durante mis crisis existenciales, para empujarme cada vez que dudo, para motivarme cada vez que siento que ya no puedo aprender más, y sobre todo, para desafiarme a ser mejor cada vez que puedo. No podría seguir intentando sin su apoyo. Gracias por siempre recibirme con una sonrisa cada vez que vengo emocionada a mostrarles alguna cosa nerd que aprendí, gracias por escucharme cada vez que me quejo o me quiebro cuando me frustro, y sobre todo, gracias por seguir aquí.",
         "Porque quiero inmortalizar la gratitud por su compañía y amor de la manera más sensata a mi alcance, y aunque pueda parecer pequeño, lo he cultivado con mucho esfuerzo y amor para ustedes. Gracias a mi familia por siempre apoyarme y empujarme a crecer, por darme ambición y ponerme metas. Gracias a mi padre por siempre volver a mi vida y nunca fallar en sacar esas buenas conversaciones que tanto me gustan y que tanto me enseñan. Gracias a mi madre por mostrarme lo mejor de mí y enseñarme lo mejor de ella. Gracias a ambos porque la mayor lección que me han dado ha sido ponerme mis propias expectativas y siempre creer en lo que hago. Gracias a mis hermanas, a quienes amo tanto, por siempre estar ahí para alegrar mi día y darme feedback de mi trabajo jaja. Gracias a mi novio por siempre impulsarme a ser mejor y quererme mucho, valoro cada minuto que dedicas a escucharme y entenderme.",
-        "Eterno agradecimiento a mis abuelos porque aunque no les correspondo, siempre han sido mis segundos padres y estoy agradecida por todo el apoyo que siempre me dan durante toda mi vida, porque gracias a ellos, esto es posible. Gracias a mis mascotas, que siempre me acompañan durante mis noches largas, alegrías y tristezas.",
+        "Eterno agradecimiento a mis abuelos porque aunque no les correspondo, siempre han sido mis segundos padres y estoy agradecida por todo el apoyo que siempre me dan durante toda mi vida, porque gracias a ellos, esto es posible. Gracias a mis mascotas Petronila, Bruno y Guacamolo, que siempre me acompañan durante mis noches largas, alegrías y tristezas.",
         "Gracias a todas las personas que he conocido en el camino, a todos mis compañeros de trabajo, a todos los que se unen a mis proyectos, a todos los que me dan feedback, a todos los que me ponen esos desafíos, y sobre todo, un millón de gracias a todas esas personas que creen en mí y en mi capacidad. Me enorgullece mucho decir que algunos de ellos se han vuelto mis amigos y es gracias a eso que todo esto vale la pena. Siempre es un honor mezclarme con sus proyectos y pasiones, pero también con sus culturas a través de diferentes países y ambientes. Gracias por permitirme estar ahí. Hoy es un portafolio, pero los llevo en mi corazón en todo lo que hago, porque son una parte intangible de mi historia. Los amo mucho a todos."
       ],
       highlights: {
@@ -493,6 +707,220 @@ export const translations = {
         instagram: 'Instagram',
         github: 'GitHub',
         email: 'Correo'
+      }
+    },
+    contact: {
+      title: 'Contacto',
+      subtitle: '¿Listo para dar vida a tus ideas? Hablemos de tu proyecto',
+      form: {
+        name: {
+          label: 'Tu Nombre',
+          placeholder: 'Juan Pérez'
+        },
+        email: {
+          label: 'Tu Email',
+          placeholder: 'juan@empresa.com'
+        },
+        phone: {
+          label: 'Tu Teléfono',
+          placeholder: '+52 123 456 7890'
+        },
+        country: {
+          label: 'País',
+          placeholder: 'México, Estados Unidos, Canadá'
+        },
+        interests: {
+          label: 'Me interesa...',
+          options: [
+            'Diseño UX/UI e Ingeniería',
+            'Desarrollo Frontend Creativo',
+            'Automatización con IA',
+            'Full-Stack y DevOps'
+          ]
+        },
+        budget: {
+          label: 'Tu Presupuesto (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: 'Más Sobre el Proyecto',
+          placeholder: 'Cuéntame más sobre tu proyecto...'
+        },
+        attachment: {
+          label: 'Agregar un Archivo',
+          specs: 'Máx 10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: 'Eliminar'
+        },
+        submit: {
+          label: 'Enviar Solicitud',
+          sending: 'Enviando...'
+        }
+      },
+      messages: {
+        success: '¡Mensaje enviado exitosamente! Te contactaré pronto.',
+        error: 'Error al enviar mensaje. Inténtalo de nuevo.',
+        validation: 'Por favor completa los campos de nombre, email y mensaje',
+        fileTooBig: 'El archivo es muy grande. El tamaño máximo es 10MB.',
+        connectionError: 'Error de conexión. Verifica tu internet e inténtalo de nuevo.'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: 'SERVICIOS',
+      subtitle: 'Soluciones digitales integrales desde el diseño hasta el despliegue',
+      items: [
+        {
+          id: 1,
+          title1: 'Diseño UX/UI',
+          title2: 'e Ingeniería',
+          description: 'Creo interfaces intuitivas y centradas en el usuario, conectando el diseño con el desarrollo a través de ingeniería UX técnica. Desde prototipos móviles en Figma hasta sistemas de diseño amigables para desarrolladores con componentes React, aseguro una transición e implementación perfecta.',
+          tags: ['Interfaz de Usuario', 'Experiencia de Usuario', 'Sistemas de Diseño', 'Librerías de Componentes', 'Diseño Móvil', 'Handoff de Desarrollador'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: 'Lideré el rediseño UX/UI para la app MonexOne y desarrollé una librería de componentes reutilizable para Athenis AI, mejorando las tasas de respuesta de formularios en un 30% y la eficiencia de desarrolladores en un 25%.'
+        },
+        {
+          id: 2,
+          title1: 'Desarrollo Frontend',
+          title2: 'Creativo',
+          description: 'Construyo interfaces web rápidas y escalables que combinan arte y tecnología. Usando React, Next.js y WebGL, creo experiencias interactivas visualmente impactantes con animaciones Three.js mientras aseguro rendimiento óptimo y diseño responsivo.',
+          tags: ['React', 'Next.js', 'WebGL', 'Gráficos 3D', 'Arte Interactivo', 'Diseño Responsivo'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: 'Construí una página de aterrizaje interactiva para Athenis AI con visualizaciones 3D y desarrollé el Gestor de Tareas Aurin con componentes UI dinámicos y efectos WebGL.'
+        },
+        {
+          id: 3,
+          title1: 'Automatización',
+          title2: 'con IA',
+          description: 'Diseño sistemas de automatización inteligente que mejoran la productividad a través de la integración de IA. Usando herramientas como N8N y Make combinadas con APIs de Gemini/OpenAI, creo flujos de trabajo inteligentes, chatbots y procesos automatizados que optimizan las operaciones.',
+          tags: ['Integración IA', 'Automatización de Procesos', 'Chatbots', 'Aprendizaje Automático', 'Diseño de Flujos', 'Eficiencia'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: 'Integré chatbot con IA y resúmenes de tareas en el Gestor de Tareas Aurin, además de reportes automatizados de tareas reduciendo la carga de trabajo manual en un 40%.'
+        },
+        {
+          id: 4,
+          title1: 'Full-Stack',
+          title2: 'y DevOps',
+          description: 'Desarrollo sistemas backend completos con Node.js, Python y Firestore, luego los despliego con pipelines CI/CD robustos. Desde APIs seguras y diseño de bases de datos hasta despliegues automatizados en Vercel con monitoreo vía Sentry.',
+          tags: ['Node.js', 'Python', 'APIs', 'Diseño de BD', 'DevOps', 'CI/CD', 'Monitoreo'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: 'Implementé sistema de enlaces dinámicos para el Gestor de Tareas Aurin con Firestore y desplegué con pipelines CI/CD automatizados para actualizaciones sin interrupciones.'
+        }
+      ]
+    },
+    aboutMe: {
+      title: 'SOBRE MÍ',
+      skills: [
+        {
+          id: '01',
+          title: 'EL DISEÑO IMPORTA',
+          description: 'Una buena UX no es magia—es iteración.',
+          highlight: 'Observo espaciado, jerarquía, contenido, movimiento... todo lo que los usuarios sienten pero no pueden explicar.'
+        },
+        {
+          id: '02',
+          title: 'construyendo lo mío',
+          description: 'Fundar WebCrafters me dio el espacio para liderar procesos completos—desde la primera llamada hasta la entrega.',
+          highlight: 'Trabajo con equipos que valoran la claridad, la responsabilidad y la retroalimentación honesta.'
+        },
+        {
+          id: '03',
+          title: 'EVOLUCIONANDO',
+          description: 'El diseño y el desarrollo se mueven rápido—pero no todo debe ser apresurado.',
+          highlight: 'Me adapto, pero me mantengo firme en usabilidad, accesibilidad y necesidades reales.'
+        },
+        {
+          id: '04',
+          title: 'PENSAMIENTO DE PRODUCTO',
+          description: 'Diseño pensando en los usuarios, pero también considero tiempo de desarrollo, escalabilidad y objetivos de negocio.',
+          highlight: 'Cada pantalla es una decisión—y me importan todas.'
+        },
+        {
+          id: '05',
+          title: 'Curiosidad Primero',
+          description: 'Siempre he sido curiosa sobre cómo funcionan las cosas. El diseño llegó como una forma de resolver problemas—no solo hacer cosas bonitas.',
+          highlight: 'Entender tanto el lado visual como el estructural siempre me ha hecho sentido.'
+        },
+        {
+          id: '06',
+          title: 'Trayendo Diseño Y CÓDIGO',
+          description: 'Soy tanto desarrolladora como diseñadora, lo que significa que no solo hago que se vea bien—hago que funcione.',
+          highlight: 'Esta mentalidad me ayuda a construir más rápido, más limpio y con menos handoffs.'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'DISEÑO UX/UI E INGENIERÍA • PROTOTIPOS FIGMA • SISTEMAS DE DISEÑO • LIBRERÍAS DE COMPONENTES • DISEÑO MÓVIL • HANDOFF DE DESARROLLADOR • DESARROLLO FRONTEND CREATIVO • REACT Y NEXT.JS • WEBGL Y THREE.JS • GRÁFICOS 3D • ARTE INTERACTIVO • DISEÑO RESPONSIVO • AUTOMATIZACIÓN CON IA • CHATBOTS • APRENDIZAJE AUTOMÁTICO • DISEÑO DE FLUJOS • N8N Y MAKE • GEMINI API • INTEGRACIÓN OPENAI • FULL-STACK Y DEVOPS • NODE.JS Y PYTHON • FASTAPI • FIRESTORE • MONGODB • PIPELINES CI/CD • DESPLIEGUE VERCEL • GITHUB ACTIONS • MONITOREO SENTRY • VIBE CODING • DESARROLLO CREATIVO • JAVASCRIPT Y TYPESCRIPT • CÓDIGO LIMPIO • RESOLUCIÓN DE PROBLEMAS • INNOVACIÓN • '
+    },
+    privacy: {
+      title: 'Política de Privacidad',
+      subtitle: 'Tu privacidad es mi prioridad',
+      description: 'En este portafolio, tu privacidad es fundamental. Esta política explica de manera transparente cómo y cuándo recopilo información personal, siempre con tu consentimiento explícito y solo cuando eliges activamente interactuar con mi contenido.',
+      sections: [
+        {
+          number: '01',
+          title: 'Cuándo recopilo información',
+          content: 'Recopilo información personal solo cuando voluntariamente eliges enviar un comentario en mis artículos de blog o escribir una reseña sobre mis servicios. No recopilo datos automáticamente, no hay seguimiento de usuarios, y no almaceno información sin tu acción explícita.'
+        },
+        {
+          number: '02',
+          title: 'Qué información recopilo',
+          content: 'Cuando eliges interactuar, recopilo: tu nombre, dirección de correo electrónico, foto de perfil (opcional), y el contenido de tu comentario o reseña. Esta información se proporciona voluntariamente a través de formularios específicos.'
+        },
+        {
+          number: '03',
+          title: 'Sistema de caché temporal',
+          content: 'Durante tu sesión activa, almaceno temporalmente tu información (nombre, email, foto) para facilitar múltiples interacciones sin requerir que vuelvas a ingresar los mismos datos repetidamente. Este caché se elimina automáticamente cuando termina tu sesión de navegación.'
+        },
+        {
+          number: '04',
+          title: 'Almacenamiento y moderación',
+          content: 'Los comentarios y reseñas se almacenan en Firestore, las fotos de perfil en Vercel Blobs. Todo el contenido está sujeto a moderación manual antes de la publicación. El contenido no aprobado se elimina permanentemente de mis sistemas.'
+        },
+        {
+          number: '05',
+          title: 'Sin seguimiento de usuarios',
+          content: 'No mantengo perfiles de usuario o sistemas de inicio de sesión. Cada comentario o reseña es independiente. No vinculo interacciones entre sesiones ni creo perfiles persistentes. La identificación es únicamente por nombre en comentarios públicos.'
+        },
+        {
+          number: '06',
+          title: 'Tus derechos y control',
+          content: 'Puedes editar tu información antes del envío, solicitar la eliminación de tus comentarios publicados, y tienes control completo sobre qué información compartes. Cumplo con GDPR, CCPA, y otras regulaciones de privacidad aplicables.'
+        }
+      ],
+      details: {
+        title: 'Información técnica detallada',
+        intro: 'Mi sistema está diseñado con privacidad por diseño, implementando el principio de minimización de datos y recopilación consensual.',
+        architecture: {
+          title: 'Arquitectura de datos',
+          content: 'Firestore: Almacena comentarios y reseñas aprobados con campos: nombre, email, contenido, timestamp, estado de moderación.\nVercel Blobs: Almacena fotos de perfil vinculadas solo a comentarios aprobados.\nCaché de sesión: Datos temporales eliminados automáticamente cuando se cierra el navegador.'
+        },
+        moderation: {
+          title: 'Proceso de moderación',
+          content: 'Todos los comentarios pasan por revisión manual vía sistema de notificación por email y rutas API. El contenido puede ser aprobado (campo "approved": true) para aparecer públicamente, o rechazado para eliminación permanente. No hay publicación automática.'
+        },
+        principles: {
+          title: 'Principios de privacidad',
+          content: 'Consentimiento explícito: Solo recopilo datos cuando envías formularios.\nMinimización: Solo almaceno lo necesario para la funcionalidad.\nTransparencia: Proceso claro y comprensible.\nControl del usuario: La información es editable y eliminable.'
+        },
+        thirdParty: {
+          title: 'Servicios de terceros',
+          content: 'Vercel: Hosting y almacenamiento de archivos (política de privacidad: vercel.com/legal/privacy-policy)\nGoogle Cloud/Firestore: Base de datos (política de privacidad: cloud.google.com/privacy)'
+        },
+        retention: {
+          title: 'Retención de datos',
+          content: 'Comentarios aprobados: Almacenados indefinidamente hasta solicitud de eliminación.\nComentarios rechazados: Eliminados inmediatamente después de la decisión de moderación.\nCaché temporal: Eliminado automáticamente cuando termina la sesión.\nFotos de perfil: Vinculadas a comentarios aprobados, eliminadas si se elimina el comentario.'
+        },
+        contact: {
+          title: 'Contáctame para ejercer derechos',
+          content: 'Para solicitar acceso, rectificación, eliminación, o cualquier consulta sobre tus datos personales, contáctame directamente en karenrortizg@gmail.com o a través de otros medios disponibles en el sitio web. Responderé en un máximo de 30 días.'
+        },
+        lastUpdated: 'Última actualización: 27 de septiembre, 2025'
       }
     },
     resume: {
@@ -856,6 +1284,220 @@ export const translations = {
         email: 'Email'
       }
     },
+    contact: {
+      title: 'Entrer en Contact',
+      subtitle: 'Prêt à donner vie à vos idées ? Discutons de votre projet',
+      form: {
+        name: {
+          label: 'Votre Nom',
+          placeholder: 'Jean Dupont'
+        },
+        email: {
+          label: 'Votre Email',
+          placeholder: 'jean@entreprise.com'
+        },
+        phone: {
+          label: 'Votre Téléphone',
+          placeholder: '+33 1 23 45 67 89'
+        },
+        country: {
+          label: 'Pays',
+          placeholder: 'France, Canada, Belgique'
+        },
+        interests: {
+          label: 'Je suis intéressé par...',
+          options: [
+            'Design UX/UI et Ingénierie',
+            'Développement Frontend Créatif',
+            'Automatisation avec IA',
+            'Full-Stack et DevOps'
+          ]
+        },
+        budget: {
+          label: 'Votre Budget (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: 'Plus sur le Projet',
+          placeholder: 'Parlez-moi de votre projet...'
+        },
+        attachment: {
+          label: 'Ajouter une Pièce Jointe',
+          specs: 'Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: 'Supprimer'
+        },
+        submit: {
+          label: 'Envoyer la Demande',
+          sending: 'Envoi...'
+        }
+      },
+      messages: {
+        success: 'Message envoyé avec succès ! Je vous contacterai bientôt.',
+        error: 'Échec de l\'envoi du message. Veuillez réessayer.',
+        validation: 'Veuillez compléter les champs nom, email et message',
+        fileTooBig: 'Le fichier est trop volumineux. La taille maximale est de 10MB.',
+        connectionError: 'Erreur de connexion. Vérifiez votre internet et réessayez.'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: 'SERVICES',
+      subtitle: 'Solutions numériques complètes de la conception au déploiement',
+      items: [
+        {
+          id: 1,
+          title1: 'Design UX/UI',
+          title2: 'et Ingénierie',
+          description: 'Je crée des interfaces intuitives et centrées sur l\'utilisateur, reliant le design au développement grâce à l\'ingénierie UX technique. Des prototypes mobiles dans Figma aux systèmes de design conviviaux pour les développeurs avec des composants React, j\'assure une transition et une implémentation fluides.',
+          tags: ['Interface Utilisateur', 'Expérience Utilisateur', 'Systèmes de Design', 'Bibliothèques de Composants', 'Design Mobile', 'Handoff Développeur'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: 'J\'ai dirigé la refonte UX/UI pour l\'app MonexOne et développé une bibliothèque de composants réutilisable pour Athenis AI, améliorant les taux de réponse des formulaires de 30% et l\'efficacité des développeurs de 25%.'
+        },
+        {
+          id: 2,
+          title1: 'Développement Frontend',
+          title2: 'Créatif',
+          description: 'Je construis des interfaces web rapides et évolutives qui mélangent art et technologie. En utilisant React, Next.js et WebGL, je crée des expériences interactives visuellement époustouflantes avec des animations Three.js tout en assurant des performances optimales et un design responsive.',
+          tags: ['React', 'Next.js', 'WebGL', 'Graphiques 3D', 'Art Interactif', 'Design Responsive'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: 'J\'ai construit une page d\'atterrissage interactive pour Athenis AI avec des visualisations 3D et développé le Gestionnaire de Tâches Aurin avec des composants UI dynamiques et des effets WebGL.'
+        },
+        {
+          id: 3,
+          title1: 'Automatisation',
+          title2: 'avec IA',
+          description: 'Je conçois des systèmes d\'automatisation intelligents qui améliorent la productivité grâce à l\'intégration de l\'IA. En utilisant des outils comme N8N et Make combinés avec les APIs Gemini/OpenAI, je crée des flux de travail intelligents, des chatbots et des processus automatisés qui rationalisent les opérations.',
+          tags: ['Intégration IA', 'Automatisation des Processus', 'Chatbots', 'Apprentissage Automatique', 'Design de Flux', 'Efficacité'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: 'J\'ai intégré un chatbot IA et des résumés de tâches dans le Gestionnaire de Tâches Aurin, plus des rapports automatisés de tâches réduisant la charge de travail manuel de 40%.'
+        },
+        {
+          id: 4,
+          title1: 'Full-Stack',
+          title2: 'et DevOps',
+          description: 'Je développe des systèmes backend complets avec Node.js, Python et Firestore, puis les déploie avec des pipelines CI/CD robustes. Des APIs sécurisées et conception de bases de données aux déploiements automatisés sur Vercel avec surveillance via Sentry.',
+          tags: ['Node.js', 'Python', 'APIs', 'Conception BD', 'DevOps', 'CI/CD', 'Surveillance'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: 'J\'ai implémenté un système de liens dynamiques pour le Gestionnaire de Tâches Aurin avec Firestore et déployé avec des pipelines CI/CD automatisés pour des mises à jour transparentes.'
+        }
+      ]
+    },
+    aboutMe: {
+      title: 'À PROPOS DE MOI',
+      skills: [
+        {
+          id: '01',
+          title: 'LE DESIGN COMPTE',
+          description: 'Une bonne UX n\'est pas de la magie—c\'est de l\'itération.',
+          highlight: 'Je regarde l\'espacement, la hiérarchie, le contenu, le mouvement... tout ce que les utilisateurs ressentent mais ne peuvent pas expliquer.'
+        },
+        {
+          id: '02',
+          title: 'construire le mien',
+          description: 'Fonder WebCrafters m\'a donné l\'espace pour diriger des processus complets—du premier appel à la livraison.',
+          highlight: 'Je travaille avec des équipes qui valorisent la clarté, la responsabilité et les retours honnêtes.'
+        },
+        {
+          id: '03',
+          title: 'ÉVOLUER AVEC INTENTION',
+          description: 'Le design et le dev bougent vite—mais tout ne doit pas être précipité.',
+          highlight: 'Je m\'adapte, mais je reste ancré dans l\'utilisabilité, l\'accessibilité et les vrais besoins.'
+        },
+        {
+          id: '04',
+          title: 'PENSÉE PRODUIT',
+          description: 'Je conçois en pensant aux utilisateurs, mais je pense aussi au temps de dev, à l\'évolutivité et aux objectifs business.',
+          highlight: 'Chaque écran est une décision—et je me soucie de tous.'
+        },
+        {
+          id: '05',
+          title: 'Curiosité d\'abord',
+          description: 'J\'ai toujours été curieuse de savoir comment les choses fonctionnent. Le design est venu comme un moyen de résoudre des problèmes—pas seulement rendre les choses jolies.',
+          highlight: 'Comprendre à la fois le côté visuel et structurel a toujours eu du sens pour moi.'
+        },
+        {
+          id: '06',
+          title: 'Apporter Design ET CODE',
+          description: 'Je suis à la fois développeuse et designer, ce qui signifie que je ne fais pas que rendre ça beau—je fais que ça marche.',
+          highlight: 'Cet état d\'esprit m\'aide à construire plus vite, plus proprement et avec moins de handoffs.'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'DESIGN UX/UI ET INGÉNIERIE • PROTOTYPES FIGMA • SYSTÈMES DE DESIGN • BIBLIOTHÈQUES DE COMPOSANTS • DESIGN MOBILE • HANDOFF DÉVELOPPEUR • DÉVELOPPEMENT FRONTEND CRÉATIF • REACT ET NEXT.JS • WEBGL ET THREE.JS • GRAPHIQUES 3D • ART INTERACTIF • DESIGN RESPONSIVE • AUTOMATISATION IA • CHATBOTS • APPRENTISSAGE AUTOMATIQUE • DESIGN DE FLUX • N8N ET MAKE • GEMINI API • INTÉGRATION OPENAI • FULL-STACK ET DEVOPS • NODE.JS ET PYTHON • FASTAPI • FIRESTORE • MONGODB • PIPELINES CI/CD • DÉPLOIEMENT VERCEL • GITHUB ACTIONS • SURVEILLANCE SENTRY • VIBE CODING • DÉVELOPPEMENT CRÉATIF • JAVASCRIPT ET TYPESCRIPT • CODE PROPRE • RÉSOLUTION DE PROBLÈMES • INNOVATION • '
+    },
+    privacy: {
+      title: 'Politique de Confidentialité',
+      subtitle: 'Votre vie privée est notre priorité',
+      description: 'Dans ce portfolio, votre vie privée est fondamentale. Cette politique explique de manière transparente comment et quand je collecte des informations personnelles, toujours avec votre consentement explicite et seulement lorsque vous choisissez activement d\'interagir avec mon contenu.',
+      sections: [
+        {
+          number: '01',
+          title: 'Quand je collecte des informations',
+          content: 'Je collecte des informations personnelles uniquement lorsque vous choisissez volontairement de soumettre un commentaire sur mes articles de blog ou d\'écrire un avis sur mes services. Je ne collecte pas de données automatiquement, il n\'y a pas de suivi d\'utilisateurs, et je ne stocke pas d\'informations sans votre action explicite.'
+        },
+        {
+          number: '02',
+          title: 'Quelles informations je collecte',
+          content: 'Lorsque vous choisissez d\'interagir, je collecte : votre nom, adresse e-mail, photo de profil (optionnelle), et le contenu de votre commentaire ou avis. Ces informations sont fournies volontairement via des formulaires spécifiques.'
+        },
+        {
+          number: '03',
+          title: 'Système de cache temporaire',
+          content: 'Pendant votre session active, je stocke temporairement vos informations (nom, e-mail, photo) pour faciliter plusieurs interactions sans vous obliger à ressaisir les mêmes données répétitivement. Ce cache est automatiquement supprimé lorsque votre session de navigation se termine.'
+        },
+        {
+          number: '04',
+          title: 'Stockage et modération',
+          content: 'Les commentaires et avis sont stockés dans Firestore, les photos de profil dans Vercel Blobs. Tout le contenu est soumis à une modération manuelle avant publication. Le contenu non approuvé est définitivement supprimé de mes systèmes.'
+        },
+        {
+          number: '05',
+          title: 'Pas de suivi d\'utilisateurs',
+          content: 'Je ne maintiens pas de profils d\'utilisateurs ou de systèmes de connexion. Chaque commentaire ou avis est indépendant. Je ne lie pas les interactions entre les sessions ni ne crée de profils persistants. L\'identification se fait uniquement par nom dans les commentaires publics.'
+        },
+        {
+          number: '06',
+          title: 'Vos droits et contrôle',
+          content: 'Vous pouvez modifier vos informations avant soumission, demander la suppression de vos commentaires publiés, et avez un contrôle complet sur les informations que vous partagez. Je me conforme au RGPD, CCPA, et autres réglementations de confidentialité applicables.'
+        }
+      ],
+      details: {
+        title: 'Informations techniques détaillées',
+        intro: 'Mon système est conçu avec la confidentialité par conception, implémentant le principe de minimisation des données et de collecte consensuelle.',
+        architecture: {
+          title: 'Architecture des données',
+          content: 'Firestore : Stocke les commentaires et avis approuvés avec les champs : nom, e-mail, contenu, horodatage, statut de modération.\nVercel Blobs : Stocke les photos de profil liées uniquement aux commentaires approuvés.\nCache de session : Données temporaires supprimées automatiquement à la fermeture du navigateur.'
+        },
+        moderation: {
+          title: 'Processus de modération',
+          content: 'Tous les commentaires passent par une révision manuelle via un système de notification par e-mail et des routes API. Le contenu peut être approuvé (champ "approved": true) pour apparaître publiquement, ou rejeté pour suppression permanente. Il n\'y a pas de publication automatique.'
+        },
+        principles: {
+          title: 'Principes de confidentialité',
+          content: 'Consentement explicite : Je ne collecte des données que lorsque vous soumettez des formulaires.\nMinimisation : Je ne stocke que ce qui est nécessaire pour la fonctionnalité.\nTransparence : Processus clair et compréhensible.\nContrôle utilisateur : Les informations sont modifiables et supprimables.'
+        },
+        thirdParty: {
+          title: 'Services tiers',
+          content: 'Vercel : Hébergement et stockage de fichiers (politique de confidentialité : vercel.com/legal/privacy-policy)\nGoogle Cloud/Firestore : Base de données (politique de confidentialité : cloud.google.com/privacy)'
+        },
+        retention: {
+          title: 'Rétention des données',
+          content: 'Commentaires approuvés : Stockés indéfiniment jusqu\'à demande de suppression.\nCommentaires rejetés : Supprimés immédiatement après décision de modération.\nCache temporaire : Supprimé automatiquement à la fin de session.\nPhotos de profil : Liées aux commentaires approuvés, supprimées si le commentaire est supprimé.'
+        },
+        contact: {
+          title: 'Contactez-moi pour exercer vos droits',
+          content: 'Pour demander l\'accès, la rectification, la suppression, ou toute question concernant vos données personnelles, contactez-moi directement à karenrortizg@gmail.com ou par d\'autres moyens disponibles sur le site web. Je répondrai dans un délai maximum de 30 jours.'
+        },
+        lastUpdated: 'Dernière mise à jour : 27 septembre 2025'
+      }
+    },
     resume: {
       title: 'Karen Rebeca Ortiz - CV Professionnel',
       badge: 'INGÉNIEURE DE CONCEPTION / 2025',
@@ -1088,6 +1730,178 @@ export const translations = {
         instagram: 'Instagram',
         github: 'GitHub',
         email: 'ईमेल'
+      }
+    },
+    contact: {
+      title: 'संपर्क में रहें',
+      subtitle: 'अपने विचारों को जीवंत बनाने के लिए तैयार हैं? आइए आपके प्रोजेक्ट पर चर्चा करें',
+      form: {
+        name: {
+          label: 'आपका नाम',
+          placeholder: 'राहुल शर्मा'
+        },
+        email: {
+          label: 'आपका ईमेल',
+          placeholder: 'rahul@company.com'
+        },
+        phone: {
+          label: 'आपका फोन',
+          placeholder: '+91 98765 43210'
+        },
+        country: {
+          label: 'देश',
+          placeholder: 'भारत, अमेरिका, कनाडा'
+        },
+        interests: {
+          label: 'मुझे रुचि है...',
+          options: [
+            'UX/UI डिज़ाइन और इंजीनियरिंग',
+            'क्रिएटिव फ्रंटएंड डेवलपमेंट',
+            'AI-संचालित ऑटोमेशन',
+            'फुल-स्टैक और DevOps'
+          ]
+        },
+        budget: {
+          label: 'आपका बजट (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: 'प्रोजेक्ट के बारे में और',
+          placeholder: 'अपने प्रोजेक्ट के बारे में बताएं...'
+        },
+        attachment: {
+          label: 'एक अटैचमेंट जोड़ें',
+          specs: 'अधिकतम 10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: 'हटाएं'
+        },
+        submit: {
+          label: 'अनुरोध भेजें',
+          sending: 'भेजा जा रहा है...'
+        }
+      },
+      messages: {
+        success: 'संदेश सफलतापूर्वक भेजा गया! मैं जल्द ही आपसे संपर्क करूंगा।',
+        error: 'संदेश भेजने में विफल। कृपया पुनः प्रयास करें।',
+        validation: 'कृपया नाम, ईमेल और संदेश फ़ील्ड पूरे करें',
+        fileTooBig: 'फ़ाइल बहुत बड़ी है। अधिकतम आकार 10MB है।',
+        connectionError: 'कनेक्शन त्रुटि। कृपया अपना इंटरनेट जांचें और पुनः प्रयास करें।'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: 'सेवाएं',
+      subtitle: 'डिज़ाइन से तैनाती तक व्यापक डिजिटल समाधान',
+      items: [
+        {
+          id: 1,
+          title1: 'UX/UI डिज़ाइन',
+          title2: 'और इंजीनियरिंग',
+          description: 'मैं सहज, उपयोगकर्ता-केंद्रित इंटरफेस बनाता हूं और तकनीकी UX इंजीनियरिंग के माध्यम से डिज़ाइन को विकास से जोड़ता हूं। Figma में मोबाइल प्रोटोटाइप से लेकर React घटकों के साथ डेवलपर-फ्रेंडली डिज़ाइन सिस्टम तक, मैं निर्बाध हैंडऑफ और कार्यान्वयन सुनिश्चित करता हूं।',
+          tags: ['उपयोगकर्ता इंटरफेस', 'उपयोगकर्ता अनुभव', 'डिज़ाइन सिस्टम', 'घटक पुस्तकालय', 'मोबाइल डिज़ाइन', 'डेवलपर हैंडऑफ'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: 'MonexOne ऐप के लिए UX/UI रीडिज़ाइन का नेतृत्व किया और Athenis AI के लिए पुन: उपयोग योग्य घटक पुस्तकालय विकसित किया, फॉर्म प्रतिक्रिया दरों में 30% और डेवलपर दक्षता में 25% सुधार।'
+        },
+        {
+          id: 2,
+          title1: 'क्रिएटिव फ्रंटएंड',
+          title2: 'डेवलपमेंट',
+          description: 'मैं तेज़, स्केलेबल वेब इंटरफेस बनाता हूं जो कला और प्रौद्योगिकी को मिलाते हैं। React, Next.js, और WebGL का उपयोग करके, मैं Three.js एनिमेशन के साथ दृश्य रूप से आश्चर्यजनक, इंटरैक्टिव अनुभव बनाता हूं जबकि इष्टतम प्रदर्शन और उत्तरदायी डिज़ाइन सुनिश्चित करता हूं।',
+          tags: ['React', 'Next.js', 'WebGL', '3D ग्राफिक्स', 'इंटरैक्टिव आर्ट', 'रेस्पॉन्सिव डिज़ाइन'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: '3D विज़ुअलाइज़ेशन के साथ Athenis AI के लिए इंटरैक्टिव लैंडिंग पेज बनाया और डायनामिक UI घटकों और WebGL प्रभावों के साथ Aurin टास्क मैनेजर विकसित किया।'
+        },
+        {
+          id: 3,
+          title1: 'AI-संचालित',
+          title2: 'ऑटोमेशन',
+          description: 'मैं बुद्धिमान ऑटोमेशन सिस्टम डिज़ाइन करता हूं जो AI एकीकरण के माध्यम से उत्पादकता बढ़ाते हैं। N8N और Make जैसे उपकरणों का उपयोग करके Gemini/OpenAI APIs के साथ संयुक्त, मैं स्मार्ट वर्कफ़्लो, चैटबॉट्स, और स्वचालित प्रक्रियाएं बनाता हूं जो संचालन को सुव्यवस्थित करती हैं।',
+          tags: ['AI एकीकरण', 'प्रक्रिया ऑटोमेशन', 'चैटबॉट्स', 'मशीन लर्निंग', 'वर्कफ़्लो डिज़ाइन', 'दक्षता'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: 'Aurin टास्क मैनेजर में AI-संचालित चैटबॉट और टास्क सारांश एकीकृत किया, साथ ही स्वचालित टास्क रिपोर्टिंग जिससे मैन्युअल कार्यभार 40% कम हो गया।'
+        },
+        {
+          id: 4,
+          title1: 'फुल-स्टैक',
+          title2: 'और DevOps',
+          description: 'मैं Node.js, Python, और Firestore के साथ पूर्ण बैकएंड सिस्टम विकसित करता हूं, फिर उन्हें मजबूत CI/CD पाइपलाइन के साथ तैनात करता हूं। सुरक्षित APIs और डेटाबेस डिज़ाइन से लेकर Sentry के माध्यम से निगरानी के साथ Vercel पर स्वचालित तैनाती तक।',
+          tags: ['Node.js', 'Python', 'APIs', 'डेटाबेस डिज़ाइन', 'DevOps', 'CI/CD', 'निगरानी'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: 'Firestore के साथ Aurin टास्क मैनेजर के लिए डायनामिक लिंक सिस्टम लागू किया और निर्बाध अपडेट के लिए स्वचालित CI/CD पाइपलाइन के साथ तैनात किया।'
+        }
+      ]
+    },
+    aboutMe: {
+      title: 'मेरे बारे में',
+      skills: [
+        {
+          id: '01',
+          title: 'डिज़ाइन मायने रखता है',
+          description: 'अच्छा UX जादू नहीं है—यह पुनरावृत्ति है।',
+          highlight: 'मैं स्पेसिंग, पदानुक्रम, सामग्री, गति... सब कुछ देखता हूं जो उपयोगकर्ता महसूस करते हैं लेकिन समझा नहीं सकते।'
+        },
+        {
+          id: '02',
+          title: 'अपना निर्माण',
+          description: 'WebCrafters की स्थापना ने मुझे पूरी प्रक्रियाओं का नेतृत्व करने का स्थान दिया—पहली कॉल से डिलीवरी तक।',
+          highlight: 'मैं उन टीमों के साथ काम करता हूं जो स्पष्टता, स्वामित्व और ईमानदार फीडबैक को महत्व देती हैं।'
+        },
+        {
+          id: '03',
+          title: 'इरादे के साथ विकसित होना',
+          description: 'डिज़ाइन और डेव तेज़ी से आगे बढ़ते हैं—लेकिन सब कुछ जल्दबाजी में नहीं होना चाहिए।',
+          highlight: 'मैं अनुकूलित होता हूं, लेकिन उपयोगिता, पहुंच और वास्तविक आवश्यकताओं में स्थिर रहता हूं।'
+        },
+        {
+          id: '04',
+          title: 'उत्पाद सोच',
+          description: 'मैं उपयोगकर्ताओं को ध्यान में रखकर डिज़ाइन करता हूं, लेकिन मैं डेव समय, स्केलेबिलिटी और व्यावसायिक लक्ष्यों के बारे में भी सोचता हूं।',
+          highlight: 'हर स्क्रीन एक निर्णय है—और मुझे सभी की परवाह है।'
+        },
+        {
+          id: '05',
+          title: 'जिज्ञासा पहले',
+          description: 'मैं हमेशा से उत्सुक रहा हूं कि चीजें कैसे काम करती हैं। डिज़ाइन समस्याओं को हल करने के तरीके के रूप में आया—सिर्फ चीजों को सुंदर बनाने के लिए नहीं।',
+          highlight: 'दृश्य और संरचनात्मक दोनों पक्षों को समझना हमेशा मेरे लिए समझ में आया है।'
+        },
+        {
+          id: '06',
+          title: 'डिज़ाइन और कोड लाना',
+          description: 'मैं एक डेवलपर और डिज़ाइनर दोनों हूं, जिसका मतलब है कि मैं सिर्फ इसे अच्छा नहीं दिखाता—मैं इसे काम करवाता हूं।',
+          highlight: 'यह मानसिकता मुझे तेज़, साफ़ और कम हैंडऑफ़ के साथ निर्माण करने में मदद करती है।'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'UX/UI डिज़ाइन और इंजीनियरिंग • FIGMA प्रोटोटाइप • डिज़ाइन सिस्टम • घटक पुस्तकालय • मोबाइल डिज़ाइन • डेवलपर हैंडऑफ • क्रिएटिव फ्रंटएंड डेवलपमेंट • REACT और NEXT.JS • WEBGL और THREE.JS • 3D ग्राफिक्स • इंटरैक्टिव आर्ट • रेस्पॉन्सिव डिज़ाइन • AI-संचालित ऑटोमेशन • चैटबॉट्स • मशीन लर्निंग • वर्कफ़्लो डिज़ाइन • N8N और MAKE • GEMINI API • OPENAI एकीकरण • फुल-स्टैक और DEVOPS • NODE.JS और PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD पाइपलाइन • VERCEL डिप्लॉयमेंट • GITHUB ACTIONS • SENTRY मॉनिटरिंग • VIBE CODING • क्रिएटिव डेवलपमेंट • JAVASCRIPT और TYPESCRIPT • क्लीन कोड • समस्या समाधान • नवाचार • '
+    },
+    privacy: {
+      title: 'गोपनीयता नीति',
+      subtitle: 'आपकी गोपनीयता हमारी प्राथमिकता है',
+      description: 'इस पोर्टफोलियो में, आपकी गोपनीयता मौलिक है। यह नीति पारदर्शी रूप से बताती है कि मैं व्यक्तिगत जानकारी कैसे और कब एकत्र करता हूं।',
+      sections: [
+        { number: '01', title: 'जब मैं जानकारी एकत्र करता हूं', content: 'मैं व्यक्तिगत जानकारी केवल तभी एकत्र करता हूं जब आप स्वेच्छा से टिप्पणी या समीक्षा सबमिट करते हैं।' },
+        { number: '02', title: 'मैं कौन सी जानकारी एकत्र करता हूं', content: 'जब आप इंटरैक्ट करते हैं, तो मैं एकत्र करता हूं: आपका नाम, ईमेल पता, प्रोफ़ाइल फ़ोटो।' },
+        { number: '03', title: 'अस्थायी कैशिंग सिस्टम', content: 'आपके सक्रिय सत्र के दौरान, मैं अस्थायी रूप से आपकी जानकारी संग्रहीत करता हूं।' },
+        { number: '04', title: 'भंडारण और मॉडरेशन', content: 'टिप्पणियां Firestore में संग्रहीत हैं, प्रोफ़ाइल फ़ोटो Vercel Blobs में।' },
+        { number: '05', title: 'कोई उपयोगकर्ता ट्रैकिंग नहीं', content: 'मैं उपयोगकर्ता प्रोफ़ाइल या लॉगिन सिस्टम बनाए नहीं रखता।' },
+        { number: '06', title: 'आपके अधिकार और नियंत्रण', content: 'आप सबमिशन से पहले अपनी जानकारी संपादित कर सकते हैं।' }
+      ],
+      details: {
+        title: 'विस्तृत तकनीकी जानकारी',
+        intro: 'मेरा सिस्टम गोपनीयता द्वारा डिज़ाइन के साथ डिज़ाइन किया गया है।',
+        architecture: { title: 'डेटा आर्किटेक्चर', content: 'Firestore: अनुमोदित टिप्पणियां संग्रहीत करता है।' },
+        moderation: { title: 'मॉडरेशन प्रक्रिया', content: 'सभी टिप्पणियां मैन्युअल समीक्षा से गुजरती हैं।' },
+        principles: { title: 'गोपनीयता सिद्धांत', content: 'स्पष्ट सहमति: मैं केवल तभी डेटा एकत्र करता हूं जब आप फॉर्म सबमिट करते हैं।' },
+        thirdParty: { title: 'तृतीय-पक्ष सेवाएं', content: 'Vercel: होस्टिंग और फ़ाइल भंडारण।' },
+        retention: { title: 'डेटा प्रतिधारण', content: 'अनुमोदित टिप्पणियां: हटाने के अनुरोध तक अनिश्चित काल तक संग्रहीत।' },
+        contact: { title: 'अधिकारों का प्रयोग करने के लिए संपर्क करें', content: 'karenrortizg@gmail.com पर संपर्क करें।' },
+        lastUpdated: 'अंतिम अपडेट: 27 सितंबर, 2025'
       }
     },
     resume: {
@@ -1324,6 +2138,154 @@ export const translations = {
         email: 'メール'
       }
     },
+    contact: {
+      title: 'お問い合わせ',
+      subtitle: 'あなたのアイデアを実現する準備はできていますか？プロジェクトについて話し合いましょう',
+      form: {
+        name: {
+          label: 'お名前',
+          placeholder: '田中太郎'
+        },
+        email: {
+          label: 'メールアドレス',
+          placeholder: 'tanaka@company.com'
+        },
+        phone: {
+          label: '電話番号',
+          placeholder: '+81 90-1234-5678'
+        },
+        country: {
+          label: '国',
+          placeholder: '日本、アメリカ、カナダ'
+        },
+        interests: {
+          label: '興味があるのは...',
+          options: [
+            'UX/UIデザイン＆エンジニアリング',
+            'クリエイティブフロントエンド開発',
+            'AI駆動オートメーション',
+            'フルスタック＆DevOps'
+          ]
+        },
+        budget: {
+          label: 'ご予算 (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: 'プロジェクトについて詳しく',
+          placeholder: 'プロジェクトについて詳しく教えてください...'
+        },
+        attachment: {
+          label: '添付ファイルを追加',
+          specs: '最大10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: '削除'
+        },
+        submit: {
+          label: 'リクエストを送信',
+          sending: '送信中...'
+        }
+      },
+      messages: {
+        success: 'メッセージが正常に送信されました！すぐにご連絡いたします。',
+        error: 'メッセージの送信に失敗しました。もう一度お試しください。',
+        validation: '名前、メール、メッセージフィールドを完了してください',
+        fileTooBig: 'ファイルが大きすぎます。最大サイズは10MBです。',
+        connectionError: '接続エラーです。インターネット接続を確認して再試行してください。'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: 'サービス',
+      subtitle: 'デザインから展開まで包括的なデジタルソリューション',
+      items: [
+        {
+          id: 1,
+          title1: 'UX/UIデザイン',
+          title2: '＆エンジニアリング',
+          description: '直感的でユーザー中心のインターフェースを作成し、技術的UXエンジニアリングを通じてデザインと開発を橋渡しします。Figmaでのモバイルプロトタイプから、Reactコンポーネントを使った開発者フレンドリーなデザインシステムまで、シームレスなハンドオフと実装を保証します。',
+          tags: ['ユーザーインターフェース', 'ユーザーエクスペリエンス', 'デザインシステム', 'コンポーネントライブラリ', 'モバイルデザイン', '開発者ハンドオフ'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: 'MonexOneアプリのUX/UI再設計を主導し、Athenis AI用の再利用可能なコンポーネントライブラリを開発、フォーム応答率を30%、開発者効率を25%向上させました。'
+        },
+        {
+          id: 2,
+          title1: 'クリエイティブフロントエンド',
+          title2: '開発',
+          description: 'アートとテクノロジーを融合した高速でスケーラブルなWebインターフェースを構築します。React、Next.js、WebGLを使用して、Three.jsアニメーションで視覚的に素晴らしいインタラクティブな体験を作成し、最適なパフォーマンスとレスポンシブデザインを確保します。',
+          tags: ['React', 'Next.js', 'WebGL', '3Dグラフィックス', 'インタラクティブアート', 'レスポンシブデザイン'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: '3D可視化を使ったAthenis AI用インタラクティブランディングページを構築し、動的UIコンポーネントとWebGL効果を使ったAurinタスクマネージャーを開発しました。'
+        },
+        {
+          id: 3,
+          title1: 'AI駆動',
+          title2: 'オートメーション',
+          description: 'AI統合を通じて生産性を向上させるインテリジェントな自動化システムを設計します。N8NやMakeなどのツールをGemini/OpenAI APIと組み合わせて使用し、運用を合理化するスマートワークフロー、チャットボット、自動化プロセスを作成します。',
+          tags: ['AI統合', 'プロセス自動化', 'チャットボット', '機械学習', 'ワークフロー設計', '効率性'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: 'AurinタスクマネージャーにAI駆動チャットボットとタスク要約を統合し、自動タスクレポートによりマニュアル作業負荷を40%削減しました。'
+        },
+        {
+          id: 4,
+          title1: 'フルスタック',
+          title2: '＆DevOps',
+          description: 'Node.js、Python、Firestoreで完全なバックエンドシステムを開発し、堅牢なCI/CDパイプラインでデプロイします。セキュアなAPIとデータベース設計から、Sentryによる監視を伴うVercelでの自動デプロイまで。',
+          tags: ['Node.js', 'Python', 'APIs', 'データベース設計', 'DevOps', 'CI/CD', '監視'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: 'FirestoreでAurinタスクマネージャー用動的リンクシステムを実装し、シームレスな更新のための自動CI/CDパイプラインでデプロイしました。'
+        }
+      ]
+    },
+    aboutMe: {
+      title: '私について',
+      skills: [
+        {
+          id: '01',
+          title: 'デザインが重要',
+          description: '良いUXは魔法ではありません—反復です。',
+          highlight: 'スペーシング、階層、コンテンツ、モーション...ユーザーが感じるが説明できないすべてを見ています。'
+        },
+        {
+          id: '02',
+          title: '自分自身を構築',
+          description: 'WebCraftersの設立により、最初の電話から納品まで、完全なプロセスをリードする空間を得ました。',
+          highlight: '明確さ、オーナーシップ、正直なフィードバックを重視するチームと働いています。'
+        },
+        {
+          id: '03',
+          title: '意図的な進化',
+          description: 'デザインと開発は速く動きます—しかし、すべてを急ぐべきではありません。',
+          highlight: '適応しますが、使いやすさ、アクセシビリティ、実際のニーズに根ざしています。'
+        },
+        {
+          id: '04',
+          title: 'プロダクト思考',
+          description: 'ユーザーを念頭に置いてデザインしますが、開発時間、スケーラビリティ、ビジネス目標についても考えます。',
+          highlight: '各画面は決定です—そして私はそのすべてを大切にしています。'
+        },
+        {
+          id: '05',
+          title: '好奇心第一',
+          description: '物事がどのように機能するかについて常に好奇心を持っていました。デザインは問題を解決する方法として来ました—単に物事を美しくするためではありません。',
+          highlight: '視覚的側面と構造的側面の両方を理解することは、常に私にとって理にかなっていました。'
+        },
+        {
+          id: '06',
+          title: 'デザインとコードを持参',
+          description: '私は開発者でありデザイナーでもあります。つまり、見た目を良くするだけでなく、機能させます。',
+          highlight: 'この考え方により、より速く、よりクリーンに、より少ないハンドオフで構築できます。'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'UX/UIデザイン＆エンジニアリング • FIGMAプロトタイプ • デザインシステム • コンポーネントライブラリ • モバイルデザイン • 開発者ハンドオフ • クリエイティブフロントエンド開発 • REACT＆NEXT.JS • WEBGL＆THREE.JS • 3Dグラフィックス • インタラクティブアート • レスポンシブデザイン • AI駆動オートメーション • チャットボット • 機械学習 • ワークフローデザイン • N8N＆MAKE • GEMINI API • OPENAI統合 • フルスタック＆DEVOPS • NODE.JS＆PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CDパイプライン • VERCELデプロイ • GITHUB ACTIONS • SENTRY監視 • VIBE CODING • クリエイティブ開発 • JAVASCRIPT＆TYPESCRIPT • クリーンコード • 問題解決 • イノベーション • '
+    },
     resume: {
       title: 'カレン・レベッカ・オルティス - プロフェッショナルCV',
       badge: 'デザインエンジニア / 2025',
@@ -1558,6 +2520,154 @@ export const translations = {
         email: '邮箱'
       }
     },
+    contact: {
+      title: '联系我们',
+      subtitle: '准备好将您的想法变为现实了吗？让我们讨论您的项目',
+      form: {
+        name: {
+          label: '您的姓名',
+          placeholder: '张三'
+        },
+        email: {
+          label: '您的邮箱',
+          placeholder: 'zhang@company.com'
+        },
+        phone: {
+          label: '您的电话',
+          placeholder: '+86 138 0013 8000'
+        },
+        country: {
+          label: '国家',
+          placeholder: '中国，美国，加拿大'
+        },
+        interests: {
+          label: '我感兴趣的是...',
+          options: [
+            'UX/UI设计与工程',
+            '创意前端开发',
+            'AI驱动自动化',
+            '全栈与DevOps'
+          ]
+        },
+        budget: {
+          label: '您的预算 (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: '更多关于项目',
+          placeholder: '告诉我更多关于您的项目...'
+        },
+        attachment: {
+          label: '添加附件',
+          specs: '最大10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: '删除'
+        },
+        submit: {
+          label: '发送请求',
+          sending: '发送中...'
+        }
+      },
+      messages: {
+        success: '消息发送成功！我会尽快与您联系。',
+        error: '消息发送失败。请重试。',
+        validation: '请完成姓名、邮箱和消息字段',
+        fileTooBig: '文件太大。最大大小为10MB。',
+        connectionError: '连接错误。请检查您的网络连接并重试。'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: '服务',
+      subtitle: '从设计到部署的全面数字解决方案',
+      items: [
+        {
+          id: 1,
+          title1: 'UX/UI设计',
+          title2: '与工程',
+          description: '我创造直观、以用户为中心的界面，通过技术UX工程连接设计与开发。从Figma中的移动原型到使用React组件的开发者友好设计系统，我确保无缝交接和实施。',
+          tags: ['用户界面', '用户体验', '设计系统', '组件库', '移动设计', '开发者交接'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: '领导MonexOne应用的UX/UI重新设计，为Athenis AI开发可重用组件库，将表单响应率提高30%，开发者效率提高25%。'
+        },
+        {
+          id: 2,
+          title1: '创意前端',
+          title2: '开发',
+          description: '我构建融合艺术与技术的快速、可扩展的Web界面。使用React、Next.js和WebGL，我创建具有Three.js动画的视觉震撼的交互体验，同时确保最佳性能和响应式设计。',
+          tags: ['React', 'Next.js', 'WebGL', '3D图形', '交互艺术', '响应式设计'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: '为Athenis AI构建了具有3D可视化的交互式着陆页，并开发了具有动态UI组件和WebGL效果的Aurin任务管理器。'
+        },
+        {
+          id: 3,
+          title1: 'AI驱动',
+          title2: '自动化',
+          description: '我设计通过AI集成提高生产力的智能自动化系统。使用N8N和Make等工具结合Gemini/OpenAI API，我创建智能工作流、聊天机器人和自动化流程来简化操作。',
+          tags: ['AI集成', '流程自动化', '聊天机器人', '机器学习', '工作流设计', '效率'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: '在Aurin任务管理器中集成AI驱动的聊天机器人和任务摘要，加上自动化任务报告，将手动工作量减少40%。'
+        },
+        {
+          id: 4,
+          title1: '全栈',
+          title2: '与DevOps',
+          description: '我使用Node.js、Python和Firestore开发完整的后端系统，然后使用强大的CI/CD管道进行部署。从安全API和数据库设计到通过Sentry监控在Vercel上的自动部署。',
+          tags: ['Node.js', 'Python', 'APIs', '数据库设计', 'DevOps', 'CI/CD', '监控'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: '为Aurin任务管理器实施了使用Firestore的动态链接系统，并使用自动化CI/CD管道进行部署以实现无缝更新。'
+        }
+      ]
+    },
+    aboutMe: {
+      title: '关于我',
+      skills: [
+        {
+          id: '01',
+          title: '设计很重要',
+          description: '好的UX不是魔法—是迭代。',
+          highlight: '我关注间距、层次、内容、动效...用户感受到但无法解释的一切。'
+        },
+        {
+          id: '02',
+          title: '建立我自己的',
+          description: '创立WebCrafters给了我领导完整流程的空间—从第一通电话到交付。',
+          highlight: '我与重视清晰度、所有权和诚实反馈的团队合作。'
+        },
+        {
+          id: '03',
+          title: '有意识地发展',
+          description: '设计和开发发展很快—但不是所有事情都应该匆忙。',
+          highlight: '我适应，但我坚持可用性、可访问性和真实需求。'
+        },
+        {
+          id: '04',
+          title: '产品思维',
+          description: '我设计时考虑用户，但我也考虑开发时间、可扩展性和业务目标。',
+          highlight: '每个屏幕都是一个决定—我关心所有这些。'
+        },
+        {
+          id: '05',
+          title: '好奇心优先',
+          description: '我一直对事物如何运作感到好奇。设计作为解决问题的方式出现—不仅仅是让事物变得漂亮。',
+          highlight: '理解视觉和结构方面对我来说总是有意义的。'
+        },
+        {
+          id: '06',
+          title: '带来设计和代码',
+          description: '我既是开发者又是设计师，这意味着我不仅让它看起来好—我让它工作。',
+          highlight: '这种心态帮助我构建得更快、更干净，减少交接。'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'UX/UI设计与工程 • FIGMA原型 • 设计系统 • 组件库 • 移动设计 • 开发者交接 • 创意前端开发 • REACT和NEXT.JS • WEBGL和THREE.JS • 3D图形 • 交互艺术 • 响应式设计 • AI驱动自动化 • 聊天机器人 • 机器学习 • 工作流设计 • N8N和MAKE • GEMINI API • OPENAI集成 • 全栈和DEVOPS • NODE.JS和PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD管道 • VERCEL部署 • GITHUB ACTIONS • SENTRY监控 • VIBE CODING • 创意开发 • JAVASCRIPT和TYPESCRIPT • 清洁代码 • 问题解决 • 创新 • '
+    },
     resume: {
       title: '卡伦·雷贝卡·奥尔蒂斯 - 专业简历',
       badge: '设计工程师 / 2025',
@@ -1791,6 +2901,154 @@ export const translations = {
         github: 'GitHub',
         email: '電子郵件'
       }
+    },
+    contact: {
+      title: '聯絡我們',
+      subtitle: '準備好將您的想法變為現實了嗎？讓我們討論您的專案',
+      form: {
+        name: {
+          label: '您的姓名',
+          placeholder: '王小明'
+        },
+        email: {
+          label: '您的電子郵件',
+          placeholder: 'wang@company.com'
+        },
+        phone: {
+          label: '您的電話',
+          placeholder: '+886 912 345 678'
+        },
+        country: {
+          label: '國家',
+          placeholder: '台灣，美國，加拿大'
+        },
+        interests: {
+          label: '我感興趣的是...',
+          options: [
+            'UX/UI設計與工程',
+            '創意前端開發',
+            'AI驅動自動化',
+            '全端與DevOps'
+          ]
+        },
+        budget: {
+          label: '您的預算 (USD)',
+          options: [
+            '< $1,000',
+            '$1,000 - $5,000',
+            '$5,000 - $10,000',
+            '$10,000 - $20,000',
+            '> $20,000'
+          ]
+        },
+        message: {
+          label: '更多關於專案',
+          placeholder: '告訴我更多關於您的專案...'
+        },
+        attachment: {
+          label: '新增附件',
+          specs: '最大10MB • PDF, DOC, DOCX, TXT, JPG, PNG',
+          remove: '刪除'
+        },
+        submit: {
+          label: '發送請求',
+          sending: '發送中...'
+        }
+      },
+      messages: {
+        success: '訊息發送成功！我會盡快與您聯繫。',
+        error: '訊息發送失敗。請重試。',
+        validation: '請完成姓名、電子郵件和訊息欄位',
+        fileTooBig: '檔案太大。最大大小為10MB。',
+        connectionError: '連線錯誤。請檢查您的網路連線並重試。'
+      },
+      emailBadge: 'karen.ortizg@yahoo.com'
+    },
+    services: {
+      title: '服務',
+      subtitle: '從設計到部署的全面數位解決方案',
+      items: [
+        {
+          id: 1,
+          title1: 'UX/UI設計',
+          title2: '與工程',
+          description: '我創造直覺、以使用者為中心的介面，透過技術UX工程連接設計與開發。從Figma中的行動原型到使用React元件的開發者友善設計系統，我確保無縫交接和實施。',
+          tags: ['使用者介面', '使用者體驗', '設計系統', '元件庫', '行動設計', '開發者交接'],
+          technologies: ['Figma', 'Sketch', 'Webflow', 'Framer', 'React', 'TypeScript', 'Storybook', 'Tailwind', 'Zeplin'],
+          example: '領導MonexOne應用程式的UX/UI重新設計，為Athenis AI開發可重複使用的元件庫，將表單回應率提高30%，開發者效率提高25%。'
+        },
+        {
+          id: 2,
+          title1: '創意前端',
+          title2: '開發',
+          description: '我建構融合藝術與技術的快速、可擴展的Web介面。使用React、Next.js和WebGL，我創建具有Three.js動畫的視覺震撼的互動體驗，同時確保最佳效能和響應式設計。',
+          tags: ['React', 'Next.js', 'WebGL', '3D圖形', '互動藝術', '響應式設計'],
+          technologies: ['JavaScript', 'React', 'TypeScript', 'Next.js', 'Astro', 'Three.js', 'WebGL', 'GSAP', 'SASS', 'Tailwind'],
+          example: '為Athenis AI建構了具有3D視覺化的互動式登陸頁面，並開發了具有動態UI元件和WebGL效果的Aurin任務管理器。'
+        },
+        {
+          id: 3,
+          title1: 'AI驅動',
+          title2: '自動化',
+          description: '我設計透過AI整合提高生產力的智慧自動化系統。使用N8N和Make等工具結合Gemini/OpenAI API，我創建智慧工作流程、聊天機器人和自動化流程來簡化操作。',
+          tags: ['AI整合', '流程自動化', '聊天機器人', '機器學習', '工作流程設計', '效率'],
+          technologies: ['Gemini API', 'OpenAI API', 'Anthropic API', 'LangChain', 'N8N', 'Make', 'Zapier', 'Cursor', 'Claude.ai', 'Google Cloud AI'],
+          example: '在Aurin任務管理器中整合AI驅動的聊天機器人和任務摘要，加上自動化任務報告，將手動工作量減少40%。'
+        },
+        {
+          id: 4,
+          title1: '全端',
+          title2: '與DevOps',
+          description: '我使用Node.js、Python和Firestore開發完整的後端系統，然後使用強大的CI/CD管道進行部署。從安全API和資料庫設計到透過Sentry監控在Vercel上的自動部署。',
+          tags: ['Node.js', 'Python', 'APIs', '資料庫設計', 'DevOps', 'CI/CD', '監控'],
+          technologies: ['Node.js', 'Python', 'FastAPI', 'Prisma', 'Firestore', 'Supabase', 'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Vercel', 'GitHub', 'GitHub Actions', 'Sentry', 'Clerk'],
+          example: '為Aurin任務管理器實施了使用Firestore的動態連結系統，並使用自動化CI/CD管道進行部署以實現無縫更新。'
+        }
+      ]
+    },
+    aboutMe: {
+      title: '關於我',
+      skills: [
+        {
+          id: '01',
+          title: '設計很重要',
+          description: '好的UX不是魔法—是迭代。',
+          highlight: '我關注間距、層次、內容、動效...使用者感受到但無法解釋的一切。'
+        },
+        {
+          id: '02',
+          title: '建立我自己的',
+          description: '創立WebCrafters給了我領導完整流程的空間—從第一通電話到交付。',
+          highlight: '我與重視清晰度、所有權和誠實回饋的團隊合作。'
+        },
+        {
+          id: '03',
+          title: '有意識地發展',
+          description: '設計和開發發展很快—但不是所有事情都應該匆忙。',
+          highlight: '我適應，但我堅持可用性、可訪問性和真實需求。'
+        },
+        {
+          id: '04',
+          title: '產品思維',
+          description: '我設計時考慮使用者，但我也考慮開發時間、可擴展性和業務目標。',
+          highlight: '每個螢幕都是一個決定—我關心所有這些。'
+        },
+        {
+          id: '05',
+          title: '好奇心優先',
+          description: '我一直對事物如何運作感到好奇。設計作為解決問題的方式出現—不僅僅是讓事物變得漂亮。',
+          highlight: '理解視覺和結構方面對我來說總是有意義的。'
+        },
+        {
+          id: '06',
+          title: '帶來設計和程式碼',
+          description: '我既是開發者又是設計師，這意味著我不僅讓它看起來好—我讓它運作。',
+          highlight: '這種心態幫助我建構得更快、更乾淨，減少交接。'
+        }
+      ]
+    },
+    topMarquee: {
+      text: 'UX/UI設計與工程 • FIGMA原型 • 設計系統 • 元件庫 • 行動設計 • 開發者交接 • 創意前端開發 • REACT和NEXT.JS • WEBGL和THREE.JS • 3D圖形 • 互動藝術 • 響應式設計 • AI驅動自動化 • 聊天機器人 • 機器學習 • 工作流程設計 • N8N和MAKE • GEMINI API • OPENAI整合 • 全端和DEVOPS • NODE.JS和PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD管道 • VERCEL部署 • GITHUB ACTIONS • SENTRY監控 • VIBE CODING • 創意開發 • JAVASCRIPT和TYPESCRIPT • 清潔程式碼 • 問題解決 • 創新 • '
     },
     resume: {
       title: '卡倫·雷貝卡·奧爾蒂斯 - 專業履歷',

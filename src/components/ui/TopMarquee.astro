@@ -1,15 +1,21 @@
 ---
 // TopMarquee - Lightweight marquee banner for header
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detectar idioma de la URL actual
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations] || translations.en;
 ---
 
 <div class="top-marquee-container">
   <div class="top-marquee-wrapper">
     <div id="top-marquee" class="top-marquee">
       <span class="marquee-text">
-        UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
+        {t.topMarquee.text}
       </span>
       <span class="marquee-text">
-        UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • 
+        {t.topMarquee.text}
       </span>
     </div>
   </div>

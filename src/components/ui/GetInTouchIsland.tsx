@@ -7,10 +7,15 @@ import { TextDisperse } from './TextDisperse.tsx';
 import TypeSound from './TypeSound.tsx';
 import { useContactFormStore } from '../../stores/contactFormStore.ts';
 import { shallow } from 'zustand/shallow';
+import { translations } from '../../i18n/translations.js';
 
 // FormData interface ahora está en el store
 
-const GetInTouchIsland: React.FC = React.memo(() => {
+interface GetInTouchIslandProps {
+  lang?: string;
+}
+
+const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = 'en' }) => {
   // Zustand store hooks optimizados - acceso directo
   const formData = useContactFormStore((state) => state.formData);
   const { focusedField, isHovered, isSubmitting } = useContactFormStore((state) => state.uiState);
@@ -26,19 +31,12 @@ const GetInTouchIsland: React.FC = React.memo(() => {
   // Hook de toasts
   const { showSuccess, showError, ToastContainer } = useToast();
 
-  const interestOptions = [
-    'Website Design',
-    'Website Development',
-    'Motion & Graphic Design'
-  ];
+  // Obtener traducciones para el idioma actual
+  const t = translations[lang as keyof typeof translations] || translations.en;
+  const contactT = t.contact;
 
-  const budgetOptions = [
-    '< $1,000',
-    '$1,000 - $5,000',
-    '$5,000 - $10,000',
-    '$10,000 - $20,000',
-    '> $20,000'
-  ];
+  const interestOptions = contactT.form.interests.options;
+  const budgetOptions = contactT.form.budget.options;
 
   const handleInterestToggle = useCallback((interest: string) => {
     toggleInterest(interest);
@@ -54,7 +52,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
     if (file) {
       // Validar tamaño del archivo (máximo 10MB)
       if (file.size > 10 * 1024 * 1024) {
-        showError('File is too large. Maximum size is 10MB.');
+        showError(contactT.messages.fileTooBig);
         // Limpiar el input
         event.target.value = '';
         return;
@@ -78,7 +76,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
     
     // Validación básica
     if (!formData.name || !formData.email || !formData.message) {
-      showError('Please complete name, email and message fields');
+      showError(contactT.messages.validation);
       return;
     }
 
@@ -113,15 +111,15 @@ const GetInTouchIsland: React.FC = React.memo(() => {
       const result = await response.json();
 
       if (result.success) {
-        showSuccess('Message sent successfully! I will contact you soon.');
+        showSuccess(contactT.messages.success);
         // Limpiar formulario
         resetForm();
       } else {
-        showError(result.message || 'Failed to send message. Please try again.');
+        showError(result.message || contactT.messages.error);
       }
     } catch (error) {
       console.error('Error enviando formulario:', error);
-      showError('Connection error. Please check your internet and try again.');
+      showError(contactT.messages.connectionError);
     } finally {
       setIsSubmitting(false);
     }
@@ -147,7 +145,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <TextDisperse 
-            text="Get In Touch"
+            text={contactT.title}
             className="text-white font-display"
             style={{
               fontSize: 'clamp(80px, 15vw, 200px)',
@@ -179,7 +177,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
             width: '100%'
           }}
         >
-          Ready to bring your ideas to life? Let's discuss your project
+          {contactT.subtitle}
         </motion.p>
       </motion.div>
 
@@ -203,12 +201,12 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           <div className="form-field">
             <label className="field-label">
               <User size={18} className="inline-block" />
-              Your Name
+              {contactT.form.name.label}
             </label>
             <div className="input-container">
               <input
                 type="text"
-                placeholder="John Smith"
+                placeholder={contactT.form.name.placeholder}
                 value={formData.name}
                 onChange={(e) => setField('name', e.target.value)}
                 onFocus={() => setFocusedField('name')}
@@ -221,12 +219,12 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           <div className="form-field">
             <label className="field-label">
               <Mail size={18} className="inline-block" />
-              Your Email
+              {contactT.form.email.label}
             </label>
             <div className="input-container">
               <input
                 type="email"
-                placeholder="john@company.com"
+                placeholder={contactT.form.email.placeholder}
                 value={formData.email}
                 onChange={(e) => setField('email', e.target.value)}
                 onFocus={() => setFocusedField('email')}
@@ -249,12 +247,12 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           <div className="form-field">
             <label className="field-label">
               <Phone size={18} className="inline-block" />
-              Your Phone
+              {contactT.form.phone.label}
             </label>
             <div className="input-container">
               <input
                 type="tel"
-                placeholder="+52 123 4444 4444"
+                placeholder={contactT.form.phone.placeholder}
                 value={formData.phone}
                 onChange={(e) => setField('phone', e.target.value)}
                 onFocus={() => setFocusedField('phone')}
@@ -267,12 +265,12 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           <div className="form-field">
             <label className="field-label">
               <Globe size={18} className="inline-block" />
-              Country
+              {contactT.form.country.label}
             </label>
             <div className="input-container">
               <input
                 type="text"
-                placeholder="Mexico, United States, Canada"
+                placeholder={contactT.form.country.placeholder}
                 value={formData.country}
                 onChange={(e) => setField('country', e.target.value)}
                 onFocus={() => setFocusedField('country')}
@@ -294,7 +292,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
         >
           <label className="field-label">
             <Heart size={18} className="inline-block" />
-            I'm interested in...
+            {contactT.form.interests.label}
           </label>
           <div className="interests-options">
             {interestOptions.map((interest, index) => (
@@ -326,7 +324,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
         >
           <label className="field-label">
             <DollarSign size={18} className="inline-block" />
-            Your Budget (USD)
+            {contactT.form.budget.label}
           </label>
           <div className="budget-options">
             {budgetOptions.map((budget, index) => (
@@ -358,11 +356,11 @@ const GetInTouchIsland: React.FC = React.memo(() => {
         >
           <label className="field-label">
             <MessageSquare size={18} className="inline-block" />
-            More About The Project
+            {contactT.form.message.label}
           </label>
           <div className="message-container">
             <textarea
-              placeholder="Tell me more about your project..."
+              placeholder={contactT.form.message.placeholder}
               value={formData.message}
               onChange={(e) => setField('message', e.target.value)}
               onFocus={() => setFocusedField('message')}
@@ -385,10 +383,10 @@ const GetInTouchIsland: React.FC = React.memo(() => {
             >
               <div className="attachment-button-content">
                 <Paperclip size={18} className="inline-block" />
-                <span>Add an Attachment</span>
+                <span>{contactT.form.attachment.label}</span>
               </div>
               <div className="file-specs">
-                <span>Max 10MB • PDF, DOC, DOCX, TXT, JPG, PNG</span>
+                <span>{contactT.form.attachment.specs}</span>
               </div>
             </motion.label>
             <input
@@ -440,7 +438,7 @@ const GetInTouchIsland: React.FC = React.memo(() => {
               cursor: isSubmitting ? 'not-allowed' : 'pointer'
             }}
           >
-            <span>{isSubmitting ? 'Sending...' : 'Send Request'}</span>
+            <span>{isSubmitting ? contactT.form.submit.sending : contactT.form.submit.label}</span>
             <div className="submit-icon">
               {isSubmitting ? (
                 <Loader2 size={18} className="animate-spin" color="white" />
@@ -452,6 +450,18 @@ const GetInTouchIsland: React.FC = React.memo(() => {
           </div>
         </div>
       </motion.form>
+
+      {/* Email Badge */}
+      <motion.div 
+        className="email-badge"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <Mail size={16} />
+        <span>{contactT.emailBadge}</span>
+      </motion.div>
 
       {/* Toast Container */}
       <ToastContainer />
