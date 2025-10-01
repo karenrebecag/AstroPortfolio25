@@ -53,5 +53,4 @@
   Cache-Control: public, max-age=604800
 
 # Service worker - No cache
-/sw.js
   Cache-Control: no-cache, no-store, must-revalidate

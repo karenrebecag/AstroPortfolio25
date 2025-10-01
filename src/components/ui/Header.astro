@@ -808,12 +808,8 @@ const lang = getLangFromUrl(Astro.url);
     });
     
     // Close menu when clicking on links or contact button
-    mobileMenu?.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target && (target.tagName === 'A' || target.classList.contains('mobile-contact-btn'))) {
-        closeMenu();
-      }
-    });
+    // REMOVED: This was interfering with smooth scroll functionality
+    // The closeMenu() is now handled in the individual link click handlers below
 
     // Close menu when clicking outside content
     mobileMenu?.addEventListener('click', (e) => {
@@ -882,16 +878,62 @@ const lang = getLangFromUrl(Astro.url);
     });
 
     // Mobile navigation links - scroll functionality
-    const mobileScrollLinks = document.querySelectorAll('.mobile-nav a');
+    const mobileScrollLinks = document.querySelectorAll('.mobile-nav a:not(.mobile-language-option)');
     mobileScrollLinks.forEach(link => {
       link.addEventListener('click', (e) => {
-        e.preventDefault();
         const href = link.getAttribute('href');
+        
+        // Only handle anchor links (section navigation)
         if (href && href.startsWith('#')) {
+          e.preventDefault();
+          e.stopPropagation();
+          
           const targetId = href.substring(1);
-          smoothScrollTo(targetId);
-          closeMenu(); // Close mobile menu after clicking
+          
+          // Close menu first
+          closeMenu();
+          
+          // Wait for menu close animation and body scroll restoration
+          setTimeout(() => {
+            // Ensure body scroll is restored
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            
+            // Find the target element (check after menu closes in case it's dynamically loaded)
+            let target = document.getElementById(targetId);
+            
+            // If target not found, try to find it by waiting a bit more
+            if (!target) {
+              console.warn(`Target element #${targetId} not found, retrying...`);
+              setTimeout(() => {
+                target = document.getElementById(targetId);
+                if (target) {
+                  const headerHeight = (headerWrapper as HTMLElement)?.offsetHeight || 0;
+                  const targetPosition = target.offsetTop - headerHeight - 20;
+                  
+                  window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                  });
+                } else {
+                  console.error(`Target element #${targetId} still not found after retry`);
+                }
+              }, 200);
+              return;
+            }
+            
+            // Scroll to target
+            const headerHeight = (headerWrapper as HTMLElement)?.offsetHeight || 0;
+            const targetPosition = target.offsetTop - headerHeight - 20;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }, 550); // Wait for full menu close animation (500ms) + 50ms buffer
         }
+        // Language links and external links will work normally
       });
     });
 
