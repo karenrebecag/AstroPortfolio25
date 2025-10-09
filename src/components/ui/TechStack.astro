@@ -1,0 +1,285 @@
+---
+// TechStack.astro - Tech Stack section component with scrolling content
+---
+
+<!-- Tech Stack Scroll Container -->
+<div class="tech-stack-scroll-container">
+  <div class="tech-story-grid w-full max-w-[1400px] mx-auto px-15 grid lg:grid-cols-2 gap-12">
+
+    <!-- Left Column: Fixed Tech Stack Title -->
+    <div class="sticky-tech-column sticky top-0 h-screen flex items-center rounded-2xl">
+      <div class="w-full relative">
+        <div class="relative z-10">
+          <div class="relative">
+            <!-- Purple circle positioned behind the heading -->
+            <h2 class="text-hero font-median mb-2 relative z-10" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
+              <span class="text-[#080808]">Tech</span><br />
+              <span class="text-[#7350cc]">Stack</span>
+            </h2>
+          </div>
+          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6" style="font-size: 20px; line-height: 1.5;">
+            The technologies and tools powering Aurin Task Manager's robust architecture.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Scrolling Tech Content -->
+    <div class="scrolling-tech-column">
+      
+      <!-- Tech Section 1: Frontend -->
+      <div class="tech-content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6 pb-4" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#7350cc]">Frontend</span><br />
+            <span class="text-[#080808]">Technologies</span>
+          </h2>
+          <div class="tech-list mb-8">
+            <div class="tech-item">
+              <h3 class="tech-name">Next.js 15.3.3</h3>
+              <p class="tech-description">React framework with App Router, server components, and optimized performance for production-ready applications.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">React 19</h3>
+              <p class="tech-description">Latest React with concurrent features, automatic batching, and enhanced developer experience.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">TypeScript</h3>
+              <p class="tech-description">100% type safety ensuring robust, maintainable code with strict configuration and comprehensive type coverage.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Section 2: Backend & Database -->
+      <div class="tech-content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6 pb-4" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#080808]">Backend &</span><br />
+            <span class="text-[#7350cc]">Database</span>
+          </h2>
+          <div class="tech-list mb-8">
+            <div class="tech-item">
+              <h3 class="tech-name">Firebase Firestore</h3>
+              <p class="tech-description">NoSQL database with real-time synchronization, offline support, and granular security rules for scalable data management.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">Vercel Edge Functions</h3>
+              <p class="tech-description">Serverless functions deployed globally for optimal performance and automatic scaling.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">Nodemailer</h3>
+              <p class="tech-description">Professional email system with smart notification queuing, retry logic, and batch processing capabilities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Section 3: State Management -->
+      <div class="tech-content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6 pb-4" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#7350cc]">State</span><br />
+            <span class="text-[#080808]">Management</span>
+          </h2>
+          <div class="tech-list mb-8">
+            <div class="tech-item">
+              <h3 class="tech-name">Zustand</h3>
+              <p class="tech-description">Lightweight state management with optimistic updates, ensuring UI responds instantly while Firestore syncs afterward.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">Custom Hooks</h3>
+              <p class="tech-description">Specialized hooks for encryption, message pagination, drag interactions, and timer management.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">React Context</h3>
+              <p class="tech-description">Global state management for user authentication, theme preferences, and application-wide settings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Section 4: Authentication & Security -->
+      <div class="tech-content-section">
+        <div class="relative z-10">
+          <h2 class="text-hero font-median mb-6 pb-4" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
+            <span class="text-[#080808]">Authentication</span><br />
+            <span class="text-[#7350cc]">& Security</span>
+          </h2>
+          <div class="tech-list mb-8">
+            <div class="tech-item">
+              <h3 class="tech-name">Clerk</h3>
+              <p class="tech-description">Complete user management with social logins, MFA, and role-based access control for enterprise security.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">Firebase Auth</h3>
+              <p class="tech-description">Backend security layer with custom claims, secure token validation, and granular permission management.</p>
+            </div>
+            <div class="tech-item">
+              <h3 class="tech-name">Encryption</h3>
+              <p class="tech-description">End-to-end message encryption using custom useEncryption hook for secure team communications.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Tech Stack Scroll Container */
+  .tech-stack-scroll-container {
+		background: hsl(0, 0%, 99%);
+    position: relative;
+  }
+
+  .tech-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two column layout on desktop */
+    gap: 3rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+
+  /* Left Column: Sticky Tech Title */
+  .sticky-tech-column {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Right Column: Scrolling Tech Content */
+  .scrolling-tech-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tech-content-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  /* Tech List Styles */
+  .tech-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .tech-item {
+    padding: 1.5rem;
+		backdrop-filter: blur(10px) brightness(0.8);
+		border-radius: 12px;
+		border: 1px solid transparent;
+		background-image: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+		background-origin: border-box;
+		background-clip: padding-box, border-box;
+  }
+
+ 
+  .tech-name {
+    font-family: var(--font-display, 'Median', serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #7350cc;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.2;
+  }
+
+  .tech-description {
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(8, 8, 8, 0.7);
+    margin: 0;
+  }
+
+  /* Grid pattern overlay */
+  .tech-stack-scroll-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .tech-story-grid {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .tech-story-grid {
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tech-story-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .sticky-tech-column {
+      display: none;
+    }
+
+    .tech-content-section {
+      min-height: 60vh;
+    }
+
+    .tech-item {
+      padding: 1.25rem;
+    }
+
+    .tech-name {
+      font-size: 1.25rem;
+    }
+
+    .tech-description {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tech-story-grid {
+      padding: 0 1rem;
+    }
+
+    .tech-content-section {
+      min-height: 50vh;
+      padding: 1.5rem 0;
+    }
+
+    .tech-item {
+      padding: 1rem;
+    }
+
+    .tech-name {
+      font-size: 1.125rem;
+    }
+
+    .tech-description {
+      font-size: 0.875rem;
+    }
+  }
+</style>

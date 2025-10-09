@@ -6,12 +6,16 @@ import HeaderPill from '../components/ui/HeaderPill.astro';
 import ParallaxBanner from '../components/ui/ParallaxBanner.astro';
 import MainButton from '../components/ui/MainButton.astro';
 import CodeBlock from '../components/ui/CodeBlock.astro';
-import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
+import { LineHeading } from '../components/ui/LineHeading.tsx';
 import { InView } from '../components/ui/InView.tsx';
 import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
 import { LucideIcon } from '../components/ui/LucideIcon.tsx';
 import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { Carousel } from '../components/ui/Carousel.tsx';
+import AurinMarquees from '../components/ui/AurinMarquees.astro';
+import TechStack from '../components/ui/TechStack.astro';
+import AurinBestFeatures from '../components/ui/AurinBestFeatures.astro';
+import AurinWorkflow from '../components/ui/AurinWorkflow.astro';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
@@ -337,7 +341,7 @@ const loadTestResults = {
 	
 	<HeaderPill />
 
-	<!-- Parallax Banner Strip -->
+	<!-- Parallax Banner Strip
 	<ParallaxBanner
 		title="Aurin Task Manager"
 		subtitle="Enterprise-Grade Task Management with AI Integration - A Comprehensive Success Story"
@@ -350,7 +354,7 @@ const loadTestResults = {
 
 		</div>
 	</ParallaxBanner>
-
+ -->
 	<DarkModeContainer client:load>
 		<!-- Main Content Sections -->
 		<main class="main-content" id="main-content">
@@ -371,9 +375,9 @@ const loadTestResults = {
 				</div>
 
 				<div class="section-header" style="padding-top: 2rem;">
-					<h2 class="section-title" id="project-summary">
-						<TextDisperseBlack client:idle text="Project Summary" />
-					</h2>
+					<div class="section-title" id="project-summary">
+						<LineHeading client:visible>Project Summary</LineHeading>
+					</div>
 					<div class="section-label">Enterprise Success Story</div>
 				</div>
 
@@ -449,14 +453,14 @@ const loadTestResults = {
 			</div>
 		</section>
 
-		<!-- Features Section -->
-		<section class="content-section" id="features">
+		<!-- The Spark Section -->
+		<section class="content-section" id="the-spark">
 			<div class="section-container">
 				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Core Features" />
-					</h2>
-					<div class="section-label">Technical Excellence</div>
+					<div class="section-title">
+						<LineHeading client:visible>The Spark</LineHeading>
+					</div>
+					<div class="section-label">Origin Story</div>
 				</div>
 
 				<InView client:visible
@@ -467,145 +471,21 @@ const loadTestResults = {
 					viewOptions={{ margin: "0px 0px -100px 0px" }}
 					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
 				>
-					<div class="features-grid">
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="zap" size={40} />
-							</div>
-							<h3>100% TypeScript Architecture</h3>
-							<p>Complete type safety with Next.js 15.3.3, React 19, and strict TypeScript configuration ensuring robust, maintainable code.</p>
-						</div>
-						
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="flame" size={40} />
-							</div>
-							<h3>Firebase Real-time Database</h3>
-							<p>NoSQL Firestore with real-time synchronization, offline support, and granular security rules for scalable data management.</p>
-						</div>
-						
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="shield" size={40} />
-							</div>
-							<h3>Dual Authentication System</h3>
-							<p>Clerk for user management with Firebase Auth for backend security, supporting social logins, MFA, and role-based access control.</p>
-						</div>
-						
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="bot" size={40} />
-							</div>
-							<h3>Advanced Email System</h3>
-							<p>Professional email templates with Nodemailer, smart notification queuing, retry logic, and batch processing capabilities.</p>
-						</div>
-						
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="trending-up" size={40} />
-							</div>
-							<h3>Production Performance</h3>
-							<p>98+ Lighthouse score, sub-second load times, 99.98% uptime, and Core Web Vitals optimization on Vercel edge network.</p>
-						</div>
-						
-						<div class="feature-card">
-							<div class="feature-icon">
-								<LucideIcon client:load name="dollar-sign" size={40} />
-							</div>
-							<h3>Cost-Effective Scaling</h3>
-							<p>$0.29 per user monthly cost with 96% cost reduction vs traditional solutions and 16,580% annual ROI.</p>
-						</div>
+					<div class="story-content text-center">
+						<p class="text-center ">Wrike changed how I see project management. But when I tried to build my own task manager, not everything went as planned in the tutorials... Aurin Task Manager was born from an obsession: replicating Wrike's brutal efficiency, but with my own signature. An enterprise task manager with real-time notifications, integrated encrypted chat, per-task time tracking, and instant collaboration with Firestore. Sounds impressive, right? Well, let me tell you the truth: the code wasn't always pretty. ChatSidebar.tsx has 2,066 lines. Yes, you read that right. It works, but it was my greatest lesson in humility. I learned more building (and breaking) Aurin than in years of tutorials. This article is my treasure map for you: what technologies to use, how to modularize correctly, mistakes that cost me entire nights, and updated resources so you don't stumble the same way. If you're thinking about building your own SaaS, buckle up: here come the brutal lessons.</p>
 					</div>
 				</InView>
 			</div>
 		</section>
 
-		<!-- Technology Stack Section -->
-		<section class="content-section" id="technology">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Technical Architecture" />
-					</h2>
-					<div class="section-label">Enterprise Stack</div>
-				</div>
-
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
-				>
-					<div class="tech-categories">
-						<div class="tech-category">
-							<h3>Frontend</h3>
-							<div class="tech-tags">
-								<span class="tech-tag">Next.js 15.3.3</span>
-								<span class="tech-tag">React 19</span>
-								<span class="tech-tag">TypeScript 100%</span>
-								<span class="tech-tag">SCSS Modules</span>
-								<span class="tech-tag">Framer Motion</span>
-								<span class="tech-tag">GSAP</span>
-							</div>
-						</div>
-						
-						<div class="tech-category">
-							<h3>Backend & Database</h3>
-							<div class="tech-tags">
-								<span class="tech-tag">Firebase Firestore</span>
-								<span class="tech-tag">Google Cloud Storage</span>
-								<span class="tech-tag">Next.js API Routes</span>
-								<span class="tech-tag">Nodemailer</span>
-								<span class="tech-tag">Zustand</span>
-							</div>
-						</div>
-						
-						<div class="tech-category">
-							<h3>AI & Infrastructure</h3>
-							<div class="tech-tags">
-								<span class="tech-tag">Google Gemini</span>
-								<span class="tech-tag">OpenAI GPT</span>
-								<span class="tech-tag">Vercel Edge</span>
-								<span class="tech-tag">Clerk Auth</span>
-								<span class="tech-tag">Sentry</span>
-							</div>
-						</div>
-					</div>
-				</InView>
-
-				<!-- Database Architecture Code -->
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }}
-				>
-					<div class="code-section">
-						<h3 class="code-section-title">Firebase Firestore Collection Architecture</h3>
-						<p class="code-section-description">
-							NoSQL document structure designed for scalability and real-time synchronization across all connected clients.
-						</p>
-						<CodeBlock 
-							code={firestoreCollectionCode}
-							language="javascript"
-							title="firestore-collections.js"
-						/>
-					</div>
-				</InView>
-			</div>
-		</section>
 
 		<!-- Project Gallery Section -->
 		<section class="content-section" id="gallery">
 			<div class="section-container">
 				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Gallery" />
-					</h2>
+					<div class="section-title">
+						<LineHeading client:visible>Gallery</LineHeading>
+					</div>
 					<div class="section-label">Visual Showcase</div>
 				</div>
 
@@ -650,154 +530,14 @@ const loadTestResults = {
 			</div>
 		</section>
 
-
-
-		<!-- Architecture Deep Dive Section -->
-		<section class="content-section" id="architecture">
+		<!-- The Great Lesson Section -->
+		<section class="content-section" id="modularization-lesson">
 			<div class="section-container">
 				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="System Architecture" />
-					</h2>
-					<div class="section-label">Technical Implementation</div>
-				</div>
-
-				<div class="architecture-content">
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-					>
-						<div class="architecture-item">
-							<div class="architecture-number">
-								<AnimatedNumber client:load value={1} format={{ minimumFractionDigits: 0 }} />
-							</div>
-							<div class="architecture-details">
-								<h3>Frontend Architecture</h3>
-								<div class="architecture-subtitle">Next.js 15.3.3 with React 19</div>
-								<p>App Router leverages the latest Next.js architecture for optimal performance with Server Components reducing JavaScript bundle size and improving loading times. Complete TypeScript implementation ensures type safety and catches errors at compile-time.</p>
-							</div>
-						</div>
-					</InView>
-
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.08 }}
-					>
-						<div class="architecture-item">
-							<div class="architecture-number">
-								<AnimatedNumber client:load value={2} format={{ minimumFractionDigits: 0 }} />
-							</div>
-							<div class="architecture-details">
-								<h3>Real-time Sync Engine</h3>
-								<div class="architecture-subtitle">Firebase Firestore with Optimistic Updates</div>
-								<p>Advanced real-time synchronization with sub-100ms update propagation, optimistic updates with rollback on conflict, and comprehensive offline support. WebSocket connections ensure live collaboration across all connected clients.</p>
-							</div>
-						</div>
-					</InView>
-
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.16 }}
-					>
-						<div class="architecture-item">
-							<div class="architecture-number">
-								<AnimatedNumber client:load value={3} format={{ minimumFractionDigits: 0 }} />
-							</div>
-							<div class="architecture-details">
-								<h3>AI Integration Layer</h3>
-								<div class="architecture-subtitle">Dual Provider Strategy</div>
-								<p>Google Gemini for natural language processing and smart suggestions, OpenAI GPT for task summarization and content generation. Intelligent failover system ensures 99.9% AI service availability with automatic retry logic.</p>
-							</div>
-						</div>
-					</InView>
-
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.24 }}
-					>
-						<div class="architecture-item">
-							<div class="architecture-number">
-								<AnimatedNumber client:load value={4} format={{ minimumFractionDigits: 0 }} />
-							</div>
-							<div class="architecture-details">
-								<h3>Notification Infrastructure</h3>
-								<div class="architecture-subtitle">Multi-channel Delivery System</div>
-								<p>Advanced queue system with exponential backoff retry logic, professional email templates via Nodemailer, smart filtering to prevent notification spam, and real-time in-app notifications with read/unread tracking.</p>
-							</div>
-						</div>
-					</InView>
-
-					<!-- AI Integration Code -->
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.32 }}
-					>
-						<div class="code-section">
-							<h3 class="code-section-title">AI Integration with Google Gemini</h3>
-							<p class="code-section-description">
-								Intelligent task assignment suggestions using natural language processing and team member skill analysis.
-							</p>
-							<CodeBlock 
-								code={aiIntegrationCode}
-								language="typescript"
-								title="GeminiService.ts"
-							/>
-						</div>
-					</InView>
-
-					<!-- Real-time Sync Engine Code -->
-					<InView client:visible
-						variants={{
-							hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-							visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-						}}
-						viewOptions={{ margin: "0px 0px -100px 0px" }}
-						transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }}
-					>
-						<div class="code-section">
-							<h3 class="code-section-title">Real-time Sync Engine with Optimistic Updates</h3>
-							<p class="code-section-description">
-								Advanced synchronization system with immediate UI updates, conflict resolution, and automatic rollback on failures.
-							</p>
-							<CodeBlock 
-								code={realTimeSyncCode}
-								language="typescript"
-								title="SyncEngine.ts"
-							/>
-						</div>
-					</InView>
-				</div>
-			</div>
-		</section>
-
-		<!-- Development Journey Section -->
-		<section class="content-section" id="development">
-			<div class="section-container">
-				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Development Journey" />
-					</h2>
-					<div class="section-label">6 Months Timeline</div>
+					<div class="section-title">
+						<LineHeading client:visible>The Greatest Lesson: Modularization</LineHeading>
+					</div>
+					<div class="section-label">Hard-Learned Wisdom</div>
 				</div>
 
 				<InView client:visible
@@ -806,49 +546,150 @@ const loadTestResults = {
 						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
 					}}
 					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
 				>
-					<div class="development-timeline">
-						<div class="timeline-item">
-							<div class="timeline-phase">Phase 1-2</div>
-							<div class="timeline-content">
-								<h3>Foundation & Core Features</h3>
-								<p>Project setup with Next.js 15, TypeScript configuration, Firebase integration, basic task management, and real-time synchronization implementation.</p>
+					<div class="lesson-content">
+						<div class="achievements-list">
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">1</div>
+								<div class="achievement-text">Complete chat system with encrypted messages using useEncryption hook</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">2</div>
+								<div class="achievement-text">Drag-to-reply interactions with fluid micro-animations (Framer Motion + custom useMessageDrag hook)</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">3</div>
+								<div class="achievement-text">Optimistic updates thanks to Zustand: UI responds instantly, Firestore syncs afterward</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">4</div>
+								<div class="achievement-text">Real-time synchronization with Firestore listeners (onSnapshot)</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">5</div>
+								<div class="achievement-text">Integrated timer per task with custom hooks (useTimerStoreHook)</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">6</div>
+								<div class="achievement-text">Infinite pagination with useMessagePagination hook</div>
+							</div>
+							<div class="info-card flex-row flex">
+								<div class="achievement-number">7</div>
+								<div class="achievement-text">Enterprise-grade notifications with notificationService</div>
 							</div>
 						</div>
 
-						<div class="timeline-item">
-							<div class="timeline-phase">Phase 3-4</div>
-							<div class="timeline-content">
-								<h3>Advanced Features & AI</h3>
-								<p>Dual authentication system, notification infrastructure, AI integration with Gemini and GPT, advanced email templates, and queue management system.</p>
+						<div class="info-card">
+							<h3 class="lesson-title">The biggest lesson I take away:</h3>
+							<p>I've learned that modularization isn't about showing off architecture, it's for your future sanity. If a component exceeds 300-400 lines, <strong>it's time to stop and refactor.</strong></p>
+						
+							<div >
+								<h3 class="resources-title">Key Resources:</h3>
+								<ul class="resources-list">
+									<li><a href="#" class="resource-link">Atomic Design Methodology</a></li>
+									<li><a href="#" class="resource-link">React Patterns 2025</a></li>
+									<li><a href="#" class="resource-link">Component Composition Best Practices</a></li>
+								</ul>
 							</div>
 						</div>
 
-						<div class="timeline-item">
-							<div class="timeline-phase">Phase 5-6</div>
-							<div class="timeline-content">
-								<h3>Production & Optimization</h3>
-								<p>Performance optimization, security hardening, deployment pipeline, monitoring setup, user testing, and production launch with all organization users.</p>
-							</div>
-						</div>
+
 					</div>
 				</InView>
-
-				<!-- Notification Queue System Code - Content to be added later -->
 			</div>
 		</section>
 
-	
+		<!-- Features Section -->
+		<section class="content-section" id="features">
+			<div class="section-container">
+				<div class="section-header">
+					<div class="section-title">
+						<LineHeading client:visible>Core Features</LineHeading>
+					</div>
+					<div class="section-label">Technical Excellence</div>
+				</div>
 
+				<InView client:visible
+					variants={{
+						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+					}}
+					viewOptions={{ margin: "0px 0px -100px 0px" }}
+					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+				>
+					<div class="features-grid">
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="zap" size={40} />
+							</div>
+							<h4>100% TypeScript Architecture</h4>
+							<p>Complete type safety with Next.js 15.3.3, React 19, and strict TypeScript configuration ensuring robust, maintainable code.</p>
+						</div>
+						
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="flame" size={40} />
+							</div>
+							<h4>Firebase Real-time Database</h4>
+							<p>NoSQL Firestore with real-time synchronization, offline support, and granular security rules for scalable data management.</p>
+						</div>
+						
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="shield" size={40} />
+							</div>
+							<h4>Dual Authentication System</h4>
+							<p>Clerk for user management with Firebase Auth for backend security, supporting social logins, MFA, and role-based access control.</p>
+						</div>
+						
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="bot" size={40} />
+							</div>
+							<h4>Advanced Email System</h4>
+							<p>Professional email templates with Nodemailer, smart notification queuing, retry logic, and batch processing capabilities.</p>
+						</div>
+						
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="trending-up" size={40} />
+							</div>
+							<h4>Production Performance</h4>
+							<p>98+ Lighthouse score, sub-second load times, 99.98% uptime, and Core Web Vitals optimization on Vercel edge network.</p>
+						</div>
+						
+						<div class="info-card flex flex-col items-center text-center">
+							<div class="feature-icon">
+								<LucideIcon client:load name="dollar-sign" size={40} />
+							</div>
+							<h4>Cost-Effective Scaling</h4>
+							<p>$0.29 per user monthly cost with 96% cost reduction vs traditional solutions and 16,580% annual ROI.</p>
+						</div>
+					</div>
+				</InView>
+			</div>
+		</section>
+
+		<!-- Aurin Marquees Section -->
+		<AurinMarquees />
+
+		<!-- Tech Stack Section -->
+		<TechStack />
+
+		<!-- Aurin Best Features Section -->
+		<AurinBestFeatures />
+
+		<!-- Aurin Workflow Section -->
+		<AurinWorkflow />
 
 		<!-- Live Application Section -->
 		<section class="content-section" id="live-app">
 			<div class="section-container">
 				<div class="section-header">
-					<h2 class="section-title">
-						<TextDisperseBlack client:visible text="Live Application" />
-					</h2>
+					<div class="section-title">
+						<LineHeading client:visible>Live Application</LineHeading>
+					</div>
 					<div class="section-label">Production Ready</div>
 				</div>
 
@@ -975,7 +816,7 @@ const loadTestResults = {
 
 	/* Main Content Layout */
 	.main-content {
-		background: #ececec;
+		background: hsl(0, 0%, 99%);
 		width: 100%;
 		padding: 0;
 	}
@@ -984,8 +825,8 @@ const loadTestResults = {
 		padding: 6rem 2rem;
 		border-bottom: 1px solid #f0f0f0;
 		background-image:
-			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+			linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
 		background-size: 20px 20px;
 		position: relative;
 	}
@@ -1002,7 +843,7 @@ const loadTestResults = {
 
 	/* Section Headers - Following resume.astro structure */
 	.section-header {
-		margin-bottom: 4rem;
+		margin: 8rem 0rem 6rem 0rem;
 		text-align: center;
 	}
 
@@ -1093,9 +934,12 @@ const loadTestResults = {
 
 	.info-card {
 		padding: 1.5rem;
-		background: #f8f9fa;
+		backdrop-filter: blur(10px) brightness(0.8);
 		border-radius: 12px;
-		border: 1px solid #e9ecef;
+		border: 1px solid transparent;
+		background-image: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+		background-origin: border-box;
+		background-clip: padding-box, border-box;
 	}
 
 	.info-label {
@@ -1273,6 +1117,160 @@ const loadTestResults = {
 		.section-title {
 			font-size: clamp(2rem, 8vw, 3rem);
 		}
+	}
+
+	/* Lesson Content Styles */
+	.lesson-content {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.lesson-intro {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.achievements-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.achievement-item {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+
+	.achievement-number {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.5rem;
+		font-weight: 400;
+		min-width: 2rem;
+		color: #4523AE;
+	}
+
+	.achievement-text {
+		flex: 1;
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #333;
+	}
+
+	.mistakes-section {
+		margin-top: 2rem;
+	}
+
+	.mistakes-title {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.mistake-highlight {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: #dc2626;
+		margin: 0 0 1rem 0;
+	}
+
+	.mistakes-list {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+		padding-left: 1.5rem;
+	}
+
+	.mistakes-list li {
+		margin-bottom: 0.5rem;
+	}
+
+	.architecture-section {
+		margin-top: 2rem;
+	}
+
+	.architecture-title {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1.5rem 0;
+	}
+
+	.key-lesson {
+		margin-top: 2rem;
+		padding: 2rem;
+		background: white;
+		border-radius: 16px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+	}
+
+	.lesson-title {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.25rem;
+		font-weight: 400;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.key-lesson p {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #333;
+		margin: 0;
+	}
+
+	.resources-section {
+		margin-top: 2rem;
+	}
+
+	.resources-title {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	.resources-list {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		margin: 0;
+		padding-left: 1.5rem;
+	}
+
+	.resources-list li {
+		margin-bottom: 0.5rem;
+	}
+
+	.resource-link {
+		color: #4523AE;
+		text-decoration: underline;
+		transition: color 0.2s ease;
+	}
+
+	.resource-link:hover {
+		color: #6d28d9;
+	}
+
+	/* Text utility classes for lesson content */
+	.text-normal {
+		font-weight: 400;
+	}
+
+	.text-bold {
+		font-weight: 700;
 	}
 
 	/* Dark Mode Styles */
@@ -1508,9 +1506,13 @@ const loadTestResults = {
 		transition-delay: 0.15s;
 	}
 
-	/* TextDisperseBlack Dark Mode */
-	:global(.dark-mode .section-title span) {
+	/* LineHeading Dark Mode */
+	:global(.dark-mode .section-title h2) {
 		color: #ffffff !important;
+	}
+	
+	:global(.dark-mode .section-title .text-purple-600) {
+		color: #9D7FC1 !important;
 	}
 
 	/* Executive Summary Image Styles */

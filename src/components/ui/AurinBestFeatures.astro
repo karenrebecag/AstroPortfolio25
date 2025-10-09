@@ -1,0 +1,680 @@
+---
+// AurinBestFeatures.astro - Best features section with dark theme
+import { motion } from 'motion/react';
+---
+
+<!-- Aurin Best Features Section -->
+<section class="aurin-best-features">
+  <div class="features-container">
+    
+    <!-- Header Section -->
+    <div class="features-header">
+      <div class="header-title">
+        <div class="title-part-1 playfair-display-italic">LO MEJOR DE</div>
+        <div class="title-part-2">AURIN</div>
+      </div>
+      <div class="header-description">
+        Estas son las features relacionadas a notificaciones que adopté y ejecuté correctamente:
+      </div>
+    </div>
+
+    <!-- Main Features Grid -->
+    <div class="main-features-grid">
+      <motion.div 
+        className="feature-card"
+        whileHover={{ 
+          backgroundColor: "#7A2CC8",
+          y: -4,
+          boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+        }}
+        transition={{ duration: 0.05, ease: "easeOut" }}
+        client:load
+      >
+        <div class="feature-content">
+          <div class="feature-title">Notificaciones en tiempo real en la app</div>
+          <div class="feature-tech">FIRESTORE LISTENERS</div>
+        </div>
+        <motion.div 
+          className="feature-icon"
+          whileHover={{ rotate: 5 }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+        >
+          <div class="icon-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9,11 12,14 22,4"></polyline>
+              <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+            </svg>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      <motion.div 
+        className="feature-card"
+        whileHover={{ 
+          backgroundColor: "#7A2CC8",
+          y: -4,
+          boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+        }}
+        transition={{ duration: 0.05, ease: "easeOut" }}
+        client:load
+      >
+        <div class="feature-content">
+          <div class="feature-title">Emails automáticos a usuarios involucrados</div>
+          <div class="feature-tech">(Nodemailer + Gmail App Password)</div>
+        </div>
+        <motion.div 
+          className="feature-icon"
+          whileHover={{ rotate: 5 }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+        >
+          <div class="icon-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9,11 12,14 22,4"></polyline>
+              <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+            </svg>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      <motion.div 
+        className="feature-card"
+        whileHover={{ 
+          backgroundColor: "#7A2CC8",
+          y: -4,
+          boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+        }}
+        transition={{ duration: 0.05, ease: "easeOut" }}
+        client:load
+      >
+        <div class="feature-content">
+          <div class="feature-title">Sistema de cola con reintentos automáticos</div>
+          <div class="feature-tech">MAXIMA FIABILIDAD</div>
+        </div>
+        <motion.div 
+          className="feature-icon"
+          whileHover={{ rotate: 5 }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+        >
+          <div class="icon-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9,11 12,14 22,4"></polyline>
+              <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+            </svg>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      <motion.div 
+        className="feature-card"
+        whileHover={{ 
+          backgroundColor: "#7A2CC8",
+          y: -4,
+          boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+        }}
+        transition={{ duration: 0.05, ease: "easeOut" }}
+        client:load
+      >
+        <div class="feature-content">
+          <div class="feature-title">Templates HTML profesionales</div>
+          <div class="feature-tech">(Nodemailer)</div>
+        </div>
+        <motion.div 
+          className="feature-icon"
+          whileHover={{ rotate: 5 }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+        >
+          <div class="icon-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9,11 12,14 22,4"></polyline>
+              <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+            </svg>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+
+    <!-- Side Content Section -->
+    <div class="side-content">
+      <!-- Code Block -->
+      <div class="code-block">
+        <div class="code-content">
+          <span class="code-label">Tipos de notificaciones implementados:</span><br/>
+          <span class="code-text">task_created - Nueva tarea asignada<br/>
+          task_status_changed - Estado actualizado<br/>
+          group_message - Mensaje en chat de tarea<br/>
+          private_message - Mensaje directo<br/>
+          time_log - Registro de tiempo añadido<br/>
+          task_deleted - Tarea eliminada<br/>
+          task_archived - Tarea archivada</span>
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="resources-section">
+        <div class="resources-title">Recursos útiles:</div>
+        <div class="resources-links">
+          <a href="#" class="resource-link">Nodemailer Production Best Practices</a>
+          <a href="#" class="resource-link">Email Queue Systems with Bull</a>
+          <a href="#" class="resource-link">Gmail App Passwords Setup</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="tips-section">
+      <div class="tips-header">
+        <h2 class="tips-title">Tips Prácticos</h2>
+      </div>
+
+      <div class="tips-grid">
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Organiza por Features, No por Tipos de Archivo</div>
+            <div class="tip-description">En lugar de /components/, /hooks/, /utils/ separados, usa /features/tasks/, /features/messages/. Todo relacionado vive junto.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Documenta Decisiones Técnicas</div>
+            <div class="tip-description">Un diagrama simple salva horas de debugging. Usa ADRs (Architecture Decision Records) para decisiones arquitectónicas importantes.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Automatiza Tests de Features Críticas</div>
+            <div class="tip-description">Notificaciones, autenticación, drag & drop. Configura CI/CD con GitHub Actions desde el principio.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Usa Hooks Personalizados para Lógica de Negocio</div>
+            <div class="tip-description">Crea hooks que sean reutilizables y testeables para isolar errores.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Prioriza Experiencia, No Solo Estética</div>
+            <div class="tip-description">Micro-interactions con propósito, Loading states claros y significativos, Feedback instantáneo con optimistic updates</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Implementa Actualizaciones Optimistas</div>
+            <div class="tip-description">La UI responde al instante, sincronizas con backend después, y haces rollback si falla. Esto transforma la percepción de velocidad.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="tip-card"
+          whileHover={{ 
+            backgroundColor: "#7A2CC8",
+            y: -4,
+            boxShadow: "0 12px 32px rgba(122, 44, 200, 0.3)"
+          }}
+          transition={{ duration: 0.05, ease: "easeOut" }}
+          client:load
+        >
+          <div class="tip-content">
+            <div class="tip-title">Aprovecha TypeScript</div>
+            <div class="tip-description">Template literal types para rutas type-safe, operador satisfies para configs, generics para componentes reutilizables.</div>
+          </div>
+          <motion.div 
+            className="tip-icon"
+            whileHover={{ rotate: 5 }}
+            transition={{ duration: 0.05, ease: "easeOut" }}
+          >
+            <div class="icon-circle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,11 12,14 22,4"></polyline>
+                <path d="m21,3-6.5,18a.55.55,0,0,1-1,0L10,14,3,10.5a.55.55,0,0,1,0-1Z"></path>
+              </svg>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Aurin Best Features Section */
+  .aurin-best-features {
+    width: 100%;
+    background: #151515;
+    padding: 8rem 4.5rem;
+    position: relative;
+  }
+
+  .features-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  /* Header Section */
+  .features-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .header-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .title-part-1 {
+    color: white;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .title-part-2 {
+    color: white;
+    font-size: clamp(32px, 6vw, 64px);
+    font-family: var(--font-display, 'Median', serif);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .header-description {
+    width: 100%;
+    max-width: 416px;
+    color: #BBBBBB;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* Main Features Grid */
+  .main-features-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .feature-card {
+    height: auto;
+    min-height: 173px;
+    padding: 2.75rem 3rem;
+    background: #212121;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .feature-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .feature-title {
+    color: white;
+    font-size: clamp(20px, 3vw, 32px);
+    font-family: var(--font-display, 'Median', serif);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .feature-tech {
+    color: #BBBBBB;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .feature-card.featured .feature-tech {
+    color: #EEEEEE;
+  }
+
+  .feature-icon {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .icon-circle {
+    padding: 11px;
+    border-radius: 50px;
+    border: 1px solid #494949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+  /* Side Content */
+  .side-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .code-block {
+    padding: 2rem 1.5rem;
+    background: rgba(27, 27, 27, 0.3);
+    box-shadow: -2px 4px 10px rgba(145, 145, 145, 0.05);
+    border-radius: 20px;
+    border: 1px solid #404040;
+    backdrop-filter: blur(12.5px);
+  }
+
+  .code-content {
+    color: white;
+    font-size: clamp(12px, 1.8vw, 16px);
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .code-label {
+    font-weight: 600;
+  }
+
+  .resources-section {
+    text-align: right;
+  }
+
+  .resources-title {
+    color: white;
+    font-size: clamp(16px, 2.4vw, 20px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 700;
+    line-height: 1.33;
+    margin-bottom: 1rem;
+  }
+
+  .resources-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .resource-link {
+    color: white;
+    font-size: clamp(16px, 2.4vw, 20px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 700;
+    text-decoration: underline;
+    line-height: 1.33;
+    transition: color 0.3s ease;
+  }
+
+  .resource-link:hover {
+    color: #7A2CC8;
+  }
+
+  /* Tips Section */
+  .tips-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tips-title {
+    color: white;
+    font-size: clamp(28px, 5vw, 48px);
+    font-family: var(--font-display, 'Median', serif);
+    font-weight: 400;
+    line-height: 1.17;
+  }
+
+  .tips-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .tip-card {
+    height: auto;
+    min-height: 173px;
+    padding: 2.75rem 3rem;
+    background: #212121;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .tip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .tip-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .tip-title {
+    color: white;
+    font-size: clamp(20px, 3vw, 32px);
+    font-family: var(--font-display, 'Median', serif);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .tip-description {
+    color: #BBBBBB;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .tip-icon {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .aurin-best-features {
+      padding: 6rem 2rem;
+    }
+
+    .features-header {
+      gap: 2rem;
+      flex-direction: column;
+    }
+
+    .header-description {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .aurin-best-features {
+      padding: 4rem 1.5rem;
+    }
+
+    .features-container {
+      gap: 3rem;
+    }
+
+    .feature-card,
+    .tip-card {
+      padding: 2rem 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .feature-icon,
+    .tip-icon {
+      align-self: flex-end;
+    }
+
+    .resources-section {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .aurin-best-features {
+      padding: 3rem 1rem;
+    }
+
+    .feature-card,
+    .tip-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .code-block {
+      padding: 1.5rem 1rem;
+    }
+  }
+</style>

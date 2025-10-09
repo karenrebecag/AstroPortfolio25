@@ -1,6 +1,7 @@
 @import './fonts.css';
 @import './i18n-fonts.css';
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 /* Enhanced base styles using our custom fonts */
 @layer base {
@@ -71,6 +72,19 @@
   scrollbar-color: #d7ccfb transparent;
 }
 
+
+/* Playfair Display Font */
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.playfair-display-italic {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: italic;
+}
 
 /* Gradient utilities for footer */
 @layer utilities {

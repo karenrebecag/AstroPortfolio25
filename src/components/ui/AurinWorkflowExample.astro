@@ -1,0 +1,39 @@
+---
+// AurinWorkflowExample.astro - Example usage of AurinWorkflow component
+import AurinWorkflow from './AurinWorkflow.astro';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurin Workflow Example</title>
+</head>
+<body>
+  <AurinWorkflow />
+</body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f9f9f9;
+  }
+
+  :root {
+    --font-primary: 'InterTight', sans-serif;
+    --font-display: 'Median', serif;
+  }
+
+  .playfair-display-italic {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+</style>

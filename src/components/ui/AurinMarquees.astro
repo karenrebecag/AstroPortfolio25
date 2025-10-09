@@ -1,0 +1,130 @@
+---
+// AurinMarquees.astro
+import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
+---
+
+<section class="aurin-marquees-section">
+  <div class="aurin-marquees-section-container">
+    <div class="aurin-marquees-section-wrapper">
+      <AurinMarqueesIsland client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .aurin-marquees-section {
+    width: 100%;
+		background: hsl(0, 0%, 99%);
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
+    background-size: 20px 20px;
+    overflow: hidden;
+    position: relative;
+    padding: 8rem 0;
+  }
+
+  .aurin-marquees-section-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .aurin-marquees-section-wrapper {
+    width: 100%;
+    max-width: 1800px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    .aurin-marquees-section-wrapper::before,
+    .aurin-marquees-section-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .aurin-marquees-section-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, #ececec, transparent);
+    }
+
+    .aurin-marquees-section-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, #ececec, transparent);
+    }
+  }
+
+  :global(.aurin-marquees-container) {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.aurin-marquee-wrapper) {
+    position: absolute;
+    width: 200%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    transform-origin: center;
+    overflow: hidden;
+  }
+
+  :global(.aurin-first-marquee) {
+    background: #4523AE;
+    transform: rotate(3deg);
+    z-index: 1;
+  }
+
+  :global(.aurin-second-marquee) {
+    background: #1B1B1B;
+    transform: rotate(-3deg);
+    z-index: 2;
+  }
+
+  @media (max-width: 768px) {
+    .aurin-marquees-section {
+      background-size: 15px 15px;
+      padding: 3rem 0;
+    }
+    
+    :global(.aurin-marquees-container) {
+      height: 150px;
+    }
+    
+    :global(.aurin-marquee-wrapper) {
+      height: 60px;
+      width: 300%;
+    }
+    
+    :global(.aurin-first-marquee) {
+      transform: rotate(3deg);
+    }
+
+    :global(.aurin-second-marquee) {
+      transform: rotate(-3deg);
+    }
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.aurin-marquee-wrapper) {
+      animation: none;
+    }
+    
+    :global(.aurin-marquees-container) {
+      /* Provide static fallback when motion is reduced */
+      overflow: hidden;
+    }
+  }
+</style>
