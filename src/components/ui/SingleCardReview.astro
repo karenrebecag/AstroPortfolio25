@@ -1,0 +1,259 @@
+---
+// SingleCardReview.astro - Individual review card component
+// Following Astro best practices from Docu.md and typography system from global.css
+
+export interface Props {
+  review: string;
+  author: string;
+  position: string;
+  avatar?: string;
+  rotation?: number;
+  className?: string;
+}
+
+const { 
+  review,
+  author,
+  position,
+  avatar,
+  rotation = -5,
+  className = ""
+} = Astro.props;
+---
+
+<div 
+  class={`single-review-card ${className}`}
+  style={`transform: rotate(${rotation}deg);`}
+>
+  <!-- Review Text -->
+  <div class="review-text">
+    {review}
+  </div>
+
+  <!-- Author Info -->
+  <div class="author-info">
+    <div class="author-details">
+      <div class="author-position">{position}</div>
+      <div class="author-name">{author}</div>
+    </div>
+    
+    <!-- Avatar -->
+    <div class="author-avatar">
+      {avatar ? (
+        <img 
+          src={avatar} 
+          alt={`${author} profile picture`}
+          loading="lazy"
+        />
+      ) : (
+        <div class="avatar-placeholder"></div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .single-review-card {
+    width: 100%;
+    max-width: 413px;
+    height: auto;
+    min-height: 280px;
+    padding: 36px;
+    background: #EEEEEE;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    transform-origin: top left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .single-review-card:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Review Text - Using typography system */
+  .review-text {
+    width: 100%;
+    color: black;
+    font-family: var(--font-primary);
+    font-size: clamp(20px, 4vw, 24px);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-snug);
+    text-align: left;
+    word-wrap: break-word;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Author Info Container */
+  .author-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .author-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+  }
+
+  /* Author Position - Using typography system */
+  .author-position {
+    color: #494949;
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-normal);
+    word-wrap: break-word;
+  }
+
+  /* Author Name - Using typography system */
+  .author-name {
+    color: black;
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-normal);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    word-wrap: break-word;
+  }
+
+  /* Avatar Styling */
+  .author-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #C4C4C4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .avatar-placeholder::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: #999999;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+  }
+
+  .avatar-placeholder::after {
+    content: '';
+    width: 30px;
+    height: 20px;
+    background: #999999;
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    bottom: 8px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .single-review-card {
+      max-width: 100%;
+      padding: 24px;
+      min-height: 240px;
+    }
+
+    .review-text {
+      font-size: clamp(18px, 4vw, 20px);
+    }
+
+    .author-info {
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .single-review-card {
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .review-text {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .author-details {
+      gap: 8px;
+    }
+
+    .author-position {
+      font-size: 12px;
+    }
+
+    .author-name {
+      font-size: 14px;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .single-review-card {
+      transition: none;
+    }
+    
+    .single-review-card:hover {
+      transform: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .single-review-card {
+      border: 2px solid #000000;
+    }
+
+    .author-position {
+      color: #333333;
+    }
+
+    .avatar-placeholder {
+      background: #888888;
+    }
+  }
+</style>

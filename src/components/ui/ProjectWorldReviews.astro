@@ -1,0 +1,288 @@
+---
+// ProjectWorldReviews.astro - Client reviews section with world SVG
+// Following Astro Islands best practices from Docu.md
+
+import ProjectWorldReviewsIsland from './ProjectWorldReviewsIsland.tsx';
+import BrushDrawingIsland from './BrushDrawingIsland.tsx';
+import ReviewCardsStack from './ReviewCardsStack.astro';
+
+// Props for future customization
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  showReviews?: boolean;
+  className?: string;
+}
+
+const { 
+  title = "Client's reviews",
+  subtitle,
+  showReviews = true,
+  className = ""
+} = Astro.props;
+
+// No need for sample data anymore - ReviewCardsStack handles its own data
+---
+
+<section class="project-world-reviews">
+  <!-- Brush SVG Background - Animated with GSAP -->
+  <div class="brush-background">
+    <BrushDrawingIsland client:visible />
+  </div>
+
+  <div class="reviews-container">
+    <!-- Title Section -->
+    <div class="reviews-title-wrapper">
+      <div class="reviews-title">
+        <div class="title-clients playfair-display-italic">Client's</div>
+        <div class="title-reviews">reviews</div>
+      </div>
+    </div>
+
+    <!-- Center Content: World SVG + Review Card -->
+    <div class="center-content">
+      <!-- World SVG Background -->
+      <div class="world-svg-container">
+        <img 
+          src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/EarthSphere.svg" 
+          alt="World sphere representing global client reviews"
+          class="world-svg"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Review Cards Stack Centered -->
+      <div class="review-cards-center">
+        <ReviewCardsStack />
+      </div>
+    </div>
+
+    <!-- Reviews Content - Astro Island for interactivity -->
+    {showReviews && (
+      <div class="reviews-content">
+        <ProjectWorldReviewsIsland client:visible />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  /* Import island styles */
+  @import '../../styles/project-world-reviews.css';
+
+  .project-world-reviews {
+    width: 100%;
+    min-height: 100vh;
+    background: white;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Brush SVG Background */
+  .brush-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Brush SVG animation container styles moved to brush-drawing.css */
+
+  .reviews-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Title Styling */
+  .reviews-title-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .reviews-title {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    display: inline-flex;
+  }
+
+  .title-clients {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    color: black;
+    font-size: clamp(32px, 8vw, 64px);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    word-wrap: break-word;
+  }
+
+  .title-reviews {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    color: black;
+    font-size: clamp(32px, 8vw, 64px);
+    font-family: var(--font-primary, 'InterTight', sans-serif);
+    font-weight: 400;
+    line-height: 1;
+    word-wrap: break-word;
+  }
+
+  /* Center Content Layout */
+  .center-content {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  /* World SVG Styling */
+  .world-svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .world-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+    opacity: 0.8;
+  }
+
+  .world-svg:hover {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  /* Review Cards Stack Center Positioning */
+  .review-cards-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Reviews Content */
+  .reviews-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .project-world-reviews {
+      padding: 2rem 1rem;
+      min-height: 80vh;
+    }
+
+    .reviews-container {
+      gap: 2rem;
+    }
+
+    .reviews-title {
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .center-content {
+      max-width: 600px;
+    }
+
+    .world-svg-container {
+      max-width: 400px;
+    }
+
+    .review-cards-center {
+      max-width: 600px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .project-world-reviews {
+      padding: 1.5rem 1rem;
+    }
+
+    .center-content {
+      max-width: 400px;
+    }
+
+    .world-svg-container {
+      max-width: 300px;
+    }
+
+    .review-cards-center {
+      max-width: 350px;
+    }
+  }
+
+  /* Animation for future enhancements */
+  @media (prefers-reduced-motion: no-preference) {
+    .world-svg {
+      animation: subtle-float 6s ease-in-out infinite;
+    }
+
+    @keyframes subtle-float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .world-svg {
+      animation: none;
+    }
+    
+    .world-svg:hover {
+      transform: none;
+    }
+  }
+</style>

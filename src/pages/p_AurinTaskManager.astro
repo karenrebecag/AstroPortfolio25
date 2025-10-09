@@ -16,6 +16,7 @@ import AurinMarquees from '../components/ui/AurinMarquees.astro';
 import TechStack from '../components/ui/TechStack.astro';
 import AurinBestFeatures from '../components/ui/AurinBestFeatures.astro';
 import AurinWorkflow from '../components/ui/AurinWorkflow.astro';
+import ProjectWorldReviews from '../components/ui/ProjectWorldReviews.astro';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
@@ -682,6 +683,12 @@ const loadTestResults = {
 
 		<!-- Aurin Workflow Section -->
 		<AurinWorkflow />
+
+		<!-- Client Reviews Section -->
+		<ProjectWorldReviews 
+			title="Client's reviews"
+			showReviews={true}
+		/>
 
 		<!-- Live Application Section -->
 		<section class="content-section" id="live-app">
