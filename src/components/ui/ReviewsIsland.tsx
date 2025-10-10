@@ -6,7 +6,6 @@ import { useReviewsStore } from '../../stores/reviewsStore';
 import Toast from './Toast';
 import ReviewsSlider from './ReviewsSlider';
 import '../../styles/review-popup.css';
-import '../../styles/reviews-section.css';
 
 interface ToastData {
   id: string;
@@ -337,92 +336,72 @@ const ReviewsIsland: React.FC<ReviewsIslandProps> = ({
       const marqueeContainer = document.createElement('div');
       marqueeContainer.className = 'reviews-marquee';
 
-      // Card color variations
-      const cardColors = ['#C0D645', '#EEEEEE', '#FFFFFF', '#151515'];
-      const textColors = ['black', 'black', 'black', 'white'];
-      const positionColors = ['#494949', '#494949', '#494949', '#9ca3af'];
-      
-      // Función para crear una card de review con el diseño específico
+      // Función para crear una card de review con el diseño oscuro original (commit f072ceb)
       const createReviewCard = (review: Review, index: number) => {
         const card = document.createElement('div');
         card.className = 'review-card-marquee';
         
-        const colorIndex = index % 4;
-        const backgroundColor = cardColors[colorIndex];
-        const textColor = textColors[colorIndex];
-        const positionColor = positionColors[colorIndex];
-        
-        // Rotaciones alternadas para efecto dinámico
-        const rotations = ['2deg', '-1deg', '1.5deg', '-2deg'];
-        const rotation = rotations[index % 4];
-        
         card.innerHTML = `
           <div style="
-            width: 100%;
-            height: 100%;
-            padding: 36px;
-            transform: rotate(${rotation});
-            transform-origin: top left;
-            background: ${backgroundColor};
-            border-radius: 20px;
+            position: relative;
+            border: 2px solid transparent;
+            border-radius: 45px;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #141020 0%, rgb(30, 26, 32) 50%, #141020 100%);
+            background-clip: padding-box;
+            min-height: 300px;
+            display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-start;
-            display: inline-flex;
-            min-height: 280px;
-            max-width: 400px;
           ">
-            <!-- Review text -->
             <div style="
-              width: 100%;
-              text-box-trim: trim-both;
-              text-box-edge: cap alphabetic;
-              color: ${textColor};
-              font-size: 16px;
-              font-family: Inter, var(--font-primary);
-              font-weight: 400;
-              line-height: 22px;
-              word-wrap: break-word;
-              margin-bottom: 16px;
-            ">"${review.review}"</div>
+              position: absolute;
+              inset: 0;
+              border-radius: 45px;
+              background: linear-gradient(71deg, #333333, #ffffff, #333333);
+              z-index: -1;
+            "></div>
             
             <!-- Profile section -->
             <div style="
-              width: 100%;
-              justify-content: flex-start;
-              align-items: center;
-              gap: 16px;
-              display: inline-flex;
+              display: flex;
+              align-items: start;
+              margin-bottom: 1.5rem;
+              flex-direction: column;
             ">
-              <div style="
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                gap: 12px;
-                display: inline-flex;
+              <h3 style="
+                font-family: var(--font-display);
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #ffffff;
+                margin: 0;
+                letter-spacing: -0.02em;
+              ">${review.name}</h3>
+              ${review.position ? `<p style="
+                font-size: 0.75rem;
+                color: #9ca3af;
+                margin: 0.25rem 0 0 0;
+                font-weight: 400;
+              ">${review.position}</p>` : ''}
+            </div>
+            
+            <!-- Review description -->
+            <div style="
+              flex: 1;
+              overflow-y: auto;
+              max-height: 150px;
+            ">
+              <p style="
+                font-family: var(--font-primary);
+                font-size: 1rem;
+                text-align: left;
+                font-weight: 400;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.7);
+                margin: 0;
+                max-width: 100%;
               ">
-                <div style="
-                  text-box-trim: trim-both;
-                  text-box-edge: cap alphabetic;
-                  color: ${positionColor};
-                  font-size: 11px;
-                  font-family: Inter, var(--font-primary);
-                  font-weight: 400;
-                  line-height: 16px;
-                  word-wrap: break-word;
-                ">${review.position || 'Client'}</div>
-                <div style="
-                  text-box-trim: trim-both;
-                  text-box-edge: cap alphabetic;
-                  color: ${textColor};
-                  font-size: 13px;
-                  font-family: Inter, var(--font-primary);
-                  font-weight: 400;
-                  text-transform: uppercase;
-                  line-height: 18px;
-                  word-wrap: break-word;
-                ">${review.name}</div>
-              </div>
+                ${review.review}
+              </p>
             </div>
           </div>
         `;
@@ -612,7 +591,26 @@ const ReviewsIsland: React.FC<ReviewsIslandProps> = ({
     <>
       {renderLayout()}
       
-   
+      {/* Submit Review Button */}
+      {showSubmitButton && (
+        <div className="submit-review-button">
+          <div className="submit-review-btn-main">
+            <button
+              onClick={() => setShowPopup(true)}
+              className="review-submit-btn"
+              data-cursor-text="Submit Your Review"
+            >
+              <div className="review-btn-glow"></div>
+              <div className="review-btn-blob"></div>
+              <div className="review-btn-content">
+                <Star size={16} />
+                <span className="review-btn-text">Submit a Review</span>
+                <div className="review-btn-inner-glow"></div>
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Review Popup */}
       <AnimatePresence>

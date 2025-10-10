@@ -4,6 +4,7 @@ import TopMarquee from './TopMarquee.astro';
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
+import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
 
 const lang = getLangFromUrl(Astro.url);
@@ -23,6 +24,7 @@ const lang = getLangFromUrl(Astro.url);
     </nav>
     
     <div class="header-actions-wrapper">
+      <HeaderDarkModeToggleWrapper />
       <div class="contact-btn-wrapper">
         <a href="#contact" class="contact-link">
           <MainButton text={t('nav.contact', lang)} />
@@ -92,7 +94,12 @@ const lang = getLangFromUrl(Astro.url);
     background-repeat: repeat;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    transition: background-image 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease, transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: 
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     border-bottom: 1px solid rgba(204, 204, 204, 0.2);
   }
 
@@ -143,7 +150,9 @@ const lang = getLangFromUrl(Astro.url);
     color: #060314;
     font-family: var(--font-display);
     font-size: clamp(17px, 3.5vw, 28px);
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      transform 0.2s ease;
     cursor: pointer;
   }
 
@@ -162,7 +171,9 @@ const lang = getLangFromUrl(Astro.url);
     font-family: var(--font-display);
     text-decoration: none;
     font-size: clamp(11px, 2.1vw, 17px);
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      transform 0.2s ease;
     position: relative;
   }
 
@@ -196,7 +207,9 @@ const lang = getLangFromUrl(Astro.url);
     font-family: var(--font-display);
     text-decoration: none;
     font-size: clamp(11px, 2.1vw, 17px);
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+      transform 0.2s ease;
     position: relative;
     cursor: pointer;
     display: flex;
@@ -280,7 +293,9 @@ const lang = getLangFromUrl(Astro.url);
     width: 20px;
     height: 2px;
     background: #060314;
-    transition: all 0.3s ease;
+    transition: 
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      all 0.3s ease;
   }
 
   .menu-btn:hover span {
@@ -589,6 +604,31 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   /* Dark mode styles */
+  :global(.dark-mode .header-wrapper) {
+    background: rgba(17, 17, 17, 0.95);
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .header-wrapper.scrolled) {
+    background: rgba(17, 17, 17, 0.98);
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  :global(.dark-mode .logo) {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode .logo:hover) {
+    color: #e5e5e5;
+  }
+
   :global(.dark-mode) #projectsNavLink::before {
     color: #ffffff;
   }
@@ -603,6 +643,26 @@ const lang = getLangFromUrl(Astro.url);
 
   :global(.dark-mode) .nav a::after {
     background: #ffffff;
+  }
+
+  :global(.dark-mode) .nav-button {
+    color: #ffffff;
+  }
+
+  :global(.dark-mode) .nav-button:hover {
+    color: #e5e5e5;
+  }
+
+  :global(.dark-mode) .nav-button::after {
+    background: #ffffff;
+  }
+
+  :global(.dark-mode) .menu-btn span {
+    background: #ffffff;
+  }
+
+  :global(.dark-mode) .menu-btn:hover span {
+    background: #e5e5e5;
   }
 
   @media (max-width: 768px) {

@@ -50,6 +50,7 @@ const GLSLHillsBackground: React.FC<GLSLHillsBackgroundProps> = ({
   }>({});
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showGradient, setShowGradient] = useState(false);
   const { isVisible, isPaused, quality, setVisibility, setPaused } = useGLSLHillsStore();
 
   // Plane class with GLSL shaders
@@ -240,6 +241,9 @@ const GLSLHillsBackground: React.FC<GLSLHillsBackgroundProps> = ({
     sceneRef.current.camera.aspect = clientWidth / clientHeight;
     sceneRef.current.camera.updateProjectionMatrix();
     sceneRef.current.renderer.setSize(clientWidth, clientHeight);
+    
+    // Check if we should show gradient for large viewports
+    setShowGradient(window.innerWidth > 1800);
   };
 
   // Animation loop
@@ -291,6 +295,9 @@ const GLSLHillsBackground: React.FC<GLSLHillsBackgroundProps> = ({
   useEffect(() => {
     initScene();
     
+    // Initial check for gradient
+    setShowGradient(window.innerWidth > 1800);
+    
     return () => {
       // Cleanup Three.js resources
       if (sceneRef.current.animationId) {
@@ -335,6 +342,8 @@ const GLSLHillsBackground: React.FC<GLSLHillsBackgroundProps> = ({
         position: 'relative', 
         width, 
         height,
+        maxWidth: '1800px',
+        margin: '0 auto',
         overflow: 'hidden'
       }}
     >
@@ -351,6 +360,24 @@ const GLSLHillsBackground: React.FC<GLSLHillsBackgroundProps> = ({
           transition: 'opacity 0.5s ease-in-out'
         }}
       />
+      
+      {/* Gradiente sutil en los costados para viewports grandes */}
+      {showGradient && (
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(to right, rgba(255, 255, 255, 0.3) 0%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.3) 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+            opacity: isLoaded ? 1 : 0,
+            transition: 'opacity 0.5s ease-in-out'
+          }}
+        />
+      )}
       
       {/* Loading fallback */}
       {!isLoaded && (

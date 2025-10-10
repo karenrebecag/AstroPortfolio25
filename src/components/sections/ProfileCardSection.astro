@@ -2,6 +2,7 @@
 // ProfileCardSection - DRY component for profile card sections
 import { KarenProfileCard } from '../ui/ProfileCard.tsx';
 import '../../styles/ProfileCard.css';
+import { motion } from 'motion/react';
 
 export interface Props {
   className?: string;
@@ -13,20 +14,29 @@ const { className = '', variant = 'default' } = Astro.props;
 
 <!-- Profile Card Section -->
 <section class={`profile-card-section ${className}`}>
-  <div class="profile-card-wrapper">
+  <motion.div 
+    className="profile-card-wrapper"
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    client:load
+  >
     <KarenProfileCard client:load />
-  </div>
+  </motion.div>
 </section>
 
 <style>
   /* Profile Card Section Styles - DRY implementation */
   .profile-card-section {
     padding: 4rem 2rem;
-    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #f0f0f0;
+    background-color: #fdfdfd;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
     transition: border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 

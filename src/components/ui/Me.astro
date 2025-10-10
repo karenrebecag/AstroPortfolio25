@@ -9,6 +9,7 @@ import { TextDisperseBlack } from './TextDisperseBlack.tsx';
 import ExperienceMarqueeIsland from './ExperienceMarqueeIsland.tsx';
 import ExperienceSlider from './ExperienceSlider.tsx';
 import { motion } from 'motion/react';
+import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 
 const experienceData = [
   {
@@ -59,126 +60,156 @@ const experienceData = [
   <div class="story-grid w-full max-w-[1400px] mx-auto px-15 grid lg:grid-cols-2 gap-12">
 
     <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
-    <div class="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl">
+    <AnimatedMeHeader client:visible>
       <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
         <!-- Cube 3D Background -->
         <CubeBackground client:visible className="cube-3d-container" />
       </div>
-    </div>
+    </AnimatedMeHeader>
     
     <!-- Right Column: Scrolling Content -->
     <div class="scrolling-content-column">
       
       <!-- Content Section 1: Introduction -->
-      <div class="content-section">
+      <AnimatedMeSection client:visible delay={0.1}>
         <div class="relative z-10">
           <div class="relative">
             <!-- Purple circle positioned behind the heading -->
-            <div class="w-[244px] h-[238px] bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10"></div>
-            <h2 class="text-hero font-median mb-2 relative z-10" style="font-size: clamp(48px, 8vw, 96px); line-height: 0.75;">
-              <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
-            </h2>
+            <AnimatedMeElement client:visible delay={0.2} direction="right">
+              <div class="me-purple-circle bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10"></div>
+            </AnimatedMeElement>
+            <AnimatedMeElement client:visible delay={0.25}>
+              <h2 class="me-hero-title text-hero font-median mb-2 relative z-10">
+                <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+              </h2>
+            </AnimatedMeElement>
           </div>
-          <h3 class="text-heading-lg text-[#080808] font-secondary font-bold" style="font-size: clamp(28px, 4vw, 44px); line-height: 1.23;">
-            Based in Mexico City
-          </h3>
-          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6" style="font-size: 20px; line-height: 1.5;">
-            That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
-            who you are and what you stand for, but words that truly land with those that read them.
-          </p>
+          <AnimatedMeElement client:visible delay={0.3}>
+            <h3 class="me-heading-lg text-heading-lg text-[#080808] font-secondary font-bold">
+              Based in Mexico City
+            </h3>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.35}>
+            <p class="me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6">
+              That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
+              who you are and what you stand for, but words that truly land with those that read them.
+            </p>
+          </AnimatedMeElement>
         </div>
-      </div>
+      </AnimatedMeSection>
 
       <!-- Content Section 2: Experience -->
-      <div class="content-section">
+      <AnimatedMeSection client:visible delay={0.15}>
         <div class="relative z-10">
-          <h2 class="text-hero font-median mb-6" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
-            <span class="text-[#7350cc]">5+ Years</span><br />
-            <span class="text-[#080808]">Creating Digital</span><br />
-            <span class="text-[#080808]">Experiences</span>
-          </h2>
-          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-8" style="font-size: 20px; line-height: 1.5;">
-            From UI/UX design to full-stack development, I've worked with companies across the globe, 
-            creating seamless digital experiences that merge aesthetics with functionality.
-          </p>
-          <div class="flex items-start gap-9 button-container-me">
-            <div class="realism-button-wrapper" data-astro-cid-rjz7vswu="" style="transform: translate(0px, 0px);">
-              <a href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/" target="_blank" rel="noopener noreferrer" class="realism-button group" data-astro-cid-rjz7vswu="true" data-cursor-text="Go there!">
-                <div class="button-glow" data-astro-cid-rjz7vswu=""></div>
-                <div class="button-blob" data-astro-cid-rjz7vswu=""></div>
-                <div class="button-content" data-astro-cid-rjz7vswu="">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="color: white; margin-right: 8px;">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect width="4" height="12" x="2" y="9"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                  <span class="button-text" data-astro-cid-rjz7vswu="">Connect</span>
-                  <!-- Inner glow layer -->
-                  <div class="inner-glow" data-astro-cid-rjz7vswu=""></div>
-                </div>
-              </a>
+          <AnimatedMeElement client:visible delay={0.4}>
+            <h2 class="me-section-title text-hero font-median mb-6">
+              <span class="text-[#7350cc]">5+ Years</span><br />
+              <span class="text-[#080808]">Creating Digital</span><br />
+              <span class="text-[#080808]">Experiences</span>
+            </h2>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.45}>
+            <p class="me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-8">
+              From UI/UX design to full-stack development, I've worked with companies across the globe, 
+              creating seamless digital experiences that merge aesthetics with functionality.
+            </p>
+          </AnimatedMeElement>
+          <AnimatedMeButton client:visible delay={0.5}>
+            <div class="flex items-start gap-9 button-container-me">
+              <div class="realism-button-wrapper" data-astro-cid-rjz7vswu="" style="transform: translate(0px, 0px);">
+                <a href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/" target="_blank" rel="noopener noreferrer" class="realism-button group" data-astro-cid-rjz7vswu="true" data-cursor-text="Go there!">
+                  <div class="button-glow" data-astro-cid-rjz7vswu=""></div>
+                  <div class="button-blob" data-astro-cid-rjz7vswu=""></div>
+                  <div class="button-content" data-astro-cid-rjz7vswu="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="color: white; margin-right: 8px;">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect width="4" height="12" x="2" y="9"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    <span class="button-text" data-astro-cid-rjz7vswu="">Connect</span>
+                    <!-- Inner glow layer -->
+                    <div class="inner-glow" data-astro-cid-rjz7vswu=""></div>
+                  </div>
+                </a>
+              </div>
             </div>
-          </div>
+          </AnimatedMeButton>
         </div>
-      </div>
+      </AnimatedMeSection>
 
       <!-- Content Section 3: Stats -->
-      <div class="content-section">
+      <AnimatedMeSection client:visible delay={0.2}>
         <div class="relative z-10">
-          <h2 class="text-hero font-median mb-8" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
-            <span class="text-[#080808]">Numbers That</span><br />
-            <span class="text-[#7350cc]">Speak Volumes</span>
-          </h2>
+          <AnimatedMeElement client:visible delay={0.55}>
+            <h2 class="me-section-title text-hero font-median mb-8">
+              <span class="text-[#080808]">Numbers That</span><br />
+              <span class="text-[#7350cc]">Speak Volumes</span>
+            </h2>
+          </AnimatedMeElement>
           
           <!-- Stats Grid -->
           <div class="grid grid-cols-3 gap-8 mb-8">
-            <div class="text-center">
-              <div class="text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={8} delay={500} client:visible />
+            <AnimatedMeStats client:visible delay={0.6}>
+              <div class="text-center">
+                <div class="me-stats-number text-display text-[#080808] font-secondary mb-2">
+                  <Number value={8} delay={500} client:visible />
+                </div>
+                <div class="me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">Award winner</div>
               </div>
-              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Award winner</div>
-            </div>
+            </AnimatedMeStats>
             
-            <div class="text-center">
-              <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={1} delay={700} client:visible />
-                <span>.2k</span>
+            <AnimatedMeStats client:visible delay={0.65}>
+              <div class="text-center">
+                <div class="me-stats-number flex items-center justify-center text-display text-[#080808] font-secondary mb-2">
+                  <Number value={1} delay={700} client:visible />
+                  <span>.2k</span>
+                </div>
+                <div class="me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">Worldwide clients</div>
               </div>
-              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Worldwide clients</div>
-            </div>
+            </AnimatedMeStats>
             
-            <div class="text-center">
-              <div class="flex items-center justify-center text-display text-[#080808] font-secondary mb-2" style="font-size: 48px; line-height: 56px;">
-                <Number value={3} delay={900} client:visible />
-                <span>.5k</span>
+            <AnimatedMeStats client:visible delay={0.7}>
+              <div class="text-center">
+                <div class="me-stats-number flex items-center justify-center text-display text-[#080808] font-secondary mb-2">
+                  <Number value={3} delay={900} client:visible />
+                  <span>.5k</span>
+                </div>
+                <div class="me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">Jobs completed</div>
               </div>
-              <div class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 16px;">Jobs completed</div>
-            </div>
+            </AnimatedMeStats>
           </div>
           
-          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 18px; line-height: 1.5;">
-            Every project is an opportunity to push boundaries and create something extraordinary.
-          </p>
+          <AnimatedMeElement client:visible delay={0.75}>
+            <p class="me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">
+              Every project is an opportunity to push boundaries and create something extraordinary.
+            </p>
+          </AnimatedMeElement>
         </div>
-      </div>
+      </AnimatedMeSection>
 
       <!-- Content Section 4: Philosophy -->
-      <div class="content-section">
+      <AnimatedMeSection client:visible delay={0.25}>
         <div class="relative z-10">
-          <h2 class="text-hero font-median mb-6" style="font-size: clamp(36px, 6vw, 72px); line-height: 0.9;">
-            <span class="text-[#080808]">Design Is Not Just</span><br />
-            <span class="text-[#7350cc]">What It Looks Like</span><br />
-            <span class="text-[#080808]">It's How It Works</span>
-          </h2>
-          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-6" style="font-size: 20px; line-height: 1.5;">
-            I believe in creating digital experiences that are not only visually stunning but also 
-            functionally exceptional. Every pixel serves a purpose, every interaction tells a story.
-          </p>
-          <p class="text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary" style="font-size: 18px; line-height: 1.5;">
-            Ready to bring your vision to life? Let's create something extraordinary together.
-          </p>
+          <AnimatedMeElement client:visible delay={0.8}>
+            <h2 class="me-section-title text-hero font-median mb-6">
+              <span class="text-[#080808]">Design Is Not Just</span><br />
+              <span class="text-[#7350cc]">What It Looks Like</span><br />
+              <span class="text-[#080808]">It's How It Works</span>
+            </h2>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.85}>
+            <p class="me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-6">
+              I believe in creating digital experiences that are not only visually stunning but also 
+              functionally exceptional. Every pixel serves a purpose, every interaction tells a story.
+            </p>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.9}>
+            <p class="me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">
+              Ready to bring your vision to life? Let's create something extraordinary together.
+            </p>
+          </AnimatedMeElement>
         </div>
-      </div>
+      </AnimatedMeSection>
 
     </div>
   </div>
@@ -243,6 +274,8 @@ const experienceData = [
   /* Storytelling Scroll Container */
   .storytelling-scroll-container {
     background: #f9f9f9;
+    padding-top: 20rem;
+
     position: relative;
   }
 
@@ -282,6 +315,7 @@ const experienceData = [
   .scrolling-content-column {
     display: flex;
     flex-direction: column;
+    gap: 10rem;
   }
 
   .content-section {
@@ -311,6 +345,46 @@ const experienceData = [
   .story-grid {
     position: relative;
     z-index: 2;
+  }
+
+  /* Me Section Title Styles */
+  .me-hero-title {
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.75;
+  }
+
+  .me-section-title {
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 0.9;
+  }
+
+  .me-heading-lg {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.23;
+  }
+
+  .me-body-lg {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  .me-body-md {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .me-body-sm {
+    font-size: 16px;
+  }
+
+  .me-stats-number {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .me-purple-circle {
+    width: 244px;
+    height: 238px;
   }
 
   /* Responsive Design */
@@ -462,7 +536,7 @@ const experienceData = [
 
   .globe-container {
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
@@ -500,9 +574,10 @@ const experienceData = [
 
   /* Globe Title Styles - Behind Globe */
   .globe-title-wrapper {
-    padding: 50px 60px 510px 60px;
+    padding: 200px 60px 510px 60px;
     width: 100%;
     display: flex;
+    margin-top: 100px;
     justify-content: center;
     position: relative;
     z-index: 1;

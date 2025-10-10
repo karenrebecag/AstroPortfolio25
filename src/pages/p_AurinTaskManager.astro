@@ -24,6 +24,9 @@ import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
 import StickyScrollController from '../components/ui/StickyScrollController.tsx';
+import MoreProjects from '../components/ui/MoreProjects.astro';
+import ProjectGallerySection from '../components/ui/ProjectGallerySection.astro';
+import { aurinGalleryConfig } from '../config/aurinGalleryData.ts';
 import '../styles/global.css';
 import '../styles/shiki-themes.css';
 import '../styles/reviews-section.css';
@@ -525,56 +528,12 @@ const aurinReviews: Review[] = [
 		</section>
 
 
-		<!-- Project Gallery Section -->
-		<section class="content-section" id="gallery">
-			<div class="section-container">
-				<div class="section-header">
-					<div class="section-title">
-						<LineHeading client:visible>Gallery</LineHeading>
-					</div>
-					<div class="section-label">Visual Showcase</div>
-				</div>
-
-				<InView client:visible
-					variants={{
-						hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
-						visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-					}}
-					viewOptions={{ margin: "0px 0px -100px 0px" }}
-					transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
-				>
-					<div class="carousel-container">
-						<Carousel client:visible slides={[
-							{
-								title: "Aurin Dashboard",
-								button: "View Dashboard",
-								src: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin1.webp"
-							},
-							{
-								title: "Task Management",
-								button: "View Tasks",
-								src: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin2.webp"
-							},
-							{
-								title: "Analytics Overview",
-								button: "View Analytics",
-								src: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin3.webp"
-							},
-							{
-								title: "Team Collaboration",
-								button: "View Team",
-								src: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin4.webp"
-							},
-							{
-								title: "Project Settings",
-								button: "View Settings",
-								src: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/aurin5.webp"
-							}
-						]} />
-					</div>
-				</InView>
-			</div>
-		</section>
+		<!-- Project Gallery Section - Modularized -->
+		<ProjectGallerySection 
+			title={aurinGalleryConfig.title}
+			label={aurinGalleryConfig.label}
+			slides={aurinGalleryConfig.slides}
+		/>
 
 		<!-- The Great Lesson Section -->
 		<section class="content-section" id="modularization-lesson">
@@ -793,6 +752,12 @@ const aurinReviews: Review[] = [
 			</section>
 		</div>
 
+
+		<!-- More Projects Section -->
+		<MoreProjects />
+		
+
+
 		<!-- Live Application Section -->
 		<section class="content-section" id="live-app">
 			<div class="section-container">
@@ -904,11 +869,13 @@ const aurinReviews: Review[] = [
 
 		<ProfileCardSection />
 
+
 		<!-- Share Bar Section -->
 		<ShareBar />
 
 		<!-- Comments Section -->
 		<CommentsSection storyId="aurin-task-manager" />
+
 
 		</main>
 	</DarkModeContainer>
@@ -1585,7 +1552,6 @@ const aurinReviews: Review[] = [
 
 	.profile-card-wrapper {
 		width: 100%;
-		max-width: 800px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -2335,7 +2301,8 @@ const aurinReviews: Review[] = [
 	/* Reviews Section Styles */
 	.reviews-section {
 		width: 100%;
-		padding: 4rem 0;
+		max-width: 1800px;
+		margin: 0 auto;
 		background-color: white;
 		background-image: 
 			url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/EarthSphere.svg'),
@@ -2355,6 +2322,34 @@ const aurinReviews: Review[] = [
 			repeat;
 		position: relative;
 		overflow: hidden;
+	}
+
+	/* Gradiente sutil en los costados para viewports grandes */
+	@media (min-width: 1801px) {
+		.reviews-section::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(
+				to right,
+				rgba(255, 255, 255, 0.4) 0%,
+				transparent 15%,
+				transparent 85%,
+				rgba(255, 255, 255, 0.4) 100%
+			);
+			pointer-events: none;
+			z-index: 5;
+		}
+	}
+
+	/* Ocultar brush en viewports mayores a 1500px */
+	@media (min-width: 1501px) {
+		.brush-svg-overlay {
+			display: none !important;
+		}
 	}
 
 	.reviews-section__container {

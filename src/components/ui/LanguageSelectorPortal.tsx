@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { animate } from 'motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface Language {
   code: string;
@@ -119,84 +119,11 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
       dropdown.style.right = `${window.innerWidth - triggerRect.right}px`;
       dropdown.style.pointerEvents = 'auto';
       dropdown.style.zIndex = '10001';
-
-      // Animate in with stagger effect
-      animate(
-        dropdown,
-        {
-          opacity: [0, 1],
-          scale: [0.92, 1],
-          y: [-15, 0],
-        },
-        {
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        }
-      );
-
-      // Animate individual items with stagger
-      const items = dropdown.querySelectorAll('a');
-      items.forEach((item, index) => {
-        const element = item as HTMLElement;
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(10px)';
-
-        animate(
-          element,
-          {
-            opacity: [0, 1],
-            y: [10, 0],
-          },
-          {
-            duration: 0.3,
-            delay: index * 0.05,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }
-        );
-      });
     }
   };
 
   const closeDropdown = () => {
-    if (dropdownRef.current) {
-      // Animate items out first (reverse stagger)
-      const items = dropdownRef.current.querySelectorAll('a');
-      items.forEach((item, index) => {
-        const element = item as HTMLElement;
-        animate(
-          element,
-          {
-            opacity: 0,
-            y: -8,
-          },
-          {
-            duration: 0.15,
-            delay: (items.length - index - 1) * 0.02,
-            ease: [0.4, 0.0, 0.2, 1],
-          }
-        );
-      });
-
-      // Then animate container
-      animate(
-        dropdownRef.current,
-        {
-          opacity: 0,
-          scale: 0.92,
-          y: -15,
-        },
-        {
-          duration: 0.25,
-          delay: 0.1,
-          ease: [0.4, 0.0, 0.2, 1],
-          onComplete: () => {
-            setIsOpen(false);
-          }
-        }
-      );
-    } else {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -272,8 +199,12 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
   };
 
   const Dropdown = () => (
-    <div
+    <motion.div
       ref={dropdownRef}
+      initial={{ opacity: 0, scale: 0.92, y: -15 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.92, y: -15 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       style={{
         position: 'absolute',
         minWidth: '220px',
@@ -282,15 +213,27 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
         borderRadius: '0px',
         boxShadow: isDarkMode ? '4px 4px 0px rgba(0, 0, 0, 0.5)' : '4px 4px 0px #000000',
         overflow: 'hidden',
-        opacity: 0,
         pointerEvents: 'auto',
-        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       }}
     >
       {languages.map((language, index) => (
-        <a
+        <motion.a
           key={language.code}
           href={getLanguagePath(language.code)}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ 
+            duration: 0.4, 
+            delay: index * 0.1,
+            ease: "easeOut"
+          }}
+          whileHover={{ 
+            scale: 1.02, 
+            x: language.code !== currentLang ? 2 : 0,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.98 }}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -298,7 +241,6 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             padding: '14px 16px',
             color: isDarkMode ? '#ffffff' : '#000000',
             textDecoration: 'none',
-            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             borderBottom: index === languages.length - 1 ? 'none' : isDarkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid #000000',
             fontFamily: 'var(--font-primary)',
             position: 'relative',
@@ -309,39 +251,17 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
               fontWeight: 'var(--font-weight-bold)',
             }),
           }}
-          onMouseEnter={(e) => {
-            if (language.code !== currentLang) {
-              e.currentTarget.style.background = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : '#e0e0e0';
-              e.currentTarget.style.transform = 'translateX(2px)';
-              e.currentTarget.style.paddingLeft = '18px';
-              e.currentTarget.style.boxShadow = isDarkMode ? 'inset 2px 0 0 rgba(255, 255, 255, 0.3)' : 'inset 2px 0 0 #000000';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (language.code !== currentLang) {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.transform = 'translateX(0px)';
-              e.currentTarget.style.paddingLeft = '16px';
-              e.currentTarget.style.boxShadow = 'none';
-            }
-          }}
           onClick={() => {
             closeDropdown();
           }}
         >
-          <span style={{
-            fontSize: '18px',
-            transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
+          <motion.span 
+            style={{ fontSize: '18px' }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.2 }}
           >
             {language.flag}
-          </span>
+          </motion.span>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -366,7 +286,6 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
               opacity: 0.8,
               fontFamily: 'var(--font-primary)',
               fontStyle: 'normal',
-              transition: 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}>
               {language.greeting}
             </span>
@@ -378,21 +297,27 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
             letterSpacing: 'var(--tracking-wider)',
             fontFamily: 'var(--font-display)',
             opacity: 0.7,
-            transition: 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           }}>
             {language.code.toUpperCase()}
           </span>
-        </a>
+        </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 
   return (
     <>
       {/* Trigger Button */}
-      <button
+      <motion.button
         ref={triggerRef}
         onClick={toggleDropdown}
+        whileHover={{ 
+          scale: 1.02, 
+          x: 1, 
+          y: 1,
+          transition: { duration: 0.2 }
+        }}
+        whileTap={{ scale: 0.98 }}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -406,20 +331,9 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
           fontSize: 'var(--text-sm)',
           fontWeight: 'var(--font-weight-normal)',
           color: isDarkMode ? '#ffffff' : '#000000',
-          transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           letterSpacing: 'var(--tracking-wide)',
           textTransform: 'uppercase',
           boxShadow: isDarkMode ? '2px 2px 0px rgba(0, 0, 0, 0.5)' : '2px 2px 0px #000000',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = isDarkMode ? 'rgba(10, 8, 22, 0.95)' : '#f0f0f0';
-          e.currentTarget.style.transform = 'translate(1px, 1px)';
-          e.currentTarget.style.boxShadow = isDarkMode ? '1px 1px 0px rgba(0, 0, 0, 0.5)' : '1px 1px 0px #000000';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = isDarkMode ? 'rgba(10, 8, 22, 0.9)' : '#ffffff';
-          e.currentTarget.style.transform = 'translate(0px, 0px)';
-          e.currentTarget.style.boxShadow = isDarkMode ? '2px 2px 0px rgba(0, 0, 0, 0.5)' : '2px 2px 0px #000000';
         }}
       >
         <span style={{
@@ -430,20 +344,25 @@ const LanguageSelectorPortal: React.FC<LanguageSelectorPortalProps> = ({
         }}>
           {currentLang.toUpperCase()}
         </span>
-        <span
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           style={{
             fontSize: '10px',
-            transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
             opacity: 0.7,
           }}
         >
           ▼
-        </span>
-      </button>
+        </motion.span>
+      </motion.button>
 
       {/* Portal Dropdown */}
-      {portalContainer && isOpen && createPortal(<Dropdown />, portalContainer)}
+      {portalContainer && createPortal(
+        <AnimatePresence mode="wait">
+          {isOpen && <Dropdown />}
+        </AnimatePresence>, 
+        portalContainer
+      )}
     </>
   );
 };

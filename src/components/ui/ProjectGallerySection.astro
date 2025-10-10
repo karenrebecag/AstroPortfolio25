@@ -1,0 +1,146 @@
+---
+// ProjectGallerySection.astro - Modular gallery section component
+import { LineHeading } from './LineHeading.tsx';
+import { InView } from './InView.tsx';
+import { Carousel } from './Carousel.tsx';
+
+export interface GallerySlide {
+  title: string;
+  button: string;
+  src: string;
+}
+
+export interface Props {
+  className?: string;
+  title?: string;
+  label?: string;
+  slides: GallerySlide[];
+}
+
+const { 
+  className = '',
+  title = 'Gallery',
+  label = 'Visual Showcase',
+  slides = []
+} = Astro.props;
+---
+
+<!-- Project Gallery Section -->
+<section class={`content-section gallery-section ${className}`} id="gallery">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-title">
+        <LineHeading client:visible>{title}</LineHeading>
+      </div>
+      <div class="section-label">{label}</div>
+    </div>
+
+    <InView client:visible
+      variants={{
+        hidden: { opacity: 0, y: 30, filter: "blur(2px)" },
+        visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+      }}
+      viewOptions={{ margin: "0px 0px -100px 0px" }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
+    >
+      <div class="carousel-container">
+        <Carousel client:visible slides={slides} />
+      </div>
+    </InView>
+  </div>
+</section>
+
+<style>
+  /* Gallery Section Background */
+  .gallery-section {
+    background:#efefef ;
+    position: relative;
+    padding: 50px 0px;
+    overflow: hidden;
+  }
+
+  /* Optional: Add subtle pattern overlay */
+  .gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Gallery-specific styles */
+  .carousel-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 60px 200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 80px);
+    max-width: 1400px;
+    padding: 0 200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    margin-bottom: 16px;
+    color: rgb(27, 27, 27);
+  }
+
+  .section-label {
+    font-family: var(--font-primary);
+    font-size: clamp(14px, 2.5vw, 18px);
+    font-weight: var(--font-weight-medium);
+    color: rgb(27, 27, 27);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .section-header {
+      padding: 0 100px;
+    }
+    
+    .carousel-container {
+      padding: 60px 100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-header {
+      margin-bottom: clamp(30px, 8vw, 50px);
+      padding: 0 2rem;
+    }
+    
+    .carousel-container {
+      padding: 40px 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-header {
+      padding: 0 1rem;
+    }
+    
+    .carousel-container {
+      padding: 30px 1rem;
+    }
+  }
+</style>

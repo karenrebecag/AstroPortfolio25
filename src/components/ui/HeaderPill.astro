@@ -64,7 +64,7 @@ const lang = getLangFromUrl(Astro.url);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.4s ease-out;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
    
     overflow: hidden;
@@ -222,7 +222,7 @@ const lang = getLangFromUrl(Astro.url);
     font-family: var(--font-display);
     font-size: clamp(14px, 3vw, 20px);
     font-weight: 500;
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
     cursor: pointer;
   }
 
@@ -242,7 +242,7 @@ const lang = getLangFromUrl(Astro.url);
     text-decoration: none;
     font-size: clamp(10px, 1.8vw, 13px);
     font-weight: 400;
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
     position: relative;
   }
 
@@ -261,7 +261,7 @@ const lang = getLangFromUrl(Astro.url);
     height: 2px;
     background: #060314;
     border-radius: 1px;
-    transition: width 0.3s ease;
+    transition: width 0.4s ease-out;
   }
 
   .nav a:hover::after {
@@ -310,7 +310,7 @@ const lang = getLangFromUrl(Astro.url);
     padding: 8px;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -325,7 +325,7 @@ const lang = getLangFromUrl(Astro.url);
     width: 18px;
     height: 18px;
     color: #060314;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
   /* Dark mode styles for the toggle button */
@@ -399,7 +399,7 @@ const lang = getLangFromUrl(Astro.url);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.6s ease-out;
   }
 
   .mobile-menu.open {
@@ -421,7 +421,7 @@ const lang = getLangFromUrl(Astro.url);
     gap: 32px;
     text-align: center;
     transform: translateY(30px);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.6s ease-out;
   }
 
   .mobile-menu.open .mobile-nav {
@@ -435,7 +435,7 @@ const lang = getLangFromUrl(Astro.url);
     font-size: clamp(18px, 4vw, 24px);
     font-weight: 300;
     letter-spacing: 0.5px;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease-out;
     position: relative;
     opacity: 0;
     transform: translateY(20px);
@@ -481,7 +481,7 @@ const lang = getLangFromUrl(Astro.url);
     font-family: var(--font-display);
     font-size: clamp(14px, 3vw, 16px);
     cursor: pointer;
-    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: color 0.2s ease, transform 0.4s ease-out, box-shadow 0.4s ease-out;
     position: relative;
     overflow: hidden;
     margin-top: 24px;
@@ -685,6 +685,19 @@ const lang = getLangFromUrl(Astro.url);
 
     .menu-btn {
       display: flex;
+    }
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .top-marquee {
+      animation: none !important;
     }
   }
 </style>

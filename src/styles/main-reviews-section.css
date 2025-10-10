@@ -1,0 +1,318 @@
+/* MainReviewsSection.astro - Reviews Marquee Styles */
+/* Restored from commit f072ceb with original functionality */
+
+/* Desktop Reviews Marquee (visible >= 768px) */
+.reviews-marquee-desktop {
+  display: block;
+  width: 100%;
+}
+
+/* Mobile Reviews Slider (visible < 768px) */
+.reviews-slider-mobile {
+  display: none;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .reviews-marquee-desktop {
+    display: none;
+  }
+  
+  .reviews-slider-mobile {
+    display: block;
+  }
+}
+
+/* Reviews Container */
+.reviews-container {
+  width: 100%;
+  position: relative;
+}
+
+/* Reviews Marquee Wrapper */
+.reviews-marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+/* Reviews Marquee Container */
+.reviews-marquee {
+  display: flex;
+  animation: marqueeScroll 60s linear infinite;
+  will-change: transform;
+}
+
+.reviews-marquee:hover {
+  animation-duration: 120s;
+}
+
+/* Reviews Set (duplicated for seamless loop) */
+.reviews-set {
+  display: flex;
+  gap: 2rem;
+  flex-shrink: 0;
+}
+
+/* Individual Review Card in Marquee */
+.review-card-marquee {
+  width: 400px;
+  flex-shrink: 0;
+}
+
+/* Review Card Inner Content */
+.review-card-marquee .card-inner {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 45px;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #141022 0%, #141022 50%, #141022 100%);
+  background-clip: padding-box;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Gradient Border Effect */
+.review-card-marquee .gradient-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 45px;
+  background: linear-gradient(71deg, #333333, #ffffff, #333333);
+  z-index: -1;
+}
+
+/* Profile Section */
+.review-card-marquee .profile-section {
+  display: flex;
+  align-items: start;
+  margin-bottom: 1.5rem;
+  flex-direction: column;
+}
+
+.review-card-marquee .reviewer-name {
+  font-family: var(--font-display); /* Median */
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.review-card-marquee .reviewer-position {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0.25rem 0 0 0;
+  font-weight: 400;
+}
+
+/* Review Description */
+.review-card-marquee .review-description {
+  font-family: var(--font-primary); /* InterTight */
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 150px;
+}
+
+/* Submit Review Button Styles */
+.submit-review-button {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 5rem 0;
+}
+
+.submit-review-btn-main {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+}
+
+.submit-review-btn-main:hover {
+  transform: translateY(-2px);
+}
+
+/* Review Submit Button */
+.review-submit-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #4523AE 0%, #9D7FC1 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.review-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(69, 35, 174, 0.3);
+}
+
+.review-btn-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-btn-glow {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: 1;
+}
+
+.review-btn-blob {
+  position: absolute;
+  bottom: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background: #9D7FC1;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.review-submit-btn:hover .review-btn-blob {
+  width: 25px;
+  height: 25px;
+  bottom: -8px;
+  left: -8px;
+}
+
+.review-btn-inner-glow {
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, rgba(157, 127, 193, 0.1) 0%, rgba(69, 35, 174, 0.1) 100%);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+/* Marquee Animation Keyframes */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Accessibility - Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee {
+    animation: none;
+  }
+  
+  .reviews-marquee-wrapper {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  
+  .reviews-marquee {
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reviews-set {
+    gap: 1.5rem;
+  }
+
+  .review-card-marquee {
+    width: 350px;
+  }
+
+  .reviews-marquee {
+    animation-duration: 45s;
+  }
+
+  .review-card-marquee .card-inner {
+    padding: 2rem;
+  }
+
+  .review-card-marquee .reviewer-name {
+    font-size: 1.25rem;
+  }
+
+  .review-card-marquee .review-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .reviews-set {
+    gap: 1rem;
+  }
+
+  .review-card-marquee {
+    width: 300px;
+  }
+
+  .reviews-marquee {
+    animation-duration: 35s;
+  }
+
+  .review-card-marquee .card-inner {
+    padding: 1.5rem;
+  }
+
+  .review-card-marquee .profile-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .review-card-marquee .reviewer-name {
+    font-size: 1.1rem;
+  }
+
+  .review-card-marquee .review-description {
+    font-size: 0.85rem;
+  }
+
+  .submit-review-button {
+    padding: 0 0 3rem 0;
+  }
+
+  .review-submit-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

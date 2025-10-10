@@ -2,6 +2,7 @@
 // CommentsSection.astro - Wrapper component for comments
 import CommentsWithToast from './CommentsWithToast.tsx';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import { AnimatedCommentsWrapper, AnimatedCommentsHeader, AnimatedCommentsContent } from './AnimatedCommentsWrapper.tsx';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 
@@ -26,25 +27,26 @@ const {
 
 <!-- Comments Section with standardized styling -->
 <section class={`content-section comments-section ${className}`} id="comments">
-  <div class="section-container">
-      <div class="section-header">
-        <h2 class="section-title">
-          <TextDisperseBlack text={title} client:load />
-        </h2>
-        <p class="section-subtitle">{subtitle}</p>
-      </div>
+  <!-- Astro Islands Architecture: React Island for animations -->
+  <AnimatedCommentsWrapper client:visible>
+    <AnimatedCommentsHeader client:visible>
+      <h2 class="section-title">
+        <TextDisperseBlack text={title} client:load />
+      </h2>
+      <p class="section-subtitle">{subtitle}</p>
+    </AnimatedCommentsHeader>
     
     <!-- Reddit-style Comments Island - loads only when visible -->
-    <div class="comments-island-wrapper">
+    <AnimatedCommentsContent client:visible>
       <CommentsWithToast client:visible storyId={storyId} />
-    </div>
-  </div>
+    </AnimatedCommentsContent>
+  </AnimatedCommentsWrapper>
 </section>
 
 <style>
   .comments-section {
     /* Use the same background pattern as other sections */
-    background: #ffffff;
+    background: #fdfdfd;
     position: relative;
     overflow: hidden;
   }
@@ -52,10 +54,10 @@ const {
   .section-container {
     padding: 3em 0px;
     position: relative;
-    background-color: #ececec;
+    background-color: #fdfdfd;
     background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
     background-size: 20px 20px;
     transition: 
       background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),

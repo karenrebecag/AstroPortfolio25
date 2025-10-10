@@ -1,0 +1,526 @@
+---
+// MoreProjects.astro - Strip de case studies principales con selección aleatoria
+import MoreProjectsIsland from './MoreProjectsIsland.tsx';
+import MainButton from './MainButton.astro';
+import { motion } from 'motion/react';
+
+// Case Studies principales con thumbnails de hover de Projects.astro
+const projectData = [
+  {
+    id: "01",
+    title: "THIS PORTFOLIO",
+    description: "The very portfolio you're experiencing right now! A self-referential showcase built with Astro, React, and Three.js featuring custom cursor effects, magnetic buttons, flip text animations, and seamless interactions.",
+    tags: ["Astro", "React", "TypeScript", "Three.js", "Tailwind", "Motion", "Creative Coding"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/KarenBillboard.webp",
+    url: "/p_ThisPortfolio",
+    type: "Portfolio Website",
+    author: "Karen Ortiz",
+    readTime: "8 min"
+  },
+  {
+    id: "02", 
+    title: "Aurin Task Manager",
+    description: "Enterprise task management platform revolutionizing team collaboration with AI-powered automation and real-time synchronization. Features intelligent task assignment suggestions, smart notifications, and collaborative editing.",
+    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Google Gemini", "OpenAI", "Vercel"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Frame%202147225832.webp",
+    url: "/p_AurinTaskManager",
+    type: "Enterprise Platform",
+    author: "Karen Ortiz",
+    readTime: "12 min"
+  },
+  {
+    id: "03",
+    title: "OPINATOR Platform Redesign",
+    description: "Complete UX/UI redesign of OPINATOR's live forms platform, enhancing user experience and accessibility for better form response rates. Led a collaborative team of five to redesign the entire WebApp interface.",
+    tags: ["Figma", "React", "UX/UI Design", "Design System", "Frontend"],
+    image: "https://picsum.photos/300/300?random=13", 
+    url: "#",
+    type: "UX/UI Redesign",
+    author: "Karen Ortiz",
+    readTime: "10 min"
+  },
+  {
+    id: "04",
+    title: "AI INTEGRATIONS",
+    description: "Creative portfolio website with Three.js animations, responsive design, and optimized performance showcasing advanced AI integration capabilities.",
+    tags: ["Astro", "Three.js", "TypeScript", "Tailwind"],
+    image: "https://picsum.photos/300/300?random=17",
+    url: "#",
+    type: "AI Integration",
+    author: "Karen Ortiz",
+    readTime: "6 min"
+  },
+  {
+    id: "05",
+    title: "Mobile Apps",
+    description: "Cross-platform mobile application with real-time features, push notifications, and offline capabilities designed for optimal user experience.",
+    tags: ["React Native", "Firebase", "Redux", "Expo"],
+    image: "https://picsum.photos/300/300?random=21",
+    url: "#",
+    type: "Mobile Development",
+    author: "Karen Ortiz",
+    readTime: "9 min"
+  },
+  {
+    id: "06",
+    title: "AWE MX Platform",
+    description: "Global XR community platform promoting spatial computing and AI innovation in Mexico. Built with Astro for optimal performance and modern web standards.",
+    tags: ["Astro", "XR Community", "Events Platform", "TypeScript"],
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AWEMX.webp",
+    url: "https://awexr.mx/",
+    type: "Community Platform",
+    author: "Karen Ortiz",
+    readTime: "5 min"
+  }
+];
+---
+
+<section class="more-projects-section">
+  <div class="more-projects-container">
+    <!-- Header Section -->
+    <motion.div
+      className="more-projects-header"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:visible
+    >
+      <div class="header-content">
+        <div class="title-section">
+          <div class="title-wrapper">
+            <h2 class="title-press">More</h2>
+            <h2 class="title-corner">Projects</h2>
+          </div>
+        </div>
+        <MainButton text="View All" />
+      </div>
+    </motion.div>
+
+    <!-- Projects Grid - Astro Island Component -->
+    <motion.div
+      className="projects-grid-wrapper"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+      client:visible
+    >
+      <MoreProjectsIsland projectData={projectData} client:load />
+    </motion.div>
+  </div>
+</section>
+
+<style>
+  .more-projects-section {
+    width: 100%;
+    padding: 0 0 108px 0;
+    background: linear-gradient(to bottom, #f7f7f7 0%, #fdfdfd 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 95px;
+  }
+
+  .more-projects-container {
+    width: 100%;
+    display: flex;
+    padding-top: 5rem;
+    flex-direction: column;
+    gap: 95px;
+  }
+
+  /* Header Styles */
+  .more-projects-header {
+    width: 100%;
+    padding: 0 57px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-content {
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .title-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .title-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .title-press {
+    color: black;
+    font-size: 64px;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 64px;
+    margin: 0;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+  .title-corner {
+    color: black;
+    font-size: 64px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    line-height: 64px;
+    margin: 0;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+
+  /* Projects Grid Wrapper */
+  .projects-grid-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .more-projects-section {
+      padding: 0 0 80px 0;
+      gap: 70px;
+    }
+
+    .more-projects-container {
+      gap: 70px;
+    }
+
+    .more-projects-header {
+      padding: 0 40px;
+    }
+
+    :global(.projects-grid) {
+      padding: 0 40px;
+    }
+
+    .title-press,
+    .title-corner {
+      font-size: clamp(40px, 8vw, 64px);
+      line-height: clamp(40px, 8vw, 64px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .more-projects-section {
+      padding: 0 0 60px 0;
+      gap: 50px;
+    }
+
+    .more-projects-container {
+      gap: 50px;
+    }
+
+    .more-projects-header {
+      padding: 0 20px;
+    }
+
+    :global(.projects-grid) {
+      padding: 0 20px;
+    }
+
+    .header-content {
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .title-wrapper {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .title-press,
+    .title-corner {
+      font-size: clamp(32px, 10vw, 48px);
+      line-height: clamp(32px, 10vw, 48px);
+    }
+
+    .all-articles-btn {
+      align-self: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .more-projects-section {
+      padding: 0 0 40px 0;
+      gap: 40px;
+    }
+
+    .more-projects-container {
+      gap: 40px;
+    }
+
+    .more-projects-header {
+      padding: 0 16px;
+    }
+
+    :global(.projects-grid) {
+      padding: 0 16px;
+    }
+
+    .title-press,
+    .title-corner {
+      font-size: clamp(28px, 12vw, 40px);
+      line-height: clamp(28px, 12vw, 40px);
+    }
+  }
+
+  /* Projects Grid Styles */
+  :global(.projects-grid) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    padding: 0 57px;
+    flex-wrap: nowrap;
+  }
+
+  :global(.project-card) {
+    flex: 1;
+    max-width: 368px;
+    height: 422px;
+    padding: 24px 12px;
+    border: 1px solid transparent;
+		background-image: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    overflow: hidden;
+    backdrop-filter: blur(10px) brightness(0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+  }
+
+
+  /* Mostrar 4 cards por defecto */
+  :global(.project-card:nth-child(1)),
+  :global(.project-card:nth-child(2)),
+  :global(.project-card:nth-child(3)),
+  :global(.project-card:nth-child(4)) {
+    display: flex;
+  }
+
+  :global(.project-card:hover) {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.046);
+  }
+
+  /* Card Header */
+  :global(.card-header) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 130px;
+  }
+
+  :global(.author-section) {
+    flex: 2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+  }
+
+  :global(.avatar) {
+    width: 32px;
+    height: 32px;
+    background: #C4C4C4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  :global(.avatar-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  :global(.avatar-initials) {
+    color: white;
+    font-size: 12px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  :global(.author-info) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  :global(.editor-label) {
+    color: #808080;
+    font-size: 12px;
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    line-height: 16px;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+  :global(.author-name) {
+    color: black;
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    text-transform: uppercase;
+    line-height: 20px;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+  :global(.read-time-section) {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+  }
+
+  :global(.time-icon) {
+    width: 16px;
+    height: 16px;
+    color: #808080;
+  }
+
+  :global(.read-time) {
+    color: #494949;
+    font-size: 12px;
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    text-transform: uppercase;
+    line-height: 16px;
+    text-align: right;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+  /* Card Image */
+  :global(.card-image) {
+    width: 100%;
+    flex: 1;
+    min-height: 200px;
+    background: #F2EFEF;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  :global(.image-overlay) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+
+  /* Card Title */
+  :global(.card-title) {
+    width: 100%;
+    color: black;
+    font-size: 24px;
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-tight);
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    margin: 0;
+  }
+
+
+  /* Responsive Design for Projects Grid */
+  
+  /* En 1400px ocultar la cuarta card - mostrar 3 cards */
+  @media (max-width: 1400px) {
+    :global(.project-card:nth-child(4)) {
+      display: none;
+    }
+    
+    :global(.project-card) {
+      max-width: 450px;
+    }
+  }
+
+  /* En 1024px ocultar la tercera card - mostrar 2 cards */
+  @media (max-width: 1024px) {
+    :global(.project-card:nth-child(3)) {
+      display: none;
+    }
+    
+    :global(.project-card) {
+      max-width: 600px;
+    }
+    
+    :global(.projects-grid) {
+      gap: 40px;
+    }
+  }
+
+  /* En 650px ocultar la segunda card - mostrar 1 card */
+  @media (max-width: 650px) {
+    :global(.project-card:nth-child(2)) {
+      display: none;
+    }
+    
+    :global(.project-card) {
+      max-width: 100%;
+    }
+    
+    :global(.projects-grid) {
+      gap: 0;
+    }
+  }
+
+  /* Ajustes adicionales para móvil */
+  @media (max-width: 480px) {
+    :global(.projects-grid) {
+      padding: 0 20px;
+    }
+    
+    :global(.project-card) {
+      padding: 16px;
+      gap: 20px;
+      height: 380px;
+    }
+
+    :global(.card-title) {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { animate } from 'motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface Project {
   id: number;
@@ -108,7 +108,7 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
     // Wait for next frame to ensure dropdown is rendered
     await new Promise(resolve => requestAnimationFrame(resolve));
 
-    if (dropdownRef.current) {
+    if (dropdownRef.current && triggerRef.current) {
       // Find the projects nav link to position relative to it
       const projectsNavLink = document.querySelector('#projectsNavLink');
       if (projectsNavLink) {
@@ -121,84 +121,11 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
         dropdown.style.pointerEvents = 'auto';
         dropdown.style.zIndex = '10001';
       }
-
-      // Animate in with stagger effect
-      animate(
-        dropdownRef.current,
-        {
-          opacity: [0, 1],
-          scale: [0.92, 1],
-          y: [-15, 0],
-        },
-        {
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        }
-      );
-
-      // Animate individual items with stagger
-      const items = dropdownRef.current.querySelectorAll('a');
-      items.forEach((item: Element, index: number) => {
-        const element = item as HTMLElement;
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(10px)';
-
-        animate(
-          element,
-          {
-            opacity: [0, 1],
-            y: [10, 0],
-          },
-          {
-            duration: 0.3,
-            delay: index * 0.05,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }
-        );
-      });
     }
   };
 
   const closeDropdown = () => {
-    if (dropdownRef.current) {
-      // Animate items out first (reverse stagger)
-      const items = dropdownRef.current.querySelectorAll('a');
-      items.forEach((item, index) => {
-        const element = item as HTMLElement;
-        animate(
-          element,
-          {
-            opacity: 0,
-            y: -8,
-          },
-          {
-            duration: 0.15,
-            delay: (items.length - index - 1) * 0.02,
-            ease: [0.4, 0.0, 0.2, 1],
-          }
-        );
-      });
-
-      // Then animate container
-      animate(
-        dropdownRef.current,
-        {
-          opacity: 0,
-          scale: 0.92,
-          y: -15,
-        },
-        {
-          duration: 0.25,
-          delay: 0.1,
-          ease: [0.4, 0.0, 0.2, 1],
-          onComplete: () => {
-            setIsOpen(false);
-          }
-        }
-      );
-    } else {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -221,50 +148,53 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
   };
 
   const Dropdown = () => (
-    <div
+    <motion.div
       ref={dropdownRef}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       style={{
         position: 'absolute',
         minWidth: '280px',
         maxWidth: '320px',
-        background: '#ffffff',
-        border: '2px solid #000000',
+        background: isDarkMode ? 'rgba(10, 8, 22, 0.95)' : '#ffffff',
+        border: isDarkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid #000000',
         borderRadius: '0px',
-        boxShadow: '4px 4px 0px #000000',
+        boxShadow: isDarkMode ? '4px 4px 0px rgba(0, 0, 0, 0.5)' : '4px 4px 0px #000000',
         overflow: 'hidden',
-        opacity: 0,
         pointerEvents: 'auto',
-        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       }}
     >
       {projects.map((project, index) => (
-        <a
+        <motion.a
           key={project.id}
           href={getProjectUrl(project)}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ 
+            duration: 0.6, 
+            delay: index * 0.1,
+            ease: "easeOut"
+          }}
+          whileHover={{ 
+            scale: 1.02, 
+            x: 2,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.98 }}
           style={{
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
             padding: '16px 18px',
-            color: '#000000',
+            color: isDarkMode ? '#ffffff' : '#000000',
             textDecoration: 'none',
-            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            borderBottom: index === projects.length - 1 ? 'none' : '2px solid #000000',
+            borderBottom: index === projects.length - 1 ? 'none' : isDarkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid #000000',
             fontFamily: 'var(--font-primary)',
             position: 'relative',
             overflow: 'hidden',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#f0f0f0';
-            e.currentTarget.style.transform = 'translateX(2px)';
-            e.currentTarget.style.paddingLeft = '20px';
-            e.currentTarget.style.boxShadow = 'inset 2px 0 0 #000000';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.transform = 'translateX(0px)';
-            e.currentTarget.style.paddingLeft = '18px';
-            e.currentTarget.style.boxShadow = 'none';
           }}
           onClick={() => {
             closeDropdown();
@@ -277,7 +207,7 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
           }}>
             <span style={{
               fontSize: '12px',
-              color: '#666',
+              color: isDarkMode ? '#cccccc' : '#666',
               fontWeight: 'var(--font-weight-medium)',
               letterSpacing: 'var(--tracking-wider)',
               fontFamily: 'var(--font-display)',
@@ -305,13 +235,12 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
           </div>
           <p style={{
             fontSize: 'var(--text-xs)',
-            color: '#666',
+            color: isDarkMode ? '#cccccc' : '#666',
             fontWeight: 'var(--font-weight-normal)',
             letterSpacing: 'var(--tracking-normal)',
             opacity: 0.8,
             fontFamily: 'var(--font-primary)',
             fontStyle: 'normal',
-            transition: 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             margin: 0,
             lineHeight: '1.4',
             display: '-webkit-box',
@@ -347,16 +276,16 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
             {project.tags.length > 3 && (
               <span style={{
                 fontSize: '10px',
-                color: '#666',
+                color: isDarkMode ? '#999999' : '#666',
                 fontFamily: 'var(--font-primary)',
               }}>
                 +{project.tags.length - 3}
               </span>
             )}
           </div>
-        </a>
+        </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 
   return (
@@ -380,7 +309,12 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
       </button>
 
       {/* Portal Dropdown */}
-      {portalContainer && isOpen && createPortal(<Dropdown />, portalContainer)}
+      {portalContainer && createPortal(
+        <AnimatePresence mode="wait">
+          {isOpen && <Dropdown />}
+        </AnimatePresence>, 
+        portalContainer
+      )}
     </>
   );
 };

@@ -1,6 +1,7 @@
 ---
 // AurinBestFeatures.astro - Best features section with dark theme
 import { motion } from 'motion/react';
+import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideContent, AnimatedAurinTipsSection } from './AnimatedAurinWrapper.tsx';
 ---
 
 <!-- Aurin Best Features Section -->
@@ -8,7 +9,7 @@ import { motion } from 'motion/react';
   <div class="features-container">
     
     <!-- Header Section -->
-    <div class="features-header">
+    <AnimatedAurinHeader client:visible>
       <div class="header-title">
         <div class="title-part-1 playfair-display-italic">LO MEJOR DE</div>
         <div class="title-part-2">AURIN</div>
@@ -16,10 +17,10 @@ import { motion } from 'motion/react';
       <div class="header-description">
         Estas son las features relacionadas a notificaciones que adopté y ejecuté correctamente:
       </div>
-    </div>
+    </AnimatedAurinHeader>
 
     <!-- Main Features Grid -->
-    <div class="main-features-grid">
+    <AnimatedAurinFeaturesGrid client:visible>
       <motion.div 
         className="feature-card"
         whileHover={{ 
@@ -131,10 +132,10 @@ import { motion } from 'motion/react';
           </div>
         </motion.div>
       </motion.div>
-    </div>
+    </AnimatedAurinFeaturesGrid>
 
     <!-- Side Content Section -->
-    <div class="side-content">
+    <AnimatedAurinSideContent client:visible>
       <!-- Code Block -->
       <div class="code-block">
         <div class="code-content">
@@ -158,10 +159,10 @@ import { motion } from 'motion/react';
           <a href="#" class="resource-link">Gmail App Passwords Setup</a>
         </div>
       </div>
-    </div>
+    </AnimatedAurinSideContent>
 
     <!-- Tips Section -->
-    <div class="tips-section">
+    <AnimatedAurinTipsSection client:visible>
       <div class="tips-header">
         <h2 class="tips-title">Tips Prácticos</h2>
       </div>
@@ -363,7 +364,7 @@ import { motion } from 'motion/react';
           </motion.div>
         </motion.div>
       </div>
-    </div>
+    </AnimatedAurinTipsSection>
 
   </div>
 </section>

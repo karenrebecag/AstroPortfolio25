@@ -1,19 +1,31 @@
 ---
 // ShareBar Component - Social Media Sharing Strip
 import { ShareBarIsland } from './ShareBarIsland';
+import { motion } from 'motion/react';
 ---
 
-<div class="share-bar">
+<motion.div 
+  className="share-bar"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+  client:load
+>
   <ShareBarIsland client:visible />
-</div>
+</motion.div>
 
 <style>
   .share-bar {
     position: relative;
     width: 100%;
+    padding: 2rem 0;
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    background-color: #fdfdfd;
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
     z-index: 50;
   }
 
@@ -23,13 +35,14 @@ import { ShareBarIsland } from './ShareBarIsland';
     max-width: 600px;
     background: transparent;
     backdrop-filter: blur(25px);
+    
     -webkit-backdrop-filter: blur(25px);
     border-radius: 50px;
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.2);
     overflow: hidden;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
   }
 
   :global(.share-content) {

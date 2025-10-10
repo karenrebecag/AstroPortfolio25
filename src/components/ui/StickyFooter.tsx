@@ -170,10 +170,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             {showSpaceInvaders ? (
                                 <motion.div
                                     key="space-invaders"
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
-                                    transition={{ duration: 0.5 }}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -30 }}
+                                    transition={{ duration: 0.6, ease: "easeOut" }}
                                     className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
                                 >
                                     <SpaceInvadersIsland onExit={exitSpaceInvaders} />
@@ -181,10 +181,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                             ) : (
                                 <motion.div
                                     key="normal-footer"
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
-                                    transition={{ duration: 0.5 }}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -30 }}
+                                    transition={{ duration: 0.6, ease: "easeOut" }}
                                     className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-between gap-5 py-8 relative z-20"
                                 >
                             <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
@@ -211,26 +211,38 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
                                             {socialLinks.map((link, index) => (
-                                                <a
+                                                <motion.a
                                                     key={link.title}
                                                     href={link.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
+                                                    className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
                                                     title={link.title}
                                                     data-cursor-text={t.visitSocial.replace('{platform}', link.title)}
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    whileInView={{ opacity: 1, scale: 1 }}
+                                                    viewport={{ once: true, margin: "-100px" }}
+                                                    transition={{ duration: 0.4, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
+                                                    whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                    whileTap={{ scale: 0.95 }}
                                                 >
                                                     <link.icon className="w-6 h-6 text-white" />
-                                                </a>
+                                                </motion.a>
                                             ))}
-                                            <button
+                                            <motion.button
                                                 onClick={copyToClipboard}
-                                                className="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
                                                 title={t.copyLink}
                                                 data-cursor-text={t.copyLink}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.6, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                whileTap={{ scale: 0.95 }}
                                             >
                                                 <Link className="w-6 h-6 text-white" />
-                                            </button>
+                                            </motion.button>
                                         </div>
                                     </div>
                                 </AnimatedContainer>
@@ -278,14 +290,17 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                             <h3 className="text-white font-primary text-lg font-semibold">
                                                 {t.sitePerformance}
                                             </h3>
-                                            <button
+                                            <motion.button
                                                 onClick={() => window.open('https://guileless-douhua-b2ff53.netlify.app/karen-ortiz-portfolio/', '_blank')}
-                                                className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+                                                className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 group"
                                                 title={t.viewReportTitle}
                                                 data-cursor-text={t.viewReport}
+                                                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                whileTap={{ scale: 0.95 }}
+                                                transition={{ duration: 0.2 }}
                                             >
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-white group-hover:text-white/90" />
-                                            </button>
+                                            </motion.button>
                                         </div>
                                     </div>
                                     <SpeedlifyStats 
@@ -398,32 +413,33 @@ type AnimatedContainerProps = {
     children?: React.ReactNode;
     delay?: number;
     className?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
+};
 
-function AnimatedContainer({
+const AnimatedContainer = React.memo(({
     delay = 0.1,
     children,
     className,
-    ...props
-}: AnimatedContainerProps) {
+}: AnimatedContainerProps) => {
     const shouldReduceMotion = useReducedMotion();
 
     if (shouldReduceMotion) {
-        return <div className={className} {...props}>{children}</div>;
+        return <div className={className}>{children}</div>;
     }
 
     return (
         <motion.div
-            initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
-            whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay, duration: 0.8 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ delay, duration: 0.6, ease: "easeOut" }}
             className={className}
         >
             {children}
         </motion.div>
     );
-}
+});
+
+AnimatedContainer.displayName = 'AnimatedContainer';
 
 // Añadir estilos globales para el texto gigante y textura de grid
 if (typeof document !== 'undefined') {

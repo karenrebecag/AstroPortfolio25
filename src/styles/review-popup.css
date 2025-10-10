@@ -74,27 +74,50 @@
 
 /* Form */
 .review-popup-form {
-  display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 
-/* Form Fields */
-.review-form-field {
+/* Form Styles */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Row */
+.review-form-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Form Group */
+.review-form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex: 1;
 }
 
+/* Form Labels */
 .review-form-label {
-  font-family: var(--font-secondary);
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: #374151;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  font-family: var(--font-primary);
+  margin-bottom: 0.5rem;
+}
+
+.review-form-label svg {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+  flex-shrink: 0;
 }
 
 .review-form-input,
@@ -126,6 +149,26 @@
 }
 
 /* Character Counter */
+.review-char-count {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
+
+.review-char-count span {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-family: var(--font-primary);
+}
+
+.review-char-warning {
+  color: #f59e0b !important;
+}
+
+.review-char-error {
+  color: #ef4444 !important;
+}
+
 .review-char-counter {
   font-size: 0.75rem;
   color: #9ca3af;
@@ -642,9 +685,13 @@
     font-size: 1.5rem;
   }
   
-  .review-avatar {
-    width: 70px;
-    height: 70px;
+  .review-form-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .review-form-group {
+    width: 100%;
   }
   
   .review-submit-section {
@@ -652,8 +699,7 @@
     gap: 0.75rem;
   }
   
-  .review-submit-btn,
-  .review-cancel-btn {
+  .review-submit-btn {
     width: 100%;
     justify-content: center;
   }

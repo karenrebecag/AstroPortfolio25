@@ -1,0 +1,76 @@
+---
+// Header Dark Mode Toggle Wrapper
+import { HeaderDarkModeToggle } from './HeaderDarkModeToggle.tsx';
+---
+
+<div class="header-dark-mode-wrapper">
+  <HeaderDarkModeToggle client:load />
+</div>
+
+<style>
+  .header-dark-mode-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.header-dark-mode-toggle) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+
+  :global(.header-dark-mode-toggle:hover) {
+    background: rgba(69, 35, 174, 0.1);
+  }
+
+  :global(.toggle-switch) {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    box-shadow: 
+      inset 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.toggle-indicator) {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.toggle-icon) {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2.5;
+  }
+
+  /* Dark mode styles */
+  :global(.dark-mode .header-dark-mode-toggle:hover) {
+    background: rgba(157, 127, 193, 0.1);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header-dark-mode-wrapper {
+      display: none; /* Hide on mobile to save space */
+    }
+  }
+</style>
+

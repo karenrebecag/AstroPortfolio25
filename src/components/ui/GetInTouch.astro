@@ -2,7 +2,7 @@
 // GetInTouch.astro - Sección de contacto con formulario interactivo (Dark Mode)
 import GetInTouchIsland from './GetInTouchIsland.tsx';
 import { DitheringShader } from '../three/DitheringShader.tsx';
-import ReviewsIsland from './ReviewsIsland.tsx';
+import ServiceReviewsIsland from './ServiceReviewsIsland.tsx';
 import { getLangFromUrl } from '../../i18n/utils.js';
 
 // Detectar idioma de la URL actual
@@ -35,7 +35,7 @@ const lang = getLangFromUrl(Astro.url);
   
   <!-- Reviews Section -->
   <div class="reviews-container">
-    <ReviewsIsland client:visible reviews={[]} />
+    <ServiceReviewsIsland client:visible />
   </div>
 </section>
 
@@ -641,6 +641,44 @@ const lang = getLangFromUrl(Astro.url);
     padding: 0px 2rem 0 2rem;
     position: relative;
     z-index: 2;
+  }
+
+  /* Desktop/Mobile Reviews Layout */
+  :global(.reviews-marquee-desktop) {
+    display: block;
+    width: 100%;
+  }
+
+  :global(.reviews-slider-mobile) {
+    display: none;
+    width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    :global(.reviews-marquee-desktop) {
+      display: none;
+    }
+    
+    :global(.reviews-slider-mobile) {
+      display: block;
+    }
+  }
+
+  /* Submit Review Button */
+  :global(.submit-review-button) {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 5rem 0;
+  }
+
+  :global(.submit-review-btn-main) {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.2s ease-out;
+  }
+
+  :global(.submit-review-btn-main:hover) {
+    transform: translateY(-2px);
   }
 
   /* Reviews Marquee */

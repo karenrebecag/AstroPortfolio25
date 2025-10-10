@@ -125,17 +125,17 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
             <div className="fixed bottom-0 h-[800px] w-full">
                 <div className="sticky top-[calc(100vh-800px)] h-full overflow-y-auto">
                     <div className="white-footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-gray-900" style={{ 
-                        backgroundColor: '#ffffff',
+                        backgroundColor: '#fdfdfd',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.08), 0 -10px 20px rgba(0, 0, 0, 0.04)'
                     }}>
                         
                         {/* DitheringShader Background Scene */}
-                        <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(0.95)' }}>
+                        <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.0)' }}>
                             <DitheringShader
                                 width={1920}
                                 height={800}
-                                colorBack="#f8f8f8"
-                                colorFront="#ececec"
+                                colorBack="#fdfdfd"
+                                colorFront="#f0f0f0"
                                 shape="wave"
                                 type="8x8"
                                 pxSize={3}
@@ -190,17 +190,29 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                             <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
                                 <AnimatedContainer className="w-full">
                                     {/* Main Title */}
-                                    <h2 className="text-gray-900 font-secondary text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-16" >
+                                    <motion.h2 
+                                        className="text-gray-900 font-secondary text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-16"
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: "-100px" }}
+                                        transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                                    >
                                         {t.mainTitle.split('\n').map((line, index) => (
                                             <React.Fragment key={index}>
                                                 {line}
                                                 {index < t.mainTitle.split('\n').length - 1 && <br />}
                                             </React.Fragment>
                                         ))}
-                                    </h2>
+                                    </motion.h2>
                                     
                                     {/* Follow Me Section */}
-                                    <div className="w-full flex flex-col justify-start items-start gap-6" >
+                                    <motion.div 
+                                        className="w-full flex flex-col justify-start items-start gap-6"
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: "-100px" }}
+                                        transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+                                    >
                                         <div className="w-full flex flex-col justify-start items-start gap-3">
                                             <h3 className="text-gray-900 font-primary text-2xl font-semibold leading-tight">
                                                 {t.followMe}
@@ -211,64 +223,100 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
                                             {socialLinks.map((link, index) => (
-                                                <a
+                                                <motion.a
                                                     key={link.title}
                                                     href={link.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300 hover:scale-110"
+                                                    className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
                                                     title={link.title}
                                                     data-cursor-text={t.visitSocial.replace('{platform}', link.title)}
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    whileInView={{ opacity: 1, scale: 1 }}
+                                                    viewport={{ once: true, margin: "-100px" }}
+                                                    transition={{ duration: 0.4, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
+                                                    whileHover={{ scale: 1.05, y: -2 }}
+                                                    whileTap={{ scale: 0.95 }}
                                                 >
                                                     <link.icon className="w-6 h-6 text-gray-700" />
-                                                </a>
+                                                </motion.a>
                                             ))}
-                                            <button
+                                            <motion.button
                                                 onClick={copyToClipboard}
-                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300 hover:scale-110"
+                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
                                                 title={t.copyLink}
                                                 data-cursor-text={t.copyLink}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.2 + (socialLinks.length * 0.1), ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
                                             >
                                                 <Link className="w-6 h-6 text-gray-700" />
-                                            </button>
+                                            </motion.button>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 </AnimatedContainer>
                             </div>
                             
                             {/* Texto gigante KAREN ORTIZ con FlipText */}
-                            <div 
+                            <motion.div 
                                 className="white-karen-ortiz-container text-gray-900 cursor-pointer"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                                 onClick={activateEasterEgg}
                                 data-cursor-text={t.easterEggHint}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <FlipText 
                                     text="KAREN ORTIZ" 
                                     isHovered={isHovered}
                                     className="white-karen-ortiz-flip-text"
                                 />
-                            </div>
+                            </motion.div>
                             
                             {/* Nav Links pequeños debajo de KAREN ORTIZ */}
-                            <div className="flex items-center justify-center gap-8 mt-4 mb-8">
-                                <a 
+                            <motion.div 
+                                className="flex items-center justify-center gap-8 mt-4 mb-8"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                            >
+                                <motion.a 
                                     href="/greetings" 
                                     className="text-gray-600 hover:text-gray-900 font-primary text-sm font-medium transition-colors duration-300"
                                     data-cursor-text={t.greetings}
+                                    whileHover={{ scale: 1.05, y: -1 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     {t.greetings}
-                                </a>
-                                <span className="text-gray-400 text-sm">•</span>
-                                <a 
+                                </motion.a>
+                                <motion.span 
+                                    className="text-gray-400 text-sm"
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.4, delay: 0.45, ease: "easeOut" }}
+                                >
+                                    •
+                                </motion.span>
+                                <motion.a 
                                     href="/privacy" 
                                     className="text-gray-600 hover:text-gray-900 font-primary text-sm font-medium transition-colors duration-300"
                                     data-cursor-text={t.privacyPolicy}
+                                    whileHover={{ scale: 1.05, y: -1 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     {t.privacyPolicy}
-                                </a>
-                            </div>
+                                </motion.a>
+                            </motion.div>
                             
                             {/* Performance Stats Section */}
                             <AnimatedContainer delay={0.4} className="w-full">
@@ -278,14 +326,17 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                             <h3 className="text-gray-900 font-primary text-lg font-semibold">
                                                 {t.sitePerformance}
                                             </h3>
-                                            <button
+                                            <motion.button
                                                 onClick={() => window.open('https://guileless-douhua-b2ff53.netlify.app/karen-ortiz-portfolio/', '_blank')}
-                                                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 hover:scale-110 group"
+                                                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 group"
                                                 title={t.viewReportTitle}
                                                 data-cursor-text={t.viewReport}
+                                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                transition={{ duration: 0.2 }}
                                             >
                                                 <CircleArrowOutUpRight className="w-4 h-4 text-gray-700 group-hover:text-gray-600" />
-                                            </button>
+                                            </motion.button>
                                         </div>
                                     </div>
                                     <SpeedlifyStatsLight 
