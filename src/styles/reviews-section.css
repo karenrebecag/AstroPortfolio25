@@ -758,6 +758,40 @@
   font-family: var(--font-primary, 'InterTight', sans-serif);
 }
 
+/* Progressive Card Hiding - Responsive */
+/* En 1200px oculta la cuarta card */
+@media (max-width: 1200px) {
+  .progressive-review-card:nth-child(4) {
+    display: none;
+  }
+}
+
+/* En 920px oculta la tercera card */
+@media (max-width: 920px) {
+  .progressive-review-card:nth-child(3) {
+    display: none;
+  }
+}
+
+/* En 650px oculta la segunda card */
+@media (max-width: 650px) {
+  .progressive-review-card:nth-child(2) {
+    display: none;
+  }
+  
+  /* Solo queda la primera card - centrarla y ajustar */
+  .progressive-cards-container {
+    justify-content: center;
+    gap: 0;
+  }
+  
+  .progressive-review-card:nth-child(1) {
+    margin: 0; /* Sin overlap cuando es la única */
+    width: 90%;
+    max-width: 320px;
+  }
+}
+
 /* Responsive adjustments for progressive cards */
 @media (max-width: 768px) {
   .progressive-cards-container {

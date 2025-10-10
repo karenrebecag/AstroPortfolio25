@@ -136,8 +136,28 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
 
   return (
     <div ref={containerRef} className="progressive-reviews-container">
+      {/* Brush SVG Overlay - appears at 80% scroll */}
+      <div 
+        className="brush-svg-overlay"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 3, // Above GLSLHills (z-index: 1) but below title/subtitle (z-index: 5) and cards (z-index: 10+)
+          opacity: scrollProgress >= 0.8 ? 1 : 0,
+          transition: 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          backgroundImage: 'url(https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Brush.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          pointerEvents: 'none' // Don't interfere with card interactions
+        }}
+      />
+
       {/* Header with Progressive Animation */}
-      <div className="reviews-section__header">
+      <div className="reviews-section__header" style={{ position: 'relative', zIndex: 5 }}>
         <div className="reviews-section__title" style={getHeaderStyle('title')}>
           <div className="title-clients playfair-display-italic">Client's</div>
           <div className="title-reviews" style={{ fontFamily: 'var(--font-primary)' }}>reviews</div>
@@ -181,7 +201,7 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
                 padding: '28px',
                 margin: '0 -15px',
                 position: 'relative',
-                zIndex: 4 - index, // Z-index decreciente: 4, 3, 2, 1
+                zIndex: 10 + (4 - index), // Z-index alto para cards: 14, 13, 12, 11
                 boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
                 border: '3px solid rgba(255, 255, 255, 0.9)',
                 cursor: 'pointer',
@@ -192,12 +212,12 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg) translateY(-8px) scale(1.03)`;
                 e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3)';
-                e.currentTarget.style.zIndex = '10';
+                e.currentTarget.style.zIndex = '20'; // Muy alto en hover
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg)`;
                 e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
-                e.currentTarget.style.zIndex = (4 - index).toString();
+                e.currentTarget.style.zIndex = (10 + (4 - index)).toString(); // Volver al z-index original
               }}
             >
               <div className="card-content" style={{
@@ -244,21 +264,6 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
         })}
       </div>
 
-      {/* Debug info (remove in production) */}
-      <div style={{ 
-        position: 'fixed', 
-        top: '10px', 
-        right: '10px', 
-        background: 'rgba(0,0,0,0.8)', 
-        color: 'white', 
-        padding: '10px', 
-        borderRadius: '5px',
-        fontSize: '12px',
-        zIndex: 1000
-      }}>
-        Progress: {Math.round(scrollProgress * 100)}%<br/>
-        Visible Cards: {visibleCards}/{reviews.length}
-      </div>
     </div>
   );
 };
