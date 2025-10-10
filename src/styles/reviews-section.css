@@ -691,28 +691,38 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
-  max-width: 1200px;
+  gap: -10px; /* Negative gap para amontonar */
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .progressive-review-card {
-  width: 280px;
-  height: 240px;
+  width: 320px; /* Más grandes: 280px → 320px */
+  height: 280px; /* Más altas: 240px → 280px */
   border-radius: 30px;
-  padding: 24px;
+  padding: 28px; /* Más padding: 24px → 28px */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
   border: 3px solid rgba(255, 255, 255, 0.9);
   cursor: pointer;
   will-change: transform, opacity;
+  margin: 0 -15px; /* Overlap horizontal para amontonar */
+  position: relative;
+  z-index: 1;
 }
 
+/* Z-index stacking para efecto amontonado */
+.progressive-review-card:nth-child(1) { z-index: 4; }
+.progressive-review-card:nth-child(2) { z-index: 3; }
+.progressive-review-card:nth-child(3) { z-index: 2; }
+.progressive-review-card:nth-child(4) { z-index: 1; }
+
 .progressive-review-card:hover {
-  transform: translateY(-5px) scale(1.02) !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  z-index: 10 !important; /* Siempre encima en hover */
 }
 
 .card-content {
@@ -723,25 +733,25 @@
 }
 
 .review-text {
-  font-size: 14px;
+  font-size: 16px; /* Más grande: 14px → 16px */
   line-height: 1.5;
-  margin-bottom: 16px;
+  margin-bottom: 20px; /* Más espacio: 16px → 20px */
   font-family: var(--font-primary, 'InterTight', sans-serif);
 }
 
 .review-author {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px; /* Más espacio: 8px → 10px */
 }
 
 .author-position {
-  font-size: 12px;
+  font-size: 13px; /* Más grande: 12px → 13px */
   font-family: var(--font-primary, 'InterTight', sans-serif);
 }
 
 .author-name {
-  font-size: 12px;
+  font-size: 14px; /* Más grande: 12px → 14px */
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -751,37 +761,54 @@
 /* Responsive adjustments for progressive cards */
 @media (max-width: 768px) {
   .progressive-cards-container {
-    gap: 15px;
+    gap: -5px; /* Menos overlap en tablet */
     padding: 0 1rem;
   }
   
   .progressive-review-card {
-    width: 250px;
-    height: 220px;
-    padding: 20px;
+    width: 280px; /* Mantener tamaño decente */
+    height: 250px;
+    padding: 24px;
+    margin: 0 -10px; /* Menos overlap */
   }
   
   .review-text {
-    font-size: 13px;
+    font-size: 15px;
   }
   
-  .author-position,
+  .author-position {
+    font-size: 12px;
+  }
+  
   .author-name {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
   .progressive-cards-container {
     flex-direction: column;
-    gap: 20px;
+    gap: 15px; /* Espacio normal en móvil */
   }
   
   .progressive-review-card {
     width: 90%;
-    max-width: 320px;
-    height: 200px;
-    padding: 18px;
+    max-width: 300px;
+    height: 220px;
+    padding: 20px;
+    margin: 0; /* Sin overlap en móvil */
+  }
+  
+  .review-text {
+    font-size: 14px;
+  }
+  
+  .author-position {
+    font-size: 11px;
+  }
+  
+  .author-name {
+    font-size: 12px;
   }
 }
 

@@ -116,6 +116,24 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
     return colorVariants[index % colorVariants.length];
   };
 
+  const getRandomFont = (index: number) => {
+    const fonts = [
+      'var(--font-primary)', // Inter Tight
+      'var(--font-secondary)', // Boysen
+      'var(--font-display)', // Median
+      '"Playfair Display", serif', // Playfair Display
+      'var(--font-game)' // Video Game Font
+    ];
+    // Use index to ensure consistent font per card but still appear random
+    return fonts[index % fonts.length];
+  };
+
+  const getRandomRotation = (index: number) => {
+    // Generate consistent but random-looking rotation for each card
+    const rotations = [-15, -10, -5, 5, 10, 15];
+    return rotations[index % rotations.length];
+  };
+
   return (
     <div ref={containerRef} className="progressive-reviews-container">
       {/* Header with Progressive Animation */}
@@ -135,9 +153,20 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
       </div>
 
       {/* Progressive Cards */}
-      <div className="progressive-cards-container">
+      <div className="progressive-cards-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '-10px',
+        maxWidth: '1400px',
+        margin: '0 auto'
+      }}>
         {reviews.map((review, index) => {
           const colors = getCardColors(index);
+          const randomFont = getRandomFont(index);
+          const rotation = getRandomRotation(index);
+          
           return (
             <div
               key={review.id}
@@ -145,18 +174,67 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
               style={{
                 ...getCardStyle(index),
                 backgroundColor: colors.bg,
-                color: colors.textColor
+                color: colors.textColor,
+                width: '320px',
+                height: '280px',
+                borderRadius: '30px',
+                padding: '28px',
+                margin: '0 -15px',
+                position: 'relative',
+                zIndex: 4 - index, // Z-index decreciente: 4, 3, 2, 1
+                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
+                border: '3px solid rgba(255, 255, 255, 0.9)',
+                cursor: 'pointer',
+                willChange: 'transform, opacity',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transform: `${getCardStyle(index).transform} rotate(${rotation}deg)`
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg) translateY(-8px) scale(1.03)`;
+                e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3)';
+                e.currentTarget.style.zIndex = '10';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg)`;
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+                e.currentTarget.style.zIndex = (4 - index).toString();
               }}
             >
-              <div className="card-content">
-                <div className="review-text" style={{ color: colors.textColor }}>
+              <div className="card-content" style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}>
+                <div className="review-text" style={{ 
+                  color: colors.textColor,
+                  fontSize: '16px',
+                  lineHeight: '1.5',
+                  marginBottom: '20px',
+                  fontFamily: randomFont
+                }}>
                   "{review.review}"
                 </div>
-                <div className="review-author">
-                  <div className="author-position" style={{ color: colors.positionColor }}>
+                <div className="review-author" style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}>
+                  <div className="author-position" style={{ 
+                    color: colors.positionColor,
+                    fontSize: '13px',
+                    fontFamily: randomFont
+                  }}>
                     {review.position}
                   </div>
-                  <div className="author-name" style={{ color: colors.textColor }}>
+                  <div className="author-name" style={{ 
+                    color: colors.textColor,
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    fontFamily: randomFont
+                  }}>
                     {review.name}
                   </div>
                 </div>
