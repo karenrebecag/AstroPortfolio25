@@ -58,8 +58,6 @@ const {
     max-width: 413px;
     height: auto;
     min-height: 280px;
-    padding: 36px;
-    background: #EEEEEE;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -68,20 +66,16 @@ const {
     gap: 24px;
     transform-origin: top left;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
 
-  .single-review-card:hover {
-    transform: rotate(0deg) scale(1.02);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  }
+
 
   /* Review Text - Using typography system */
   .review-text {
     width: 100%;
     color: black;
     font-family: var(--font-primary);
-    font-size: clamp(20px, 4vw, 24px);
+    font-size: clamp(12px, 1.6vw, 18px);
     font-weight: var(--font-weight-normal);
     line-height: var(--leading-snug);
     text-align: left;
@@ -123,7 +117,7 @@ const {
   .author-name {
     color: black;
     font-family: var(--font-primary);
-    font-size: var(--text-base);
+    font-size: clamp(12px, 1.2vw, 18px);
     font-weight: var(--font-weight-medium);
     line-height: var(--leading-normal);
     text-transform: uppercase;

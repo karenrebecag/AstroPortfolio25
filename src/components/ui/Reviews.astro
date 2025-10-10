@@ -1,11 +1,58 @@
 ---
 import ReviewsIsland from './ReviewsIsland.tsx';
+import type { Review } from '../../types/reviews';
+
+// Default reviews data
+const defaultReviews: Review[] = [
+  {
+    id: "review-1",
+    name: "Sarah Johnson",
+    position: "CEO at TechStart",
+    review: "Karen delivered an exceptional website that exceeded all our expectations. Her attention to detail and creative vision transformed our brand completely.",
+    rating: 5,
+    timestamp: new Date(),
+    status: 'approved' as const
+  },
+  {
+    id: "review-2",
+    name: "Michael Chen",
+    position: "Product Manager",
+    review: "Working with Karen was a game-changer for our startup. She created a stunning UI/UX that our users absolutely love.",
+    rating: 5,
+    timestamp: new Date(),
+    status: 'approved' as const
+  },
+  {
+    id: "review-3",
+    name: "Emily Rodriguez",
+    position: "Creative Director",
+    review: "Karen's motion design skills are incredible. She brought our static designs to life with beautiful animations.",
+    rating: 5,
+    timestamp: new Date(),
+    status: 'approved' as const
+  },
+  {
+    id: "review-4",
+    name: "David Wilson",
+    position: "CTO at InnovateHub",
+    review: "The technical implementation was flawless. Karen's expertise in modern web technologies is outstanding.",
+    rating: 5,
+    timestamp: new Date(),
+    status: 'approved' as const
+  }
+];
 ---
 
 <section class="reviews-section">
   <!-- Reviews content -->
   <div class="reviews-content">
-    <ReviewsIsland client:visible />
+    <ReviewsIsland 
+      reviews={defaultReviews}
+      layout="marquee"
+      theme="dark"
+      showSubmitButton={false}
+      client:visible 
+    />
   </div>
 </section>
 

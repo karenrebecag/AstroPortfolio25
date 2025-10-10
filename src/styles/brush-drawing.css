@@ -37,7 +37,6 @@
   /* Calidad visual premium del stroke */
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 10;
   fill: none;
   vector-effect: non-scaling-stroke;
   
@@ -54,12 +53,6 @@
   transition: stroke-width 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Optimización para dispositivos de alta densidad */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .brush-svg-animated path {
-    stroke-width: 8; /* Ligeramente más delgado en pantallas retina */
-  }
-}
 
 /* Optimización para dispositivos de baja potencia */
 @media (prefers-reduced-motion: reduce) {

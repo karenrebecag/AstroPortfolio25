@@ -16,12 +16,17 @@ import AurinMarquees from '../components/ui/AurinMarquees.astro';
 import TechStack from '../components/ui/TechStack.astro';
 import AurinBestFeatures from '../components/ui/AurinBestFeatures.astro';
 import AurinWorkflow from '../components/ui/AurinWorkflow.astro';
-import ProjectWorldReviews from '../components/ui/ProjectWorldReviews.astro';
+import ReviewsIsland from '../components/ui/ReviewsIsland.tsx';
+import ProgressiveReviewsIsland from '../components/ui/ProgressiveReviewsIsland.tsx';
+import GLSLHills from '../components/ui/GLSLHills.astro';
+import type { Review } from '../types/reviews';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
 import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
+import StickyScrollController from '../components/ui/StickyScrollController.tsx';
 import '../styles/global.css';
 import '../styles/shiki-themes.css';
+import '../styles/reviews-section.css';
 
 // Code snippets for the technical documentation
 const firestoreCollectionCode = `// Firebase Firestore Collection Architecture
@@ -287,6 +292,46 @@ const loadTestResults = {
   "Throughput": "416 req/sec",
   "Error Rate": "0.02%"
 }`;
+
+// Aurin Task Manager specific reviews data
+const aurinReviews: Review[] = [
+  {
+    id: "aurin-1",
+    name: "Carlos Mendoza",
+    position: "CTO at Aurin",
+    review: "Karen delivered an exceptional task management platform that transformed our team's productivity. The real-time collaboration features and AI integration exceeded our expectations completely.",
+    rating: 5,
+    timestamp: new Date('2024-08-15'),
+    status: 'approved'
+  },
+  {
+    id: "aurin-2", 
+    name: "Sofia Rodriguez",
+    position: "Project Manager at Aurin",
+    review: "The notification system and workflow automation Karen built saved us 15+ hours per week. The attention to detail in UX design makes complex project management feel effortless.",
+    rating: 5,
+    timestamp: new Date('2024-08-20'),
+    status: 'approved'
+  },
+  {
+    id: "aurin-3",
+    name: "Miguel Santos",
+    position: "Lead Developer at Aurin", 
+    review: "Working with Karen was incredible. Her technical expertise in Next.js, TypeScript, and Firebase resulted in a robust, scalable platform that handles our enterprise needs perfectly.",
+    rating: 5,
+    timestamp: new Date('2024-09-01'),
+    status: 'approved'
+  },
+  {
+    id: "aurin-4",
+    name: "Ana Gutierrez",
+    position: "Operations Director at Aurin",
+    review: "The cost reduction from $15/user to $0.29/user while improving functionality is remarkable. Karen's solution delivered 16,580% ROI in the first year. Outstanding work!",
+    rating: 5,
+    timestamp: new Date('2024-09-10'),
+    status: 'approved'
+  }
+];
 ---
 
 <Layout title="Karen Ortiz - Aurin Task Manager" lang="en">
@@ -685,10 +730,68 @@ const loadTestResults = {
 		<AurinWorkflow />
 
 		<!-- Client Reviews Section -->
-		<ProjectWorldReviews 
-			title="Client's reviews"
-			showReviews={true}
-		/>
+		<div class="sticky-scroll-wrapper">
+			<section class="reviews-section sticky-reviews">
+				<div class="reviews-section__container">
+					<div class="reviews-section__reviews">
+					<!-- GLSL Hills Background -->
+					<div class="reviews-glsl-background">
+						<GLSLHills 
+							height="100%" 
+							cameraZ={125}
+							planeSize={256}
+							speed={0.3}
+							className="reviews-hills-bg"
+						/>
+					</div>
+					<ProgressiveReviewsIsland 
+						reviews={[
+							{
+								id: "aurin-1",
+								name: "Carlos Mendoza",
+								position: "CTO at Aurin",
+								review: "Karen delivered an exceptional task management platform that transformed our team's productivity. The real-time collaboration features and AI integration exceeded our expectations completely.",
+								rating: 5,
+								timestamp: new Date('2024-08-15'),
+								status: 'approved'
+							},
+							{
+								id: "aurin-2", 
+								name: "Sofia Rodriguez",
+								position: "Project Manager at Aurin",
+								review: "The notification system and workflow automation Karen built saved us 15+ hours per week. The attention to detail in UX design makes complex project management feel effortless.",
+								rating: 5,
+								timestamp: new Date('2024-08-20'),
+								status: 'approved'
+							},
+							{
+								id: "aurin-3",
+								name: "Miguel Santos",
+								position: "Lead Developer at Aurin", 
+								review: "Working with Karen was incredible. Her technical expertise in Next.js, TypeScript, and Firebase resulted in a robust, scalable platform that handles our enterprise needs perfectly.",
+								rating: 5,
+								timestamp: new Date('2024-09-01'),
+								status: 'approved'
+							},
+							{
+								id: "aurin-4",
+								name: "Ana Gutierrez",
+								position: "Operations Director at Aurin",
+								review: "The cost reduction from $15/user to $0.29/user while improving functionality is remarkable. Karen's solution delivered 16,580% ROI in the first year. Outstanding work!",
+								rating: 5,
+								timestamp: new Date('2024-09-10'),
+								status: 'approved'
+							}
+						]}
+						layout="grid"
+						theme="light"
+						showSubmitButton={true}
+						client:visible 
+					/>
+					</div>
+				</div>
+			</section>
+		</div>
 
 		<!-- Live Application Section -->
 		<section class="content-section" id="live-app">
@@ -2228,4 +2331,296 @@ const loadTestResults = {
 			font-size: 1.125rem;
 		}
 	}
+
+	/* Reviews Section Styles */
+	.reviews-section {
+		width: 100%;
+		padding: 4rem 0;
+		background-color: white;
+		background-image: 
+			url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/EarthSphere.svg'),
+			linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px), 
+			linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
+		background-size: 
+			clamp(300px, 40vw, 500px),
+			20px 20px,
+			20px 20px;
+		background-position: 
+			center center,
+			0 0,
+			0 0;
+		background-repeat: 
+			no-repeat,
+			repeat,
+			repeat;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.reviews-section__container {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.reviews-section__header {
+		position: relative;
+		z-index: 10;
+		text-align: center;
+		margin-bottom: 3rem;
+		padding-top: 2rem;
+	}
+
+	.reviews-section__title {
+		width: 100%;
+		height: 100%;
+		justify-content: flex-start;
+		align-items: flex-start;
+		gap: 20px;
+		display: inline-flex;
+		margin-bottom: 1rem;
+	}
+
+	.title-clients {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
+		color: black;
+		font-size: 64px;
+		font-family: 'Playfair Display', serif;
+		font-style: italic;
+		font-weight: 400;
+		line-height: 64px;
+		word-wrap: break-word;
+	}
+
+	.title-reviews {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
+		color: black;
+		font-size: 64px;
+		font-family: 'Inter', sans-serif;
+		font-weight: 400;
+		line-height: 64px;
+		word-wrap: break-word;
+	}
+
+	.reviews-section__subtitle {
+		font-family: var(--font-primary);
+		font-size: clamp(1rem, 2.5vw, 1.25rem);
+		color: #64748b;
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: var(--leading-relaxed);
+	}
+
+	.reviews-section__reviews {
+		position: relative;
+		width: 100%;
+		min-height: 1000px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.reviews-glsl-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		min-height: 800px;
+		z-index: 0;
+		pointer-events: none;
+		opacity: 0.7;
+		overflow: hidden;
+	}
+
+	/* GLSL Hills specific styling */
+	.reviews-glsl-background .reviews-hills-bg {
+		width: 100%;
+		height: 100%;
+		filter: blur(0.5px);
+	}
+
+	.reviews-glsl-background .glsl-hills-wrapper {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* Ensure ReviewsIsland is above background and perfectly centered */
+	.reviews-section__reviews > astro-island[component-url*="ReviewsIsland"] {
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media (max-width: 768px) {
+		.reviews-section {
+			padding: 2rem 0;
+		}
+
+		.reviews-section__container {
+			padding: 0;
+		}
+
+		.reviews-section__header {
+			margin-bottom: 2rem;
+			padding-top: 1rem;
+		}
+
+		.title-clients,
+		.title-reviews {
+			font-size: 48px;
+			line-height: 48px;
+		}
+
+		.reviews-section__title {
+			gap: 15px;
+		}
+
+		.reviews-glsl-background {
+			opacity: 0.5;
+			min-height: 600px;
+		}
+
+		.reviews-glsl-background .reviews-hills-bg {
+			filter: blur(1px);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.title-clients,
+		.title-reviews {
+			font-size: 36px;
+			line-height: 36px;
+		}
+
+		.reviews-section__title {
+			gap: 10px;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+		}
+
+		.reviews-glsl-background {
+			opacity: 0.3;
+			min-height: 400px;
+		}
+
+		.reviews-glsl-background .reviews-hills-bg {
+			filter: blur(1.5px);
+		}
+	}
+
+	/* Sticky Scroll Effect Styles */
+	.sticky-scroll-wrapper {
+		position: relative;
+		width: 100%;
+		height: 500vh; /* Aún más alto para permitir animación progresiva de cards */
+	}
+
+	.sticky-reviews {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		width: 100%;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* Reviews section styling for sticky */
+	.sticky-reviews .reviews-section__container {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sticky-reviews .reviews-section__reviews {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* Background positioning for sticky reviews */
+	.sticky-reviews .reviews-glsl-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	/* Header positioning for sticky reviews */
+	.sticky-reviews .reviews-section__header {
+		position: relative;
+		z-index: 10;
+		margin-bottom: 3rem;
+		text-align: center;
+	}
+
+	/* Reviews island positioning for sticky reviews */
+	.sticky-reviews .reviews-section__reviews > astro-island[component-url*="ReviewsIsland"] {
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	/* Responsive adjustments for sticky scroll */
+	@media (max-width: 768px) {
+		.sticky-scroll-wrapper {
+			height: 400vh; /* Más altura en tablet para animación progresiva */
+		}
+		
+		.sticky-reviews {
+			height: 80vh;
+		}
+		
+		.sticky-reviews .reviews-section__header {
+			margin-bottom: 2rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.sticky-scroll-wrapper {
+			height: 350vh; /* Más altura en móvil para animación progresiva */
+		}
+		
+		.sticky-reviews {
+			height: 70vh;
+		}
+		
+		.sticky-reviews .reviews-section__header {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	/* Smooth transitions for sticky effect */
+	.sticky-reviews {
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Accessibility: Respect reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.sticky-reviews {
+			transition: none;
+		}
+	}
+
 </style>

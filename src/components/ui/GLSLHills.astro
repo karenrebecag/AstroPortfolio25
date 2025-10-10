@@ -1,0 +1,99 @@
+---
+// GLSLHills.astro - Astro wrapper for GLSL Hills background
+// Following Astro Islands Architecture best practices from Docu.md
+
+import GLSLHillsBackground from '../three/GLSLHillsBackground.tsx';
+
+export interface Props {
+  width?: string;
+  height?: string;
+  cameraZ?: number;
+  planeSize?: number;
+  speed?: number;
+  className?: string;
+}
+
+const { 
+  width = '100%',
+  height = '100vh',
+  cameraZ = 125,
+  planeSize = 256,
+  speed = 0.5,
+  className = ''
+} = Astro.props;
+---
+
+<div class={`glsl-hills-wrapper ${className}`}>
+  <!-- Static fallback content for SSR -->
+  <div class="glsl-hills-fallback">
+    <div class="hills-gradient"></div>
+  </div>
+  
+  <!-- React Island with client:visible for performance -->
+  <GLSLHillsBackground 
+    width={width}
+    height={height}
+    cameraZ={cameraZ}
+    planeSize={planeSize}
+    speed={speed}
+    className="glsl-hills-island"
+    client:visible
+  />
+</div>
+
+<style>
+  .glsl-hills-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .glsl-hills-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hills-gradient {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.02) 0%,
+      rgba(0, 0, 0, 0.05) 25%,
+      rgba(0, 0, 0, 0.03) 50%,
+      rgba(0, 0, 0, 0.08) 75%,
+      rgba(0, 0, 0, 0.04) 100%
+    );
+    opacity: 0.6;
+  }
+
+  .glsl-hills-island {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .glsl-hills-wrapper {
+      /* Reduce complexity on mobile for better performance */
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glsl-hills-island {
+      display: none;
+    }
+    
+    .hills-gradient {
+      opacity: 0.3;
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+</style>
