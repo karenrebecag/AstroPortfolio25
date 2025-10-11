@@ -973,27 +973,35 @@
 
 /* Dark Mode Styles - Following Documentation Pattern */
 .dark-mode .reddit-comments-container {
-  background-color: #0200105f;
-  color: #ffffff;
+  background-color: rgba(15, 0, 26, 0.85);
+  color: #f8f4ff;
+  transition: 
+    background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dark-mode .comment-card {
-  background: #0b0918;
-  border-color: #090815;
-  color: #ffffff;
+  background: rgba(15, 0, 26, 0.6);
+  border-color: rgba(157, 127, 193, 0.1);
+  color: #f8f4ff;
+  transition: 
+    background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dark-mode .comment-card:hover {
-  background: rgb(63, 63, 63)a3;
-  border-color: #505050;
+  background: rgba(15, 0, 26, 0.8);
+  border-color: rgba(157, 127, 193, 0.2);
 }
 
 .dark-mode .comment-author {
-  color: #ffffff;
+  color: #f8f4ff;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dark-mode .comment-content {
-  color: #e5e5e5;
+  color: #e6d9f0;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dark-mode .comment-timestamp {

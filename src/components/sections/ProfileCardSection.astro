@@ -37,7 +37,9 @@ const { className = '', variant = 'default' } = Astro.props;
     background-image: 
       linear-gradient(rgba(0, 0, 0, 0.020) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
-    transition: border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .profile-card-wrapper {
@@ -49,8 +51,11 @@ const { className = '', variant = 'default' } = Astro.props;
   }
 
   /* Dark mode styles */
-  :global(.dark-mode .profile-card-section) {
-    border-bottom-color: #333333;
+  :global(.dark-mode) .profile-card-section {
+    background-color: #020009;
+    background-image: 
+      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
   }
 
 

@@ -141,6 +141,8 @@ const softSkillsData = t.aboutMe.skills;
     transform: none;
   }
 
+  /* Dark mode will be handled via JavaScript to avoid CSS scoping issues */
+
   /* Dual System: Desktop Scroll + Mobile Slider */
   .skills-container-desktop {
     display: flex;
@@ -177,6 +179,10 @@ const softSkillsData = t.aboutMe.skills;
     }
   }
 
+  .skills-container-wrapper {
+    --gradient-bg: #f9f9f9;
+  }
+
   .skills-container-wrapper::before {
     content: '';
     position: absolute;
@@ -184,9 +190,10 @@ const softSkillsData = t.aboutMe.skills;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right,#f9f9f9 0%, transparent 10%, transparent 90%,#f9f9f9 100%);
+    background: linear-gradient(to right, var(--gradient-bg) 0%, transparent 10%, transparent 90%, var(--gradient-bg) 100%);
     pointer-events: none;
     z-index: 1;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Gradientes laterales para pantallas grandes */
@@ -688,7 +695,63 @@ const softSkillsData = t.aboutMe.skills;
   document.addEventListener('DOMContentLoaded', () => {
     const gemSection = document.querySelector('.gem-section');
     const skillsScroll = document.querySelector('.skills-scroll');
+    const titleElement = document.querySelector('.soft-skills-title-normal');
     
+    // Dark mode styles function
+    const applyDarkMode = (isDark: boolean) => {
+      if (gemSection) {
+        if (isDark) {
+          (gemSection as HTMLElement).style.background = '#020009';
+          (gemSection as HTMLElement).style.backgroundImage = 
+            'linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px)';
+        } else {
+          (gemSection as HTMLElement).style.background = '#f9f9f9';
+          (gemSection as HTMLElement).style.backgroundImage = 
+            'linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)';
+        }
+      }
+      
+      if (titleElement) {
+        if (isDark) {
+          (titleElement as HTMLElement).style.color = '#f8f4ff';
+        } else {
+          (titleElement as HTMLElement).style.color = '#000000';
+        }
+      }
+
+      // Apply dark mode to side gradients
+      const skillsWrapper = document.querySelector('.skills-container-wrapper');
+      if (skillsWrapper) {
+        const wrapperElement = skillsWrapper as HTMLElement;
+        if (isDark) {
+          // Dark mode gradient
+          wrapperElement.style.setProperty('--gradient-bg', '#020009');
+          const beforeStyle = `linear-gradient(to right, #020009 0%, transparent 10%, transparent 90%, #020009 100%)`;
+          wrapperElement.setAttribute('data-before-bg', beforeStyle);
+        } else {
+          // Light mode gradient
+          wrapperElement.style.setProperty('--gradient-bg', '#f9f9f9');
+          const beforeStyle = `linear-gradient(to right, #f9f9f9 0%, transparent 10%, transparent 90%, #f9f9f9 100%)`;
+          wrapperElement.setAttribute('data-before-bg', beforeStyle);
+        }
+      }
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDark);
+    };
+
+    // Listen for dark mode changes from HeaderDarkModeToggle
+    window.addEventListener('darkModeChange', (event: CustomEvent) => {
+      applyDarkMode(event.detail.isDark);
+    });
+
+    // Check initial state after a short delay to ensure toggle has loaded
+    setTimeout(checkInitialDarkMode, 100);
+    
+    // Scroll animation functionality
     if (gemSection && skillsScroll) {
       // Calculate total scroll width
       const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;

@@ -330,7 +330,7 @@ if (!isClient) {
 #### Elementos no cambian color
 **Causa**: Las clases CSS locales de Astro no son accesibles por los selectores `:global(.dark-mode ...)` debido al scope aislado.
 
-**Solución**: Convertir las clases locales a `:global()` para que los estilos dark mode puedan seleccionarlas correctamente.
+**Solución 1 - Método CSS Global**: Convertir las clases locales a `:global()` para que los estilos dark mode puedan seleccionarlas correctamente.
 
 **Ejemplo incorrecto**:
 ```css
@@ -360,6 +360,57 @@ if (!isClient) {
 - Elementos de texto: `.section-title`, `.section-label`, `.content-description`
 - Contenedores con fondos: `.privacy-details`, `.feature-card`
 - Elementos anidados: `.highlight-content h3`, `.detail-section p`
+
+**Solución 2 - Método JavaScript (Para secciones sensibles)**: Usar JavaScript para aplicar estilos inline cuando el método CSS global puede romper la maquetación.
+
+**Cuándo usar este método**:
+- ❌ Secciones con posicionamiento complejo (ej: GemSection con gema 3D)
+- ❌ Componentes con z-index críticos
+- ❌ Layouts que se rompen al cambiar clases a :global()
+- ✅ Cuando solo necesitas cambiar colores sin afectar posicionamiento
+
+**Implementación JavaScript**:
+```javascript
+// En el <script> del componente Astro
+document.addEventListener('DOMContentLoaded', () => {
+  const targetElement = document.querySelector('.my-section');
+  
+  // Función para aplicar dark mode
+  const applyDarkMode = (isDark: boolean) => {
+    if (targetElement) {
+      if (isDark) {
+        // Aplicar estilos dark mode
+        (targetElement as HTMLElement).style.background = '#020009';
+        (targetElement as HTMLElement).style.color = '#f8f4ff';
+      } else {
+        // Revertir a light mode
+        (targetElement as HTMLElement).style.background = '#f9f9f9';
+        (targetElement as HTMLElement).style.color = '#000000';
+      }
+    }
+  };
+
+  // Detectar estado inicial
+  const checkInitialDarkMode = () => {
+    const isDark = document.documentElement.classList.contains('dark-mode');
+    applyDarkMode(isDark);
+  };
+
+  // Escuchar cambios del toggle
+  window.addEventListener('darkModeChange', (event: CustomEvent) => {
+    applyDarkMode(event.detail.isDark);
+  });
+
+  // Aplicar estado inicial con delay
+  setTimeout(checkInitialDarkMode, 100);
+});
+```
+
+**Ventajas del método JavaScript**:
+- ✅ **Preserva maquetación**: No toca clases CSS existentes
+- ✅ **Estilos inline**: Máxima especificidad sin !important
+- ✅ **Compatible**: Funciona con HeaderDarkModeToggle
+- ✅ **Robusto**: Detecta estado inicial y cambios dinámicos
 
 #### Footer no transiciona suavemente
 **Solución**: Verificar AnimatePresence con `mode="wait"`
