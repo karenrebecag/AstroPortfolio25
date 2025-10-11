@@ -5,8 +5,12 @@ import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
 import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 ---
 
-<div class="w-full h-screen overflow-hidden relative flex flex-col justify-between items-center" style="background: linear-gradient(135deg, #e7e7e6 0%, #d8d8d7 100%); background-image: linear-gradient(to right, rgba(204, 204, 204, 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(204, 204, 204, 0.5) 1px, transparent 1px); background-size: 40px 40px, 40px 40px; background-position: center; background-repeat: repeat;max-height: 85vh;">
+<div class="banner-container w-full h-screen overflow-hidden relative flex flex-col justify-between items-center">
   <h1 class="sr-only">Karen Ortiz - Design Engineer Portfolio</h1>
+  
+  <!-- Dark mode overlay gradient -->
+  <div class="dark-overlay"></div>
+  
   <div class="w-full">
     <Header />
   </div>
@@ -15,6 +19,8 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
     <img 
       id="banner-image" 
       src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" 
+      data-light-src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png"
+      data-dark-src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/MePortfolioDark.png"
       alt="Banner Image" 
       fetchpriority="high" 
       loading="eager" 
@@ -30,9 +36,62 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 
 
 <style>
+  .banner-container {
+    /* Light mode background with grid */
+    background: white;
+    background-image: 
+      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, .05) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
+    max-height: 85vh;
+    transition: 
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark mode styles - Minimized grid opacity */
+  :global(.dark-mode) .banner-container {
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
+    background-image: 
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
+  }
+
   #banner-image {
     transform: translateY(30px);
     animation: slideUp 0.8s ease-out 0.5s forwards;
+    transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark mode overlay gradient */
+  .dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, transparent 60%);
+    z-index: 25;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Show overlay only in dark mode */
+  :global(.dark-mode) .dark-overlay {
+    opacity: 1;
+  }
+
+  /* Dark mode - Neon glow backdrop effect */
+  :global(.dark-mode) #banner-image {
+    filter: drop-shadow(0 0 60px #c31e9225) 
+            drop-shadow(0 0 80px rgba(195, 30, 146, 0.06)) 
+            drop-shadow(0 0 180px rgba(195, 30, 146, 0.02));
   }
 
   @keyframes slideUp {
@@ -64,3 +123,39 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
     }
   }
 </style>
+
+<script>
+  // Function to update banner image based on dark mode
+  function updateBannerImage() {
+    const bannerImage = document.getElementById('banner-image') as HTMLImageElement;
+    if (!bannerImage) return;
+    
+    const isDarkMode = document.documentElement.classList.contains('dark-mode');
+    const lightSrc = bannerImage.getAttribute('data-light-src');
+    const darkSrc = bannerImage.getAttribute('data-dark-src');
+    
+    if (isDarkMode && darkSrc) {
+      bannerImage.src = darkSrc;
+    } else if (!isDarkMode && lightSrc) {
+      bannerImage.src = lightSrc;
+    }
+  }
+  
+  // Update image on initial load
+  document.addEventListener('DOMContentLoaded', updateBannerImage);
+  
+  // Listen for dark mode changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        updateBannerImage();
+      }
+    });
+  });
+  
+  // Observe changes to the html element's class attribute
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+</script>

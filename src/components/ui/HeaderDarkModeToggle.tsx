@@ -67,7 +67,7 @@ export function HeaderDarkModeToggle({ className = "" }: HeaderDarkModeTogglePro
     <motion.button
       onClick={toggleDarkMode}
       className={`header-dark-mode-toggle ${className}`}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       initial={{ opacity: 0, scale: 0.8 }}
@@ -75,35 +75,14 @@ export function HeaderDarkModeToggle({ className = "" }: HeaderDarkModeTogglePro
       transition={{ duration: 0.3, delay: 0.1 }}
     >
       <motion.div
-        className="toggle-switch"
-        animate={{ 
-          backgroundColor: isDark ? '#4523AE' : '#e5e5e5',
-        }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        animate={{ rotate: isDark ? 360 : 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <motion.div
-          className="toggle-indicator"
-          animate={{ 
-            x: isDark ? 26 : 2,
-            backgroundColor: isDark ? '#ffffff' : '#4523AE'
-          }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 500, 
-            damping: 30 
-          }}
-        >
-          <motion.div
-            animate={{ rotate: isDark ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            {isDark ? (
-              <Moon className="toggle-icon" />
-            ) : (
-              <Sun className="toggle-icon" />
-            )}
-          </motion.div>
-        </motion.div>
+        {isDark ? (
+          <Sun className="toggle-icon" />
+        ) : (
+          <Moon className="toggle-icon" />
+        )}
       </motion.div>
     </motion.button>
   );

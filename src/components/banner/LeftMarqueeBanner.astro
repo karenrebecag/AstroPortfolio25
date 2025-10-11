@@ -46,6 +46,96 @@
     width: max-content !important;
   }
 
+  /* Dark mode styles - Intense neon illumination stroke text */
+  :global(.dark-mode) #left-marquee {
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    color: transparent !important;
+    -webkit-text-stroke: 1px #d51da4;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 
+      /* Core white illumination */
+      0 0 2px rgba(255, 255, 255, 1),
+      0 0 5px rgba(255, 255, 255, 0.9),
+      0 0 10px rgba(255, 255, 255, 0.8),
+      /* Purple neon illumination layers */
+      0 0 20px rgba(157, 127, 193, 1),
+      0 0 40px rgba(157, 127, 193, 0.9),
+      0 0 60px rgba(157, 127, 193, 0.8),
+      0 0 80px rgba(157, 127, 193, 0.7),
+      0 0 100px rgba(157, 127, 193, 0.6),
+      0 0 120px rgba(157, 127, 193, 0.5);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(1.2) saturate(1.3)
+            drop-shadow(0 0 40px rgba(157, 127, 193, 0.15))
+            drop-shadow(0 0 80px rgba(157, 127, 193, 0.08))
+            drop-shadow(0 0 120px rgba(157, 127, 193, 0.04));
+  }
+
+  /* Hover effect - Maximum neon illumination with flicker */
+  :global(.dark-mode) .left-marquee-wrapper:hover #left-marquee {
+    -webkit-text-stroke: 1px rgba(157, 127, 193, 1);
+    text-shadow: 
+      /* Intense core illumination */
+      0 0 3px rgba(255, 255, 255, 1),
+      0 0 8px rgba(255, 255, 255, 1),
+      0 0 15px rgba(255, 255, 255, 0.9),
+      /* Maximum purple neon illumination */
+      0 0 25px rgba(157, 127, 193, 1),
+      0 0 50px rgba(157, 127, 193, 1),
+      0 0 75px rgba(157, 127, 193, 0.9),
+      0 0 100px rgba(157, 127, 193, 0.8),
+      0 0 125px rgba(157, 127, 193, 0.7),
+      0 0 150px rgba(157, 127, 193, 0.6),
+      0 0 175px rgba(157, 127, 193, 0.5);
+    filter: brightness(1.5) saturate(1.5)
+            drop-shadow(0 0 60px rgba(157, 127, 193, 0.25))
+            drop-shadow(0 0 120px rgba(157, 127, 193, 0.15))
+            drop-shadow(0 0 180px rgba(157, 127, 193, 0.08));
+    animation: intensePurpleFlicker 1.8s ease-in-out infinite alternate;
+  }
+
+  /* Intense purple flicker animation - realistic neon effect */
+  @keyframes intensePurpleFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+   text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 102px #0fa,
+    0 0 151px #0fa;
+      filter: brightness(10) saturate(1.5);
+    }
+    20%, 24%, 55% {
+      text-shadow: 
+        /* Dimmed flicker state */
+        0 0 1px rgba(255, 255, 255, 0.6),
+        0 0 3px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(157, 127, 193, 0.6),
+        0 0 15px rgba(157, 127, 193, 0.4),
+        0 0 25px rgba(193, 127, 127, 0.3);
+      filter: brightness(0.8) saturate(0.8);
+    }
+  }
+
+  /* Performance optimizations */
+  :global(.dark-mode) #left-marquee {
+    /* GPU acceleration for smooth animations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.dark-mode) .left-marquee-wrapper:hover #left-marquee {
+      animation: none !important;
+    }
+  }
+
   /* Gradientes laterales para pantallas grandes */
   @media (min-width: 2560px) {
     .left-marquee-wrapper::before,
@@ -67,6 +157,15 @@
     .left-marquee-wrapper::after {
       right: 0;
       background: linear-gradient(to left, white, transparent);
+    }
+
+    /* Dark mode gradients */
+    :global(.dark-mode) .left-marquee-wrapper::before {
+      background: linear-gradient(to right, #050112, transparent);
+    }
+
+    :global(.dark-mode) .left-marquee-wrapper::after {
+      background: linear-gradient(to left, #050112, transparent);
     }
   }
 </style>

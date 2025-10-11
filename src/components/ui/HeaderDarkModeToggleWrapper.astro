@@ -21,49 +21,33 @@ import { HeaderDarkModeToggle } from './HeaderDarkModeToggle.tsx';
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
-    border-radius: 50px;
-    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    transition: 
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s ease;
   }
 
   :global(.header-dark-mode-toggle:hover) {
-    background: rgba(69, 35, 174, 0.1);
-  }
-
-  :global(.toggle-switch) {
-    position: relative;
-    width: 52px;
-    height: 28px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    box-shadow: 
-      inset 0 2px 4px rgba(0, 0, 0, 0.1),
-      0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  :global(.toggle-indicator) {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      0 1px 2px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
   }
 
   :global(.toggle-icon) {
-    width: 14px;
-    height: 14px;
-    stroke-width: 2.5;
+    width: 18px;
+    height: 18px;
+    color: #060314;
+    stroke-width: 2;
+    transition: 
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Dark mode styles */
   :global(.dark-mode .header-dark-mode-toggle:hover) {
-    background: rgba(157, 127, 193, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.dark-mode .toggle-icon) {
+    color: #ffffff;
   }
 
   /* Responsive adjustments */
