@@ -69,7 +69,7 @@ import { motion } from 'motion/react';
 </section>
 
 <style>
-  .my-stack-section {
+  :global(.my-stack-section) {
     width: 100%;
     padding-top: 10vw;
     max-width: 100vw; /* Prevenir overflow horizontal */
@@ -81,10 +81,11 @@ import { motion } from 'motion/react';
     position: relative;
     overflow: hidden;
     box-sizing: border-box; /* Incluir padding y border en el width */
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* DitheringShader Background con opacidad muy baja */
-  .dithering-background-container {
+  :global(.dithering-background-container) {
     position: absolute;
     top: 0;
     left: 0;
@@ -94,6 +95,7 @@ import { motion } from 'motion/react';
     justify-content: center;
     pointer-events: none;
     z-index: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .dithering-background-wrapper {
@@ -132,11 +134,13 @@ import { motion } from 'motion/react';
     .dithering-background-wrapper::before {
       left: 0;
       background: linear-gradient(to right, white, transparent);
+      transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .dithering-background-wrapper::after {
       right: 0;
       background: linear-gradient(to left, white, transparent);
+      transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
 
@@ -551,5 +555,74 @@ import { motion } from 'motion/react';
     :global(.title-disperse-black) {
       font-size: clamp(60px, 12vw, 120px) !important;
     }
+  }
+
+  /* Dark Mode Styles - Following Documentation Pattern */
+  :global(.dark-mode .my-stack-section) {
+    background: #020009;
+    background-image: 
+      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+  }
+
+  /* Hide DitheringShader in dark mode */
+  :global(.dark-mode .dithering-background-container) {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Dark mode gradients for large screens */
+  @media (min-width: 2560px) {
+    :global(.dark-mode) .dithering-background-wrapper::before {
+      background: linear-gradient(to right, #020009, transparent);
+    }
+
+    :global(.dark-mode) .dithering-background-wrapper::after {
+      background: linear-gradient(to left, #020009, transparent);
+    }
+  }
+
+  /* Title Dark Mode */
+  :global(.dark-mode .title-disperse-black) {
+    color: #f8f4ff !important;
+  }
+
+  :global(.dark-mode .title-disperse-black span) {
+    color: #f8f4ff !important;
+  }
+
+  /* Button Dark Mode */
+  :global(.dark-mode) .check-stack-btn {
+    background: linear-gradient(135deg, #9D7FC1 0%, #d4a5ff 100%);
+    box-shadow: 0 4px 15px rgba(157, 127, 193, 0.25);
+  }
+
+  :global(.dark-mode) .check-stack-btn:hover {
+    background: linear-gradient(135deg, #b8a3ff 0%, #e6d9f0 100%);
+    box-shadow: 0 6px 20px rgba(157, 127, 193, 0.35);
+  }
+
+  /* Placeholder Dark Mode */
+  :global(.dark-mode .model-placeholder) {
+    background: rgba(157, 127, 193, 0.15);
+    border-color: rgba(157, 127, 193, 0.4);
+  }
+
+  :global(.dark-mode .placeholder-content) {
+    color: #d4a5ff;
+  }
+
+  /* Loading Dark Mode */
+  :global(.dark-mode .kirby-loading) {
+    color: #d4a5ff;
+  }
+
+  :global(.dark-mode .loading-spinner) {
+    border-color: rgba(157, 127, 193, 0.3);
+    border-top-color: #d4a5ff;
+  }
+
+  :global(.dark-mode .kirby-loading p) {
+    color: #d4a5ff;
   }
 </style>

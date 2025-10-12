@@ -735,6 +735,53 @@ const softSkillsData = t.aboutMe.skills;
           wrapperElement.setAttribute('data-before-bg', beforeStyle);
         }
       }
+
+      // Apply dark mode to skill cards - remove backgrounds and add purple border
+      const skillCards = document.querySelectorAll('.skill-card');
+      skillCards.forEach(card => {
+        const cardElement = card as HTMLElement;
+        if (isDark) {
+          // Dark mode: transparent background with purple border
+          cardElement.style.background = 'transparent';
+          cardElement.style.backgroundImage = 'none';
+          cardElement.style.border = '1px solid rgb(123, 111, 178)';
+          
+          // Hide Three.js silk background
+          const silkBg = card.querySelector('.skill-card-silk-bg') as HTMLElement;
+          if (silkBg) {
+            silkBg.style.display = 'none';
+          }
+        } else {
+          // Light mode: restore original backgrounds
+          cardElement.style.background = "url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg')";
+          cardElement.style.backgroundSize = 'cover';
+          cardElement.style.backgroundPosition = 'center';
+          cardElement.style.backgroundRepeat = 'no-repeat';
+          cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3)';
+          
+          // Show Three.js silk background
+          const silkBg = card.querySelector('.skill-card-silk-bg') as HTMLElement;
+          if (silkBg) {
+            silkBg.style.display = '';
+          }
+        }
+      });
+
+      // Apply dark mode to mobile slider skill cards
+      const sliderCards = document.querySelectorAll('.skill-card-slider');
+      sliderCards.forEach(card => {
+        const cardElement = card as HTMLElement;
+        if (isDark) {
+          // Dark mode: transparent background with purple border
+          cardElement.style.background = 'transparent !important';
+          cardElement.style.backgroundImage = 'none !important';
+          cardElement.style.border = '1px solid rgb(123, 111, 178) !important';
+        } else {
+          // Light mode: restore transparent background (slider cards don't have fallback image)
+          cardElement.style.background = 'transparent !important';
+          cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3) !important';
+        }
+      });
     };
 
     // Check initial dark mode state
@@ -744,8 +791,9 @@ const softSkillsData = t.aboutMe.skills;
     };
 
     // Listen for dark mode changes from HeaderDarkModeToggle
-    window.addEventListener('darkModeChange', (event: CustomEvent) => {
-      applyDarkMode(event.detail.isDark);
+    window.addEventListener('darkModeChange', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      applyDarkMode(customEvent.detail.isDark);
     });
 
     // Check initial state after a short delay to ensure toggle has loaded

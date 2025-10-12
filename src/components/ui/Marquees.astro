@@ -12,7 +12,7 @@ import MarqueesIsland from './MarqueesIsland.tsx';
 </section>
 
 <style>
-  .marquees-section {
+  :global(.marquees-section) {
     width: 100%;
     background: #FEFEFE;
     background-image: 
@@ -21,6 +21,7 @@ import MarqueesIsland from './MarqueesIsland.tsx';
     background-size: 40px 40px;
     overflow: hidden;
     position: relative;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .marquees-section-container {
@@ -52,11 +53,13 @@ import MarqueesIsland from './MarqueesIsland.tsx';
     .marquees-section-wrapper::before {
       left: 0;
       background: linear-gradient(to right, #FEFEFE, transparent);
+      transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .marquees-section-wrapper::after {
       right: 0;
       background: linear-gradient(to left, #FEFEFE, transparent);
+      transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
 
@@ -124,5 +127,33 @@ import MarqueesIsland from './MarqueesIsland.tsx';
       /* Provide static fallback when motion is reduced */
       overflow: hidden;
     }
+  }
+
+  /* Dark Mode Styles - Following Documentation Pattern */
+  :global(.dark-mode .marquees-section) {
+    background: #020009;
+    background-image: 
+      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+  }
+
+  /* Dark mode gradients for large screens */
+  @media (min-width: 2560px) {
+    :global(.dark-mode) .marquees-section-wrapper::before {
+      background: linear-gradient(to right, #020009, transparent);
+    }
+
+    :global(.dark-mode) .marquees-section-wrapper::after {
+      background: linear-gradient(to left, #020009, transparent);
+    }
+  }
+
+  /* Marquee backgrounds with enhanced contrast for dark mode */
+  :global(.dark-mode .first-marquee) {
+    background: #9D7FC1; /* Purple brand color for better contrast */
+  }
+
+  :global(.dark-mode .second-marquee) {
+    background: #4523AE; /* Darker purple for variety */
   }
 </style>

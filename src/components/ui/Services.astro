@@ -29,7 +29,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
       </motion.div>
       
       <motion.p
-        className="text-black/70 font-primary text-center mx-auto max-w-[600px] m-0 leading-relaxed"
+        className="services-subtitle font-primary text-center mx-auto max-w-[600px] m-0 leading-relaxed"
         style={{ fontSize: 'clamp(14px, 2vw, 18px)' }}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 </section>
 
 <style>
-  .services-section {
+  :global(.services-section) {
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
@@ -74,6 +74,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .services-container {
@@ -174,16 +175,17 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 
   }
 
-  .services-title {
+  :global(.services-title) {
     color: #808080;
     font-family: var(--font-display);
     font-size: clamp(32px, 6vw, 48px);
     font-weight: 400;
     line-height: clamp(50px, 8vw, 70px);
     margin: 0;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .services-description {
+  :global(.services-description) {
     width: 100%;
     max-width: 424px;
     color: #111111;
@@ -192,6 +194,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     font-weight: 500;
     line-height: clamp(24px, 3.5vw, 30px);
     margin: 0;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Services List */
@@ -537,6 +540,12 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     }
   }
 
+  /* Services subtitle class */
+  :global(.services-subtitle) {
+    color: rgba(0, 0, 0, 0.7);
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   /* Screen reader only class for accessibility */
   .sr-only {
     position: absolute;
@@ -549,5 +558,104 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     white-space: nowrap;
     border: 0;
   }
+
+  /* Dark Mode Styles - Following Documentation Pattern */
+  :global(.dark-mode .services-section) {
+    background:
+      linear-gradient(to right, rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      #020009;
+  }
+
+  :global(.dark-mode .services-subtitle) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .giant-heading-disperse-black) {
+    color: #f8f4ff !important;
+  }
+
+  :global(.dark-mode .giant-heading-disperse-black span) {
+    color: #f8f4ff !important;
+  }
+
+  :global(.dark-mode .services-title) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .services-description) {
+    color: #f8f4ff;
+  }
+
+  /* Service Items Dark Mode */
+  :global(.dark-mode .service-item) {
+    border-top-color: rgba(157, 127, 193, 0.2);
+  }
+
+  :global(.dark-mode .service-number) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .service-number.inactive) {
+    color: rgba(157, 127, 193, 0.4);
+  }
+
+  :global(.dark-mode .service-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .service-title.inactive) {
+    color: rgba(157, 127, 193, 0.4);
+  }
+
+  /* Hover states Dark Mode */
+  :global(.dark-mode .service-item:hover .service-title) {
+    color: #ffffff !important;
+  }
+
+  :global(.dark-mode .service-item:hover .service-number) {
+    color: #ffffff !important;
+  }
+
+  :global(.dark-mode .service-item:hover .service-title.inactive) {
+    color: #ffffff !important;
+  }
+
+  :global(.dark-mode .service-item:hover .service-number.inactive) {
+    color: #ffffff !important;
+  }
+
+  :global(.dark-mode .service-item:hover .service-title .flip-text-container span) {
+    color: #ffffff !important;
+  }
+
+  /* Service Details Dark Mode */
+  :global(.dark-mode .service-description) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .tech-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .tech-tag) {
+    background: rgba(157, 127, 193, 0.15);
+    border-color: rgba(157, 127, 193, 0.3);
+    color: #d4a5ff;
+  }
+
+  :global(.dark-mode .tech-tag:hover) {
+    background: rgba(157, 127, 193, 0.25);
+  }
+
+  :global(.dark-mode .example-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .example-text) {
+    color: #e6d9f0;
+  }
+
+  /* Tags remain with original purple gradient - they look good in dark mode */
 </style>
 

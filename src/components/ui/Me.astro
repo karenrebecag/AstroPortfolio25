@@ -80,12 +80,12 @@ const experienceData = [
             </AnimatedMeElement>
             <AnimatedMeElement client:visible delay={0.25}>
               <h2 class="me-hero-title text-hero font-median mb-2 relative z-10">
-                <span class="text-[#080808]">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+                <span class="me-hero-text-dark">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
               </h2>
             </AnimatedMeElement>
           </div>
           <AnimatedMeElement client:visible delay={0.3}>
-            <h3 class="me-heading-lg text-heading-lg text-[#080808] font-secondary font-bold">
+            <h3 class="me-heading-lg text-heading-lg me-heading-text-dark font-secondary font-bold">
               Based in Mexico City
             </h3>
           </AnimatedMeElement>
@@ -104,8 +104,8 @@ const experienceData = [
           <AnimatedMeElement client:visible delay={0.4}>
             <h2 class="me-section-title text-hero font-median mb-6">
               <span class="text-[#7350cc]">5+ Years</span><br />
-              <span class="text-[#080808]">Creating Digital</span><br />
-              <span class="text-[#080808]">Experiences</span>
+              <span class="me-section-text-dark">Creating Digital</span><br />
+              <span class="me-section-text-dark">Experiences</span>
             </h2>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.45}>
@@ -142,7 +142,7 @@ const experienceData = [
         <div class="relative z-10">
           <AnimatedMeElement client:visible delay={0.55}>
             <h2 class="me-section-title text-hero font-median mb-8">
-              <span class="text-[#080808]">Numbers That</span><br />
+              <span class="me-section-text-dark">Numbers That</span><br />
               <span class="text-[#7350cc]">Speak Volumes</span>
             </h2>
           </AnimatedMeElement>
@@ -151,7 +151,7 @@ const experienceData = [
           <div class="grid grid-cols-3 gap-8 mb-8">
             <AnimatedMeStats client:visible delay={0.6}>
               <div class="text-center">
-                <div class="me-stats-number text-display text-[#080808] font-secondary mb-2">
+                <div class="me-stats-number text-display me-stats-text-dark font-secondary mb-2">
                   <Number value={8} delay={500} client:visible />
                 </div>
                 <div class="me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary">Award winner</div>
@@ -160,7 +160,7 @@ const experienceData = [
             
             <AnimatedMeStats client:visible delay={0.65}>
               <div class="text-center">
-                <div class="me-stats-number flex items-center justify-center text-display text-[#080808] font-secondary mb-2">
+                <div class="me-stats-number flex items-center justify-center text-display me-stats-text-dark font-secondary mb-2">
                   <Number value={1} delay={700} client:visible />
                   <span>.2k</span>
                 </div>
@@ -170,7 +170,7 @@ const experienceData = [
             
             <AnimatedMeStats client:visible delay={0.7}>
               <div class="text-center">
-                <div class="me-stats-number flex items-center justify-center text-display text-[#080808] font-secondary mb-2">
+                <div class="me-stats-number flex items-center justify-center text-display me-stats-text-dark font-secondary mb-2">
                   <Number value={3} delay={900} client:visible />
                   <span>.5k</span>
                 </div>
@@ -192,9 +192,9 @@ const experienceData = [
         <div class="relative z-10">
           <AnimatedMeElement client:visible delay={0.8}>
             <h2 class="me-section-title text-hero font-median mb-6">
-              <span class="text-[#080808]">Design Is Not Just</span><br />
+              <span class="me-section-text-dark">Design Is Not Just</span><br />
               <span class="text-[#7350cc]">What It Looks Like</span><br />
-              <span class="text-[#080808]">It's How It Works</span>
+              <span class="me-section-text-dark">It's How It Works</span>
             </h2>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.85}>
@@ -272,11 +272,11 @@ const experienceData = [
 
 <style>
   /* Storytelling Scroll Container */
-  .storytelling-scroll-container {
+  :global(.storytelling-scroll-container) {
     background: #f9f9f9;
     padding-top: 20rem;
-
     position: relative;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .story-grid {
@@ -315,7 +315,7 @@ const experienceData = [
   .scrolling-content-column {
     display: flex;
     flex-direction: column;
-    gap: 10rem;
+    gap: 15rem;
   }
 
   .content-section {
@@ -327,7 +327,7 @@ const experienceData = [
   }
 
   /* Grid pattern overlay */
-  .storytelling-scroll-container::before {
+  :global(.storytelling-scroll-container)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -340,6 +340,7 @@ const experienceData = [
     background-size: 20px 20px;
     pointer-events: none;
     z-index: 1;
+    transition: background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .story-grid {
@@ -348,43 +349,87 @@ const experienceData = [
   }
 
   /* Me Section Title Styles */
-  .me-hero-title {
+  :global(.me-hero-title) {
     font-size: clamp(48px, 8vw, 96px);
     line-height: 0.75;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-section-title {
+  :global(.me-section-title) {
     font-size: clamp(36px, 6vw, 72px);
     line-height: 0.9;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-heading-lg {
+  :global(.me-heading-lg) {
     font-size: clamp(28px, 4vw, 44px);
     line-height: 1.23;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-body-lg {
+  :global(.me-body-lg) {
     font-size: 20px;
     line-height: 1.5;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-body-md {
+  :global(.me-body-md) {
     font-size: 18px;
     line-height: 1.5;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-body-sm {
+  :global(.me-body-sm) {
     font-size: 16px;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-stats-number {
+  :global(.me-stats-number) {
     font-size: 48px;
     line-height: 56px;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .me-purple-circle {
+  :global(.me-purple-circle) {
     width: 244px;
     height: 238px;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* New classes for hardcoded text colors */
+  :global(.me-hero-text-dark) {
+    color: #080808;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.me-heading-text-dark) {
+    color: #080808;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.me-section-text-dark) {
+    color: #080808;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.me-stats-text-dark) {
+    color: #080808;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .globe-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 780px; /* 600px * 1.3 = 780px */
+    height: 780px; /* 600px * 1.3 = 780px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Responsive Design */
@@ -522,7 +567,7 @@ const experienceData = [
   }
 
   /* Globe Section Styles */
-  .globe-section {
+  :global(.globe-section) {
     width: 100%;
     background: #f9f9f9;
     padding: 0px 60px 0px 60px;
@@ -531,6 +576,7 @@ const experienceData = [
     justify-content: center;
     align-items: center;
     position: relative;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     /* min-height: 50vh; */
   }
 
@@ -557,7 +603,7 @@ const experienceData = [
   }
 
   /* Grid pattern overlay for globe section */
-  .globe-section::before {
+  :global(.globe-section)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -570,6 +616,7 @@ const experienceData = [
     background-size: 20px 20px;
     pointer-events: none;
     z-index: 1;
+    transition: background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Globe Title Styles - Behind Globe */
@@ -629,12 +676,13 @@ const experienceData = [
   }
 
   /* Experience Cards Styles - Marquee Infinito */
-  .experience-container {
+  :global(.experience-container) {
     width: 100%;
     position: relative;
     margin-top: 0;
     background: #f9f9f9;
     padding: 80px 0;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Experience Text Styles */
@@ -654,13 +702,14 @@ const experienceData = [
     text-align: center;
   }
 
-  .experience-description-text {
+  :global(.experience-description-text) {
     font-family: var(--font-primary);
     font-size: var(--text-xl);
     font-weight: var(--font-weight-normal);
     line-height: var(--leading-relaxed);
     color: rgba(8, 8, 8, 0.8);
     margin: 0;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Experience Marquee Styles */
@@ -1505,6 +1554,192 @@ const experienceData = [
     .button-container-me :global(.button-content) {
       width: 100% !important;
       justify-content: center !important;
+    }
+  }
+
+  /* Dark Mode Styles - Following Documentation Pattern */
+  :global(.dark-mode .storytelling-scroll-container) {
+    background-color: #020009;
+  }
+
+  :global(.dark-mode .storytelling-scroll-container)::before {
+    background-image: 
+      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+  }
+
+  :global(.dark-mode .globe-section) {
+    background-color: #020009;
+  }
+
+  :global(.dark-mode .globe-section)::before {
+    background-image: 
+      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+  }
+
+  :global(.dark-mode .experience-container) {
+    background-color: #020009;
+  }
+
+  /* Text Elements Dark Mode */
+  :global(.dark-mode .me-hero-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-section-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-heading-lg) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-body-lg) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .me-body-md) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .me-body-sm) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .me-stats-number) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-description-text) {
+    color: #e6d9f0;
+  }
+
+  /* Purple Circle Dark Mode */
+  :global(.dark-mode .me-purple-circle) {
+    background-color: rgba(157, 127, 193, 0.3);
+  }
+
+  /* New hardcoded text classes Dark Mode */
+  :global(.dark-mode .me-hero-text-dark) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-heading-text-dark) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-section-text-dark) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .me-stats-text-dark) {
+    color: #f8f4ff;
+  }
+
+  /* Globe Container Dark Mode - Invert Filter */
+  :global(.dark-mode) .globe-container {
+    filter: invert(1);
+  }
+
+  /* Globe Title Dark Mode */
+  :global(.dark-mode .globe-title-disperse) {
+    color: #f8f4ff !important;
+  }
+
+  :global(.dark-mode .globe-title-disperse span) {
+    color: #f8f4ff !important;
+  }
+
+  /* Experience Cards Dark Mode */
+  :global(.dark-mode .experience-card-marquee) {
+    background: rgba(15, 0, 26, 0.85);
+    border-color: rgba(157, 127, 193, 0.2);
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-card-slider) {
+    background: rgba(15, 0, 26, 0.85);
+    border-color: rgba(157, 127, 193, 0.2);
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-number) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-title) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-company) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .description-normal) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .description-highlight) {
+    color: #d4a5ff;
+  }
+
+  /* Slider Elements Dark Mode */
+  :global(.dark-mode .experience-number-slider) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-title-slider) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .experience-company-slider) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .description-normal-slider) {
+    color: #e6d9f0;
+  }
+
+  :global(.dark-mode .description-highlight-slider) {
+    color: #d4a5ff;
+  }
+
+  /* Slider Controls Dark Mode */
+  :global(.dark-mode .experience-slider-arrow) {
+    background: rgba(15, 0, 26, 0.9);
+    border-color: rgba(157, 127, 193, 0.3);
+  }
+
+  :global(.dark-mode .experience-slider-arrow:hover) {
+    background: rgba(157, 127, 193, 0.2);
+    border-color: rgba(157, 127, 193, 0.5);
+  }
+
+  :global(.dark-mode .experience-slider-arrow svg) {
+    fill: #d4a5ff;
+  }
+
+  :global(.dark-mode .experience-slider-page) {
+    background: rgba(157, 127, 193, 0.4);
+  }
+
+  :global(.dark-mode .experience-slider-page.is-active) {
+    background: #d4a5ff;
+  }
+
+  :global(.dark-mode .experience-slider-page:hover) {
+    background: rgba(157, 127, 193, 0.7);
+  }
+
+  /* Gradients for large screens Dark Mode */
+  @media (min-width: 2560px) {
+    :global(.dark-mode .experience-marquee-wrapper-limited)::before {
+      background: linear-gradient(to right, #020009, transparent);
+    }
+
+    :global(.dark-mode .experience-marquee-wrapper-limited)::after {
+      background: linear-gradient(to left, #020009, transparent);
     }
   }
 </style>
