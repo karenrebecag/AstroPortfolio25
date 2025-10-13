@@ -16,6 +16,18 @@
       <span class="marquee-content">
         CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
       </span>
+            <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
+            <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO • 
+      </span>
     </div>
   </div>
 </div>
@@ -35,7 +47,11 @@
     min-height: 163px;
     overflow: hidden;
     position: relative;
-    contain: layout style paint;
+    contain: strict;
+    
+    /* Fix webkit compositing layer bug */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   
   #left-marquee {
@@ -44,6 +60,12 @@
     left: 0;
     /* Allow infinite width for marquee animation */
     width: max-content !important;
+    
+    /* Hardware acceleration webkit */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   /* Dark mode styles - Intense neon illumination stroke text */
@@ -136,6 +158,44 @@
     }
   }
 
+  /* 🍎 Safari-Only Fallback - Dark mode simple solo para Safari, Chromium mantiene efectos neon */
+  @supports (-webkit-appearance: none) and (not (background: paint(something))) {
+    :global(.dark-mode) #left-marquee {
+      /* Anular efectos complejos solo en Safari */
+      background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: none !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+      filter: none !important;
+      animation: none !important;
+      transition: none !important;
+      
+      /* Mantener optimizaciones de performance */
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    
+    /* Anular hover effects solo en Safari */
+    :global(.dark-mode) .left-marquee-wrapper:hover #left-marquee {
+      background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: none !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+      filter: none !important;
+      animation: none !important;
+    }
+  }
+  
+
+
   /* Gradientes laterales para pantallas grandes */
   @media (min-width: 2560px) {
     .left-marquee-wrapper::before,
@@ -179,28 +239,31 @@
     const leftContent = leftMarquee.querySelectorAll('.marquee-content');
     if (leftContent.length === 0) return;
     
+    // Calcular ancho explícito para Safari
+    const firstElement = leftContent[0] as HTMLElement;
+    const contentWidth = firstElement.getBoundingClientRect().width;
+    
     let leftPosition = 0;
     const speed = 1; // Velocidad en píxeles por frame
     
     function animateLeftMarquee() {
       leftPosition -= speed;
       
-      // Obtener el ancho del contenido
-      const firstElement = leftContent[0] as HTMLElement;
-      const contentWidth = firstElement.offsetWidth;
-      
       // Resetear posición cuando el primer elemento sale completamente
       if (Math.abs(leftPosition) >= contentWidth) {
         leftPosition = 0;
       }
       
-      // Aplicar transformación
-      (leftMarquee as HTMLElement).style.transform = `translateX(${leftPosition}px)`;
+      // Usar translate3d para webkit optimization
+      (leftMarquee as HTMLElement).style.transform = `translate3d(${leftPosition}px, 0, 0)`;
       
       requestAnimationFrame(animateLeftMarquee);
     }
     
-    animateLeftMarquee();
+    // Doble RAF para Safari
+    requestAnimationFrame(() => {
+      requestAnimationFrame(animateLeftMarquee);
+    });
   }
   
   // Iniciar animación cuando el DOM esté listo

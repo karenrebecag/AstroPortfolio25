@@ -11,6 +11,7 @@
     height="24"
   >
     <path
+      class="cursor-path"
       fill="#000000"
       stroke="#ffffff"
       stroke-width="2"
@@ -40,13 +41,41 @@
 
   .custom-cursor.cursor-hover {
     transform: translate(-50%, -50%) scale(1.5);
+    -webkit-transform: translate(-50%, -50%) scale(1.5);
   }
 
-  .cursor-icon {
+  :global(.cursor-icon) {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
-    transition: transform 0.2s ease;
+    transition: 
+      transform 0.2s ease,
+      filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Estilos para el path del cursor */
+  :global(.cursor-path) {
+    transition: 
+      fill 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      stroke 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* 🌙 Dark Mode - Cursor blanco */
+  :global(.dark-mode .cursor-path) {
+    fill: #ffffff;
+    stroke: #000000;
+  }
+
+  :global(.dark-mode .cursor-icon) {
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.15));
+  }
+
+  /* 🌙 Dark Mode - Tags moraditas */
+  :global(.dark-mode .cursor-text-content) {
+    background: #4523AE;
+    color: #ffffff;
+    border-color: #6B46C1;
+    box-shadow: 0 4px 12px rgba(69, 35, 174, 0.25);
   }
 
   /* Estilos para el texto del cursor */
@@ -65,9 +94,10 @@
   .cursor-text.cursor-text-visible {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
   }
 
-  .cursor-text-content {
+  :global(.cursor-text-content) {
     display: inline-block;
     padding: 8px 12px;
     background: #fefaec;
@@ -81,6 +111,11 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: 
+      background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Ocultar cursor en dispositivos táctiles */
@@ -91,32 +126,114 @@
     }
   }
 
-  /* Ocultar cursor del sistema cuando el personalizado está activo */
+  /* SOLUCIÓN SAFARI: Usar cursor transparente en vez de cursor: none */
+  /* Data URI de pixel transparente 1x1px que funciona como cursor invisible */
   body.custom-cursor-active {
-    cursor: none !important;
+    cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='), auto !important;
   }
 
-  body.custom-cursor-active * {
-    cursor: none !important;
+  body.custom-cursor-active *,
+  body.custom-cursor-active *:hover,
+  body.custom-cursor-active *:active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active select {
+    cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='), auto !important;
+  }
+
+  /* Fallback para navegadores muy antiguos sin soporte data URI */
+  @supports not (cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=')) {
+    body.custom-cursor-active {
+      cursor: none !important;
+    }
+    
+    body.custom-cursor-active * {
+      cursor: none !important;
+    }
+  }
+
+  /* Safari transforms optimization */
+  .custom-cursor {
+    -webkit-transform: translate(-50%, -50%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  .cursor-text {
+    -webkit-transform: translate(-50%, -50%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 </style>
 
 <script>
-  // Detectar si es dispositivo táctil
+  // Detectar si es dispositivo táctil - Enhanced Safari compatibility
   const isTouchDevice = () => {
-    return 'ontouchstart' in window || 
-           navigator.maxTouchPoints > 0 || 
-           window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    // Safari/iPad detection improvements
+    try {
+      // Check for touch capability
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      // Check media queries with fallback for older Safari
+      let isPrimaryTouch = false;
+      try {
+        isPrimaryTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      } catch (e) {
+        // Fallback for older Safari versions
+        isPrimaryTouch = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      }
+      
+      // Additional iPad/Safari detection
+      const isIPad = /iPad/.test(navigator.userAgent) || 
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      
+      // Check for Safari on desktop (should allow custom cursor)
+      const isSafariDesktop = /Safari/.test(navigator.userAgent) && 
+                            !/Chrome/.test(navigator.userAgent) && 
+                            !hasTouch && 
+                            !isIPad;
+      
+      // If Safari desktop, force enable custom cursor
+      if (isSafariDesktop) {
+        return false;
+      }
+      
+      return hasTouch || isPrimaryTouch || isIPad;
+    } catch (error) {
+      console.warn('Error detecting touch device:', error);
+      // Fallback: if detection fails, assume non-touch
+      return false;
+    }
   };
 
+  // Debug logging for Safari
+  const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+  const isTouch = isTouchDevice();
+  
+  if (isSafari) {
+    console.log('🦎 CustomCursor Safari Debug:', {
+      isTouchDevice: isTouch,
+      userAgent: navigator.userAgent,
+      maxTouchPoints: navigator.maxTouchPoints,
+      platform: navigator.platform
+    });
+  }
+
   // Solo inicializar en dispositivos no táctiles
-  if (!isTouchDevice()) {
+  if (!isTouch) {
     const cursor = document.getElementById('custom-cursor');
     const cursorText = document.getElementById('cursor-text');
     const cursorTextContent = document.querySelector('.cursor-text-content');
     const body = document.body;
     
     if (cursor && cursorText && cursorTextContent) {
+      if (isSafari) {
+        console.log('🦎 CustomCursor Safari: Elements found, initializing...');
+      }
+      
       let isActive = false;
       let currentX = 0;
       let currentY = 0;
@@ -179,22 +296,37 @@
         return Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
       };
 
-      // Función para actualizar posición del cursor con delay suave
+      // Función para actualizar posición del cursor con delay suave - Safari optimized
       const updateCursorPosition = () => {
-        currentX = lerp(currentX, targetX, 0.15);
-        currentY = lerp(currentY, targetY, 0.15);
-        currentRotation = lerp(currentRotation, targetRotation, 0.1);
+        try {
+          currentX = lerp(currentX, targetX, 0.15);
+          currentY = lerp(currentY, targetY, 0.15);
+          currentRotation = lerp(currentRotation, targetRotation, 0.1);
 
-        cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%) rotate(${currentRotation}deg)`;
+          // Safari-optimized transforms
+          const transformValue = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%) rotate(${currentRotation}deg)`;
+          cursor.style.webkitTransform = transformValue;
+          cursor.style.transform = transformValue;
 
-        // Actualizar posición del texto con un delay ligeramente diferente para efecto suave
-        if (isTextVisible) {
-          textCurrentX = lerp(textCurrentX, textTargetX, 0.12);
-          textCurrentY = lerp(textCurrentY, textTargetY, 0.12);
-          cursorText.style.transform = `translate(${textCurrentX}px, ${textCurrentY}px) translate(-50%, -50%)`;
+          // Actualizar posición del texto con un delay ligeramente diferente para efecto suave
+          if (isTextVisible) {
+            textCurrentX = lerp(textCurrentX, textTargetX, 0.12);
+            textCurrentY = lerp(textCurrentY, textTargetY, 0.12);
+            const textTransformValue = `translate(${textCurrentX}px, ${textCurrentY}px) translate(-50%, -50%)`;
+            cursorText.style.webkitTransform = textTransformValue;
+            cursorText.style.transform = textTransformValue;
+          }
+
+          // Use requestAnimationFrame with fallback for older Safari
+          if (typeof window.requestAnimationFrame === 'function') {
+            requestAnimationFrame(updateCursorPosition);
+          } else {
+            setTimeout(updateCursorPosition, 16); // ~60fps fallback
+          }
+        } catch (error) {
+          console.warn('Cursor animation error:', error);
+          // Stop animation loop on error to prevent console spam
         }
-
-        requestAnimationFrame(updateCursorPosition);
       };
 
       // Función para capturar la posición del mouse
@@ -227,6 +359,17 @@
           isActive = true;
           body.classList.add('custom-cursor-active');
           cursor.style.opacity = '1';
+          
+          // Safari-specific: Force cursor update to ensure data URI applies
+          if (isSafari) {
+            requestAnimationFrame(() => {
+              body.classList.remove('custom-cursor-active');
+              requestAnimationFrame(() => {
+                body.classList.add('custom-cursor-active');
+              });
+            });
+          }
+          
           // Inicializar posición para evitar salto inicial
           lastX = e?.clientX || 0;
           lastY = e?.clientY || 0;
@@ -442,6 +585,42 @@
         });
       };
 
+      // Safari-specific initialization
+      if (isSafari) {
+        console.log('🦎 CustomCursor Safari: Starting initialization...');
+        
+        // Force initial visibility check
+        setTimeout(() => {
+          if (cursor) {
+            const computedStyle = window.getComputedStyle(cursor);
+            console.log('🦎 CustomCursor Safari visibility check:', {
+              display: computedStyle.display,
+              opacity: computedStyle.opacity,
+              transform: computedStyle.transform,
+              zIndex: computedStyle.zIndex
+            });
+            
+            // Force visibility if hidden
+            if (computedStyle.display === 'none') {
+              cursor.style.display = 'block';
+              console.log('🦎 CustomCursor Safari: Forced display block');
+            }
+          }
+        }, 100);
+        
+        // Debug: Check if transparent cursor is applied
+        setTimeout(() => {
+          const bodyCursor = window.getComputedStyle(body).cursor;
+          console.log('🦎 CustomCursor Safari: Body cursor style:', bodyCursor);
+          
+          if (bodyCursor.includes('data:image/png;base64')) {
+            console.log('✅ Safari: Transparent cursor data URI applied successfully');
+          } else {
+            console.warn('❌ Safari: Transparent cursor NOT applied, current cursor:', bodyCursor);
+          }
+        }, 200);
+      }
+
       // Inicializar audio y efectos hover
       initClickAudio();
       addHoverEffects();
@@ -466,6 +645,34 @@
         // Limpiar estado del texto
         hideCursorText();
       });
+      
+      // Safari-specific late initialization check
+      if (isSafari) {
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            console.log('🦎 CustomCursor Safari: Post-load check');
+            
+            // Final activation test
+            const testEvent = new MouseEvent('mousemove', {
+              clientX: window.innerWidth / 2,
+              clientY: window.innerHeight / 2
+            });
+            
+            handleMouseMove(testEvent);
+            showCursor(testEvent);
+            
+            console.log('🦎 CustomCursor Safari: Test activation completed');
+          }, 500);
+        });
+      }
+    } else if (isSafari) {
+      console.warn('🦎 CustomCursor Safari: Elements not found!', {
+        cursor: !!cursor,
+        cursorText: !!cursorText,
+        cursorTextContent: !!cursorTextContent
+      });
     }
+  } else if (isSafari) {
+    console.log('🦎 CustomCursor Safari: Disabled due to touch device detection');
   }
 </script>

@@ -57,9 +57,9 @@
   font-display: optional;
 }
 
-/* CSS Custom Properties for Typography */
+/* CSS Custom Properties for Typography - Will be overridden by global.css for better fallbacks */
 :root {
-  /* Font Families */
+  /* Font Families - Base definitions */
   --font-primary: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
   --font-secondary: 'Boysen', 'Inter Tight', sans-serif;
   --font-display: 'Median', 'Boysen', serif;

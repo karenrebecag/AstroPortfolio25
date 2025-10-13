@@ -2,39 +2,7 @@
 @import './i18n-fonts.css';
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
-/* Enhanced base styles using our custom fonts */
-@layer base {
-  html {
-    font-family: var(--font-primary);
-  }
-  
-  body {
-    font-family: var(--font-primary);
-    font-weight: var(--font-weight-normal);
-    line-height: var(--leading-normal);
-    background-color: white;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-secondary);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--leading-tight);
-  }
-  
-  h1 {
-    font-size: var(--text-5xl);
-    font-weight: var(--font-weight-bold);
-  }
-  
-  h2 {
-    font-size: var(--text-4xl);
-  }
-  
-  h3 {
-    font-size: var(--text-3xl);
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap');
 
 /* Marquee animations */
 @keyframes marquee-left {
@@ -73,6 +41,7 @@
 }
 
 
+/* Estilos de clases FUERA de @layer base para mayor especificidad */
 /* Playfair Display Font */
 .playfair-display {
   font-family: "Playfair Display", serif;
@@ -86,43 +55,205 @@
   font-style: italic;
 }
 
-/* Review Cards Typography - Smaller text sizes */
+/* Navegadores con size-adjust */
+@supports (size-adjust: 100%) {
+  .playfair-display,
+  .playfair-display-italic {
+    font-family: "Playfair Display", "Playfair Display Fallback", Georgia, serif;
+  }
+  
+  .bbh-sans-bogle-regular {
+    font-family: "BBH Sans Bogle", "BBH Sans Bogle Fallback", Arial, sans-serif;
+  }
+}
+
+  /* Safari-specific font detection and fallbacks */
+  @supports (not (size-adjust: 100%)) and (-webkit-backdrop-filter: blur(1px)) {
+    /* Safari detected - use system fonts with compensation */
+    :root {
+      --font-geist-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-geist-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+    }
+
+    /* Make all fonts much bolder in Safari */
+    * {
+      font-weight: 800 !important;
+    }
+
+    /* Specific weight adjustments for different elements */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 800 !important;
+    }
+
+    strong, b {
+      font-weight: 900 !important;
+    }
+
+    /* Maintain thin weights where specifically needed */
+    .font-thin, [class*="font-thin"] {
+      font-weight: 400 !important;
+    }
+
+    .font-light, [class*="font-light"] {
+      font-weight: 500 !important;
+    }
+  }
+
+/* Safari iOS específico */
+@supports (-webkit-touch-callout: none) and (not (size-adjust: 100%)) {
+  body {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Fallback font-faces ANTES de @layer para que estén disponibles globalmente */
+@font-face {
+  font-family: 'Inter Tight Fallback';
+  src: local('Arial'), local('Helvetica'), local('system-ui');
+  size-adjust: 102%;
+  ascent-override: 95%;
+  descent-override: 23%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Boysen Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('sans-serif');
+  size-adjust: 98%;
+  ascent-override: 92%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Median Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  size-adjust: 96%;
+  ascent-override: 90%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  size-adjust: 94%;
+  ascent-override: 88%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'BBH Sans Bogle Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('sans-serif');
+  size-adjust: 100%;
+  ascent-override: 96%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+/* Variables CSS DENTRO de @layer base para prioridad correcta */
+@layer base {
+  /* Variables por defecto - todos los navegadores */
+  :root {
+    --font-primary: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-secondary: 'Boysen', 'Inter Tight', sans-serif;
+    --font-display: 'Median', 'Boysen', serif;
+    --font-signature: 'Karstar Signature', cursive;
+    --font-game: 'Video Game Font', 'Courier New', monospace;
+  }
+  
+  /* Navegadores con size-adjust (Chrome, Firefox, Edge) */
+  @supports (size-adjust: 100%) {
+    :root {
+      --font-primary: 'Inter Tight', 'Inter Tight Fallback', system-ui, sans-serif;
+      --font-secondary: 'Boysen', 'Boysen Fallback', sans-serif;
+      --font-display: 'Median', 'Median Fallback', serif;
+    }
+  }
+  
+  /* Safari específico - Detección más precisa */
+  @supports (not (size-adjust: 100%)) and (-webkit-backdrop-filter: blur(1px)) {
+    :root {
+      --font-primary: 'Inter Tight', -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+      --font-secondary: 'Boysen', -apple-system, "SF Pro Display", sans-serif;
+      --font-display: 'Median', "New York", Georgia, "Palatino", serif;
+    }
+  }
+  
+  html {
+    font-family: var(--font-primary);
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-normal);
+    background-color: white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--leading-tight);
+  }
+  
+  h1 {
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  h2 {
+    font-size: var(--text-4xl);
+  }
+  
+  h3 {
+    font-size: var(--text-3xl);
+  }
+}
+
+/* Review Cards Typography - Quitar !important para evitar conflictos */
 .review-card-text,
 .review-text {
-  font-size: 14px !important;
-  line-height: 20px !important;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .review-card-name,
 .author-name {
-  font-size: 11px !important;
-  line-height: 16px !important;
+  font-size: 11px;
+  line-height: 16px;
 }
 
 .review-card-position,
 .author-position {
-  font-size: 9px !important;
-  line-height: 14px !important;
+  font-size: 9px;
+  line-height: 14px;
 }
 
-/* Responsive adjustments for review cards */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .review-card-text,
   .review-text {
-    font-size: 12px !important;
-    line-height: 18px !important;
+    font-size: 12px;
+    line-height: 18px;
   }
   
   .review-card-name,
   .author-name {
-    font-size: 10px !important;
-    line-height: 14px !important;
+    font-size: 10px;
+    line-height: 14px;
   }
   
   .review-card-position,
   .author-position {
-    font-size: 8px !important;
-    line-height: 12px !important;
+    font-size: 8px;
+    line-height: 12px;
   }
 }
 
