@@ -125,15 +125,6 @@ export const translations = {
       title: 'Discussion',
       subtitle: 'Share your thoughts and join the conversation'
     },
-    profileCard: {
-      bio: 'Building beautiful and intuitive digital experiences. Passionate about design systems and web animation.',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: 'Email'
-      }
-    },
     contact: {
       title: 'Get In Touch',
       subtitle: 'Ready to bring your ideas to life? Let\'s discuss your project',
@@ -699,15 +690,6 @@ export const translations = {
     commentsSection: {
       title: 'Discusión',
       subtitle: 'Comparte tus pensamientos y únete a la conversación'
-    },
-    profileCard: {
-      bio: 'Creando experiencias digitales hermosas e intuitivas. Apasionada por los sistemas de diseño y la animación web.',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: 'Correo'
-      }
     },
     contact: {
       title: 'Contacto',
@@ -1275,15 +1257,6 @@ export const translations = {
       title: 'Discussion',
       subtitle: 'Partagez vos pensées et rejoignez la conversation'
     },
-    profileCard: {
-      bio: 'Créer des expériences numériques belles et intuitives. Passionnée par les systèmes de design et l\'animation web.',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: 'Email'
-      }
-    },
     contact: {
       title: 'Entrer en Contact',
       subtitle: 'Prêt à donner vie à vos idées ? Discutons de votre projet',
@@ -1723,15 +1696,6 @@ export const translations = {
       title: 'चर्चा',
       subtitle: 'अपने विचार साझा करें और बातचीत में शामिल हों'
     },
-    profileCard: {
-      bio: 'सुंदर और सहज डिजिटल अनुभव बनाना। डिज़ाइन सिस्टम और वेब एनीमेशन के लिए जुनूनी।',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: 'ईमेल'
-      }
-    },
     contact: {
       title: 'संपर्क में रहें',
       subtitle: 'अपने विचारों को जीवंत बनाने के लिए तैयार हैं? आइए आपके प्रोजेक्ट पर चर्चा करें',
@@ -2129,15 +2093,6 @@ export const translations = {
       title: 'ディスカッション',
       subtitle: 'あなたの考えを共有し、会話に参加してください'
     },
-    profileCard: {
-      bio: '美しく直感的なデジタル体験を構築しています。デザインシステムとウェブアニメーションに情熱を注いでいます。',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: 'メール'
-      }
-    },
     contact: {
       title: 'お問い合わせ',
       subtitle: 'あなたのアイデアを実現する準備はできていますか？プロジェクトについて話し合いましょう',
@@ -2511,15 +2466,6 @@ export const translations = {
       title: '讨论',
       subtitle: '分享您的想法并加入对话'
     },
-    profileCard: {
-      bio: '构建美观直观的数字体验。热衷于设计系统和网页动画。',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: '邮箱'
-      }
-    },
     contact: {
       title: '联系我们',
       subtitle: '准备好将您的想法变为现实了吗？让我们讨论您的项目',
@@ -2892,15 +2838,6 @@ export const translations = {
     commentsSection: {
       title: '討論',
       subtitle: '分享您的想法並加入對話'
-    },
-    profileCard: {
-      bio: '構建美觀直覺的數位體驗。熱衷於設計系統和網頁動畫。',
-      socialLinks: {
-        linkedin: 'LinkedIn',
-        instagram: 'Instagram',
-        github: 'GitHub',
-        email: '電子郵件'
-      }
     },
     contact: {
       title: '聯絡我們',
