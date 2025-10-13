@@ -217,9 +217,9 @@
   /* Safari específico - Detección más precisa */
   @supports (not (size-adjust: 100%)) and (-webkit-backdrop-filter: blur(1px)) {
     :root {
-      --font-primary: 'Inter Tight', -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
-      --font-secondary: 'Boysen', -apple-system, "SF Pro Display", sans-serif;
-      --font-display: 'Median', "New York", Georgia, "Palatino", serif;
+      --font-primary: 'Inter Tight', 'Inter Tight Fallback', -apple-system, "SF Pro Display", sans-serif;
+      --font-secondary: 'Boysen', 'Boysen Fallback', -apple-system, "SF Pro Display", sans-serif;
+      --font-display: 'Median', 'Median Fallback', "New York", Georgia, serif;
     }
   }
   

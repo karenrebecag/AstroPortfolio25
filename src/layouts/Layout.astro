@@ -111,9 +111,11 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
 		<link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
 		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png" fetchpriority="high">
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin>
-		
+		<!-- Preload Critical Fonts -->
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
 		<!-- Font Loading - Optimized for performance -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
