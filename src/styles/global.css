@@ -83,34 +83,38 @@
 }
 
   /* Safari-specific font detection and fallbacks */
-  @supports (not (size-adjust: 100%)) and (-webkit-backdrop-filter: blur(1px)) {
-    /* Safari detected - use system fonts with compensation */
-    :root {
-      --font-geist-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-geist-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-    }
+  @supports selector(::-webkit-scrollbar) and (not (size-adjust: 100%)) {
+    @media not all and (min-resolution:.001dpcm) {
+      @supports (-webkit-appearance:none) {
+        /* Safari detected - use system fonts with compensation */
+        :root {
+          --font-geist-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --font-geist-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+        }
 
-    /* Make all fonts much bolder in Safari */
-    * {
-      font-weight: 800 !important;
-    }
+        /* Make all fonts much bolder in Safari ONLY */
+        * {
+          font-weight: 800 !important;
+        }
 
-    /* Specific weight adjustments for different elements */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 800 !important;
-    }
+        /* Specific weight adjustments for different elements */
+        h1, h2, h3, h4, h5, h6 {
+          font-weight: 800 !important;
+        }
 
-    strong, b {
-      font-weight: 900 !important;
-    }
+        strong, b {
+          font-weight: 900 !important;
+        }
 
-    /* Maintain thin weights where specifically needed */
-    .font-thin, [class*="font-thin"] {
-      font-weight: 400 !important;
-    }
+        /* Maintain thin weights where specifically needed */
+        .font-thin, [class*="font-thin"] {
+          font-weight: 400 !important;
+        }
 
-    .font-light, [class*="font-light"] {
-      font-weight: 500 !important;
+        .font-light, [class*="font-light"] {
+          font-weight: 500 !important;
+        }
+      }
     }
   }
 
