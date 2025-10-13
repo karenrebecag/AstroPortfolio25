@@ -561,10 +561,13 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 
   /* Dark Mode Styles - Following Documentation Pattern */
   :global(.dark-mode .services-section) {
-    background:
-      linear-gradient(to right, rgba(112, 11, 108, 0.15) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(112, 11, 108, 0.15) 1px, transparent 1px),
-      #020009;
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
+    background-image:
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
   }
 
   :global(.dark-mode .services-subtitle) {

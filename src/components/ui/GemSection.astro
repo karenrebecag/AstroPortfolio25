@@ -92,6 +92,7 @@ const softSkillsData = t.aboutMe.skills;
     will-change: auto;
     contain: layout style paint;
     transform: translateZ(0);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .gem-container {
@@ -701,13 +702,42 @@ const softSkillsData = t.aboutMe.skills;
     const applyDarkMode = (isDark: boolean) => {
       if (gemSection) {
         if (isDark) {
-          (gemSection as HTMLElement).style.background = '#020009';
+          // Replicate exact Banner.astro dark mode background
+          (gemSection as HTMLElement).style.background = 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)';
           (gemSection as HTMLElement).style.backgroundImage = 
-            'linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px)';
+            'linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px)';
+          (gemSection as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px';
+          (gemSection as HTMLElement).style.backgroundPosition = 'center';
+          (gemSection as HTMLElement).style.backgroundRepeat = 'repeat';
+          
+          // Update pseudo-element for dark mode by adding a style element
+          let darkModeStyle = document.getElementById('gem-section-dark-mode-style');
+          if (!darkModeStyle) {
+            darkModeStyle = document.createElement('style');
+            darkModeStyle.id = 'gem-section-dark-mode-style';
+            document.head.appendChild(darkModeStyle);
+          }
+          darkModeStyle.textContent = `
+            .gem-section::before {
+              background-image: 
+                linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px) !important;
+              background-size: 40px 40px !important;
+            }
+          `;
         } else {
           (gemSection as HTMLElement).style.background = '#f9f9f9';
           (gemSection as HTMLElement).style.backgroundImage = 
             'linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)';
+          (gemSection as HTMLElement).style.backgroundSize = '20px 20px';
+          (gemSection as HTMLElement).style.backgroundPosition = '';
+          (gemSection as HTMLElement).style.backgroundRepeat = '';
+          
+          // Remove dark mode pseudo-element styles
+          const darkModeStyle = document.getElementById('gem-section-dark-mode-style');
+          if (darkModeStyle) {
+            darkModeStyle.remove();
+          }
         }
       }
       
@@ -724,15 +754,11 @@ const softSkillsData = t.aboutMe.skills;
       if (skillsWrapper) {
         const wrapperElement = skillsWrapper as HTMLElement;
         if (isDark) {
-          // Dark mode gradient
-          wrapperElement.style.setProperty('--gradient-bg', '#020009');
-          const beforeStyle = `linear-gradient(to right, #020009 0%, transparent 10%, transparent 90%, #020009 100%)`;
-          wrapperElement.setAttribute('data-before-bg', beforeStyle);
+          // Dark mode gradient - replicate banner background style
+          wrapperElement.style.setProperty('--gradient-bg', 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)');
         } else {
           // Light mode gradient
           wrapperElement.style.setProperty('--gradient-bg', '#f9f9f9');
-          const beforeStyle = `linear-gradient(to right, #f9f9f9 0%, transparent 10%, transparent 90%, #f9f9f9 100%)`;
-          wrapperElement.setAttribute('data-before-bg', beforeStyle);
         }
       }
 

@@ -1630,27 +1630,47 @@ const experienceData = [
 
   /* Dark Mode Styles - Following Documentation Pattern */
   :global(.dark-mode .storytelling-scroll-container) {
-    background-color: #020009;
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
+    background-image: 
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
   }
 
   :global(.dark-mode .storytelling-scroll-container)::before {
     background-image: 
-      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
   :global(.dark-mode .globe-section) {
-    background-color: #020009;
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
+    background-image: 
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
   }
 
   :global(.dark-mode .globe-section)::before {
     background-image: 
-      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
   :global(.dark-mode .experience-container) {
-    background-color: #020009;
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
+    background-image: 
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
   }
 
   /* Text Elements Dark Mode */
@@ -1708,9 +1728,9 @@ const experienceData = [
     color: #f8f4ff;
   }
 
-  /* Globe Container Dark Mode - Invert Filter */
+  /* Globe Container Dark Mode - Azulado Oscuro Filter */
   :global(.dark-mode) .globe-container {
-    filter: invert(1);
+    filter: invert(1) hue-rotate(115deg) saturate(10) brightness(2);
   }
 
   /* Globe Title Dark Mode */

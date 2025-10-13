@@ -131,20 +131,23 @@ import MarqueesIsland from './MarqueesIsland.tsx';
 
   /* Dark Mode Styles - Following Documentation Pattern */
   :global(.dark-mode .marquees-section) {
-    background: #020009;
+    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
     background-image: 
-      linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: center;
+    background-repeat: repeat;
   }
 
   /* Dark mode gradients for large screens */
   @media (min-width: 2560px) {
     :global(.dark-mode) .marquees-section-wrapper::before {
-      background: linear-gradient(to right, #020009, transparent);
+      background: linear-gradient(to right, linear-gradient(135deg, #07001e 0%, #2c20a6 100%), transparent);
     }
 
     :global(.dark-mode) .marquees-section-wrapper::after {
-      background: linear-gradient(to left, #020009, transparent);
+      background: linear-gradient(to left, linear-gradient(135deg, #07001e 0%, #2c20a6 100%), transparent);
     }
   }
 
