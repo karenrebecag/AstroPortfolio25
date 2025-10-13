@@ -434,12 +434,12 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
   }, [isVisible, isPaused, quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className={`absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${
         isLoaded && !isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       } ${className}`}
-      style={{ 
+      style={{
         zIndex: 5, // Mismo z-index que el contenedor 3D en MyStack.astro
         mixBlendMode: 'normal'
       }}

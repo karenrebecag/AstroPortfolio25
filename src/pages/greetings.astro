@@ -140,19 +140,14 @@ const t = translations[lang].greetings;
 
 
 
-		
-
-		<!-- Lazy load non-critical sections -->
-		<div class="lazy-content">
-		</div>
-
+	
 		<!-- Share Bar Section -->
 		<div class="lazy-content">
 			<ShareBar />
 		</div>
 
 		<!-- Comments Section -->
-		<div class="lazy-content" style="min-height: 200px;">
+		<div class="lazy-content" >
 			<CommentsSection storyId="greetings-page" />
 		</div>
 
@@ -306,7 +301,7 @@ const t = translations[lang].greetings;
 		max-width: 1000px;
 		margin: 0 auto;
 		padding: 2rem;
-		min-height: 400px; /* Prevent layout shift while fonts load */
+		min-height: 550px; /* Prevent layout shift while fonts load */
 	}
 
 	:global(.gratitude-paragraph) {
