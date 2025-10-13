@@ -3,14 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Card, CardContent, CardHeader } from './Card.tsx';
-import { Avatar, AvatarFallback } from './Avatar.tsx';
-import { Badge } from './Badge.tsx';
-import { Textarea } from './Textarea.tsx';
 import TypeSound from './TypeSound.tsx';
 import { Heart, MessageSquare, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload, Trash2 } from 'lucide-react';
 import { useCommentsStore } from '../../stores/commentsStore';
-import '../../styles/reddit-comments.css';
 import { useToast } from '../../hooks/useToast';
 import { useUserCache } from '../../hooks/useUserCache';
 import { translations } from '../../i18n/translations.js';
@@ -151,9 +146,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
               {/* Collapse toggle for replies */}
               {comment.replies && comment.replies.length > 0 && (
                 <button 
-                  className="comment-action-btn"
+                  className="comment-action-btn comment-collapse-btn"
                   onClick={() => setIsExpanded(!isExpanded)}
-                  style={{ marginLeft: 'auto' }}
                   data-cursor-text={isExpanded ? t.hideReplies : t.showReplies}
                 >
                   {isExpanded ? <ChevronUp /> : <ChevronDown />}
@@ -173,14 +167,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <div className="reply-form-row">
-              <div 
-                className="comment-avatar comment-avatar-empty"
-                style={{
-                  background: '#f3f4f6',
-                  border: '2px dashed #d1d5db'
-                }}
-              >
-                <Upload style={{ width: '16px', height: '16px', color: '#9ca3af' }} />
+              <div className="comment-avatar comment-avatar-empty">
+                <Upload className="upload-icon" />
               </div>
               <div className="reply-form-content">
                 <textarea
@@ -191,7 +179,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                   data-cursor-text={t.reply}
                 />
                 <div className="reply-buttons">
-                  {/* Cancel Button - SecondaryButton style */}
+                  {/* SecondaryButton Component - Cancel */}
                   <div className="glass-button-wrap">
                     <button 
                       className="glass-button"
@@ -199,11 +187,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
                       data-cursor-text={t.cancel}
                     >
                       <span className="glass-button-text">{t.cancel}</span>
-                      <div className="glass-button-shadow"></div>
                     </button>
+                    <div className="glass-button-shadow"></div>
                   </div>
                   
-                  {/* Comment Button - MainButton style */}
+                  {/* MainButton Component - Submit Reply */}
                   <div className="realism-button-wrapper">
                     <button 
                       className="realism-button"
@@ -514,7 +502,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                 />
                 
                 <div className="comment-submit-buttons">
-                  {/* Main Button - Post Comment */}
+                  {/* MainButton Component - Post Comment */}
                   <div className="realism-button-wrapper">
                     <button 
                       type="submit" 

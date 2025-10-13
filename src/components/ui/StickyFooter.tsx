@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import {
-    InstagramIcon,
-    LinkedinIcon,
+    Instagram,
+    Linkedin,
     CircleArrowOutUpRight,
     Link,
     Github,
@@ -130,7 +130,10 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                     }}>
                         
                         {/* DitheringShader Background Scene */}
-                        <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)' }}>
+                        <div className="absolute inset-0 z-0" style={{ 
+                            filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)',
+                            isolation: 'isolate'
+                        }}>
                             <DitheringShader
                                 width={1920}
                                 height={800}
@@ -174,7 +177,8 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -30 }}
                                     transition={{ duration: 0.6, ease: "easeOut" }}
-                                    className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-center items-center py-8 relative z-20 overflow-x-hidden"
+                                    className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-center items-center py-8 relative overflow-x-hidden"
+                                    style={{ zIndex: 50, isolation: 'isolate' }}
                                 >
                                     <SpaceInvadersIsland onExit={exitSpaceInvaders} />
                                 </motion.div>
@@ -185,7 +189,8 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -30 }}
                                     transition={{ duration: 0.6, ease: "easeOut" }}
-                                    className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-between gap-5 py-8 relative z-20"
+                                    className="footer-content-container w-full max-w-[1200px] mx-auto flex flex-col justify-between gap-5 py-8 relative"
+                                    style={{ zIndex: 50, isolation: 'isolate' }}
                                 >
                             <div className="w-full  flex flex-col justify-start items-start gap-16 mt-10 xl:mt-0">
                                 <AnimatedContainer className="w-full">
@@ -210,25 +215,67 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
                                             </p>
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
-                                            {socialLinks.map((link, index) => (
-                                                <motion.a
-                                                    key={link.title}
-                                                    href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
-                                                    title={link.title}
-                                                    data-cursor-text={t.visitSocial.replace('{platform}', link.title)}
-                                                    initial={{ opacity: 0, scale: 0.8 }}
-                                                    whileInView={{ opacity: 1, scale: 1 }}
-                                                    viewport={{ once: true, margin: "-100px" }}
-                                                    transition={{ duration: 0.4, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
-                                                    whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                >
-                                                    <link.icon className="w-6 h-6 text-white" />
-                                                </motion.a>
-                                            ))}
+                                            <a
+                                                href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl hover:bg-white/20 transition-colors duration-300"
+                                                title="LinkedIn"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'LinkedIn')}
+                                            >
+                                                <Linkedin className="w-6 h-6 text-white" />
+                                            </a>
+                                            
+                                            <motion.a
+                                                href="https://www.instagram.com/karenrebeca.og/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
+                                                title="Instagram"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'Instagram')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Instagram className="w-6 h-6 text-white" />
+                                            </motion.a>
+                                            
+                                            <motion.a
+                                                href="https://github.com/karenrebecag"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
+                                                title="GitHub"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'GitHub')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Github className="w-6 h-6 text-white" />
+                                            </motion.a>
+                                            
+                                            <motion.a
+                                                href="https://dribbble.com/krog11"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
+                                                title="Dribbble"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'Dribbble')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <DribbbleIcon className="w-6 h-6 text-white" />
+                                            </motion.a>
                                             <motion.button
                                                 onClick={copyToClipboard}
                                                 className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl"
@@ -358,8 +405,8 @@ const DribbbleIcon = ({ className }: { className?: string }) => (
 );
 
 const socialLinks = [
-    { title: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282', icon: LinkedinIcon },
-    { title: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/', icon: InstagramIcon },
+    { title: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282', icon: Linkedin },
+    { title: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/', icon: Instagram },
     { title: 'GitHub', href: 'https://github.com/karenrebecag', icon: Github },
     { title: 'Dribbble', href: 'https://dribbble.com/krog11', icon: DribbbleIcon },
 ];

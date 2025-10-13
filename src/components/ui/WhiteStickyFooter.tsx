@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'motion/react';
 import {
-    InstagramIcon,
-    LinkedinIcon,
+    Instagram,
+    Linkedin,
     CircleArrowOutUpRight,
     Link,
     Github,
@@ -222,25 +222,73 @@ export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProp
                                             </p>
                                         </div>
                                         <div className="flex justify-start items-center gap-6">
-                                            {socialLinks.map((link, index) => (
-                                                <motion.a
-                                                    key={link.title}
-                                                    href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
-                                                    title={link.title}
-                                                    data-cursor-text={t.visitSocial.replace('{platform}', link.title)}
-                                                    initial={{ opacity: 0, scale: 0.8 }}
-                                                    whileInView={{ opacity: 1, scale: 1 }}
-                                                    viewport={{ once: true, margin: "-100px" }}
-                                                    transition={{ duration: 0.4, delay: 0.2 + (index * 0.1), ease: "easeOut" }}
-                                                    whileHover={{ scale: 1.05, y: -2 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                >
-                                                    <link.icon className="w-6 h-6 text-gray-700" />
-                                                </motion.a>
-                                            ))}
+                                            <motion.a
+                                                href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
+                                                title="LinkedIn"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'LinkedIn')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Linkedin className="w-6 h-6 text-gray-700" />
+                                            </motion.a>
+                                            
+                                            <motion.a
+                                                href="https://www.instagram.com/karenrebeca.og/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
+                                                title="Instagram"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'Instagram')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Instagram className="w-6 h-6 text-gray-700" />
+                                            </motion.a>
+                                            
+                                            <motion.a
+                                                href="https://github.com/karenrebecag"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
+                                                title="GitHub"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'GitHub')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Github className="w-6 h-6 text-gray-700" />
+                                            </motion.a>
+                                            
+                                            <motion.a
+                                                href="https://dribbble.com/krog11"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
+                                                title="Dribbble"
+                                                data-cursor-text={t.visitSocial.replace('{platform}', 'Dribbble')}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                viewport={{ once: true, margin: "-100px" }}
+                                                transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
+                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <DribbbleIcon className="w-6 h-6 text-gray-700" />
+                                            </motion.a>
                                             <motion.button
                                                 onClick={copyToClipboard}
                                                 className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-300"
@@ -394,8 +442,8 @@ const DribbbleIcon = ({ className }: { className?: string }) => (
 );
 
 const socialLinks = [
-    { title: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282', icon: LinkedinIcon },
-    { title: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/', icon: InstagramIcon },
+    { title: 'LinkedIn', href: 'https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282', icon: Linkedin },
+    { title: 'Instagram', href: 'https://www.instagram.com/karenrebeca.og/', icon: Instagram },
     { title: 'GitHub', href: 'https://github.com/karenrebecag', icon: Github },
     { title: 'Dribbble', href: 'https://dribbble.com/krog11', icon: DribbbleIcon },
 ];

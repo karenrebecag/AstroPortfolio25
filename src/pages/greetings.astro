@@ -3,21 +3,14 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import HeaderPill from '../components/ui/HeaderPill.astro';
-import MegaBanner from '../components/ui/MegaBanner.astro';
-import MainButton from '../components/ui/MainButton.astro';
 import { TextDisperseBlack } from '../components/ui/TextDisperseBlack.tsx';
-import { InView } from '../components/ui/InView.tsx';
 import { DarkModeContainer } from '../components/ui/DarkModeContainer.tsx';
-import { ScrollReveal } from '../components/ui/ScrollReveal.tsx';
 import Highlight from '../components/ui/Highlight.astro';
 import { DecorativeFlower } from '../components/ui/DecorativeFlower.tsx';
 import { SignatureText } from '../components/ui/SignatureText.tsx';
-import { LucideIcon } from '../components/ui/LucideIcon.tsx';
-import { AnimatedNumber } from '../components/ui/AnimatedNumber.tsx';
 import { ArcGalleryHero } from '../components/ui/ArcGalleryHero.tsx';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
-import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
 import { translations } from '../i18n/translations.js';
 import '../styles/global.css';
 
@@ -26,6 +19,44 @@ const t = translations[lang].greetings;
 ---
 
 <Layout title={t.title} lang={lang}>
+	<!-- Critical preconnects to reduce network dependency chain -->
+	<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev" slot="head" />
+	<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app" slot="head" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+	
+	<!-- Preload CRITICAL fonts with optimal font-display -->
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin slot="head" />
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin slot="head" />
+	
+	<!-- Preload LCP image and first 2 critical images -->
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp" as="image" slot="head" />
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/lastImage.webp" as="image" slot="head" />
+	
+	<!-- DNS prefetch for external domains -->
+	<link rel="dns-prefetch" href="//static.cloudflareinsights.com" slot="head" />
+	
+	<!-- Prefetch next likely pages for instant navigation -->
+	<link rel="prefetch" href="/" slot="head" />
+	<link rel="prefetch" href="/resume" slot="head" />
+	
+	<!-- Critical CSS for above-the-fold content -->
+	<style slot="head">
+		@font-face {
+			font-family: 'InterTight';
+			src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf') format('truetype');
+			font-display: swap;
+			font-weight: 100 900;
+		}
+		@font-face {
+			font-family: 'Median';
+			src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2') format('woff2');
+			font-display: swap;
+			font-weight: normal;
+		}
+		
+		/* Only critical font loading - NO layout CSS to preserve dark mode */
+	</style>
+	
 	<HeaderPill />
 
 
@@ -56,9 +87,9 @@ const t = translations[lang].greetings;
 						/>
 					</div>
 			<!-- Decorative Flowers Background -->
-			<DecorativeFlower client:visible position={{ top: '50%', right: '-15%' }} size={600} />
+			<DecorativeFlower client:visible position={{ top: '50%', right: '-15%' }} size={200} />
 			<div style="transform: scaleX(-1);">
-				<DecorativeFlower client:visible position={{ top: '30%', right: '-30%' }} size={600} />
+				<DecorativeFlower client:visible position={{ top: '30%', right: '-30%' }} size={200} />
 			</div>
 
 			<div class="section-container">
@@ -90,12 +121,15 @@ const t = translations[lang].greetings;
 					<div class="love-image-container">
 						<img
 							src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/love%20(3).webp"
-							alt="Love"
+							alt="Love heart icon"
 							class="love-image"
 							loading="lazy"
+							width="44"
+							height="82"
+							decoding="async"
 						/>
 						<div class="signature-name">
-							<SignatureText client:visible text={t.signature} />
+							<SignatureText client:idle text={t.signature} />
 						</div>
 					</div>
 
@@ -108,13 +142,19 @@ const t = translations[lang].greetings;
 
 		
 
-		<ProfileCardSection />
+		<!-- Lazy load non-critical sections -->
+		<div class="lazy-content">
+		</div>
 
 		<!-- Share Bar Section -->
-		<ShareBar />
+		<div class="lazy-content">
+			<ShareBar />
+		</div>
 
 		<!-- Comments Section -->
-		<CommentsSection storyId="greetings-page" />
+		<div class="lazy-content" style="min-height: 200px;">
+			<CommentsSection storyId="greetings-page" />
+		</div>
 
 		</main>
 	</DarkModeContainer>
@@ -172,14 +212,15 @@ const t = translations[lang].greetings;
 	}
 
 
-	/* Main Content Layout */
-	.main-content {
+	/* Main Content Layout - Global para dark mode */
+	:global(.main-content) {
 		background: #ececec;
 		width: 100%;
 		padding: 0;
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	.content-section {
+	:global(.content-section) {
 		padding: 6rem 2rem;
 		border-bottom: 1px solid #f0f0f0;
 		background-image:
@@ -187,6 +228,9 @@ const t = translations[lang].greetings;
 			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 		background-size: 20px 20px;
 		position: relative;
+		transition: 
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	.gratitude-section {
@@ -208,28 +252,30 @@ const t = translations[lang].greetings;
 		background: transparent !important;
 	}
 
-	/* Section Headers */
-	.section-header {
+	/* Section Headers - Global para dark mode */
+	:global(.section-header) {
 		margin-bottom: 4rem;
 		text-align: center;
 	}
 
-	.section-title {
+	:global(.section-title) {
 		font-family: var(--font-display, 'Median', serif);
 		font-size: clamp(2.5rem, 6vw, 4rem);
 		font-weight: 400;
 		line-height: 0.9;
 		margin-bottom: 1rem;
 		color: #1B1B1B;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	.section-label {
+	:global(.section-label) {
 		font-family: var(--font-primary, 'InterTight', sans-serif);
 		font-size: 0.875rem;
 		font-weight: 500;
 		color: #666;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	/* Content Grid Layout */
@@ -255,20 +301,23 @@ const t = translations[lang].greetings;
 	}
 
 	/* Gratitude Text Container */
-	.gratitude-text-container {
+	:global(.gratitude-text-container) {
 		width: 100%;
 		max-width: 1000px;
 		margin: 0 auto;
 		padding: 2rem;
+		min-height: 400px; /* Prevent layout shift while fonts load */
 	}
 
-	.gratitude-paragraph {
+	:global(.gratitude-paragraph) {
 		font-family: var(--font-primary, 'InterTight', sans-serif);
-		font-size: clamp(1.125rem, 2.5vw, 1.4rem);
+		font-size: clamp(1.125rem, 1.5vw, 1.4rem);
 		line-height: 1.8;
 		color: #333;
 		text-align: center;
 		margin: 2rem 0;
+		font-display: swap; /* Prevent invisible text during font load */
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	/* Love Image and Signature */
@@ -291,7 +340,7 @@ const t = translations[lang].greetings;
 		filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 	}
 
-	.signature-name {
+	:global(.signature-name) {
 		font-family: var(--font-signature, 'Karstar Signature', cursive);
 		font-size: clamp(2.6rem, 5.2vw, 3.9rem);
 		color: #1B1B1B;
@@ -299,6 +348,7 @@ const t = translations[lang].greetings;
 		text-align: center;
 		position: relative;
 		display: inline-block;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	:global(.signature-text-wrapper) {
@@ -328,10 +378,14 @@ const t = translations[lang].greetings;
 	/* Arc Gallery Wrapper */
 	.arc-gallery-wrapper {
 		width: 100%;
+		height: 400px; /* Fixed height to prevent layout shift */
 		margin-top: 0;
 		margin-bottom: 4rem;
 		position: relative;
 		z-index: 2;
+		overflow: hidden; /* Prevent content overflow during load */
+		contain: layout style paint; /* Optimize for performance */
+		will-change: auto; /* Remove unnecessary GPU layers */
 	}
 
 	:global(.text-highlight) {
@@ -647,7 +701,7 @@ const t = translations[lang].greetings;
 		text-decoration: underline;
 	}
 
-	/* Responsive Design */
+	/* Mobile-First Responsive Design */
 	@media (max-width: 768px) {
 		.banner-actions {
 			flex-direction: column;
@@ -655,16 +709,26 @@ const t = translations[lang].greetings;
 		}
 
 		.content-section {
-			padding: 4rem 1rem;
+			padding: 3rem 1rem; /* Reduce padding for mobile */
 		}
 
 		.content-grid {
 			grid-template-columns: 1fr;
-			gap: 3rem;
+			gap: 2rem; /* Reduce gap for mobile */
 		}
 
 		.section-header {
-			margin-bottom: 3rem;
+			margin-bottom: 2rem; /* Reduce margin for mobile */
+		}
+		
+		.arc-gallery-wrapper {
+			height: 250px; /* Smaller height on mobile */
+			margin-bottom: 2rem;
+		}
+		
+		.gratitude-text-container {
+			padding: 1rem;
+			min-height: 300px; /* Smaller on mobile */
 		}
 
 		.features-grid {
@@ -721,7 +785,7 @@ const t = translations[lang].greetings;
 		}
 	}
 
-	/* Dark Mode Styles */
+	/* Dark Mode Styles - Siguiendo la guía DarkMode.md */
 	:global(.dark-mode) {
 		color-scheme: dark;
 	}
@@ -747,10 +811,6 @@ const t = translations[lang].greetings;
 		color: #cccccc;
 	}
 
-	:global(.dark-mode .content-description) {
-		color: #e5e5e5;
-	}
-
 	:global(.dark-mode .gratitude-paragraph) {
 		color: #e5e5e5;
 	}
@@ -771,11 +831,18 @@ const t = translations[lang].greetings;
 		) !important;
 	}
 
+	/* Lazy Content Optimization */
+	.lazy-content {
+		min-height: 200px; /* Prevent layout shift during lazy load */
+	}
+
 	/* Decorative Flowers */
 	:global(.decorative-flower) {
 		filter: blur(2px);
 		transition: opacity 0.5s ease;
 		transform: rotate(-25deg) translateY(-50%);
+		will-change: opacity; /* Optimize for animations */
+		contain: layout style paint; /* Contain layout to prevent shifts */
 	}
 
 	:global(.dark-mode .decorative-flower) {
@@ -861,17 +928,13 @@ const t = translations[lang].greetings;
 		background: #22c55e;
 	}
 
-	/* Smooth transitions for theme switching */
+	/* Smooth transitions for theme switching - Siguiendo guía DarkMode.md */
 	:global(.main-content),
 	:global(.content-section),
 	:global(.section-title),
 	:global(.section-label),
-	:global(.content-description),
-	:global(.highlight-content h3),
-	:global(.highlight-content p),
-	:global(.info-card),
-	:global(.info-value),
-	:global(.info-label),
+	:global(.gratitude-paragraph),
+	:global(.signature-name),
 	:global(.feature-card),
 	:global(.feature-card h3),
 	:global(.feature-card p),
@@ -906,28 +969,6 @@ const t = translations[lang].greetings;
 		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	/* Profile Card Section Styles */
-	.profile-card-section {
-		padding: 4rem 2rem;
-		background: transparent;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	.profile-card-wrapper {
-		width: 100%;
-		max-width: 800px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	/* Dark mode styles for profile card section */
-	:global(.dark-mode .profile-card-section) {
-		border-bottom-color: #333333;
-	}
 
 	/* Responsive adjustments */
 	@media (max-width: 768px) {

@@ -7,7 +7,6 @@ import { TextDisperseBlack } from '../../components/ui/TextDisperseBlack.tsx';
 import { InView } from '../../components/ui/InView.tsx';
 import { DarkModeContainer } from '../../components/ui/DarkModeContainer.tsx';
 import ShareBar from '../../components/ui/ShareBar.astro';
-import ProfileCardSection from '../../components/sections/ProfileCardSection.astro';
 import { translations } from '../../i18n/translations.js';
 import '../../styles/global.css';
 
@@ -90,7 +89,6 @@ const privacyData = t.privacy;
 			</div>
 		</section>
 
-		<ProfileCardSection />
 
 		<!-- Share Bar Section -->
 		<ShareBar />
@@ -449,33 +447,4 @@ const privacyData = t.privacy;
 		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	/* Profile Card Section Styles */
-	.profile-card-section {
-		padding: 4rem 2rem;
-		background: transparent;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	.profile-card-wrapper {
-		width: 100%;
-		max-width: 800px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	/* Dark mode styles for profile card section */
-	:global(.dark-mode .profile-card-section) {
-		border-bottom-color: #333333;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		.profile-card-section {
-			padding: 3rem 1rem;
-		}
-	}
 </style>

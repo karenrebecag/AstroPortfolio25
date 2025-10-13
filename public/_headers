@@ -19,10 +19,7 @@
 /videos/*
   Cache-Control: public, max-age=15552000
 
-# CSS and JS - Cache for 1 year with immutable
-/_astro/*.css
-  Cache-Control: public, max-age=31536000, immutable
-
+# JS - Cache for 1 year with immutable
 /_astro/*.js
   Cache-Control: public, max-age=31536000, immutable
 

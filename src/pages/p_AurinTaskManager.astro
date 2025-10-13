@@ -22,7 +22,6 @@ import GLSLHills from '../components/ui/GLSLHills.astro';
 import type { Review } from '../types/reviews';
 import ShareBar from '../components/ui/ShareBar.astro';
 import CommentsSection from '../components/ui/CommentsSection.astro';
-import ProfileCardSection from '../components/sections/ProfileCardSection.astro';
 import StickyScrollController from '../components/ui/StickyScrollController.tsx';
 import MoreProjects from '../components/ui/MoreProjects.astro';
 import ProjectGallerySection from '../components/ui/ProjectGallerySection.astro';
@@ -866,7 +865,6 @@ const aurinReviews: Review[] = [
 			</div>
 		</section>
 
-		<ProfileCardSection />
 
 
 		<!-- Share Bar Section -->
@@ -1364,22 +1362,6 @@ const aurinReviews: Review[] = [
 		color-scheme: dark;
 	}
 
-	/* HeaderPill Dark Mode Styles */
-	:global(.dark-mode .header-pill) {
-		background: rgba(17, 17, 17, 0.95);
-		border-color: rgba(255, 255, 255, 0.1);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-	}
-
-	:global(.dark-mode .header-pill.scrolled) {
-		background: rgba(17, 17, 17, 0.98);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-		border-color: rgba(255, 255, 255, 0.15);
-	}
-
-	:global(.dark-mode .logo) {
-		color: #ffffff;
-	}
 
 	:global(.dark-mode .logo:hover) {
 		color: #e5e5e5;
@@ -1510,7 +1492,6 @@ const aurinReviews: Review[] = [
 	:global(.feature-card p),
 	:global(.tech-category h4),
 	:global(.tech-tag),
-	:global(.header-pill),
 	:global(.logo),
 	:global(.nav a),
 	:global(.nav a::after),
@@ -1550,34 +1531,11 @@ const aurinReviews: Review[] = [
 		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	/* Profile Card Section Styles */
-	.profile-card-section {
-		padding: 4rem 2rem;
-		background: transparent;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-bottom: 1px solid #f0f0f0;
-	}
+	/* Profile Card Section Styles - REMOVED
+	   All ProfileCard styles are now centralized in ProfileCard.css
+	   and managed by ProfileCardSection.astro component */
 
-	.profile-card-wrapper {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	/* Dark mode styles for profile card section */
-	:global(.dark-mode .profile-card-section) {
-		border-bottom-color: #333333;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		.profile-card-section {
-			padding: 3rem 1rem;
-		}
-	}
+	/* Responsive adjustments - ProfileCard section styles removed (centralized) */
 
 	/* Stagger animation delays for content sections */
 	:global(.content-section:nth-child(1)) {
@@ -2200,41 +2158,7 @@ const aurinReviews: Review[] = [
 		color: #f0f4ff !important;
 	}
 
-	/* ProfileCard Dark Mode Styles - Following DarkMode.md methodology */
-	:global(.dark-mode .profile-card) {
-		background: #050112 !important;
-		border-color: rgba(255, 255, 255, 0.1) !important;
-		color: #ffffff !important;
-	}
-
-	:global(.dark-mode .profile-name) {
-		color: #ffffff !important;
-	}
-
-	:global(.dark-mode .profile-bio) {
-		color: rgba(255, 255, 255, 0.8) !important;
-	}
-
-	:global(.dark-mode .profile-divider) {
-		background: rgba(255, 255, 255, 0.1) !important;
-	}
-
-	:global(.dark-mode .social-button) {
-		background: rgba(255, 255, 255, 0.1) !important;
-		border-color: rgba(255, 255, 255, 0.1) !important;
-	}
-
-	:global(.dark-mode .social-button:hover) {
-		background: rgba(255, 255, 255, 0.2) !important;
-	}
-
-	:global(.dark-mode .social-icon) {
-		color: rgba(255, 255, 255, 0.7) !important;
-	}
-
-	:global(.dark-mode .social-button:hover .social-icon) {
-		color: rgba(255, 255, 255, 0.9) !important;
-	}
+	/* ProfileCard Dark Mode Styles - REMOVED: All ProfileCard styles now centralized in ProfileCard.css */
 
 	:global(.dark-mode .content-section p),
 	:global(.dark-mode .content-section span),
@@ -2708,6 +2632,43 @@ const aurinReviews: Review[] = [
 	@media (prefers-reduced-motion: reduce) {
 		.sticky-reviews {
 			transition: none;
+		}
+	}
+
+	/* Profile Card Section Styles */
+	.profile-card-section {
+		background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+		border: none;
+	}
+
+	.profile-card-section .profile-card-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 2rem 0;
+	}
+
+	/* Dark mode for profile card section */
+	:global(.dark-mode .profile-card-section) {
+		background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+	}
+
+	:global(.dark-mode .profile-card-section .section-title) {
+		color: #f0f4ff;
+	}
+
+	:global(.dark-mode .profile-card-section .section-label) {
+		color: #b8c4e6;
+	}
+
+	/* Responsive adjustments for profile card section */
+	@media (max-width: 768px) {
+		.profile-card-section {
+			padding: 4rem 1rem;
+		}
+		
+		.profile-card-section .profile-card-container {
+			padding: 1rem 0;
 		}
 	}
 
