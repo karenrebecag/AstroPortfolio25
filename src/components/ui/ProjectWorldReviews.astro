@@ -78,56 +78,146 @@ const reviewsData = reviews.length > 0 ? reviews : fallbackReviews;
 </section>
 
 <style>
-  .project-world-reviews {
+  /* Light Mode Styles */
+  :global(.project-world-reviews) {
     padding: 4rem 0;
     background-color: white;
+    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .reviews-container {
+  :global(.reviews-container) {
     text-align: center;
+    position: relative;
   }
 
-  .reviews-title {
+  :global(.reviews-title) {
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Header Section Styles */
+  :global(.reviews-section__header) {
+    position: relative;
+    z-index: 15 !important;
     margin-bottom: 3rem;
   }
 
-  .title-clients {
+  :global(.reviews-section__title) {
+    position: relative;
+    z-index: 15 !important;
+    margin-bottom: 1rem;
+  }
+
+  :global(.reviews-section__subtitle) {
+    position: relative;
+    z-index: 15 !important;
+    color: rgba(8, 8, 8, 0.7);
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.title-clients) {
     display: inline;
     color: black;
     font-size: 64px;
     font-family: 'Playfair Display', serif;
     font-style: italic;
     margin-right: 20px;
+    position: relative;
+    z-index: 15;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .title-reviews {
+  :global(.title-reviews) {
     display: inline;
     color: black;
     font-size: 64px;
     font-family: 'Inter', sans-serif;
+    position: relative;
+    z-index: 15;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode Styles */
+  :global(.dark-mode .project-world-reviews) {
+    background: linear-gradient(to bottom, #050112 0%, #050112 100%);
+  }
+
+  :global(.dark-mode .title-clients) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .title-reviews) {
+    color: #f8f4ff;
+  }
+
+  :global(.dark-mode .reviews-section__subtitle) {
+    color: #b8c4e6;
+  }
+
+  /* Review Cards Z-Index Control */
+  :global(.bounce-review-card) {
+    position: relative;
+    z-index: 5 !important;
+  }
+
+  :global(.review-card) {
+    position: relative;
+    z-index: 5 !important;
+  }
+
+  /* Ensure bounce cards container has lower z-index */
+  :global(.bounce-cards-container) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Additional Z-Index Overrides for Safety */
+  :global(.reviews-section__header *) {
+    position: relative;
+    z-index: 15 !important;
+  }
+
+  /* Prevent any animated elements from covering text */
+  :global(.reviews-container > *:not(.reviews-section__header)) {
+    z-index: 5 !important;
   }
 
   @media (max-width: 768px) {
-    .title-clients,
-    .title-reviews {
+    :global(.title-clients),
+    :global(.title-reviews) {
       font-size: 48px;
+    }
+
+    :global(.reviews-section__subtitle) {
+      font-size: var(--text-base, 16px);
+      padding: 0 1rem;
     }
   }
 
   @media (max-width: 480px) {
-    .title-clients,
-    .title-reviews {
+    :global(.title-clients),
+    :global(.title-reviews) {
       font-size: 36px;
     }
     
-    .title-clients {
+    :global(.title-clients) {
       display: block;
       margin-right: 0;
       margin-bottom: 10px;
     }
     
-    .title-reviews {
+    :global(.title-reviews) {
       display: block;
+    }
+
+    :global(.reviews-section__subtitle) {
+      font-size: var(--text-sm, 14px);
+      line-height: 1.5;
+    }
+
+    :global(.reviews-section__header) {
+      padding: 0 0.5rem;
     }
   }
 </style>

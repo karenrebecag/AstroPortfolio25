@@ -370,12 +370,18 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
 </section>
 
 <style>
-  /* Aurin Best Features Section */
-  .aurin-best-features {
+  /* Aurin Best Features Section - Light Mode */
+  :global(.aurin-best-features) {
     width: 100%;
     background: #151515;
     padding: 8rem 4.5rem;
     position: relative;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Main Section */
+  :global(.dark-mode .aurin-best-features) {
+    background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
   }
 
   .features-container {
@@ -403,22 +409,24 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 1.25rem;
   }
 
-  .title-part-1 {
+  :global(.title-part-1) {
     color: white;
     font-size: clamp(32px, 6vw, 64px);
     font-weight: 400;
     line-height: 1;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .title-part-2 {
+  :global(.title-part-2) {
     color: white;
     font-size: clamp(32px, 6vw, 64px);
     font-family: var(--font-display, 'Median', serif);
     font-weight: 400;
     line-height: 1;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .header-description {
+  :global(.header-description) {
     width: 100%;
     max-width: 416px;
     color: #BBBBBB;
@@ -426,6 +434,20 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     font-family: var(--font-primary, 'InterTight', sans-serif);
     font-weight: 400;
     line-height: 1.4;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Header Text */
+  :global(.dark-mode .title-part-1) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .title-part-2) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .header-description) {
+    color: #b8c4e6;
   }
 
   /* Main Features Grid */
@@ -436,7 +458,7 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 0.625rem;
   }
 
-  .feature-card {
+  :global(.feature-card) {
     height: auto;
     min-height: 173px;
     padding: 2.75rem 3rem;
@@ -445,6 +467,13 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Feature Cards */
+  :global(.dark-mode .feature-card) {
+    background: #1a1b3a;
+    border: 1px solid rgba(176, 196, 230, 0.1);
   }
 
 
@@ -455,25 +484,41 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 1.25rem;
   }
 
-  .feature-title {
+  :global(.feature-title) {
     color: white;
     font-size: clamp(20px, 3vw, 32px);
     font-family: var(--font-display, 'Median', serif);
     font-weight: 400;
     line-height: 1.2;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .feature-tech {
+  :global(.feature-tech) {
     color: #BBBBBB;
     font-size: clamp(14px, 1.4vw, 18px);
     font-family: var(--font-primary, 'InterTight', sans-serif);
     font-weight: 400;
     text-transform: uppercase;
     line-height: 1.2;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .feature-card.featured .feature-tech {
+  :global(.feature-card.featured .feature-tech) {
     color: #EEEEEE;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Feature Text */
+  :global(.dark-mode .feature-title) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .feature-tech) {
+    color: #b8c4e6;
+  }
+
+  :global(.dark-mode .feature-card.featured .feature-tech) {
+    color: #d4e2ff;
   }
 
   .feature-icon {
@@ -482,7 +527,7 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     align-items: flex-start;
   }
 
-  .icon-circle {
+  :global(.icon-circle) {
     padding: 11px;
     border-radius: 50px;
     border: 1px solid #494949;
@@ -490,6 +535,13 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     justify-content: center;
     align-items: center;
     color: white;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Icons */
+  :global(.dark-mode .icon-circle) {
+    border-color: rgba(176, 196, 230, 0.3);
+    color: #f0f4ff;
   }
 
   /* Side Content */
@@ -499,47 +551,61 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 3rem;
   }
 
-  .code-block {
+  :global(.code-block) {
     padding: 2rem 1.5rem;
     background: rgba(27, 27, 27, 0.3);
     box-shadow: -2px 4px 10px rgba(145, 145, 145, 0.05);
     border-radius: 20px;
     border: 1px solid #404040;
     backdrop-filter: blur(12.5px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .code-content {
+  :global(.code-content) {
     color: white;
     font-size: clamp(12px, 1.8vw, 16px);
     font-family: 'Source Code Pro', monospace;
     font-weight: 400;
     line-height: 1.4;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .code-label {
+  :global(.code-label) {
     font-weight: 600;
+  }
+
+  /* Dark Mode - Code Block */
+  :global(.dark-mode .code-block) {
+    background: rgba(26, 27, 58, 0.4);
+    border-color: rgba(176, 196, 230, 0.2);
+    box-shadow: -2px 4px 10px rgba(5, 1, 18, 0.2);
+  }
+
+  :global(.dark-mode .code-content) {
+    color: #e8f0ff;
   }
 
   .resources-section {
     text-align: right;
   }
 
-  .resources-title {
+  :global(.resources-title) {
     color: white;
     font-size: clamp(16px, 2.4vw, 20px);
     font-family: var(--font-primary, 'InterTight', sans-serif);
     font-weight: 700;
     line-height: 1.33;
     margin-bottom: 1rem;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .resources-links {
+  :global(.resources-links) {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
 
-  .resource-link {
+  :global(.resource-link) {
     color: white;
     font-size: clamp(16px, 2.4vw, 20px);
     font-family: var(--font-primary, 'InterTight', sans-serif);
@@ -549,8 +615,21 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     transition: color 0.3s ease;
   }
 
-  .resource-link:hover {
+  :global(.resource-link:hover) {
     color: #7A2CC8;
+  }
+
+  /* Dark Mode - Resources */
+  :global(.dark-mode .resources-title) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .resource-link) {
+    color: #d4e2ff;
+  }
+
+  :global(.dark-mode .resource-link:hover) {
+    color: #9b7ae8;
   }
 
   /* Tips Section */
@@ -560,21 +639,22 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 1.5rem;
   }
 
-  .tips-title {
+  :global(.tips-title) {
     color: white;
     font-size: clamp(28px, 5vw, 48px);
     font-family: var(--font-display, 'Median', serif);
     font-weight: 400;
     line-height: 1.17;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .tips-grid {
+  :global(.tips-grid) {
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
   }
 
-  .tip-card {
+  :global(.tip-card) {
     height: auto;
     min-height: 173px;
     padding: 2.75rem 3rem;
@@ -583,12 +663,26 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .tip-card:hover {
+  :global(.tip-card:hover) {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Dark Mode - Tips Section */
+  :global(.dark-mode .tips-title) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .tip-card) {
+    background: #1a1b3a;
+    border: 1px solid rgba(176, 196, 230, 0.1);
+  }
+
+  :global(.dark-mode .tip-card:hover) {
+    box-shadow: 0 8px 24px rgba(5, 1, 18, 0.4);
   }
 
   .tip-content {
@@ -598,21 +692,32 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     gap: 1.25rem;
   }
 
-  .tip-title {
+  :global(.tip-title) {
     color: white;
     font-size: clamp(20px, 3vw, 32px);
     font-family: var(--font-display, 'Median', serif);
     font-weight: 400;
     line-height: 1.2;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .tip-description {
+  :global(.tip-description) {
     color: #BBBBBB;
     font-size: clamp(14px, 1.4vw, 18px);
     font-family: var(--font-primary, 'InterTight', sans-serif);
     font-weight: 400;
     text-transform: uppercase;
     line-height: 1.4;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Tip Content */
+  :global(.dark-mode .tip-title) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .tip-description) {
+    color: #b8c4e6;
   }
 
   .tip-icon {
@@ -643,24 +748,66 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
     }
 
     .features-container {
-      gap: 3rem;
+      gap: 4rem;
     }
 
-    .feature-card,
-    .tip-card {
-      padding: 2rem 1.5rem;
+    /* Enhanced spacing for feature and tip cards */
+    :global(.feature-card),
+    :global(.tip-card) {
+      padding: 2.5rem 2rem;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Enhanced spacing for card content */
+    .feature-content,
+    .tip-content {
+      gap: 1.5rem;
+      padding-bottom: 1rem;
+    }
+
+    /* Additional padding bottom for titles */
+    :global(.feature-title),
+    :global(.tip-title) {
+      padding-bottom: 0.75rem;
+    }
+
+    :global(.feature-tech),
+    :global(.tip-description) {
+      padding-bottom: 0.5rem;
+    }
+
+    /* Adjust grid gaps */
+    .main-features-grid,
+    :global(.tips-grid) {
+      gap: 1.25rem;
     }
 
     .feature-icon,
     .tip-icon {
       align-self: flex-end;
+      margin-top: 0.5rem;
     }
 
     .resources-section {
       text-align: left;
+      padding-top: 1rem;
+    }
+
+    /* Header titles spacing */
+    :global(.tips-title) {
+      padding-bottom: 1.5rem;
+    }
+
+    :global(.title-part-1),
+    :global(.title-part-2) {
+      padding-bottom: 1rem;
+    }
+
+    :global(.header-description) {
+      padding-bottom: 1.5rem;
     }
   }
 
@@ -669,13 +816,138 @@ import { AnimatedAurinHeader, AnimatedAurinFeaturesGrid, AnimatedAurinSideConten
       padding: 3rem 1rem;
     }
 
-    .feature-card,
-    .tip-card {
-      padding: 1.5rem 1rem;
+    .features-container {
+      gap: 3rem;
+    }
+
+    /* Enhanced spacing for mobile */
+    :global(.feature-card),
+    :global(.tip-card) {
+      padding: 2rem 1.5rem;
+      gap: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-content,
+    .tip-content {
+      gap: 1.75rem;
+      padding-bottom: 1.25rem;
+    }
+
+    /* Enhanced padding bottom for mobile titles */
+    :global(.feature-title),
+    :global(.tip-title) {
+      padding-bottom: 1rem;
+    }
+
+    :global(.feature-tech),
+    :global(.tip-description) {
+      padding-bottom: 0.75rem;
+    }
+
+    /* Mobile grid gaps */
+    .main-features-grid,
+    :global(.tips-grid) {
+      gap: 1.5rem;
     }
 
     .code-block {
-      padding: 1.5rem 1rem;
+      padding: 2rem 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .resources-section {
+      padding: 1.5rem 0;
+    }
+
+    /* Mobile header spacing */
+    :global(.tips-title) {
+      padding-bottom: 2rem;
+    }
+
+    :global(.title-part-1),
+    :global(.title-part-2) {
+      padding-bottom: 1.25rem;
+    }
+
+    :global(.header-description) {
+      padding-bottom: 2rem;
+    }
+
+    .feature-icon,
+    .tip-icon {
+      margin-top: 0.75rem;
     }
   }
 </style>
+
+<script>
+  // Dark mode handler for tip cards with inline styles
+  document.addEventListener('DOMContentLoaded', () => {
+    const applyDarkModeToTipCards = (isDark: boolean) => {
+      const tipCards = document.querySelectorAll('.tip-card');
+      
+      tipCards.forEach((card) => {
+        const element = card as HTMLElement;
+        if (isDark) {
+          // Dark mode styles - azulados
+          element.style.backgroundColor = '#1a1b3a';
+          element.style.border = '1px solid rgba(176, 196, 230, 0.1)';
+        } else {
+          // Light mode styles
+          element.style.backgroundColor = '#212121';
+          element.style.border = 'none';
+        }
+      });
+    };
+
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach((card) => {
+      const element = card as HTMLElement;
+      // Check if it has whileHover prop (Motion.dev card)
+      const checkDarkMode = () => {
+        const isDark = document.documentElement.classList.contains('dark-mode');
+        if (isDark) {
+          element.style.backgroundColor = '#1a1b3a';
+          element.style.border = '1px solid rgba(176, 196, 230, 0.1)';
+        } else {
+          element.style.backgroundColor = '#212121';  
+          element.style.border = 'none';
+        }
+      };
+      
+      // Apply initial state
+      setTimeout(checkDarkMode, 100);
+      
+      // Listen for class changes on documentElement
+      const observer = new MutationObserver(() => {
+        checkDarkMode();
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    });
+
+    // Apply to tip cards 
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkModeToTipCards(isDark);
+    };
+
+    // Listen for dark mode changes
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkModeToTipCards(isDark);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // Apply initial state with delay to ensure Motion.dev has rendered
+    setTimeout(checkInitialDarkMode, 200);
+  });
+</script>

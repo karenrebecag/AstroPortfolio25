@@ -52,15 +52,21 @@ const {
 
 <style>
   /* Gallery Section Background */
-  .gallery-section {
+  :global(.gallery-section) {
     background:#efefef ;
     position: relative;
     padding: 50px 0px;
     overflow: hidden;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Gallery Section */
+  :global(.dark-mode .gallery-section) {
+    background: linear-gradient(to bottom, #0a0820 0%, #050112 100%);
   }
 
   /* Optional: Add subtle pattern overlay */
-  .gallery-section::before {
+  :global(.gallery-section::before) {
     content: '';
     position: absolute;
     top: 0;
@@ -73,15 +79,23 @@ const {
     background-size: 20px 20px;
     pointer-events: none;
     z-index: 1;
+    transition: background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .section-container {
+  /* Dark Mode - Pattern Overlay */
+  :global(.dark-mode .gallery-section::before) {
+    background-image: 
+      linear-gradient(rgba(176, 196, 230, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(176, 196, 230, 0.05) 1px, transparent 1px);
+  }
+
+  :global(.section-container) {
     position: relative;
     z-index: 2;
   }
 
   /* Gallery-specific styles */
-  .carousel-container {
+  :global(.carousel-container) {
     width: 100%;
     max-width: 1400px;
     padding: 60px 200px;
@@ -89,7 +103,7 @@ const {
     position: relative;
   }
 
-  .section-header {
+  :global(.section-header) {
     text-align: center;
     margin-bottom: clamp(40px, 6vw, 80px);
     max-width: 1400px;
@@ -98,49 +112,68 @@ const {
     margin-right: auto;
   }
 
-  .section-title {
+  :global(.section-title) {
     margin-bottom: 16px;
     color: rgb(27, 27, 27);
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .section-label {
+  :global(.section-label) {
     font-family: var(--font-primary);
     font-size: clamp(14px, 2.5vw, 18px);
     font-weight: var(--font-weight-medium);
     color: rgb(27, 27, 27);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Section Text */
+  :global(.dark-mode .section-title) {
+    color: #f0f4ff;
+  }
+
+  :global(.dark-mode .section-label) {
+    color: #b8c4e6;
   }
 
   /* Responsive adjustments */
   @media (max-width: 1024px) {
-    .section-header {
+    :global(.section-header) {
       padding: 0 100px;
     }
     
-    .carousel-container {
+    :global(.carousel-container) {
       padding: 60px 100px;
     }
   }
 
   @media (max-width: 768px) {
-    .section-header {
+    :global(.section-header) {
       margin-bottom: clamp(30px, 8vw, 50px);
       padding: 0 2rem;
     }
     
-    .carousel-container {
+    :global(.carousel-container) {
       padding: 40px 2rem;
+    }
+
+    :global(.gallery-section) {
+      padding: 40px 0px;
     }
   }
 
   @media (max-width: 480px) {
-    .section-header {
+    :global(.section-header) {
       padding: 0 1rem;
     }
     
-    .carousel-container {
+    :global(.carousel-container) {
       padding: 30px 1rem;
+    }
+
+    :global(.gallery-section) {
+      padding: 30px 0px;
     }
   }
 </style>

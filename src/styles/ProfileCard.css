@@ -246,6 +246,17 @@
   border-color: rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Mode Overrides */
+.dark-mode .profile-card-section[data-astro-cid-imbkmbag] {
+  background-color: #050112;
+  background-image: linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+}
+
+.dark-mode .share-bar[data-astro-cid-d5szac2q] {
+  background-color: #050112;
+  background-image: linear-gradient(rgba(112, 11, 108, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(112, 11, 108, 0.15) 1px, transparent 1px);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-card {

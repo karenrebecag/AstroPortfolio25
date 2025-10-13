@@ -11,7 +11,22 @@
       style="font-size: clamp(163px, 32.6vw, 326px); width: max-content; text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
     >
       <span class="marquee-content">
-        FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS •
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+      </span>
+      <span class="marquee-content">
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+      </span>
+      <span class="marquee-content">
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+      </span>
+      <span class="marquee-content">
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+      </span>
+      <span class="marquee-content">
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
+      </span>
+      <span class="marquee-content">
+        FRONTEND • BACKEND • FULLSTACK • PROJECTS • 
       </span>
     </div>
   </div>
@@ -25,7 +40,6 @@
   }
 
   .right-marquee-wrapper {
-    /* Reserve space to prevent layout shift */
     width: 100%;
     max-width: 1800px;
     height: clamp(163px, 32.6vw, 326px);
@@ -43,7 +57,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    /* Allow infinite width for marquee animation */
     width: max-content !important;
     display: flex;
     
@@ -212,33 +225,28 @@
 </style>
 
 <script>
-  // JavaScript para animación infinita fluida del marquee derecho
+  // JavaScript para animación infinita fluida del marquee derecho (izquierda a derecha)
   function initRightMarquee() {
     const rightMarquee = document.getElementById('right-marquee');
     if (!rightMarquee) return;
     
-    const wrapper = rightMarquee.parentElement;
-    if (!wrapper) return;
-    
     const rightContent = rightMarquee.querySelectorAll('.marquee-content');
     if (rightContent.length === 0) return;
     
-    // Calcular dimensiones
+    // Calcular ancho explícito para Safari
     const firstElement = rightContent[0] as HTMLElement;
     const contentWidth = firstElement.getBoundingClientRect().width;
-    const wrapperWidth = wrapper.getBoundingClientRect().width;
     
-    // Iniciar desde el lado derecho del wrapper
-    let rightPosition = wrapperWidth;
-    const speed = 2; // Velocidad en píxeles por frame (positiva para movimiento hacia la izquierda)
+    // Iniciar desde la izquierda (posición negativa completa)
+    let rightPosition = -contentWidth;
+    const speed = 1; // Velocidad en píxeles por frame (positiva para movimiento hacia la derecha)
     
     function animateRightMarquee() {
-      rightPosition -= speed;
+      rightPosition += speed; // Movimiento hacia la derecha (positivo)
       
-      // Resetear posición cuando todo el contenido sale por la izquierda
-      // Necesitamos que regrese desde la derecha nuevamente
-      if (rightPosition <= -contentWidth) {
-        rightPosition = wrapperWidth;
+      // Resetear posición cuando el primer elemento entra completamente desde la izquierda
+      if (rightPosition >= 0) {
+        rightPosition = -contentWidth;
       }
       
       // Usar translate3d para webkit optimization
@@ -259,9 +267,4 @@
   } else {
     initRightMarquee();
   }
-  
-  // Reiniciar en resize para recalcular dimensiones
-  window.addEventListener('resize', () => {
-    initRightMarquee();
-  });
 </script>

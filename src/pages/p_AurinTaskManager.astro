@@ -905,6 +905,16 @@ const aurinReviews: Review[] = [
 			linear-gradient(90deg, rgba(0, 0, 0, 0.020) 1px, transparent 1px);
 		background-size: 20px 20px;
 		position: relative;
+		transition: background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+		            border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode - Content Section */
+	:global(.dark-mode .content-section) {
+		border-bottom-color: rgba(176, 196, 230, 0.1);
+		background-image:
+			linear-gradient(rgba(176, 196, 230, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(176, 196, 230, 0.05) 1px, transparent 1px);
 	}
 
 	.content-section:last-child {
@@ -1401,23 +1411,24 @@ const aurinReviews: Review[] = [
 	}
 
 	:global(.dark-mode .main-content) {
-		background: #050112;
-		color: #ffffff;
+		background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
+		color: #f0f4ff;
 	}
 
 	:global(.dark-mode .content-section) {
-		border-bottom-color: #333333;
+		background: #050112;
+		border-bottom-color: rgba(176, 196, 230, 0.1);
 		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+			linear-gradient(rgba(176, 196, 230, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(176, 196, 230, 0.05) 1px, transparent 1px);
 	}
 
 	:global(.dark-mode .section-title) {
-		color: #ffffff;
+		color: #f0f4ff;
 	}
 
 	:global(.dark-mode .section-label) {
-		color: #cccccc;
+		color: #b8c4e6;
 	}
 
 	:global(.dark-mode .content-description) {
@@ -2157,12 +2168,20 @@ const aurinReviews: Review[] = [
 
 	/* Ensure link hover states work in dark mode */
 	:global(.dark-mode .link-url:hover) {
-		color: #e5e5e5 !important;
+		color: #c4b5fd !important;
+	}
+
+	:global(.dark-mode a) {
+		color: #9b7ae8 !important;
+	}
+
+	:global(.dark-mode a:hover) {
+		color: #c4b5fd !important;
 	}
 
 	/* Make sure all list items and bullets are visible */
 	:global(.dark-mode .achievement-item li::before) {
-		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1' stroke-linecap='round' stroke-linejoin='round' opacity='0.4'%3e%3cpath d='M20 6 9 17l-5-5'/%3e%3c/svg%3e") no-repeat center !important;
+		background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b8c4e6' stroke-width='1' stroke-linecap='round' stroke-linejoin='round' opacity='0.6'%3e%3cpath d='M20 6 9 17l-5-5'/%3e%3c/svg%3e") no-repeat center !important;
 		background-size: contain !important;
 	}
 
@@ -2178,14 +2197,50 @@ const aurinReviews: Review[] = [
 	:global(.dark-mode .content-section h4),
 	:global(.dark-mode .content-section h5),
 	:global(.dark-mode .content-section h6) {
+		color: #f0f4ff !important;
+	}
+
+	/* ProfileCard Dark Mode Styles - Following DarkMode.md methodology */
+	:global(.dark-mode .profile-card) {
+		background: #050112 !important;
+		border-color: rgba(255, 255, 255, 0.1) !important;
 		color: #ffffff !important;
+	}
+
+	:global(.dark-mode .profile-name) {
+		color: #ffffff !important;
+	}
+
+	:global(.dark-mode .profile-bio) {
+		color: rgba(255, 255, 255, 0.8) !important;
+	}
+
+	:global(.dark-mode .profile-divider) {
+		background: rgba(255, 255, 255, 0.1) !important;
+	}
+
+	:global(.dark-mode .social-button) {
+		background: rgba(255, 255, 255, 0.1) !important;
+		border-color: rgba(255, 255, 255, 0.1) !important;
+	}
+
+	:global(.dark-mode .social-button:hover) {
+		background: rgba(255, 255, 255, 0.2) !important;
+	}
+
+	:global(.dark-mode .social-icon) {
+		color: rgba(255, 255, 255, 0.7) !important;
+	}
+
+	:global(.dark-mode .social-button:hover .social-icon) {
+		color: rgba(255, 255, 255, 0.9) !important;
 	}
 
 	:global(.dark-mode .content-section p),
 	:global(.dark-mode .content-section span),
 	:global(.dark-mode .content-section div),
 	:global(.dark-mode .content-section li) {
-		color: #e5e5e5 !important;
+		color: #b8c4e6 !important;
 	}
 
 	/* Ultimate fallback - override any remaining dark text colors */
@@ -2297,8 +2352,8 @@ const aurinReviews: Review[] = [
 		}
 	}
 
-	/* Reviews Section Styles */
-	.reviews-section {
+	/* Reviews Section Styles - Light Mode */
+	:global(.reviews-section) {
 		width: 100%;
 		max-width: 1800px;
 		margin: 0 auto;
@@ -2321,11 +2376,22 @@ const aurinReviews: Review[] = [
 			repeat;
 		position: relative;
 		overflow: hidden;
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+		           background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode - Reviews Section */
+	:global(.dark-mode .reviews-section) {
+		background-color: #050112;
+		background-image: 
+			url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/EarthSphere.svg'),
+			linear-gradient(rgba(248, 244, 255, 0.03) 1px, transparent 1px), 
+			linear-gradient(90deg, rgba(248, 244, 255, 0.03) 1px, transparent 1px);
 	}
 
 	/* Gradiente sutil en los costados para viewports grandes */
 	@media (min-width: 1801px) {
-		.reviews-section::before {
+		:global(.reviews-section::before) {
 			content: '';
 			position: absolute;
 			top: 0;
@@ -2341,6 +2407,18 @@ const aurinReviews: Review[] = [
 			);
 			pointer-events: none;
 			z-index: 5;
+			transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		/* Dark Mode - Gradiente sutil */
+		:global(.dark-mode .reviews-section::before) {
+			background: linear-gradient(
+				to right,
+				rgba(5, 1, 18, 0.6) 0%,
+				transparent 15%,
+				transparent 85%,
+				rgba(5, 1, 18, 0.6) 100%
+			);
 		}
 	}
 
@@ -2366,7 +2444,7 @@ const aurinReviews: Review[] = [
 		padding-top: 2rem;
 	}
 
-	.reviews-section__title {
+	:global(.reviews-section__title) {
 		width: 100%;
 		height: 100%;
 		justify-content: flex-start;
@@ -2376,7 +2454,7 @@ const aurinReviews: Review[] = [
 		margin-bottom: 1rem;
 	}
 
-	.title-clients {
+	:global(.title-clients) {
 		text-box-trim: trim-both;
 		text-box-edge: cap alphabetic;
 		color: black;
@@ -2386,9 +2464,10 @@ const aurinReviews: Review[] = [
 		font-weight: 400;
 		line-height: 64px;
 		word-wrap: break-word;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	.title-reviews {
+	:global(.title-reviews) {
 		text-box-trim: trim-both;
 		text-box-edge: cap alphabetic;
 		color: black;
@@ -2397,15 +2476,30 @@ const aurinReviews: Review[] = [
 		font-weight: 400;
 		line-height: 64px;
 		word-wrap: break-word;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
-	.reviews-section__subtitle {
+	:global(.reviews-section__subtitle) {
 		font-family: var(--font-primary);
 		font-size: clamp(1rem, 2.5vw, 1.25rem);
 		color: #64748b;
 		max-width: 600px;
 		margin: 0 auto;
 		line-height: var(--leading-relaxed);
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .title-clients) {
+		color: #f8f4ff;
+	}
+
+	:global(.dark-mode .title-reviews) {
+		color: #f8f4ff;
+	}
+
+	:global(.dark-mode .reviews-section__subtitle) {
+		color: #c4b5fd;
 	}
 
 	.reviews-section__reviews {

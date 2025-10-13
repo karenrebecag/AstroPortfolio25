@@ -12,7 +12,7 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
 </section>
 
 <style>
-  .aurin-marquees-section {
+  :global(.aurin-marquees-section) {
     width: 100%;
 		background: hsl(0, 0%, 99%);
     background-image: 
@@ -22,15 +22,24 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
     overflow: hidden;
     position: relative;
     padding: 8rem 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .aurin-marquees-section-container {
+  /* Dark Mode - Main Section */
+  :global(.dark-mode .aurin-marquees-section) {
+    background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
+    background-image: 
+      linear-gradient(rgba(176, 196, 230, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(176, 196, 230, 0.05) 1px, transparent 1px);
+  }
+
+  :global(.aurin-marquees-section-container) {
     width: 100%;
     display: flex;
     justify-content: center;
   }
 
-  .aurin-marquees-section-wrapper {
+  :global(.aurin-marquees-section-wrapper) {
     width: 100%;
     max-width: 1800px;
     position: relative;
@@ -39,8 +48,8 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
 
   /* Gradientes laterales para pantallas grandes */
   @media (min-width: 2560px) {
-    .aurin-marquees-section-wrapper::before,
-    .aurin-marquees-section-wrapper::after {
+    :global(.aurin-marquees-section-wrapper::before),
+    :global(.aurin-marquees-section-wrapper::after) {
       content: '';
       position: absolute;
       top: 0;
@@ -48,16 +57,26 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
       width: 120px;
       z-index: 10;
       pointer-events: none;
+      transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .aurin-marquees-section-wrapper::before {
+    :global(.aurin-marquees-section-wrapper::before) {
       left: 0;
       background: linear-gradient(to right, #ececec, transparent);
     }
 
-    .aurin-marquees-section-wrapper::after {
+    :global(.aurin-marquees-section-wrapper::after) {
       right: 0;
       background: linear-gradient(to left, #ececec, transparent);
+    }
+
+    /* Dark Mode - Large Screen Gradients */
+    :global(.dark-mode .aurin-marquees-section-wrapper::before) {
+      background: linear-gradient(to right, #050112, transparent);
+    }
+
+    :global(.dark-mode .aurin-marquees-section-wrapper::after) {
+      background: linear-gradient(to left, #050112, transparent);
     }
   }
 
@@ -84,18 +103,29 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
     background: #4523AE;
     transform: rotate(3deg);
     z-index: 1;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   :global(.aurin-second-marquee) {
     background: #1B1B1B;
     transform: rotate(-3deg);
     z-index: 2;
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark Mode - Marquee Colors */
+  :global(.dark-mode .aurin-first-marquee) {
+    background: #9b7ae8; /* Violeta azulado más suave para dark mode */
+  }
+
+  :global(.dark-mode .aurin-second-marquee) {
+    background: #2d2f5a; /* Azul oscuro azulado */
   }
 
   @media (max-width: 768px) {
-    .aurin-marquees-section {
+    :global(.aurin-marquees-section) {
       background-size: 15px 15px;
-      padding: 3rem 0;
+      padding: 4rem 0;
     }
     
     :global(.aurin-marquees-container) {
@@ -113,6 +143,28 @@ import AurinMarqueesIsland from './AurinMarqueesIsland.tsx';
 
     :global(.aurin-second-marquee) {
       transform: rotate(-3deg);
+    }
+
+    /* Dark Mode - Mobile Grid Pattern */
+    :global(.dark-mode .aurin-marquees-section) {
+      background-image: 
+        linear-gradient(rgba(176, 196, 230, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(176, 196, 230, 0.04) 1px, transparent 1px);
+    }
+  }
+
+  /* Responsive Design for smaller mobile */
+  @media (max-width: 480px) {
+    :global(.aurin-marquees-section) {
+      padding: 3rem 0;
+    }
+    
+    :global(.aurin-marquees-container) {
+      height: 120px;
+    }
+    
+    :global(.aurin-marquee-wrapper) {
+      height: 50px;
     }
   }
 

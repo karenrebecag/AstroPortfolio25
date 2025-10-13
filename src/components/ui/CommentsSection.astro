@@ -66,15 +66,20 @@ const {
 
   /* Dark Mode Styles */
   :global(.dark-mode .section-container) {
-    background-color: #0a0817;
+    background-color: #050112;
     background-image: 
       linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   }
 
+  :global(.dark-mode .comments-section) {
+    background: #050112;
+  }
+
   .section-header {
     text-align: center;
     margin-bottom: clamp(40px, 6vw, 80px);
+    padding-top: clamp(60px, 8vw, 120px);
   }
 
   .section-title {

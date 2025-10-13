@@ -17,6 +17,33 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleCards, setVisibleCards] = useState<number>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Dark mode detection effect
+  useEffect(() => {
+    const checkDarkMode = () => {
+      if (typeof document !== 'undefined') {
+        setIsDarkMode(document.documentElement.classList.contains('dark-mode'));
+      }
+    };
+
+    // Check initial state
+    checkDarkMode();
+
+    // Listen for dark mode changes
+    const observer = new MutationObserver(() => {
+      checkDarkMode();
+    });
+
+    if (typeof document !== 'undefined') {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,14 +133,26 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
     };
   };
 
-  const getCardColors = (index: number) => {
-    const colorVariants = [
-      { bg: '#C0D645', textColor: 'black', positionColor: '#494949' }, // Green
-      { bg: '#151515', textColor: 'white', positionColor: '#9ca3af' },  // Black
-      { bg: '#EEEEEE', textColor: 'black', positionColor: '#494949' }, // Gray
-      { bg: '#FFFFFF', textColor: 'black', positionColor: '#494949' }  // White
-    ];
-    return colorVariants[index % colorVariants.length];
+  const getCardColors = (index: number) => {    
+    if (isDarkMode) {
+      // Dark mode colors derived from #050112
+      const colorVariants = [
+        { bg: '#1a1435', textColor: '#f8f4ff', positionColor: '#a29db8' }, // Purple tone
+        { bg: '#0f0a2a', textColor: '#f8f4ff', positionColor: '#c4b5fd' }, // Darker purple
+        { bg: '#2d1b69', textColor: '#f8f4ff', positionColor: '#a29db8' }, // Medium purple
+        { bg: '#3b2c7a', textColor: '#f8f4ff', positionColor: '#c4b5fd' }  // Light purple
+      ];
+      return colorVariants[index % colorVariants.length];
+    } else {
+      // Light mode colors (original)
+      const colorVariants = [
+        { bg: '#C0D645', textColor: 'black', positionColor: '#494949' }, // Green
+        { bg: '#151515', textColor: 'white', positionColor: '#9ca3af' },  // Black
+        { bg: '#EEEEEE', textColor: 'black', positionColor: '#494949' }, // Gray
+        { bg: '#FFFFFF', textColor: 'black', positionColor: '#494949' }  // White
+      ];
+      return colorVariants[index % colorVariants.length];
+    }
   };
 
   const getRandomFont = (index: number) => {
@@ -147,17 +186,18 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
           height: '100%',
           zIndex: 3, // Above GLSLHills (z-index: 1) but below title/subtitle (z-index: 5) and cards (z-index: 10+)
           opacity: scrollProgress >= 0.8 ? 1 : 0,
-          transition: 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           backgroundImage: 'url(https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Brush.svg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          pointerEvents: 'none' // Don't interfere with card interactions
+          pointerEvents: 'none', // Don't interfere with card interactions
+          filter: isDarkMode ? 'invert(0.8)' : 'none'
         }}
       />
 
       {/* Header with Progressive Animation */}
-      <div className="reviews-section__header" style={{ position: 'relative', zIndex: 5 }}>
+      <div className="reviews-section__header" style={{ position: 'relative', zIndex: 25 }}>
         <div className="reviews-section__title" style={getHeaderStyle('title')}>
           <div className="title-clients playfair-display-italic">Client's</div>
           <div className="title-reviews" style={{ fontFamily: 'var(--font-primary)' }}>reviews</div>
@@ -201,7 +241,7 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
                 padding: '28px',
                 margin: '0 -15px',
                 position: 'relative',
-                zIndex: 10 + (4 - index), // Z-index alto para cards: 14, 13, 12, 11
+                zIndex: 5 + (4 - index), // Z-index para cards: 9, 8, 7, 6 (menores que header z-index: 25)
                 boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
                 border: '3px solid rgba(255, 255, 255, 0.9)',
                 cursor: 'pointer',
@@ -212,12 +252,12 @@ export const ProgressiveReviewsIsland: React.FC<ProgressiveReviewsIslandProps> =
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg) translateY(-8px) scale(1.03)`;
                 e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3)';
-                e.currentTarget.style.zIndex = '20'; // Muy alto en hover
+                e.currentTarget.style.zIndex = '15'; // Alto en hover pero menor que header (25)
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = `${getCardStyle(index).transform} rotate(${rotation}deg)`;
                 e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
-                e.currentTarget.style.zIndex = (10 + (4 - index)).toString(); // Volver al z-index original
+                e.currentTarget.style.zIndex = (5 + (4 - index)).toString(); // Volver al z-index original
               }}
             >
               <div className="card-content" style={{

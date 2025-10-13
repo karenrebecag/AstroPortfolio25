@@ -60,12 +60,14 @@ const experienceData = [
   <div class="story-grid w-full max-w-[1400px] mx-auto px-15 grid lg:grid-cols-2 gap-12">
 
     <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
-    <AnimatedMeHeader client:visible>
-      <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
-        <!-- Cube 3D Background -->
-        <CubeBackground client:visible className="cube-3d-container" />
-      </div>
-    </AnimatedMeHeader>
+    <div class="cube-column-desktop">
+      <AnimatedMeHeader client:visible>
+        <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
+          <!-- Cube 3D Background -->
+          <CubeBackground client:visible className="cube-3d-container" />
+        </div>
+      </AnimatedMeHeader>
+    </div>
     
     <!-- Right Column: Scrolling Content -->
     <div class="scrolling-content-column">
@@ -441,6 +443,10 @@ const experienceData = [
   }
 
   @media (max-width: 768px) {
+    :global(.storytelling-scroll-container) {
+      padding-top: 10rem; /* reduced from 20rem */
+    }
+
     .story-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -450,6 +456,11 @@ const experienceData = [
 
     .sticky-image-column {
       display: none;
+    }
+
+    /* Hide cube column on mobile */
+    .cube-column-desktop {
+      display: none !important;
     }
 
     .sticky-image {
@@ -464,6 +475,66 @@ const experienceData = [
 
     .content-section {
       min-height: 60vh;
+    }
+
+    /* Typography adjustments for mobile - All Me section texts slightly smaller */
+    :global(.me-hero-title) {
+      font-size: clamp(40px, 7vw, 80px); /* increased from clamp(36px, 6vw, 72px) */
+    }
+
+    :global(.me-section-title) {
+      font-size: clamp(32px, 5.5vw, 64px); /* increased from clamp(28px, 5vw, 60px) */
+    }
+
+    :global(.me-heading-lg) {
+      font-size: clamp(24px, 3.5vw, 40px); /* increased from clamp(20px, 3vw, 36px) */
+    }
+
+    :global(.me-body-lg) {
+      font-size: 19px; /* increased from 18px */
+    }
+
+    :global(.me-body-md) {
+      font-size: 17px; /* increased from 16px */
+    }
+
+    :global(.me-body-sm) {
+      font-size: 15px; /* increased from 14px */
+    }
+
+    :global(.me-stats-number) {
+      font-size: 44px; /* increased from 40px */
+      line-height: 52px; /* adjusted accordingly */
+    }
+
+    /* Additional reduction for right column content (1 more step down) */
+    .scrolling-content-column :global(.me-hero-title) {
+      font-size: clamp(32px, 5vw, 64px); /* increased from clamp(28px, 4vw, 56px) */
+    }
+
+    .scrolling-content-column :global(.me-section-title) {
+      font-size: clamp(24px, 4vw, 52px); /* increased from clamp(20px, 3.5vw, 48px) */
+    }
+
+    .scrolling-content-column :global(.me-heading-lg) {
+      font-size: clamp(19px, 3vw, 32px); /* increased from clamp(16px, 2.5vw, 28px) */
+    }
+
+    .scrolling-content-column :global(.me-body-lg) {
+      font-size: 16px; /* increased from 14px */
+    }
+
+    .scrolling-content-column :global(.me-body-md) {
+      font-size: 14px; /* increased from 12px */
+    }
+
+    .scrolling-content-column :global(.me-body-sm) {
+      font-size: 13px; /* increased from 11px */
+    }
+
+    .scrolling-content-column :global(.me-stats-number) {
+      font-size: 36px; /* increased from 32px */
+      line-height: 42px; /* adjusted accordingly */
     }
   }
 
@@ -1205,7 +1276,7 @@ const experienceData = [
     :global(.experience-card-slider) {
       max-width: 100%;
       width: 100%;
-      padding: 20px 50px 0px 50px;
+      padding: 40px 50px 40px 50px;
     }
   }
 

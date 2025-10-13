@@ -55,7 +55,8 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<!-- Critical CSS Inline - Expanded for LCP optimization -->
 		<style>
 			/* Critical above-the-fold styles - Optimized for LCP */
-			body{font-family:'Inter','Median',sans-serif;width:100vw;margin:0;padding:0;box-sizing:border-box;background:#fff;overflow-x:hidden}
+			body{font-family:'Inter','Median',sans-serif;width:100vw;margin:0;padding:0;box-sizing:border-box;background:#fff;overflow-x:hidden;color:#080808;transition:background-color 0.5s cubic-bezier(0.25,0.46,0.45,0.94),color 0.5s cubic-bezier(0.25,0.46,0.45,0.94)}
+			body.dark-mode{background:linear-gradient(to bottom,#050112 0%,#0a0820 100%);color:#f0f4ff}
 			*{margin:0;padding:0;box-sizing:border-box}
 			/* Critical banner styles for faster LCP */
 			.banner-section{background:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
@@ -199,6 +200,39 @@ import PageLoader from '../components/ui/PageLoader.astro';
 	body {
 		font-family: 'Inter', 'Median', sans-serif;
 		width: 100vw;
+		background: #ffffff;
+		color: #080808;
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+		            color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode - Body */
+	body.dark-mode {
+		background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
+		color: #f0f4ff;
+	}
+
+	/* Dark Mode - Global Elements */
+	.dark-mode h1,
+	.dark-mode h2,
+	.dark-mode h3,
+	.dark-mode h4,
+	.dark-mode h5,
+	.dark-mode h6 {
+		color: #f0f4ff;
+	}
+
+	.dark-mode p {
+		color: #b8c4e6;
+	}
+
+	.dark-mode a {
+		color: #9b7ae8;
+		transition: color 0.3s ease;
+	}
+
+	.dark-mode a:hover {
+		color: #c4b5fd;
 	}
 
 	:root {
