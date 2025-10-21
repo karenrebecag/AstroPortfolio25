@@ -57,37 +57,20 @@ const resumeSEOConfig = {
   
     <main class="resume-main main-content">
     
-    <!-- Fixed Background with DitheringShader -->
+    <!-- Fixed Background with DitheringShader - Dark Mode Only -->
     <div class="resume-fixed-background">
-      <!-- Light mode DitheringShader (WhiteStickyFooter colors) -->
-      <div class="light-mode-shader">
-        <DitheringShader
-          width={1920}
-          height={1080}
-          colorBack="#fdfdfd"
-          colorFront="#f0f0f0"
-          shape="wave"
-          type="8x8"
-          pxSize={3}
-          speed={0.6}
-          client:load
-        />
-      </div>
-      
       <!-- Dark mode DitheringShader (StickyFooter colors) -->
-      <div class="dark-mode-shader">
-        <DitheringShader
-          width={1920}
-          height={1400}
-          colorBack="#010111"
-          colorFront="#4523AE"
-          shape="wave"
-          type="8x8"
-          pxSize={3}
-          speed={0.6}
-          client:load
-        />
-      </div>
+      <DitheringShader
+        width={1920}
+        height={1400}
+        colorBack="#010111"
+        colorFront="#4523AE"
+        shape="wave"
+        type="8x8"
+        pxSize={3}
+        speed={0.6}
+        client:load
+      />
       
       <!-- Fallback decorative elements -->
       <div class="resume-decorative-elements">
@@ -188,10 +171,10 @@ const resumeSEOConfig = {
         <div class="summary-content">
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             client:load
           >
             <h3 class="content-heading">{t('resume.sections.summary.items.0.title', lang)}</h3>
@@ -202,10 +185,10 @@ const resumeSEOConfig = {
 
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.05 }}
             client:load
           >
             <h4 class="content-subheading">{t('resume.sections.summary.items.1.title', lang)}</h4>
@@ -216,10 +199,10 @@ const resumeSEOConfig = {
 
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.1, ease: "easeOut", delay: 0.1 }}
             client:load
           >
             <h4 class="content-subheading">{t('resume.sections.summary.items.2.title', lang)}</h4>
@@ -245,10 +228,10 @@ const resumeSEOConfig = {
           {t('resume.sections.experience.jobs', lang).map((job: any, jobIndex: number) => (
             <motion.div 
               className="content-item"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: jobIndex * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, ease: "easeOut", delay: jobIndex * 0.05 }}
               client:load
             >
               <div class="job-section">
@@ -286,10 +269,10 @@ const resumeSEOConfig = {
         <div class="skills-container">
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             client:load
           >
             <SkillGroup title={t('resume.sections.skills.groups.0.title', lang)} delay={0}>
@@ -301,10 +284,10 @@ const resumeSEOConfig = {
 
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.05 }}
             client:load
           >
             <SkillGroup title={t('resume.sections.skills.groups.1.title', lang)} delay={1}>
@@ -316,10 +299,10 @@ const resumeSEOConfig = {
 
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.1, ease: "easeOut", delay: 0.1 }}
             client:load
           >
             <SkillGroup title={t('resume.sections.skills.groups.2.title', lang)} delay={2}>
@@ -331,10 +314,10 @@ const resumeSEOConfig = {
 
           <motion.div 
             className="content-item"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.15 }}
             client:load
           >
             <SkillGroup title={t('resume.sections.skills.groups.3.title', lang)} delay={3}>
@@ -361,10 +344,10 @@ const resumeSEOConfig = {
           {t('resume.sections.projects.items', lang).map((project: any, index: number) => (
             <motion.div 
               className="content-item project-item"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.05 }}
               client:load
             >
               <div class="project-number">{project.number}</div>
@@ -397,10 +380,10 @@ const resumeSEOConfig = {
           {t('resume.sections.education.items', lang).map((item: any, index: number) => (
             <motion.div 
               className="content-item education-item"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.05 }}
               client:load
             >
               <div class="education-number">{item.number}</div>
@@ -419,10 +402,10 @@ const resumeSEOConfig = {
         
         <motion.div 
           className="content-item"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.3, ease: "easeOut", delay: 0.15 }}
           client:load
         >
           <div class="learning-badge">
@@ -490,32 +473,22 @@ const resumeSEOConfig = {
 </ResumeLayout>
 
 <style>
-  body{
-    background-color: #ececec;
+  /* Always Dark Mode */
+  html {
+    background-color: #171523;
   }
 
-  /* Dark Mode Global Styles */
-  :global(.dark-mode html) {
-    background-color: #050112;
-  }
-
-  :global(.dark-mode body) {
-    background-color: #050112;
+  body {
+    background-color: #171523;
     color: #ffffff;
-  }
-
-  :global(.dark-mode) {
     color-scheme: dark;
-  }
-
-  :global(.light-mode) {
-    color-scheme: light;
   }
 
   /* Resume Page Container */
   .resume-page-container {
     min-height: 100vh;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background-color: #171523;
+    color: #ffffff;
   }
   
 
@@ -547,82 +520,48 @@ const resumeSEOConfig = {
   .content-heading {
     font-size: 1.25rem;
     font-weight: 500;
-    color: #0c0819;
-    font-family: var(--font-secondary); /* Boysen font */
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .content-heading) {
     color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
   }
 
   .content-subheading {
     font-size: 1.125rem;
     font-weight: 500;
-    color: #0c0819;
-    font-family: var(--font-secondary); /* Boysen font */
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .content-subheading) {
     color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
   }
 
   /* Base Text Classes */
   .content-text {
-    color: #0c08198c;
-    line-height: 1.6;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .content-text) {
     color: #ffffff;
+    line-height: 1.6;
   }
 
   /* Base Card Classes */
   :global(.card-item) {
     padding: 1.5rem;
-    border: 1px solid #f9f9f941;
+    border: 1px solid #393939;
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    background: #1f1f1f3b;
+    color: #ffffff;
     overflow: hidden;
     backdrop-filter: blur(10px) brightness(0.8);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-    transition: 
-      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .card-item) {
-    background: #1f1f1f3b !important;
-    color: #ffffff;
-    border: 1px solid #393939;
   }
 
   :global(.card-heading) {
     font-size: 1.125rem;
     font-weight: 500;
-    color: #0c0819;
-    font-family: var(--font-secondary); /* Boysen font */
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .card-heading) {
     color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
   }
 
   :global(.card-text) {
-    color: #0c08198c;
-    line-height: 1.6;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .card-text) {
     color: #ffffff;
+    line-height: 1.6;
   }
 
   /* Accessibility - Respect user preferences */
@@ -639,30 +578,24 @@ const resumeSEOConfig = {
     }
   }
 
-  /* Fixed Background Styles */
+  /* Fixed Background Styles - Dark Mode Only */
   .resume-fixed-background {
     position: fixed;
-    top: 80px; /* Start after header */
+    top: 0; /* Start from top */
     left: 0;
     width: 100vw;
     bottom: 0; /* Extend to bottom of viewport */
     z-index: -1;
-    background-color: #fdfdfd; /* WhiteStickyFooter background */
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    filter: hue-rotate(12deg) saturate(0.78) brightness(1.0); /* WhiteStickyFooter filter */
+    background-color: #171523; /* Dark background */
+    filter: hue-rotate(12deg) saturate(0.78) brightness(1.4);
   }
 
-  :global(.dark-mode .resume-fixed-background) {
-    background-color: #111111; /* StickyFooter background */
-    filter: hue-rotate(12deg) saturate(0.78) brightness(1.4); /* StickyFooter filter */
-  }
-
-  /* Decorative elements - Light mode (WhiteStickyFooter) */
+  /* Decorative elements - Dark Mode Only */
   .resume-decorative-elements {
     position: absolute;
     inset: 0;
     z-index: 1;
-    opacity: 0.2; /* WhiteStickyFooter opacity */
+    opacity: 0.3;
     pointer-events: none;
   }
 
@@ -674,7 +607,7 @@ const resumeSEOConfig = {
     width: 10rem;
     border-radius: 50%;
     opacity: 0.1;
-    background: radial-gradient(circle, rgba(69,35,174,0.1) 0%, rgba(69,35,174,0.02) 50%, transparent 100%); /* WhiteStickyFooter colors */
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
     transform: translateY(-5rem) rotate(-45deg);
   }
 
@@ -686,67 +619,19 @@ const resumeSEOConfig = {
     width: 15rem;
     border-radius: 50%;
     opacity: 0.1;
-    background: radial-gradient(circle, rgba(69,35,174,0.08) 0%, rgba(69,35,174,0.01) 80%, transparent 100%); /* WhiteStickyFooter colors */
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 80%, transparent 100%);
     transform: translateX(2rem) translateY(-24rem) rotate(-45deg);
   }
 
-  /* Dark mode decorative elements (StickyFooter) */
-  :global(.dark-mode .resume-decorative-elements) {
-    opacity: 0.3; /* StickyFooter opacity */
-  }
 
-  :global(.dark-mode .decorative-circle-1) {
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, transparent 100%); /* StickyFooter colors */
-  }
-
-  :global(.dark-mode .decorative-circle-2) {
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 80%, transparent 100%); /* StickyFooter colors */
-  }
-
-  /* DitheringShader mode switching */
-  .light-mode-shader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .dark-mode-shader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .light-mode-shader) {
-    opacity: 0;
-  }
-
-  :global(.dark-mode .dark-mode-shader) {
-    opacity: 1;
-  }
-
-  /* Main CV Styles - Light Mode */
+  /* Main CV Styles - Dark Mode Only */
   .resume-main {
     position: relative;
     background: transparent; /* Transparent to show background */
-    color: #000000;
-    font-family: var(--font-primary);
-    padding-top: 80px; /* Account for CV header (no TopMarquee) */
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 1; /* Above the fixed background */
-  }
-
-  /* Dark Mode Styles for Main */
-  :global(.dark-mode .resume-main) {
-    background: transparent; /* Transparent to show fixed background */
     color: #ffffff;
+    font-family: var(--font-primary);
+    padding-top: 0; /* No padding top */
+    z-index: 1; /* Above the fixed background */
   }
 
   /* Hero Section */
@@ -773,15 +658,10 @@ const resumeSEOConfig = {
 
   .hero-badge {
     font-size: 0.875rem;
-    color: rgb(0, 0, 0);
+    color: #ffffff;
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-badge) {
-    color: #ffffff;
   }
 
   .hero-title {
@@ -790,25 +670,15 @@ const resumeSEOConfig = {
     line-height: 1.1;
     letter-spacing: -0.02em;
     font-family: var(--font-display); /* Median font */
-    color: #313131;
+    color: #ffffff;
     min-height: 4.4rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     contain: layout style;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-title) {
-    color: #ffffff;
   }
 
   .hero-subtitle {
-    color: #888888;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-subtitle) {
     color: #cccccc;
   }
 
@@ -822,31 +692,14 @@ const resumeSEOConfig = {
   :global(.hero-description p) {
     font-size: clamp(1.125rem, 3vw, 1.25rem);
     line-height: 1.6;
-    color: #000000;
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-description p) {
     color: #ffffff;
   }
 
   :global(.hero-description *) {
-    color: #000000;
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-description *) {
     color: #ffffff;
   }
 
   .highlight {
-    color: #7a7a7a;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .highlight) {
     color: #cccccc;
   }
 
@@ -870,11 +723,6 @@ const resumeSEOConfig = {
     flex-direction: column;
     gap: 0.75rem;
     font-size: 0.875rem;
-    color: #363636;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .hero-status) {
     color: #cccccc;
   }
 
@@ -927,15 +775,10 @@ const resumeSEOConfig = {
 
   .section-label {
     font-size: 0.875rem;
-    color: #000000;
+    color: #ffffff;
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .section-label) {
-    color: #ffffff;
   }
 
   .contact-links {
@@ -945,20 +788,12 @@ const resumeSEOConfig = {
   }
 
   .contact-link {
-    color: #1d1d1db6;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: color 0.3s ease;
   }
 
-  :global(.dark-mode .contact-link) {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
   .contact-link:hover {
-    color: rgb(0, 0, 0);
-  }
-
-  :global(.dark-mode .contact-link:hover) {
     color: #ffffff;
   }
 
@@ -968,11 +803,6 @@ const resumeSEOConfig = {
 
   .contact-link.small {
     font-size: 0.75rem;
-    color: #222222;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .contact-link.small) {
     color: #cccccc;
   }
 
@@ -1020,27 +850,17 @@ const resumeSEOConfig = {
     font-size: clamp(2rem, 6vw, 2.5rem);
     font-weight: 300;
     font-family: var(--font-display); /* Median font */
-    color: #0c0819;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .section-title) {
     color: #ffffff;
   }
 
   /* TextDisperse styles for section titles */
   .section-title :global(.relative) {
-    color: #0c0819 !important;
+    color: #ffffff !important;
     font-size: inherit;
     font-family: inherit;
     font-weight: inherit;
     line-height: inherit;
     letter-spacing: inherit;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-  }
-
-  :global(.dark-mode .section-title .relative) {
-    color: #ffffff !important;
   }
 
   /* Summary Styles */
@@ -1083,21 +903,11 @@ const resumeSEOConfig = {
 
   .company {
     font-weight: 500;
-    color: #0c0819;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .company) {
     color: #ffffff;
   }
 
   .location {
     font-size: 0.875rem;
-    color: #cccccc;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .location) {
     color: #999999;
   }
 
@@ -1148,19 +958,10 @@ const resumeSEOConfig = {
     display: grid;
     gap: 1rem;
     padding: 1.5rem 0;
-    border-bottom: 1px solid #e2e2e2;
-    transition: border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .project-item) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .project-item:hover {
-    border-color: #555555;
-  }
-
-  :global(.dark-mode .project-item:hover) {
     border-color: rgba(255, 255, 255, 0.3);
   }
 
@@ -1175,19 +976,10 @@ const resumeSEOConfig = {
   .project-number {
     font-size: 1.5rem;
     font-weight: 300;
-    color: #0c08198c;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .project-number) {
     color: #ffffff;
   }
 
   .project-item:hover .project-number {
-    color: #0c0819;
-  }
-
-  :global(.dark-mode .project-item:hover .project-number) {
     color: #ffffff;
   }
 
@@ -1198,13 +990,8 @@ const resumeSEOConfig = {
   }
 
   .project-subtitle {
-    color: #0c08198c;
-    font-size: 0.875rem;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .project-subtitle) {
     color: #ffffff;
+    font-size: 0.875rem;
   }
 
   .project-details .content-text {
@@ -1223,16 +1010,11 @@ const resumeSEOConfig = {
 
   .benefits-label {
     font-size: 0.875rem;
-    color: #0c08198c;
+    color: #ffffff;
     font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .benefits-label) {
-    color: #ffffff;
   }
 
   .project-benefits .content-text {
@@ -1251,11 +1033,6 @@ const resumeSEOConfig = {
     display: grid;
     gap: 1rem;
     padding: 1.5rem 0;
-    border-bottom: 1px solid #e3e3e3;
-    transition: border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .education-item) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
@@ -1270,11 +1047,6 @@ const resumeSEOConfig = {
   .education-number {
     font-size: 1.5rem;
     font-weight: 300;
-    color: #cccccc;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .education-number) {
     color: #ffffff;
   }
 
@@ -1289,13 +1061,8 @@ const resumeSEOConfig = {
   }
 
   .education-duration {
-    color: #0c08198c;
-    margin-bottom: 1rem;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .education-duration) {
     color: #ffffff;
+    margin-bottom: 1rem;
   }
 
   :global(.education-points) {
@@ -1308,75 +1075,49 @@ const resumeSEOConfig = {
 
   :global(.education-points li) {
     font-size: 0.875rem;
-    color: #0c08198c;
+    color: #ffffff;
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .education-points li) {
-    color: #ffffff;
   }
 
   :global(.education-points li::before) {
     content: '';
     width: 0.25rem;
     height: 0.25rem;
-    background: #0c08198c;
+    background: #ffffff;
     border-radius: 50%;
     margin-top: 0.5rem;
     flex-shrink: 0;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .education-points li::before) {
-    background: #ffffff;
   }
 
   :global(.learning-badge) {
     text-align: center;
     padding: 2rem;
-    border: 1px solid #f9f9f941;
+    border: 1px solid #393939;
     border-radius: 0.5rem;
     margin-top: 2rem;
-    background: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    background: #1f1f1f3b;
+    color: #ffffff;
     overflow: hidden;
     backdrop-filter: blur(10px) brightness(0.8);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .learning-badge) {
-    background: #1f1f1f3b !important;
-    color: #ffffff;
-    border: 1px solid #393939;
   }
 
   :global(.badge-title) {
     font-size: 1.5rem;
     font-weight: 300;
     margin-bottom: 0.5rem;
-    color: #0c0819;
-    font-family: var(--font-secondary); /* Boysen font */
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .badge-title) {
     color: #ffffff;
+    font-family: var(--font-secondary); /* Boysen font */
   }
 
   :global(.badge-subtitle) {
     font-size: 1.125rem;
-    color: #cccccc;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .badge-subtitle) {
     color: #999999;
   }
 
-  /* Skill Tags Styles - Following DarkMode.md pattern */
+  /* Skill Tags Styles - Dark Mode Only */
   :global(.skill-group) {
     display: flex;
     flex-direction: column;
@@ -1386,15 +1127,10 @@ const resumeSEOConfig = {
   :global(.skill-group-title) {
     font-size: 16px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #ffffff;
     font-family: var(--font-secondary);
     margin-bottom: 8px;
     letter-spacing: 0.5px;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .skill-group-title) {
-    color: #ffffff;
   }
 
   :global(.skill-tags-container) {
@@ -1419,27 +1155,15 @@ const resumeSEOConfig = {
 
   /* Primary Variant */
   :global(.skill-tag-primary) {
-    background: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    background: #1f1f1f3b;
+    color: #ffffff;
+    border: 1px solid #393939;
     overflow: hidden;
     backdrop-filter: blur(10px) brightness(0.8);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    color: #1a1a1a;
-  }
-
-  :global(.dark-mode .skill-tag-primary) {
-    background: #1f1f1f3b !important;
-    color: #ffffff;
-    border: 1px solid #393939;
   }
 
   :global(.skill-tag-primary:hover) {
-    background: rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  :global(.dark-mode .skill-tag-primary:hover) {
     background: #2a2a2a;
     border: 1px solid #444444;
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
@@ -1447,52 +1171,30 @@ const resumeSEOConfig = {
 
   /* Secondary Variant */
   :global(.skill-tag-secondary) {
-    background: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    background: #1f1f1f3b;
+    color: #ffffff;
+    border: 1px solid #393939;
     overflow: hidden;
     backdrop-filter: blur(10px) brightness(0.8);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(69, 35, 174, 0.2);
-    color: #4523AE;
-  }
-
-  :global(.dark-mode .skill-tag-secondary) {
-    background: #1f1f1f3b !important;
-    color: #ffffff;
-    border: 1px solid #393939;
   }
 
   :global(.skill-tag-secondary:hover) {
-    background: rgba(69, 35, 174, 0.12);
-    border: 1px solid rgba(69, 35, 174, 0.35);
-  }
-
-  :global(.dark-mode .skill-tag-secondary:hover) {
     background: rgba(69, 35, 174, 0.25);
     border: 1px solid rgba(69, 35, 174, 0.6);
   }
 
   /* Accent Variant */
   :global(.skill-tag-accent) {
-    background: linear-gradient(#ffffff, rgb(250, 250, 250)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    background: #1f1f1f3b;
+    color: #ffffff;
+    border: 1px solid #393939;
     overflow: hidden;
     backdrop-filter: blur(10px) brightness(0.8);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #059669;
-  }
-
-  :global(.dark-mode .skill-tag-accent) {
-    background: #1f1f1f3b !important;
-    color: #ffffff;
-    border: 1px solid #393939;
   }
 
   :global(.skill-tag-accent:hover) {
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-  }
-
-  :global(.dark-mode .skill-tag-accent:hover) {
     background: rgba(16, 185, 129, 0.25);
     border: 1px solid rgba(16, 185, 129, 0.6);
   }
@@ -1550,7 +1252,8 @@ const resumeSEOConfig = {
     justify-content: center;
     overflow: hidden;
     will-change: transform;
-    padding: 4rem 0; /* Add padding instead of min-height */
+    padding: 2rem 0; /* Reduced padding */
+    margin-top: 0; /* No margin top */
   }
 
   /* Hero CSS Background - Disabled (using fixed DitheringShader background) */
@@ -1580,7 +1283,7 @@ const resumeSEOConfig = {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem 4rem 2rem; /* Reduced top padding */
     background: transparent; /* No background - show DitheringShader */
     z-index: 10; /* Above the background */
   }
@@ -1588,11 +1291,11 @@ const resumeSEOConfig = {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .resume-main {
-      padding-top: 70px;
+      padding-top: 0;
     }
     
     .hero-container {
-      padding: 3rem 1rem;
+      padding: 1rem 1rem 3rem 1rem;
     }
     
     .section-container {
@@ -1603,29 +1306,14 @@ const resumeSEOConfig = {
       padding: 0 1rem;
     }
   }
-  /* DitheringShader Dark Mode - Canvas background blending */
-  :global(.dark-mode .hero-dithering-background) {
-    /* The DitheringShader will render with colors #050112 (dark) and #1a1a1a (lighter dark) */
-    background: #050112;
-  }
 
-  :global(.hero-dithering-background) {
-    background: #ececec;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Status Dot Dark Mode */
+  /* Status Dot */
   .status-dot {
     width: 0.5rem;
     height: 0.5rem;
-    background: #000000;
+    background: #ffffff;
     border-radius: 50%;
     animation: pulse 2s infinite;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .status-dot) {
-    background: #ffffff;
   }
 
   @keyframes pulse {
@@ -1636,16 +1324,10 @@ const resumeSEOConfig = {
   /* Resume Footer Styles */
   .resume-footer {
     background: transparent;
-    color: #000000;
+    color: #ffffff;
     padding: 4rem 0 2rem 0;
     position: relative;
     z-index: 10;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .resume-footer) {
-    background: transparent;
-    color: #ffffff;
   }
 
   .footer-container {
@@ -1676,35 +1358,20 @@ const resumeSEOConfig = {
   .footer-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #000000;
-    font-family: var(--font-secondary);
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .footer-title) {
     color: #ffffff;
+    font-family: var(--font-secondary);
   }
 
   .footer-subtitle {
     font-size: 1rem;
-    color: #666666;
-    font-weight: 500;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .footer-subtitle) {
     color: #cccccc;
+    font-weight: 500;
   }
 
   .footer-description {
-    color: #666666;
+    color: #cccccc;
     line-height: 1.6;
     max-width: 300px;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .footer-description) {
-    color: #cccccc;
   }
 
   .social-links {
@@ -1714,21 +1381,13 @@ const resumeSEOConfig = {
   }
 
   .social-link {
-    color: #4523AE;
+    color: #9D7FC1;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
   }
 
   .social-link:hover {
-    color: #6B46C1;
-  }
-
-  :global(.dark-mode .social-link) {
-    color: #9D7FC1;
-  }
-
-  :global(.dark-mode .social-link:hover) {
     color: #B794F6;
   }
 
@@ -1739,34 +1398,22 @@ const resumeSEOConfig = {
   }
 
   .footer-link {
-    color: #666666;
+    color: #cccccc;
     text-decoration: none;
     transition: color 0.3s ease;
   }
 
   .footer-link:hover {
-    color: #000000;
-  }
-
-  :global(.dark-mode .footer-link) {
-    color: #cccccc;
-  }
-
-  :global(.dark-mode .footer-link:hover) {
     color: #ffffff;
   }
 
   .footer-bottom {
     padding-top: 2rem;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #333333;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
-  }
-
-  :global(.dark-mode .footer-bottom) {
-    border-top: 1px solid #333333;
   }
 
   @media (min-width: 768px) {
@@ -1780,23 +1427,13 @@ const resumeSEOConfig = {
 
   .copyright {
     font-size: 0.875rem;
-    color: #666666;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .copyright) {
     color: #cccccc;
   }
 
   .availability {
     font-size: 0.875rem;
-    color: #4523AE;
-    font-weight: 500;
-    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  :global(.dark-mode .availability) {
     color: #9D7FC1;
+    font-weight: 500;
   }
 
   @media (max-width: 768px) {
@@ -1809,47 +1446,57 @@ const resumeSEOConfig = {
     }
   }
 
+  /* Hide dark mode toggle on resume page */
+  :global(.header-pill .dark-mode-toggle-wrapper),
+  :global(.dark-mode-toggle-wrapper),
+  :global(#darkModeToggle),
+  :global(.header-pill #darkModeToggle),
+  :global(.dark-mode-toggle-btn) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Adjust header spacing without toggle */
+  :global(.header-pill .header-right-section) {
+    gap: 0.5rem !important;
+  }
+
+  /* Force hide any button with dark mode toggle functionality */
+  :global(button[title*="Dark Mode"]),
+  :global(button[title*="Light Mode"]),
+  :global(button[data-cursor-text*="Dark Mode"]),
+  :global(button[data-cursor-text*="Light Mode"]) {
+    display: none !important;
+  }
+
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Handle dark mode initialization
-    const savedTheme = localStorage.getItem('aurin-theme');
-    const shouldBeDark = savedTheme === 'dark';
+    // Always set dark mode
+    document.documentElement.classList.add('dark-mode');
+    document.body.style.backgroundColor = '#171523';
+    document.body.style.color = '#ffffff';
 
-    if (shouldBeDark) {
-      document.documentElement.classList.add('dark-mode');
-      document.body.style.backgroundColor = '#050112';
-      document.body.style.color = '#ffffff';
-    } else {
-      document.documentElement.classList.add('light-mode');
-      document.documentElement.classList.remove('dark-mode');
-      document.body.style.backgroundColor = '#ececec';
-      document.body.style.color = '#1f2937';
-    }
-
-    // Listen for dark mode changes from HeaderPill
-    const handleDarkModeChange = (event: any) => {
-      const newIsDark = event.detail.isDark;
-
-      // Apply theme to document with smooth transition
-      document.documentElement.style.transition = 'background-color 0.5s ease, color 0.5s ease';
-      document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
-
-      if (newIsDark) {
-        document.documentElement.classList.add('dark-mode');
-        document.documentElement.classList.remove('light-mode');
-        document.body.style.backgroundColor = '#050112';
-        document.body.style.color = '#ffffff';
-      } else {
-        document.documentElement.classList.add('light-mode');
-        document.documentElement.classList.remove('dark-mode');
-        document.body.style.backgroundColor = '#ececec';
-        document.body.style.color = '#1f2937';
+    // Hide dark mode toggle button
+    const hideToggleButton = () => {
+      const toggleWrapper = document.querySelector('.dark-mode-toggle-wrapper');
+      const toggleElement = document.getElementById('darkModeToggle');
+      
+      if (toggleWrapper) {
+        toggleWrapper.style.display = 'none';
+      }
+      if (toggleElement) {
+        toggleElement.style.display = 'none';
       }
     };
 
-    window.addEventListener('darkModeChange', handleDarkModeChange);
+    // Hide immediately and also after a delay to catch dynamic content
+    hideToggleButton();
+    setTimeout(hideToggleButton, 100);
+    setTimeout(hideToggleButton, 500);
 
     // Handle "Go Portfolio" button click
     const portfolioButton = document.getElementById('portfolio-button');
