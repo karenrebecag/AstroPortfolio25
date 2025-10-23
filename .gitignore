@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # Speedify tests (deployed separately)
 Tests/
+
+# Payload CMS module (deployed separately)
+src/components/modules/CMS/
