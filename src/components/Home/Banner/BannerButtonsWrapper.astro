@@ -1,0 +1,15 @@
+---
+// BannerButtonsWrapper component - Contains both MainButton and SecondaryButton
+import styles from './BannerButtonsWrapper.module.css';
+import MainButton from '../../ui/MainButton.astro';
+import SecondaryButton from '../../ui/SecondaryButton.astro';
+---
+
+<div class={styles.bannerButtonsContainer}>
+  <div class={styles.buttonWrapper}>
+    <SecondaryButton text="Projects" />
+  </div>
+  <div class={styles.buttonWrapper}>
+    <MainButton text="Get my Resume" href="/resume" />
+  </div>
+</div>

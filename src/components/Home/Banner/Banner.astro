@@ -1,0 +1,116 @@
+---
+// Banner component integrating Header, BannerButtonsWrapper and Marquees
+import styles from './Banner.module.css';
+import Header from '../../ui/Header.astro';
+import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
+import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
+---
+
+<div class={`${styles.bannerContainer} w-full h-screen overflow-hidden relative flex flex-col justify-between items-center`} id="bannerContainer">
+  <h1 class={styles.srOnly}>Karen Ortiz - Design Engineer Portfolio</h1>
+
+  <!-- Dark mode overlay gradient -->
+  <div class={styles.darkOverlay} id="darkOverlay"></div>
+
+  <div class="w-full">
+    <Header />
+  </div>
+  <BannerMarqueesWrapper />
+  <div id="banner-image-container" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%; z-index: 10; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; height: 537px;">
+    <img
+      id="banner-image"
+      src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png"
+      data-light-src="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png"
+      data-dark-src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/MePortfolioDark.png"
+      alt="Banner Image"
+      fetchpriority="high"
+      loading="eager"
+      width="520"
+      height="537"
+      style="max-width: 600px; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block;"
+    />
+  </div>
+  <div id="banner-buttons-container" class="w-full flex justify-center relative z-20">
+    <BannerButtonsWrapper />
+  </div>
+</div>
+
+
+
+
+<script>
+  // Dark mode handler for Banner
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerContainer = document.getElementById('bannerContainer');
+    const darkOverlay = document.getElementById('darkOverlay');
+    const bannerImage = document.getElementById('banner-image') as HTMLImageElement;
+
+    const applyDarkMode = (isDark: boolean) => {
+      if (!bannerContainer || !darkOverlay || !bannerImage) return;
+
+      if (isDark) {
+        // Dark mode Banner background
+        (bannerContainer as HTMLElement).style.background = 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)';
+        (bannerContainer as HTMLElement).style.backgroundImage = `
+          linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px),
+          radial-gradient(circle at 50% 60%, rgba(236, 72, 154, 0.04) 0%, rgba(168,85,247,0.05) 40%, transparent 70%)
+        `;
+        (bannerContainer as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px';
+        (bannerContainer as HTMLElement).style.backgroundPosition = 'center';
+        (bannerContainer as HTMLElement).style.backgroundRepeat = 'repeat';
+
+        // Show dark overlay
+        (darkOverlay as HTMLElement).style.opacity = '1';
+
+        // Banner image dark src and filter
+        const darkSrc = bannerImage.getAttribute('data-dark-src');
+        if (darkSrc) bannerImage.src = darkSrc;
+        (bannerImage as HTMLElement).style.filter = 'drop-shadow(0 0 60px #c31e9225) drop-shadow(0 0 80px rgba(195, 30, 146, 0.06)) drop-shadow(0 0 180px rgba(195, 30, 146, 0.02))';
+      } else {
+        // Light mode - reset to defaults
+        (bannerContainer as HTMLElement).style.background = '';
+        (bannerContainer as HTMLElement).style.backgroundImage = '';
+        (bannerContainer as HTMLElement).style.backgroundSize = '';
+        (bannerContainer as HTMLElement).style.backgroundPosition = '';
+        (bannerContainer as HTMLElement).style.backgroundRepeat = '';
+
+        // Hide dark overlay
+        (darkOverlay as HTMLElement).style.opacity = '';
+
+        // Banner image light src and filter
+        const lightSrc = bannerImage.getAttribute('data-light-src');
+        if (lightSrc) bannerImage.src = lightSrc;
+        (bannerImage as HTMLElement).style.filter = '';
+      }
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDark);
+    };
+
+    // Listen for dark mode toggle changes
+    window.addEventListener('darkModeChange', ((event: CustomEvent) => {
+      applyDarkMode(event.detail.isDark);
+    }) as EventListener);
+
+    // MutationObserver fallback for class changes on documentElement
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          checkInitialDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // Apply initial state with small delay
+    setTimeout(checkInitialDarkMode, 100);
+  });
+</script>

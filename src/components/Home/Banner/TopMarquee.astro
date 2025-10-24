@@ -1,0 +1,93 @@
+---
+// TopMarquee - Lightweight marquee banner for header
+import styles from './TopMarquee.module.css';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detectar idioma de la URL actual
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations] || translations.en;
+---
+
+<div class={styles.topMarqueeContainer} id="topMarqueeContainer">
+  <div class={styles.topMarqueeWrapper} id="topMarqueeWrapper">
+    <div id="top-marquee" class={styles.topMarquee}>
+      <span class={styles.marqueeText}>
+        {t.topMarquee.text}
+      </span>
+      <span class={styles.marqueeText}>
+        {t.topMarquee.text}
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dark mode handler for TopMarquee
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('topMarqueeContainer');
+    const wrapper = document.getElementById('topMarqueeWrapper');
+    const marqueeTexts = document.querySelectorAll('#top-marquee span');
+
+    const applyDarkMode = (isDark: boolean) => {
+      if (!container || !wrapper) return;
+
+      if (isDark) {
+        // Dark mode styles
+        (container as HTMLElement).style.background = 'linear-gradient(90deg, #160021 0%, #1b0027 50%, #3d005c 100%)';
+
+        marqueeTexts.forEach(text => {
+          (text as HTMLElement).style.color = '#f8f4ff';
+          (text as HTMLElement).style.textShadow = '0 0 8px rgba(255, 255, 255, 0.3)';
+        });
+
+        // Large screen gradients
+        if (window.innerWidth >= 2560) {
+          const before = window.getComputedStyle(wrapper, '::before');
+          const after = window.getComputedStyle(wrapper, '::after');
+          // Note: ::before/::after need to be set in CSS with data attributes
+          wrapper.setAttribute('data-dark-mode', 'true');
+        }
+      } else {
+        // Light mode styles (reset to CSS module defaults)
+        (container as HTMLElement).style.background = '';
+
+        marqueeTexts.forEach(text => {
+          (text as HTMLElement).style.color = '';
+          (text as HTMLElement).style.textShadow = '';
+        });
+
+        wrapper.removeAttribute('data-dark-mode');
+      }
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDark);
+    };
+
+    // Listen for dark mode toggle changes
+    window.addEventListener('darkModeChange', ((event: CustomEvent) => {
+      applyDarkMode(event.detail.isDark);
+    }) as EventListener);
+
+    // Apply initial state with small delay to ensure DOM is ready
+    setTimeout(checkInitialDarkMode, 100);
+  });
+</script>
+
+<style>
+  /* Dark mode gradients for ::before and ::after using data attribute */
+  @media (min-width: 2560px) {
+    #topMarqueeWrapper[data-dark-mode="true"]::before {
+      background: linear-gradient(to right, #3d005c, transparent) !important;
+    }
+
+    #topMarqueeWrapper[data-dark-mode="true"]::after {
+      background: linear-gradient(to left, #3d005c, transparent) !important;
+    }
+  }
+</style>
+
+

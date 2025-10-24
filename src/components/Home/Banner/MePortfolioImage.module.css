@@ -1,0 +1,43 @@
+  .me-portfolio-image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    contain: layout style paint;
+  }
+  
+  .me-portfolio-picture {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .me-portfolio-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    /* Reserve space to prevent layout shift */
+    aspect-ratio: 520 / 537;
+    background-color: #f5f5f5; /* Placeholder color */
+  }
+  
+  /* Fade in effect when image loads */
+  .me-portfolio-img {
+    opacity: 0;
+  }
+  
+  .me-portfolio-img.loaded {
+    opacity: 1;
+  }
+  
+  /* Responsive sizing */
+  @media (max-width: 768px) {
+    .me-portfolio-img {
+      aspect-ratio: 1 / 1; /* Square on mobile */
+    }
+  }
+  
+  /* Optimize for LCP */
+  .me-portfolio-img[loading="eager"] {
+    content-visibility: auto;
+  }

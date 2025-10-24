@@ -1,0 +1,50 @@
+---
+import styles from './Enterprises.module.css';
+
+const logos = [
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientLogo-1.png', alt: 'Ancient' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAILogo.png', alt: 'Athenis AI' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/OpinatorLogo.png', alt: 'Opinator' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SodioWhite.png', alt: 'Sodio' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SpilLogo.png', alt: 'Spil' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCraftersLogo.png', alt: 'WebCrafters' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ZoekLogo.png', alt: 'Zoek' }
+];
+---
+
+<section class={styles.enterprises}>
+  <div class={styles.enterprisesContainer}>
+    <div class={styles.enterprisesWrapper}>
+      <div class={styles.container}>
+        <h2 class={styles.title}>Trusted by Leading Brands to Deliver Exceptional Design Solutions</h2>
+        <div class={styles.slider}>
+          {[...logos, ...logos].map((logo) => (
+            <img src={logo.src} alt={logo.alt} class={styles.logo} width="90" height="12" loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Dark mode styles - Purple tones */
+  :global(.dark-mode) :global(.enterprises) {
+    background: linear-gradient(145deg, #020009 0%, #0c0115 100%) !important;
+  }
+
+  :global(.dark-mode) :global(.title) {
+    color: #e6d9f0 !important;
+  }
+
+  /* Dark mode gradients - Purple tones (large screens only) */
+  @media (min-width: 2560px) {
+    :global(.dark-mode) :global(.enterprisesWrapper)::before {
+      background: linear-gradient(to right, #2a0845, transparent) !important;
+    }
+
+    :global(.dark-mode) :global(.enterprisesWrapper)::after {
+      background: linear-gradient(to left, #2a0845, transparent) !important;
+    }
+  }
+</style>

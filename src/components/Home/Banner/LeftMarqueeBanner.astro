@@ -1,0 +1,218 @@
+---
+// LeftMarqueeBanner - Large animated text moving from right to left
+import styles from './LeftMarqueeBanner.module.css';
+---
+
+<!-- Wrapper para prevenir layout shift -->
+<div class={styles.leftMarqueeContainer}>
+  <div class={styles.leftMarqueeWrapper}>
+    <div
+      id="left-marquee"
+      class="whitespace-nowrap font-display font-bold select-none text-right"
+      style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
+    >
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+      <span class="marquee-content">
+        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Dark mode styles - Intense neon illumination stroke text */
+  :global(.dark-mode) #left-marquee {
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    color: transparent !important;
+    -webkit-text-stroke: 1px #d51da4;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+      /* Core white illumination */
+      0 0 2px rgba(255, 255, 255, 1),
+      0 0 5px rgba(255, 255, 255, 0.9),
+      0 0 10px rgba(255, 255, 255, 0.8),
+      /* Purple neon illumination layers */
+      0 0 20px rgba(157, 127, 193, 1),
+      0 0 40px rgba(157, 127, 193, 0.9),
+      0 0 60px rgba(157, 127, 193, 0.8),
+      0 0 80px rgba(157, 127, 193, 0.7),
+      0 0 100px rgba(157, 127, 193, 0.6),
+      0 0 120px rgba(157, 127, 193, 0.5);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(1.2) saturate(1.3)
+            drop-shadow(0 0 40px rgba(157, 127, 193, 0.15))
+            drop-shadow(0 0 80px rgba(157, 127, 193, 0.08))
+            drop-shadow(0 0 120px rgba(157, 127, 193, 0.04));
+  }
+
+  /* Hover effect - Maximum neon illumination with flicker */
+  :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+    -webkit-text-stroke: 1px rgba(157, 127, 193, 1);
+    text-shadow:
+      /* Intense core illumination */
+      0 0 3px rgba(255, 255, 255, 1),
+      0 0 8px rgba(255, 255, 255, 1),
+      0 0 15px rgba(255, 255, 255, 0.9),
+      /* Maximum purple neon illumination */
+      0 0 25px rgba(157, 127, 193, 1),
+      0 0 50px rgba(157, 127, 193, 1),
+      0 0 75px rgba(157, 127, 193, 0.9),
+      0 0 100px rgba(157, 127, 193, 0.8),
+      0 0 125px rgba(157, 127, 193, 0.7),
+      0 0 150px rgba(157, 127, 193, 0.6),
+      0 0 175px rgba(157, 127, 193, 0.5);
+    filter: brightness(1.5) saturate(1.5)
+            drop-shadow(0 0 60px rgba(157, 127, 193, 0.25))
+            drop-shadow(0 0 120px rgba(157, 127, 193, 0.15))
+            drop-shadow(0 0 180px rgba(157, 127, 193, 0.08));
+    animation: intensePurpleFlicker 1.8s ease-in-out infinite alternate;
+  }
+
+  /* Intense purple flicker animation - realistic neon effect */
+  @keyframes intensePurpleFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+      text-shadow:
+        0 0 7px #fff,
+        0 0 10px #fff,
+        0 0 21px #fff,
+        0 0 42px #0fa,
+        0 0 82px #0fa,
+        0 0 92px #0fa,
+        0 0 102px #0fa,
+        0 0 151px #0fa;
+      filter: brightness(10) saturate(1.5);
+    }
+    20%, 24%, 55% {
+      text-shadow:
+        /* Dimmed flicker state */
+        0 0 1px rgba(255, 255, 255, 0.6),
+        0 0 3px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(157, 127, 193, 0.6),
+        0 0 15px rgba(157, 127, 193, 0.4),
+        0 0 25px rgba(193, 127, 127, 0.3);
+      filter: brightness(0.8) saturate(0.8);
+    }
+  }
+
+  /* Performance optimizations */
+  :global(.dark-mode) #left-marquee {
+    /* GPU acceleration for smooth animations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+      animation: none !important;
+    }
+  }
+
+  /* 🍎 Safari-Only Fallback - Dark mode simple solo para Safari, Chromium mantiene efectos neon */
+  @supports (-webkit-appearance: none) and (not (background: paint(something))) {
+    :global(.dark-mode) #left-marquee {
+      /* Anular efectos complejos solo en Safari */
+      background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: none !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+      filter: none !important;
+      animation: none !important;
+      transition: none !important;
+
+      /* Mantener optimizaciones de performance */
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    /* Anular hover effects solo en Safari */
+    :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+      background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: none !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+      filter: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Gradientes laterales para pantallas grandes */
+  @media (min-width: 2560px) {
+    /* Dark mode gradients */
+    :global(.dark-mode) :global(.leftMarqueeWrapper)::before {
+      background: linear-gradient(to right, #050112, transparent) !important;
+    }
+
+    :global(.dark-mode) :global(.leftMarqueeWrapper)::after {
+      background: linear-gradient(to left, #050112, transparent) !important;
+    }
+  }
+</style>
+
+<script>
+  // JavaScript para animación infinita fluida del marquee izquierdo
+  function initLeftMarquee() {
+    const leftMarquee = document.getElementById('left-marquee');
+    if (!leftMarquee) return;
+
+    const leftContent = leftMarquee.querySelectorAll('.marquee-content');
+    if (leftContent.length === 0) return;
+
+    // Calcular ancho explícito para Safari
+    const firstElement = leftContent[0] as HTMLElement;
+    const contentWidth = firstElement.getBoundingClientRect().width;
+
+    let leftPosition = 0;
+    const speed = 1; // Velocidad en píxeles por frame
+
+    function animateLeftMarquee() {
+      leftPosition -= speed;
+
+      // Resetear posición cuando el primer elemento sale completamente
+      if (Math.abs(leftPosition) >= contentWidth) {
+        leftPosition = 0;
+      }
+
+      // Usar translate3d para webkit optimization
+      (leftMarquee as HTMLElement).style.transform = `translate3d(${leftPosition}px, 0, 0)`;
+
+      requestAnimationFrame(animateLeftMarquee);
+    }
+
+    // Doble RAF para Safari
+    requestAnimationFrame(() => {
+      requestAnimationFrame(animateLeftMarquee);
+    });
+  }
+
+  // Iniciar animación cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLeftMarquee);
+  } else {
+    initLeftMarquee();
+  }
+</script>

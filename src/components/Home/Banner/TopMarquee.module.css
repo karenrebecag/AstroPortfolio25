@@ -1,0 +1,87 @@
+.topMarqueeContainer {
+  width: 100%;
+  height: 32px;
+  background-color: #7754cd;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  display: flex;
+  justify-content: center;
+  transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.topMarqueeWrapper {
+  width: 100%;
+  max-width: 1800px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.topMarquee {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  height: 100%;
+  align-items: center;
+  animation: marqueeScroll 120s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marqueeText {
+  font-family: 'Boysen', var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+  letter-spacing: 0.5px;
+  padding-right: 0;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  contain: layout style;
+  will-change: transform;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Gradientes laterales para pantallas grandes */
+@media (min-width: 2560px) {
+  .topMarqueeWrapper::before,
+  .topMarqueeWrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .topMarqueeWrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #7256c6, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .topMarqueeWrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #7256c6, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+@media (max-width: 768px) {
+  .topMarqueeContainer {
+    height: 28px;
+  }
+
+  .marqueeText {
+    font-size: 12px;
+  }
+}

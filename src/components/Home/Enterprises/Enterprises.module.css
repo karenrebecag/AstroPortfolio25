@@ -1,0 +1,86 @@
+.enterprises {
+  background: #000;
+  padding: 44px 0;
+  overflow: hidden;
+  transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.enterprisesContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.enterprisesWrapper {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Median', serif;
+  font-size: clamp(12px, 1vw, 12px);
+  color: #fff;
+  margin: 0 0 32px;
+  font-weight: 500;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slider {
+  display: flex;
+  gap: 80px;
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+.logo {
+  filter: grayscale(1) brightness(1.2);
+  opacity: 0.8;
+  object-fit: contain;
+}
+
+@keyframes scroll {
+  to { transform: translateX(-50%); }
+}
+
+/* Gradientes laterales para pantallas grandes */
+@media (min-width: 2560px) {
+  .enterprisesWrapper::before,
+  .enterprisesWrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .enterprisesWrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #000, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .enterprisesWrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #000, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider { 
+    animation: none; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+  }
+}

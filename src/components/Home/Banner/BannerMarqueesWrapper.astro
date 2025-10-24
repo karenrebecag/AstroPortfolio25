@@ -1,0 +1,15 @@
+---
+// BannerMarqueesWrapper - Container for stacked marquees positioned behind banner content
+import styles from './BannerMarqueesWrapper.module.css';
+import LeftMarqueeBanner from './LeftMarqueeBanner.astro';
+import RightMarqueeBanner from './RightMarqueeBanner.astro';
+---
+
+<div class={styles.marqueeContainer}>
+  <div class={styles.marqueeRight}>
+    <RightMarqueeBanner />
+  </div>
+  <div class={styles.marqueeLeft}>
+    <LeftMarqueeBanner />
+  </div>
+</div>
