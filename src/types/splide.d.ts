@@ -23,6 +23,7 @@ declare module '@splidejs/react-splide' {
 
   export interface SplideSlideProps {
     key?: string;
+    className?: string;
     role?: string;
     style?: React.CSSProperties;
     children?: ReactNode;

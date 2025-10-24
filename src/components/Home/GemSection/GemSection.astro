@@ -1,0 +1,225 @@
+---
+import styles from './GemSection.module.css';
+import SilkBackground from './three/SilkBackground.tsx';
+import GemBackground from './three/GemBackground.tsx';
+import SoftSkillsSlider from './SoftSkillsSlider.tsx';
+import { motion, transform } from 'motion/react';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detectar idioma de la URL actual
+const lang = getLangFromUrl(Astro.url);
+const t = translations[lang as keyof typeof translations] || translations.en;
+const softSkillsData = t.aboutMe.skills;
+---
+
+<section class={styles['gem-section']} data-gem-section>
+
+  <!-- Gem 3D Background - moved outside gem-container for proper stacking -->
+  <GemBackground client:visible className={styles['gem-background']} />
+
+  <div class={styles['gem-container']}>
+
+    <!-- Desktop: Cards Container con scroll horizontal (visible en vp >= 768px) -->
+    <div class={styles['skills-container-desktop']}>
+      <div class={styles['skills-container-wrapper']} data-skills-wrapper>
+        <div class={styles['skills-scroll']} data-skills-scroll>
+          {softSkillsData.map((skill) => (
+            <div class={styles['skill-card']} data-skill-card>
+              <SilkBackground client:visible className={styles['skill-card-silk-bg']} data-silk-bg />
+              <div class={styles['skill-header']}>
+                <div class={styles['skill-number']}>{skill.id}</div>
+              </div>
+              <div class={styles['skill-content']}>
+                <div class={styles['skill-title']}>{skill.title}</div>
+              </div>
+              <div class={styles['skill-description']}>
+                <span class={styles['description-normal']}>{skill.description}</span>
+                <span class={styles['description-highlight']}>{skill.highlight}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile: Slider Manual (visible en vp < 768px) -->
+    <div class={styles['skills-container-mobile']}>
+      <SoftSkillsSlider softSkillsData={softSkillsData} client:visible />
+    </div>
+
+
+    <!-- Large ABOUT ME Text -->
+    <motion.div
+      className={styles['soft-skills-title-container']}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:idle
+    >
+      <h2
+        class={styles['soft-skills-title-normal']}
+        data-title="about-me"
+      >
+        {t.aboutMe.title}
+      </h2>
+    </motion.div>
+
+  </div>
+</section>
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const gemSection = document.querySelector('[data-gem-section]');
+    const skillsScroll = document.querySelector('[data-skills-scroll]');
+    const titleElement = document.querySelector('[data-title="about-me"]');
+    
+    // Dark mode styles function
+    const applyDarkMode = (isDark: boolean) => {
+      if (gemSection) {
+        if (isDark) {
+          // Apply grid lines and radial gradient without base gradient
+          (gemSection as HTMLElement).style.backgroundImage =
+            'linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px), radial-gradient(circle at 50% 60%, rgba(236,72,153,0.15) 0%, rgba(168,85,247,0.05) 40%, transparent 70%)';
+          (gemSection as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px, 100% 100%';
+          (gemSection as HTMLElement).style.backgroundPosition = '0 0, 0 0, center';
+          (gemSection as HTMLElement).style.backgroundRepeat = 'repeat, repeat, no-repeat';
+          (gemSection as HTMLElement).style.backgroundColor = 'transparent';
+
+          // Update pseudo-element for dark mode by adding a style element
+          let darkModeStyle = document.getElementById('gem-section-dark-mode-style');
+          if (!darkModeStyle) {
+            darkModeStyle = document.createElement('style');
+            darkModeStyle.id = 'gem-section-dark-mode-style';
+            document.head.appendChild(darkModeStyle);
+          }
+          darkModeStyle.textContent = `
+            [data-gem-section]::before {
+              background-image: none !important;
+              opacity: 0 !important;
+            }
+          `;
+        } else {
+          (gemSection as HTMLElement).style.backgroundColor = '#f9f9f9';
+          (gemSection as HTMLElement).style.backgroundImage =
+            'linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)';
+          (gemSection as HTMLElement).style.backgroundSize = '20px 20px';
+          (gemSection as HTMLElement).style.backgroundPosition = '';
+          (gemSection as HTMLElement).style.backgroundRepeat = '';
+
+          // Remove dark mode pseudo-element styles
+          const darkModeStyle = document.getElementById('gem-section-dark-mode-style');
+          if (darkModeStyle) {
+            darkModeStyle.remove();
+          }
+        }
+      }
+      
+      if (titleElement) {
+        if (isDark) {
+          (titleElement as HTMLElement).style.color = '#f8f4ff';
+        } else {
+          (titleElement as HTMLElement).style.color = '#000000';
+        }
+      }
+
+      // Apply dark mode to side gradients
+      const skillsWrapper = document.querySelector('[data-skills-wrapper]');
+      if (skillsWrapper) {
+        const wrapperElement = skillsWrapper as HTMLElement;
+        if (isDark) {
+          // Dark mode gradient - replicate banner background style
+          wrapperElement.style.setProperty('--gradient-bg', 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)');
+        } else {
+          // Light mode gradient
+          wrapperElement.style.setProperty('--gradient-bg', '#f9f9f9');
+        }
+      }
+
+      // Apply dark mode to skill cards - remove backgrounds and add purple border
+      const skillCards = document.querySelectorAll('[data-skill-card]');
+      skillCards.forEach(card => {
+        const cardElement = card as HTMLElement;
+        if (isDark) {
+          // Dark mode: transparent background with purple border
+          cardElement.style.background = 'transparent';
+          cardElement.style.backgroundImage = 'none';
+          cardElement.style.border = '1px solid rgb(123, 111, 178)';
+
+          // Hide Three.js silk background
+          const silkBg = card.querySelector('[data-silk-bg]') as HTMLElement;
+          if (silkBg) {
+            silkBg.style.display = 'none';
+          }
+        } else {
+          // Light mode: restore original backgrounds
+          cardElement.style.background = "url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg')";
+          cardElement.style.backgroundSize = 'cover';
+          cardElement.style.backgroundPosition = 'center';
+          cardElement.style.backgroundRepeat = 'no-repeat';
+          cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3)';
+
+          // Show Three.js silk background
+          const silkBg = card.querySelector('[data-silk-bg]') as HTMLElement;
+          if (silkBg) {
+            silkBg.style.display = '';
+          }
+        }
+      });
+
+      // Apply dark mode to mobile slider skill cards
+      const sliderCards = document.querySelectorAll('.skill-card-slider');
+      sliderCards.forEach(card => {
+        const cardElement = card as HTMLElement;
+        if (isDark) {
+          // Dark mode: transparent background with purple border
+          cardElement.style.background = 'transparent !important';
+          cardElement.style.backgroundImage = 'none !important';
+          cardElement.style.border = '1px solid rgb(123, 111, 178) !important';
+        } else {
+          // Light mode: restore transparent background (slider cards don't have fallback image)
+          cardElement.style.background = 'transparent !important';
+          cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3) !important';
+        }
+      });
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDark);
+    };
+
+    // Listen for dark mode changes from HeaderDarkModeToggle
+    window.addEventListener('darkModeChange', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      applyDarkMode(customEvent.detail.isDark);
+    });
+
+    // Check initial state after a short delay to ensure toggle has loaded
+    setTimeout(checkInitialDarkMode, 100);
+    
+    // Scroll animation functionality
+    if (gemSection && skillsScroll) {
+      // Calculate total scroll width
+      const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
+      
+      if (scrollWidth > 0) {
+        // Create scroll-triggered horizontal animation for skill cards
+        scroll(
+          (progress: number) => {
+            skillsScroll.scrollLeft = progress * scrollWidth;
+          },
+          {
+            target: gemSection,
+            offset: ["start center", "end center"]
+          }
+        );
+      }
+    }
+  });
+</script>
