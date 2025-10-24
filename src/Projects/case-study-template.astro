@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { StickyFooter } from '../components/ui/StickyFooter.tsx';
+import HeaderPill from '../components/case-study/HeaderPill.astro';
+import CaseStudyTemplateComponent from '../components/case-study/CaseStudyTemplate.tsx';
+import type { CaseStudyData } from '../components/case-study/types';
+
+// Mock data for template - this will be replaced with Payload CMS data
+const mockData: CaseStudyData = {
+  title: "Project Nexus",
+  subtitle: "Redefining Digital Experiences Through Innovation",
+  heroImage: "/modern-dashboard.png",
+  description: [
+    "Project Nexus represents a groundbreaking approach to modern web applications, combining cutting-edge technology with user-centric design principles. Our team embarked on a journey to create a platform that not only meets current industry standards but sets new benchmarks for performance and usability.",
+    "Through extensive research and iterative development, we crafted a solution that seamlessly integrates complex backend systems with an intuitive frontend experience. The result is a product that delights users while maintaining robust functionality under the hood.",
+    "This case study explores the challenges we faced, the innovative solutions we implemented, and the measurable impact our work had on the client's business objectives.",
+  ],
+  services: [
+    "UI/UX Design",
+    "Frontend Development", 
+    "Backend Architecture",
+    "Performance Optimization",
+    "User Research",
+  ],
+  stack: [
+    {
+      name: "React",
+      desc: "Component-based architecture for building dynamic user interfaces with optimal performance",
+    },
+    {
+      name: "Next.js", 
+      desc: "Server-side rendering and static site generation for improved SEO and load times",
+    },
+    {
+      name: "TypeScript",
+      desc: "Type-safe development ensuring code quality and reducing runtime errors",
+    },
+    {
+      name: "Tailwind CSS",
+      desc: "Utility-first CSS framework for rapid UI development and consistent styling",
+    },
+    {
+      name: "Framer Motion",
+      desc: "Production-ready animation library for creating fluid, engaging interactions",
+    },
+    {
+      name: "Node.js",
+      desc: "Scalable backend runtime for handling high-traffic API requests efficiently",
+    },
+  ],
+  workflow: [
+    {
+      step: 1,
+      title: "Discovery & Research",
+      desc: "We began with comprehensive stakeholder interviews and competitive analysis to understand the market landscape. Through user surveys and analytics review, we identified key pain points and opportunities for innovation. This phase established our north star metrics and success criteria.",
+    },
+    {
+      step: 2,
+      title: "Design & Prototyping", 
+      desc: "Armed with research insights, we created wireframes and high-fidelity prototypes. Multiple design iterations were tested with real users, allowing us to refine the interface before development. We established a design system to ensure consistency across all touchpoints.",
+    },
+    {
+      step: 3,
+      title: "Development & Integration",
+      desc: "Our engineering team built the application using modern best practices and agile methodologies. We implemented CI/CD pipelines for automated testing and deployment. Regular code reviews and pair programming sessions ensured code quality and knowledge sharing.",
+    },
+    {
+      step: 4,
+      title: "Testing & Launch",
+      desc: "Comprehensive QA testing covered functionality, performance, accessibility, and security. We conducted beta testing with select users to gather feedback before the public launch. Post-launch monitoring and rapid iteration addressed any emerging issues.",
+    },
+  ],
+  lessons: [
+    "Early user testing revealed assumptions that would have been costly to fix later in development",
+    "Investing in a robust design system upfront saved countless hours during implementation", 
+    "Performance optimization should be considered from day one, not as an afterthought",
+    "Clear communication channels between design and development teams prevented misalignment",
+    "Iterative releases allowed us to gather real-world feedback and adjust our roadmap accordingly",
+  ],
+  results: [
+    {
+      metric: "45%",
+      desc: "Increase in user engagement",
+    },
+    {
+      metric: "60%", 
+      desc: "Faster page load times",
+    },
+    {
+      metric: "3x",
+      desc: "Growth in conversions",
+    },
+  ],
+  images: [
+    "/modern-dashboard.png",
+    "/mobile-app-screens.png", 
+    "/data-visualization-charts.png",
+    "/user-profile-interface.png",
+    "/settings-panel-design.jpg",
+    "/analytics-dashboard.png",
+  ],
+  quote: {
+    text: "The team delivered beyond our expectations. Their attention to detail and commitment to excellence transformed our vision into reality.",
+    author: "Sarah Chen",
+    role: "CEO, TechCorp Industries",
+  },
+};
+---
+
+<Layout title="Case Study Template - Karen Ortiz Portfolio">
+  <HeaderPill />
+  
+  <main class="case-study-main">
+    <CaseStudyTemplateComponent data={mockData} client:load />
+  </main>
+
+  <StickyFooter client:visible />
+</Layout>
+
+<style>
+  .case-study-main {
+    min-height: 100vh;
+    background: #060314;
+    color: white;
+  }
+</style>
