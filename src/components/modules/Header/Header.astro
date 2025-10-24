@@ -5,6 +5,7 @@ import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
 import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
+import { BGPattern } from '../../ui/WhiteBackgroundTexture/bg-pattern.tsx';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
 
 const lang = getLangFromUrl(Astro.url);
@@ -13,6 +14,24 @@ const lang = getLangFromUrl(Astro.url);
 <TopMarquee />
 
 <div class="header-wrapper" id="headerWrapper">
+  <div class="bg-container light-pattern">
+    <BGPattern
+      client:load
+      variant="vertical-lines"
+      mask="none"
+      size={32}
+      fill="rgba(0, 0, 0, 0.02)"
+    />
+  </div>
+  <div class="bg-container dark-pattern">
+    <BGPattern
+      client:load
+      variant="vertical-lines"
+      mask="none"
+      size={32}
+      fill="rgba(157, 127, 193, 0.12)"
+    />
+  </div>
   <header class="header" id="mainHeader">
     <div class="logo" id="logoBtn">KAREN ORTIZ</div>
     
@@ -84,33 +103,40 @@ const lang = getLangFromUrl(Astro.url);
     top: 32px; /* Account for TopMarquee height */
     left: 0;
     right: 0;
-    z-index: 100;
-    background: white;
-    background-image:
-      linear-gradient(to right, rgba(204, 204, 204, 0.3) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(204, 204, 204, 0.3) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
+    z-index: 999999999;
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    transition: 
+    transition:
       background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     border-bottom: 1px solid rgba(204, 204, 204, 0.2);
   }
 
+  .bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .light-pattern {
+    opacity: 1;
+  }
+
+  .dark-pattern {
+    opacity: 0;
+  }
+
   .header-wrapper.scrolled {
     background: rgba(255, 255, 255, 0.98);
-    background-image: 
-      linear-gradient(to right, rgba(204, 204, 204, 0.15) 1px, transparent 1px), 
-      linear-gradient(to bottom, rgba(204, 204, 204, 0.15) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
     box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid rgba(204, 204, 204, 0.25);
   }
@@ -134,6 +160,7 @@ const lang = getLangFromUrl(Astro.url);
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    z-index: 1;
   }
 
   @media (max-width: 768px) {
@@ -310,7 +337,7 @@ const lang = getLangFromUrl(Astro.url);
     height: 100vh;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 10000;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -604,25 +631,25 @@ const lang = getLangFromUrl(Astro.url);
   }
 
   /* Dark mode styles */
+  :global(.dark-mode) .light-pattern {
+    opacity: 0;
+  }
+
+  :global(.dark-mode) .dark-pattern {
+    opacity: 1;
+  }
+
   :global(.dark-mode .header-wrapper) {
-    background: 
-      linear-gradient(135deg,  rgba(41, 0, 30, 0.192) 0%, #26003951 100%),
-      linear-gradient(to right, rgba(157, 127, 193, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(157, 127, 193, 0.08) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
+    background: rgba(10, 22, 40, 0.95);
     border-bottom: 1px solid rgba(157, 127, 193, 0.2);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(69, 35, 174, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   :global(.dark-mode .header-wrapper.scrolled) {
-    background: 
-      linear-gradient(135deg, rgba(17, 17, 17, 0.98) 0%, rgba(23, 21, 35, 0.98) 100%),
-      linear-gradient(to right, rgba(157, 127, 193, 0.05) 1px, transparent 1px), 
-      linear-gradient(to bottom, rgba(157, 127, 193, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
-    box-shadow: 
+    background: rgba(10, 22, 40, 0.98);
+    box-shadow:
       0 12px 40px rgba(69, 35, 174, 0.15),
       0 4px 32px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);

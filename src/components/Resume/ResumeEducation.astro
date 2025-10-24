@@ -1,0 +1,713 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Education content by language
+const educationContent = {
+  en: {
+    title: "Education & Certifications",
+    subtitle: "Academic background and professional development achievements",
+    education: [
+      {
+        degree: "Bachelor of Science in Computer Science",
+        institution: "Universidad de Guadalajara",
+        location: "Guadalajara, Mexico",
+        period: "2018 - 2022",
+        description: "Focused on software engineering, web development, and human-computer interaction. Graduated Magna Cum Laude with specialization in frontend technologies and user experience design.",
+        achievements: [
+          "Graduated Magna Cum Laude (GPA: 3.8/4.0)",
+          "Dean's List for 6 consecutive semesters",
+          "President of Computer Science Student Association",
+          "Winner of Annual Hackathon 2021 - Best UI/UX Design"
+        ],
+        type: "degree"
+      },
+      {
+        degree: "Frontend Development Bootcamp",
+        institution: "Platzi",
+        location: "Online",
+        period: "2020",
+        description: "intensive program covering modern frontend technologies including React, TypeScript, and advanced CSS techniques. Completed over 40 courses with hands-on projects.",
+        achievements: [
+          "Completed 40+ courses in frontend development",
+          "Built 15+ real-world projects",
+          "Specialization in React and TypeScript",
+          "Top 5% of cohort performance"
+        ],
+        type: "bootcamp"
+      }
+    ],
+    certifications: [
+      {
+        name: "AWS Certified Solutions Architect",
+        issuer: "Amazon Web Services",
+        date: "2023",
+        credentialId: "AWS-SAA-2023-001",
+        status: "active"
+      },
+      {
+        name: "Google UX Design Professional Certificate",
+        issuer: "Google (via Coursera)",
+        date: "2022",
+        credentialId: "GUXD-2022-456",
+        status: "active"
+      },
+      {
+        name: "Meta Frontend Developer Professional Certificate",
+        issuer: "Meta (via Coursera)",
+        date: "2022",
+        credentialId: "META-FE-2022-789",
+        status: "active"
+      },
+      {
+        name: "Figma Advanced Certification",
+        issuer: "Figma",
+        date: "2021",
+        credentialId: "FIG-ADV-2021-123",
+        status: "active"
+      }
+    ],
+    skills: [
+      {
+        category: "Languages",
+        items: ["Spanish (Native)", "English (Fluent)", "Portuguese (Conversational)"]
+      },
+      {
+        category: "Soft Skills",
+        items: ["Team Leadership", "Project Management", "Cross-functional Collaboration", "Mentoring"]
+      },
+      {
+        category: "Methodologies",
+        items: ["Agile/Scrum", "Design Thinking", "User-Centered Design", "Test-Driven Development"]
+      }
+    ]
+  },
+  es: {
+    title: "Educación y Certificaciones",
+    subtitle: "Formación académica y logros de desarrollo profesional",
+    education: [
+      {
+        degree: "Licenciatura en Ciencias de la Computación",
+        institution: "Universidad de Guadalajara",
+        location: "Guadalajara, México",
+        period: "2018 - 2022",
+        description: "Enfocado en ingeniería de software, desarrollo web e interacción humano-computadora. Graduada Magna Cum Laude con especialización en tecnologías frontend y diseño de experiencia de usuario.",
+        achievements: [
+          "Graduada Magna Cum Laude (Promedio: 3.8/4.0)",
+          "Lista del Decano por 6 semestres consecutivos",
+          "Presidenta de la Asociación de Estudiantes de Ciencias de la Computación",
+          "Ganadora del Hackathon Anual 2021 - Mejor Diseño UI/UX"
+        ],
+        type: "degree"
+      },
+      {
+        degree: "Bootcamp de Desarrollo Frontend",
+        institution: "Platzi",
+        location: "En línea",
+        period: "2020",
+        description: "Programa intensivo cubriendo tecnologías frontend modernas incluyendo React, TypeScript y técnicas avanzadas de CSS. Completé más de 40 cursos con proyectos prácticos.",
+        achievements: [
+          "Completé 40+ cursos en desarrollo frontend",
+          "Construí 15+ proyectos del mundo real",
+          "Especialización en React y TypeScript",
+          "Top 5% de rendimiento de la cohorte"
+        ],
+        type: "bootcamp"
+      }
+    ],
+    certifications: [
+      {
+        name: "AWS Certified Solutions Architect",
+        issuer: "Amazon Web Services",
+        date: "2023",
+        credentialId: "AWS-SAA-2023-001",
+        status: "active"
+      },
+      {
+        name: "Certificado Profesional de Diseño UX de Google",
+        issuer: "Google (vía Coursera)",
+        date: "2022",
+        credentialId: "GUXD-2022-456",
+        status: "active"
+      },
+      {
+        name: "Certificado Profesional de Desarrollador Frontend de Meta",
+        issuer: "Meta (vía Coursera)",
+        date: "2022",
+        credentialId: "META-FE-2022-789",
+        status: "active"
+      },
+      {
+        name: "Certificación Avanzada de Figma",
+        issuer: "Figma",
+        date: "2021",
+        credentialId: "FIG-ADV-2021-123",
+        status: "active"
+      }
+    ],
+    skills: [
+      {
+        category: "Idiomas",
+        items: ["Español (Nativo)", "Inglés (Fluido)", "Portugués (Conversacional)"]
+      },
+      {
+        category: "Habilidades Blandas",
+        items: ["Liderazgo de Equipos", "Gestión de Proyectos", "Colaboración Multifuncional", "Mentoría"]
+      },
+      {
+        category: "Metodologías",
+        items: ["Agile/Scrum", "Design Thinking", "Diseño Centrado en el Usuario", "Desarrollo Dirigido por Pruebas"]
+      }
+    ]
+  },
+  fr: {
+    title: "Éducation et Certifications",
+    subtitle: "Formation académique et réalisations de développement professionnel",
+    education: [
+      {
+        degree: "Licence en Sciences Informatiques",
+        institution: "Universidad de Guadalajara",
+        location: "Guadalajara, Mexique",
+        period: "2018 - 2022",
+        description: "Concentré sur l'ingénierie logicielle, le développement web et l'interaction humain-ordinateur. Diplômée Magna Cum Laude avec spécialisation en technologies frontend et conception d'expérience utilisateur.",
+        achievements: [
+          "Diplômée Magna Cum Laude (GPA: 3.8/4.0)",
+          "Liste du Doyen pendant 6 semestres consécutifs",
+          "Présidente de l'Association des Étudiants en Informatique",
+          "Gagnante du Hackathon Annuel 2021 - Meilleur Design UI/UX"
+        ],
+        type: "degree"
+      },
+      {
+        degree: "Bootcamp Développement Frontend",
+        institution: "Platzi",
+        location: "En ligne",
+        period: "2020",
+        description: "Programme intensif couvrant les technologies frontend modernes incluant React, TypeScript et techniques CSS avancées. Complété plus de 40 cours avec projets pratiques.",
+        achievements: [
+          "Complété 40+ cours en développement frontend",
+          "Construit 15+ projets du monde réel",
+          "Spécialisation en React et TypeScript",
+          "Top 5% de performance de la cohorte"
+        ],
+        type: "bootcamp"
+      }
+    ],
+    certifications: [
+      {
+        name: "AWS Certified Solutions Architect",
+        issuer: "Amazon Web Services",
+        date: "2023",
+        credentialId: "AWS-SAA-2023-001",
+        status: "active"
+      },
+      {
+        name: "Certificat Professionnel Design UX Google",
+        issuer: "Google (via Coursera)",
+        date: "2022",
+        credentialId: "GUXD-2022-456",
+        status: "active"
+      },
+      {
+        name: "Certificat Professionnel Développeur Frontend Meta",
+        issuer: "Meta (via Coursera)",
+        date: "2022",
+        credentialId: "META-FE-2022-789",
+        status: "active"
+      },
+      {
+        name: "Certification Figma Avancée",
+        issuer: "Figma",
+        date: "2021",
+        credentialId: "FIG-ADV-2021-123",
+        status: "active"
+      }
+    ],
+    skills: [
+      {
+        category: "Langues",
+        items: ["Espagnol (Natif)", "Anglais (Courant)", "Portugais (Conversationnel)"]
+      },
+      {
+        category: "Compétences Douces",
+        items: ["Leadership d'Équipe", "Gestion de Projet", "Collaboration Transversale", "Mentorat"]
+      },
+      {
+        category: "Méthodologies",
+        items: ["Agile/Scrum", "Design Thinking", "Design Centré Utilisateur", "Développement Dirigé par Tests"]
+      }
+    ]
+  }
+};
+
+const content = educationContent[lang as keyof typeof educationContent] || educationContent.en;
+---
+
+<section class="resume-education">
+  <div class="education-container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">{content.title}</h2>
+      <p class="section-subtitle">{content.subtitle}</p>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Content Grid -->
+    <div class="education-grid">
+      <!-- Education Column -->
+      <div class="education-column">
+        <h3 class="column-title">Education</h3>
+        
+        <div class="education-list">
+          {content.education.map((edu, index) => (
+            <article class="education-item" data-type={edu.type}>
+              <div class="education-header">
+                <div class="education-main">
+                  <h4 class="education-degree">{edu.degree}</h4>
+                  <div class="education-institution">
+                    <span class="institution-name">{edu.institution}</span>
+                    <span class="institution-location">{edu.location}</span>
+                  </div>
+                </div>
+                <div class="education-period">{edu.period}</div>
+              </div>
+              
+              <p class="education-description">
+                {edu.description}
+              </p>
+              
+              <div class="education-achievements">
+                <h5 class="achievements-title">Key Achievements:</h5>
+                <ul class="achievements-list">
+                  {edu.achievements.map((achievement) => (
+                    <li class="achievement-item">{achievement}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Certifications & Skills Column -->
+      <div class="certifications-column">
+        <!-- Certifications -->
+        <div class="certifications-section">
+          <h3 class="column-title">Certifications</h3>
+          
+          <div class="certifications-list">
+            {content.certifications.map((cert, index) => (
+              <div class="certification-item" data-status={cert.status}>
+                <div class="certification-header">
+                  <h4 class="certification-name">{cert.name}</h4>
+                  <div class="certification-date">{cert.date}</div>
+                </div>
+                <div class="certification-issuer">{cert.issuer}</div>
+                <div class="certification-id">ID: {cert.credentialId}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <!-- Additional Skills -->
+        <div class="skills-section">
+          <h3 class="column-title">Additional Skills</h3>
+          
+          <div class="skills-categories">
+            {content.skills.map((skillCategory, index) => (
+              <div class="skill-category">
+                <h4 class="skill-category-title">{skillCategory.category}</h4>
+                <div class="skill-items">
+                  {skillCategory.items.map((skill) => (
+                    <span class="skill-tag">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-education {
+    padding: 5rem 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+  }
+
+  .education-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Education Grid */
+  .education-grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 1024px) {
+    .education-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+    }
+  }
+
+  /* Column Titles */
+  .column-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  .column-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    border-radius: 1px;
+  }
+
+  /* Education Items */
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .education-item {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .education-item:hover {
+    border-color: rgba(157, 127, 193, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .education-item[data-type="degree"] {
+    border-left: 4px solid #9D7FC1;
+  }
+
+  .education-item[data-type="bootcamp"] {
+    border-left: 4px solid #B794F6;
+  }
+
+  .education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .education-degree {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .education-institution {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .institution-name {
+    color: #9D7FC1;
+    font-weight: 600;
+  }
+
+  .institution-location {
+    color: #cccccc;
+    font-size: 0.875rem;
+  }
+
+  .education-period {
+    color: #B794F6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .education-description {
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Achievements */
+  .education-achievements {
+    margin-top: 1.5rem;
+  }
+
+  .achievements-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .achievement-item {
+    color: #cccccc;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .achievement-item::before {
+    content: "▪";
+    color: #9D7FC1;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Certifications */
+  .certifications-section {
+    margin-bottom: 3rem;
+  }
+
+  .certifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .certification-item {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .certification-item:hover {
+    border-color: rgba(157, 127, 193, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .certification-item[data-status="active"] {
+    border-left: 3px solid #4ADE80;
+  }
+
+  .certification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .certification-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    line-height: 1.3;
+  }
+
+  .certification-date {
+    color: #9D7FC1;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .certification-issuer {
+    color: #cccccc;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .certification-id {
+    color: #999999;
+    font-size: 0.75rem;
+    font-family: monospace;
+  }
+
+  /* Skills Section */
+  .skills-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .skill-category {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .skill-category-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+  }
+
+  .skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    background: rgba(157, 127, 193, 0.2);
+    color: #9D7FC1;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .skill-tag:hover {
+    background: rgba(157, 127, 193, 0.3);
+    border-color: rgba(157, 127, 193, 0.4);
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .resume-education {
+      padding: 3rem 0;
+    }
+    
+    .education-container {
+      padding: 0 1rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    
+    .education-grid {
+      gap: 2rem;
+    }
+    
+    .education-item,
+    .certification-item {
+      padding: 1.5rem;
+    }
+    
+    .education-header,
+    .certification-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .education-period,
+    .certification-date {
+      text-align: left;
+    }
+  }
+
+  /* Animations */
+  .education-item,
+  .certification-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInLeft 0.6s ease-out forwards;
+  }
+
+  .education-item:nth-child(1) { animation-delay: 0.1s; }
+  .education-item:nth-child(2) { animation-delay: 0.2s; }
+  
+  .certification-item:nth-child(1) { animation-delay: 0.3s; }
+  .certification-item:nth-child(2) { animation-delay: 0.4s; }
+  .certification-item:nth-child(3) { animation-delay: 0.5s; }
+  .certification-item:nth-child(4) { animation-delay: 0.6s; }
+
+  .skill-category {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out forwards;
+  }
+
+  .skill-category:nth-child(1) { animation-delay: 0.7s; }
+  .skill-category:nth-child(2) { animation-delay: 0.8s; }
+  .skill-category:nth-child(3) { animation-delay: 0.9s; }
+
+  @keyframes slideInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

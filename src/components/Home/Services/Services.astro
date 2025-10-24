@@ -64,17 +64,12 @@ const t = translations[lang as keyof typeof translations] || translations.en;
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-    background:
-      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      white;
-    background-size: 40px 40px, 40px 40px, 100% 100%;
+
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .services-container {

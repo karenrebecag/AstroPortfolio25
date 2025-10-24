@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // https://astro.build/config
 export default defineConfig({
@@ -30,6 +32,11 @@ sitemap({
   ],
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@': path.resolve(path.dirname(fileURLToPath(import.meta.url)), './src')
+      }
+    },
     build: {
       rollupOptions: {
         output: {

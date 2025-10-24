@@ -1,0 +1,64 @@
+---
+import type { FAQ } from '../types/caseStudy'
+
+interface Props {
+  title?: string
+  subtitle?: string
+  faqs: FAQ[]
+}
+
+const {
+  title = "Frequently Asked Questions",
+  subtitle = "Have questions? We've got answers.",
+  faqs = []
+} = Astro.props
+---
+
+{faqs.length > 0 && (
+  <section class="faq-strip">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2>
+          {title}
+        </h2>
+        {subtitle && (
+          <p class="subtitle">
+            {subtitle}
+          </p>
+        )}
+      </div>
+
+      <!-- FAQs Accordion -->
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" open={index === 0}>
+            <summary>
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="flex-1">
+                  {faq.question}
+                </h3>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </summary>
+            <div class="faq-answer">
+              <p>
+                {faq.answer}
+              </p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- CTA after FAQs -->
+      <div class="cta-section">
+        <p>Still have questions?</p>
+        <a href="#contact">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+)}

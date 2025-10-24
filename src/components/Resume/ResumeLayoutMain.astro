@@ -10,7 +10,7 @@ const { lang, title, resumeSEOConfig } = Astro.props;
 import ResumeLayout from '../../layouts/ResumeLayout.astro';
 import AdvancedSEO from '../seo/AdvancedSEO.astro';
 import HeaderPill from '../modules/Header/HeaderPill.astro';
-import { DitheringShader } from '../three/DitheringShader.tsx';
+import { DitheringShader } from '../components/modules/Footer/shaders/DitheringShader';
 import ResumeHero from './ResumeHero.astro';
 import ResumeSummary from './ResumeSummary.astro';
 import ResumeExperience from './ResumeExperience.astro';
@@ -85,8 +85,6 @@ import '../../styles/global.css';
   }
 
   body {
-    background-color: #171523;
-    color: #ffffff;
     color-scheme: dark;
   }
 
@@ -94,7 +92,6 @@ import '../../styles/global.css';
   .resume-page-container {
     min-height: 100vh;
     background-color: #171523;
-    color: #ffffff;
   }
 
   /* Fixed Background Styles - Dark Mode Only */

@@ -50,12 +50,7 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 
       if (isDark) {
         // Dark mode Banner background
-        (bannerContainer as HTMLElement).style.background = 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)';
-        (bannerContainer as HTMLElement).style.backgroundImage = `
-          linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px),
-          radial-gradient(circle at 50% 60%, rgba(236, 72, 154, 0.04) 0%, rgba(168,85,247,0.05) 40%, transparent 70%)
-        `;
+       
         (bannerContainer as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px';
         (bannerContainer as HTMLElement).style.backgroundPosition = 'center';
         (bannerContainer as HTMLElement).style.backgroundRepeat = 'repeat';

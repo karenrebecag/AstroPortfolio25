@@ -14,14 +14,8 @@ import MarqueesIsland from './MarqueesIsland.tsx';
 <style>
   :global(.marquees-section) {
     width: 100%;
-    background: #FEFEFE;
-    background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
     overflow: hidden;
     position: relative;
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .marquees-section-container {
@@ -129,16 +123,6 @@ import MarqueesIsland from './MarqueesIsland.tsx';
     }
   }
 
-  /* Dark Mode Styles - Following Documentation Pattern */
-  :global(.dark-mode .marquees-section) {
-    background: linear-gradient(135deg, #07001e 0%, #2c20a6 100%);
-    background-image: 
-      linear-gradient(to right, rgba(112, 11, 108, 0.3) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(112, 11, 108, 0.3) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
-    background-position: center;
-    background-repeat: repeat;
-  }
 
   /* Dark mode gradients for large screens */
   @media (min-width: 2560px) {

@@ -12,6 +12,7 @@ import { DarkModeContainer } from '../ui/DarkModeContainer.tsx';
 import GratitudeSection from './GratitudeSection.astro';
 import ShareBar from '../modules/ShareBar/ShareBar.astro';
 import CommentsSection from '../ui/CommentsSection.astro';
+import WhiteBackground from '../ui/WhiteBackgroundTexture/WhiteBackground.astro';
 import '../../styles/global.css';
 ---
 
@@ -57,30 +58,31 @@ import '../../styles/global.css';
 	<HeaderPill />
 
 	<DarkModeContainer client:load>
-		<!-- Main Content Sections -->
-		<main class="main-content" id="main-content">
-			<GratitudeSection greetingsData={greetingsData} />
-			
-			<!-- Share Bar Section -->
-			<div>
-				<ShareBar />
-			</div>
+		<WhiteBackground>
+			<!-- Main Content Sections -->
+			<main class="main-content" id="main-content">
+				<GratitudeSection greetingsData={greetingsData} />
 
-			<!-- Comments Section -->
-			<div>
-				<CommentsSection storyId="greetings-page" />
-			</div>
-		</main>
+				<!-- Share Bar Section -->
+				<div>
+					<ShareBar />
+				</div>
+
+				<!-- Comments Section -->
+				<div>
+					<CommentsSection storyId="greetings-page" />
+				</div>
+			</main>
+		</WhiteBackground>
 	</DarkModeContainer>
 </Layout>
 
 <style>
 	/* Main Content Layout - Global para dark mode */
 	:global(.main-content) {
-		background: #ececec;
 		width: 100%;
 		padding: 0;
-		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	/* Dark Mode Styles */
@@ -90,7 +92,6 @@ import '../../styles/global.css';
 
 	/* Main Content Dark Mode */
 	:global(.dark-mode .main-content) {
-		background: #050112;
 		color: #ffffff;
 	}
 

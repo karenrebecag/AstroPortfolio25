@@ -1,6 +1,5 @@
 
   .gem-section {
-    background: #f9f9f9;
     position: relative;
     width: 100%;
     padding: 5rem 0 0 0;
@@ -13,10 +12,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-    background-size: 20px 20px;
     pointer-events: none;
     z-index: 0;
     will-change: auto;
@@ -111,7 +106,7 @@
   }
 
   .skills-container-wrapper {
-    --gradient-bg: #f9f9f9;
+    --gradient-bg: transparent;
   }
 
   .skills-container-wrapper::before {

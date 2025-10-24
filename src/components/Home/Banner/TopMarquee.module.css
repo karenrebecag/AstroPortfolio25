@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 101;
+  z-index: 10001;
   display: flex;
   justify-content: center;
   transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);

@@ -1,0 +1,629 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Projects content by language
+const projectsContent = {
+  en: {
+    title: "Featured Projects",
+    subtitle: "A selection of recent work showcasing technical expertise and creative problem-solving",
+    projects: [
+      {
+        title: "E-Commerce Platform",
+        category: "Full-Stack Development",
+        description: "Built a comprehensive e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment processing, inventory management, and real-time analytics dashboard.",
+        image: "/projects/ecommerce-platform.jpg",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe API", "Redux", "Express"],
+        features: [
+          "Responsive design with mobile-first approach",
+          "Real-time inventory tracking",
+          "Secure payment processing",
+          "Admin dashboard with analytics"
+        ],
+        github: "https://github.com/karenrebecag/ecommerce-platform",
+        demo: "https://ecommerce-demo.vercel.app",
+        status: "Live"
+      },
+      {
+        title: "Design System Library",
+        category: "UI/UX & Frontend",
+        description: "Created a comprehensive design system and component library used across multiple products. Includes documentation site, Storybook integration, and automated testing for all components.",
+        image: "/projects/design-system.jpg",
+        technologies: ["React", "TypeScript", "Storybook", "Figma", "CSS-in-JS", "Jest"],
+        features: [
+          "50+ reusable components",
+          "Comprehensive documentation",
+          "Dark/light theme support",
+          "Accessibility compliant (WCAG 2.1)"
+        ],
+        github: "https://github.com/karenrebecag/design-system",
+        demo: "https://design-system-demo.netlify.app",
+        status: "Live"
+      },
+      {
+        title: "Portfolio & Blog Platform",
+        category: "JAMstack Development",
+        description: "Built a modern portfolio and blog platform using Astro, featuring dynamic content management, SEO optimization, and performance-focused architecture with 100% Lighthouse scores.",
+        image: "/projects/portfolio-platform.jpg",
+        technologies: ["Astro", "TypeScript", "Tailwind CSS", "Markdown", "Vercel", "Figma"],
+        features: [
+          "Static site generation for optimal performance",
+          "Dynamic content with Markdown support",
+          "Advanced SEO optimization",
+          "Multi-language support"
+        ],
+        github: "https://github.com/karenrebecag/portfolio-platform",
+        demo: "https://karenortiz.dev",
+        status: "Live"
+      },
+      {
+        title: "Task Management App",
+        category: "Frontend Development",
+        description: "Developed a collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features using modern React patterns.",
+        image: "/projects/task-management.jpg",
+        technologies: ["React", "TypeScript", "Socket.io", "Zustand", "React DnD", "Tailwind"],
+        features: [
+          "Real-time collaboration",
+          "Drag & drop task organization",
+          "Team workspace management",
+          "Progress tracking and analytics"
+        ],
+        github: "https://github.com/karenrebecag/task-management",
+        demo: "https://task-manager-demo.vercel.app",
+        status: "In Development"
+      }
+    ]
+  },
+  es: {
+    title: "Proyectos Destacados",
+    subtitle: "Una selección de trabajos recientes que muestran experiencia técnica y resolución creativa de problemas",
+    projects: [
+      {
+        title: "Plataforma E-Commerce",
+        category: "Desarrollo Full-Stack",
+        description: "Construí una solución e-commerce integral con React, Node.js y MongoDB. Incluye autenticación de usuarios, procesamiento de pagos, gestión de inventario y dashboard de análisis en tiempo real.",
+        image: "/projects/ecommerce-platform.jpg",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe API", "Redux", "Express"],
+        features: [
+          "Diseño responsivo con enfoque mobile-first",
+          "Seguimiento de inventario en tiempo real",
+          "Procesamiento seguro de pagos",
+          "Dashboard de administración con análisis"
+        ],
+        github: "https://github.com/karenrebecag/ecommerce-platform",
+        demo: "https://ecommerce-demo.vercel.app",
+        status: "Activo"
+      },
+      {
+        title: "Biblioteca de Sistema de Diseño",
+        category: "UI/UX y Frontend",
+        description: "Creé un sistema de diseño integral y biblioteca de componentes usada en múltiples productos. Incluye sitio de documentación, integración con Storybook y testing automatizado para todos los componentes.",
+        image: "/projects/design-system.jpg",
+        technologies: ["React", "TypeScript", "Storybook", "Figma", "CSS-in-JS", "Jest"],
+        features: [
+          "50+ componentes reutilizables",
+          "Documentación integral",
+          "Soporte para tema oscuro/claro",
+          "Cumple con accesibilidad (WCAG 2.1)"
+        ],
+        github: "https://github.com/karenrebecag/design-system",
+        demo: "https://design-system-demo.netlify.app",
+        status: "Activo"
+      },
+      {
+        title: "Plataforma de Portfolio y Blog",
+        category: "Desarrollo JAMstack",
+        description: "Construí una plataforma moderna de portfolio y blog usando Astro, con gestión de contenido dinámico, optimización SEO y arquitectura enfocada en rendimiento con puntuaciones 100% en Lighthouse.",
+        image: "/projects/portfolio-platform.jpg",
+        technologies: ["Astro", "TypeScript", "Tailwind CSS", "Markdown", "Vercel", "Figma"],
+        features: [
+          "Generación de sitio estático para rendimiento óptimo",
+          "Contenido dinámico con soporte Markdown",
+          "Optimización SEO avanzada",
+          "Soporte multi-idioma"
+        ],
+        github: "https://github.com/karenrebecag/portfolio-platform",
+        demo: "https://karenortiz.dev",
+        status: "Activo"
+      },
+      {
+        title: "App de Gestión de Tareas",
+        category: "Desarrollo Frontend",
+        description: "Desarrollé una aplicación colaborativa de gestión de tareas con actualizaciones en tiempo real, funcionalidad de arrastrar y soltar, y características de colaboración en equipo usando patrones modernos de React.",
+        image: "/projects/task-management.jpg",
+        technologies: ["React", "TypeScript", "Socket.io", "Zustand", "React DnD", "Tailwind"],
+        features: [
+          "Colaboración en tiempo real",
+          "Organización de tareas drag & drop",
+          "Gestión de espacios de trabajo en equipo",
+          "Seguimiento de progreso y análisis"
+        ],
+        github: "https://github.com/karenrebecag/task-management",
+        demo: "https://task-manager-demo.vercel.app",
+        status: "En Desarrollo"
+      }
+    ]
+  },
+  fr: {
+    title: "Projets en Vedette",
+    subtitle: "Une sélection de travaux récents démontrant l'expertise technique et la résolution créative de problèmes",
+    projects: [
+      {
+        title: "Plateforme E-Commerce",
+        category: "Développement Full-Stack",
+        description: "J'ai construit une solution e-commerce complète avec React, Node.js et MongoDB. Comprend l'authentification utilisateur, le traitement des paiements, la gestion des stocks et un tableau de bord analytique en temps réel.",
+        image: "/projects/ecommerce-platform.jpg",
+        technologies: ["React", "Node.js", "MongoDB", "Stripe API", "Redux", "Express"],
+        features: [
+          "Design responsive avec approche mobile-first",
+          "Suivi des stocks en temps réel",
+          "Traitement sécurisé des paiements",
+          "Tableau de bord admin avec analyses"
+        ],
+        github: "https://github.com/karenrebecag/ecommerce-platform",
+        demo: "https://ecommerce-demo.vercel.app",
+        status: "En Ligne"
+      },
+      {
+        title: "Bibliothèque de Système de Design",
+        category: "UI/UX et Frontend",
+        description: "J'ai créé un système de design complet et une bibliothèque de composants utilisée dans plusieurs produits. Comprend un site de documentation, l'intégration Storybook et des tests automatisés pour tous les composants.",
+        image: "/projects/design-system.jpg",
+        technologies: ["React", "TypeScript", "Storybook", "Figma", "CSS-in-JS", "Jest"],
+        features: [
+          "50+ composants réutilisables",
+          "Documentation complète",
+          "Support thème sombre/clair",
+          "Conforme à l'accessibilité (WCAG 2.1)"
+        ],
+        github: "https://github.com/karenrebecag/design-system",
+        demo: "https://design-system-demo.netlify.app",
+        status: "En Ligne"
+      },
+      {
+        title: "Plateforme Portfolio et Blog",
+        category: "Développement JAMstack",
+        description: "J'ai construit une plateforme moderne de portfolio et blog utilisant Astro, avec gestion de contenu dynamique, optimisation SEO et architecture axée performance avec scores Lighthouse 100%.",
+        image: "/projects/portfolio-platform.jpg",
+        technologies: ["Astro", "TypeScript", "Tailwind CSS", "Markdown", "Vercel", "Figma"],
+        features: [
+          "Génération de site statique pour performance optimale",
+          "Contenu dynamique avec support Markdown",
+          "Optimisation SEO avancée",
+          "Support multi-langues"
+        ],
+        github: "https://github.com/karenrebecag/portfolio-platform",
+        demo: "https://karenortiz.dev",
+        status: "En Ligne"
+      },
+      {
+        title: "App de Gestion des Tâches",
+        category: "Développement Frontend",
+        description: "J'ai développé une application collaborative de gestion des tâches avec mises à jour en temps réel, fonctionnalité glisser-déposer et fonctionnalités de collaboration d'équipe utilisant des patterns React modernes.",
+        image: "/projects/task-management.jpg",
+        technologies: ["React", "TypeScript", "Socket.io", "Zustand", "React DnD", "Tailwind"],
+        features: [
+          "Collaboration en temps réel",
+          "Organisation des tâches par glisser-déposer",
+          "Gestion d'espaces de travail d'équipe",
+          "Suivi des progrès et analyses"
+        ],
+        github: "https://github.com/karenrebecag/task-management",
+        demo: "https://task-manager-demo.vercel.app",
+        status: "En Développement"
+      }
+    ]
+  }
+};
+
+const content = projectsContent[lang as keyof typeof projectsContent] || projectsContent.en;
+---
+
+<section class="resume-projects">
+  <div class="projects-container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">{content.title}</h2>
+      <p class="section-subtitle">{content.subtitle}</p>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      {content.projects.map((project, index) => (
+        <article class="project-card" data-index={index}>
+          <div class="project-image">
+            <img 
+              src={project.image} 
+              alt={project.title}
+              loading="lazy"
+              onerror="this.src='/placeholder-project.jpg'"
+            />
+            <div class="project-overlay">
+              <div class="project-status" data-status={project.status.toLowerCase()}>
+                {project.status}
+              </div>
+            </div>
+          </div>
+          
+          <div class="project-content">
+            <div class="project-header">
+              <div class="project-category">{project.category}</div>
+              <h3 class="project-title">{project.title}</h3>
+            </div>
+            
+            <p class="project-description">
+              {project.description}
+            </p>
+            
+            <div class="project-features">
+              <h4 class="features-title">Key Features:</h4>
+              <ul class="features-list">
+                {project.features.map((feature) => (
+                  <li class="feature-item">{feature}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <div class="project-technologies">
+              <div class="tech-title">Technologies:</div>
+              <div class="tech-tags">
+                {project.technologies.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
+              </div>
+            </div>
+            
+            <div class="project-links">
+              <a 
+                href={project.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="project-link project-link--github"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              
+              <a 
+                href={project.demo} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="project-link project-link--demo"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15,3 21,3 21,9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-projects {
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .projects-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Project Card */
+  .project-card {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: rgba(157, 127, 193, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+  }
+
+  /* Project Image */
+  .project-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+  }
+
+  .project-overlay {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .project-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .project-status[data-status="live"],
+  .project-status[data-status="activo"],
+  .project-status[data-status="en ligne"] {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ADE80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
+  .project-status[data-status="in development"],
+  .project-status[data-status="en desarrollo"],
+  .project-status[data-status="en développement"] {
+    background: rgba(251, 191, 36, 0.2);
+    color: #FBBF24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  /* Project Content */
+  .project-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .project-category {
+    color: #9D7FC1;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+  }
+
+  .project-description {
+    color: #cccccc;
+    line-height: 1.6;
+    font-size: 0.875rem;
+  }
+
+  /* Features */
+  .project-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .features-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .feature-item {
+    color: #cccccc;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .feature-item::before {
+    content: "▪";
+    color: #9D7FC1;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Technologies */
+  .project-technologies {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tech-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-tag {
+    background: rgba(157, 127, 193, 0.2);
+    color: #9D7FC1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+  }
+
+  /* Project Links */
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+  }
+
+  .project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .project-link--github {
+    background: rgba(157, 127, 193, 0.2);
+    color: #9D7FC1;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+  }
+
+  .project-link--github:hover {
+    background: #9D7FC1;
+    color: white;
+  }
+
+  .project-link--demo {
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    color: white;
+    border: none;
+  }
+
+  .project-link--demo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(157, 127, 193, 0.3);
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .resume-projects {
+      padding: 3rem 0;
+    }
+    
+    .projects-container {
+      padding: 0 1rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    
+    .project-content {
+      padding: 1.5rem;
+    }
+    
+    .project-links {
+      flex-direction: column;
+    }
+    
+    .project-link {
+      flex: none;
+    }
+  }
+
+  /* Animation */
+  .project-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.6s ease-out forwards;
+  }
+
+  .project-card:nth-child(1) { animation-delay: 0.1s; }
+  .project-card:nth-child(2) { animation-delay: 0.2s; }
+  .project-card:nth-child(3) { animation-delay: 0.3s; }
+  .project-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes slideInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -1,0 +1,462 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Skills content by language
+const skillsContent = {
+  en: {
+    title: "Technical Skills",
+    categories: [
+      {
+        title: "Frontend Development",
+        icon: "💻",
+        skills: [
+          { name: "React", level: 90 },
+          { name: "TypeScript", level: 85 },
+          { name: "Next.js", level: 80 },
+          { name: "JavaScript", level: 95 },
+          { name: "HTML5/CSS3", level: 95 },
+          { name: "Tailwind CSS", level: 90 }
+        ]
+      },
+      {
+        title: "Design & UX",
+        icon: "🎨",
+        skills: [
+          { name: "Figma", level: 90 },
+          { name: "Adobe XD", level: 80 },
+          { name: "Photoshop", level: 75 },
+          { name: "Illustrator", level: 70 },
+          { name: "UI/UX Design", level: 85 },
+          { name: "Prototyping", level: 80 }
+        ]
+      },
+      {
+        title: "Tools & Technologies",
+        icon: "🛠️",
+        skills: [
+          { name: "Git/GitHub", level: 85 },
+          { name: "Webpack", level: 70 },
+          { name: "Vite", level: 80 },
+          { name: "Jest", level: 75 },
+          { name: "Storybook", level: 70 },
+          { name: "Docker", level: 60 }
+        ]
+      },
+      {
+        title: "Backend & Database",
+        icon: "🗄️",
+        skills: [
+          { name: "Node.js", level: 70 },
+          { name: "Express", level: 65 },
+          { name: "MongoDB", level: 60 },
+          { name: "PostgreSQL", level: 55 },
+          { name: "REST APIs", level: 75 },
+          { name: "GraphQL", level: 50 }
+        ]
+      }
+    ]
+  },
+  es: {
+    title: "Habilidades Técnicas",
+    categories: [
+      {
+        title: "Desarrollo Frontend",
+        icon: "💻",
+        skills: [
+          { name: "React", level: 90 },
+          { name: "TypeScript", level: 85 },
+          { name: "Next.js", level: 80 },
+          { name: "JavaScript", level: 95 },
+          { name: "HTML5/CSS3", level: 95 },
+          { name: "Tailwind CSS", level: 90 }
+        ]
+      },
+      {
+        title: "Diseño y UX",
+        icon: "🎨",
+        skills: [
+          { name: "Figma", level: 90 },
+          { name: "Adobe XD", level: 80 },
+          { name: "Photoshop", level: 75 },
+          { name: "Illustrator", level: 70 },
+          { name: "Diseño UI/UX", level: 85 },
+          { name: "Prototipado", level: 80 }
+        ]
+      },
+      {
+        title: "Herramientas y Tecnologías",
+        icon: "🛠️",
+        skills: [
+          { name: "Git/GitHub", level: 85 },
+          { name: "Webpack", level: 70 },
+          { name: "Vite", level: 80 },
+          { name: "Jest", level: 75 },
+          { name: "Storybook", level: 70 },
+          { name: "Docker", level: 60 }
+        ]
+      },
+      {
+        title: "Backend y Base de Datos",
+        icon: "🗄️",
+        skills: [
+          { name: "Node.js", level: 70 },
+          { name: "Express", level: 65 },
+          { name: "MongoDB", level: 60 },
+          { name: "PostgreSQL", level: 55 },
+          { name: "APIs REST", level: 75 },
+          { name: "GraphQL", level: 50 }
+        ]
+      }
+    ]
+  },
+  fr: {
+    title: "Compétences Techniques",
+    categories: [
+      {
+        title: "Développement Frontend",
+        icon: "💻",
+        skills: [
+          { name: "React", level: 90 },
+          { name: "TypeScript", level: 85 },
+          { name: "Next.js", level: 80 },
+          { name: "JavaScript", level: 95 },
+          { name: "HTML5/CSS3", level: 95 },
+          { name: "Tailwind CSS", level: 90 }
+        ]
+      },
+      {
+        title: "Design et UX",
+        icon: "🎨",
+        skills: [
+          { name: "Figma", level: 90 },
+          { name: "Adobe XD", level: 80 },
+          { name: "Photoshop", level: 75 },
+          { name: "Illustrator", level: 70 },
+          { name: "Design UI/UX", level: 85 },
+          { name: "Prototypage", level: 80 }
+        ]
+      },
+      {
+        title: "Outils et Technologies",
+        icon: "🛠️",
+        skills: [
+          { name: "Git/GitHub", level: 85 },
+          { name: "Webpack", level: 70 },
+          { name: "Vite", level: 80 },
+          { name: "Jest", level: 75 },
+          { name: "Storybook", level: 70 },
+          { name: "Docker", level: 60 }
+        ]
+      },
+      {
+        title: "Backend et Base de Données",
+        icon: "🗄️",
+        skills: [
+          { name: "Node.js", level: 70 },
+          { name: "Express", level: 65 },
+          { name: "MongoDB", level: 60 },
+          { name: "PostgreSQL", level: 55 },
+          { name: "APIs REST", level: 75 },
+          { name: "GraphQL", level: 50 }
+        ]
+      }
+    ]
+  }
+};
+
+const content = skillsContent[lang as keyof typeof skillsContent] || skillsContent.en;
+---
+
+<section class="resume-skills">
+  <div class="skills-container">
+    <!-- Section Title -->
+    <div class="section-header">
+      <h2 class="section-title">{content.title}</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Skills Grid -->
+    <div class="skills-grid">
+      {content.categories.map((category, categoryIndex) => (
+        <div class="skill-category" data-category={categoryIndex}>
+          <div class="category-header">
+            <div class="category-icon">{category.icon}</div>
+            <h3 class="category-title">{category.title}</h3>
+          </div>
+          
+          <div class="skills-list">
+            {category.skills.map((skill, skillIndex) => (
+              <div class="skill-item" data-skill={skillIndex}>
+                <div class="skill-info">
+                  <span class="skill-name">{skill.name}</span>
+                  <span class="skill-percentage">{skill.level}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div 
+                    class="skill-progress" 
+                    style={`--skill-level: ${skill.level}%`}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-skills {
+    padding: 5rem 0;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    position: relative;
+  }
+
+  .skills-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Skill Category */
+  .skill-category {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .skill-category:hover {
+    border-color: rgba(157, 127, 193, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(157, 127, 193, 0.2);
+  }
+
+  .category-icon {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: rgba(157, 127, 193, 0.2);
+    border-radius: 50%;
+  }
+
+  .category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+  }
+
+  /* Skills List */
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .skill-name {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .skill-percentage {
+    color: #9D7FC1;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  /* Skill Bar */
+  .skill-bar {
+    height: 6px;
+    background: rgba(157, 127, 193, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #9D7FC1, #B794F6);
+    border-radius: 3px;
+    width: var(--skill-level);
+    transition: width 1s ease-in-out;
+    transform-origin: left;
+  }
+
+  /* Animation Classes */
+  .skill-item.animate .skill-progress {
+    animation: fillProgress 1s ease-in-out forwards;
+  }
+
+  @keyframes fillProgress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: var(--skill-level);
+    }
+  }
+
+  /* Category Animation */
+  .skill-category {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.6s ease-out forwards;
+  }
+
+  .skill-category:nth-child(1) { animation-delay: 0.1s; }
+  .skill-category:nth-child(2) { animation-delay: 0.2s; }
+  .skill-category:nth-child(3) { animation-delay: 0.3s; }
+  .skill-category:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes slideInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .resume-skills {
+      padding: 3rem 0;
+    }
+    
+    .skills-container {
+      padding: 0 1rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    
+    .skill-category {
+      padding: 1.5rem;
+    }
+    
+    .category-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .category-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .category-title {
+      font-size: 1.125rem;
+    }
+    
+    .skills-list {
+      gap: 1.25rem;
+    }
+  }
+
+  /* Intersection Observer Setup */
+  .skill-category:not(.visible) .skill-progress {
+    width: 0%;
+  }
+
+  .skill-category.visible .skill-progress {
+    width: var(--skill-level);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Intersection Observer for skill bars animation
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Animate skill bars with staggered delay
+          const skillItems = entry.target.querySelectorAll('.skill-item');
+          skillItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.classList.add('animate');
+            }, index * 100);
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Observe all skill categories
+    document.querySelectorAll('.skill-category').forEach(category => {
+      observer.observe(category);
+    });
+  });
+</script>

@@ -82,13 +82,6 @@ const softSkillsData = t.aboutMe.skills;
     const applyDarkMode = (isDark: boolean) => {
       if (gemSection) {
         if (isDark) {
-          // Apply grid lines and radial gradient without base gradient
-          (gemSection as HTMLElement).style.backgroundImage =
-            'linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px), radial-gradient(circle at 50% 60%, rgba(236,72,153,0.15) 0%, rgba(168,85,247,0.05) 40%, transparent 70%)';
-          (gemSection as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px, 100% 100%';
-          (gemSection as HTMLElement).style.backgroundPosition = '0 0, 0 0, center';
-          (gemSection as HTMLElement).style.backgroundRepeat = 'repeat, repeat, no-repeat';
-          (gemSection as HTMLElement).style.backgroundColor = 'transparent';
 
           // Update pseudo-element for dark mode by adding a style element
           let darkModeStyle = document.getElementById('gem-section-dark-mode-style');
@@ -104,12 +97,7 @@ const softSkillsData = t.aboutMe.skills;
             }
           `;
         } else {
-          (gemSection as HTMLElement).style.backgroundColor = '#f9f9f9';
-          (gemSection as HTMLElement).style.backgroundImage =
-            'linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)';
-          (gemSection as HTMLElement).style.backgroundSize = '20px 20px';
-          (gemSection as HTMLElement).style.backgroundPosition = '';
-          (gemSection as HTMLElement).style.backgroundRepeat = '';
+          
 
           // Remove dark mode pseudo-element styles
           const darkModeStyle = document.getElementById('gem-section-dark-mode-style');
@@ -132,11 +120,8 @@ const softSkillsData = t.aboutMe.skills;
       if (skillsWrapper) {
         const wrapperElement = skillsWrapper as HTMLElement;
         if (isDark) {
-          // Dark mode gradient - replicate banner background style
-          wrapperElement.style.setProperty('--gradient-bg', 'linear-gradient(135deg, #07001e 0%, #2c20a6 100%)');
+        
         } else {
-          // Light mode gradient
-          wrapperElement.style.setProperty('--gradient-bg', '#f9f9f9');
         }
       }
 

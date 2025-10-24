@@ -12,6 +12,7 @@ import HeaderPill from '../../modules/Header/HeaderPill.astro';
 import { DarkModeContainer } from '../../ui/DarkModeContainer.tsx';
 import ShareBar from '../../modules/ShareBar/ShareBar.astro';
 import PrivacySection from './PrivacySection.astro';
+import WhiteBackground from '../../ui/WhiteBackgroundTexture/WhiteBackground.astro';
 import '../../../styles/global.css';
 ---
 
@@ -19,22 +20,23 @@ import '../../../styles/global.css';
 	<HeaderPill />
 
 	<DarkModeContainer client:load>
-		<!-- Main Content Sections -->
-		<main class="main-content" id="main-content">
-			<PrivacySection privacyData={privacyData} />
-			<!-- Share Bar Section -->
-			<ShareBar />
-		</main>
+		<WhiteBackground>
+			<!-- Main Content Sections -->
+			<main class="main-content" id="main-content">
+				<PrivacySection privacyData={privacyData} />
+				<!-- Share Bar Section -->
+				<ShareBar />
+			</main>
+		</WhiteBackground>
 	</DarkModeContainer>
 </Layout>
 
 <style>
 	/* Main Content Layout */
 	.main-content {
-		background: #ececec;
 		width: 100%;
 		padding: 0;
-		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	/* Dark Mode Styles */
@@ -44,7 +46,6 @@ import '../../../styles/global.css';
 
 	/* Main Content Dark Mode */
 	:global(.dark-mode .main-content) {
-		background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
 		color: #f0f4ff;
 	}
 

@@ -1,0 +1,478 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Experience content by language
+const experienceContent = {
+  en: {
+    title: "Work Experience",
+    experiences: [
+      {
+        position: "Frontend Developer",
+        company: "Tech Innovations Inc.",
+        location: "Remote",
+        period: "2022 - Present",
+        description: "Led the development of responsive web applications using React and TypeScript. Collaborated with design teams to implement pixel-perfect UI components and optimize user experiences.",
+        achievements: [
+          "Increased application performance by 40% through code optimization",
+          "Built and maintained a comprehensive design system",
+          "Mentored 3 junior developers",
+          "Implemented automated testing resulting in 95% code coverage"
+        ],
+        technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Jest"]
+      },
+      {
+        position: "UI/UX Designer & Developer",
+        company: "Creative Solutions Ltd.",
+        location: "Mexico City, MX",
+        period: "2021 - 2022",
+        description: "Designed and developed user interfaces for web and mobile applications. Conducted user research and usability testing to improve product experiences.",
+        achievements: [
+          "Redesigned main product interface, increasing user engagement by 60%",
+          "Created design system used across 5 different products",
+          "Reduced development time by 30% through component standardization",
+          "Led UX workshops for cross-functional teams"
+        ],
+        technologies: ["Figma", "Adobe XD", "React", "CSS3", "JavaScript"]
+      },
+      {
+        position: "Junior Frontend Developer",
+        company: "StartUp Hub",
+        location: "Guadalajara, MX",
+        period: "2020 - 2021",
+        description: "Developed and maintained web applications for various clients. Learned modern frontend technologies and best practices while contributing to multiple projects.",
+        achievements: [
+          "Successfully delivered 15+ client projects on time",
+          "Implemented responsive designs for mobile-first approach",
+          "Collaborated with backend team to integrate RESTful APIs",
+          "Participated in code reviews and agile development processes"
+        ],
+        technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Git"]
+      }
+    ]
+  },
+  es: {
+    title: "Experiencia Laboral",
+    experiences: [
+      {
+        position: "Desarrolladora Frontend",
+        company: "Tech Innovations Inc.",
+        location: "Remoto",
+        period: "2022 - Presente",
+        description: "Lideré el desarrollo de aplicaciones web responsivas usando React y TypeScript. Colaboré con equipos de diseño para implementar componentes UI pixel-perfect y optimizar experiencias de usuario.",
+        achievements: [
+          "Incrementé el rendimiento de aplicaciones en un 40% a través de optimización de código",
+          "Construí y mantuve un sistema de diseño integral",
+          "Mentoré a 3 desarrolladores junior",
+          "Implementé testing automatizado resultando en 95% de cobertura de código"
+        ],
+        technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Jest"]
+      },
+      {
+        position: "Diseñadora y Desarrolladora UI/UX",
+        company: "Creative Solutions Ltd.",
+        location: "Ciudad de México, MX",
+        period: "2021 - 2022",
+        description: "Diseñé y desarrollé interfaces de usuario para aplicaciones web y móviles. Realicé investigación de usuarios y pruebas de usabilidad para mejorar experiencias de producto.",
+        achievements: [
+          "Rediseñé la interfaz principal del producto, incrementando el engagement de usuarios en 60%",
+          "Creé sistema de diseño usado en 5 productos diferentes",
+          "Reduje tiempo de desarrollo en 30% a través de estandarización de componentes",
+          "Lideré talleres de UX para equipos multifuncionales"
+        ],
+        technologies: ["Figma", "Adobe XD", "React", "CSS3", "JavaScript"]
+      },
+      {
+        position: "Desarrolladora Frontend Junior",
+        company: "StartUp Hub",
+        location: "Guadalajara, MX",
+        period: "2020 - 2021",
+        description: "Desarrollé y mantuve aplicaciones web para varios clientes. Aprendí tecnologías frontend modernas y mejores prácticas mientras contribuía a múltiples proyectos.",
+        achievements: [
+          "Entregué exitosamente 15+ proyectos de clientes a tiempo",
+          "Implementé diseños responsivos con enfoque mobile-first",
+          "Colaboré con el equipo backend para integrar APIs RESTful",
+          "Participé en revisiones de código y procesos de desarrollo ágil"
+        ],
+        technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Git"]
+      }
+    ]
+  },
+  fr: {
+    title: "Expérience Professionnelle",
+    experiences: [
+      {
+        position: "Développeuse Frontend",
+        company: "Tech Innovations Inc.",
+        location: "Télétravail",
+        period: "2022 - Présent",
+        description: "J'ai dirigé le développement d'applications web responsives utilisant React et TypeScript. J'ai collaboré avec les équipes de design pour implémenter des composants UI pixel-perfect et optimiser les expériences utilisateur.",
+        achievements: [
+          "Augmenté les performances des applications de 40% grâce à l'optimisation du code",
+          "Construit et maintenu un système de design complet",
+          "Encadré 3 développeurs junior",
+          "Implémenté des tests automatisés résultant en 95% de couverture de code"
+        ],
+        technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Jest"]
+      },
+      {
+        position: "Designeuse et Développeuse UI/UX",
+        company: "Creative Solutions Ltd.",
+        location: "Mexico City, MX",
+        period: "2021 - 2022",
+        description: "J'ai conçu et développé des interfaces utilisateur pour des applications web et mobiles. J'ai mené des recherches utilisateur et des tests d'utilisabilité pour améliorer les expériences produit.",
+        achievements: [
+          "Redesigné l'interface principale du produit, augmentant l'engagement utilisateur de 60%",
+          "Créé un système de design utilisé dans 5 produits différents",
+          "Réduit le temps de développement de 30% grâce à la standardisation des composants",
+          "Dirigé des ateliers UX pour les équipes transversales"
+        ],
+        technologies: ["Figma", "Adobe XD", "React", "CSS3", "JavaScript"]
+      },
+      {
+        position: "Développeuse Frontend Junior",
+        company: "StartUp Hub",
+        location: "Guadalajara, MX",
+        period: "2020 - 2021",
+        description: "J'ai développé et maintenu des applications web pour divers clients. J'ai appris les technologies frontend modernes et les meilleures pratiques tout en contribuant à plusieurs projets.",
+        achievements: [
+          "Livré avec succès 15+ projets clients à temps",
+          "Implémenté des designs responsifs avec approche mobile-first",
+          "Collaboré avec l'équipe backend pour intégrer des APIs RESTful",
+          "Participé aux revues de code et processus de développement agile"
+        ],
+        technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "Git"]
+      }
+    ]
+  }
+};
+
+const content = experienceContent[lang as keyof typeof experienceContent] || experienceContent.en;
+---
+
+<section class="resume-experience">
+  <div class="experience-container">
+    <!-- Section Title -->
+    <div class="section-header">
+      <h2 class="section-title">{content.title}</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Experience Timeline -->
+    <div class="experience-timeline">
+      {content.experiences.map((experience, index) => (
+        <div class="experience-item" data-index={index}>
+          <div class="timeline-marker">
+            <div class="timeline-dot"></div>
+            {index < content.experiences.length - 1 && (
+              <div class="timeline-line"></div>
+            )}
+          </div>
+          
+          <div class="experience-content">
+            <div class="experience-header">
+              <div class="experience-main">
+                <h3 class="experience-position">{experience.position}</h3>
+                <div class="experience-company">
+                  <span class="company-name">{experience.company}</span>
+                  <span class="company-location">{experience.location}</span>
+                </div>
+              </div>
+              <div class="experience-period">{experience.period}</div>
+            </div>
+            
+            <p class="experience-description">
+              {experience.description}
+            </p>
+            
+            <div class="achievements">
+              <h4 class="achievements-title">Key Achievements:</h4>
+              <ul class="achievements-list">
+                {experience.achievements.map((achievement) => (
+                  <li class="achievement-item">{achievement}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <div class="technologies">
+              <div class="technologies-title">Technologies:</div>
+              <div class="tech-tags">
+                {experience.technologies.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-experience {
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .experience-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Timeline */
+  .experience-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .experience-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .experience-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Timeline Marker */
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    border-radius: 50%;
+    position: relative;
+    z-index: 10;
+  }
+
+  .timeline-line {
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, #9D7FC1, transparent);
+    margin-top: 1rem;
+  }
+
+  /* Experience Content */
+  .experience-content {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .experience-content:hover {
+    border-color: rgba(157, 127, 193, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .experience-position {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .experience-company {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .company-name {
+    color: #9D7FC1;
+    font-weight: 600;
+  }
+
+  .company-location {
+    color: #cccccc;
+    font-size: 0.875rem;
+  }
+
+  .experience-period {
+    color: #B794F6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .experience-description {
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Achievements */
+  .achievements {
+    margin-bottom: 1.5rem;
+  }
+
+  .achievements-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .achievement-item {
+    color: #cccccc;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .achievement-item::before {
+    content: "▪";
+    color: #9D7FC1;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Technologies */
+  .technologies {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .technologies-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-tag {
+    background: rgba(157, 127, 193, 0.2);
+    color: #9D7FC1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .resume-experience {
+      padding: 3rem 0;
+    }
+    
+    .experience-container {
+      padding: 0 1rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    
+    .experience-item {
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .experience-content {
+      padding: 1.5rem;
+    }
+    
+    .experience-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .experience-period {
+      text-align: left;
+    }
+    
+    .timeline-line {
+      height: 80px;
+    }
+  }
+
+  /* Animation */
+  .experience-item {
+    animation: slideInLeft 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .experience-item:nth-child(1) { animation-delay: 0.1s; }
+  .experience-item:nth-child(2) { animation-delay: 0.3s; }
+  .experience-item:nth-child(3) { animation-delay: 0.5s; }
+
+  @keyframes slideInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style>

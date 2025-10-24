@@ -14,6 +14,7 @@ import GetInTouch from '../components/modules/GetInTouch/components/GetInTouch.a
 import Footer from "../components/modules/Footer/components/Footer.astro";
 import Enterprises from '../components/Home/Enterprises/Enterprises.astro';
 import GemSection from '../components/Home/GemSection/GemSection.astro';
+import WhiteBackground from '../components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
 import { getMainPageSchema, getFAQSchema } from '../utils/structuredData';
 import '../styles/global.css';
 
@@ -46,18 +47,20 @@ const seoConfig = {
     speakable={seoConfig.speakable}
     alternateLanguages={seoConfig.alternateLanguages}
   />
-	<Banner />
-	<Enterprises />
-	<GemSection />
-	<section id="about">
-		<Me />
-	</section>
-	<section id="services">
-		<Services />
-	</section>
-	<Marquees />
+	<WhiteBackground>
+		<Banner />
+		<Enterprises />
+		<GemSection />
+		<section id="about">
+			<Me />
+		</section>
+		<section id="services">
+			<Services />
+		</section>
+		<Marquees />
 
-	<MyStack />
+		<MyStack />
+	</WhiteBackground>
 
 	<section id="projects">
 		<Projects />
