@@ -4,7 +4,6 @@
 // Components
 export { default as ReviewsIsland } from './components/ReviewsIsland';
 export { default as ServiceReviewsIsland } from './components/ServiceReviewsIsland';
-export { default as BounceReviewsIsland } from './components/BounceReviewsIsland';
 export { default as ReviewsSlider } from './components/ReviewsSlider';
 export { default as ReviewsWithToast } from './components/ReviewsWithToast';
 

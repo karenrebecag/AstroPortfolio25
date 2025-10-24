@@ -134,7 +134,7 @@ import { SpeedlifyStatsLight } from '@/components/ui/SpeedlifyStatsLight';
 Las URLs que se pueden monitorear están definidas en:
 
 ```
-Tests/_data/sites/karen-portfolio.js
+src/components/modules/Speedify/_data/sites/karen-portfolio.js
 ```
 
 Actualmente configuradas:
@@ -198,7 +198,7 @@ Indica que algunas métricas están ocultas:
 
 Si una URL no está configurada en Speedlify, el componente mostrará datos de fallback. Para agregar una nueva URL:
 
-1. Edita `Tests/_data/sites/karen-portfolio.js`
+1. Edita `src/components/modules/Speedify/_data/sites/karen-portfolio.js`
 2. Agrega la URL al array `urls`
 3. Commit y push a GitHub
 4. Netlify ejecutará las pruebas automáticamente
@@ -208,7 +208,7 @@ Si una URL no está configurada en Speedlify, el componente mostrará datos de f
 Speedlify tiene una restricción de 23 horas entre pruebas. Para forzar nuevas pruebas:
 
 ```bash
-cd Tests
+cd src/components/modules/Speedify
 npm run clean
 git add .
 git commit -m "Force new Speedlify tests"

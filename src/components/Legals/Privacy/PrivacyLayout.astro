@@ -8,9 +8,9 @@ export interface Props {
 const { title, lang, privacyData } = Astro.props;
 
 import Layout from '../../../layouts/Layout.astro';
-import HeaderPill from '../../ui/HeaderPill.astro';
+import HeaderPill from '../../modules/Header/HeaderPill.astro';
 import { DarkModeContainer } from '../../ui/DarkModeContainer.tsx';
-import ShareBar from '../../ui/ShareBar.astro';
+import ShareBar from '../../modules/ShareBar/ShareBar.astro';
 import PrivacySection from './PrivacySection.astro';
 import '../../../styles/global.css';
 ---

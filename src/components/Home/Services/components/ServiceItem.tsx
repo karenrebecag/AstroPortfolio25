@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FlipText from './FlipText';
+import FlipText from '../../../ui/FlipText';
 
 interface ServiceItemProps {
   number: string;

@@ -1,11 +1,11 @@
 ---
 // Simplified header component
-import TopMarquee from '../Home/Banner/TopMarquee.astro';
+import TopMarquee from '../../Home/Banner/TopMarquee.astro';
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
 import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
-import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
+import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
 
 const lang = getLangFromUrl(Astro.url);
 ---

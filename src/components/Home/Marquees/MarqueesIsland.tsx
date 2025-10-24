@@ -1,5 +1,5 @@
 import React from 'react';
-import { MarqueeAnimation } from './MarqueeAnimation';
+import { MarqueeAnimation } from '../MyStack/components/MarqueeAnimation';
 import ErrorBoundary from './ErrorBoundary';
 
 const MarqueesIsland: React.FC = () => {

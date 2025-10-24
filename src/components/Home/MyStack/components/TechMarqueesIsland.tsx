@@ -1,6 +1,6 @@
 import React from 'react';
 import { MarqueeAnimation } from './MarqueeAnimation';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '../../Marquees/ErrorBoundary';
 
 const TechMarqueesIsland: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import FlipText from './FlipText';
+import FlipText from '../../../ui/FlipText';
 import { BounceCards } from './BounceCards';
-import { translations } from '../../i18n/translations.js';
+import { translations } from '../../../../i18n/translations.js';
 
 interface Position {
   x: number;

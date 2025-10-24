@@ -1,10 +1,10 @@
 ---
 // Services.astro - Sección de servicios con funcionalidad colapsable optimizada
-import ServicesIsland from './ServicesIsland.tsx';
-import { TextDisperseBlack } from './TextDisperseBlack.tsx';
+import ServicesIsland from './components/ServicesIsland.tsx';
+import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
 import { motion } from 'motion/react';
-import { getLangFromUrl } from '../../i18n/utils.js';
-import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
 
 // Detectar idioma de la URL actual
 const lang = getLangFromUrl(Astro.url);

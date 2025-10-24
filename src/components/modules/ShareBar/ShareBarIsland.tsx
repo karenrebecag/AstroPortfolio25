@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useSimpleToast } from '../modules/Toasts';
-import { translations } from '../../i18n/translations.js';
-import { getLangFromUrl } from '../../i18n/utils.js';
+import { useSimpleToast } from '../Toasts';
+import { translations } from '../../../i18n/translations.js';
+import { getLangFromUrl } from '../../../i18n/utils.js';
 
 export function ShareBarIsland() {
   const { showSuccess, showError } = useSimpleToast();

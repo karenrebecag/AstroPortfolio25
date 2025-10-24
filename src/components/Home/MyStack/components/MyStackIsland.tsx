@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MarqueeAnimation } from './MarqueeAnimation';
-import ErrorBoundary from './ErrorBoundary';
-import RingSphereBackground from '../three/RingSphereBackground';
+import ErrorBoundary from '../../Marquees/ErrorBoundary';
+import RingSphereBackground from '../../../three/RingSphereBackground';
 
 interface MyStackIslandProps {
   className?: string;

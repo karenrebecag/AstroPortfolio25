@@ -27,7 +27,7 @@ pnpm-debug.log*
 .vercel
 
 # Speedify tests (deployed separately)
-Tests/
+src/components/modules/Speedify/
 
 # Payload CMS module (deployed separately)
 src/components/modules/CMS/
