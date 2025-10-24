@@ -44,6 +44,7 @@
   .content-section {
     min-height: 100vh;
     display: flex;
+    
     align-items: center;
     position: relative;
     padding: 2rem 0;
@@ -530,8 +531,9 @@
     width: 390px;
     min-height: 268px;
     padding: 20px;
-    background: white;
-    border: 1px solid rgba(74, 36, 181, 0.15);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 20px;
     display: flex;
     flex-direction: column;

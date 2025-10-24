@@ -195,7 +195,6 @@ const ArcGalleryHeroComponent: React.FC<ArcGalleryHeroProps> = ({
                     `,
                     overflow: 'visible',
                     border: screenSize.width < 520 ? '4px solid white' : '8px solid white',
-                    backgroundColor: 'white',
                     transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     width: '100%',
                     height: '100%',

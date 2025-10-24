@@ -46,9 +46,7 @@ import PrivacyDetails from './PrivacyDetails.astro';
 	.content-section {
 		padding: 6rem 2rem;
 		border-bottom: 1px solid #f0f0f0;
-		background-image:
-			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		
 		background-size: 20px 20px;
 		position: relative;
 		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-image 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -148,13 +146,6 @@ import PrivacyDetails from './PrivacyDetails.astro';
 		}
 	}
 
-	/* Dark Mode Styles */
-	:global(.dark-mode .content-section) {
-		border-bottom-color: rgba(176, 196, 230, 0.1);
-		background-image:
-			linear-gradient(rgba(176, 196, 230, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(176, 196, 230, 0.05) 1px, transparent 1px);
-	}
 
 	:global(.dark-mode .section-title) {
 		color: #f0f4ff;
