@@ -1,0 +1,386 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Hero content by language
+const heroContent = {
+  en: {
+    title: "Design Engineer",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "Passionate about creating digital experiences that blend creativity with functionality. Specialized in frontend development and UI/UX design.",
+    cta: "Get In Touch"
+  },
+  es: {
+    title: "Ingeniera de Diseño",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "Apasionada por crear experiencias digitales que combinan creatividad con funcionalidad. Especializada en desarrollo frontend y diseño UI/UX.",
+    cta: "Contáctame"
+  },
+  fr: {
+    title: "Ingénieure Design",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "Passionnée par la création d'expériences numériques qui allient créativité et fonctionnalité. Spécialisée en développement frontend et design UI/UX.",
+    cta: "Contactez-moi"
+  },
+  hi: {
+    title: "डिज़ाइन इंजीनियर",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "डिजिटल अनुभव बनाने के लिए उत्साहित जो रचनात्मकता को कार्यक्षमता के साथ मिलाते हैं। फ्रंटएंड डेवलपमेंट और UI/UX डिज़ाइन में विशेषज्ञ।",
+    cta: "संपर्क करें"
+  },
+  ja: {
+    title: "デザインエンジニア",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "創造性と機能性を融合したデジタル体験の創造に情熱を注いでいます。フロントエンド開発とUI/UXデザインを専門としています。",
+    cta: "お問い合わせ"
+  },
+  "zh-cn": {
+    title: "设计工程师",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "热衷于创造融合创意与功能的数字体验。专注于前端开发和UI/UX设计。",
+    cta: "联系我"
+  },
+  "zh-tw": {
+    title: "設計工程師",
+    subtitle: "Karen Rebeca Ortiz",
+    description: "熱衷於創造融合創意與功能的數位體驗。專注於前端開發和UI/UX設計。",
+    cta: "聯絡我"
+  }
+};
+
+const content = heroContent[lang as keyof typeof heroContent] || heroContent.en;
+---
+
+<section class="resume-hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <!-- Profile Image -->
+      <div class="profile-image">
+        <img 
+          src="/profile-image.jpg" 
+          alt="Karen Rebeca Ortiz - Design Engineer"
+          loading="eager"
+        />
+        <div class="image-glow"></div>
+      </div>
+      
+      <!-- Hero Text -->
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="title-main">{content.title}</span>
+          <span class="title-subtitle">{content.subtitle}</span>
+        </h1>
+        
+        <p class="hero-description">
+          {content.description}
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <a href="mailto:karen.ortizg@yahoo.com" class="cta-primary">
+            {content.cta}
+          </a>
+          <a href="/portfolio" class="cta-secondary">
+            View Work
+          </a>
+        </div>
+        
+        <!-- Status Badge -->
+        <div class="status-badge">
+          <div class="status-indicator"></div>
+          <span>Available for opportunities</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Animated Background Elements -->
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem 0;
+    overflow: hidden;
+  }
+
+  .hero-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-content {
+    display: grid;
+    align-items: center;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-content {
+      grid-template-columns: auto 1fr;
+      text-align: left;
+      gap: 4rem;
+    }
+  }
+
+  /* Profile Image */
+  .profile-image {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .profile-image {
+      width: 250px;
+      height: 250px;
+      margin: 0;
+    }
+  }
+
+  .profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #9D7FC1;
+  }
+
+  .image-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #9D7FC1, #B794F6, #9D7FC1);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.3;
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.5;
+    }
+  }
+
+  /* Hero Text */
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .title-main {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: var(--font-secondary);
+    line-height: 1.1;
+  }
+
+  .title-subtitle {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    color: #cccccc;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  /* CTA Buttons */
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-actions {
+      justify-content: flex-start;
+    }
+  }
+
+  .cta-primary {
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(157, 127, 193, 0.3);
+  }
+
+  .cta-secondary {
+    color: #9D7FC1;
+    padding: 0.75rem 2rem;
+    border: 2px solid #9D7FC1;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .cta-secondary:hover {
+    background: #9D7FC1;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #cccccc;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .status-badge {
+      justify-content: flex-start;
+    }
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    background: #4ADE80;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Background Elements */
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .floating-element {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #9D7FC1, #B794F6);
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .element-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 10%;
+    animation-delay: 0s;
+  }
+
+  .element-2 {
+    width: 60px;
+    height: 60px;
+    bottom: 30%;
+    left: 15%;
+    animation-delay: 2s;
+  }
+
+  .element-3 {
+    width: 80px;
+    height: 80px;
+    top: 60%;
+    right: 20%;
+    animation-delay: 4s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-20px) rotate(120deg);
+    }
+    66% {
+      transform: translateY(10px) rotate(240deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .resume-hero {
+      min-height: 80vh;
+      padding: 1rem 0;
+    }
+    
+    .hero-container {
+      padding: 0 1rem;
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .cta-primary,
+    .cta-secondary {
+      width: 200px;
+      text-align: center;
+    }
+  }
+</style>

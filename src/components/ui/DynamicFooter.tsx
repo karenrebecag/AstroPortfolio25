@@ -1,6 +1,5 @@
 import React from 'react';
-import { StickyFooter } from './StickyFooter';
-import { WhiteStickyFooter } from './WhiteStickyFooter';
+import { StickyFooter, WhiteStickyFooter } from '../modules/Footer';
 
 interface DynamicFooterProps {
   isDark: boolean;

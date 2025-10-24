@@ -1,0 +1,57 @@
+---
+export interface Props {
+	title: string;
+	lang: string;
+	privacyData: any;
+}
+
+const { title, lang, privacyData } = Astro.props;
+
+import Layout from '../../../layouts/Layout.astro';
+import HeaderPill from '../../ui/HeaderPill.astro';
+import { DarkModeContainer } from '../../ui/DarkModeContainer.tsx';
+import ShareBar from '../../ui/ShareBar.astro';
+import PrivacySection from './PrivacySection.astro';
+import '../../../styles/global.css';
+---
+
+<Layout title={title} lang={lang}>
+	<HeaderPill />
+
+	<DarkModeContainer client:load>
+		<!-- Main Content Sections -->
+		<main class="main-content" id="main-content">
+			<PrivacySection privacyData={privacyData} />
+			<!-- Share Bar Section -->
+			<ShareBar />
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Main Content Layout */
+	.main-content {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	/* Main Content Dark Mode */
+	:global(.dark-mode .main-content) {
+		background: linear-gradient(to bottom, #050112 0%, #0a0820 100%);
+		color: #f0f4ff;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.main-content),
+	:global(body),
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

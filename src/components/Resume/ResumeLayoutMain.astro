@@ -1,0 +1,214 @@
+---
+export interface Props {
+	lang: string;
+	title: string;
+	resumeSEOConfig: any;
+}
+
+const { lang, title, resumeSEOConfig } = Astro.props;
+
+import ResumeLayout from '../../layouts/ResumeLayout.astro';
+import AdvancedSEO from '../seo/AdvancedSEO.astro';
+import HeaderPill from '../ui/HeaderPill.astro';
+import { DitheringShader } from '../three/DitheringShader.tsx';
+import ResumeHero from './ResumeHero.astro';
+import ResumeSummary from './ResumeSummary.astro';
+import ResumeExperience from './ResumeExperience.astro';
+import ResumeSkills from './ResumeSkills.astro';
+import ResumeProjects from './ResumeProjects.astro';
+import ResumeEducation from './ResumeEducation.astro';
+import ResumeFooterSection from './ResumeFooterSection.astro';
+import '../../styles/global.css';
+---
+
+<ResumeLayout title={title} lang={lang}>
+  <!-- Advanced SEO for Resume Page -->
+  <AdvancedSEO 
+    title={resumeSEOConfig.title}
+    description={resumeSEOConfig.description}
+    keywords={resumeSEOConfig.keywords}
+    canonical={resumeSEOConfig.canonical}
+    ogType={resumeSEOConfig.ogType}
+    structuredData={resumeSEOConfig.structuredData}
+    speakable={resumeSEOConfig.speakable}
+    alternateLanguages={resumeSEOConfig.alternateLanguages}
+    publishedTime={resumeSEOConfig.publishedTime}
+    modifiedTime={resumeSEOConfig.modifiedTime}
+    author={resumeSEOConfig.author}
+  />
+  
+  <!-- FAQ Schema for Resume-related questions -->
+  <script type="application/ld+json" set:html={JSON.stringify(resumeSEOConfig.faqSchema)}></script>
+  
+  <HeaderPill />
+
+  <div class="resume-page-container">
+    <main class="resume-main main-content">
+      <!-- Fixed Background with DitheringShader - Dark Mode Only -->
+      <div class="resume-fixed-background">
+        <DitheringShader
+          width={1920}
+          height={1400}
+          colorBack="#010111"
+          colorFront="#4523AE"
+          shape="wave"
+          type="8x8"
+          pxSize={3}
+          speed={0.6}
+          client:load
+        />
+        
+        <!-- Fallback decorative elements -->
+        <div class="resume-decorative-elements">
+          <div class="decorative-circle-1"></div>
+          <div class="decorative-circle-2"></div>
+        </div>
+      </div>
+      
+      <!-- Main Content Sections -->
+      <ResumeHero lang={lang} />
+      <ResumeSummary lang={lang} />
+      <ResumeExperience lang={lang} />
+      <ResumeSkills lang={lang} />
+      <ResumeProjects lang={lang} />
+      <ResumeEducation lang={lang} />
+    </main>
+
+    <ResumeFooterSection />
+  </div>
+</ResumeLayout>
+
+<style>
+  /* Always Dark Mode */
+  html {
+    background-color: #171523;
+  }
+
+  body {
+    background-color: #171523;
+    color: #ffffff;
+    color-scheme: dark;
+  }
+
+  /* Resume Page Container */
+  .resume-page-container {
+    min-height: 100vh;
+    background-color: #171523;
+    color: #ffffff;
+  }
+
+  /* Fixed Background Styles - Dark Mode Only */
+  .resume-fixed-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    bottom: 0;
+    z-index: -1;
+    background-color: #171523;
+    filter: hue-rotate(12deg) saturate(0.78) brightness(1.4);
+  }
+
+  /* Decorative elements - Dark Mode Only */
+  .resume-decorative-elements {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .decorative-circle-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20rem;
+    width: 10rem;
+    border-radius: 50%;
+    opacity: 0.1;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+    transform: translateY(-5rem) rotate(-45deg);
+  }
+
+  .decorative-circle-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20rem;
+    width: 15rem;
+    border-radius: 50%;
+    opacity: 0.1;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 80%, transparent 100%);
+    transform: translateX(2rem) translateY(-24rem) rotate(-45deg);
+  }
+
+  /* Main CV Styles - Dark Mode Only */
+  .resume-main {
+    position: relative;
+    background: transparent;
+    color: #ffffff;
+    font-family: var(--font-primary);
+    padding-top: 0;
+    z-index: 1;
+  }
+
+  /* Hide dark mode toggle on resume page */
+  :global(.header-pill .dark-mode-toggle-wrapper),
+  :global(.dark-mode-toggle-wrapper),
+  :global(#darkModeToggle),
+  :global(.header-pill #darkModeToggle),
+  :global(.dark-mode-toggle-btn) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Adjust header spacing without toggle */
+  :global(.header-pill .header-right-section) {
+    gap: 0.5rem !important;
+  }
+
+  /* Force hide any button with dark mode toggle functionality */
+  :global(button[title*="Dark Mode"]),
+  :global(button[title*="Light Mode"]),
+  :global(button[data-cursor-text*="Dark Mode"]),
+  :global(button[data-cursor-text*="Light Mode"]) {
+    display: none !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Always set dark mode
+    document.documentElement.classList.add('dark-mode');
+    document.body.style.backgroundColor = '#171523';
+    document.body.style.color = '#ffffff';
+
+    // Hide dark mode toggle button
+    const hideToggleButton = () => {
+      const toggleWrapper = document.querySelector('.dark-mode-toggle-wrapper') as HTMLElement;
+      const toggleElement = document.getElementById('darkModeToggle') as HTMLElement;
+      
+      if (toggleWrapper) {
+        toggleWrapper.style.display = 'none';
+      }
+      if (toggleElement) {
+        toggleElement.style.display = 'none';
+      }
+    };
+
+    // Hide immediately and also after a delay to catch dynamic content
+    hideToggleButton();
+    setTimeout(hideToggleButton, 100);
+    setTimeout(hideToggleButton, 500);
+
+    // Handle "Go Portfolio" button click
+    const portfolioButton = document.getElementById('portfolio-button');
+    if (portfolioButton) {
+      portfolioButton.addEventListener('click', () => {
+        window.location.href = '/';
+      });
+    }
+  });
+</script>

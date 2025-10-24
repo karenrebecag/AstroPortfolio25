@@ -1,0 +1,88 @@
+---
+export interface Props {
+	sections: Array<{
+		number: string;
+		title: string;
+		content: string;
+	}>;
+}
+
+const { sections } = Astro.props;
+---
+
+<div class="content-highlights">
+	{sections.map((section) => (
+		<div class="highlight-item">
+			<div class="highlight-number">{section.number}</div>
+			<div class="highlight-content">
+				<h3>{section.title}</h3>
+				<p>{section.content}</p>
+			</div>
+		</div>
+	))}
+</div>
+
+<style>
+	/* Content Highlights */
+	.content-highlights {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.highlight-item {
+		display: flex;
+		gap: 1.5rem;
+		align-items: flex-start;
+	}
+
+	:global(.highlight-number) {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: 1.5rem;
+		font-weight: 400;
+		color: #4523AE;
+		min-width: 3rem;
+		text-align: center;
+	}
+
+	:global(.highlight-content h3) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 0.5rem 0;
+	}
+
+	:global(.highlight-content p) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.5;
+		color: #666;
+		margin: 0;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.highlight-item {
+			gap: 1rem;
+		}
+
+		.highlight-number {
+			min-width: 2rem;
+			font-size: 1.25rem;
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .highlight-content h3) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .highlight-content p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .highlight-number) {
+		color: #4523AE;
+	}
+</style>

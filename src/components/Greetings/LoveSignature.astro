@@ -1,0 +1,97 @@
+---
+export interface Props {
+	signature: string;
+}
+
+const { signature } = Astro.props;
+
+import { SignatureText } from './SignatureText.tsx';
+---
+
+<!-- Love Image and Signature -->
+<div class="love-image-container">
+	<img
+		src="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/love%20(3).webp"
+		alt="Love heart icon"
+		class="love-image"
+		loading="lazy"
+		width="44"
+		height="82"
+		decoding="async"
+	/>
+	<div class="signature-name">
+		<SignatureText client:idle text={signature} />
+	</div>
+</div>
+
+<style>
+	/* Love Image and Signature */
+	.love-image-container {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		margin-top: 0rem;
+		margin-bottom: 2rem;
+		gap: 1rem;
+	}
+
+	.love-image {
+		max-width: 44px;
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+	}
+
+	:global(.signature-name) {
+		font-family: var(--font-signature, 'Karstar Signature', cursive);
+		font-size: clamp(2.6rem, 5.2vw, 3.9rem);
+		color: #1B1B1B;
+		margin: 0;
+		text-align: center;
+		position: relative;
+		display: inline-block;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(.signature-text-wrapper) {
+		position: relative;
+		display: inline-block;
+	}
+
+	:global(.signature-letter) {
+		position: relative;
+		z-index: 1;
+	}
+
+	:global(.signature-name::before) {
+		content: '';
+		position: absolute;
+		bottom: 10%;
+		left: -5%;
+		right: -5%;
+		height: 35%;
+		background: linear-gradient(90deg, #dbd8fc 0%, #f0eeff 100%);
+		z-index: -1;
+		border-radius: 8px;
+		transform: skewX(-5deg);
+		opacity: 0.7;
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .signature-name) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .signature-name::before) {
+		background: linear-gradient(90deg, #4523AE 0%, #6B46C1 100%);
+		opacity: 0.5;
+	}
+
+	/* Smooth transitions */
+	:global(.signature-name) {
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

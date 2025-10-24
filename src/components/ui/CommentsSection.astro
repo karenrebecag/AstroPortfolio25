@@ -1,8 +1,8 @@
 ---
 // CommentsSection.astro - Wrapper component for comments
-import CommentsWithToast from './CommentsWithToast.tsx';
+import { CommentsWithToast } from '../modules/Comments';
 import { TextDisperseBlack } from './TextDisperseBlack.tsx';
-import { AnimatedCommentsWrapper, AnimatedCommentsHeader, AnimatedCommentsContent } from './AnimatedCommentsWrapper.tsx';
+import { AnimatedCommentsWrapper, AnimatedCommentsHeader, AnimatedCommentsContent } from '../modules/Comments/components/AnimatedCommentsWrapper.tsx';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 

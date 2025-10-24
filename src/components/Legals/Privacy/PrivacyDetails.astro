@@ -1,0 +1,145 @@
+---
+export interface Props {
+	details: {
+		title: string;
+		intro: string;
+		architecture: {
+			title: string;
+			content: string;
+		};
+		moderation: {
+			title: string;
+			content: string;
+		};
+		principles: {
+			title: string;
+			content: string;
+		};
+		thirdParty: {
+			title: string;
+			content: string;
+		};
+		retention: {
+			title: string;
+			content: string;
+		};
+		contact: {
+			title: string;
+			content: string;
+		};
+		lastUpdated: string;
+	};
+}
+
+const { details } = Astro.props;
+---
+
+<div class="privacy-details">
+	<div class="detail-section">
+		<h3>{details.title}</h3>
+		<p>{details.intro}</p>
+		
+		<h4>{details.architecture.title}</h4>
+		<p set:html={details.architecture.content.replace(/\n/g, '<br>')}></p>
+		
+		<h4>{details.moderation.title}</h4>
+		<p>{details.moderation.content}</p>
+		
+		<h4>{details.principles.title}</h4>
+		<p set:html={details.principles.content.replace(/\n/g, '<br>')}></p>
+		
+		<h4>{details.thirdParty.title}</h4>
+		<p set:html={details.thirdParty.content.replace(/\n/g, '<br>')}></p>
+		
+		<h4>{details.retention.title}</h4>
+		<p set:html={details.retention.content.replace(/\n/g, '<br>')}></p>
+		
+		<h4>{details.contact.title}</h4>
+		<p>{details.contact.content}</p>
+		
+		<p class="last-updated"><strong>{details.lastUpdated}</strong></p>
+	</div>
+</div>
+
+<style>
+	/* Privacy Details Section */
+	:global(.privacy-details) {
+		margin-top: 3rem;
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e9ecef;
+		border-radius: 16px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+	}
+
+	:global(.detail-section h3) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 0 0 1rem 0;
+	}
+
+	:global(.detail-section h4) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1B1B1B;
+		margin: 2rem 0 0.75rem 0;
+	}
+
+	:global(.detail-section p) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #666;
+		margin: 0 0 1rem 0;
+	}
+
+	:global(.last-updated) {
+		margin-top: 2rem;
+		padding-top: 1rem;
+		border-top: 1px solid #e9ecef;
+		font-size: 0.875rem !important;
+		color: #999 !important;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.privacy-details {
+			padding: 1.5rem;
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .privacy-details) {
+		background: #0a0816;
+		border-color: rgba(51, 51, 51, 0.3);
+	}
+
+	:global(.dark-mode .detail-section h3),
+	:global(.dark-mode .detail-section h4) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .detail-section p) {
+		color: #cccccc;
+	}
+
+	:global(.dark-mode .last-updated) {
+		border-top-color: #333333;
+		color: #999999 !important;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.privacy-details),
+	:global(.detail-section h3),
+	:global(.detail-section h4),
+	:global(.detail-section p) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

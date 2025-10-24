@@ -1,0 +1,193 @@
+---
+export interface Props {
+	greetingsData: any;
+}
+
+const { greetingsData } = Astro.props;
+
+import { TextDisperseBlack } from '../ui/TextDisperseBlack.tsx';
+import { DecorativeFlower } from './DecorativeFlower.tsx';
+import { ArcGalleryHero } from './ArcGalleryHero.tsx';
+import GratitudeText from './GratitudeText.astro';
+---
+
+<!-- Gratitude Message Section -->
+<section class="content-section gratitude-section" id="gratitude">
+	<!-- Arc Gallery Hero -->
+	<div class="arc-gallery-wrapper">
+		<ArcGalleryHero
+			client:visible
+			images={[
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/lastImage.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.19.04%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.20.16%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/4bff168e-1c99-44b0-82e4-86bf82b7a125.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.22.12%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/IMG_0760.jpg',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.24.04%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.10%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.25.57%402x.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/1fd7fb34-b422-4cdf-bc3b-82be7a0e453c.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/6644db8d-9a37-43da-8e92-a9d49df28e4b.webp',
+				'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.31.40%402x.webp'
+			]}
+		/>
+	</div>
+
+	<!-- Decorative Flowers Background -->
+	<DecorativeFlower client:visible position={{ top: '50%', right: '-15%' }} size={600} />
+	<div style="transform: scaleX(-1);">
+		<DecorativeFlower client:visible position={{ top: '30%', right: '-30%' }} size={600} />
+	</div>
+
+	<div class="section-container">
+		<div class="section-header">
+			<h2 class="section-title" id="gratitude-message">
+				<TextDisperseBlack client:idle text={greetingsData.pageTitle} />
+			</h2>
+			<div class="section-label">{greetingsData.subtitle}</div>
+		</div>
+
+		<GratitudeText greetingsData={greetingsData} />
+	</div>
+</section>
+
+<style>
+	:global(.content-section) {
+		padding: 6rem 2rem;
+		border-bottom: 1px solid #f0f0f0;
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+		position: relative;
+		transition: 
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	.gratitude-section {
+		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
+	}
+
+	.content-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+		background: transparent !important;
+	}
+
+	/* Section Headers - Global para dark mode */
+	:global(.section-header) {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	:global(.section-title) {
+		font-family: var(--font-display, 'Median', serif);
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		font-weight: 400;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		color: #1B1B1B;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(.section-label) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Arc Gallery Wrapper */
+	.arc-gallery-wrapper {
+		width: 100%;
+		height: 400px; /* Fixed height to prevent layout shift */
+		margin-top: 0;
+		margin-bottom: 4rem;
+		position: relative;
+		z-index: 2;
+		overflow: hidden; /* Prevent content overflow during load */
+		contain: layout style paint; /* Optimize for performance */
+		will-change: auto; /* Remove unnecessary GPU layers */
+	}
+
+	/* Mobile-First Responsive Design */
+	@media (max-width: 768px) {
+		.content-section {
+			padding: 3rem 1rem; /* Reduce padding for mobile */
+		}
+
+		.section-header {
+			margin-bottom: 2rem; /* Reduce margin for mobile */
+		}
+		
+		.arc-gallery-wrapper {
+			height: 250px; /* Smaller height on mobile */
+			margin-bottom: 2rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.content-section {
+			padding: 3rem 1rem;
+		}
+
+		.section-title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .content-section) {
+		border-bottom-color: #333333;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	}
+
+	:global(.dark-mode .section-title) {
+		color: #ffffff;
+	}
+
+	:global(.dark-mode .section-label) {
+		color: #cccccc;
+	}
+
+	/* Decorative Flowers */
+	:global(.decorative-flower) {
+		filter: blur(2px);
+		transition: opacity 0.5s ease;
+		transform: rotate(-25deg) translateY(-50%);
+		will-change: opacity; /* Optimize for animations */
+		contain: layout style paint; /* Contain layout to prevent shifts */
+		opacity: 0.25 !important; /* Ensure visibility in light mode */
+	}
+
+	:global(.dark-mode .decorative-flower) {
+		opacity: 0.15 !important;
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.content-section),
+	:global(.section-title),
+	:global(.section-label) {
+		transition:
+			background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

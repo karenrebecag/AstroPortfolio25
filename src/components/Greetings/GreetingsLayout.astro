@@ -1,0 +1,108 @@
+---
+export interface Props {
+	lang: string;
+	greetingsData: any;
+}
+
+const { lang, greetingsData } = Astro.props;
+
+import Layout from '../../layouts/Layout.astro';
+import HeaderPill from '../ui/HeaderPill.astro';
+import { DarkModeContainer } from '../ui/DarkModeContainer.tsx';
+import GratitudeSection from './GratitudeSection.astro';
+import ShareBar from '../ui/ShareBar.astro';
+import CommentsSection from '../ui/CommentsSection.astro';
+import '../../styles/global.css';
+---
+
+<Layout title={greetingsData.title} lang={lang}>
+	<!-- Critical preconnects to reduce network dependency chain -->
+	<link rel="preconnect" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev" slot="head" />
+	<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app" slot="head" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+	
+	<!-- Preload CRITICAL fonts with optimal font-display -->
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin slot="head" />
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin slot="head" />
+	
+	<!-- Preload LCP image and first 2 critical images -->
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/CleanShot%202025-09-27%20at%2000.16.22%402x.webp" as="image" slot="head" />
+	<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/lastImage.webp" as="image" slot="head" />
+	
+	<!-- DNS prefetch for external domains -->
+	<link rel="dns-prefetch" href="//static.cloudflareinsights.com" slot="head" />
+	
+	<!-- Prefetch next likely pages for instant navigation -->
+	<link rel="prefetch" href="/" slot="head" />
+	<link rel="prefetch" href="/resume" slot="head" />
+	
+	<!-- Critical CSS for above-the-fold content -->
+	<style slot="head">
+		@font-face {
+			font-family: 'InterTight';
+			src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf') format('truetype');
+			font-display: swap;
+			font-weight: 100 900;
+		}
+		@font-face {
+			font-family: 'Median';
+			src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2') format('woff2');
+			font-display: swap;
+			font-weight: normal;
+		}
+		
+		/* Only critical font loading - NO layout CSS to preserve dark mode */
+	</style>
+	
+	<HeaderPill />
+
+	<DarkModeContainer client:load>
+		<!-- Main Content Sections -->
+		<main class="main-content" id="main-content">
+			<GratitudeSection greetingsData={greetingsData} />
+			
+			<!-- Share Bar Section -->
+			<div>
+				<ShareBar />
+			</div>
+
+			<!-- Comments Section -->
+			<div>
+				<CommentsSection storyId="greetings-page" />
+			</div>
+		</main>
+	</DarkModeContainer>
+</Layout>
+
+<style>
+	/* Main Content Layout - Global para dark mode */
+	:global(.main-content) {
+		background: #ececec;
+		width: 100%;
+		padding: 0;
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode) {
+		color-scheme: dark;
+	}
+
+	/* Main Content Dark Mode */
+	:global(.dark-mode .main-content) {
+		background: #050112;
+		color: #ffffff;
+	}
+
+	/* Lazy Content Optimization */
+	.lazy-content {
+		min-height: 200px; /* Prevent layout shift during lazy load */
+	}
+
+	/* Smooth transitions for theme switching */
+	:global(.main-content),
+	:global(body),
+	:global(html) {
+		transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+</style>

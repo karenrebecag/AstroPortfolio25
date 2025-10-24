@@ -1,0 +1,86 @@
+---
+export interface Props {
+	greetingsData: any;
+}
+
+const { greetingsData } = Astro.props;
+
+import Highlight from '../ui/Highlight.astro';
+import LoveSignature from './LoveSignature.astro';
+---
+
+<div class="gratitude-text-container">
+	<p class="gratitude-paragraph">
+		<Highlight text={greetingsData.paragraphs[0]} highlights={[greetingsData.highlights.allPeople]} />
+	</p>
+	<p class="gratitude-paragraph">
+		{greetingsData.paragraphs[1]}
+	</p>
+	<p class="gratitude-paragraph">
+		<Highlight text={greetingsData.paragraphs[2]} highlights={[greetingsData.highlights.family, greetingsData.highlights.parents, greetingsData.highlights.sisters, greetingsData.highlights.boyfriend]} />
+	</p>
+	<p class="gratitude-paragraph">
+		<Highlight text={greetingsData.paragraphs[3]} highlights={[greetingsData.highlights.grandparents, greetingsData.highlights.pets]} />
+	</p>
+	<p class="gratitude-paragraph">
+		<Highlight text={greetingsData.paragraphs[4]} highlights={[greetingsData.highlights.coworkers, greetingsData.highlights.projects]} />
+	</p>
+
+	<LoveSignature signature={greetingsData.signature} />
+</div>
+
+<style>
+	/* Gratitude Text Container */
+	:global(.gratitude-text-container) {
+		width: 100%;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem;
+		min-height: 550px; /* Prevent layout shift while fonts load */
+	}
+
+	:global(.gratitude-paragraph) {
+		font-family: var(--font-primary, 'InterTight', sans-serif);
+		font-size: clamp(1.125rem, 1.5vw, 1.4rem);
+		line-height: 1.8;
+		color: #333;
+		text-align: center;
+		margin: 2rem 0;
+		font-display: swap; /* Prevent invisible text during font load */
+		transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	:global(.text-highlight) {
+		all: unset;
+		background-repeat: no-repeat;
+		background-size: 0% 100%;
+		background-image: linear-gradient(
+			transparent calc(100% - 0.5em),
+			#dbd8fc 0.5em
+		) !important;
+	}
+
+	/* Mobile adjustments */
+	@media (max-width: 768px) {
+		.gratitude-text-container {
+			padding: 1rem;
+			min-height: 300px; /* Smaller on mobile */
+		}
+
+		.gratitude-paragraph {
+			font-size: 1.125rem;
+		}
+	}
+
+	/* Dark Mode Styles */
+	:global(.dark-mode .gratitude-paragraph) {
+		color: #e5e5e5;
+	}
+
+	:global(.dark-mode .text-highlight) {
+		background-image: linear-gradient(
+			transparent calc(100% - 0.5em),
+			#dbd8fc 0.5em
+		) !important;
+	}
+</style>

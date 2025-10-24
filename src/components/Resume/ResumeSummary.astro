@@ -1,0 +1,374 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Summary content by language
+const summaryContent = {
+  en: {
+    title: "Professional Summary",
+    description: "Design Engineer with expertise in frontend development and user experience design. Passionate about creating seamless digital experiences through the intersection of design and technology.",
+    highlights: [
+      "3+ years experience in frontend development",
+      "Specialized in React, TypeScript, and modern web technologies",
+      "Strong background in UI/UX design principles",
+      "Experience with design systems and component libraries",
+      "Proficient in design tools like Figma and Adobe Creative Suite"
+    ],
+    stats: [
+      { number: "50+", label: "Projects Completed" },
+      { number: "3+", label: "Years Experience" },
+      { number: "10+", label: "Technologies Mastered" },
+      { number: "100%", label: "Client Satisfaction" }
+    ]
+  },
+  es: {
+    title: "Resumen Profesional",
+    description: "Ingeniera de Diseño con experiencia en desarrollo frontend y diseño de experiencia de usuario. Apasionada por crear experiencias digitales fluidas a través de la intersección del diseño y la tecnología.",
+    highlights: [
+      "3+ años de experiencia en desarrollo frontend",
+      "Especializada en React, TypeScript y tecnologías web modernas",
+      "Sólida formación en principios de diseño UI/UX",
+      "Experiencia con sistemas de diseño y bibliotecas de componentes",
+      "Competente en herramientas de diseño como Figma y Adobe Creative Suite"
+    ],
+    stats: [
+      { number: "50+", label: "Proyectos Completados" },
+      { number: "3+", label: "Años de Experiencia" },
+      { number: "10+", label: "Tecnologías Dominadas" },
+      { number: "100%", label: "Satisfacción del Cliente" }
+    ]
+  },
+  fr: {
+    title: "Résumé Professionnel",
+    description: "Ingénieure Design avec expertise en développement frontend et conception d'expérience utilisateur. Passionnée par la création d'expériences numériques fluides à l'intersection du design et de la technologie.",
+    highlights: [
+      "3+ années d'expérience en développement frontend",
+      "Spécialisée en React, TypeScript et technologies web modernes",
+      "Solide formation en principes de design UI/UX",
+      "Expérience avec systèmes de design et bibliothèques de composants",
+      "Compétente en outils de design comme Figma et Adobe Creative Suite"
+    ],
+    stats: [
+      { number: "50+", label: "Projets Complétés" },
+      { number: "3+", label: "Années d'Expérience" },
+      { number: "10+", label: "Technologies Maîtrisées" },
+      { number: "100%", label: "Satisfaction Client" }
+    ]
+  },
+  hi: {
+    title: "व्यावसायिक सारांश",
+    description: "फ्रंटएंड डेवलपमेंट और यूजर एक्सपीरियंस डिज़ाइन में विशेषज्ञता के साथ डिज़ाइन इंजीनियर। डिज़ाइन और प्रौद्योगिकी के चौराहे पर निर्बाध डिजिटल अनुभव बनाने के लिए उत्साहित।",
+    highlights: [
+      "फ्रंटएंड डेवलपमेंट में 3+ साल का अनुभव",
+      "React, TypeScript और आधुनिक वेब तकनीकों में विशेषज्ञ",
+      "UI/UX डिज़ाइन सिद्धांतों में मजबूत पृष्ठभूमि",
+      "डिज़ाइन सिस्टम और कंपोनेंट लाइब्रेरीज़ का अनुभव",
+      "Figma और Adobe Creative Suite जैसे डिज़ाइन टूल्स में दक्ष"
+    ],
+    stats: [
+      { number: "50+", label: "पूर्ण परियोजनाएं" },
+      { number: "3+", label: "वर्षों का अनुभव" },
+      { number: "10+", label: "प्रौद्योगिकियां महारत" },
+      { number: "100%", label: "ग्राहक संतुष्टि" }
+    ]
+  },
+  ja: {
+    title: "プロフェッショナル概要",
+    description: "フロントエンド開発とユーザーエクスペリエンスデザインの専門知識を持つデザインエンジニア。デザインとテクノロジーの交差点でシームレスなデジタル体験を創造することに情熱を注いでいます。",
+    highlights: [
+      "フロントエンド開発で3年以上の経験",
+      "React、TypeScript、最新のWeb技術を専門とする",
+      "UI/UXデザイン原則の強固な基盤",
+      "デザインシステムとコンポーネントライブラリの経験",
+      "FigmaやAdobe Creative Suiteなどのデザインツールに熟練"
+    ],
+    stats: [
+      { number: "50+", label: "完了プロジェクト" },
+      { number: "3+", label: "年の経験" },
+      { number: "10+", label: "習得技術" },
+      { number: "100%", label: "顧客満足度" }
+    ]
+  },
+  "zh-cn": {
+    title: "专业概述",
+    description: "具有前端开发和用户体验设计专业知识的设计工程师。热衷于通过设计与技术的交汇点创造无缝的数字体验。",
+    highlights: [
+      "前端开发3年以上经验",
+      "专精于React、TypeScript和现代Web技术",
+      "UI/UX设计原则的扎实基础",
+      "设计系统和组件库的经验",
+      "精通Figma和Adobe Creative Suite等设计工具"
+    ],
+    stats: [
+      { number: "50+", label: "完成项目" },
+      { number: "3+", label: "年经验" },
+      { number: "10+", label: "掌握技术" },
+      { number: "100%", label: "客户满意度" }
+    ]
+  },
+  "zh-tw": {
+    title: "專業概述",
+    description: "具有前端開發和使用者體驗設計專業知識的設計工程師。熱衷於透過設計與技術的交匯點創造無縫的數位體驗。",
+    highlights: [
+      "前端開發3年以上經驗",
+      "專精於React、TypeScript和現代Web技術",
+      "UI/UX設計原則的紮實基礎",
+      "設計系統和元件庫的經驗",
+      "精通Figma和Adobe Creative Suite等設計工具"
+    ],
+    stats: [
+      { number: "50+", label: "完成專案" },
+      { number: "3+", label: "年經驗" },
+      { number: "10+", label: "掌握技術" },
+      { number: "100%", label: "客戶滿意度" }
+    ]
+  }
+};
+
+const content = summaryContent[lang as keyof typeof summaryContent] || summaryContent.en;
+---
+
+<section class="resume-summary">
+  <div class="summary-container">
+    <!-- Section Title -->
+    <div class="section-header">
+      <h2 class="section-title">{content.title}</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Main Content Grid -->
+    <div class="summary-content">
+      <!-- Description & Highlights -->
+      <div class="summary-text">
+        <p class="summary-description">
+          {content.description}
+        </p>
+        
+        <div class="highlights">
+          <h3 class="highlights-title">Key Highlights</h3>
+          <ul class="highlights-list">
+            {content.highlights.map((highlight) => (
+              <li class="highlight-item">
+                <span class="highlight-icon">✦</span>
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        {content.stats.map((stat) => (
+          <div class="stat-card">
+            <div class="stat-number">{stat.number}</div>
+            <div class="stat-label">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume-summary {
+    padding: 5rem 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+  }
+
+  .summary-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    font-family: var(--font-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Content Grid */
+  .summary-content {
+    display: grid;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .summary-content {
+      grid-template-columns: 1fr auto;
+      gap: 6rem;
+    }
+  }
+
+  /* Summary Text */
+  .summary-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .summary-description {
+    font-size: 1.125rem;
+    color: #cccccc;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .highlights-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: var(--font-secondary);
+  }
+
+  .highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #cccccc;
+    line-height: 1.6;
+  }
+
+  .highlight-icon {
+    color: #9D7FC1;
+    font-size: 0.875rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    min-width: 280px;
+  }
+
+  @media (max-width: 1023px) {
+    .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .stat-card {
+    background: rgba(157, 127, 193, 0.1);
+    border: 1px solid rgba(157, 127, 193, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    background: rgba(157, 127, 193, 0.15);
+    border-color: rgba(157, 127, 193, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #9D7FC1, #B794F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: var(--font-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: #cccccc;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .resume-summary {
+      padding: 3rem 0;
+    }
+    
+    .summary-container {
+      padding: 0 1rem;
+    }
+    
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    
+    .summary-content {
+      gap: 3rem;
+    }
+    
+    .stat-card {
+      padding: 1rem;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Animation */
+  .stat-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.1s; }
+  .stat-card:nth-child(2) { animation-delay: 0.2s; }
+  .stat-card:nth-child(3) { animation-delay: 0.3s; }
+  .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

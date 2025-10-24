@@ -1,0 +1,354 @@
+---
+// Me.astro - About section component
+import MainButton from '../../ui/MainButton.astro';
+import SecondaryButton from '../../ui/SecondaryButton.astro';
+import { Number } from '../../ui/Number.tsx';
+import CubeBackground from './CubeBackground.tsx';
+import GlobeBackground from './ExperienceSlider/GlobeBackground.tsx';
+import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
+import ExperienceMarqueeIsland from './ExperienceSlider/ExperienceMarqueeIsland.tsx';
+import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
+import { motion } from 'motion/react';
+import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
+import styles from './Me.module.css';
+
+const experienceData = [
+  {
+    id: "01",
+    title: "UX/UI & Frontend Developer",
+    company: "OPINATOR (Madrid, Spain)",
+    description: "Led the UX/UI redesign of OPINATOR's live forms WebApp, collaborating with a team of five to enhance user experience, accessibility, and developer workflows.",
+    highlight: "Designed a modular design system with Figma and implemented frontend with React, boosting form response rates by 30%.",
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/fe0d8274-c12e-461f-8052-73525d0ecd0d.webp"
+  },
+  {
+    id: "02",
+    title: "UX/UI & Webflow Developer",
+    company: "AURIN × ANCIENT TECH Partnership",
+    description: "Led a collaborative four-month UX engineering project between Aurin and Ancient Tech to design and develop Ancient's main web platform in Webflow, while working directly for Aurin.",
+    highlight: "Built an AI-driven interactive hero banner with WebGL animations through this strategic partnership, enhancing engagement and visual appeal.",
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Ancient.png"
+  },
+  {
+    id: "03",
+    title: "Design Engineer & Fullstack Developer",
+    company: "AURIN (SODIO) (Cuernavaca, México)",
+    description: "Designed mobile and web UX/UI for MonexOne and web apps like Inglesindividual, Galicia MX, Dentol MX, and Fintpay Banking, while leading fullstack development and AI automations.",
+    highlight: "Developed Aurin Task Manager with Next.js, Firestore, Clerk, and AI-powered task summaries, streamlining team workflows with temporary dynamic links.",
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Aurin.jpeg"
+  },
+  {
+    id: "04",
+    title: "Senior UX/UI Designer",
+    company: "ATHENIS AI (LATAM & EU)",
+    description: "Led UX/UI design for an AI-driven educational platform, creating intuitive interfaces and component libraries to enhance user engagement and developer efficiency.",
+    highlight: "Crafted a Figma-to-React component library for Login and Dashboard, improving handoff efficiency by 25%.",
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAI.jpeg"
+  },
+  {
+    id: "05",
+    title: "Founder & Design Engineer",
+    company: "WEBCRAFTERS (Mexico City)",
+    description: "Founded WebCrafters, a UX/UI and Web Art agency, delivering custom web applications with AI-driven features, 3D animations, and scalable architectures.",
+    highlight: "Led design and deployment of visually stunning web solutions with Three.js and AI integrations, serving diverse industries.",
+    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCrafters.jpeg"
+  }
+];
+---
+
+<!-- Storytelling Scroll Container -->
+<div class={`${styles['storytelling-scroll-container']} storytelling-scroll-container`}>
+  <div class={styles['story-grid']}>
+
+    <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
+    <div class={styles['cube-column-desktop']}>
+      <AnimatedMeHeader client:visible>
+        <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
+          <!-- Cube 3D Background -->
+          <CubeBackground client:visible className={styles['cube-3d-container']} />
+        </div>
+      </AnimatedMeHeader>
+    </div>
+    
+    <!-- Right Column: Scrolling Content -->
+    <div class={styles['scrolling-content-column']}>
+      
+      <!-- Content Section 1: Introduction -->
+      <AnimatedMeSection client:visible delay={0.1}>
+        <div class="relative z-10">
+          <div class="relative">
+            <!-- Purple circle positioned behind the heading -->
+            <AnimatedMeElement client:visible delay={0.2} direction="right">
+              <div class={`me-purple-circle bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10`}></div>
+            </AnimatedMeElement>
+            <AnimatedMeElement client:visible delay={0.25}>
+              <h2 class={`me-hero-title text-hero font-median mb-2 relative z-10`}>
+                <span class="me-hero-text-dark">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+              </h2>
+            </AnimatedMeElement>
+          </div>
+          <AnimatedMeElement client:visible delay={0.3}>
+            <h3 class={`${styles['me-heading-lg']} me-heading-lg text-heading-lg ${styles['me-heading-text-dark']} me-heading-text-dark font-secondary font-bold`}>
+              Based in Mexico City
+            </h3>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.35}>
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6`}>
+              That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
+              who you are and what you stand for, but words that truly land with those that read them.
+            </p>
+          </AnimatedMeElement>
+        </div>
+      </AnimatedMeSection>
+
+      <!-- Content Section 2: Experience -->
+      <AnimatedMeSection client:visible delay={0.15}>
+        <div class="relative z-10">
+          <AnimatedMeElement client:visible delay={0.4}>
+            <h2 class={`me-section-title text-hero font-median mb-6`}>
+              <span class="text-[#7350cc]">5+ Years</span><br />
+              <span class="me-section-text-dark">Creating Digital</span><br />
+              <span class="me-section-text-dark">Experiences</span>
+            </h2>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.45}>
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-8`}>
+              From UI/UX design to full-stack development, I've worked with companies across the globe, 
+              creating seamless digital experiences that merge aesthetics with functionality.
+            </p>
+          </AnimatedMeElement>
+          <AnimatedMeButton client:visible delay={0.5}>
+            <div class="flex items-start gap-9 button-container-me">
+              <div class="realism-button-wrapper" data-astro-cid-rjz7vswu="" style="transform: translate(0px, 0px);">
+                <a href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/" target="_blank" rel="noopener noreferrer" class="realism-button group" data-astro-cid-rjz7vswu="true" data-cursor-text="Go there!">
+                  <div class="button-glow" data-astro-cid-rjz7vswu=""></div>
+                  <div class="button-blob" data-astro-cid-rjz7vswu=""></div>
+                  <div class="button-content" data-astro-cid-rjz7vswu="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="color: white; margin-right: 8px;">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect width="4" height="12" x="2" y="9"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    <span class="button-text" data-astro-cid-rjz7vswu="">Connect</span>
+                    <!-- Inner glow layer -->
+                    <div class="inner-glow" data-astro-cid-rjz7vswu=""></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </AnimatedMeButton>
+        </div>
+      </AnimatedMeSection>
+
+      <!-- Content Section 3: Stats -->
+      <AnimatedMeSection client:visible delay={0.2}>
+        <div class="relative z-10">
+          <AnimatedMeElement client:visible delay={0.55}>
+            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median mb-8`}>
+              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>Numbers That</span><br />
+              <span class="text-[#7350cc]">Speak Volumes</span>
+            </h2>
+          </AnimatedMeElement>
+                    
+          <AnimatedMeElement client:visible delay={0.75}>
+            <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+              Every project is an opportunity to push boundaries and create something extraordinary.
+            </p>
+          </AnimatedMeElement>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-3 gap-8 mb-8">
+            <AnimatedMeStats client:visible delay={0.6}>
+              <div class="text-center">
+                <div class={`${styles['me-stats-number']} me-stats-number text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
+                  <Number value={8} delay={500} client:visible />
+                </div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Award winner</div>
+              </div>
+            </AnimatedMeStats>
+            
+            <AnimatedMeStats client:visible delay={0.65}>
+              <div class="text-center">
+                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
+                  <Number value={1} delay={700} client:visible />
+                  <span>.2k</span>
+                </div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Worldwide clients</div>
+              </div>
+            </AnimatedMeStats>
+            
+            <AnimatedMeStats client:visible delay={0.7}>
+              <div class="text-center">
+                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
+                  <Number value={3} delay={900} client:visible />
+                  <span>.5k</span>
+                </div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Jobs completed</div>
+              </div>
+            </AnimatedMeStats>
+          </div>
+
+        </div>
+      </AnimatedMeSection>
+
+      <!-- Content Section 4: Philosophy -->
+      <AnimatedMeSection client:visible delay={0.25}>
+        <div class="relative z-10">
+          <AnimatedMeElement client:visible delay={0.8}>
+            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median mb-6`}>
+              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>Design Is Not Just</span><br />
+              <span class="text-[#7350cc]">What It Looks Like</span><br />
+              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>It's How It Works</span>
+            </h2>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.85}>
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-6`}>
+              I believe in creating digital experiences that are not only visually stunning but also 
+              functionally exceptional. Every pixel serves a purpose, every interaction tells a story.
+            </p>
+          </AnimatedMeElement>
+          <AnimatedMeElement client:visible delay={0.9}>
+            <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+              Ready to bring your vision to life? Let's create something extraordinary together.
+            </p>
+          </AnimatedMeElement>
+        </div>
+      </AnimatedMeSection>
+
+    </div>
+  </div>
+</div>
+
+<!-- Globe Section - Above Experience Cards -->
+<div class={`${styles['globe-section']} globe-section`}>
+  <div class={styles['globe-title-wrapper']}>
+    <motion.div
+      className={styles['globe-title-container']}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:idle
+    >
+      <div class={`${styles['globe-title-text-wrapper']} globe-title-text-wrapper`}>
+        <TextDisperseBlack text="GLOBAL IMPACT" className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle />
+      </div>
+    </motion.div>
+  </div>
+  <div class={styles['globe-container']}>
+    <GlobeBackground client:visible className={styles['globe-3d-container']} />
+  </div>
+</div>
+
+<!-- Experience Cards Section - Dual System: Marquee (Desktop) + Slider (Mobile) -->
+<div class={`${styles['experience-container']} experience-container ${styles['cards-section']}`}>
+  <!-- Text Above Experience Cards -->
+  <div class={styles['experience-text-container']}>
+    <motion.div
+      className={styles['experience-text-wrapper']}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      client:idle
+    >
+      <p class={`${styles['experience-description-text']} experience-description-text`}>
+        I've collaborated with clients worldwide to create efficient, 
+        impactful digital products that drive real business results.
+      </p>
+    </motion.div>
+  </div>
+  
+  <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
+  <div class={styles['experience-marquee-desktop']}>
+    <div class={styles['experience-marquee-container']}>
+      <div class={styles['experience-marquee-wrapper-limited']}>
+        <ExperienceMarqueeIsland client:visible />
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile: Slider Manual (visible en vp < 768px) -->
+  <div class={styles['experience-slider-mobile']}>
+    <ExperienceSlider experienceData={experienceData} client:visible />
+  </div>
+</div>
+
+
+<script>
+  // Simple scroll initialization - el efecto funciona con CSS puro
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeGlobalTitleResize();
+  });
+
+  // Re-initialize para transiciones de Astro
+  document.addEventListener('astro:page-load', () => {
+    initializeGlobalTitleResize();
+  });
+
+  function initializeGlobalTitleResize() {
+    const globeTitle = document.querySelector('.globe-title-disperse') as HTMLElement;
+    const titleWrapper = document.querySelector('.globe-title-text-wrapper') as HTMLElement;
+
+    if (!globeTitle || !titleWrapper) return;
+
+    function adjustTitleSize() {
+      if (!globeTitle || !titleWrapper) return;
+      
+      const wrapperWidth = titleWrapper.offsetWidth;
+      const titleWidth = globeTitle.scrollWidth;
+
+      if (titleWidth > wrapperWidth) {
+        // Calcular el factor de escala necesario
+        const scaleFactor = (wrapperWidth - 40) / titleWidth; // 40px de margen de seguridad
+        const minScale = 0.6; // Escala mínima para mantener legibilidad
+        const finalScale = Math.max(scaleFactor, minScale);
+
+        // Aplicar transform scale en lugar de cambiar font-size
+        globeTitle.style.transform = `scale(${finalScale})`;
+        globeTitle.style.transformOrigin = 'center';
+      } else {
+        // Resetear si el texto cabe naturalmente
+        globeTitle.style.transform = 'scale(1)';
+      }
+    }
+
+    // Ejecutar al cargar
+    setTimeout(adjustTitleSize, 100);
+
+    // Ejecutar en resize
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(adjustTitleSize, 150);
+    });
+  }
+
+  // Dark Mode Implementation
+  function applyDarkMode(isDark: boolean) {
+    // This component relies on global .dark-mode on documentElement
+    // Kept for compatibility if other systems dispatch darkModeChange
+  }
+
+  function checkInitialDarkMode() {
+    if (typeof window !== 'undefined') {
+      const isDarkMode = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDarkMode);
+    }
+  }
+
+  // Initialize dark mode on load
+  document.addEventListener('DOMContentLoaded', checkInitialDarkMode);
+
+  // Listen for dark mode changes
+  document.addEventListener('darkModeChange', (event: CustomEvent) => {
+    applyDarkMode(event.detail.isDark);
+  });
+
+  // Apply immediately if DOM already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkInitialDarkMode);
+  } else {
+    checkInitialDarkMode();
+  }
+</script>

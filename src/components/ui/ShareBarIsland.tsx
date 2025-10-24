@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import Toast from './Toast';
+import { useSimpleToast } from '../modules/Toasts';
 import { translations } from '../../i18n/translations.js';
 import { getLangFromUrl } from '../../i18n/utils.js';
 
-interface ToastData {
-  id: string;
-  type: 'success' | 'error';
-  message: string;
-}
-
 export function ShareBarIsland() {
-  const [toasts, setToasts] = useState<ToastData[]>([]);
+  const { showSuccess, showError } = useSimpleToast();
 
   // Get current language from URL
   const getCurrentLang = () => {
@@ -25,15 +19,6 @@ export function ShareBarIsland() {
   const getTranslations = () => {
     const lang = getCurrentLang();
     return translations[lang as keyof typeof translations]?.shareBar || translations.en.shareBar;
-  };
-
-  const addToast = (type: 'success' | 'error', message: string) => {
-    const id = Date.now().toString();
-    setToasts(prev => [...prev, { id, type, message }]);
-  };
-
-  const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
   const getCurrentUrl = () => {
@@ -59,10 +44,10 @@ export function ShareBarIsland() {
     try {
       const url = getCurrentUrl();
       await navigator.clipboard.writeText(url);
-      addToast('success', t.linkCopied);
+      showSuccess(t.linkCopied);
     } catch (err) {
       console.error('Failed to copy link:', err);
-      addToast('error', t.copyFailed);
+      showError(t.copyFailed);
     }
   };
 
@@ -73,10 +58,10 @@ export function ShareBarIsland() {
       const text = `${getPageTitle()} - ${getDescription()}`;
       const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
       window.open(twitterUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', t.openingTwitter);
+      showSuccess(t.openingTwitter);
     } catch (err) {
       console.error('Failed to share on Twitter:', err);
-      addToast('error', t.twitterFailed);
+      showError(t.twitterFailed);
     }
   };
 
@@ -86,10 +71,10 @@ export function ShareBarIsland() {
       const url = getCurrentUrl();
       const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
       window.open(linkedInUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', t.openingLinkedIn);
+      showSuccess(t.openingLinkedIn);
     } catch (err) {
       console.error('Failed to share on LinkedIn:', err);
-      addToast('error', t.linkedInFailed);
+      showError(t.linkedInFailed);
     }
   };
 
@@ -100,10 +85,10 @@ export function ShareBarIsland() {
       const title = getPageTitle();
       const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
       window.open(redditUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', t.openingReddit);
+      showSuccess(t.openingReddit);
     } catch (err) {
       console.error('Failed to share on Reddit:', err);
-      addToast('error', t.redditFailed);
+      showError(t.redditFailed);
     }
   };
 
@@ -114,10 +99,10 @@ export function ShareBarIsland() {
       const text = `${getPageTitle()} - ${getDescription()} ${url}`;
       const threadsUrl = `https://threads.net/intent/post?text=${encodeURIComponent(text)}`;
       window.open(threadsUrl, '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
-      addToast('success', t.openingThreads);
+      showSuccess(t.openingThreads);
     } catch (err) {
       console.error('Failed to share on Threads:', err);
-      addToast('error', t.threadsFailed);
+      showError(t.threadsFailed);
     }
   };
 
@@ -128,10 +113,10 @@ export function ShareBarIsland() {
       const text = `${getPageTitle()} - ${getDescription()} ${url}`;
       const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, '_blank');
-      addToast('success', t.openingWhatsApp);
+      showSuccess(t.openingWhatsApp);
     } catch (err) {
       console.error('Failed to share on WhatsApp:', err);
-      addToast('error', t.whatsAppFailed);
+      showError(t.whatsAppFailed);
     }
   };
 
@@ -271,33 +256,7 @@ export function ShareBarIsland() {
         </div>
       </motion.div>
 
-      {/* Toast Container */}
-      <div 
-        style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          pointerEvents: 'none'
-        }}
-      >
-        <AnimatePresence>
-          {toasts.map((toast) => (
-            <div key={toast.id} style={{ pointerEvents: 'auto' }}>
-              <Toast
-                id={toast.id}
-                type={toast.type}
-                message={toast.message}
-                onClose={removeToast}
-                duration={3000}
-              />
-            </div>
-          ))}
-        </AnimatePresence>
-      </div>
+      {/* Toasts are now handled by centralized ToastProvider */}
 
     </>
   );

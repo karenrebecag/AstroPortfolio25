@@ -16,6 +16,7 @@ import ClickBubble from '../components/ui/ClickBubble.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';
 import LenisIsland from '../components/ui/LenisIsland.jsx';
 import PageLoader from '../components/ui/PageLoader.astro';
+import { GlobalToastContainer } from '../components/modules/Toasts';
 ---
 
 <!DOCTYPE html>
@@ -186,6 +187,8 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:idle />
+		<!-- Global Toast Container - Permite toasts desde cualquier componente -->
+		<GlobalToastContainer client:only="react" />
 		<Analytics />
 		<SpeedInsights />
 	</body>
