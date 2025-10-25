@@ -2,35 +2,36 @@
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
+import styles from './HeaderPill.module.css';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
-<div class="header-pill">
+<div class={styles['header-pill']}>
 
 
-  <div class="header-wrapper" id="headerWrapper">
-    <header class="header" id="mainHeader">
-      <div class="logo-section">
-        <button class="back-btn" id="backBtn" data-cursor-text="Go Back" aria-label="Go back to home page">
+  <div class={styles['header-wrapper']} id="headerWrapper">
+    <header class={styles['header']} id="mainHeader">
+      <div class={styles['logo-section']}>
+        <button class={styles['back-btn']} id="backBtn" data-cursor-text="Go Back" aria-label="Go back to home page">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m15 18-6-6 6-6"/>
           </svg>
         </button>
-        <div class="logo" id="logoBtn" data-cursor-text="Go Home">KAREN ORTIZ</div>
+        <div class={styles['logo']} id="logoBtn" data-cursor-text="Go Home">KAREN ORTIZ</div>
       </div>
 
-      <div class="header-right-section">
-        <div class="header-actions-wrapper">
-          <div class="contact-btn-wrapper">
-            <a href="/#contact" class="contact-link" data-cursor-text="Get In Touch">
+      <div class={styles['header-right-section']}>
+        <div class={styles['header-actions-wrapper']}>
+          <div class={styles['contact-btn-wrapper']}>
+            <a href="/#contact" class={styles['contact-link']} data-cursor-text="Get In Touch">
               <MainButton text={t('nav.contact', lang)} />
             </a>
           </div>
           <LanguageSelectorWrapper />
         </div>
 
-        <div class="dark-mode-toggle-wrapper">
+        <div class={styles['dark-mode-toggle-wrapper']}>
           <div id="darkModeToggle"></div>
         </div>
       </div>
@@ -38,9 +39,9 @@ const lang = getLangFromUrl(Astro.url);
   </div>
 </div>
 
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-content">
-    <button class="mobile-close-btn" id="mobileCloseBtn" data-cursor-text="Close Menu">
+<div class={styles['mobile-menu']} id="mobileMenu">
+  <div class={styles['mobile-menu-content']}>
+    <button class={styles['mobile-close-btn']} id="mobileCloseBtn" data-cursor-text="Close Menu">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
         <path d="m18 6-12 12"/>
         <path d="m6 6 12 12"/>
@@ -51,661 +52,11 @@ const lang = getLangFromUrl(Astro.url);
   </div>
 </div>
 
-<style>
-  .header-pill {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    width: calc(100% - 4rem);
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-radius: 50px;
-		border: 1px solid #e9ecef;
-    transition: all 0.4s ease-out;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-   
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
 
-  .top-marquee-container {
-    width: 100%;
-    height: 24px;
-    background-color: #7754cd;
-    overflow: hidden;
-    border-radius: 50px 50px 0 0;
-  }
-
-  .top-marquee {
-    display: flex;
-    white-space: nowrap;
-    width: max-content;
-    height: 100%;
-    align-items: center;
-    animation: marquee-scroll 20s linear infinite;
-  }
-
-  @keyframes marquee-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .marquee-text {
-    font-family: 'Boysen', var(--font-primary);
-    font-size: 12px;
-    font-weight: 400;
-    color: white;
-    letter-spacing: 0.5px;
-    padding-right: 0;
-    min-height: 24px;
-    display: inline-flex;
-    align-items: center;
-    contain: layout style;
-  }
-
-  .header-wrapper {
-    width: 100%;
-    background: transparent;
-        border-radius: 50px;
-
-    border-radius: 0 0 50px 50px;
-  }
-
-  .header-pill.scrolled {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-    border-color: rgba(204, 204, 204, 0.4);
-  }
-
-  :global(.header-pill.hidden) {
-    transform: translateX(-50%) translateY(-100%) !important;
-    pointer-events: none !important;
-  }
-
-  .header-pill:hover {
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 24px;
-    position: relative;
-    width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    .header-pill {
-      top: 16px;
-      width: calc(100% - 2rem);
-      border-radius: 40px;
-    }
-
-    .top-marquee-container {
-      height: 24px;
-      border-radius: 40px 40px 0 0;
-    }
-
-    .header-wrapper {
-      border-radius: 0 0 40px 40px;
-    }
-
-    .header {
-      padding: 12px 24px;
-    }
-
-    .marquee-text {
-      font-size: 11px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .header-pill {
-      top: 12px;
-      width: calc(100% - 1rem);
-      border-radius: 30px;
-    }
-
-    .top-marquee-container {
-      height: 22px;
-      border-radius: 30px 30px 0 0;
-    }
-
-    .header-wrapper {
-      border-radius: 0 0 30px 30px;
-    }
-
-    .header {
-      padding: 10px 20px;
-    }
-
-    .marquee-text {
-      font-size: 10px;
-    }
-  }
-
-  .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .back-btn {
-    background: none;
-    border: none;
-    color: #060314;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .back-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #131019;
-    transform: translateX(-2px);
-  }
-
-  .logo {
-    color: #060314;
-    font-family: var(--font-display);
-    font-size: clamp(14px, 3vw, 20px);
-    font-weight: 500;
-    transition: color 0.2s ease, transform 0.2s ease;
-    cursor: pointer;
-  }
-
-  .logo:hover {
-    color: #131019;
-    transform: scale(1.02);
-  }
-
-  .nav {
-    display: flex;
-    gap: 20px;
-  }
-
-  .nav a {
-    color: #131019;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: clamp(10px, 1.8vw, 13px);
-    font-weight: 400;
-    transition: color 0.2s ease, transform 0.2s ease;
-    position: relative;
-  }
-
-  .nav a:hover {
-    color: #060314;
-    transform: translateY(-1px);
-  }
-
-  .nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: #060314;
-    border-radius: 1px;
-    transition: width 0.4s ease-out;
-  }
-
-  .nav a:hover::after {
-    width: 100%;
-  }
-
-  .header-right-section {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-width: 200px;
-    justify-content: flex-end;
-    contain: layout style;
-  }
-
-  .header-actions-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-width: 150px;
-    justify-content: flex-end;
-    contain: layout style;
-  }
-
-  .contact-btn-wrapper {
-    display: flex;
-    align-items: center;
-    scale: 0.65;
-    transform-origin: center;
-  }
-
-  .contact-link {
-    text-decoration: none;
-    display: block;
-  }
-
-  .dark-mode-toggle-wrapper {
-    display: flex;
-    align-items: center;
-    margin-left: 8px;
-  }
-
-  .dark-mode-toggle-btn {
-    background: none;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dark-mode-toggle-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
-    transform: scale(1.1);
-  }
-
-  .dark-mode-toggle-btn svg {
-    width: 18px;
-    height: 18px;
-    color: #060314;
-    transition: all 0.2s ease;
-  }
-
-  /* Dark mode styles for the toggle button */
-  :global(.dark-mode .dark-mode-toggle-btn:hover) {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .dark-mode-toggle-btn svg) {
-    color: #ffffff;
-  }
-
-  /* Dark mode styles for all SVGs in header */
-  :global(.dark-mode .back-btn svg) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .mobile-close-btn svg) {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode .header-pill) {
-    background: rgba(10, 8, 22, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .header-pill.scrolled) {
-    background: rgba(10, 8, 22, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-  }
-
-  :global(.dark-mode .logo) {
-    color: #ffffff;
-  }
-
-  .menu-btn {
-    display: none;
-    flex-direction: column;
-    gap: 2px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    padding: 6px;
-  }
-
-  .menu-btn:hover {
-    transform: scale(1.1);
-  }
-
-  .menu-btn span {
-    width: 16px;
-    height: 2px;
-    background: #060314;
-    border-radius: 1px;
-    transition: all 0.3s ease;
-  }
-
-  .menu-btn:hover span {
-    background: #131019;
-  }
-
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 10000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.6s ease-out;
-  }
-
-  .mobile-menu.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  .mobile-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    text-align: center;
-    transform: translateY(30px);
-    transition: transform 0.6s ease-out;
-  }
-
-  .mobile-menu.open .mobile-nav {
-    transform: translateY(0);
-  }
-
-  .mobile-nav a {
-    color: white;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: clamp(18px, 4vw, 24px);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    transition: all 0.4s ease-out;
-    position: relative;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .mobile-menu.open .mobile-nav a {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
-  .mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
-  .mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
-
-  .mobile-nav a:hover {
-    color: #ffffff;
-    transform: scale(1.05);
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-
-  .mobile-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, white, transparent);
-    transition: width 0.4s ease;
-  }
-
-  .mobile-nav a:hover::after {
-    width: 100%;
-  }
-
-  .mobile-contact-btn {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 12px 24px;
-    font-family: var(--font-display);
-    font-size: clamp(14px, 3vw, 16px);
-    cursor: pointer;
-    transition: color 0.2s ease, transform 0.4s ease-out, box-shadow 0.4s ease-out;
-    position: relative;
-    overflow: hidden;
-    margin-top: 24px;
-    border-radius: 4px;
-    opacity: 0;
-    transform: translateY(20px);
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .mobile-menu.open .mobile-contact-btn {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.5s;
-  }
-
-  .mobile-contact-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: white;
-    transition: left 0.3s ease;
-    z-index: -1;
-  }
-
-  .mobile-contact-btn:hover::before {
-    left: 0;
-  }
-
-  .mobile-menu .mobile-nav .mobile-contact-btn:hover {
-    color: #000000 !important;
-    position: relative;
-    z-index: 1;
-    transition: color 0.1s ease !important;
-  }
-
-  .mobile-contact-btn:hover,
-  .mobile-nav a.mobile-contact-btn:hover {
-    color: #000000 !important;
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
-  }
-
-  .mobile-menu .mobile-nav a.mobile-contact-btn:hover {
-    color: #000000 !important;
-  }
-
-  .mobile-language-section {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    transition-delay: 0.6s;
-  }
-
-  .mobile-menu.open .mobile-language-section {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-language-title {
-    color: rgba(255, 255, 255, 0.7);
-    font-family: var(--font-display);
-    font-size: 12px;
-    text-align: center;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .mobile-language-list {
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  }
-
-  .mobile-language-list::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .mobile-language-list::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .mobile-language-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
-  }
-
-  .mobile-language-option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    font-family: var(--font-display);
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .mobile-language-option:last-child {
-    border-bottom: none;
-  }
-
-  .mobile-language-option:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(4px);
-  }
-
-  .mobile-language-option.active {
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    font-weight: 500;
-  }
-
-  .mobile-language-option .flag {
-    font-size: 18px;
-    line-height: 1;
-  }
-
-  .mobile-language-option .name {
-    flex: 1;
-    font-weight: 400;
-  }
-
-  .mobile-close-btn {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: rotate(-90deg) scale(0.8);
-    z-index: 10;
-  }
-
-  .mobile-menu.open .mobile-close-btn {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-    transition-delay: 0.3s;
-  }
-
-  .mobile-close-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(90deg) scale(1.1);
-    color: #ffffff;
-  }
-
-  .mobile-close-btn:active {
-    transform: rotate(90deg) scale(0.95);
-  }
-
-  .mobile-close-btn svg {
-    width: 24px;
-    height: 24px;
-    transition: all 0.2s ease;
-  }
-
-  @media (max-width: 480px) {
-    .mobile-close-btn {
-      top: 16px;
-      right: 16px;
-      padding: 6px;
-    }
-
-    .mobile-close-btn svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    .nav {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .header-actions-wrapper {
-      display: none;
-    }
-
-    .menu-btn {
-      display: flex;
-    }
-  }
-
-  /* Accessibility: Respect user's motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    
-    .top-marquee {
-      animation: none !important;
-    }
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const headerPill = document.querySelector('.header-pill');
+    const headerPill = document.querySelector('[class*="header-pill"]');
     let lastScrollY = window.scrollY;
     let isScrolling = false;
 
@@ -727,7 +78,7 @@ const lang = getLangFromUrl(Astro.url);
             if (!headerPill.classList.contains('hidden')) {
               headerPill.classList.add('hidden');
 
-              const allHeaders = document.querySelectorAll('.header-pill');
+              const allHeaders = document.querySelectorAll('[class*="header-pill"]');
               allHeaders.forEach((header) => {
                 (header as HTMLElement).style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
                 (header as HTMLElement).style.transform = 'translateX(-50%) translateY(-100%)';
@@ -744,7 +95,7 @@ const lang = getLangFromUrl(Astro.url);
             if (headerPill.classList.contains('hidden')) {
               headerPill.classList.remove('hidden');
 
-              const allHeaders = document.querySelectorAll('.header-pill');
+              const allHeaders = document.querySelectorAll('[class*="header-pill"]');
               allHeaders.forEach((header) => {
                 (header as HTMLElement).style.display = '';
                 (header as HTMLElement).style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
@@ -772,11 +123,11 @@ const lang = getLangFromUrl(Astro.url);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    const allMenuBtns = document.querySelectorAll('.menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
-    const contactBtn = document.querySelector('.mobile-contact-btn');
+    const allMenuBtns = document.querySelectorAll('[id*="menuBtn"]');
+    const mobileMenu = document.querySelector('[id="mobileMenu"]');
+    const mobileNav = mobileMenu?.querySelector('nav');
+    const mobileNavLinks = mobileNav?.querySelectorAll('a');
+    const contactBtn = mobileNav?.querySelector('a[href*="contact"]');
 
     let isOpen = false;
 
@@ -788,8 +139,9 @@ const lang = getLangFromUrl(Astro.url);
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
 
+      // Reset initial states
       if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(30px)';
-      mobileNavLinks.forEach(link => {
+      mobileNavLinks?.forEach(link => {
         const linkEl = link as HTMLElement;
         linkEl.style.opacity = '0';
         linkEl.style.transform = 'translateY(20px)';
@@ -801,7 +153,7 @@ const lang = getLangFromUrl(Astro.url);
 
       setTimeout(() => {
         if (mobileNav) (mobileNav as HTMLElement).style.transform = 'translateY(0px)';
-        mobileNavLinks.forEach((link, index) => {
+        mobileNavLinks?.forEach((link, index) => {
           const linkEl = link as HTMLElement;
           setTimeout(() => {
             linkEl.style.opacity = '1';
@@ -820,7 +172,7 @@ const lang = getLangFromUrl(Astro.url);
     const closeMenu = () => {
       isOpen = false;
 
-      mobileNavLinks.forEach((link, index) => {
+      mobileNavLinks?.forEach((link, index) => {
         const linkEl = link as HTMLElement;
         setTimeout(() => {
           linkEl.style.opacity = '0';
@@ -862,7 +214,7 @@ const lang = getLangFromUrl(Astro.url);
       });
     });
 
-    const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+    const mobileCloseBtn = document.querySelector('[id="mobileCloseBtn"]');
     mobileCloseBtn?.addEventListener('click', () => {
       if (isOpen) {
         closeMenu();
@@ -932,7 +284,7 @@ const lang = getLangFromUrl(Astro.url);
       });
     };
 
-    const logoBtn = document.querySelector('.logo');
+    const logoBtn = document.querySelector('[id="logoBtn"]');
     logoBtn?.addEventListener('click', () => {
       // Check if we're on the home page
       const currentPath = window.location.pathname;
@@ -948,12 +300,12 @@ const lang = getLangFromUrl(Astro.url);
       }
     });
 
-    const backBtn = document.querySelector('.back-btn');
+    const backBtn = document.querySelector('[id="backBtn"]');
     backBtn?.addEventListener('click', () => {
       window.location.href = '/';
     });
 
-    const desktopNavLinks = document.querySelectorAll('.nav a');
+    const desktopNavLinks = document.querySelectorAll('[id="mainHeader"] nav a');
     desktopNavLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -965,7 +317,7 @@ const lang = getLangFromUrl(Astro.url);
       });
     });
 
-    const mobileScrollLinks = document.querySelectorAll('.mobile-nav a');
+    const mobileScrollLinks = document.querySelectorAll('[id="mobileMenu"] a');
     mobileScrollLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -978,7 +330,7 @@ const lang = getLangFromUrl(Astro.url);
       });
     });
 
-    const contactLink = document.querySelector('.contact-link');
+    const contactLink = document.querySelector('[href*="contact"]');
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();
       
@@ -993,12 +345,32 @@ const lang = getLangFromUrl(Astro.url);
       }
     });
 
+    // Dark mode event handling
+    const applyDarkMode = (isDark: boolean) => {
+      // Apply any HeaderPill specific dark mode styles here if needed
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      applyDarkMode(isDark);
+    };
+
+    // Listen for dark mode changes from HeaderDarkModeToggle
+    window.addEventListener('darkModeChange', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      applyDarkMode(customEvent.detail.isDark);
+    });
+
+    // Check initial state after a short delay to ensure toggle has loaded
+    setTimeout(checkInitialDarkMode, 100);
+
     // Dark Mode Toggle Functionality
     const createDarkModeToggle = () => {
       const toggleContainer = document.getElementById('darkModeToggle');
       if (!toggleContainer) return;
 
-      let isDark = localStorage.getItem('aurin-theme') === 'dark';
+      let isDark = localStorage.getItem('portfolio-theme') === 'dark';
 
       const updateUI = () => {
         if (isDark) {
@@ -1028,10 +400,10 @@ const lang = getLangFromUrl(Astro.url);
 
       const toggleDarkMode = () => {
         isDark = !isDark;
-        localStorage.setItem('aurin-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
         updateUI();
 
-        // Trigger dark mode change for DarkModeContainer
+        // Trigger dark mode change event for other components
         const event = new CustomEvent('darkModeChange', { detail: { isDark } });
         window.dispatchEvent(event);
       };

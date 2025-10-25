@@ -1,0 +1,17 @@
+.language-selector-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Hide in header on mobile, but show in mobile menu */
+@media (max-width: 768px) {
+  :global(.header) .language-selector-wrapper {
+    display: none;
+  }
+
+  :global(.mobile-language-dropdown) .language-selector-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+}

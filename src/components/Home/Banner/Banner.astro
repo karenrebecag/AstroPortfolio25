@@ -1,20 +1,18 @@
 ---
-// Banner component integrating Header, BannerButtonsWrapper and Marquees
+// Banner component integrating BannerButtonsWrapper and Marquees
 import styles from './Banner.module.css';
-import Header from '../../modules/Header/Header.astro';
 import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
 import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
+import MainButton from '../../modules/Header/MainButton.astro';
+import SecondaryButton from '../../ui/SecondaryButton.astro';
 ---
 
-<div class={`${styles.bannerContainer} w-full h-screen overflow-hidden relative flex flex-col justify-between items-center`} id="bannerContainer">
+<div class={`${styles.bannerContainer} w-full h-screen overflow-hidden relative flex flex-col justify-end items-center`} id="bannerContainer">
   <h1 class={styles.srOnly}>Karen Ortiz - Design Engineer Portfolio</h1>
 
   <!-- Dark mode overlay gradient -->
   <div class={styles.darkOverlay} id="darkOverlay"></div>
 
-  <div class="w-full">
-    <Header />
-  </div>
   <BannerMarqueesWrapper />
   <div id="banner-image-container" style="position: absolute; bottom: 0; left: 0; right: 0; width: 100%; z-index: 10; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; height: 537px;">
     <img
@@ -30,8 +28,9 @@ import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
       style="max-width: 600px; height: auto; object-fit: contain; object-position: bottom; mix-blend-mode: multiply; display: block;"
     />
   </div>
-  <div id="banner-buttons-container" class="w-full flex justify-center relative z-20">
-    <BannerButtonsWrapper />
+  <div id="banner-buttons-container" class="w-full flex justify-center gap-12 banner-buttons" style="position: relative; z-index: 30; margin-bottom: 2rem;">
+    <SecondaryButton text="Projects" />
+    <MainButton text="Get my Resume" href="/resume" />
   </div>
 </div>
 

@@ -1,34 +1,15 @@
 ---
 import { getLangFromUrl, languageOptions } from '../../../i18n/utils.js';
 import LanguageSelectorPortal from '../../ui/LanguageSelectorPortal.tsx';
+import styles from './LanguageSelectorWrapper.module.css';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
-<div class="language-selector-wrapper">
+<div class={styles['language-selector-wrapper']}>
   <LanguageSelectorPortal
     currentLang={lang}
     languages={languageOptions}
     client:idle
   />
 </div>
-
-<style>
-.language-selector-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-/* Hide in header on mobile, but show in mobile menu */
-@media (max-width: 768px) {
-  .header .language-selector-wrapper {
-    display: none;
-  }
-
-  .mobile-language-dropdown .language-selector-wrapper {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-}
-</style>

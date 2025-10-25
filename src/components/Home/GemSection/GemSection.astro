@@ -77,122 +77,80 @@ const softSkillsData = t.aboutMe.skills;
     const gemSection = document.querySelector('[data-gem-section]');
     const skillsScroll = document.querySelector('[data-skills-scroll]');
     const titleElement = document.querySelector('[data-title="about-me"]');
-    
-    // Dark mode styles function
+
+    // Apply dark mode styles - only for title and card backgrounds
+    // SilkBackground component handles its own dark mode visibility
     const applyDarkMode = (isDark: boolean) => {
-      if (gemSection) {
-        if (isDark) {
-
-          // Update pseudo-element for dark mode by adding a style element
-          let darkModeStyle = document.getElementById('gem-section-dark-mode-style');
-          if (!darkModeStyle) {
-            darkModeStyle = document.createElement('style');
-            darkModeStyle.id = 'gem-section-dark-mode-style';
-            document.head.appendChild(darkModeStyle);
-          }
-          darkModeStyle.textContent = `
-            [data-gem-section]::before {
-              background-image: none !important;
-              opacity: 0 !important;
-            }
-          `;
-        } else {
-          
-
-          // Remove dark mode pseudo-element styles
-          const darkModeStyle = document.getElementById('gem-section-dark-mode-style');
-          if (darkModeStyle) {
-            darkModeStyle.remove();
-          }
-        }
-      }
-      
+      // Update title color
       if (titleElement) {
-        if (isDark) {
-          (titleElement as HTMLElement).style.color = '#f8f4ff';
-        } else {
-          (titleElement as HTMLElement).style.color = '#000000';
-        }
+        (titleElement as HTMLElement).style.transition = 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        (titleElement as HTMLElement).style.color = isDark ? '#f8f4ff' : '#000000';
       }
 
-      // Apply dark mode to side gradients
-      const skillsWrapper = document.querySelector('[data-skills-wrapper]');
-      if (skillsWrapper) {
-        const wrapperElement = skillsWrapper as HTMLElement;
-        if (isDark) {
-        
-        } else {
-        }
-      }
-
-      // Apply dark mode to skill cards - remove backgrounds and add purple border
+      // Update card backgrounds (NOT silk background - that's handled in React component)
       const skillCards = document.querySelectorAll('[data-skill-card]');
       skillCards.forEach(card => {
         const cardElement = card as HTMLElement;
+
+        // Add smooth transition
+        cardElement.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
         if (isDark) {
           // Dark mode: transparent background with purple border
           cardElement.style.background = 'transparent';
           cardElement.style.backgroundImage = 'none';
           cardElement.style.border = '1px solid rgb(123, 111, 178)';
-
-          // Hide Three.js silk background
-          const silkBg = card.querySelector('[data-silk-bg]') as HTMLElement;
-          if (silkBg) {
-            silkBg.style.display = 'none';
-          }
         } else {
-          // Light mode: restore original backgrounds
+          // Light mode: show fallback image background
           cardElement.style.background = "url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg')";
           cardElement.style.backgroundSize = 'cover';
           cardElement.style.backgroundPosition = 'center';
           cardElement.style.backgroundRepeat = 'no-repeat';
           cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3)';
-
-          // Show Three.js silk background
-          const silkBg = card.querySelector('[data-silk-bg]') as HTMLElement;
-          if (silkBg) {
-            silkBg.style.display = '';
-          }
-        }
-      });
-
-      // Apply dark mode to mobile slider skill cards
-      const sliderCards = document.querySelectorAll('.skill-card-slider');
-      sliderCards.forEach(card => {
-        const cardElement = card as HTMLElement;
-        if (isDark) {
-          // Dark mode: transparent background with purple border
-          cardElement.style.background = 'transparent !important';
-          cardElement.style.backgroundImage = 'none !important';
-          cardElement.style.border = '1px solid rgb(123, 111, 178) !important';
-        } else {
-          // Light mode: restore transparent background (slider cards don't have fallback image)
-          cardElement.style.background = 'transparent !important';
-          cardElement.style.border = '1px solid rgba(74, 36, 181, 0.3) !important';
         }
       });
     };
 
-    // Check initial dark mode state
-    const checkInitialDarkMode = () => {
-      const isDark = document.documentElement.classList.contains('dark-mode');
-      applyDarkMode(isDark);
+    // Detect current dark mode state
+    const detectDarkMode = (): boolean => {
+      const hasClass = document.documentElement.classList.contains('dark-mode');
+      const savedTheme = localStorage.getItem('aurin-theme');
+      const isStoredDark = savedTheme === 'dark';
+      return hasClass || isStoredDark;
     };
 
-    // Listen for dark mode changes from HeaderDarkModeToggle
-    window.addEventListener('darkModeChange', (event: Event) => {
-      const customEvent = event as CustomEvent;
-      applyDarkMode(customEvent.detail.isDark);
+    // Initial application
+    const isDark = detectDarkMode();
+    applyDarkMode(isDark);
+
+    // Watch for class changes on documentElement
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const isDark = detectDarkMode();
+          applyDarkMode(isDark);
+        }
+      });
     });
 
-    // Check initial state after a short delay to ensure toggle has loaded
-    setTimeout(checkInitialDarkMode, 100);
-    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // Listen for storage changes (theme changes in other tabs)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'aurin-theme') {
+        const isDark = detectDarkMode();
+        applyDarkMode(isDark);
+      }
+    });
+
     // Scroll animation functionality
     if (gemSection && skillsScroll) {
       // Calculate total scroll width
       const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
-      
+
       if (scrollWidth > 0) {
         // Create scroll-triggered horizontal animation for skill cards
         scroll(

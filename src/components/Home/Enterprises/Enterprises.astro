@@ -27,24 +27,4 @@ const logos = [
   </div>
 </section>
 
-<style>
-  /* Dark mode styles - Purple tones */
-  :global(.dark-mode) :global(.enterprises) {
-    background: linear-gradient(145deg, #020009 0%, #0c0115 100%) !important;
-  }
 
-  :global(.dark-mode) :global(.title) {
-    color: #e6d9f0 !important;
-  }
-
-  /* Dark mode gradients - Purple tones (large screens only) */
-  @media (min-width: 2560px) {
-    :global(.dark-mode) :global(.enterprisesWrapper)::before {
-      background: linear-gradient(to right, #2a0845, transparent) !important;
-    }
-
-    :global(.dark-mode) :global(.enterprisesWrapper)::after {
-      background: linear-gradient(to left, #2a0845, transparent) !important;
-    }
-  }
-</style>

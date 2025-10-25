@@ -16,6 +16,7 @@ import ClickBubble from '../components/ui/ClickBubble.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';
 import LenisIsland from '../components/ui/LenisIsland.jsx';
 import PageLoader from '../components/ui/PageLoader.astro';
+import Header from '../components/modules/Header/Header.astro';
 import { GlobalToastContainer } from '../components/modules/Toasts';
 ---
 
@@ -184,6 +185,7 @@ import { GlobalToastContainer } from '../components/modules/Toasts';
 		<CustomCursor />
 		<!-- <ClickBubble /> -->
 		<ScrollIndicator />
+		<Header />
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:idle />

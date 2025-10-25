@@ -5,6 +5,11 @@
   transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Dark mode for enterprises section */
+:global(.dark-mode) .enterprises {
+  background: linear-gradient(145deg, #020009 0%, #0c0115 100%) !important;
+}
+
 .enterprisesContainer {
   width: 100%;
   display: flex;
@@ -32,6 +37,11 @@
   margin: 0 0 32px;
   font-weight: 500;
   transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark mode for title */
+:global(.dark-mode) .title {
+  color: #e6d9f0 !important;
 }
 
 .slider {
@@ -74,6 +84,15 @@
     right: 0;
     background: linear-gradient(to left, #000, transparent);
     transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Dark mode gradients for large screens */
+  :global(.dark-mode) .enterprisesWrapper::before {
+    background: linear-gradient(to right, #2a0845, transparent) !important;
+  }
+
+  :global(.dark-mode) .enterprisesWrapper::after {
+    background: linear-gradient(to left, #2a0845, transparent) !important;
   }
 }
 

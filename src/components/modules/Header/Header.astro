@@ -1,20 +1,21 @@
 ---
 // Simplified header component
-import TopMarquee from '../../Home/Banner/TopMarquee.astro';
+import TopMarquee from './TopMarquee.astro';
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
 import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
 import { BGPattern } from '../../ui/WhiteBackgroundTexture/bg-pattern.tsx';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
+import styles from './Header.module.css';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
 <TopMarquee />
 
-<div class="header-wrapper" id="headerWrapper">
-  <div class="bg-container light-pattern">
+<div class={styles['header-wrapper']} id="headerWrapper">
+  <div class={`${styles['bg-container']} ${styles['light-pattern']}`}>
     <BGPattern
       client:load
       variant="vertical-lines"
@@ -23,29 +24,29 @@ const lang = getLangFromUrl(Astro.url);
       fill="rgba(0, 0, 0, 0.02)"
     />
   </div>
-  <div class="bg-container dark-pattern">
+  <div class={`${styles['bg-container']} ${styles['dark-pattern']}`}>
     <BGPattern
       client:load
       variant="vertical-lines"
       mask="none"
       size={32}
-      fill="rgba(157, 127, 193, 0.12)"
+      fill="rgba(157, 127, 193, 0.05)"
     />
   </div>
-  <header class="header" id="mainHeader">
-    <div class="logo" id="logoBtn">KAREN ORTIZ</div>
+  <header class={styles['header']} id="mainHeader">
+    <div class={styles['logo']} id="logoBtn">KAREN ORTIZ</div>
     
-    <nav class="nav">
+    <nav class={styles['nav']}>
       <a href="#about">{t('nav.about', lang)}</a>
       <a href="#services">{t('nav.services', lang)}</a>
-      <button type="button" id="projectsNavLink" class="nav-button">{t('nav.projects', lang)}</button>
+      <button type="button" id="projectsNavLink" class={styles['nav-button']}>{t('nav.projects', lang)}</button>
       <a href="#reviews">{t('nav.reviews', lang)}</a>
     </nav>
     
-    <div class="header-actions-wrapper">
+    <div class={styles['header-actions-wrapper']}>
       <HeaderDarkModeToggleWrapper />
-      <div class="contact-btn-wrapper">
-        <a href="#contact" class="contact-link">
+      <div class={styles['contact-btn-wrapper']}>
+        <a href="#contact" class={styles['contact-link']}>
           <MainButton text={t('nav.contact', lang)} />
         </a>
       </div>
@@ -53,7 +54,7 @@ const lang = getLangFromUrl(Astro.url);
       <ProjectsDropdownWrapper />
     </div>
     
-    <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">
+    <button class={styles['menu-btn']} id="menuBtn" aria-label="Open navigation menu">
       <span></span>
       <span></span>
       <span></span>
@@ -61,34 +62,34 @@ const lang = getLangFromUrl(Astro.url);
   </header>
 </div>
 
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-content">
+<div class={styles['mobile-menu']} id="mobileMenu">
+  <div class={styles['mobile-menu-content']}>
     <!-- Close Button -->
-    <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close navigation menu">
+    <button class={styles['mobile-close-btn']} id="mobileCloseBtn" aria-label="Close navigation menu">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
         <path d="m18 6-12 12"/>
         <path d="m6 6 12 12"/>
       </svg>
     </button>
     
-    <nav class="mobile-nav">
+    <nav class={styles['mobile-nav']}>
       <a href="#about">{t('nav.about', lang)}</a>
       <a href="#services">{t('nav.services', lang)}</a>
       <a href="#projects">{t('nav.projects', lang)}</a>
       <a href="#reviews">{t('nav.reviews', lang)}</a>
-      <a href="#contact" class="mobile-contact-btn">{t('nav.contact', lang)}</a>
+      <a href="#contact" class={styles['mobile-contact-btn']}>{t('nav.contact', lang)}</a>
 
       <!-- Mobile Language Selector -->
-      <div class="mobile-language-section">
-        <div class="mobile-language-title">Language / Idioma</div>
-        <div class="mobile-language-list">
+      <div class={styles['mobile-language-section']}>
+        <div class={styles['mobile-language-title']}>Language / Idioma</div>
+        <div class={styles['mobile-language-list']}>
           {languageOptions.map((language) => (
             <a
               href={useTranslatedPath(language.code, Astro.url.pathname)}
-              class={`mobile-language-option ${lang === language.code ? 'active' : ''}`}
+              class={`${styles['mobile-language-option']} ${lang === language.code ? styles['active'] : ''}`}
             >
-              <span class="flag">{language.flag}</span>
-              <span class="name">{language.name}</span>
+              <span class={styles['flag']}>{language.flag}</span>
+              <span class={styles['name']}>{language.name}</span>
             </a>
           ))}
         </div>
@@ -97,659 +98,125 @@ const lang = getLangFromUrl(Astro.url);
   </div>
 </div>
 
-<style>
-  .header-wrapper {
-    position: fixed;
-    top: 32px; /* Account for TopMarquee height */
-    left: 0;
-    right: 0;
-    z-index: 999999999;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    transition:
-      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      border-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    border-bottom: 1px solid rgba(204, 204, 204, 0.2);
-  }
 
-  .bg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .light-pattern {
-    opacity: 1;
-  }
-
-  .dark-pattern {
-    opacity: 0;
-  }
-
-  .header-wrapper.scrolled {
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(204, 204, 204, 0.25);
-  }
-
-  :global(.header-wrapper.hidden) {
-    transform: translateY(-100%) !important;
-    pointer-events: none !important;
-  }
-
-  /* Smooth hover effects for better interaction */
-  .header-wrapper:hover {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    z-index: 1;
-  }
-
-  @media (max-width: 768px) {
-    .header-wrapper {
-      top: 28px; /* Account for mobile TopMarquee height */
-    }
-    
-    .header {
-      padding: 8px 16px;
-    }
-  }
-
-  .logo {
-    color: #060314;
-    font-family: var(--font-display);
-    font-size: clamp(17px, 3.5vw, 28px);
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-      transform 0.2s ease;
-    cursor: pointer;
-  }
-
-  .logo:hover {
-    color: #131019;
-    transform: scale(1.05);
-  }
-
-  .nav {
-    display: flex;
-    gap: 32px;
-  }
-
-  .nav a {
-    color: #131019;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: clamp(11px, 2.1vw, 17px);
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-      transform 0.2s ease;
-    position: relative;
-  }
-
-  .nav a:hover {
-    color: #060314;
-    transform: translateY(-2px);
-  }
-
-  .nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #060314;
-    transition: width 0.3s ease;
-  }
-
-  .nav a:hover::after {
-    width: 100%;
-  }
-
-  /* Nav button styles - same as nav links */
-  .nav-button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    color: #131019;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: clamp(11px, 2.1vw, 17px);
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-      transform 0.2s ease;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .nav-button:hover {
-    color: #060314;
-    transform: translateY(-2px);
-  }
-
-  .nav-button::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #060314;
-    transition: width 0.3s ease;
-  }
-
-  .nav-button:hover::after {
-    width: 100%;
-  }
-
-  /* Projects dropdown indicator */
-  #projectsNavLink::before {
-    content: '▼';
-    font-size: 8px;
-    opacity: 0.6;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: rotate(0deg);
-  }
-
-  #projectsNavLink:hover::before {
-    opacity: 1;
-    transform: rotate(180deg);
-  }
-
-  #projectsNavLink.dropdown-open::before {
-    transform: rotate(180deg);
-    opacity: 1;
-  }
-
-  .header-actions-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .contact-btn-wrapper {
-    display: flex;
-    align-items: center;
-    scale: 0.7;
-    transform-origin: center;
-  }
-
-
-  .contact-link {
-    text-decoration: none;
-    display: block;
-  }
-
-  .menu-btn {
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-
-  .menu-btn:hover {
-    transform: scale(1.1);
-  }
-
-  .menu-btn span {
-    width: 20px;
-    height: 2px;
-    background: #060314;
-    transition: 
-      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      all 0.3s ease;
-  }
-
-  .menu-btn:hover span {
-    background: #131019;
-  }
-
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 10000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .mobile-menu.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  .mobile-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    text-align: center;
-    transform: translateY(30px);
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .mobile-menu.open .mobile-nav {
-    transform: translateY(0);
-  }
-
-  .mobile-nav a {
-    color: white;
-    font-family: var(--font-display);
-    text-decoration: none;
-    font-size: clamp(18px, 4vw, 24px);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    position: relative;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .mobile-menu.open .mobile-nav a {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-nav a:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-nav a:nth-child(2) { transition-delay: 0.2s; }
-  .mobile-nav a:nth-child(3) { transition-delay: 0.3s; }
-  .mobile-nav a:nth-child(4) { transition-delay: 0.4s; }
-
-  .mobile-nav a:hover {
-    color: #ffffff;
-    transform: scale(1.05);
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-
-  .mobile-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, white, transparent);
-    transition: width 0.4s ease;
-  }
-
-  .mobile-nav a:hover::after {
-    width: 100%;
-  }
-
-  .mobile-contact-btn {
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    padding: 12px 24px;
-    font-family: var(--font-display);
-    font-size: clamp(14px, 3vw, 16px);
-    cursor: pointer;
-    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    margin-top: 24px;
-    border-radius: 4px;
-    opacity: 0;
-    transform: translateY(20px);
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .mobile-menu.open .mobile-contact-btn {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.5s;
-  }
-
-  .mobile-contact-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: white;
-    transition: left 0.3s ease;
-    z-index: -1;
-  }
-
-  .mobile-contact-btn:hover::before {
-    left: 0;
-  }
-
-  /* Specific pseudo-element styling for text color on hover */
-  .mobile-contact-btn:hover::before ~ * {
-    color: #000000 !important;
-  }
-
-  /* Alternative approach with higher specificity */
-  .mobile-menu .mobile-nav .mobile-contact-btn:hover {
-    color: #000000 !important;
-    position: relative;
-    z-index: 1;
-    transition: color 0.1s ease !important;
-  }
-
-  .mobile-contact-btn:hover,
-  .mobile-nav a.mobile-contact-btn:hover {
-    color: #000000 !important;
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-    transition: color 0.1s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
-  }
-
-  /* Additional specificity for the hover text color */
-  .mobile-menu .mobile-nav a.mobile-contact-btn:hover {
-    color: #000000 !important;
-  }
-
-  /* Mobile Language Selector Styles */
-  .mobile-language-section {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    transition-delay: 0.6s;
-  }
-
-  .mobile-menu.open .mobile-language-section {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-language-title {
-    color: rgba(255, 255, 255, 0.7);
-    font-family: var(--font-display);
-    font-size: 12px;
-    text-align: center;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .mobile-language-list {
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-
-    /* Custom scrollbar for mobile */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  }
-
-  .mobile-language-list::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .mobile-language-list::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .mobile-language-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
-  }
-
-  .mobile-language-option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    font-family: var(--font-display);
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .mobile-language-option:last-child {
-    border-bottom: none;
-  }
-
-  .mobile-language-option:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(4px);
-  }
-
-  .mobile-language-option.active {
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    font-weight: 500;
-  }
-
-  .mobile-language-option .flag {
-    font-size: 18px;
-    line-height: 1;
-  }
-
-  .mobile-language-option .name {
-    flex: 1;
-    font-weight: 400;
-  }
-
-  /* Close Button Styles */
-  .mobile-close-btn {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: rotate(-90deg) scale(0.8);
-    z-index: 10;
-  }
-
-  .mobile-menu.open .mobile-close-btn {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-    transition-delay: 0.3s;
-  }
-
-  .mobile-close-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(90deg) scale(1.1);
-    color: #ffffff;
-  }
-
-  .mobile-close-btn:active {
-    transform: rotate(90deg) scale(0.95);
-  }
-
-  .mobile-close-btn svg {
-    width: 24px;
-    height: 24px;
-    transition: all 0.2s ease;
-  }
-
-  @media (max-width: 480px) {
-    .mobile-close-btn {
-      top: 16px;
-      right: 16px;
-      padding: 6px;
-    }
-    
-    .mobile-close-btn svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    .nav {
-      display: none;
-    }
-  }
-
-  /* Dark mode styles */
-  :global(.dark-mode) .light-pattern {
-    opacity: 0;
-  }
-
-  :global(.dark-mode) .dark-pattern {
-    opacity: 1;
-  }
-
-  :global(.dark-mode .header-wrapper) {
-    background: rgba(10, 22, 40, 0.95);
-    border-bottom: 1px solid rgba(157, 127, 193, 0.2);
-    box-shadow:
-      0 8px 32px rgba(69, 35, 174, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  }
-
-  :global(.dark-mode .header-wrapper.scrolled) {
-    background: rgba(10, 22, 40, 0.98);
-    box-shadow:
-      0 12px 40px rgba(69, 35, 174, 0.15),
-      0 4px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(157, 127, 193, 0.25);
-  }
-
-  :global(.dark-mode .header-wrapper:hover) {
-    box-shadow: 
-      0 16px 48px rgba(69, 35, 174, 0.2),
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .logo) {
-    color: #ffffff;
-    text-shadow: 0 0 20px rgba(157, 127, 193, 0.3);
-  }
-
-  :global(.dark-mode .logo:hover) {
-    color: #ffffff;
-    text-shadow: 
-      0 0 30px rgba(157, 127, 193, 0.6),
-      0 0 60px rgba(157, 127, 193, 0.3);
-    transform: scale(1.05);
-  }
-
-  :global(.dark-mode) #projectsNavLink::before {
-    color: #ffffff;
-  }
-
-  :global(.dark-mode) .nav a {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode) .nav a:hover {
-    color: #ffffff;
-    text-shadow: 
-      0 0 20px rgba(157, 127, 193, 0.4),
-      0 0 40px rgba(157, 127, 193, 0.2);
-  }
-
-  :global(.dark-mode) .nav a::after {
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(157, 127, 193, 0.8), 
-      rgba(255, 255, 255, 1), 
-      rgba(157, 127, 193, 0.8), 
-      transparent
-    );
-    box-shadow: 0 0 8px rgba(157, 127, 193, 0.5);
-  }
-
-  :global(.dark-mode) .nav-button {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode) .nav-button:hover {
-    color: #ffffff;
-    text-shadow: 
-      0 0 20px rgba(157, 127, 193, 0.4),
-      0 0 40px rgba(157, 127, 193, 0.2);
-  }
-
-  :global(.dark-mode) .nav-button::after {
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(157, 127, 193, 0.8), 
-      rgba(255, 255, 255, 1), 
-      rgba(157, 127, 193, 0.8), 
-      transparent
-    );
-    box-shadow: 0 0 8px rgba(157, 127, 193, 0.5);
-  }
-
-  :global(.dark-mode) .menu-btn span {
-    background: #ffffff;
-  }
-
-  :global(.dark-mode) .menu-btn:hover span {
-    background: #e5e5e5;
-  }
-
-  @media (max-width: 768px) {
-    .header-actions-wrapper {
-      display: none;
-    }
-
-    .menu-btn {
-      display: flex;
-    }
-  }
-</style>
 
 <script>
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Header elements
+    const headerWrapper = document.querySelector('[id="headerWrapper"]');
+    const mainHeader = document.querySelector('[id="mainHeader"]');
+    const logoElement = document.querySelector('[id="logoBtn"]');
+    const navLinks = document.querySelectorAll('[id="mainHeader"] nav a');
+    const navButtons = document.querySelectorAll('[id="mainHeader"] .nav-button');
+    const menuBtnSpans = document.querySelectorAll('[id="menuBtn"] span');
+    const lightPattern = headerWrapper?.querySelector('[class*="light-pattern"]');
+    const darkPattern = headerWrapper?.querySelector('[class*="dark-pattern"]');
+    
+    // Dark mode styles function
+    const applyDarkMode = (isDark: boolean) => {
+      // Pattern switching
+      if (lightPattern && darkPattern) {
+        if (isDark) {
+          (lightPattern as HTMLElement).style.opacity = '0';
+          (darkPattern as HTMLElement).style.opacity = '1';
+        } else {
+          (lightPattern as HTMLElement).style.opacity = '1';
+          (darkPattern as HTMLElement).style.opacity = '0';
+        }
+      }
+
+      // Header wrapper background
+      if (headerWrapper) {
+        if (isDark) {
+          (headerWrapper as HTMLElement).style.background = 'rgba(5, 11, 21, 0.85)';
+          (headerWrapper as HTMLElement).style.backdropFilter = 'blur(20px)';
+          (headerWrapper as HTMLElement).style.WebkitBackdropFilter = 'blur(20px)';
+          (headerWrapper as HTMLElement).style.borderBottom = '1px solid rgba(157, 127, 193, 0.2)';
+          (headerWrapper as HTMLElement).style.boxShadow = '0 8px 32px rgba(69, 35, 174, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
+        } else {
+          (headerWrapper as HTMLElement).style.background = 'rgba(255, 255, 255, 0.95)';
+          (headerWrapper as HTMLElement).style.backdropFilter = 'blur(15px)';
+          (headerWrapper as HTMLElement).style.WebkitBackdropFilter = 'blur(15px)';
+          (headerWrapper as HTMLElement).style.borderBottom = '1px solid rgba(204, 204, 204, 0.2)';
+          (headerWrapper as HTMLElement).style.boxShadow = '';
+        }
+      }
+
+      // Logo
+      if (logoElement) {
+        if (isDark) {
+          (logoElement as HTMLElement).style.color = '#ffffff';
+          (logoElement as HTMLElement).style.textShadow = '0 0 20px rgba(157, 127, 193, 0.3)';
+        } else {
+          (logoElement as HTMLElement).style.color = '#060314';
+          (logoElement as HTMLElement).style.textShadow = '';
+        }
+      }
+
+      // Navigation links
+      navLinks.forEach(link => {
+        if (isDark) {
+          (link as HTMLElement).style.color = '#ffffff';
+          (link as HTMLElement).style.textShadow = '0 0 10px rgba(255, 255, 255, 0.1)';
+        } else {
+          (link as HTMLElement).style.color = '#131019';
+          (link as HTMLElement).style.textShadow = '';
+        }
+      });
+
+      // Navigation buttons
+      navButtons.forEach(button => {
+        if (isDark) {
+          (button as HTMLElement).style.color = '#ffffff';
+          (button as HTMLElement).style.textShadow = '0 0 10px rgba(255, 255, 255, 0.1)';
+        } else {
+          (button as HTMLElement).style.color = '#131019';
+          (button as HTMLElement).style.textShadow = '';
+        }
+      });
+
+      // Menu button spans
+      menuBtnSpans.forEach(span => {
+        if (isDark) {
+          (span as HTMLElement).style.background = '#ffffff';
+        } else {
+          (span as HTMLElement).style.background = '#060314';
+        }
+      });
+    };
+
+    // Check initial dark mode state
+    const checkInitialDarkMode = () => {
+      // Check both localStorage and DOM class for consistency
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      const isDarkFromStorage = savedTheme === 'dark';
+      const isDarkFromDOM = document.documentElement.classList.contains('dark-mode');
+      
+      // Use storage value if available, otherwise use DOM class
+      const isDark = isDarkFromStorage || isDarkFromDOM;
+      applyDarkMode(isDark);
+
+      // Ensure DOM class matches storage
+      if (isDarkFromStorage && !isDarkFromDOM) {
+        document.documentElement.classList.add('dark-mode');
+        document.documentElement.classList.remove('light-mode');
+      } else if (!isDarkFromStorage && isDarkFromDOM) {
+        document.documentElement.classList.add('light-mode');
+        document.documentElement.classList.remove('dark-mode');
+      }
+    };
+
+    // Listen for dark mode changes from HeaderDarkModeToggle
+    window.addEventListener('darkModeChange', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      applyDarkMode(customEvent.detail.isDark);
+    });
+
+    // Check initial state after a short delay to ensure toggle has loaded
+    setTimeout(checkInitialDarkMode, 100);
+
     // Header scroll behavior
-    const headerWrapper = document.querySelector('.header-wrapper');
     let lastScrollY = window.scrollY;
     let isScrolling = false;
 
@@ -775,7 +242,7 @@ const lang = getLangFromUrl(Astro.url);
               headerWrapper.classList.add('hidden');
 
               // Animate OUT first, then hide
-              const allHeaders = document.querySelectorAll('.header-wrapper');
+              const allHeaders = document.querySelectorAll('[id="headerWrapper"]');
 
               allHeaders.forEach((header) => {
                 // First set up the animation
@@ -797,7 +264,7 @@ const lang = getLangFromUrl(Astro.url);
               headerWrapper.classList.remove('hidden');
 
               // Show first, then animate IN
-              const allHeaders = document.querySelectorAll('.header-wrapper');
+              const allHeaders = document.querySelectorAll('[id="headerWrapper"]');
 
               allHeaders.forEach((header) => {
                 // Make sure it's visible but still in hidden position
@@ -830,11 +297,11 @@ const lang = getLangFromUrl(Astro.url);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Mobile menu functionality
-    const allMenuBtns = document.querySelectorAll('.menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
-    const contactBtn = document.querySelector('.mobile-contact-btn');
+    const allMenuBtns = document.querySelectorAll('[id="menuBtn"]');
+    const mobileMenu = document.querySelector('[id="mobileMenu"]');
+    const mobileNav = document.querySelector('[id="mobileMenu"] nav');
+    const mobileNavLinks = document.querySelectorAll('[id="mobileMenu"] nav a');
+    const contactBtn = mobileNav?.querySelector('a[href="#contact"]');
 
     let isOpen = false;
 
@@ -929,7 +396,7 @@ const lang = getLangFromUrl(Astro.url);
     });
     
     // Close button functionality
-    const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+    const mobileCloseBtn = document.querySelector('[id="mobileCloseBtn"]');
     mobileCloseBtn?.addEventListener('click', () => {
       if (isOpen) {
         closeMenu();
@@ -985,7 +452,7 @@ const lang = getLangFromUrl(Astro.url);
     };
 
     // Logo scroll to top
-    const logoBtn = document.querySelector('.logo');
+    const logoBtn = document.querySelector('[id="logoBtn"]');
     logoBtn?.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
@@ -994,7 +461,7 @@ const lang = getLangFromUrl(Astro.url);
     });
 
     // Desktop navigation links
-    const desktopNavLinks = document.querySelectorAll('.nav a');
+    const desktopNavLinks = document.querySelectorAll('[id="mainHeader"] nav a');
     desktopNavLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1007,7 +474,7 @@ const lang = getLangFromUrl(Astro.url);
     });
 
     // Mobile navigation links - scroll functionality
-    const mobileScrollLinks = document.querySelectorAll('.mobile-nav a:not(.mobile-language-option)');
+    const mobileScrollLinks = document.querySelectorAll('[id="mobileMenu"] nav a:not([href^="/"])');
     mobileScrollLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -1067,7 +534,7 @@ const lang = getLangFromUrl(Astro.url);
     });
 
     // Contact button link
-    const contactLink = document.querySelector('.contact-link');
+    const contactLink = document.querySelector('[href="#contact"]');
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();
       smoothScrollTo('contact');
@@ -1080,7 +547,7 @@ const lang = getLangFromUrl(Astro.url);
     
     // Wait for the ProjectsDropdownPortal to load and find its trigger
     const findProjectsDropdownTrigger = () => {
-      projectsDropdownTrigger = document.querySelector('.projects-dropdown-wrapper button');
+      projectsDropdownTrigger = document.querySelector('[data-projects-dropdown-trigger]');
       return projectsDropdownTrigger !== null;
     };
     

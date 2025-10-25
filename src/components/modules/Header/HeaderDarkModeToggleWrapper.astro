@@ -1,60 +1,12 @@
 ---
 // Header Dark Mode Toggle Wrapper
 import { HeaderDarkModeToggle } from './HeaderDarkModeToggle.tsx';
+import styles from './HeaderDarkModeToggleWrappet.module.css';
 ---
 
-<div class="header-dark-mode-wrapper">
+<div class={styles['header-dark-mode-wrapper']}>
   <HeaderDarkModeToggle client:load />
 </div>
 
-<style>
-  .header-dark-mode-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 
-  :global(.header-dark-mode-toggle) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: 
-      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.2s ease;
-  }
-
-  :global(.header-dark-mode-toggle:hover) {
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  :global(.toggle-icon) {
-    width: 18px;
-    height: 18px;
-    color: #060314;
-    stroke-width: 2;
-    transition: 
-      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Dark mode styles */
-  :global(.dark-mode .header-dark-mode-toggle:hover) {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  :global(.dark-mode .toggle-icon) {
-    color: #ffffff;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .header-dark-mode-wrapper {
-      display: none; /* Hide on mobile to save space */
-    }
-  }
-</style>
 

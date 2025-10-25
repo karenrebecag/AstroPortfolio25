@@ -181,23 +181,74 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
 
   const cleanup = useMemo(() => createThreeJSCleanup(), []);
 
-  // Intersection Observer - optimizado con acciones memoizadas
+  // Unified visibility control - dark mode detection with intersection observer
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const detectDarkMode = (): boolean => {
+      // Check document class (primary method)
+      const hasClass = document.documentElement.classList.contains('dark-mode');
+      // Check localStorage with correct key
+      const savedTheme = localStorage.getItem('aurin-theme');
+      const isStoredDark = savedTheme === 'dark';
+      return hasClass || isStoredDark;
+    };
+
+    let intersectionObserver: IntersectionObserver | null = null;
+    let isIntersecting = false;
+
+    const updateVisibility = () => {
+      const isDark = detectDarkMode();
+      // Only show if NOT in dark mode AND intersecting
+      const shouldBeVisible = !isDark && isIntersecting;
+      setVisible(shouldBeVisible);
+    };
+
+    // Intersection Observer
+    intersectionObserver = new IntersectionObserver(
       ([entry]) => {
-        setVisible(entry.isIntersecting);
+        isIntersecting = entry.isIntersecting;
+        updateVisibility(); // Update visibility considering both intersection and dark mode
       },
       {
         threshold: 0,
-        rootMargin: '800px 0px 200px 0px' // Activate 800px before entering and deactivate 200px after leaving
+        rootMargin: '800px 0px 200px 0px'
       }
     );
 
     if (mountRef.current) {
-      observer.observe(mountRef.current);
+      intersectionObserver.observe(mountRef.current);
     }
 
-    return () => observer.disconnect();
+    // Initial dark mode check - IMMEDIATE to prevent flash
+    updateVisibility();
+
+    // Watch for class changes on documentElement
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          updateVisibility();
+        }
+      });
+    });
+
+    mutationObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // Listen for storage changes (theme changes in other tabs)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'aurin-theme') {
+        updateVisibility();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      if (intersectionObserver) intersectionObserver.disconnect();
+      mutationObserver.disconnect();
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, [setVisible]);
 
   // Page Visibility API - optimizado con acciones memoizadas

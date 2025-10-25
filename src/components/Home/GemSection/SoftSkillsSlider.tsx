@@ -170,6 +170,15 @@ const SoftSkillsSlider: React.FC<SoftSkillsSliderProps> = ({ softSkillsData }) =
           z-index: -1;
         }
 
+        /* Hide silk background in dark mode for slider cards */
+        .dark-mode .skill-card-slider::before {
+          display: none !important;
+        }
+
+        .dark-mode .skill-card-slider::after {
+          display: none !important;
+        }
+
         .soft-skills-slider-arrows {
           display: flex !important;
           justify-content: space-between !important;
