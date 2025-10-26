@@ -369,6 +369,12 @@ import { motion } from 'motion/react';
     opacity: 0.2;
   }
 
+  /* Marquee Text Styles - Global for dark mode compatibility */
+  :global(.marquee-text) {
+    color: #1f2937;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   /* Estilos específicos para el texto de los marquees */
   :global(.tech-marquee-item .font-display) {
     font-family: 'Boysen', sans-serif !important;
@@ -611,5 +617,20 @@ import { motion } from 'motion/react';
 
   :global(.dark-mode .kirby-loading p) {
     color: #d4a5ff;
+  }
+
+  /* Dark mode marquee text - Switch to light purple for better contrast */
+  :global(.dark-mode .marquee-text) {
+    color: #d4a5ff;
+  }
+
+  /* Tech marquee items dark mode styles */
+  :global(.dark-mode .tech-marquee-item) {
+    /* Keep opacity and hover effects the same */
+    opacity: 0.07;
+  }
+
+  :global(.dark-mode .tech-marquee-item:hover) {
+    opacity: 0.2;
   }
 </style>

@@ -2,10 +2,42 @@
   max-height: 85vh;
 }
 
-.bannerContainer :global(#banner-image) {
+/* Banner image container - moved from inline styles */
+.bannerImageContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 537px;
+}
+
+.bannerImageContainer img {
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom;
+  mix-blend-mode: multiply;
+  display: block;
   transform: translateY(30px);
   animation: slideUp 0.8s ease-out 0.5s forwards;
   transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Banner buttons container - moved from inline styles */
+.bannerButtonsWrapper {
+  position: relative;
+  z-index: 30;
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
 }
 
 /* Dark mode overlay gradient */
@@ -49,7 +81,12 @@
 
 /* Mobile optimization - 30% smaller image */
 @media (max-width: 768px) {
-  .bannerContainer :global(#banner-image) {
-    max-width: 420px !important; /* 600px - 30% = 420px - Force override inline styles */
+  .bannerImageContainer img {
+    max-width: 420px !important; /* 600px - 30% = 420px */
+  }
+
+  .bannerButtonsWrapper {
+    flex-direction: column;
+    gap: 24px;
   }
 }

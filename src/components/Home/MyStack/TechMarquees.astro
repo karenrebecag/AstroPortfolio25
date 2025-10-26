@@ -94,12 +94,23 @@ import TechMarqueesIsland from './components/TechMarqueesIsland.tsx';
     }
   }
 
+  /* Marquee Text Styles - Global for dark mode compatibility */
+  :global(.marquee-text) {
+    color: #1f2937;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   /* Dark Mode Styles - Following Documentation Pattern */
   :global(.dark-mode .tech-marquees-section) {
     background-color: #020009;
   }
 
-  /* Tech marquee text dark mode - Video Game Font remains black for contrast */
+  /* Dark mode marquee text - Switch to light purple for better contrast */
+  :global(.dark-mode .marquee-text) {
+    color: #d4a5ff;
+  }
+
+  /* Tech marquee wrapper opacity remains the same in both modes */
   :global(.dark-mode .tech-marquee-wrapper) {
     /* Keep opacity and hover effects the same */
     opacity: 0.2;
@@ -108,7 +119,4 @@ import TechMarqueesIsland from './components/TechMarqueesIsland.tsx';
   :global(.dark-mode .tech-marquee-wrapper:hover) {
     opacity: 1;
   }
-
-  /* The text inside marquees uses Video Game Font and should remain black for readability */
-  /* This creates a nice contrast effect against the dark background */
 </style>

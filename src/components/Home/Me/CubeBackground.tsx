@@ -298,8 +298,16 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
       object.scale.set(0.8, 0.8, 0.8);
       object.position.set(0, 0, 0);
       object.rotation.set(0.1, 0.2, 0.1);
-      
+
       scene.add(object);
+
+      // Recompute bounding volumes for proper culling
+      object.traverse((child: THREE.Object3D) => {
+        if (child instanceof THREE.Mesh && child.geometry) {
+          child.geometry.computeBoundingBox();
+          child.geometry.computeBoundingSphere();
+        }
+      });
     }, undefined, (error) => {
       console.error('Error loading cube model:', error);
     });
@@ -371,25 +379,44 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
           cancelAnimationFrame(sceneRef.current.animationId);
         }
         
-        // Cleanup completo de recursos Three.js - siguiendo la guía
+        // Comprehensive Three.js cleanup - siguiendo mejores prácticas
         sceneRef.current.scene.traverse((child: THREE.Object3D) => {
           if (child instanceof THREE.Mesh) {
-            if (child.material) {
-              if (Array.isArray(child.material)) {
-                child.material.forEach(material => material.dispose());
-              } else {
-                child.material.dispose();
-              }
-            }
+            // Dispose geometry
             if (child.geometry) {
               child.geometry.dispose();
             }
+
+            // Dispose materials (handle both single and array)
+            if (child.material) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(material => {
+                  material.dispose();
+                  // Dispose material textures
+                  if (material.map) material.map.dispose();
+                  if (material.normalMap) material.normalMap.dispose();
+                  if (material.roughnessMap) material.roughnessMap.dispose();
+                  if (material.metalnessMap) material.metalnessMap.dispose();
+                  if (material.envMap) material.envMap.dispose();
+                });
+              } else {
+                child.material.dispose();
+                // Dispose material textures
+                if (child.material.map) child.material.map.dispose();
+                if (child.material.normalMap) child.material.normalMap.dispose();
+                if (child.material.roughnessMap) child.material.roughnessMap.dispose();
+                if (child.material.metalnessMap) child.material.metalnessMap.dispose();
+                if (child.material.envMap) child.material.envMap.dispose();
+              }
+            }
           }
         });
-        
+
+        // Dispose renderer and remove from DOM
         sceneRef.current.renderer.dispose();
-        
-        if (currentMount.contains(sceneRef.current.renderer.domElement)) {
+        sceneRef.current.renderer.forceContextLoss();
+
+        if (currentMount && currentMount.contains(sceneRef.current.renderer.domElement)) {
           currentMount.removeChild(sceneRef.current.renderer.domElement);
         }
       }

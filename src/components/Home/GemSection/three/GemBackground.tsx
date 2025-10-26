@@ -1,124 +1,18 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RGBELoader } from 'three-stdlib';
-import { create } from 'zustand';
-import { useShallow } from 'zustand/react/shallow';
-import { createThreeJSCleanup } from '../../../../utils/zustand-optimizations';
+import {
+  useGemStore,
+  useVisibilityState,
+  useSettingsState,
+  useAnimationState,
+  useThreeJSActions
+} from '../../../../utils/stores/threeJSStore';
+import { RobustAssetLoader, ASSET_CONFIGS } from '../../../../utils/assetLoader';
 import { useScroll, useTransform } from 'motion/react';
 
-// Optimized Zustand store siguiendo mejores prácticas de la guía
-// Dividido en slices por funcionalidad para evitar re-renders innecesarios
-const useGemStore = create<{
-  // Visibility slice - para control de renderizado
-  isVisible: boolean;
-  isPaused: boolean;
-  isLoading: boolean;
-  
-  // Settings slice - para configuración que cambia poco
-  opacity: number;
-  quality: 'low' | 'medium' | 'high';
-  
-  // Animation slice - para propiedades de animación basadas en scroll
-  scrollRotationX: number;
-  scrollRotationY: number;
-  scrollRotationZ: number;
-  
-  // Actions - memoizadas para evitar recreación
-  setVisible: (visible: boolean) => void;
-  setPaused: (paused: boolean) => void;
-  setLoading: (loading: boolean) => void;
-  setOpacity: (opacity: number) => void;
-  setQuality: (quality: 'low' | 'medium' | 'high') => void;
-  setScrollRotation: (x: number, y: number, z: number) => void;
-  
-  // Batch updater para múltiples cambios
-  batchUpdate: (updates: Partial<{
-    isVisible: boolean;
-    isPaused: boolean;
-    isLoading: boolean;
-    opacity: number;
-    quality: 'low' | 'medium' | 'high';
-    scrollRotationX: number;
-    scrollRotationY: number;
-    scrollRotationZ: number;
-  }>) => void;
-}>((set, get) => ({
-  // Initial state
-  isVisible: false,
-  isPaused: false,
-  isLoading: true,
-  opacity: 0,
-  quality: 'medium',
-  scrollRotationX: 0,
-  scrollRotationY: 0,
-  scrollRotationZ: 0,
-  
-  // Optimized actions con batch updates cuando es posible
-  setVisible: (visible) => {
-    const currentState = get();
-    if (currentState.isVisible === visible) return; // Evita updates innecesarios
-    
-    set({ isVisible: visible });
-    
-    // Smooth opacity transition con batch update
-    if (visible) {
-      setTimeout(() => {
-        const state = get();
-        if (state.isVisible) { // Double-check para evitar race conditions
-          set({ opacity: 1 });
-        }
-      }, 200);
-    } else {
-      setTimeout(() => set({ opacity: 0 }), 100);
-    }
-  },
-  
-  setPaused: (paused) => {
-    const currentState = get();
-    if (currentState.isPaused === paused) return;
-    set({ isPaused: paused });
-  },
-  
-  setLoading: (loading) => {
-    const currentState = get();
-    if (currentState.isLoading === loading) return;
-    set({ isLoading: loading });
-  },
-  
-  setOpacity: (opacity) => {
-    const currentState = get();
-    if (currentState.opacity === opacity) return;
-    set({ opacity });
-  },
-  
-  setQuality: (quality) => {
-    const currentState = get();
-    if (currentState.quality === quality) return;
-    set({ quality });
-  },
-  
-  setScrollRotation: (x, y, z) => {
-    const currentState = get();
-    if (currentState.scrollRotationX === x && currentState.scrollRotationY === y && currentState.scrollRotationZ === z) return;
-    set({ scrollRotationX: x, scrollRotationY: y, scrollRotationZ: z });
-  },
-  
-  // Batch updater para múltiples cambios simultáneos
-  batchUpdate: (updates) => {
-    const currentState = get();
-    const filteredUpdates: Partial<typeof currentState> = {};
-    
-    Object.entries(updates).forEach(([key, value]) => {
-      if (currentState[key as keyof typeof currentState] !== value) {
-        (filteredUpdates as any)[key] = value;
-      }
-    });
-    
-    if (Object.keys(filteredUpdates).length > 0) {
-      set(filteredUpdates);
-    }
-  },
-}));
+// ✅ Store moved to utils/stores/threeJSStore.ts for better code organization
+// This eliminates ~115 lines of duplicated store logic
 
 export const GemBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -131,54 +25,21 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
   } | null>(null);
   
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Selectores optimizados con useShallow - evita re-renders innecesarios
-  // Siguiendo las mejores prácticas de la documentación oficial de Zustand
-  const { isVisible, isPaused, isLoading } = useGemStore(
-    useShallow((state) => ({
-      isVisible: state.isVisible,
-      isPaused: state.isPaused,
-      isLoading: state.isLoading,
-    }))
-  );
-  
-  const { quality, opacity } = useGemStore(
-    useShallow((state) => ({
-      quality: state.quality,
-      opacity: state.opacity,
-    }))
-  );
-  
-  const { scrollRotationX, scrollRotationY, scrollRotationZ } = useGemStore(
-    useShallow((state) => ({
-      scrollRotationX: state.scrollRotationX,
-      scrollRotationY: state.scrollRotationY,
-      scrollRotationZ: state.scrollRotationZ,
-    }))
-  );
-  
-  // Actions memoizadas - solo se extraen cuando es necesario
-  const { setVisible, setPaused, setLoading, batchUpdate, setScrollRotation } = useGemStore(
-    useShallow((state) => ({
-      setVisible: state.setVisible,
-      setPaused: state.setPaused,
-      setLoading: state.setLoading,
-      batchUpdate: state.batchUpdate,
-      setScrollRotation: state.setScrollRotation,
-    }))
-  );
 
-  const cleanup = useMemo(() => createThreeJSCleanup(), []);
+  // ✅ Using unified store with optimized selectors
+  const { isVisible, isPaused, isLoading } = useVisibilityState();
+  const { quality, opacity } = useSettingsState();
+  const { scrollRotationX, scrollRotationY, scrollRotationZ } = useAnimationState();
+  const { setVisible, setPaused, setLoading, setScrollRotation } = useThreeJSActions();
 
   // Motion.dev scroll velocity setup
   const { scrollYProgress } = useScroll();
-  
-  // Transform scroll progress to rotation values (more evident, rotating right)
-  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.35]); // 63 degrees max
-  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 0.6]); // 108 degrees max (right rotation)  
-  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.25]); // 45 degrees max
 
-  // Intersection Observer - optimizado con acciones memoizadas
+  // Transform scroll progress to rotation values (acentuado para más movimiento)
+  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.5]); // 90 degrees max (más rotación)
+  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 1]); // 144 degrees max (más rotación)
+  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.75]); // 63 degrees max (más rotación)   
+  // Intersection Observer - ULTRA suave para la gema
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -186,7 +47,7 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       },
       { 
         threshold: 0,
-        rootMargin: '800px 0px 200px 0px' // Mismo rango que SilkBackground
+        rootMargin: '2000px 0px 2000px 0px' // MUCHO más amplio: casi siempre visible
       }
     );
 
@@ -207,9 +68,10 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [setPaused]);
 
-  // Three.js setup - siguiendo EXACTAMENTE el patrón de SilkBackground
+  // Three.js setup - initialize once and keep mounted
+  // Visibility is controlled by the animate loop, not by mounting/unmounting
   useEffect(() => {
-    if (!mountRef.current || !isVisible) return;
+    if (!mountRef.current) return;
 
     const currentMount = mountRef.current;
 
@@ -344,16 +206,16 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
 
     const animate = () => {
       const currentState = useGemStore.getState();
-      
+
       if (!currentState.isPaused && currentState.isVisible && gemObject) {
         // Apply scroll-based rotation (very subtle) while maintaining original positioning
         gemObject.rotation.x = 0.2 + currentState.scrollRotationX;
         gemObject.rotation.y = -0.35 + currentState.scrollRotationY;
         gemObject.rotation.z = -0.32 + currentState.scrollRotationZ;
-        
+
         renderer.render(scene, camera);
       }
-      
+
       sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 
@@ -416,15 +278,15 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
         }
       }
     };
-  }, [isVisible, isPaused, quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
+  }, [isPaused, quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className={`absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${
         isLoaded && !isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       } ${className}`}
-      style={{ 
+      style={{
         zIndex: 20, // Por encima de SilkBackground (z-index: 1)
         mixBlendMode: 'normal'
       }}

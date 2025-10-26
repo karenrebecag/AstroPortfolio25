@@ -32,78 +32,53 @@
     backface-visibility: hidden;
   }
 
-  /* Dark mode styles - Intense cyan illumination stroke text */
+  /* Dark mode styles - Optimized cyan illumination stroke text (9→4 layers) */
   :global(.dark-mode) #right-marquee {
     color: transparent !important;
     -webkit-text-stroke: 1px rgb(221, 255, 255);
     -webkit-text-fill-color: transparent;
-    text-shadow: 
-      /* Core white illumination */
-      0 0 2px rgba(255, 255, 255, 1),
-      0 0 5px rgba(255, 255, 255, 0.9),
-      0 0 10px rgba(255, 255, 255, 0.8),
-      /* Cyan neon illumination layers */
+    /* Reduced from 9 to 4 critical layers for better paint performance */
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 1),
       0 0 20px rgba(0, 255, 255, 1),
-      0 0 40px rgba(0, 255, 255, 0.9),
-      0 0 60px rgba(0, 255, 255, 0.8),
-      0 0 80px rgba(0, 255, 255, 0.7),
-      0 0 100px rgba(0, 255, 255, 0.6),
-      0 0 120px rgba(0, 255, 255, 0.5);
+      0 0 60px rgba(0, 255, 255, 0.6),
+      0 0 120px rgba(0, 255, 255, 0.3);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     filter: brightness(1.2) saturate(1.3)
-            drop-shadow(0 0 40px rgba(0, 255, 255, 0.15))
-            drop-shadow(0 0 80px rgba(0, 255, 255, 0.08))
-            drop-shadow(0 0 120px rgba(0, 255, 255, 0.04));
+            drop-shadow(0 0 40px rgba(0, 255, 255, 0.15));
   }
 
-  /* Hover effect - Maximum cyan illumination with flicker */
+  /* Hover effect - Optimized cyan illumination with flicker (11→5 layers) */
   :global(.dark-mode) .right-marquee-wrapper:hover #right-marquee {
     -webkit-text-stroke: 1px rgb(237, 248, 248);
-    text-shadow: 
-      /* Intense core illumination */
-      0 0 3px rgba(255, 255, 255, 1),
+    /* Reduced from 11 to 5 critical layers for better paint performance */
+    text-shadow:
       0 0 8px rgba(255, 255, 255, 1),
-      0 0 15px rgba(255, 255, 255, 0.9),
-      /* Maximum cyan neon illumination */
       0 0 25px rgba(0, 255, 255, 1),
-      0 0 50px rgba(0, 255, 255, 1),
-      0 0 75px rgba(0, 255, 255, 0.9),
-      0 0 100px rgba(0, 255, 255, 0.8),
-      0 0 125px rgba(0, 255, 255, 0.7),
-      0 0 150px rgba(0, 255, 255, 0.6),
-      0 0 175px rgba(0, 255, 255, 0.5);
+      0 0 75px rgba(0, 255, 255, 0.8),
+      0 0 125px rgba(0, 255, 255, 0.5),
+      0 0 175px rgba(0, 255, 255, 0.3);
     filter: brightness(1.5) saturate(1.5)
-            drop-shadow(0 0 60px rgba(0, 255, 255, 0.25))
-            drop-shadow(0 0 120px rgba(0, 255, 255, 0.15))
-            drop-shadow(0 0 180px rgba(0, 255, 255, 0.08));
+            drop-shadow(0 0 60px rgba(0, 255, 255, 0.25));
     animation: intenseCyanFlicker 2s ease-in-out infinite alternate;
   }
 
-  /* Intense cyan flicker animation - realistic neon effect */
+  /* Optimized cyan flicker animation - realistic neon effect */
   @keyframes intenseCyanFlicker {
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-      text-shadow: 
-        /* Core white illumination */
-        0 0 3px rgba(255, 255, 255, 1),
+      /* Reduced from 10 to 4 layers */
+      text-shadow:
         0 0 8px rgba(255, 255, 255, 1),
-        0 0 15px rgba(255, 255, 255, 0.9),
-        /* Maximum cyan neon illumination */
-        0 0 25px rgba(0, 255, 255, 1),
         0 0 50px rgba(0, 255, 255, 1),
-        0 0 75px rgba(0, 255, 255, 0.9),
-        0 0 100px rgba(0, 255, 255, 0.8),
-        0 0 125px rgba(0, 255, 255, 0.7),
-        0 0 150px rgba(0, 255, 255, 0.6),
-        0 0 175px rgba(0, 255, 255, 0.5);
+        0 0 100px rgba(0, 255, 255, 0.7),
+        0 0 175px rgba(0, 255, 255, 0.4);
       filter: brightness(1.5) saturate(1.5);
     }
     20%, 22%, 24%, 55% {
-      text-shadow: 
-        /* Dimmed flicker state */
-        0 0 1px rgba(255, 255, 255, 0.6),
+      /* Reduced from 5 to 3 layers */
+      text-shadow:
         0 0 3px rgba(255, 255, 255, 0.4),
         0 0 8px rgba(0, 255, 255, 0.6),
-        0 0 15px rgba(0, 255, 255, 0.4),
         0 0 25px rgba(0, 255, 255, 0.3);
       filter: brightness(0.8) saturate(0.8);
     }
@@ -116,10 +91,12 @@
     backface-visibility: hidden;
   }
 
-  /* Accessibility: Respect user's motion preferences */
+  /* Accessibility: Respect user's motion preferences with subtle hover */
   @media (prefers-reduced-motion: reduce) {
     :global(.dark-mode) .right-marquee-wrapper:hover #right-marquee {
       animation: none !important;
+      /* Maintain subtle hover effect without animation */
+      filter: brightness(1.2) saturate(1.2);
     }
   }
 

@@ -11,49 +11,6 @@ import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
 import { motion } from 'motion/react';
 import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 import styles from './Me.module.css';
-
-const experienceData = [
-  {
-    id: "01",
-    title: "UX/UI & Frontend Developer",
-    company: "OPINATOR (Madrid, Spain)",
-    description: "Led the UX/UI redesign of OPINATOR's live forms WebApp, collaborating with a team of five to enhance user experience, accessibility, and developer workflows.",
-    highlight: "Designed a modular design system with Figma and implemented frontend with React, boosting form response rates by 30%.",
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/fe0d8274-c12e-461f-8052-73525d0ecd0d.webp"
-  },
-  {
-    id: "02",
-    title: "UX/UI & Webflow Developer",
-    company: "AURIN × ANCIENT TECH Partnership",
-    description: "Led a collaborative four-month UX engineering project between Aurin and Ancient Tech to design and develop Ancient's main web platform in Webflow, while working directly for Aurin.",
-    highlight: "Built an AI-driven interactive hero banner with WebGL animations through this strategic partnership, enhancing engagement and visual appeal.",
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Ancient.png"
-  },
-  {
-    id: "03",
-    title: "Design Engineer & Fullstack Developer",
-    company: "AURIN (SODIO) (Cuernavaca, México)",
-    description: "Designed mobile and web UX/UI for MonexOne and web apps like Inglesindividual, Galicia MX, Dentol MX, and Fintpay Banking, while leading fullstack development and AI automations.",
-    highlight: "Developed Aurin Task Manager with Next.js, Firestore, Clerk, and AI-powered task summaries, streamlining team workflows with temporary dynamic links.",
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Aurin.jpeg"
-  },
-  {
-    id: "04",
-    title: "Senior UX/UI Designer",
-    company: "ATHENIS AI (LATAM & EU)",
-    description: "Led UX/UI design for an AI-driven educational platform, creating intuitive interfaces and component libraries to enhance user engagement and developer efficiency.",
-    highlight: "Crafted a Figma-to-React component library for Login and Dashboard, improving handoff efficiency by 25%.",
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAI.jpeg"
-  },
-  {
-    id: "05",
-    title: "Founder & Design Engineer",
-    company: "WEBCRAFTERS (Mexico City)",
-    description: "Founded WebCrafters, a UX/UI and Web Art agency, delivering custom web applications with AI-driven features, 3D animations, and scalable architectures.",
-    highlight: "Led design and deployment of visually stunning web solutions with Three.js and AI integrations, serving diverse industries.",
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCrafters.jpeg"
-  }
-];
 ---
 
 <!-- Storytelling Scroll Container -->
@@ -62,19 +19,19 @@ const experienceData = [
 
     <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
     <div class={styles['cube-column-desktop']}>
-      <AnimatedMeHeader client:visible>
+      <AnimatedMeHeader client:visible={{rootMargin: "200px"}}>
         <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
           <!-- Cube 3D Background -->
-          <CubeBackground client:visible className={styles['cube-3d-container']} />
+          <CubeBackground client:visible={{rootMargin: "200px"}} className={styles['cube-3d-container']} />
         </div>
       </AnimatedMeHeader>
     </div>
     
     <!-- Right Column: Scrolling Content -->
     <div class={styles['scrolling-content-column']}>
-      
+
       <!-- Content Section 1: Introduction -->
-      <AnimatedMeSection client:visible delay={0.1}>
+      <AnimatedMeSection client:visible={{rootMargin: "100px"}} delay={0.1}>
         <div class="relative z-10">
           <div class="relative">
             <!-- Purple circle positioned behind the heading -->
@@ -119,22 +76,10 @@ const experienceData = [
           </AnimatedMeElement>
           <AnimatedMeButton client:visible delay={0.5}>
             <div class="flex items-start gap-9 button-container-me">
-              <div class="realism-button-wrapper" data-astro-cid-rjz7vswu="" style="transform: translate(0px, 0px);">
-                <a href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/" target="_blank" rel="noopener noreferrer" class="realism-button group" data-astro-cid-rjz7vswu="true" data-cursor-text="Go there!">
-                  <div class="button-glow" data-astro-cid-rjz7vswu=""></div>
-                  <div class="button-blob" data-astro-cid-rjz7vswu=""></div>
-                  <div class="button-content" data-astro-cid-rjz7vswu="">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="color: white; margin-right: 8px;">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                      <rect width="4" height="12" x="2" y="9"/>
-                      <circle cx="4" cy="4" r="2"/>
-                    </svg>
-                    <span class="button-text" data-astro-cid-rjz7vswu="">Connect</span>
-                    <!-- Inner glow layer -->
-                    <div class="inner-glow" data-astro-cid-rjz7vswu=""></div>
-                  </div>
-                </a>
-              </div>
+              <MainButton 
+                text="Connect"
+                href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/"
+              />
             </div>
           </AnimatedMeButton>
         </div>
@@ -228,15 +173,15 @@ const experienceData = [
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      client:idle
+      client:idle={{timeout: 500}}
     >
       <div class={`${styles['globe-title-text-wrapper']} globe-title-text-wrapper`}>
-        <TextDisperseBlack text="GLOBAL IMPACT" className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle />
+        <TextDisperseBlack text="GLOBAL IMPACT" className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle={{timeout: 500}} />
       </div>
     </motion.div>
   </div>
   <div class={styles['globe-container']}>
-    <GlobeBackground client:visible className={styles['globe-3d-container']} />
+    <GlobeBackground client:visible={{rootMargin: "300px"}} className={styles['globe-3d-container']} />
   </div>
 </div>
 
@@ -250,7 +195,7 @@ const experienceData = [
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      client:idle
+      client:idle={{timeout: 500}}
     >
       <p class={`${styles['experience-description-text']} experience-description-text`}>
         I've collaborated with clients worldwide to create efficient, 
@@ -263,14 +208,14 @@ const experienceData = [
   <div class={styles['experience-marquee-desktop']}>
     <div class={styles['experience-marquee-container']}>
       <div class={styles['experience-marquee-wrapper-limited']}>
-        <ExperienceMarqueeIsland client:visible />
+        <ExperienceMarqueeIsland client:visible={{rootMargin: "400px"}} />
       </div>
     </div>
   </div>
-  
+
   <!-- Mobile: Slider Manual (visible en vp < 768px) -->
   <div class={styles['experience-slider-mobile']}>
-    <ExperienceSlider experienceData={experienceData} client:visible />
+    <ExperienceSlider client:visible={{rootMargin: "400px"}} />
   </div>
 </div>
 
@@ -325,30 +270,6 @@ const experienceData = [
   }
 
   // Dark Mode Implementation
-  function applyDarkMode(isDark: boolean) {
-    // This component relies on global .dark-mode on documentElement
-    // Kept for compatibility if other systems dispatch darkModeChange
-  }
-
-  function checkInitialDarkMode() {
-    if (typeof window !== 'undefined') {
-      const isDarkMode = document.documentElement.classList.contains('dark-mode');
-      applyDarkMode(isDarkMode);
-    }
-  }
-
-  // Initialize dark mode on load
-  document.addEventListener('DOMContentLoaded', checkInitialDarkMode);
-
-  // Listen for dark mode changes
-  document.addEventListener('darkModeChange', (event: CustomEvent) => {
-    applyDarkMode(event.detail.isDark);
-  });
-
-  // Apply immediately if DOM already loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkInitialDarkMode);
-  } else {
-    checkInitialDarkMode();
-  }
+  // This component relies on global .dark-mode on documentElement
+  // No additional dark mode logic needed here as it's handled globally
 </script>

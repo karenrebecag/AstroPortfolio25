@@ -1,30 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-// @ts-ignore - Splide types issue with package.json exports
+import React from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { motion } from 'motion/react';
+import { experienceData, type ExperienceItem } from '../../../../data/experienceData';
 import '@splidejs/splide/css/core';
 
-interface ExperienceData {
-  id: string;
-  title: string;
-  company: string;
-  description: string;
-  highlight: string;
-  image: string;
-  resumeAnchor?: string;
-}
-
 interface ExperienceSliderProps {
-  experienceData: ExperienceData[];
+  experienceData?: ExperienceItem[];
 }
 
-const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) => {
-  const splideRef = useRef<typeof Splide>(null);
-
-  useEffect(() => {
-    // Inicialización del slider - simplificado para evitar errores de tipos
-    console.log('Experience slider initialized');
-  }, []);
+const ExperienceSlider: React.FC<ExperienceSliderProps> = ({
+  experienceData: propsExperienceData
+}) => {
+  // Use props data or fallback to imported data
+  const data = propsExperienceData || experienceData;
 
   const splideOptions = {
     type: 'slide' as const,
@@ -35,14 +23,14 @@ const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) =
     pagination: true,
     drag: true,
     snap: true,
-    keyboard: 'global',
+    keyboard: 'global' as const,
     wheel: false,
     autoplay: false,
     interval: 4000,
     pauseOnHover: true,
     pauseOnFocus: true,
     resetProgress: false,
-    lazyLoad: 'nearby',
+    lazyLoad: 'nearby' as const,
     preloadPages: 1,
     classes: {
       arrows: 'splide__arrows experience-slider-arrows',
@@ -68,12 +56,11 @@ const ExperienceSlider: React.FC<ExperienceSliderProps> = ({ experienceData }) =
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
     >
       <Splide
-        ref={splideRef}
         options={splideOptions}
         className="experience-splide"
         aria-label="Experience Cards Slider"
       >
-        {experienceData.map((experience, index) => (
+        {data.map((experience, index) => (
           <SplideSlide key={experience.id}>
             <motion.div
               className="experience-card-slider"

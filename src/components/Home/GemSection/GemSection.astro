@@ -70,7 +70,8 @@ const softSkillsData = t.aboutMe.skills;
 </section>
 
 <script>
-  import { scroll, animate } from 'motion';
+  import { scroll } from 'motion';
+  import { observeDarkMode } from '../../../utils/darkMode';
 
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', () => {
@@ -111,40 +112,9 @@ const softSkillsData = t.aboutMe.skills;
       });
     };
 
-    // Detect current dark mode state
-    const detectDarkMode = (): boolean => {
-      const hasClass = document.documentElement.classList.contains('dark-mode');
-      const savedTheme = localStorage.getItem('aurin-theme');
-      const isStoredDark = savedTheme === 'dark';
-      return hasClass || isStoredDark;
-    };
-
-    // Initial application
-    const isDark = detectDarkMode();
-    applyDarkMode(isDark);
-
-    // Watch for class changes on documentElement
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const isDark = detectDarkMode();
-          applyDarkMode(isDark);
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    // Listen for storage changes (theme changes in other tabs)
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'aurin-theme') {
-        const isDark = detectDarkMode();
-        applyDarkMode(isDark);
-      }
-    });
+    // Observe dark mode changes using centralized utility
+    // Replaces duplicated detection logic
+    const cleanupDarkMode = observeDarkMode(applyDarkMode);
 
     // Scroll animation functionality
     if (gemSection && skillsScroll) {
@@ -164,5 +134,8 @@ const softSkillsData = t.aboutMe.skills;
         );
       }
     }
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', cleanupDarkMode);
   });
 </script>

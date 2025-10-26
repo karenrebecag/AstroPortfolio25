@@ -57,6 +57,12 @@ import MarqueesIsland from './MarqueesIsland.tsx';
     }
   }
 
+  /* Main Marquee Text Styles - Global for dark mode compatibility */
+  :global(.main-marquee-text) {
+    color: #ffffff;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   :global(.marquees-container) {
     position: relative;
     width: 100%;
@@ -142,5 +148,10 @@ import MarqueesIsland from './MarqueesIsland.tsx';
 
   :global(.dark-mode .second-marquee) {
     background: #4523AE; /* Darker purple for variety */
+  }
+
+  /* Main marquee text dark mode - Keep white for good contrast against colored backgrounds */
+  :global(.dark-mode .main-marquee-text) {
+    color: #ffffff; /* Keep white text on colored marquee backgrounds */
   }
 </style>

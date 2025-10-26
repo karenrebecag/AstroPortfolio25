@@ -1,138 +1,16 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { create } from 'zustand';
-import { useShallow } from 'zustand/react/shallow';
-import { createThreeJSCleanup } from '../../../../utils/zustand-optimizations';
+import {
+  useSilkStore,
+  useVisibilityState,
+  useSettingsState,
+  useAnimationState,
+  useThreeJSActions
+} from '../../../../utils/stores/threeJSStore';
+import { observeDarkMode } from '../../../../utils/darkMode';
 
-// Optimized Zustand store siguiendo mejores prácticas de la guía
-// Dividido en slices por funcionalidad para evitar re-renders innecesarios
-const useSilkStore = create<{
-  // Visibility slice - para control de renderizado
-  isVisible: boolean;
-  isPaused: boolean;
-  isLoading: boolean;
-
-  // Settings slice - para configuración que cambia poco
-  opacity: number;
-  quality: 'low' | 'medium' | 'high';
-
-  // Animation slice - para propiedades de animación
-  animationSpeed: number;
-
-  // Color slice - para configuración de colores
-  colors: {
-    primary: string;
-    contrast: string;
-  };
-
-  // Actions - memoizadas para evitar recreación
-  setVisible: (visible: boolean) => void;
-  setPaused: (paused: boolean) => void;
-  setLoading: (loading: boolean) => void;
-  setOpacity: (opacity: number) => void;
-  setQuality: (quality: 'low' | 'medium' | 'high') => void;
-  setAnimationSpeed: (speed: number) => void;
-  setColors: (colors: { primary: string; contrast: string }) => void;
-
-  // Batch updater para múltiples cambios
-  batchUpdate: (updates: Partial<{
-    isVisible: boolean;
-    isPaused: boolean;
-    isLoading: boolean;
-    opacity: number;
-    quality: 'low' | 'medium' | 'high';
-    animationSpeed: number;
-    colors: { primary: string; contrast: string };
-  }>) => void;
-}>((set, get) => ({
-  // Initial state
-  isVisible: false,
-  isPaused: false,
-  isLoading: true,
-  opacity: 0,
-  quality: 'medium',
-  animationSpeed: 1.0,
-  colors: {
-    primary: '#9D7FC1',
-    contrast: '#4523AE'
-  },
-
-  // Optimized actions con batch updates cuando es posible
-  setVisible: (visible) => {
-    const currentState = get();
-    if (currentState.isVisible === visible) return; // Evita updates innecesarios
-
-    set({ isVisible: visible });
-
-    // Smooth opacity transition con batch update
-    if (visible) {
-      setTimeout(() => {
-        const state = get();
-        if (state.isVisible) { // Double-check para evitar race conditions
-          set({ opacity: 1 });
-        }
-      }, 200);
-    } else {
-      setTimeout(() => set({ opacity: 0 }), 100);
-    }
-  },
-
-  setPaused: (paused) => {
-    const currentState = get();
-    if (currentState.isPaused === paused) return;
-    set({ isPaused: paused });
-  },
-
-  setLoading: (loading) => {
-    const currentState = get();
-    if (currentState.isLoading === loading) return;
-    set({ isLoading: loading });
-  },
-
-  setOpacity: (opacity) => {
-    const currentState = get();
-    if (currentState.opacity === opacity) return;
-    set({ opacity });
-  },
-
-  setQuality: (quality) => {
-    const currentState = get();
-    if (currentState.quality === quality) return;
-    set({ quality });
-  },
-
-  setAnimationSpeed: (speed) => {
-    const currentState = get();
-    if (currentState.animationSpeed === speed) return;
-    set({ animationSpeed: speed });
-  },
-
-  setColors: (colors) => {
-    const currentState = get();
-    if (JSON.stringify(currentState.colors) === JSON.stringify(colors)) return;
-    set({ colors });
-  },
-
-  // Batch updater para múltiples cambios simultáneos
-  batchUpdate: (updates) => {
-    const currentState = get();
-    const filteredUpdates: Partial<typeof currentState> = {};
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (key === 'colors') {
-        if (JSON.stringify(currentState.colors) !== JSON.stringify(value)) {
-          (filteredUpdates as any)[key] = value;
-        }
-      } else if (currentState[key as keyof typeof currentState] !== value) {
-        (filteredUpdates as any)[key] = value;
-      }
-    });
-
-    if (Object.keys(filteredUpdates).length > 0) {
-      set(filteredUpdates);
-    }
-  },
-}));
+// ✅ Store moved to utils/stores/threeJSStore.ts for better code organization
+// This eliminates ~130 lines of duplicated store logic
 
 export const SilkBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -146,67 +24,28 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
   
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Selectores optimizados con useShallow - evita re-renders innecesarios
-  // Siguiendo las mejores prácticas de la documentación oficial de Zustand
-  const { isVisible, isPaused, isLoading } = useSilkStore(
-    useShallow((state) => ({
-      isVisible: state.isVisible,
-      isPaused: state.isPaused,
-      isLoading: state.isLoading,
-    }))
-  );
+  // ✅ Using unified store with optimized selectors
+  const { isVisible, isPaused, isLoading } = useVisibilityState();
+  const { quality, opacity } = useSettingsState();
+  const { animationSpeed } = useAnimationState();
+  const { setVisible, setPaused, setLoading } = useThreeJSActions();
 
-  const { quality, opacity } = useSilkStore(
-    useShallow((state) => ({
-      quality: state.quality,
-      opacity: state.opacity,
-    }))
-  );
-
-  const { animationSpeed } = useSilkStore(
-    useShallow((state) => ({
-      animationSpeed: state.animationSpeed,
-    }))
-  );
-
-  // Actions memoizadas - solo se extraen cuando es necesario
-  const { setVisible, setPaused, setLoading, batchUpdate } = useSilkStore(
-    useShallow((state) => ({
-      setVisible: state.setVisible,
-      setPaused: state.setPaused,
-      setLoading: state.setLoading,
-      batchUpdate: state.batchUpdate,
-    }))
-  );
-
-  const cleanup = useMemo(() => createThreeJSCleanup(), []);
-
-  // Unified visibility control - dark mode detection with intersection observer
+  // ✅ Unified visibility control using centralized utilities
   useEffect(() => {
-    const detectDarkMode = (): boolean => {
-      // Check document class (primary method)
-      const hasClass = document.documentElement.classList.contains('dark-mode');
-      // Check localStorage with correct key
-      const savedTheme = localStorage.getItem('aurin-theme');
-      const isStoredDark = savedTheme === 'dark';
-      return hasClass || isStoredDark;
-    };
-
-    let intersectionObserver: IntersectionObserver | null = null;
     let isIntersecting = false;
 
-    const updateVisibility = () => {
-      const isDark = detectDarkMode();
+    const updateVisibility = (isDark: boolean) => {
       // Only show if NOT in dark mode AND intersecting
       const shouldBeVisible = !isDark && isIntersecting;
       setVisible(shouldBeVisible);
     };
 
     // Intersection Observer
-    intersectionObserver = new IntersectionObserver(
+    const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         isIntersecting = entry.isIntersecting;
-        updateVisibility(); // Update visibility considering both intersection and dark mode
+        // Use observeDarkMode to get current state and update
+        updateVisibility(!document.documentElement.classList.contains('dark-mode'));
       },
       {
         threshold: 0,
@@ -218,36 +57,14 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
       intersectionObserver.observe(mountRef.current);
     }
 
-    // Initial dark mode check - IMMEDIATE to prevent flash
-    updateVisibility();
-
-    // Watch for class changes on documentElement
-    const mutationObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          updateVisibility();
-        }
-      });
+    // Dark mode observer - eliminates ~50 lines of duplicated code
+    const cleanupDarkMode = observeDarkMode((isDark) => {
+      updateVisibility(isDark);
     });
-
-    mutationObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    // Listen for storage changes (theme changes in other tabs)
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'aurin-theme') {
-        updateVisibility();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
 
     return () => {
-      if (intersectionObserver) intersectionObserver.disconnect();
-      mutationObserver.disconnect();
-      window.removeEventListener('storage', handleStorageChange);
+      intersectionObserver.disconnect();
+      cleanupDarkMode();
     };
   }, [setVisible]);
 
@@ -372,15 +189,16 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
 
     let time = 0;
     const animate = () => {
+      // ✅ Use unified store's getState
       const currentState = useSilkStore.getState();
-      
+
       if (!currentState.isPaused && currentState.isVisible) {
         time += 0.1 * currentState.animationSpeed; // Match the original speed
         silkMaterial.uniforms.uTime.value = time;
         silkMaterial.uniforms.uOpacity.value = currentState.opacity;
         renderer.render(scene, camera);
       }
-      
+
       sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 

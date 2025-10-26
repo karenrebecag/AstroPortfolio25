@@ -4,12 +4,14 @@ interface Props {
   className?: string;
   priority?: boolean;
   sizes?: string;
+  id?: string;
 }
 
 const {
   className = "",
   priority = true,
-  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 520px"
+  sizes = "(max-width: 768px) 420px, (max-width: 1200px) 520px, 600px",
+  id = "banner-image"
 } = Astro.props;
 
 // URLs optimizadas para diferentes formatos y tamaños
@@ -20,7 +22,7 @@ const fallbackUrl = "https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortf
 const generateSrcSet = (format: string) => {
   return [
     `${baseUrl}-520w.${format} 520w`,
-    `${baseUrl}-780w.${format} 780w`, 
+    `${baseUrl}-780w.${format} 780w`,
     `${baseUrl}-1040w.${format} 1040w`
   ].join(', ');
 };
@@ -43,7 +45,8 @@ const generateSrcSet = (format: string) => {
     />
     
     <!-- Fallback to PNG -->
-    <img 
+    <img
+      id={id}
       src={fallbackUrl}
       alt="Karen Rebeca Ortiz - Design Engineer Portfolio"
       width="520"

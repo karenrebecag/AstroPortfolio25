@@ -12,8 +12,17 @@ export default defineConfig({
   site: 'https://karenortiz.space',
   output: 'server',
   adapter: vercel({
-    webAnalytics: { enabled: true }
+    webAnalytics: { enabled: true },
+    imageService: true
   }),
+  image: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev'
+      }
+    ]
+  },
   markdown: {
     shikiConfig: {
       themes: {

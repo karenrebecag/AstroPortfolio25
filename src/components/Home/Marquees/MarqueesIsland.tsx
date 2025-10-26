@@ -11,7 +11,7 @@ const MarqueesIsland: React.FC = () => {
           <MarqueeAnimation
             direction="right"
             baseVelocity={-2}
-            className="text-white py-2 font-display"
+            className="main-marquee-text py-2 font-display"
           >
             CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO
           </MarqueeAnimation>
@@ -21,7 +21,7 @@ const MarqueesIsland: React.FC = () => {
           <MarqueeAnimation
             direction="left"
             baseVelocity={-2}
-            className="text-white py-2 font-display"
+            className="main-marquee-text py-2 font-display"
           >
             FRONTEND • BACKEND • FULLSTACK • PROJECTS
           </MarqueeAnimation>

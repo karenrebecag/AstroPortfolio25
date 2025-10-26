@@ -41,3 +41,10 @@
   .me-portfolio-img[loading="eager"] {
     content-visibility: auto;
   }
+
+  /* Dark mode filter - No need for second image */
+  :global(.dark-mode) .me-portfolio-img {
+    filter: drop-shadow(0 0 60px #c31e9225) drop-shadow(0 0 80px rgba(195, 30, 146, 0.06)) drop-shadow(0 0 180px rgba(195, 30, 146, 0.02));
+    mix-blend-mode: multiply;
+    transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }

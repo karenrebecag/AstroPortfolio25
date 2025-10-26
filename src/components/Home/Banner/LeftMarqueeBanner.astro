@@ -4,8 +4,8 @@ import styles from './LeftMarqueeBanner.module.css';
 ---
 
 <!-- Wrapper para prevenir layout shift -->
-<div class={styles.leftMarqueeContainer}>
-  <div class={styles.leftMarqueeWrapper}>
+<div class={styles['left-marquee-container']}>
+  <div class={styles['left-marquee-wrapper']}>
     <div
       id="left-marquee"
       class="whitespace-nowrap font-display font-bold select-none text-right"
@@ -62,7 +62,7 @@ import styles from './LeftMarqueeBanner.module.css';
   }
 
   /* Hover effect - Maximum neon illumination with flicker */
-  :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+  :global(.dark-mode) :global(.left-marquee-wrapper):hover #left-marquee {
     -webkit-text-stroke: 1px rgba(157, 127, 193, 1);
     text-shadow:
       /* Intense core illumination */
@@ -119,7 +119,7 @@ import styles from './LeftMarqueeBanner.module.css';
 
   /* Accessibility: Respect user's motion preferences */
   @media (prefers-reduced-motion: reduce) {
-    :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+    :global(.dark-mode) :global(.left-marquee-wrapper):hover #left-marquee {
       animation: none !important;
     }
   }
@@ -147,7 +147,7 @@ import styles from './LeftMarqueeBanner.module.css';
     }
 
     /* Anular hover effects solo en Safari */
-    :global(.dark-mode) :global(.leftMarqueeWrapper):hover #left-marquee {
+    :global(.dark-mode) :global(.left-marquee-wrapper):hover #left-marquee {
       background: linear-gradient(90deg, #b190ff, #7449ff) !important;
       background-clip: text !important;
       -webkit-background-clip: text !important;
@@ -163,11 +163,11 @@ import styles from './LeftMarqueeBanner.module.css';
   /* Gradientes laterales para pantallas grandes */
   @media (min-width: 2560px) {
     /* Dark mode gradients */
-    :global(.dark-mode) :global(.leftMarqueeWrapper)::before {
+    :global(.dark-mode) :global(.left-marquee-wrapper)::before {
       background: linear-gradient(to right, #050112, transparent) !important;
     }
 
-    :global(.dark-mode) :global(.leftMarqueeWrapper)::after {
+    :global(.dark-mode) :global(.left-marquee-wrapper)::after {
       background: linear-gradient(to left, #050112, transparent) !important;
     }
   }
