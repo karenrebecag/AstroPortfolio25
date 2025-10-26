@@ -1,0 +1,149 @@
+.section {
+    width: 100%;
+    padding: 65px 100px; /* Adjusted padding */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1612px; /* Using max-width */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 100px;
+}
+
+.content {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 28px;
+}
+
+.briefDescription {
+    color: #4E5052;
+    font-size: 18px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.textBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px; /* Added margin for spacing */
+}
+
+.textBlockTitle {
+    align-self: stretch;
+    color: #161616;
+    font-size: 24px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 50px;
+}
+
+.textBlockParagraph {
+    align-self: stretch;
+    color: #4E5052;
+    font-size: 18px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.imageContainer {
+    align-self: stretch;
+    padding: 90px 0; /* Adjusted padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.image {
+    width: 100%;
+    height: auto; /* Changed to auto for responsiveness */
+    box-shadow: 0px 4px 50.8px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.quoteContainer {
+    align-self: stretch;
+    padding: 48px 20px; /* Adjusted padding */
+    background: #F7F5F2;
+    box-shadow: 0px 4px 68.1px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    margin: 50px 0; /* Added margin */
+}
+
+.quoteContent {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+}
+
+.quoteText {
+    align-self: stretch;
+    text-align: center;
+    color: #161616;
+    font-size: 18px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 20px;
+}
+
+.quoteAuthor {
+    color: #4E5052;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-transform: capitalize;
+    line-height: 24px;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .container {
+        gap: 50px;
+    }
+    .briefDescription, .textBlockParagraph {
+        font-size: 20px;
+        line-height: 32px;
+    }
+    .textBlockTitle {
+        font-size: 32px;
+        line-height: 40px;
+    }
+    .quoteText {
+        font-size: 24px;
+        line-height: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 40px 20px;
+    }
+    .quoteContainer {
+        padding: 30px 20px;
+    }
+}

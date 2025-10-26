@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CaseStudy from '../components/modules/CaseStudy/CaseStudy.astro';
+import { StickyFooter } from '../components/modules/Footer/components/StickyFooter.tsx';
+import '../styles/global.css';
+
+const caseStudyData = {
+  bannerData: {
+    mainTag: "Web Development",
+    uploadDate: "OCTOBER 26, 2025",
+    title: "Creating a Reusable Article Banner in Astro",
+    authorImage: "https://via.placeholder.com/40",
+    authorName: "Karen Ortiz"
+  },
+  articleData: {
+    briefDescription: "In a world that often feels overwhelming, building a joyful and fulfilling life doesn’t have to be complicated. Sometimes, it’s the small, consistent habits that create the biggest impact. Here are 10 simple yet powerful habits you can start today to cultivate more happiness and purpose in your everyday life.",
+    section1: {
+      title: "1. Start Your Day with Gratitude.",
+      text: "Start your mornings by writing down three things you're grateful for, no matter how small. End your day by reflecting on one positive moment, even if the day felt challenging. Over time, these bookends of gratitude anchor your days in positivity, build resilience, and increase your overall satisfaction with life."
+    },
+    section2: {
+      title: "2. Move Your Body with Joy.",
+      paragraphs: [
+        "Exercise shouldn’t feel like a chore; it should feel like a celebration of what your body can do. Instead of forcing yourself into rigid workouts you hate, find movement that sparks joy — dancing, hiking, stretching, yoga, or even a playful walk with your dog.",
+        "Physical activity boosts endorphins, reduces stress, and energizes you from the inside out."
+      ]
+    },
+    image: {
+      src: "https://placehold.co/1612x1075",
+      alt: "Placeholder image"
+    },
+    quote: {
+      text: "Joy is not found in grand moments, but in the quiet, simple habits we nurture every day.",
+      author: "John Smith"
+    },
+    section3: {
+      title: "3. Create Space for Meaningful Connections.",
+      paragraphs: [
+        "Human connection is one of the strongest predictors of happiness. In a busy world, it's easy to let true relationships fade. Make a conscious effort to reach out — send that text, schedule that coffee date, write that heartfelt message.",
+        "Invest in quality over quantity. A few deep, supportive relationships nourish your heart far more than a hundred surface-level ones."
+      ]
+    },
+    section4: {
+      title: "4. Design a Nurturing Environment.",
+      paragraphs: [
+        "Your environment dramatically influences your mood and mental clarity. Create spaces around you that inspire peace and creativity. Declutter your room, add plants, hang art you love, or light a candle that makes you feel calm.",
+        "A beautiful, intentional space isn't about perfection — it's about designing surroundings that reflect and support who you want to become."
+      ]
+    }
+  },
+  galleryData: {
+    images: [
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+      "https://images.unsplash.com/photo-1572099606223-6e29045d7de3?q=80&w=2070",
+    ]
+  },
+  techStackData: {
+    techStack: [
+      { heading: "Astro", description: "The web framework for building content-driven websites." },
+      { heading: "React", description: "A JavaScript library for building user interfaces." },
+      { heading: "Tailwind CSS", description: "A utility-first CSS framework for rapid UI development." },
+      { heading: "Framer Motion", description: "A production-ready motion library for React." }
+    ]
+  },
+  processWorkflowData: {
+    title: "Process Workflow",
+    subtitle: "Business challenges are tough, but we have a proven record of elevating our partners to their next and best selves.",
+    steps: [
+      { step: 1, description: "We’re looking for bold founders who are ready to shape the next wave of Bitcoin and Web3. If you’re building something groundbreaking, let’s talk." },
+      { step: 2, description: "We’re looking for bold founders who are ready to shape the next wave of Bitcoin and Web3. If you’re building something groundbreaking, let’s talk." },
+      { step: 3, description: "We’re looking for bold founders who are ready to shape the next wave of Bitcoin and Web3. If you’re building something groundbreaking, let’s talk." },
+      { step: 4, description: "We’re looking for bold founders who are ready to shape the next wave of Bitcoin and Web3. If you’re building something groundbreaking, let’s talk." },
+    ]
+  },
+  projectAchievementsData: {
+    title: "Lo que resolví",
+    achievements: [
+      { title: "Increased User Engagement", description: "Successfully redesigned the user interface, leading to a 40% increase in user engagement and session duration." },
+      { title: "Optimized Performance", description: "Reduced page load times by 60% through code optimization and modern image formats, significantly improving the user experience." },
+      { title: "Developed a Scalable Backend", description: "Built a new microservices-based architecture that allowed the platform to handle 10x more concurrent users." },
+      { title: "Improved Accessibility", description: "Ensured the application is fully compliant with WCAG 2.1 AA standards, making it accessible to all users." },
+    ],
+    imageSrc: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Abstract%20Abstract%20Glass%20Spectrum%201.webp"
+  },
+  finalAchievementsData: {
+    title: "Logros",
+    achievements: [
+      { description: "Objetivo 1. Texto Largo" },
+      { description: "Objetivo 2. Texto Largo" },
+      { description: "Objetivo 3. Texto Largo" },
+    ]
+  },
+  storyId: "example-story-id"
+};
+---
+
+<Layout title="Case Study Template">
+  <CaseStudy {...caseStudyData} />
+  <StickyFooter client:visible />
+</Layout>

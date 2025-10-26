@@ -1,0 +1,62 @@
+---
+import styles from './ArticleSection.module.css';
+
+export interface Props {
+  briefDescription: string;
+  section1: { title: string; text: string; };
+  section2: { title: string; paragraphs: string[]; };
+  image: { src: string; alt: string; };
+  quote: { text: string; author: string; };
+  section3: { title: string; paragraphs: string[]; };
+  section4: { title: string; paragraphs: string[]; };
+}
+
+const { briefDescription, section1, section2, image, quote, section3, section4 } = Astro.props;
+---
+
+<section class={styles.section}>
+    <div class={styles.container}>
+        <div class={styles.content}>
+            <p class={styles.briefDescription}>{briefDescription}</p>
+
+            <div class={styles.textBlock}>
+                <h2 class={styles.textBlockTitle}>{section1.title}</h2>
+                <p class={styles.textBlockParagraph}>{section1.text}</p>
+            </div>
+
+            <div class={styles.textBlock}>
+                <h2 class={styles.textBlockTitle}>{section2.title}</h2>
+                {section2.paragraphs.map(p => (
+                    <p class={styles.textBlockParagraph}>{p}</p>
+                ))}
+            </div>
+
+            <div class={styles.imageContainer}>
+                <img class={styles.image} src={image.src} alt={image.alt} />
+            </div>
+        </div>
+
+        <div class={styles.quoteContainer}>
+            <div class={styles.quoteContent}>
+                <blockquote class={styles.quoteText}>"{quote.text}"</blockquote>
+                <cite class={styles.quoteAuthor}>{quote.author}</cite>
+            </div>
+        </div>
+
+        <div class={styles.content}>
+            <div class={styles.textBlock}>
+                <h2 class={styles.textBlockTitle}>{section3.title}</h2>
+                {section3.paragraphs.map(p => (
+                    <p class={styles.textBlockParagraph}>{p}</p>
+                ))}
+            </div>
+
+            <div class={styles.textBlock}>
+                <h2 class={styles.textBlockTitle}>{section4.title}</h2>
+                {section4.paragraphs.map(p => (
+                    <p class={styles.textBlockParagraph}>{p}</p>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

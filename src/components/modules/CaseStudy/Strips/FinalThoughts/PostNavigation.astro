@@ -1,0 +1,30 @@
+---
+import styles from './PostNavigation.module.css';
+
+export interface Post {
+    title: string;
+    href: string;
+}
+
+export interface Props {
+    prevPost?: Post;
+    nextPost?: Post;
+}
+
+const { prevPost, nextPost } = Astro.props;
+---
+<div class={styles.navContainer}>
+    {prevPost && (
+        <a href={prevPost.href} class:list={[styles.navBox, styles.prev]}>
+            <div class={styles.navHeader}>Previous</div>
+            <div class={styles.navTitle}>{prevPost.title}</div>
+        </a>
+    )}
+    {prevPost && nextPost && <div class={styles.separator}></div>}
+    {nextPost && (
+        <a href={nextPost.href} class:list={[styles.navBox, styles.next]}>
+            <div class={styles.navHeader}>Next</div>
+            <div class={styles.navTitle}>{nextPost.title}</div>
+        </a>
+    )}
+</div>

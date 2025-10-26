@@ -1,0 +1,74 @@
+.section {
+    padding: 115px 60px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Adjust ratio as needed */
+    gap: 100px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.stickyTitle {
+    position: sticky;
+    top: 115px; /* Match top padding */
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 85px;
+    line-height: 111px;
+    color: black;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Space between tech items */
+}
+
+.techHeading {
+    font-family: 'EB Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 35px;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.techDescription {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    color: rgba(0, 0, 0, 0.63);
+    max-width: 1037px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    .stickyTitle {
+        position: static; /* Un-stick the title */
+        margin-bottom: 60px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 20px;
+    }
+    .stickyTitle {
+        font-size: 60px;
+        line-height: 1.2;
+    }
+    .techHeading {
+        font-size: 28px;
+    }
+    .techDescription {
+        font-size: 15px;
+    }
+}

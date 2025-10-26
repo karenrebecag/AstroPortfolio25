@@ -1,0 +1,32 @@
+---
+import styles from './StickyTechStack.module.css';
+import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+
+export interface Tech {
+  heading: string;
+  description: string;
+}
+
+export interface Props {
+  techStack: Tech[];
+}
+
+const { techStack } = Astro.props;
+---
+<AnimatedComponent client:visible>
+    <section class={styles.section}>
+        <div class={styles.container}>
+            <div class={styles.leftColumn}>
+                <h2 class={styles.stickyTitle}>Tech Stack</h2>
+            </div>
+            <div class={styles.rightColumn}>
+                {techStack.map((tech) => (
+                    <div class={styles.techItem}>
+                        <h3 class={styles.techHeading}>{tech.heading}</h3>
+                        <p class={styles.techDescription}>{tech.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</AnimatedComponent>

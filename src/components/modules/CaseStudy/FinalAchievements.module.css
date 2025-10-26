@@ -1,0 +1,101 @@
+.section {
+    padding: 20px 50px;
+    background: rgba(14.68, 14.68, 14.68, 0.20);
+    border-radius: 20px;
+    border: 1px #383838 solid;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleWrapper {
+    padding: 25px 50px;
+    border-bottom: 1px solid rgba(192, 192, 192, 0.23);
+    text-align: center;
+}
+
+.title {
+    color: #DADADA;
+    font-size: 64px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.itemsWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    gap: 30px;
+    padding: 0 50px;
+    border-bottom: 1px solid rgba(192, 192, 192, 0.23);
+    align-items: center;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.numberWrapper {
+    flex-shrink: 0;
+    padding: 20px 100px;
+    border-right: 1px solid rgba(192, 192, 192, 0.23);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.number {
+    font-size: 128px;
+    font-family: 'Median', serif;
+    color: #DADADA;
+    font-weight: 400;
+}
+
+.descriptionWrapper {
+    flex: 1;
+    padding: 40px 0;
+}
+
+.description {
+    color: white;
+    font-size: 32px;
+    font-family: var(--font-primary); /* Using var since Atkinson Hyperlegible is not defined */
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .section {
+        padding: 20px;
+    }
+    .item {
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    .numberWrapper {
+        border-right: none;
+        border-bottom: 1px solid rgba(192, 192, 192, 0.23);
+        padding: 20px 0;
+        width: 100%;
+    }
+    .title {
+        font-size: 48px;
+    }
+    .number {
+        font-size: 80px;
+    }
+    .description {
+        font-size: 24px;
+    }
+}

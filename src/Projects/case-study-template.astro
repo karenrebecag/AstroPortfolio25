@@ -2,19 +2,21 @@
 import Layout from '../layouts/Layout.astro';
 import { StickyFooter } from '../components/modules/Footer';
 import HeaderPill from '../components/case-study/HeaderPill.astro';
-import CaseStudyTemplateComponent from '../components/case-study/CaseStudyTemplate.tsx';
-import type { CaseStudyData } from '../components/case-study/types';
+import HeroStrip from '../components/modules/CaseStudy/components/strips/hero-strip/HeroStrip.astro';
+import ContentStrip from '../components/modules/CaseStudy/components/strips/content-strip/ContentStrip.astro';
+import CommentsStrip from '../components/modules/CaseStudy/components/strips/comments-strip/CommentsStrip.astro';
+import ContactStrip from '../components/modules/CaseStudy/components/strips/contact-strip/ContactStrip.astro';
+import FAQStrip from '../components/modules/CaseStudy/components/strips/faq-strip/FAQStrip.astro';
+import NavigationStrip from '../components/modules/CaseStudy/components/strips/navigation-strip/NavigationStrip.astro';
+import ProcessStrip from '../components/modules/CaseStudy/components/strips/process-strip/ProcessStrip.astro';
+import SolutionsStrip from '../components/modules/CaseStudy/components/strips/solutions-strip/SolutionsStrip.astro';
 
 // Mock data for template - this will be replaced with Payload CMS data
-const mockData: CaseStudyData = {
+const mockData = {
   title: "Project Nexus",
   subtitle: "Redefining Digital Experiences Through Innovation",
   heroImage: "/modern-dashboard.png",
-  description: [
-    "Project Nexus represents a groundbreaking approach to modern web applications, combining cutting-edge technology with user-centric design principles. Our team embarked on a journey to create a platform that not only meets current industry standards but sets new benchmarks for performance and usability.",
-    "Through extensive research and iterative development, we crafted a solution that seamlessly integrates complex backend systems with an intuitive frontend experience. The result is a product that delights users while maintaining robust functionality under the hood.",
-    "This case study explores the challenges we faced, the innovative solutions we implemented, and the measurable impact our work had on the client's business objectives.",
-  ],
+  description: "Project Nexus represents a groundbreaking approach to modern web applications, combining cutting-edge technology with user-centric design principles. Our team embarked on a journey to create a platform that not only meets current industry standards but sets new benchmarks for performance and usability.",
   services: [
     "UI/UX Design",
     "Frontend Development", 
@@ -31,79 +33,71 @@ const mockData: CaseStudyData = {
       name: "Next.js", 
       desc: "Server-side rendering and static site generation for improved SEO and load times",
     },
-    {
-      name: "TypeScript",
-      desc: "Type-safe development ensuring code quality and reducing runtime errors",
-    },
-    {
-      name: "Tailwind CSS",
-      desc: "Utility-first CSS framework for rapid UI development and consistent styling",
-    },
-    {
-      name: "Framer Motion",
-      desc: "Production-ready animation library for creating fluid, engaging interactions",
-    },
-    {
-      name: "Node.js",
-      desc: "Scalable backend runtime for handling high-traffic API requests efficiently",
-    },
   ],
   workflow: [
     {
-      step: 1,
+      number: 1,
       title: "Discovery & Research",
-      desc: "We began with comprehensive stakeholder interviews and competitive analysis to understand the market landscape. Through user surveys and analytics review, we identified key pain points and opportunities for innovation. This phase established our north star metrics and success criteria.",
+      description: "We began with comprehensive stakeholder interviews and competitive analysis to understand the market landscape. Through user surveys and analytics review, we identified key pain points and opportunities for innovation. This phase established our north star metrics and success criteria.",
     },
     {
-      step: 2,
+      number: 2,
       title: "Design & Prototyping", 
-      desc: "Armed with research insights, we created wireframes and high-fidelity prototypes. Multiple design iterations were tested with real users, allowing us to refine the interface before development. We established a design system to ensure consistency across all touchpoints.",
-    },
-    {
-      step: 3,
-      title: "Development & Integration",
-      desc: "Our engineering team built the application using modern best practices and agile methodologies. We implemented CI/CD pipelines for automated testing and deployment. Regular code reviews and pair programming sessions ensured code quality and knowledge sharing.",
-    },
-    {
-      step: 4,
-      title: "Testing & Launch",
-      desc: "Comprehensive QA testing covered functionality, performance, accessibility, and security. We conducted beta testing with select users to gather feedback before the public launch. Post-launch monitoring and rapid iteration addressed any emerging issues.",
+      description: "Armed with research insights, we created wireframes and high-fidelity prototypes. Multiple design iterations were tested with real users, allowing us to refine the interface before development. We established a design system to ensure consistency across all touchpoints.",
     },
   ],
   lessons: [
     "Early user testing revealed assumptions that would have been costly to fix later in development",
     "Investing in a robust design system upfront saved countless hours during implementation", 
-    "Performance optimization should be considered from day one, not as an afterthought",
-    "Clear communication channels between design and development teams prevented misalignment",
-    "Iterative releases allowed us to gather real-world feedback and adjust our roadmap accordingly",
   ],
   results: [
     {
-      metric: "45%",
-      desc: "Increase in user engagement",
+      number: 45,
+      description: "Increase in user engagement",
     },
     {
-      metric: "60%", 
-      desc: "Faster page load times",
-    },
-    {
-      metric: "3x",
-      desc: "Growth in conversions",
+      number: 60, 
+      description: "Faster page load times",
     },
   ],
   images: [
-    "/modern-dashboard.png",
-    "/mobile-app-screens.png", 
-    "/data-visualization-charts.png",
-    "/user-profile-interface.png",
-    "/settings-panel-design.jpg",
-    "/analytics-dashboard.png",
+    { src: "/modern-dashboard.png", alt: "Modern Dashboard" },
+    { src: "/mobile-app-screens.png", alt: "Mobile App Screens" }, 
   ],
   quote: {
     text: "The team delivered beyond our expectations. Their attention to detail and commitment to excellence transformed our vision into reality.",
     author: "Sarah Chen",
-    role: "CEO, TechCorp Industries",
   },
+  author: {
+      name: 'Karen Ortiz',
+      avatar: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/A5A05E33-1DDD-4041-BCF4-4522767BFCEE.jpeg'
+  },
+  mainTag: 'Web Development',
+  publishedDate: '26 Oct, 2025',
+  content: [
+      { type: 'heading', content: 'The Challenge' },
+      { type: 'text', content: 'The main challenge was to create a highly performant and scalable web application that could handle a large number of concurrent users without sacrificing user experience. The existing platform was slow, outdated, and difficult to maintain.' },
+      { type: 'image', content: { src: '/modern-dashboard.png', alt: 'Modern Dashboard', caption: 'A snapshot of the new dashboard design.' } },
+      { type: 'quote', content: { quote: 'We needed a complete overhaul of our system, and the team delivered exactly that.', author: 'Jane Doe, CTO' } },
+      { type: 'imageGrid', content: { images: [{ src: '/mobile-app-screens.png', alt: 'Mobile App' }, { src: '/data-visualization-charts.png', alt: 'Data Viz' }] } }
+  ],
+  comments: [
+      { id: '1', author: 'John Doe', avatar: '/avatars/john.png', date: 'Oct 26, 2025', content: 'This is an amazing project!', isVerified: true, replies: [] },
+      { id: '2', author: 'Jane Smith', avatar: '/avatars/jane.png', date: 'Oct 26, 2025', content: 'I love the design.', isVerified: false, replies: [
+          { id: '3', author: 'Karen Ortiz', avatar: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/A5A05E33-1DDD-4041-BCF4-4522767BFCEE.jpeg', date: 'Oct 26, 2025', content: 'Thank you!', isVerified: true, replies: [] }
+      ] }
+  ],
+  faqs: [
+      { question: 'What was the most challenging part of the project?', answer: 'The most challenging part was integrating the new frontend with the legacy backend system.' },
+      { question: 'How long did the project take?', answer: 'The project was completed in 6 months, from initial discovery to final launch.' }
+  ],
+  previousPost: { title: 'Previous Case Study', slug: 'previous-case-study' },
+  nextPost: { title: 'Next Case Study', slug: 'next-case-study' },
+  finalThoughts: {
+      title: 'Final Toughts',
+      paragraphs: ['This project was a great success and we are proud of the results.']
+  },
+  tags: ['Web Development', 'React', 'Next.js']
 };
 ---
 
@@ -111,7 +105,32 @@ const mockData: CaseStudyData = {
   <HeaderPill />
   
   <main class="case-study-main">
-    <CaseStudyTemplateComponent data={mockData} client:load />
+    <HeroStrip
+      title={mockData.title}
+      mainTag={mockData.mainTag}
+      publishedDate={mockData.publishedDate}
+      author={mockData.author}
+    />
+    <ContentStrip
+      description={mockData.description}
+      content={mockData.content}
+    />
+    <ProcessStrip
+        title="Our Workflow"
+        subtitle="A streamlined process for success"
+        steps={mockData.workflow}
+    />
+    <SolutionsStrip
+        title="Solutions"
+        dropdowns={mockData.stack}
+        achievements={mockData.results}
+        finalThoughts={mockData.finalThoughts}
+        tags={mockData.tags}
+    />
+    <FAQStrip faqs={mockData.faqs} />
+    <CommentsStrip comments={mockData.comments} />
+    <NavigationStrip previousPost={mockData.previousPost} nextPost={mockData.nextPost} />
+    <ContactStrip />
   </main>
 
   <StickyFooter client:visible />

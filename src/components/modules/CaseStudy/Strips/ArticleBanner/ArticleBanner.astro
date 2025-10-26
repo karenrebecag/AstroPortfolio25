@@ -1,0 +1,39 @@
+---
+import styles from './ArticleBanner.module.css';
+import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+
+export interface Props {
+  mainTag: string;
+  uploadDate: string;
+  title: string;
+  authorImage: string;
+  authorName: string;
+}
+
+const { mainTag, uploadDate, title, authorImage, authorName } = Astro.props;
+---
+<AnimatedComponent client:visible>
+    <div class={styles.banner}>
+        <div class={styles.container}>
+            <div class={styles.content}>
+                <div class={styles.meta}>
+                    <div class={styles.tag}>
+                        <div class={styles.tagText}>{mainTag}</div>
+                    </div>
+                    <div class={styles.date}>{uploadDate}</div>
+                    <div class={styles.separator}>/</div>
+                </div>
+                <h1 class={styles.title}>{title}</h1>
+                <div class={styles.author}>
+                    <div class={styles.authorAvatar}>
+                        <img src={authorImage} alt={authorName} />
+                    </div>
+                    <div class={styles.authorInfo}>
+                        <div class={styles.authorLabel}>Post by</div>
+                        <div class={styles.authorName}>{authorName}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</AnimatedComponent>

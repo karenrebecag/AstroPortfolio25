@@ -1,0 +1,38 @@
+---
+import styles from './FinalThoughts.module.css';
+import PostNavigation from './PostNavigation.astro';
+import type { Props as PostNavProps } from './PostNavigation.astro';
+import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+
+export interface Props {
+  title?: string;
+  paragraphs?: string[];
+  tags?: string[];
+  nav?: PostNavProps;
+}
+
+const {
+    title = "Final Thoughts.",
+    paragraphs = ["Happiness doesn’t have to be complicated. By cultivating small, consistent habits that honor your mind, body, and spirit, you naturally create a foundation for a more joyful and fulfilling life.", "Start with just one habit today — your future self will thank you."],
+    tags = ["Fashion", "Technology", "Travel List"],
+    nav = {
+        prevPost: { title: "How to Stay Productive While Working From Home.", href: "#" },
+        nextPost: { title: "Simple Habits That Will Transform Your Daily.", href: "#" }
+    }
+} = Astro.props;
+---
+<AnimatedComponent client:visible>
+    <section class={styles.section}>
+        <h2 class={styles.title}>{title}</h2>
+        <div class={styles.paragraphs}>
+            {paragraphs.map(p => <p>{p}</p>)}
+        </div>
+        <div class={styles.tagsContainer}>
+            <span class={styles.tagLabel}>Tag:</span>
+            {tags.map(tag => (
+                <div class={styles.tag}>{tag}</div>
+            ))}
+        </div>
+        <PostNavigation {...nav} />
+    </section>
+</AnimatedComponent>

@@ -1,0 +1,119 @@
+.achievementsSection {
+    width: 100%;
+    padding: 80px 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background-color: #080808;
+    color: white;
+}
+.mainTitle {
+    color: white;
+    font-size: 48px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+}
+.container {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+.leftColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.rightColumn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rightColumn img {
+    width: 100%;
+    height: auto;
+    max-height: 700px;
+    object-fit: cover;
+}
+.accordionItem {
+    align-self: stretch;
+    padding: 44px 48px;
+    background: rgba(14.68, 14.68, 14.68, 0.20);
+    border-radius: 20px;
+    border: 1px #383838 solid;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.3s;
+}
+.accordionItemOpen {
+    background: rgba(24.05, 24.05, 24.05, 0.67);
+}
+.accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.accordionTitle {
+    color: white;
+    font-size: 24px;
+    font-family: 'Median', serif;
+    font-weight: 400;
+    line-height: 30px;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+.iconOpen {
+    transform: rotate(180deg);
+}
+.iconLine {
+    width: 12px;
+    height: 2px;
+    left: 6px;
+    top: 11px;
+    position: absolute;
+    background: white;
+}
+.accordionContent {
+    overflow: hidden;
+}
+.accordionDescription {
+    padding-top: 20px;
+    color: #BBBBBB;
+    font-size: 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 20px;
+}
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+    .rightColumn {
+        order: -1;
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .achievementsSection {
+        padding: 40px 20px;
+    }
+    .mainTitle {
+        font-size: 48px;
+    }
+    .accordionItem {
+        padding: 24px;
+    }
+    .accordionTitle {
+        font-size: 24px;
+    }
+    .accordionDescription {
+        font-size: 18px;
+    }
+}

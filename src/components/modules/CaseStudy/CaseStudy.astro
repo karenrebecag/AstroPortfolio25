@@ -1,0 +1,84 @@
+---
+import ArticleBanner from './Strips/ArticleBanner/ArticleBanner.astro';
+import ArticleSection from './Strips/ArticleSection/ArticleSection.astro';
+import { HorizontalScrollGallery } from './Strips/HorizontalScrollGallery/HorizontalScrollGallery.tsx';
+import StickyTechStack from './Strips/StickyTechStack/StickyTechStack.astro';
+import ProcessWorkflowWrapper from './Strips/ProcessWorkflow/ProcessWorkflowWrapper.astro';
+import { ProjectAchievements } from './Strips/ProjectAchievements/ProjectAchievements.tsx';
+import FinalThoughts from './Strips/FinalThoughts/FinalThoughts.astro';
+import FAQs from '@/components/ui/FAQs.astro';
+import GetInTouch from '@/components/modules/GetInTouch/components/GetInTouch.astro';
+import CommentsSection from '@/components/ui/CommentsSection.astro';
+import WhiteBackground from '@/components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
+
+import type { Props as ArticleBannerProps } from './Strips/ArticleBanner/ArticleBanner.astro';
+import type { Props as ArticleSectionProps } from './Strips/ArticleSection/ArticleSection.astro';
+import type { Props as StickyTechStackProps } from './Strips/StickyTechStack/StickyTechStack.astro';
+import type { Props as ProcessWorkflowWrapperProps } from './Strips/ProcessWorkflow/ProcessWorkflowWrapper.astro';
+import type { Props as ProjectAchievementsProps } from './Strips/ProjectAchievements/ProjectAchievements.tsx';
+import type { Props as FinalThoughtsProps } from './Strips/FinalThoughts/FinalThoughts.astro';
+
+interface GalleryProps { images: string[]; }
+
+export interface Props {
+  bannerData: ArticleBannerProps;
+  articleData: ArticleSectionProps;
+  galleryData: GalleryProps;
+  techStackData: StickyTechStackProps;
+  processWorkflowData: ProcessWorkflowWrapperProps;
+  projectAchievementsData: ProjectAchievementsProps;
+  finalThoughtsData: FinalThoughtsProps;
+  storyId: string;
+}
+
+const { 
+    bannerData, 
+    articleData, 
+    galleryData, 
+    techStackData, 
+    processWorkflowData, 
+    projectAchievementsData, 
+    finalThoughtsData,
+    storyId 
+} = Astro.props;
+---
+
+<article>
+  <WhiteBackground>
+    <ArticleBanner {...bannerData} />
+    <ArticleSection {...articleData} />
+    
+    <div>
+      <HorizontalScrollGallery images={galleryData.images} client:visible />
+    </div>
+
+    <StickyTechStack {...techStackData} />
+
+    <ProcessWorkflowWrapper {...processWorkflowData} />
+  </WhiteBackground>
+
+  <ProjectAchievements {...projectAchievementsData} client:visible />
+
+  <FinalThoughts {...finalThoughtsData} />
+
+  <div class="faqs-responsive-container">
+    <FAQs />
+  </div>
+  <CommentsSection storyId={storyId} />
+  <section id="contact">
+    <GetInTouch />
+  </section>
+</article>
+
+<style>
+  /* Hide FAQs only on viewport < 480px */
+  @media (max-width: 479px) {
+    .faqs-responsive-container {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+</style>
