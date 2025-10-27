@@ -11,6 +11,24 @@ import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
 import { motion } from 'motion/react';
 import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 import styles from './Me.module.css';
+import { getExperiences } from '../../../lib/cms';
+import { experienceData as fallbackExperienceData } from '../../../data/experienceData';
+
+// Fetch experiences from CMS
+const experiencesFromCMS = await getExperiences();
+
+// Transform CMS data or use fallback
+const experienceData = experiencesFromCMS.length > 0
+  ? experiencesFromCMS.map((exp, index) => ({
+      id: (index + 1).toString().padStart(2, '0'),
+      title: exp.title,
+      company: exp.company,
+      description: exp.descriptionNormal,
+      highlight: exp.descriptionHighlight,
+      image: exp.mainCompanyImage?.url || '',
+      resumeAnchor: exp.href
+    }))
+  : fallbackExperienceData;
 ---
 
 <!-- Storytelling Scroll Container -->
@@ -208,14 +226,14 @@ import styles from './Me.module.css';
   <div class={styles['experience-marquee-desktop']}>
     <div class={styles['experience-marquee-container']}>
       <div class={styles['experience-marquee-wrapper-limited']}>
-        <ExperienceMarqueeIsland client:visible={{rootMargin: "400px"}} />
+        <ExperienceMarqueeIsland experienceData={experienceData} client:visible={{rootMargin: "400px"}} />
       </div>
     </div>
   </div>
 
   <!-- Mobile: Slider Manual (visible en vp < 768px) -->
   <div class={styles['experience-slider-mobile']}>
-    <ExperienceSlider client:visible={{rootMargin: "400px"}} />
+    <ExperienceSlider experienceData={experienceData} client:visible={{rootMargin: "400px"}} />
   </div>
 </div>
 

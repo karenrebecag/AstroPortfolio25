@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { experienceData, type ExperienceItem } from '../../../../data/experienceData';
+import type { ExperienceItem } from '../../../../data/experienceData';
+
+interface ExperienceMarqueeIslandProps {
+  experienceData: ExperienceItem[];
+}
 
 // Experience Card Component - Pure JSX (no innerHTML)
 const ExperienceCard: React.FC<{ experience: ExperienceItem }> = ({ experience }) => {
@@ -56,7 +60,7 @@ const ExperienceCard: React.FC<{ experience: ExperienceItem }> = ({ experience }
   );
 };
 
-const ExperienceMarqueeIsland: React.FC = () => {
+const ExperienceMarqueeIsland: React.FC<ExperienceMarqueeIslandProps> = ({ experienceData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 

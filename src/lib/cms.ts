@@ -189,3 +189,30 @@ export async function getQuickProjects(): Promise<QuickProject[]> {
     sort: 'order',
   });
 }
+
+/**
+ * Experiences Collection
+ */
+export interface Experience {
+  id: string;
+  title: string;
+  company: string;
+  descriptionNormal: string;
+  descriptionHighlight: string;
+  href: string;
+  mainCompanyImage: {
+    url: string;
+    alt?: string;
+  };
+  order?: number;
+  status: 'draft' | 'published';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function getExperiences(): Promise<Experience[]> {
+  return fetchCollection<Experience>('experiences', {
+    where: { status: { equals: 'published' } },
+    sort: 'order',
+  });
+}
