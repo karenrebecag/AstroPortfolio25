@@ -12,8 +12,19 @@ import { getProjects, getQuickProjects } from '../../lib/cms';
 const caseStudyProjects = await getProjects();
 const quickProjectsFromCMS = await getQuickProjects();
 
-// Project data para el marquee de proyectos rápidos (fallback)
-const projectData = [
+// Transform CMS quick projects to component format
+const projectDataFromCMS = quickProjectsFromCMS.map((project, index) => ({
+  id: (index + 1).toString().padStart(2, '0'),
+  title: project.title,
+  description: project.description,
+  tags: project.tags.map(t => t.tag),
+  image: project.image?.url || 'https://picsum.photos/300/300',
+  url: project.url,
+  type: project.type
+}));
+
+// Project data para el marquee de proyectos rápidos (fallback si CMS está vacío)
+const fallbackProjectData = [
   {
     id: "01",
     title: "AWE MX",
@@ -96,6 +107,9 @@ const projectData = [
     type: "Educational Platform"
   }
 ];
+
+// Use CMS data if available, otherwise use fallback
+const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbackProjectData;
 ---
 
 <section class="projects-section">
