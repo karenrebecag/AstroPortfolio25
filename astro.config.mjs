@@ -13,7 +13,13 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({
     webAnalytics: { enabled: true },
-    imageService: true
+    imageService: true,
+    isr: {
+      // Genera un token seguro con: openssl rand -base64 32
+      bypassToken: process.env.ISR_BYPASS_TOKEN || 'cambiar-este-token-en-produccion-32-caracteres-minimo',
+      // No cachear rutas API
+      exclude: ['/api/*']
+    }
   }),
   image: {
     remotePatterns: [

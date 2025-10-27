@@ -1,14 +1,7 @@
 ---
-// Enable ISR with revalidation
+// Enable prerendering with ISR
+// The page will be statically generated but can be revalidated on-demand
 export const prerender = true;
-
-// Revalidate every 60 seconds (1 minute)
-// This means the page will be regenerated at most once per minute
-export const config = {
-  isr: {
-    expiration: 60,
-  },
-};
 
 import Layout from '../layouts/Layout.astro';
 import AdvancedSEO from '../components/seo/AdvancedSEO.astro';

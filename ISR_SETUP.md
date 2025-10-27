@@ -1,142 +1,185 @@
-# ISR (Incremental Static Regeneration) Setup
+# 🚀 On-Demand ISR Setup Guide
 
-## ¿Qué es ISR?
+## ¿Qué hace esto?
 
-ISR permite que tu sitio Astro se actualice automáticamente cuando cambies contenido en el CMS, **sin necesidad de hacer redeploy manual**.
+Permite que tu portfolio se **actualice automáticamente** cuando cambies contenido en el CMS, **sin hacer redeploy manual**.
 
-## Cómo Funciona
+## 📋 Configuración Paso a Paso
 
-1. **ISR Automático**: La página se regenera automáticamente cada 60 segundos cuando alguien la visita
-2. **Webhook Manual**: El CMS puede forzar una actualización inmediata mediante un webhook
+### 1. Generar Tokens Seguros
 
-## Configuración
+Ejecuta esto en tu terminal para generar 2 tokens seguros:
 
-### 1. Variables de Entorno en Vercel (Portfolio)
-
-En tu proyecto de Astro en Vercel, agrega estas variables:
-
-```env
-PUBLIC_CMS_URL=https://astro-portfolio-cms-delta.vercel.app
-REVALIDATE_TOKEN=<genera-un-token-secreto-aqui>
-```
-
-Para generar un token seguro, usa:
 ```bash
+# Token 1: ISR Bypass Token (para Vercel)
+openssl rand -base64 32
+
+# Token 2: Revalidate Token (para webhook)
 openssl rand -base64 32
 ```
 
-### 2. Variables de Entorno en Vercel (CMS)
+Guarda estos tokens, los necesitarás en los siguientes pasos.
 
-En tu proyecto del CMS en Vercel, agrega:
+### 2. Configurar Variables en Vercel - PORTFOLIO
+
+Ve a tu proyecto de Astro en Vercel → Settings → Environment Variables
+
+Agrega estas 3 variables:
+
+```env
+PUBLIC_CMS_URL=https://astro-portfolio-cms-delta.vercel.app
+ISR_BYPASS_TOKEN=<pega-aqui-el-token-1>
+REVALIDATE_TOKEN=<pega-aqui-el-token-2>
+```
+
+### 3. Configurar Variables en Vercel - CMS
+
+Ve a tu proyecto del CMS en Vercel → Settings → Environment Variables
+
+Agrega estas 2 variables:
 
 ```env
 ASTRO_REVALIDATE_URL=https://karenortiz.space/api/revalidate
-ASTRO_REVALIDATE_TOKEN=<el-mismo-token-del-paso-1>
+ASTRO_REVALIDATE_TOKEN=<pega-aqui-el-token-2-mismo-del-paso-2>
 ```
 
-### 3. Actualizar Collections del CMS
+⚠️ **IMPORTANTE**: `ASTRO_REVALIDATE_TOKEN` debe ser **exactamente igual** a `REVALIDATE_TOKEN` del portfolio.
 
-Agrega hooks a las collections para triggear revalidación:
+### 4. Hacer Redeploy
 
-**Services.ts, HomeFAQs.ts, QuickProjects.ts:**
+Después de agregar las variables de entorno:
 
-```typescript
-import { CollectionConfig } from 'payload'
-import { triggerAstroRevalidation } from '../lib/revalidate'
+1. **Portfolio**: Ve a Deployments → Click en el último deployment → Redeploy
+2. **CMS**: Ve a Deployments → Click en el último deployment → Redeploy
 
-export const Services: CollectionConfig = {
-  slug: 'services',
-  // ... resto de configuración
+## ✅ Cómo Probar
 
-  hooks: {
-    afterChange: [
-      async ({ operation }) => {
-        if (operation === 'create' || operation === 'update' || operation === 'delete') {
-          await triggerAstroRevalidation(['/'])
-        }
-      },
-    ],
-  },
+### Prueba 1: Verificar el Endpoint
 
-  // ... resto de configuración
-}
+```bash
+curl https://karenortiz.space/api/revalidate
 ```
 
-## Cómo Usar
+Deberías ver información sobre cómo usar el endpoint.
 
-### Actualización Automática (ISR)
-1. Edita contenido en el CMS
-2. Guarda los cambios
-3. **Espera hasta 60 segundos**
-4. La próxima visita a la página mostrará el contenido actualizado
-
-### Actualización Inmediata (Webhook)
-1. Edita contenido en el CMS
-2. El hook `afterChange` se ejecuta automáticamente
-3. Llama al endpoint `/api/revalidate`
-4. La página se marca para regeneración
-5. **La próxima visita mostrará el contenido actualizado inmediatamente**
-
-## Testing
-
-### Probar el endpoint de revalidación:
+### Prueba 2: Triggear Revalidación Manualmente
 
 ```bash
 curl -X POST https://karenortiz.space/api/revalidate \
-  -H "x-revalidate-token: tu-token-secreto" \
+  -H "x-revalidate-token: TU-REVALIDATE-TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"paths": ["/"]}'
+  -d '{"routes": ["/"]}'
 ```
 
 Respuesta esperada:
 ```json
 {
   "success": true,
-  "message": "Revalidation triggered",
-  "paths": ["/"],
-  "timestamp": "2025-01-27T..."
+  "message": "All routes revalidated successfully",
+  "results": [
+    {
+      "route": "/",
+      "success": true,
+      "cacheStatus": "REVALIDATED",
+      "status": 200
+    }
+  ]
 }
 ```
 
-## Beneficios
+### Prueba 3: Editar Contenido en el CMS
 
-✅ **No más rebuilds manuales**: El sitio se actualiza automáticamente
-✅ **Actualización rápida**: Cambios visibles en ~60 segundos (o inmediato con webhook)
-✅ **Sin downtime**: Las páginas se regeneran en background
-✅ **Performance**: Las páginas siguen siendo estáticas y ultrarrápidas
-✅ **Fallback**: Si el CMS falla, el sitio muestra la última versión cached
+1. Ve al admin del CMS
+2. Edita un servicio, FAQ o proyecto
+3. Guarda los cambios
+4. **Espera 5-10 segundos**
+5. Visita `https://karenortiz.space` en modo incógnito
+6. ✅ Deberías ver el contenido actualizado
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
-### El contenido no se actualiza
+### No se actualizan los cambios
 
-1. **Verifica las variables de entorno** en Vercel (ambos proyectos)
-2. **Revisa los logs del CMS** para ver si el webhook se ejecuta
-3. **Espera 60 segundos** y recarga la página (limpia cache del navegador)
-4. **Prueba el endpoint** manualmente con curl
+**Verifica las variables de entorno:**
+```bash
+# En el portfolio
+echo $ISR_BYPASS_TOKEN
+echo $REVALIDATE_TOKEN
+echo $PUBLIC_CMS_URL
 
-### Error 401 en el webhook
+# En el CMS
+echo $ASTRO_REVALIDATE_URL
+echo $ASTRO_REVALIDATE_TOKEN
+```
 
-- Verifica que `REVALIDATE_TOKEN` sea el mismo en ambos proyectos
-- Verifica que el token no tenga espacios o saltos de línea
+**Revisa los logs del CMS:**
+- Ve a Vercel → Tu proyecto CMS → Deployments → Functions
+- Busca mensajes que digan "✅ Astro ISR revalidation triggered"
 
-### Error 500 en el endpoint
+**Limpia el cache del navegador:**
+- Abre el sitio en modo incógnito
+- O presiona Ctrl+Shift+R (Cmd+Shift+R en Mac)
 
-- Verifica que `REVALIDATE_TOKEN` esté configurado en Vercel
-- Revisa los logs de Vercel para más detalles
+### Error 401 "Invalid token"
 
-## Archivos Modificados
+Los tokens no coinciden. Verifica que:
+- `REVALIDATE_TOKEN` en el portfolio
+- `ASTRO_REVALIDATE_TOKEN` en el CMS
+- Sean **exactamente iguales** (sin espacios extras)
 
-### Portfolio (Astro)
-- ✅ `src/pages/index.astro` - ISR config agregado
-- ✅ `src/pages/api/revalidate.ts` - Webhook endpoint creado
-- ✅ `.env.local` - Variables de entorno agregadas
+### Error 500 "ISR_BYPASS_TOKEN not configured"
 
-### CMS (Payload)
-- ⚠️ `src/lib/revalidate.ts` - Función compartida creada
-- ⚠️ `src/collections/Projects.ts` - Hook ya existe, solo actualizar import
-- ⚠️ `src/collections/Services.ts` - Agregar hook
-- ⚠️ `src/collections/HomeFAQs.ts` - Agregar hook
-- ⚠️ `src/collections/QuickProjects.ts` - Agregar hook
+Falta el `ISR_BYPASS_TOKEN` en las variables de entorno del portfolio.
 
-**Nota**: Los archivos marcados con ⚠️ en el CMS necesitan ser actualizados manualmente o en un commit separado.
+### El webhook nunca se ejecuta
+
+Verifica en los logs del CMS si aparece:
+- ⚠️ "ASTRO_REVALIDATE_URL or ASTRO_REVALIDATE_TOKEN not configured"
+
+Si ves esto, las variables no están configuradas correctamente en el CMS.
+
+## 📊 Cómo Funciona
+
+```
+1. Editas contenido en el CMS
+   ↓
+2. CMS ejecuta el hook afterChange
+   ↓
+3. CMS envía POST a /api/revalidate
+   ↓
+4. Portfolio verifica el token
+   ↓
+5. Portfolio envía HEAD con x-prerender-revalidate
+   ↓
+6. Vercel invalida el cache
+   ↓
+7. Próxima visita regenera la página
+   ↓
+8. ✅ Usuario ve contenido nuevo
+```
+
+## 💡 Beneficios
+
+✅ **Cero rebuilds manuales** - El CMS actualiza el sitio automáticamente
+✅ **Actualización instantánea** - Cambios visibles en 5-10 segundos
+✅ **Sin downtime** - Las páginas se regeneran en background
+✅ **Performance óptima** - Las páginas siguen siendo estáticas
+✅ **Fallback robusto** - Si el CMS falla, muestra la última versión cached
+
+## 📝 Archivos Modificados
+
+### Portfolio
+- ✅ `astro.config.mjs` - ISR config con bypassToken
+- ✅ `src/pages/api/revalidate.ts` - Webhook endpoint
+- ✅ `src/pages/index.astro` - Prerender habilitado
+- ✅ `.env.local` - Variables de entorno
+
+### CMS
+- ✅ `src/lib/revalidate.ts` - Función de revalidación
+- ✅ `src/collections/Projects.ts` - Hook afterChange
+- ⚠️ `src/collections/Services.ts` - Pendiente agregar hook
+- ⚠️ `src/collections/HomeFAQs.ts` - Pendiente agregar hook
+
+## 🎯 Siguiente Paso
+
+Una vez configurado todo, **simplemente edita contenido en el CMS** y los cambios aparecerán automáticamente en el sitio. ¡No más rebuilds manuales!
