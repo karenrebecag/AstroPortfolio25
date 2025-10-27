@@ -2,8 +2,7 @@
     padding: 115px 60px;
 }
 
-/* Import playfair utility from node_modules - use bare import so Vite can resolve it */
-@import "globals/playfair.css";
+/* Playfair font is loaded globally via astro-font */
 
 .container {
     display: grid;
