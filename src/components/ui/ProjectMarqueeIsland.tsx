@@ -1,91 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 
-// Array de project data para proyectos rápidos (landing pages, no-code, vibe code, etc.)
-const projectData = [
-  {
-    id: "01",
-    title: "AWE MX",
-    description: "Global XR community platform promoting spatial computing and AI innovation in Mexico",
-    tags: ["Astro", "XR Community", "Events Platform"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AWEMX.webp",
-    url: "https://awexr.mx/",
-    type: "Community Platform"
-  },
-  {
-    id: "02", 
-    title: "Zachariel Banking",
-    description: "Fintech waitlist landing page with $100 signup bonus and premium banking features",
-    tags: ["Webflow", "UI Design", "Fintech"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Zachariel.webp",
-    url: "https://www.figma.com/design/B5hLcZbHpNdXNf0KZDcNEL/Zachariel?node-id=0-1&t=1XoEGZ6UT6SXB8T8-1",
-    type: "Landing Page"
-  },
-  {
-    id: "03",
-    title: "Ancient Tech Redesign",
-    description: "UI/UX redesign for AI-powered tech consulting platform with modern interface",
-    tags: ["Figma", "Webflow", "UI Redesign"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientTech.webp", 
-    url: "https://www.figma.com/design/wOLxrlsIUMvcRJyOzgjIoD/AncientTech--Redesign-%F0%9F%9A%80?node-id=13-4752&t=NWKMSZ7OjeZrgLd7-1",
-    type: "UI Redesign"
-  },
-  {
-    id: "04",
-    title: "Health-Ade Kombucha",
-    description: "E-commerce redesign for premium probiotic kombucha brand with gut health focus",
-    tags: ["Figma", "Shopify", "E-commerce"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/HealtAde.webp",
-    url: "https://health-ade.com/",
-    type: "E-commerce"
-  },
-  {
-    id: "05",
-    title: "Metaverse BEDU",
-    description: "Data Science dashboard UI design for BEDU diplomado featuring modern analytics interface",
-    tags: ["Figma", "UI Design", "Data Science"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/metaverse.webp",
-    url: "https://www.figma.com/design/2EkRHWv6kzGtflVeymrd52/Galicia?node-id=0-1&t=NG8PRVK7ZRsTVaAa-1", 
-    type: "Dashboard UI"
-  },
-  {
-    id: "06",
-    title: "Cadence OTC",
-    description: "E-commerce platform for affordable emergency contraception with nationwide store locator",
-    tags: ["Figma", "Shopify", "Healthcare"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/cadenceotp.webp",
-    url: "https://www.figma.com/proto/DL7gTFQHcZpLk9qdMLnPjF/Cadence_?page-id=0%3A1&node-id=0-2053&starting-point-node-id=0%3A2053&scaling=scale-down&content-scaling=fixed&t=36j4E3j6RBpvITq2-1",
-    type: "Healthcare E-commerce"
-  },
-  {
-    id: "07",
-    title: "ToTou Energy Bars",
-    description: "UI redesign for Mexican energy bar company with modern branding and product showcase",
-    tags: ["Figma", "UI Redesign", "Food & Beverage"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ToYou.webp",
-    url: "https://www.figma.com/proto/XrmpPR40YlSaTVcTuNR4Hr/ToYou--Redesign-?page-id=51%3A24&node-id=51-36&scaling=scale-down-width&content-scaling=fixed&t=yYI0ETCoFxSK3m01-1",
-    type: "UI Redesign"
-  },
-  {
-    id: "08",
-    title: "JarvioAI Canvas Prototype",
-    description: "Vibe Code prototype for AI-powered Amazon seller management platform with interactive canvas",
-    tags: ["Next.js", "Vibe Code", "AI Platform"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ChatGPT%20Image%20Sep%2029%2C%202025%2C%2011_13_13%20AM.webp",
-    url: "https://github.com/karenrebecag/JarvioPrototype",
-    type: "Vibe Code"
-  },
-  {
-    id: "09",
-    title: "Inglés Individual Platform",
-    description: "Full-stack educational platform for 50+ franchise locations managing students, teachers and payments",
-    tags: ["Laravel", "Anime.js", "Bootstrap"],
-    image: "https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InglesIndividualFrontend.webp",
-    url: "#",
-    type: "Educational Platform"
-  }
-];
+// Definición del tipo para un solo proyecto
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  url: string;
+  type: string;
+}
 
-const ProjectMarqueeIsland: React.FC = React.memo(() => {
+// Props del componente
+interface ProjectMarqueeIslandProps {
+  projects: Project[];
+}
+
+const ProjectMarqueeIsland: React.FC<ProjectMarqueeIslandProps> = React.memo(({ projects: projectData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
