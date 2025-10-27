@@ -1482,9 +1482,9 @@ const resumeSEOConfig = {
 
     // Hide dark mode toggle button
     const hideToggleButton = () => {
-      const toggleWrapper = document.querySelector('.dark-mode-toggle-wrapper');
-      const toggleElement = document.getElementById('darkModeToggle');
-      
+      const toggleWrapper = document.querySelector('.dark-mode-toggle-wrapper') as HTMLElement | null;
+      const toggleElement = document.getElementById('darkModeToggle') as HTMLElement | null;
+
       if (toggleWrapper) {
         toggleWrapper.style.display = 'none';
       }
