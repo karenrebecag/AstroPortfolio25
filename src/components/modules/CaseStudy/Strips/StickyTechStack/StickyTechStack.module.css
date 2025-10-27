@@ -2,29 +2,51 @@
     padding: 115px 60px;
 }
 
+/* Import playfair utility from node_modules - use bare import so Vite can resolve it */
+@import "globals/playfair.css";
+
 .container {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Adjust ratio as needed */
-    gap: 100px;
-    max-width: 1800px;
+    grid-template-columns: 1fr 1fr; /* Equal columns for centered layout */
+    gap: 60px;
+    max-width: 1400px;
     margin: 0 auto;
+    align-items: center; /* Center vertically */
+    justify-items: center; /* Center columns horizontally */
+    text-align: center; /* Center text inside grid cells */
+}
+
+.leftColumn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .stickyTitle {
     position: sticky;
     top: 115px; /* Match top padding */
-    font-family: 'Playfair Display', serif;
     font-style: italic;
     font-weight: 400;
     font-size: 85px;
     line-height: 111px;
     color: black;
+    margin: 0;
 }
 
 .rightColumn {
     display: flex;
     flex-direction: column;
-    gap: 80px; /* Space between tech items */
+    gap: 48px; /* Space between tech items */
+    align-items: center; /* Center the items horizontally */
+}
+
+.techItem {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .techHeading {
@@ -33,7 +55,7 @@
     font-weight: 400;
     line-height: 35px;
     color: black;
-    margin-bottom: 16px;
+    margin: 0 0 12px 0;
 }
 
 .techDescription {
@@ -42,7 +64,7 @@
     font-weight: 400;
     line-height: 30px;
     color: rgba(0, 0, 0, 0.63);
-    max-width: 1037px;
+    max-width: 100%;
 }
 
 /* Responsive */
@@ -52,7 +74,7 @@
     }
     .stickyTitle {
         position: static; /* Un-stick the title */
-        margin-bottom: 60px;
+        margin-bottom: 40px;
         text-align: center;
     }
 }

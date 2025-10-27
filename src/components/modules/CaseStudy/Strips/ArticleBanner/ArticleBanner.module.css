@@ -1,11 +1,12 @@
 .banner {
     width: 100%;
-    padding: 70px 20px; /* Added horizontal padding for mobile */
+    padding: 200px 20px 70px 20px; /* Added horizontal padding for mobile */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 60px;
+
 }
 
 .container {

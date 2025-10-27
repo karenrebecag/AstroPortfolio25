@@ -12,7 +12,7 @@ const WorkflowCard: React.FC<WorkflowCardProps> = ({ step, description }) => {
     width: '80vw',
     minWidth: '500px',
     height: '500px',
-    padding: '100px 125px',
+    padding: '50px 80px',
     background: '#FBFBFB',
     borderTopLeftRadius: '100px',
     borderTopRightRadius: '100px',
@@ -26,15 +26,15 @@ const WorkflowCard: React.FC<WorkflowCardProps> = ({ step, description }) => {
 
   const stepStyle: React.CSSProperties = {
     fontFamily: 'Median, serif',
-    fontSize: '64px',
-    lineHeight: '70px',
+    fontSize: '48px',
+    lineHeight: '50px',
     color: '#1F1F1F',
     transition: 'color 0.3s',
   };
 
   const descriptionStyle: React.CSSProperties = {
     fontFamily: 'Inter Tight, sans-serif',
-    fontSize: '24px',
+    fontSize: '18px',
     color: '#1F1F1F',
     transition: 'color 0.3s',
   };
@@ -75,8 +75,8 @@ export const ProcessWorkflow: React.FC<ProcessWorkflowProps> = ({ steps }) => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(steps.length - 1) * 85}vw`]);
 
   return (
-    <section ref={targetRef} className="relative h-[500vh]">
-      <div className="sticky top-0 flex h-screen items-end overflow-hidden">
+    <section ref={targetRef} className="relative">
+      <div className="sticky top-0 flex  pt-[50vh] items-end overflow-hidden">
         <motion.div style={{ x }} className="flex items-end ">
           {steps.map((step) => (
             <WorkflowCard

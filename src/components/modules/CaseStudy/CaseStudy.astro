@@ -45,26 +45,27 @@ const {
 
 <article>
   <WhiteBackground>
-    <ArticleBanner {...bannerData} />
-    <ArticleSection {...articleData} />
-    
-    <div>
-      <HorizontalScrollGallery images={galleryData.images} client:visible />
-    </div>
+        <ArticleBanner {...bannerData} />
+        <ArticleSection {...articleData} />
+        
+        <div>
+          <HorizontalScrollGallery images={galleryData.images} client:visible />
+        </div>
 
-    <StickyTechStack {...techStackData} />
+            <StickyTechStack {...techStackData} />
 
-    <ProcessWorkflowWrapper {...processWorkflowData} />
+            <ProcessWorkflowWrapper {...processWorkflowData} />
+
+          <ProjectAchievements {...projectAchievementsData} client:visible />
+
+          <FinalThoughts {...finalThoughtsData} />
+
+        <div class="faqs-responsive-container">
+          <FAQs />
+        </div>
+      <CommentsSection storyId={storyId} />
   </WhiteBackground>
 
-  <ProjectAchievements {...projectAchievementsData} client:visible />
-
-  <FinalThoughts {...finalThoughtsData} />
-
-  <div class="faqs-responsive-container">
-    <FAQs />
-  </div>
-  <CommentsSection storyId={storyId} />
   <section id="contact">
     <GetInTouch />
   </section>

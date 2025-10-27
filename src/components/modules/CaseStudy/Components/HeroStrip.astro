@@ -1,0 +1,7 @@
+---
+import HeroStripStatic from './strips/hero-strip/hero-strip.astro'
+
+const { title, mainTag, publishedDate, author, featuredImage } = Astro.props
+---
+
+<HeroStripStatic title={title} mainTag={mainTag} publishedDate={publishedDate} author={author} featuredImage={featuredImage} />

@@ -14,7 +14,7 @@ export interface Props {
 const { techStack } = Astro.props;
 ---
 <AnimatedComponent client:visible>
-    <section class={styles.section}>
+    <section class={`${styles.section} playfair-display-1`}>
         <div class={styles.container}>
             <div class={styles.leftColumn}>
                 <h2 class={styles.stickyTitle}>Tech Stack</h2>
