@@ -4,6 +4,10 @@ import FAQsIsland from './FAQsIsland.tsx';
 import { TextDisperse } from './TextDisperse.tsx';
 import { motion } from 'motion/react';
 import { getFAQSchema } from '../../utils/structuredData';
+import { getHomeFAQs } from '../../lib/cms';
+
+// Fetch FAQs from CMS
+const faqs = await getHomeFAQs();
 
 // Add FAQ structured data for LLM optimization
 const faqStructuredData = getFAQSchema();
@@ -51,7 +55,7 @@ const faqStructuredData = getFAQSchema();
         transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
         client:visible
       >
-        <FAQsIsland client:visible />
+        <FAQsIsland faqs={faqs} client:visible />
       </motion.div>
 
     </div>

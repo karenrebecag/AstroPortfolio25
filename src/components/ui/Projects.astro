@@ -6,8 +6,13 @@ import { ProjectImageCursor } from './ProjectImageCursor.tsx';
 import ProjectMarqueeIsland from './ProjectMarqueeIsland.tsx';
 import ProjectSlider from './ProjectSlider.tsx';
 import { motion } from 'motion/react';
+import { getProjects, getQuickProjects } from '../../lib/cms';
 
-// Project data para el marquee de proyectos rápidos
+// Fetch projects from CMS
+const caseStudyProjects = await getProjects();
+const quickProjectsFromCMS = await getQuickProjects();
+
+// Project data para el marquee de proyectos rápidos (fallback)
 const projectData = [
   {
     id: "01",
@@ -133,7 +138,7 @@ Showcasing my latest work and creative solutions
         transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
         client:visible
       >
-        <ProjectsIsland client:visible />
+        <ProjectsIsland projects={caseStudyProjects} client:visible />
       </motion.div>
 
       <!-- Project Image Cursor Component -->

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FlipText from './FlipText';
+import type { Project as CMSProject } from '../../lib/cms';
 
 interface Position {
   x: number;
@@ -15,13 +16,19 @@ interface Project {
   tags: string[];
   images: string[];
   positions: Position[];
+  slug?: string;
 }
 
-const ProjectsIsland: React.FC = () => {
+interface ProjectsIslandProps {
+  projects: CMSProject[];
+}
+
+const ProjectsIsland: React.FC<ProjectsIslandProps> = ({ projects: cmsProjects }) => {
   const [activeProject, setActiveProject] = useState<number>(1); // Primer proyecto activo por defecto
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
-  const projects: Project[] = [
+  // Fallback projects
+  const fallbackProjects: Project[] = [
     {
       id: 1,
       title1: "THIS",
@@ -119,6 +126,31 @@ const ProjectsIsland: React.FC = () => {
     }
   ];
 
+  // Transform CMS projects to component format
+  const projects: Project[] = cmsProjects && cmsProjects.length > 0
+    ? cmsProjects.map((cmsProject, index) => ({
+        id: index + 1,
+        title1: cmsProject.homepageTitle1 || cmsProject.title.split(' ').slice(0, 1).join(' '),
+        title2: cmsProject.homepageTitle2 || cmsProject.title.split(' ').slice(1).join(' '),
+        description: cmsProject.homepageDescription || '',
+        tags: cmsProject.homepageTags?.map(tag => tag.tag) || [],
+        images: cmsProject.homepageImages && cmsProject.homepageImages.length > 0
+          ? cmsProject.homepageImages.map(img => img.image.url)
+          : [
+              `https://picsum.photos/300/300?random=${index * 4 + 1}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 2}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 3}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 4}`
+            ],
+        positions: [
+          { x: -45 + (index * 2), y: -5 + (index % 2), rotate: 5 - (index % 3) },
+          { x: -15 + (index % 3), y: 8 - (index % 2), rotate: -3 + (index % 4) },
+          { x: 15 - (index % 2), y: -3 + (index % 3), rotate: 8 - (index % 2) },
+          { x: 45 - (index % 4), y: 5 - (index % 2), rotate: -5 + (index % 3) }
+        ],
+        slug: cmsProject.slug
+      }))
+    : fallbackProjects;
 
   const handleProjectClick = (projectId: number) => {
     setActiveProject(activeProject === projectId ? 0 : projectId); // Toggle para todos los dispositivos
@@ -126,15 +158,19 @@ const ProjectsIsland: React.FC = () => {
   };
 
   const handleReadMore = (projectId: number) => {
-    if (projectId === 1) {
-      // Navegar a la página de THIS PORTFOLIO
-      window.location.href = '/p_ThisPortfolio';
-    } else if (projectId === 2) {
-      // Navegar a la página del Aurin Task Manager
-      window.location.href = '/p_AurinTaskManager';
+    const project = projects.find(p => p.id === projectId);
+    if (project?.slug) {
+      // Navegar a la página del case study usando el slug del CMS
+      window.location.href = `/p_${project.slug}`;
     } else {
-      // Lógica para otros proyectos
-      console.log(`Read more about project ${projectId}`);
+      // Fallback para proyectos legacy
+      if (projectId === 1) {
+        window.location.href = '/p_ThisPortfolio';
+      } else if (projectId === 2) {
+        window.location.href = '/p_AurinTaskManager';
+      } else {
+        console.log(`Read more about project ${projectId}`);
+      }
     }
   };
 

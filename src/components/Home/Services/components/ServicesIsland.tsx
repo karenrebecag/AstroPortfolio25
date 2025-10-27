@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FlipText from '../../../ui/FlipText';
 import { BounceCards } from './BounceCards';
 import { translations } from '../../../../i18n/translations.js';
+import type { Service as CMSService } from '../../../../lib/cms';
 
 interface Position {
   x: number;
@@ -22,32 +23,17 @@ interface Service {
 }
 
 interface ServicesIslandProps {
+  services: CMSService[];
   lang?: string;
 }
 
-const ServicesIsland: React.FC<ServicesIslandProps> = ({ lang = 'en' }) => {
+const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, lang = 'en' }) => {
   const [activeService, setActiveService] = useState<number>(1); // Primer servicio activo por defecto
   const [hoveredService, setHoveredService] = useState<number | null>(null);
 
-  // Obtener traducciones para el idioma actual
+  // Obtener traducciones para el idioma actual (para fallback)
   const t = translations[lang as keyof typeof translations] || translations.en;
   const servicesData = t.services?.items || translations.en.services.items;
-
-  const services: Service[] = servicesData.map((service: any, index: number) => ({
-    ...service,
-    images: [
-      `https://picsum.photos/300/300?random=${index * 4 + 1}`,
-      `https://picsum.photos/300/300?random=${index * 4 + 2}`,
-      `https://picsum.photos/300/300?random=${index * 4 + 3}`,
-      `https://picsum.photos/300/300?random=${index * 4 + 4}`
-    ],
-    positions: [
-      { x: -45 + (index * 2), y: -5 + (index % 2), rotate: 5 - (index % 3) },
-      { x: -15 + (index % 3), y: 8 - (index % 2), rotate: -3 + (index % 4) },
-      { x: 15 - (index % 2), y: -3 + (index % 3), rotate: 8 - (index % 2) },
-      { x: 45 - (index % 4), y: 5 - (index % 2), rotate: -5 + (index % 3) }
-    ]
-  }));
 
   // Fallback services array (keeping original structure for reference)
   const fallbackServices: Service[] = [
@@ -158,6 +144,40 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ lang = 'en' }) => {
     }
   ];
 
+  // Transform CMS services to component format
+  const services: Service[] = cmsServices && cmsServices.length > 0
+    ? cmsServices.map((cmsService, index) => ({
+        id: index + 1,
+        title1: cmsService.title1,
+        title2: cmsService.title2,
+        description: cmsService.description,
+        tags: cmsService.serviceTags.map(tag => tag.tag),
+        technologies: cmsService.techTags.map(tech => tech.tech),
+        example: cmsService.exampleProject || '',
+        images: cmsService.images && cmsService.images.length > 0
+          ? cmsService.images.map(img => img.image.url)
+          : [
+              `https://picsum.photos/300/300?random=${index * 4 + 1}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 2}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 3}`,
+              `https://picsum.photos/300/300?random=${index * 4 + 4}`
+            ],
+        positions: [
+          { x: -45 + (index * 2), y: -5 + (index % 2), rotate: 5 - (index % 3) },
+          { x: -15 + (index % 3), y: 8 - (index % 2), rotate: -3 + (index % 4) },
+          { x: 15 - (index % 2), y: -3 + (index % 3), rotate: 8 - (index % 2) },
+          { x: 45 - (index % 4), y: 5 - (index % 2), rotate: -5 + (index % 3) }
+        ]
+      }))
+    : fallbackServices.map((service, index) => ({
+        ...service,
+        images: [
+          `https://picsum.photos/300/300?random=${index * 4 + 1}`,
+          `https://picsum.photos/300/300?random=${index * 4 + 2}`,
+          `https://picsum.photos/300/300?random=${index * 4 + 3}`,
+          `https://picsum.photos/300/300?random=${index * 4 + 4}`
+        ],
+      }));
 
   const handleServiceClick = (serviceId: number) => {
     setActiveService(activeService === serviceId ? 0 : serviceId); // Toggle para todos los dispositivos
