@@ -168,15 +168,16 @@ export async function getProjects(featuredOnly = false): Promise<Project[]> {
 export interface QuickProject {
   id: string;
   title: string;
-  description: string;
-  url: string;
-  type: string;
+  briefDescription: string;
+  visitUrl: string;
+  projectType: string;
   tags: { tag: string; id?: string }[];
-  image?: {
+  cardImage?: {
     url: string;
     alt?: string;
+    filename?: string;
   };
-  order: number;
+  order?: number;
   status: 'draft' | 'published';
   createdAt: string;
   updatedAt: string;

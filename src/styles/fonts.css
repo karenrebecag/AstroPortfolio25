@@ -55,11 +55,11 @@
 
 @font-face {
   font-family: 'Video Game Font';
-  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video Game Font.otf') format('opentype'),
-       url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video Game Font.ttf') format('truetype');
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video%20Game%20Font.otf') format('opentype'),
+       url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Video%20Game%20Font.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 /* CSS Custom Properties for Typography - Will be overridden by global.css for better fallbacks */

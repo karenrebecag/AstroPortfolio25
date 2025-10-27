@@ -16,11 +16,11 @@ const quickProjectsFromCMS = await getQuickProjects();
 const projectDataFromCMS = quickProjectsFromCMS.map((project, index) => ({
   id: (index + 1).toString().padStart(2, '0'),
   title: project.title,
-  description: project.description,
+  description: project.briefDescription,
   tags: project.tags.map(t => t.tag),
-  image: project.image?.url || 'https://picsum.photos/300/300',
-  url: project.url,
-  type: project.type
+  image: project.cardImage?.url || 'https://picsum.photos/300/300',
+  url: project.visitUrl,
+  type: project.projectType
 }));
 
 // Project data para el marquee de proyectos rápidos (fallback si CMS está vacío)

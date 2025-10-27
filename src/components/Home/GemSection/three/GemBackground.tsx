@@ -22,6 +22,9 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     renderer: THREE.WebGLRenderer;
     gem: THREE.Object3D | null;
     animationId: number | null;
+    material: THREE.Material | null;
+    geometry: THREE.BufferGeometry | null;
+    hdrTexture: THREE.DataTexture | null;
   } | null>(null);
   
   const [isLoaded, setIsLoaded] = useState(false);
@@ -109,20 +112,38 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
 
     let gemObject: THREE.Object3D | null = null;
 
-    // Load HDR environment from Cloudflare R2 - optimizado según calidad
-    const hdrLoader = new RGBELoader();
-    hdrLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr', (hdr) => {
+    // Load HDR environment using RobustAssetLoader
+    RobustAssetLoader.loadWithRetry(
+      (url: string) => new Promise<THREE.DataTexture>((resolve, reject) => {
+        new RGBELoader().load(url, resolve, undefined, reject);
+      }),
+      ASSET_CONFIGS.GEM_HDR,
+      { retries: 3, verbose: true }
+    ).then((hdr) => {
+      if (!hdr) {
+        console.warn('HDR texture is null, skipping environment setup');
+        return;
+      }
+
       hdr.mapping = THREE.EquirectangularReflectionMapping;
-      hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
-      
+      hdr.generateMipmaps = quality !== 'low';
+
       try {
         const pmrem = new THREE.PMREMGenerator(renderer);
         const envMap = pmrem.fromEquirectangular(hdr).texture;
         scene.environment = envMap;
+
+        // Store HDR texture reference for cleanup
+        if (sceneRef.current) {
+          sceneRef.current.hdrTexture = hdr;
+        }
+
         pmrem.dispose();
       } catch (error) {
         console.error('Failed to create envMap:', error);
       }
+    }).catch((error) => {
+      console.error('Failed to load HDR:', error);
     });
 
     // Crear material optimizado según calidad
@@ -171,15 +192,35 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       }
     };
 
-    // Load gem model from Cloudflare R2 - siguiendo patrón de carga optimizada
-    const objectLoader = new THREE.ObjectLoader();
-    objectLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/gem.json', (object) => {
+    // Load gem model using RobustAssetLoader
+    RobustAssetLoader.loadWithRetry(
+      (url: string) => new Promise<THREE.Object3D>((resolve, reject) => {
+        new THREE.ObjectLoader().load(url, resolve, undefined, reject);
+      }),
+      ASSET_CONFIGS.GEM_MODEL,
+      { retries: 3, verbose: true }
+    ).then((object) => {
+      if (!object) {
+        console.warn('Gem model is null, skipping');
+        return;
+      }
+
       gemObject = object;
       const gemMaterial = createGemMaterial();
-      
-      // Apply material to loaded object
+
+      // Apply material to loaded object and store references
       object.traverse((child: THREE.Object3D) => {
         if (child instanceof THREE.Mesh) {
+          // Store geometry and material references for cleanup
+          if (sceneRef.current) {
+            if (!sceneRef.current.geometry && child.geometry) {
+              sceneRef.current.geometry = child.geometry;
+            }
+            if (!sceneRef.current.material) {
+              sceneRef.current.material = gemMaterial;
+            }
+          }
+
           child.material = gemMaterial;
           child.castShadow = quality !== 'low';
           child.receiveShadow = quality !== 'low';
@@ -190,10 +231,15 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       object.scale.set(3.66, 3.66, 3.66);
       object.position.set(3.5, -0.5, -4);
       object.rotation.set(0.2, -0.35, -0.32);
-      
+
       scene.add(object);
-    }, undefined, (error) => {
-      console.error('Error loading gem model:', error);
+
+      // Update sceneRef with loaded gem
+      if (sceneRef.current) {
+        sceneRef.current.gem = object;
+      }
+    }).catch((error) => {
+      console.error('Failed to load gem model:', error);
     });
 
     sceneRef.current = {
@@ -201,7 +247,10 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       camera,
       renderer,
       gem: gemObject,
-      animationId: null
+      animationId: null,
+      material: null,
+      geometry: null,
+      hdrTexture: null
     };
 
     const animate = () => {
@@ -269,16 +318,33 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
         if (sceneRef.current.animationId) {
           cancelAnimationFrame(sceneRef.current.animationId);
         }
-        
-        // Cleanup completo - MISMO patrón que SilkBackground
+
+        // Cleanup completo - siguiendo ThreeModelsStandard.md
+        // 1. Dispose material
+        if (sceneRef.current.material) {
+          sceneRef.current.material.dispose();
+        }
+
+        // 2. Dispose geometry
+        if (sceneRef.current.geometry) {
+          sceneRef.current.geometry.dispose();
+        }
+
+        // 3. Dispose HDR texture
+        if (sceneRef.current.hdrTexture) {
+          sceneRef.current.hdrTexture.dispose();
+        }
+
+        // 4. Dispose renderer
         sceneRef.current.renderer.dispose();
-        
+
+        // 5. Remove DOM element
         if (currentMount.contains(sceneRef.current.renderer.domElement)) {
           currentMount.removeChild(sceneRef.current.renderer.domElement);
         }
       }
     };
-  }, [isPaused, quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
+  }, [quality, setLoading, rotationX, rotationY, rotationZ, setScrollRotation]);
 
   return (
     <div
