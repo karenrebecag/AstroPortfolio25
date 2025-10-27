@@ -17,8 +17,8 @@ export default defineConfig({
     isr: {
       // Genera un token seguro con: openssl rand -base64 32
       bypassToken: process.env.ISR_BYPASS_TOKEN || 'cambiar-este-token-en-produccion-32-caracteres-minimo',
-      // No cachear rutas API
-      exclude: ['/api/*']
+      // Excluir rutas que no deben usar ISR (pero incluir /api/revalidate)
+      exclude: []
     }
   }),
   image: {
