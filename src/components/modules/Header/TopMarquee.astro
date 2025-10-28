@@ -3,20 +3,29 @@
 import styles from './TopMarquee.module.css';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import { getTopMarqueeServices } from '../../../lib/cms';
 
 // Detectar idioma de la URL actual
 const lang = getLangFromUrl(Astro.url);
 const t = translations[lang as keyof typeof translations] || translations.en;
+
+// Fetch marquee services from CMS
+const servicesFromCMS = await getTopMarqueeServices();
+
+// Use CMS data or fallback to translations
+const marqueeText = servicesFromCMS.length > 0
+  ? servicesFromCMS.map(service => service.text).join(' • ') + ' • '
+  : t.topMarquee.text;
 ---
 
 <div class={styles.topMarqueeContainer} id="topMarqueeContainer">
   <div class={styles.topMarqueeWrapper} id="topMarqueeWrapper">
     <div id="top-marquee" class={styles.topMarquee}>
       <span class={styles.marqueeText}>
-        {t.topMarquee.text}
+        {marqueeText}
       </span>
       <span class={styles.marqueeText}>
-        {t.topMarquee.text}
+        {marqueeText}
       </span>
     </div>
   </div>

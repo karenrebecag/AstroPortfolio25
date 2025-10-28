@@ -216,3 +216,22 @@ export async function getExperiences(): Promise<Experience[]> {
     sort: 'order',
   });
 }
+
+/**
+ * Top Marquee Services Collection
+ */
+export interface TopMarqueeService {
+  id: string;
+  text: string;
+  order?: number;
+  status: 'draft' | 'published';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function getTopMarqueeServices(): Promise<TopMarqueeService[]> {
+  return fetchCollection<TopMarqueeService>('top-marquee-services', {
+    where: { status: { equals: 'published' } },
+    sort: 'order',
+  });
+}
