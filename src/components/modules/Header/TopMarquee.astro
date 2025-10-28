@@ -10,7 +10,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = translations[lang as keyof typeof translations] || translations.en;
 
 // Fetch marquee services from CMS
-const servicesFromCMS = await getTopMarqueeServices();
+const servicesFromCMS = await getTopMarqueeServices(lang);
 
 // Use CMS data or fallback to translations
 const marqueeText = servicesFromCMS.length > 0

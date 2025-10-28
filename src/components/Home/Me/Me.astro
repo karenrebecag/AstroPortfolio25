@@ -11,11 +11,14 @@ import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
 import { motion } from 'motion/react';
 import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 import styles from './Me.module.css';
+import { getLangFromUrl } from '../../../i18n/utils.js';
 import { getExperiences } from '../../../lib/cms';
 import { experienceData as fallbackExperienceData } from '../../../data/experienceData';
 
+const lang = getLangFromUrl(Astro.url);
+
 // Fetch experiences from CMS
-const experiencesFromCMS = await getExperiences();
+const experiencesFromCMS = await getExperiences(lang);
 
 // Transform CMS data or use fallback
 const experienceData = experiencesFromCMS.length > 0

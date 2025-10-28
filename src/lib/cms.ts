@@ -28,6 +28,7 @@ async function fetchCollection<T>(
     limit?: number;
     sort?: string;
     where?: Record<string, any>;
+    locale?: string;
   }
 ): Promise<T[]> {
   try {
@@ -43,6 +44,10 @@ async function fetchCollection<T>(
 
     if (options?.where) {
       params.append('where', JSON.stringify(options.where));
+    }
+
+    if (options?.locale) {
+      params.append('locale', options.locale);
     }
 
     const url = `${CMS_URL}/api/${collection}?${params.toString()}`;
@@ -88,10 +93,11 @@ export interface Service {
   updatedAt: string;
 }
 
-export async function getServices(): Promise<Service[]> {
+export async function getServices(locale: string = 'en'): Promise<Service[]> {
   return fetchCollection<Service>('services', {
     where: { status: { equals: 'published' } },
     sort: 'createdAt',
+    locale,
   });
 }
 
@@ -108,10 +114,11 @@ export interface HomeFAQ {
   updatedAt: string;
 }
 
-export async function getHomeFAQs(): Promise<HomeFAQ[]> {
+export async function getHomeFAQs(locale: string = 'en'): Promise<HomeFAQ[]> {
   return fetchCollection<HomeFAQ>('home-faqs', {
     where: { status: { equals: 'published' } },
     sort: 'order',
+    locale,
   });
 }
 
@@ -147,7 +154,7 @@ export interface Project {
   updatedAt: string;
 }
 
-export async function getProjects(featuredOnly = false): Promise<Project[]> {
+export async function getProjects(featuredOnly = false, locale: string = 'en'): Promise<Project[]> {
   const where: Record<string, any> = {
     status: { equals: 'published' },
   };
@@ -159,6 +166,7 @@ export async function getProjects(featuredOnly = false): Promise<Project[]> {
   return fetchCollection<Project>('projects', {
     where,
     sort: '-createdAt',
+    locale,
   });
 }
 
@@ -183,10 +191,11 @@ export interface QuickProject {
   updatedAt: string;
 }
 
-export async function getQuickProjects(): Promise<QuickProject[]> {
+export async function getQuickProjects(locale: string = 'en'): Promise<QuickProject[]> {
   return fetchCollection<QuickProject>('quick-projects', {
     where: { status: { equals: 'published' } },
     sort: 'order',
+    locale,
   });
 }
 
@@ -210,10 +219,11 @@ export interface Experience {
   updatedAt: string;
 }
 
-export async function getExperiences(): Promise<Experience[]> {
+export async function getExperiences(locale: string = 'en'): Promise<Experience[]> {
   return fetchCollection<Experience>('experiences', {
     where: { status: { equals: 'published' } },
     sort: 'order',
+    locale,
   });
 }
 
@@ -229,9 +239,10 @@ export interface TopMarqueeService {
   updatedAt: string;
 }
 
-export async function getTopMarqueeServices(): Promise<TopMarqueeService[]> {
+export async function getTopMarqueeServices(locale: string = 'en'): Promise<TopMarqueeService[]> {
   return fetchCollection<TopMarqueeService>('top-marquee-services', {
     where: { status: { equals: 'published' } },
     sort: 'order',
+    locale,
   });
 }

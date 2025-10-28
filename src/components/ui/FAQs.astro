@@ -5,9 +5,13 @@ import { TextDisperse } from './TextDisperse.tsx';
 import { motion } from 'motion/react';
 import { getFAQSchema } from '../../utils/structuredData';
 import { getHomeFAQs } from '../../lib/cms';
+import { getLangFromUrl } from '../../i18n/utils.js';
 
-// Fetch FAQs from CMS
-const faqs = await getHomeFAQs();
+// Detect current language
+const lang = getLangFromUrl(Astro.url);
+
+// Fetch FAQs from CMS in the current language
+const faqs = await getHomeFAQs(lang);
 
 // Add FAQ structured data for LLM optimization
 const faqStructuredData = getFAQSchema();

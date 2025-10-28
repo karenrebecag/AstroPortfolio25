@@ -12,7 +12,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = translations[lang as keyof typeof translations] || translations.en;
 
 // Fetch services from CMS
-const services = await getServices();
+const services = await getServices(lang);
 ---
 
 <section class="services-section">

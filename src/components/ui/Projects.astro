@@ -6,11 +6,14 @@ import { ProjectImageCursor } from './ProjectImageCursor.tsx';
 import ProjectMarqueeIsland from './ProjectMarqueeIsland.tsx';
 import ProjectSlider from './ProjectSlider.tsx';
 import { motion } from 'motion/react';
+import { getLangFromUrl } from '../../i18n/utils.js';
 import { getProjects, getQuickProjects } from '../../lib/cms';
 
+const lang = getLangFromUrl(Astro.url);
+
 // Fetch projects from CMS
-const caseStudyProjects = await getProjects();
-const quickProjectsFromCMS = await getQuickProjects();
+const caseStudyProjects = await getProjects(false, lang);
+const quickProjectsFromCMS = await getQuickProjects(lang);
 
 // Transform CMS quick projects to component format
 const projectDataFromCMS = quickProjectsFromCMS.map((project, index) => ({
