@@ -47,8 +47,12 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     const observer = new IntersectionObserver(
       ([entry]) => {
         setVisible(entry.isIntersecting);
+        // Si está visible inmediatamente al montar, iniciar carga
+        if (entry.isIntersecting) {
+          setLoading(false);
+        }
       },
-      { 
+      {
         threshold: 0,
         rootMargin: '2000px 0px 2000px 0px' // MUCHO más amplio: casi siempre visible
       }
@@ -59,7 +63,7 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
     }
 
     return () => observer.disconnect();
-  }, [setVisible]);
+  }, [setVisible, setLoading]);
 
   // Page Visibility API - optimizado con acciones memoizadas
   useEffect(() => {
@@ -268,12 +272,12 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
       sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 
-    // Start animation con smooth loading - usando acción memoizada
+    // Start animation inmediatamente si ya está visible, sino con delay suave
+    const startDelay = useGemStore.getState().isVisible ? 50 : 300;
     const timer = setTimeout(() => {
-      setLoading(false);
       setIsLoaded(true);
       animate();
-    }, 300);
+    }, startDelay);
 
     // Resize handler
     const handleResize = () => {
