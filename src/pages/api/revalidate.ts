@@ -65,19 +65,22 @@ export const POST: APIRoute = async ({ request, url }) => {
     const results = await Promise.all(
       routes.map(async (route: string) => {
         try {
-          // Build URL with __prerender_bypass query parameter for Vercel ISR
-          const revalidateUrl = `https://${url.host}${route}${route.includes('?') ? '&' : '?'}__prerender_bypass=${bypassToken}`;
+          // Use x-prerender-revalidate header for Vercel ISR bypass
+          const revalidateUrl = `https://${url.host}${route}`;
 
-          console.log(`[Revalidate] Fetching: ${revalidateUrl}`);
+          console.log(`[Revalidate] Fetching: ${revalidateUrl} with bypass token`);
 
           const response = await fetch(revalidateUrl, {
-            method: 'HEAD',
+            method: 'GET', // Use GET instead of HEAD to trigger full page generation
+            headers: {
+              'x-prerender-revalidate': bypassToken,
+            },
           });
 
           const cacheStatus = response.headers.get('x-vercel-cache');
-          const success = cacheStatus === 'REVALIDATED' || cacheStatus === 'BYPASS';
+          const success = cacheStatus === 'REVALIDATED' || cacheStatus === 'BYPASS' || cacheStatus === 'MISS';
 
-          console.log(`[Revalidate] Route ${route} - Cache: ${cacheStatus}, Success: ${success}`);
+          console.log(`[Revalidate] Route ${route} - Cache: ${cacheStatus}, Status: ${response.status}, Success: ${success}`);
 
           return {
             route,
