@@ -31,3 +31,4 @@ src/components/modules/Speedify/
 
 # Payload CMS (deployed separately to its own Vercel project)
 cms
+.env.vercel
