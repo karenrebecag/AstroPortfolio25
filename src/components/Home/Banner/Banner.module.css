@@ -35,6 +35,7 @@
   z-index: 30;
   margin-bottom: 2rem;
   width: 100%;
+  flex-direction: row;
   display: flex;
   justify-content: center;
   gap: 48px;
@@ -79,14 +80,7 @@
   transform: none !important;
 }
 
-/* Mobile optimization - 30% smaller image */
-@media (max-width: 768px) {
-  .bannerImageContainer img {
-    max-width: 420px !important; /* 600px - 30% = 420px */
-  }
-
-  .bannerButtonsWrapper {
-    flex-direction: column;
-    gap: 24px;
-  }
+:global(.white-background-wrapper .bg-container > div) {
+  opacity: 0.28; /* originally subtle: 0.08 in fill; this makes texture more visible */
+  transition: opacity 0.25s ease;
 }

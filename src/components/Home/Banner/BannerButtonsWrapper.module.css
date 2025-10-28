@@ -19,11 +19,6 @@
 }
 
 @media (max-width: 768px) {
-  .bannerButtonsContainer {
-    flex-direction: column;
-    gap: 24px;
-    align-items: center;
-  }
 
   .buttonWrapper {
     margin-bottom: 1rem;
