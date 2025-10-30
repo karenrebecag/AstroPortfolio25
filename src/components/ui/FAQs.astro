@@ -5,10 +5,13 @@ import { TextDisperse } from './TextDisperse.tsx';
 import { motion } from 'motion/react';
 import { getFAQSchema } from '../../utils/structuredData';
 import { getHomeFAQs } from '../../lib/cms';
-import { getLangFromUrl } from '../../i18n/utils.js';
+import { getLangFromUrl, getTranslations } from '../../i18n/utils.js';
 
 // Detect current language
 const lang = getLangFromUrl(Astro.url);
+
+// Get translations
+const t = getTranslations(lang);
 
 // Fetch FAQs from CMS in the current language
 const faqs = await getHomeFAQs(lang);
@@ -33,9 +36,9 @@ const faqStructuredData = getFAQSchema();
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <TextDisperse text="FAQS" className="giant-heading-disperse" client:idle />
+        <TextDisperse text={t.faqs.title} className="giant-heading-disperse" client:idle />
       </motion.div>
-      
+
       <motion.p
         className="giant-heading-subtitle"
         initial={{ opacity: 0, y: 20 }}
@@ -44,7 +47,7 @@ const faqStructuredData = getFAQSchema();
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         client:idle
       >
-        Common questions about my services and process
+        {t.faqs.subtitle}
       </motion.p>
     </div>
     

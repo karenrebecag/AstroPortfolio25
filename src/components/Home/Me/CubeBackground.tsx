@@ -194,34 +194,27 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
     hdrLoader.setCrossOrigin('anonymous');
     
     const loadHDR = (url: string, isRetry = false) => {
-      console.log(`Loading HDR from: ${url}`);
-      
       hdrLoader.load(
         url,
         (hdr) => {
-          console.log('HDR loaded successfully from:', url);
           hdr.mapping = THREE.EquirectangularReflectionMapping;
           hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
-          
+
           try {
             const pmrem = new THREE.PMREMGenerator(renderer);
             const envMap = pmrem.fromEquirectangular(hdr).texture;
             scene.environment = envMap;
             pmrem.dispose();
-            console.log('HDR environment applied successfully');
           } catch (error) {
             console.error('Failed to create envMap:', error);
           }
         },
-        (progress) => {
-          console.log('HDR loading progress:', (progress.loaded / progress.total * 100) + '%');
-        },
+        undefined,
         (error) => {
           console.error('Failed to load HDR from:', url, error);
-          
+
           // Fallback to local HDR if Cloudflare fails
           if (!isRetry) {
-            console.log('Attempting fallback to local HDR...');
             loadHDR('/hdr/large_corridor_1k.hdr', true);
           } else {
             console.error('Both HDR sources failed to load');

@@ -113,10 +113,37 @@ import { GlobalToastContainer } from '../components/modules/Toasts';
 		<link rel="preconnect" href="https://guileless-douhua-b2ff53.netlify.app">
 		<link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com">
 		<link rel="preload" href="https://pub-2e7dc04d482146c59f472ab28fba09a9.r2.dev/MePortfolio.png" as="image" type="image/png" fetchpriority="high">
-		<!-- Preload Critical Fonts -->
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-		<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+		<!-- Preload Critical Fonts - Conditional based on language -->
+		{lang === 'ja' && (
+			<>
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/RampartOne-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/KosugiMaru-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/DotGothic16-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+			</>
+		)}
+		{lang === 'hi' && (
+			<>
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Sarala-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Sarala-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+			</>
+		)}
+		{lang === 'zh-cn' && (
+			<>
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/NotoSansSC-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+			</>
+		)}
+		{lang === 'zh-tw' && (
+			<>
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ChocolateClassicalSans-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+			</>
+		)}
+		{(lang !== 'ja' && lang !== 'hi' && lang !== 'zh-cn' && lang !== 'zh-tw') && (
+			<>
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Median.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Boysen.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+				<link rel="preload" href="https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/InterTight-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+			</>
+		)}
 
 		<!-- Font Loading - Optimized for performance -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -185,7 +212,7 @@ import { GlobalToastContainer } from '../components/modules/Toasts';
 		<CustomCursor />
 		<!-- <ClickBubble /> -->
 		<ScrollIndicator />
-		<Header />
+		<Header lang={lang} />
 		<slot />
 		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
 		<LenisIsland client:idle />

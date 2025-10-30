@@ -13,29 +13,48 @@ import GetInTouch from "../../components/modules/GetInTouch/components/GetInTouc
 import Footer from "../../components/modules/Footer/components/Footer.astro";
 import Enterprises from '../../components/Home/Enterprises/Enterprises.astro';
 import GemSection from '../../components/Home/GemSection/GemSection.astro';
+import WhiteBackground from '../../components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
 import '../../styles/global.css';
 ---
 
 <Layout title="Karen Ortiz - ポートフォリオ" lang="ja">
-	<Banner />
-	<Enterprises />
-	<GemSection />
-	<section id="about">
-		<Me />
-	</section>
-	<section id="services">
-		<Services />
-	</section>
-	<Marquees />
+	<WhiteBackground lightOpacity={0.15} darkOpacity={0.08}>
+		<Banner lang="ja" />
+	</WhiteBackground>
 
-	<MyStack />
+	<WhiteBackground lightOpacity={0.10} darkOpacity={0.12}>
+		<Enterprises lang="ja" />
+		<GemSection />
+		<section id="about">
+			<Me />
+		</section>
+		<Services />
+		<Marquees />
+
+		<MyStack lang="ja" />
+	</WhiteBackground>
+
 	<section id="projects">
 		<Projects />
 	</section>
-	<FAQs />
+	<div class="faqs-responsive-container">
+		<FAQs />
+	</div>
 	<section id="contact">
-		<div id="reviews"></div>
-		<GetInTouch />
+		<GetInTouch lang="ja" />
 	</section>
 	<Footer />
 </Layout>
+
+<style>
+  /* Hide FAQs only on viewport < 480px */
+  @media (max-width: 479px) {
+    .faqs-responsive-container {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+</style>

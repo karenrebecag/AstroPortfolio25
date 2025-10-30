@@ -311,21 +311,6 @@ export function SpeedlifyStats({
 
       {/* Last Updated */}
       <div className="flex items-center gap-2 ml-auto">
-        {isRealData ? (
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-green-400 text-xs font-primary font-medium">
-              Live Data
-            </span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-            <span className="text-yellow-400 text-xs font-primary font-medium">
-              Demo Data
-            </span>
-          </div>
-        )}
         {(hidePerformance || hideAccessibility) && (
           <div className="flex items-center gap-1">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>

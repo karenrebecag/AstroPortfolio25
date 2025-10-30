@@ -3,10 +3,12 @@
 import GetInTouchWithToast from './GetInTouchWithToast.tsx';
 import { DitheringShader } from "../../Footer/shaders/DitheringShader";
 import { ServiceReviewsIsland } from '../../Reviews';
-import { getLangFromUrl } from '../../../../i18n/utils.js';
 
-// Detectar idioma de la URL actual
-const lang = getLangFromUrl(Astro.url);
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <section id="contact" class="get-in-touch-section">
@@ -35,7 +37,7 @@ const lang = getLangFromUrl(Astro.url);
   
   <!-- Reviews Section -->
   <div class="reviews-container">
-    <ServiceReviewsIsland client:visible />
+    <ServiceReviewsIsland client:visible lang={lang} />
   </div>
 </section>
 

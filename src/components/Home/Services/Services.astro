@@ -15,7 +15,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 const services = await getServices(lang);
 ---
 
-<section class="services-section">
+<section id="services" class="services-section">
   
   <div class="services-container">
     <!-- Giant Heading with TextDisperse -->
@@ -28,7 +28,7 @@ const services = await getServices(lang);
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <h2 class="sr-only">Services</h2>
+        <h2 class="sr-only">{t.services.title}</h2>
         <TextDisperseBlack text={t.services.title} className="giant-heading-disperse-black" client:idle />
       </motion.div>
       

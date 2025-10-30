@@ -6,7 +6,7 @@
   .story-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two column layout on desktop */
-    gap: 3rem;
+    gap: 2.5rem;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -38,16 +38,32 @@
   .scrolling-content-column {
     display: flex;
     flex-direction: column;
-    gap: 15rem;
+    gap: 6rem;
   }
 
   .content-section {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
-    
-    align-items: center;
+    align-items: stretch;
     position: relative;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
+  }
+  
+  .section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    align-items: flex-start;
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .section-heading > * {
+    margin: 0;
   }
 
   /* Grid pattern overlay */
@@ -74,8 +90,18 @@
     transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
+  .me-hero-text {
+    color: #080808;
+  }
+
   :global(.me-section-title) {
     font-size: clamp(36px, 6vw, 72px);
+    line-height: 0.82;
+    transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.me-section-subtitle) {
+    font-size: clamp(28px, 4.5vw, 56px);
     line-height: 0.9;
     transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
@@ -231,6 +257,12 @@
 
     .scrolling-content-column :global(.me-section-title) {
       font-size: clamp(24px, 4vw, 52px); /* increased from clamp(20px, 3.5vw, 48px) */
+      line-height: 0.84;
+    }
+
+    .scrolling-content-column :global(.me-section-subtitle) {
+      font-size: clamp(20px, 3.2vw, 42px);
+      line-height: 0.92;
     }
 
     .scrolling-content-column :global(.me-heading-lg) {

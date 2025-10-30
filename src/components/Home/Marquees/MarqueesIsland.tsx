@@ -1,8 +1,13 @@
 import React from 'react';
 import { MarqueeAnimation } from '../MyStack/components/MarqueeAnimation';
 import ErrorBoundary from './ErrorBoundary';
+import { t } from '../../../i18n/utils.js';
 
-const MarqueesIsland: React.FC = () => {
+interface MarqueesIslandProps {
+  lang: string;
+}
+
+const MarqueesIsland: React.FC<MarqueesIslandProps> = ({ lang }) => {
   return (
     <ErrorBoundary>
       <div className="marquees-container">
@@ -13,7 +18,7 @@ const MarqueesIsland: React.FC = () => {
             baseVelocity={-2}
             className="main-marquee-text py-2 font-display"
           >
-            CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO
+            {t('banner.leftMarquee', lang)}
           </MarqueeAnimation>
         </div>
         {/* Marquee inferior - rotado hacia la izquierda, z-index más alto */}
@@ -23,7 +28,7 @@ const MarqueesIsland: React.FC = () => {
             baseVelocity={-2}
             className="main-marquee-text py-2 font-display"
           >
-            FRONTEND • BACKEND • FULLSTACK • PROJECTS
+            {t('banner.rightMarquee', lang)}
           </MarqueeAnimation>
         </div>
       </div>

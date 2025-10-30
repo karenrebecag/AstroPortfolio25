@@ -8,6 +8,7 @@ interface Project {
   title2: string;
   description: string;
   tags: string[];
+  slug?: string;
   url?: string;
 }
 
@@ -137,14 +138,14 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
   };
 
   const getProjectUrl = (project: Project) => {
-    // Map project IDs to their corresponding URLs
-    const projectRoutes = {
-      1: '/p_ThisPortfolio',
-      2: '/p_AurinTaskManager',
-      // Add more projects as needed
-    };
-
-    return projectRoutes[project.id as keyof typeof projectRoutes] || '#projects';
+    // Use slug if available, fallback to URL or projects section
+    if (project.slug) {
+      return `/projects/${project.slug}`;
+    }
+    if (project.url) {
+      return project.url;
+    }
+    return '#projects';
   };
 
   const Dropdown = () => (

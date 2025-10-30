@@ -1,4 +1,4 @@
----
+--- 
 // Me.astro - About section component
 import MainButton from '../../modules/Header/MainButton.astro';
 import SecondaryButton from '../../ui/SecondaryButton.astro';
@@ -11,11 +11,12 @@ import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
 import { motion } from 'motion/react';
 import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 import styles from './Me.module.css';
-import { getLangFromUrl } from '../../../i18n/utils.js';
+import { getLangFromUrl, t } from '../../../i18n/utils.js';
 import { getExperiences } from '../../../lib/cms';
 import { experienceData as fallbackExperienceData } from '../../../data/experienceData';
 
 const lang = getLangFromUrl(Astro.url);
+const meTranslations = t('me', lang);
 
 // Fetch experiences from CMS
 const experiencesFromCMS = await getExperiences(lang);
@@ -53,27 +54,26 @@ const experienceData = experiencesFromCMS.length > 0
 
       <!-- Content Section 1: Introduction -->
       <AnimatedMeSection client:visible={{rootMargin: "100px"}} delay={0.1}>
-        <div class="relative z-10">
+        <div class={`${styles['section-content']} relative z-10`}>
           <div class="relative">
             <!-- Purple circle positioned behind the heading -->
             <AnimatedMeElement client:visible delay={0.2} direction="right">
               <div class={`me-purple-circle bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10`}></div>
             </AnimatedMeElement>
             <AnimatedMeElement client:visible delay={0.25}>
-              <h2 class={`me-hero-title text-hero font-median mb-2 relative z-10`}>
-                <span class="me-hero-text-dark">karen ortiz,</span> <span class="text-[#7350cc]">Design<br />Engineer</span>
+              <h2 class={`me-hero-title text-hero font-median relative z-10 ${styles['me-hero-text']}`}>
+                {meTranslations.hero.name}, <strong class="text-[#7350cc] font-semibold">{meTranslations.hero.role}</strong>
               </h2>
             </AnimatedMeElement>
           </div>
           <AnimatedMeElement client:visible delay={0.3}>
             <h3 class={`${styles['me-heading-lg']} me-heading-lg text-heading-lg ${styles['me-heading-text-dark']} me-heading-text-dark font-secondary font-bold`}>
-              Based in Mexico City
+              {meTranslations.hero.location}
             </h3>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.35}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mt-6`}>
-              That is where I come in. A lover of words, a wrangler of copy. Here to create copy that not only reflects 
-              who you are and what you stand for, but words that truly land with those that read them.
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+              {meTranslations.hero.intro}
             </p>
           </AnimatedMeElement>
         </div>
@@ -81,24 +81,23 @@ const experienceData = experiencesFromCMS.length > 0
 
       <!-- Content Section 2: Experience -->
       <AnimatedMeSection client:visible delay={0.15}>
-        <div class="relative z-10">
+        <div class={`${styles['section-content']} relative z-10`}>
           <AnimatedMeElement client:visible delay={0.4}>
-            <h2 class={`me-section-title text-hero font-median mb-6`}>
-              <span class="text-[#7350cc]">5+ Years</span><br />
-              <span class="me-section-text-dark">Creating Digital</span><br />
-              <span class="me-section-text-dark">Experiences</span>
-            </h2>
+            <div class={`${styles['section-heading']}`}>
+              <h2 class={`me-section-title text-hero font-median text-[#7350cc]`}>{meTranslations.experience.years}</h2>
+              <h3 class={`${styles['me-section-subtitle']} me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title1}</h3>
+              <h3 class={`${styles['me-section-subtitle']} me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title2}</h3>
+            </div>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.45}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-8`}>
-              From UI/UX design to full-stack development, I've worked with companies across the globe, 
-              creating seamless digital experiences that merge aesthetics with functionality.
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+              {meTranslations.experience.description}
             </p>
           </AnimatedMeElement>
           <AnimatedMeButton client:visible delay={0.5}>
             <div class="flex items-start gap-9 button-container-me">
               <MainButton 
-                text="Connect"
+                text={meTranslations.experience.connectButton}
                 href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/"
               />
             </div>
@@ -108,48 +107,48 @@ const experienceData = experiencesFromCMS.length > 0
 
       <!-- Content Section 3: Stats -->
       <AnimatedMeSection client:visible delay={0.2}>
-        <div class="relative z-10">
+        <div class={`${styles['section-content']} relative z-10`}>
           <AnimatedMeElement client:visible delay={0.55}>
-            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median mb-8`}>
-              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>Numbers That</span><br />
-              <span class="text-[#7350cc]">Speak Volumes</span>
-            </h2>
+            <div class={`${styles['section-heading']}`}>
+              <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.stats.title1}</h2>
+              <h3 class={`${styles['me-section-subtitle']} me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.stats.title2}</h3>
+            </div>
           </AnimatedMeElement>
                     
           <AnimatedMeElement client:visible delay={0.75}>
             <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              Every project is an opportunity to push boundaries and create something extraordinary.
+              {meTranslations.stats.description}
             </p>
           </AnimatedMeElement>
 
           <!-- Stats Grid -->
-          <div class="grid grid-cols-3 gap-8 mb-8">
+          <div class="grid grid-cols-3 gap-6">
             <AnimatedMeStats client:visible delay={0.6}>
               <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
-                  <Number value={8} delay={500} client:visible />
+                <div class={`${styles['me-stats-number']} me-stats-number ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                  <Number value={4} delay={500} className="font-primary font-extrabold" client:visible />
                 </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Award winner</div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.awards}</div>
               </div>
             </AnimatedMeStats>
             
             <AnimatedMeStats client:visible delay={0.65}>
               <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
-                  <Number value={1} delay={700} client:visible />
-                  <span>.2k</span>
+                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                  <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
+                  <Number value={30} delay={700} className="font-primary font-extrabold" client:visible />
                 </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Worldwide clients</div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.clients}</div>
               </div>
             </AnimatedMeStats>
             
             <AnimatedMeStats client:visible delay={0.7}>
               <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center text-display ${styles['me-stats-text-dark']} me-stats-text-dark font-secondary mb-2`}>
-                  <Number value={3} delay={900} client:visible />
-                  <span>.5k</span>
+                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                  <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
+                  <Number value={10} delay={900} className="font-primary font-extrabold" client:visible />
                 </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>Jobs completed</div>
+                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.countries}</div>
               </div>
             </AnimatedMeStats>
           </div>
@@ -159,23 +158,22 @@ const experienceData = experiencesFromCMS.length > 0
 
       <!-- Content Section 4: Philosophy -->
       <AnimatedMeSection client:visible delay={0.25}>
-        <div class="relative z-10">
+        <div class={`${styles['section-content']} relative z-10`}>
           <AnimatedMeElement client:visible delay={0.8}>
-            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median mb-6`}>
-              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>Design Is Not Just</span><br />
-              <span class="text-[#7350cc]">What It Looks Like</span><br />
-              <span class={`${styles['me-section-text-dark']} me-section-text-dark`}>It's How It Works</span>
-            </h2>
+            <div class={`${styles['section-heading']}`}>
+              <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title1}</h2>
+              <h3 class={`${styles['me-section-subtitle']} me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.philosophy.title2}</h3>
+              <h3 class={`${styles['me-section-subtitle']} me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title3}</h3>
+            </div>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.85}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary mb-6`}>
-              I believe in creating digital experiences that are not only visually stunning but also 
-              functionally exceptional. Every pixel serves a purpose, every interaction tells a story.
+            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+              {meTranslations.philosophy.description1}
             </p>
           </AnimatedMeElement>
           <AnimatedMeElement client:visible delay={0.9}>
             <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              Ready to bring your vision to life? Let's create something extraordinary together.
+              {meTranslations.philosophy.description2}
             </p>
           </AnimatedMeElement>
         </div>
@@ -197,7 +195,7 @@ const experienceData = experiencesFromCMS.length > 0
       client:idle={{timeout: 500}}
     >
       <div class={`${styles['globe-title-text-wrapper']} globe-title-text-wrapper`}>
-        <TextDisperseBlack text="GLOBAL IMPACT" className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle={{timeout: 500}} />
+        <TextDisperseBlack text={meTranslations.globe.title} className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle={{timeout: 500}} />
       </div>
     </motion.div>
   </div>
@@ -219,8 +217,7 @@ const experienceData = experiencesFromCMS.length > 0
       client:idle={{timeout: 500}}
     >
       <p class={`${styles['experience-description-text']} experience-description-text`}>
-        I've collaborated with clients worldwide to create efficient, 
-        impactful digital products that drive real business results.
+        {meTranslations.globe.description}
       </p>
     </motion.div>
   </div>
@@ -240,57 +237,3 @@ const experienceData = experiencesFromCMS.length > 0
   </div>
 </div>
 
-
-<script>
-  // Simple scroll initialization - el efecto funciona con CSS puro
-  document.addEventListener('DOMContentLoaded', () => {
-    initializeGlobalTitleResize();
-  });
-
-  // Re-initialize para transiciones de Astro
-  document.addEventListener('astro:page-load', () => {
-    initializeGlobalTitleResize();
-  });
-
-  function initializeGlobalTitleResize() {
-    const globeTitle = document.querySelector('.globe-title-disperse') as HTMLElement;
-    const titleWrapper = document.querySelector('.globe-title-text-wrapper') as HTMLElement;
-
-    if (!globeTitle || !titleWrapper) return;
-
-    function adjustTitleSize() {
-      if (!globeTitle || !titleWrapper) return;
-      
-      const wrapperWidth = titleWrapper.offsetWidth;
-      const titleWidth = globeTitle.scrollWidth;
-
-      if (titleWidth > wrapperWidth) {
-        // Calcular el factor de escala necesario
-        const scaleFactor = (wrapperWidth - 40) / titleWidth; // 40px de margen de seguridad
-        const minScale = 0.6; // Escala mínima para mantener legibilidad
-        const finalScale = Math.max(scaleFactor, minScale);
-
-        // Aplicar transform scale en lugar de cambiar font-size
-        globeTitle.style.transform = `scale(${finalScale})`;
-        globeTitle.style.transformOrigin = 'center';
-      } else {
-        // Resetear si el texto cabe naturalmente
-        globeTitle.style.transform = 'scale(1)';
-      }
-    }
-
-    // Ejecutar al cargar
-    setTimeout(adjustTitleSize, 100);
-
-    // Ejecutar en resize
-    let resizeTimeout: ReturnType<typeof setTimeout>;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(adjustTitleSize, 150);
-    });
-  }
-
-  // Dark Mode Implementation
-  // This component relies on global .dark-mode on documentElement
-  // No additional dark mode logic needed here as it's handled globally
-</script>

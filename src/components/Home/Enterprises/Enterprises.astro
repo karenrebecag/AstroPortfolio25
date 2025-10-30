@@ -1,6 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import styles from './Enterprises.module.css';
+import { t } from '../../../i18n/utils.js';
+
+const { lang = 'en' } = Astro.props;
 
 const logos = [
   { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientLogo-1.png', alt: 'Ancient', width: 132, height: 44 },
@@ -20,7 +23,7 @@ const duplicatedLogos = logos.concat(logos);
   <div class={styles.enterprisesContainer}>
     <div class={styles.enterprisesWrapper}>
       <div class={styles.container}>
-        <h2 class={styles.title}>Trusted by Leading Brands to Deliver Exceptional Design Solutions</h2>
+        <h2 class={styles.title}>{t('enterprises.title', lang)}</h2>
         <div class={styles.slider}>
           {duplicatedLogos.map((logo, index) => (
             <Image

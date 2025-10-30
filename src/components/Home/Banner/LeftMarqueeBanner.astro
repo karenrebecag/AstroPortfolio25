@@ -1,6 +1,9 @@
 ---
 // LeftMarqueeBanner - Large animated text moving from right to left
 import styles from './LeftMarqueeBanner.module.css';
+import { t } from '../../../i18n/utils.js';
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <!-- Wrapper para prevenir layout shift -->
@@ -12,22 +15,22 @@ import styles from './LeftMarqueeBanner.module.css';
       style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
     >
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
       <span class="marquee-content">
-        CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •
+        {t('banner.leftMarquee', lang)}
       </span>
     </div>
   </div>

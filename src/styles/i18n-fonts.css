@@ -1,99 +1,255 @@
 /* Multi-language typography system */
 
-/* Google Fonts imports for international languages */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap');
+/* NOTE: Google Fonts are loaded conditionally in Layout.astro based on lang prop for performance */
 
 /* Extended font family variables for international support */
 :root {
-  /* Latin script fonts (English, Spanish, French) */
-  --font-latin: 'InterTight', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-latin-display: 'Median', 'Boysen', Georgia, serif;
+  /* Latin script fonts (English, Spanish, French) - inherit from main fonts */
+  --font-latin: var(--font-primary);
+  --font-latin-secondary: var(--font-secondary);
+  --font-latin-display: var(--font-display);
 
-  /* Devanagari script (Hindi) */
-  --font-devanagari: 'Noto Sans Devanagari', 'Mangal', 'Kokila', sans-serif;
+  /* Devanagari script (Hindi) - Custom Sarala font */
+  --font-devanagari: 'Sarala', 'Inter Tight', 'Mangal', 'Kokila', sans-serif;
+  --font-devanagari-display: 'Sarala', 'Median', 'Nirmala UI', serif;
 
-  /* Japanese script */
-  --font-japanese: 'Noto Sans JP', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+  /* Japanese script (CJK) - Custom fonts */
+  --font-japanese: 'Kosugi Maru', 'Inter Tight', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-japanese-secondary: 'Rampart One', 'Kosugi Maru', 'Hiragino Mincho ProN', serif;
+  --font-japanese-display: 'Rampart One', 'Median', 'Hiragino Mincho ProN', serif;
+  --font-japanese-game: 'DotGothic16', 'Courier New', monospace;
 
-  /* Chinese Simplified */
-  --font-chinese-sc: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  /* Chinese Simplified (CJK) - Custom font */
+  --font-chinese-sc: 'Noto Sans SC', 'Inter Tight', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-chinese-sc-display: 'Noto Sans SC', 'Median', 'STHeiti', serif;
 
-  /* Chinese Traditional */
-  --font-chinese-tc: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  /* Chinese Traditional (CJK) - Custom font */
+  --font-chinese-tc: 'Chocolate Classical Sans', 'Inter Tight', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-chinese-tc-display: 'Chocolate Classical Sans', 'Median', 'STKaiti', serif;
+
+  /* Korean script (CJK) */
+  --font-korean: 'Noto Sans KR', 'InterTight', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-korean-display: 'Noto Sans KR', 'Median', 'Apple Myungjo', serif;
+
+  /* Arabic script */
+  --font-arabic: 'Noto Sans Arabic', 'InterTight', 'Tahoma', 'Arial', sans-serif;
+  --font-arabic-display: 'Noto Naskh Arabic', 'Median', 'Times New Roman', serif;
 }
 
 /* Language-specific typography rules */
 html[lang="en"],
 html[lang="es"],
-html[lang="fr"] {
+html[lang="fr"],
+html[lang="pt"],
+html[lang="de"],
+html[lang="it"] {
   font-family: var(--font-latin);
   line-height: 1.6;
 }
 
+html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3,
+html[lang="es"] h1, html[lang="es"] h2, html[lang="es"] h3,
+html[lang="fr"] h1, html[lang="fr"] h2, html[lang="fr"] h3,
+html[lang="pt"] h1, html[lang="pt"] h2, html[lang="pt"] h3 {
+  font-family: var(--font-latin-secondary);
+}
+
 html[lang="en"] .font-display,
 html[lang="es"] .font-display,
-html[lang="fr"] .font-display {
+html[lang="fr"] .font-display,
+html[lang="pt"] .font-display {
   font-family: var(--font-latin-display);
 }
 
 html[lang="hi"] {
   font-family: var(--font-devanagari);
-  line-height: 1.7; /* Increased for complex Devanagari characters */
+  line-height: 1.8; /* Increased for complex Devanagari characters */
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override CSS variables for Hindi */
+html[lang="hi"] {
+  --font-primary: var(--font-devanagari);
+  --font-secondary: var(--font-devanagari-display);
+  --font-display: var(--font-devanagari-display);
+}
+
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3 {
+  font-family: var(--font-devanagari-display);
+  font-weight: 700; /* Use bold variant for headings */
+  letter-spacing: 0.02em;
 }
 
 html[lang="hi"] .font-display {
+  font-family: var(--font-devanagari-display);
+  font-weight: 700; /* Bold for display text */
+  letter-spacing: 0.02em;
+}
+
+html[lang="hi"] body,
+html[lang="hi"] p {
   font-family: var(--font-devanagari);
-  font-weight: 600; /* Compensate for thinner Devanagari strokes */
+  font-weight: 400; /* Regular for body text */
+}
+
+/* Ensure all text elements use Hindi fonts */
+html[lang="hi"] .font-primary,
+html[lang="hi"] .font-secondary {
+  font-family: var(--font-devanagari);
 }
 
 html[lang="ja"] {
   font-family: var(--font-japanese);
-  line-height: 1.8; /* Recommended for Japanese text */
+  line-height: 1.85; /* Recommended for Japanese text */
   word-spacing: 0; /* No spaces between words in Japanese */
   font-style: normal; /* Never use italics in Japanese */
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override CSS variables for Japanese */
+html[lang="ja"] {
+  --font-primary: var(--font-japanese);
+  --font-secondary: var(--font-japanese-secondary);
+  --font-display: var(--font-japanese-display);
+  --font-game: var(--font-japanese-game);
+}
+
+html[lang="ja"] h1,
+html[lang="ja"] h2,
+html[lang="ja"] h3 {
+  font-family: var(--font-japanese-secondary);
+  font-weight: 400;
+  letter-spacing: 0.08em;
 }
 
 html[lang="ja"] .font-display {
+  font-family: var(--font-japanese-display);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+html[lang="ja"] .font-game {
+  font-family: var(--font-japanese-game);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+html[lang="ja"] body,
+html[lang="ja"] p {
   font-family: var(--font-japanese);
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* Ensure all text elements use Japanese fonts */
+html[lang="ja"] .font-primary,
+html[lang="ja"] .font-secondary {
+  font-family: var(--font-japanese);
 }
 
 /* Japanese emphasis styling (since italics are not used) */
-html[lang="ja"] em {
+html[lang="ja"] em,
+html[lang="ja"] i {
   font-style: normal !important;
   font-weight: 600;
-  background: linear-gradient(transparent 60%, #ffeb3b 60%);
-  background-size: 100% 100%;
+  text-emphasis: filled circle;
+  text-emphasis-position: over right;
 }
 
 html[lang="zh-cn"] {
   font-family: var(--font-chinese-sc);
-  line-height: 1.8;
+  line-height: 1.85;
   word-spacing: 0;
   font-variant-east-asian: simplified;
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override CSS variables for Chinese Simplified */
+html[lang="zh-cn"] {
+  --font-primary: var(--font-chinese-sc);
+  --font-secondary: var(--font-chinese-sc-display);
+  --font-display: var(--font-chinese-sc-display);
+}
+
+html[lang="zh-cn"] h1,
+html[lang="zh-cn"] h2,
+html[lang="zh-cn"] h3 {
+  font-family: var(--font-chinese-sc-display);
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 
 html[lang="zh-cn"] .font-display {
-  font-family: var(--font-chinese-sc);
+  font-family: var(--font-chinese-sc-display);
   font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+html[lang="zh-cn"] body,
+html[lang="zh-cn"] p {
+  font-family: var(--font-chinese-sc);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* Ensure all text elements use Chinese Simplified fonts */
+html[lang="zh-cn"] .font-primary,
+html[lang="zh-cn"] .font-secondary {
+  font-family: var(--font-chinese-sc);
 }
 
 html[lang="zh-tw"] {
   font-family: var(--font-chinese-tc);
-  line-height: 1.8;
+  line-height: 1.85;
   word-spacing: 0;
   font-variant-east-asian: traditional;
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override CSS variables for Chinese Traditional */
+html[lang="zh-tw"] {
+  --font-primary: var(--font-chinese-tc);
+  --font-secondary: var(--font-chinese-tc-display);
+  --font-display: var(--font-chinese-tc-display);
+}
+
+html[lang="zh-tw"] h1,
+html[lang="zh-tw"] h2,
+html[lang="zh-tw"] h3 {
+  font-family: var(--font-chinese-tc-display);
+  font-weight: 400;
+  letter-spacing: 0.08em;
 }
 
 html[lang="zh-tw"] .font-display {
+  font-family: var(--font-chinese-tc-display);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+html[lang="zh-tw"] body,
+html[lang="zh-tw"] p {
   font-family: var(--font-chinese-tc);
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* Ensure all text elements use Chinese Traditional fonts */
+html[lang="zh-tw"] .font-primary,
+html[lang="zh-tw"] .font-secondary {
+  font-family: var(--font-chinese-tc);
 }
 
 /* Responsive text sizing for CJK languages */

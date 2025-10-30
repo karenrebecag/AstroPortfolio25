@@ -227,3 +227,85 @@
   font-weight: var(--font-weight-normal);
   line-height: var(--leading-normal);
 }
+
+/* ============================================
+   JAPANESE FONTS - Loaded conditionally
+   ============================================ */
+
+/* Rampart One - Replaces Median for Japanese display text */
+@font-face {
+  font-family: 'Rampart One';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/RampartOne-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+3000-303F, U+3040-309F, U+30A0-30FF, U+FF00-FFEF, U+4E00-9FAF;
+}
+
+/* Kosugi Maru - Replaces Inter Tight for Japanese body text */
+@font-face {
+  font-family: 'Kosugi Maru';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/KosugiMaru-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+3000-303F, U+3040-309F, U+30A0-30FF, U+FF00-FFEF, U+4E00-9FAF;
+}
+
+/* DotGothic16 - Replaces Video Game Font for Japanese */
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/DotGothic16-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+3000-303F, U+3040-309F, U+30A0-30FF, U+FF00-FFEF, U+4E00-9FAF;
+}
+
+/* ============================================
+   HINDI FONTS - Loaded conditionally
+   ============================================ */
+
+/* Sarala Regular - For Hindi body text */
+@font-face {
+  font-family: 'Sarala';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Sarala-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+
+/* Sarala Bold - Replaces Median for Hindi display text */
+@font-face {
+  font-family: 'Sarala';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Sarala-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+
+/* ============================================
+   CHINESE FONTS - Loaded conditionally
+   ============================================ */
+
+/* Noto Sans SC Variable - For Chinese Simplified */
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/NotoSansSC-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+F900-FAFF, U+2F800-2FA1F;
+}
+
+/* Chocolate Classical Sans - For Chinese Traditional */
+@font-face {
+  font-family: 'Chocolate Classical Sans';
+  src: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ChocolateClassicalSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+F900-FAFF, U+2F800-2FA1F;
+}

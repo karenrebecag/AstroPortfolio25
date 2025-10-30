@@ -1,45 +1,19 @@
 ---
 import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
 import { motion } from 'motion/react';
+import { t } from '../../../i18n/utils.js';
 
-const aboutCards = [
-  {
-    id: "01",
-    title: "DESIGN MATTERS",
-    description: "Good UX isn't magic—it's iteration. I look at spacing, hierarchy, content, motion... everything users feel but can't explain.",
-    alignment: "center"
-  },
-  {
-    id: "02",
-    title: "building my\nown",
-    description: "Founding WebCrafters gave me the space to lead full processes—from first call to delivery. I work with teams that value clarity, ownership, and honest feedback.",
-    alignment: "start"
-  },
-  {
-    id: "03",
-    title: "EVOLVING\nWITH INTENTION",
-    description: "Design and dev move fast—but not everything should be rushed. I adapt, but I stay grounded in usability, accessibility, and real needs.",
-    alignment: "center"
-  },
-  {
-    id: "04",
-    title: "PRODUCT\nTHINKING",
-    description: "I design with users in mind, but I also think about dev time, scalability, and business goals. Each screen is a decision—and I care about all of them.",
-    alignment: "center"
-  },
-  {
-    id: "05",
-    title: "Curiosity First",
-    description: "I've always been curious about how things work. Design came as a way to solve problems—not just make things pretty. Understanding both the visual and the structural side has always made sense to me.",
-    alignment: "center"
-  },
-  {
-    id: "06",
-    title: "Bringing Design\nAND CODE",
-    description: "I'm both a developer and a designer, which means I don't just make it look good—I make it work. This mindset helps me build faster, cleaner, and with fewer handoffs.",
-    alignment: "center"
-  }
-];
+const { lang = 'en' } = Astro.props;
+
+const aboutCardsRaw = t('aboutMe.skills', lang) as Array<{ id: string; title: string; description: string; highlight: string; }>;
+
+const aboutCards = aboutCardsRaw.map(card => ({
+  ...card,
+  description: `${card.description} ${card.highlight}`,
+  alignment: ['01', '03', '04', '05', '06'].includes(card.id) ? 'center' : 'start'
+}));
+
+const title = t('aboutMe.title', lang);
 ---
 
 <section class="aboutme">
@@ -72,7 +46,7 @@ const aboutCards = [
       client:visible
     >
       <TextDisperseBlack 
-        text="ABOUT ME" 
+        text={title} 
         className="giant-text-disperse-black" 
         style={{ transform: 'scale(1.4)' }}
         client:visible 

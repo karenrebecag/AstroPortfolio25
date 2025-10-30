@@ -17,6 +17,23 @@ export const translations = {
       subtitle: 'Creating exceptional web experiences with React, Astro and Three.js',
       cta: 'View Projects'
     },
+    banner: {
+      leftMarquee: 'CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •',
+      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROJECTS •',
+      projectsButton: 'Projects',
+      resumeButton: 'Get my Resume'
+    },
+    faqs: {
+      title: 'FAQS',
+      subtitle: 'Common questions about my services and process'
+    },
+    enterprises: {
+      title: 'Trusted by Leading Brands to Deliver Exceptional Design Solutions'
+    },
+    myStack: {
+      title: 'MY STACK',
+      button: 'Check my Stack'
+    },
     footer: {
       rights: 'All rights reserved',
       language: 'Language'
@@ -269,6 +286,69 @@ export const translations = {
           highlight: 'This mindset helps me build faster, cleaner, and with fewer handoffs.'
         }
       ]
+    },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: 'Design Engineer',
+        location: 'Based in Mexico City',
+        intro: 'That is where I come in. A lover of my work, a wrangler of my craft. I am here to create products that not only reflect who you are and what your ideals stand for, but products that truly resonate with those who experience them and achieve their objective.'
+      },
+      experience: {
+        years: '5+ Years',
+        title1: 'Creating Digital',
+        title2: 'Experiences',
+        description: 'From UI/UX design to full-stack development, I\'ve worked with companies across the globe, creating seamless digital experiences that merge aesthetics with functionality.',
+        connectButton: 'Connect'
+      },
+      stats: {
+        title1: 'Numbers That',
+        title2: 'Speak Volumes',
+        description: 'Every project is an opportunity to push boundaries and create something extraordinary.',
+        awards: 'Awards won',
+        clients: 'Worldwide clients',
+        countries: 'Countries launched'
+      },
+      philosophy: {
+        title1: 'Design Is Not Just',
+        title2: 'What It Looks Like',
+        title3: 'It\'s How It Works',
+        description1: 'I believe in creating digital experiences that are not only visually stunning but also functionally exceptional. Every pixel serves a purpose, every interaction tells a story.',
+        description2: 'Ready to bring your vision to life? Let\'s create something extraordinary together.'
+      },
+      globe: {
+        title: 'GLOBAL IMPACT',
+        description: 'I\'ve collaborated with clients worldwide to create efficient, impactful digital products that drive real business results.'
+      },
+      readMore: 'Read More'
+    },
+    projects: {
+      caseStudies: {
+        title: 'CASE STUDIES',
+        subtitle: 'Showcasing my latest work and creative solutions'
+      },
+      quickProjects: {
+        title: 'Quick Projects',
+        description: 'Explore my collection of landing pages, no-code solutions, and creative experiments.'
+      }
+    },
+    reviews: {
+      submit: 'Submit a Review'
+    },
+    serviceReviews: {
+      title: 'Share Your Experience',
+      subtitle: 'Tell others about working with Karen on your project',
+      nameLabel: 'Your Name',
+      namePlaceholder: 'Enter your full name',
+      positionLabel: 'Position (Optional)',
+      positionPlaceholder: 'Your job title or company',
+      reviewLabel: 'Your Review',
+      reviewPlaceholder: 'Share your experience working with Karen. What did you like most about the service?',
+      submitting: 'Submitting...',
+      submit: 'Submit Review',
+      privacy: 'By submitting a review, you agree to my Privacy Policy. Your data is handled with care and only used for moderation purposes.',
+      loading: 'Loading reviews...',
+      success: 'Service review submitted successfully! It will appear after moderation.'
     },
     topMarquee: {
       text: 'UX/UI DESIGN & ENGINEERING • FIGMA PROTOTYPES • DESIGN SYSTEMS • COMPONENT LIBRARIES • MOBILE DESIGN • DEVELOPER HANDOFF • CREATIVE FRONTEND DEVELOPMENT • REACT & NEXT.JS • WEBGL & THREE.JS • 3D GRAPHICS • INTERACTIVE ART • RESPONSIVE DESIGN • AI-POWERED AUTOMATION • CHATBOTS • MACHINE LEARNING • WORKFLOW DESIGN • N8N & MAKE • GEMINI API • OPENAI INTEGRATION • FULL-STACK & DEVOPS • NODE.JS & PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD PIPELINES • VERCEL DEPLOYMENT • GITHUB ACTIONS • SENTRY MONITORING • VIBE CODING • CREATIVE DEVELOPMENT • JAVASCRIPT & TYPESCRIPT • CLEAN CODE • PROBLEM SOLVING • INNOVATION • '
@@ -583,6 +663,23 @@ export const translations = {
       subtitle: 'Creando experiencias web excepcionales con React, Astro y Three.js',
       cta: 'Ver Proyectos'
     },
+    banner: {
+      leftMarquee: 'CREATIVA • DESARROLLADORA • DISEÑADORA • PORTAFOLIO •',
+      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROYECTOS •',
+      projectsButton: 'Proyectos',
+      resumeButton: 'Ver mi CV'
+    },
+    faqs: {
+      title: 'PREGUNTAS FRECUENTES',
+      subtitle: 'Preguntas comunes sobre mis servicios y proceso'
+    },
+    enterprises: {
+      title: 'Con la confianza de marcas líderes para ofrecer soluciones de diseño excepcionales'
+    },
+    myStack: {
+      title: 'MI STACK',
+      button: 'Ver mi Stack'
+    },
     footer: {
       rights: 'Todos los derechos reservados',
       language: 'Idioma'
@@ -835,6 +932,69 @@ export const translations = {
           highlight: 'Esta mentalidad me ayuda a construir más rápido, más limpio y con menos handoffs.'
         }
       ]
+    },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: 'Ingeniera de Diseño',
+        location: 'Residente en la Ciudad de México',
+        intro: 'Ahí es donde entro yo. Amante de mi trabajo, domadora de mi oficio. Estoy aquí para crear productos que no solo reflejen quién eres y lo que representan tus ideales, sino productos que realmente resuenen con quienes los experimentan y logren su objetivo.'
+      },
+      experience: {
+        years: '5+ Años',
+        title1: 'Creando Experiencias',
+        title2: 'Digitales',
+        description: 'Desde el diseño UI/UX hasta el desarrollo full-stack, he trabajado con empresas de todo el mundo, creando experiencias digitales fluidas que fusionan la estética con la funcionalidad.',
+        connectButton: 'Conectar'
+      },
+      stats: {
+        title1: 'Números Que',
+        title2: 'Hablan Por Sí Mismos',
+        description: 'Cada proyecto es una oportunidad para superar los límites y crear algo extraordinario.',
+        awards: 'Premios ganados',
+        clients: 'Clientes mundiales',
+        countries: 'Países lanzados'
+      },
+      philosophy: {
+        title1: 'El Diseño No Es Solo',
+        title2: 'Lo Que Parece',
+        title3: 'Es Cómo Funciona',
+        description1: 'Creo en la creación de experiencias digitales que no solo son visualmente impresionantes sino también funcionalmente excepcionales. Cada píxel tiene un propósito, cada interacción cuenta una historia.',
+        description2: '¿Listo para dar vida a tu visión? Creemos algo extraordinario juntos.'
+      },
+      globe: {
+        title: 'IMPACTO GLOBAL',
+        description: 'He colaborado con clientes de todo el mundo para crear productos digitales eficientes e impactantes que impulsan resultados comerciales reales.'
+      },
+      readMore: 'Leer más'
+    },
+    projects: {
+      caseStudies: {
+        title: 'CASOS DE ESTUDIO',
+        subtitle: 'Mostrando mi último trabajo y soluciones creativas'
+      },
+      quickProjects: {
+        title: 'Proyectos Rápidos',
+        description: 'Explora mi colección de landing pages, soluciones sin código y experimentos creativos.'
+      }
+    },
+    reviews: {
+      submit: 'Enviar una reseña'
+    },
+    serviceReviews: {
+      title: 'Comparte Tu Experiencia',
+      subtitle: 'Cuéntale a otros sobre tu experiencia trabajando con Karen en tu proyecto',
+      nameLabel: 'Tu Nombre',
+      namePlaceholder: 'Ingresa tu nombre completo',
+      positionLabel: 'Cargo (Opcional)',
+      positionPlaceholder: 'Tu puesto de trabajo o empresa',
+      reviewLabel: 'Tu Reseña',
+      reviewPlaceholder: 'Comparte tu experiencia trabajando con Karen. ¿Qué fue lo que más te gustó del servicio?',
+      submitting: 'Enviando...',
+      submit: 'Enviar Reseña',
+      privacy: 'Al enviar una reseña, aceptas mi Política de Privacidad. Tus datos se manejan con cuidado y solo se utilizan para fines de moderación.',
+      loading: 'Cargando reseñas...',
+      success: '¡Reseña del servicio enviada con éxito! Aparecerá después de la moderación.'
     },
     topMarquee: {
       text: 'DISEÑO UX/UI E INGENIERÍA • PROTOTIPOS FIGMA • SISTEMAS DE DISEÑO • LIBRERÍAS DE COMPONENTES • DISEÑO MÓVIL • HANDOFF DE DESARROLLADOR • DESARROLLO FRONTEND CREATIVO • REACT Y NEXT.JS • WEBGL Y THREE.JS • GRÁFICOS 3D • ARTE INTERACTIVO • DISEÑO RESPONSIVO • AUTOMATIZACIÓN CON IA • CHATBOTS • APRENDIZAJE AUTOMÁTICO • DISEÑO DE FLUJOS • N8N Y MAKE • GEMINI API • INTEGRACIÓN OPENAI • FULL-STACK Y DEVOPS • NODE.JS Y PYTHON • FASTAPI • FIRESTORE • MONGODB • PIPELINES CI/CD • DESPLIEGUE VERCEL • GITHUB ACTIONS • MONITOREO SENTRY • VIBE CODING • DESARROLLO CREATIVO • JAVASCRIPT Y TYPESCRIPT • CÓDIGO LIMPIO • RESOLUCIÓN DE PROBLEMAS • INNOVACIÓN • '
@@ -1149,6 +1309,23 @@ export const translations = {
       subtitle: 'Créer des expériences web exceptionnelles avec React, Astro et Three.js',
       cta: 'Voir les Projets'
     },
+    banner: {
+      leftMarquee: 'CRÉATIVE • DÉVELOPPEUSE • DESIGNEUSE • PORTFOLIO •',
+      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROJETS •',
+      projectsButton: 'Projets',
+      resumeButton: 'Voir mon CV'
+    },
+    faqs: {
+      title: 'FAQ',
+      subtitle: 'Questions courantes sur mes services et mon processus'
+    },
+    enterprises: {
+      title: 'La confiance des plus grandes marques pour des solutions de design exceptionnelles'
+    },
+    myStack: {
+      title: 'MA STACK',
+      button: 'Voir ma Stack'
+    },
     footer: {
       rights: 'Tous droits réservés',
       language: 'Langue'
@@ -1402,6 +1579,76 @@ export const translations = {
         }
       ]
     },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: 'Ingénieure en Design',
+        location: 'Basée à Mexico',
+        intro: 'C\'est là que j\'interviens. Amoureuse de mon travail, dompteuse de mon art. Je suis ici pour créer des produits qui non seulement reflètent qui vous êtes et ce que vos idéaux représentent, mais des produits qui résonnent vraiment avec ceux qui les expérimentent et atteignent leur objectif.'
+      },
+      experience: {
+        years: '5+ Ans',
+        title1: 'Créer des Expériences',
+        title2: 'Numériques',
+        description: 'De la conception UI/UX au développement full-stack, j\'ai travaillé avec des entreprises du monde entier, créant des expériences numériques fluides qui fusionnent l\'esthétique avec la fonctionnalité.',
+        connectButton: 'Connecter'
+      },
+      stats: {
+        title1: 'Des Chiffres Qui',
+        title2: 'Parlent d\'Eux-Mêmes',
+        description: 'Chaque projet est une opportunité de repousser les limites et de créer quelque chose d\'extraordinaire.',
+        awards: 'Prix remportés',
+        clients: 'Clients mondiaux',
+        countries: 'Pays lancés'
+      },
+      philosophy: {
+        title1: 'Le Design N\'est Pas Seulement',
+        title2: 'Ce à Quoi Il Ressemble',
+        title3: 'C\'est Comment Il Fonctionne',
+        description1: 'Je crois en la création d\'expériences numériques qui ne sont pas seulement visuellement époustouflantes mais aussi fonctionnellement exceptionnelles. Chaque pixel a un but, chaque interaction raconte une histoire.',
+        description2: 'Prêt à donner vie à votre vision ? Créons ensemble quelque chose d\'extraordinaire.'
+      },
+      globe: {
+        title: 'IMPACT MONDIAL',
+        description: 'J\'ai collaboré avec des clients du monde entier pour créer des produits numériques efficaces et percutants qui génèrent de réels résultats commerciaux.'
+      },
+      readMore: 'Lire la suite'
+    },
+    projects: {
+      caseStudies: {
+        title: 'ÉTUDES DE CAS',
+        subtitle: 'Présentation de mes derniers travaux et solutions créatives'
+      },
+      quickProjects: {
+        title: 'Projets Rapides',
+        description: 'Découvrez ma collection de pages de destination, de solutions sans code et d\'expériences créatives.'
+      },
+      caseStudy: {
+        workflow: 'Notre Flux de Travail',
+        workflowSubtitle: 'Un processus simplifié pour le succès',
+        solutions: 'Solutions',
+        finalThoughts: 'Réflexions Finales'
+      }
+    },
+    reviews: {
+      submit: 'Soumettre un avis'
+    },
+    serviceReviews: {
+      title: 'Partagez Votre Expérience',
+      subtitle: 'Parlez aux autres de votre expérience de travail avec Karen sur votre projet',
+      nameLabel: 'Votre Nom',
+      namePlaceholder: 'Entrez votre nom complet',
+      positionLabel: 'Poste (Optionnel)',
+      positionPlaceholder: 'Votre poste ou entreprise',
+      reviewLabel: 'Votre Avis',
+      reviewPlaceholder: 'Partagez votre expérience de travail avec Karen. Qu\'est-ce que vous avez le plus aimé dans le service ?',
+      submitting: 'Envoi en cours...',
+      submit: 'Envoyer l\'Avis',
+      privacy: 'En soumettant un avis, vous acceptez ma Politique de Confidentialité. Vos données sont traitées avec soin et ne sont utilisées qu\'à des fins de modération.',
+      loading: 'Chargement des avis...',
+      success: 'Avis sur le service soumis avec succès ! Il apparaîtra après modération.'
+    },
+
     topMarquee: {
       text: 'DESIGN UX/UI ET INGÉNIERIE • PROTOTYPES FIGMA • SYSTÈMES DE DESIGN • BIBLIOTHÈQUES DE COMPOSANTS • DESIGN MOBILE • HANDOFF DÉVELOPPEUR • DÉVELOPPEMENT FRONTEND CRÉATIF • REACT ET NEXT.JS • WEBGL ET THREE.JS • GRAPHIQUES 3D • ART INTERACTIF • DESIGN RESPONSIVE • AUTOMATISATION IA • CHATBOTS • APPRENTISSAGE AUTOMATIQUE • DESIGN DE FLUX • N8N ET MAKE • GEMINI API • INTÉGRATION OPENAI • FULL-STACK ET DEVOPS • NODE.JS ET PYTHON • FASTAPI • FIRESTORE • MONGODB • PIPELINES CI/CD • DÉPLOIEMENT VERCEL • GITHUB ACTIONS • SURVEILLANCE SENTRY • VIBE CODING • DÉVELOPPEMENT CRÉATIF • JAVASCRIPT ET TYPESCRIPT • CODE PROPRE • RÉSOLUTION DE PROBLÈMES • INNOVATION • '
     },
@@ -1587,6 +1834,23 @@ export const translations = {
       title: 'फुल स्टैक डेवलपर',
       subtitle: 'React, Astro और Three.js के साथ असाधारण वेब अनुभव बनाना',
       cta: 'प्रोजेक्ट्स देखें'
+    },
+    banner: {
+      leftMarquee: 'रचनात्मक • डेवलपर • डिज़ाइनर • पोर्टफोलियो •',
+      rightMarquee: 'फ्रंटएंड • बैकएंड • फुलस्टैक • प्रोजेक्ट्स •',
+      projectsButton: 'परियोजनाएँ',
+      resumeButton: 'मेरा रिज्यूमे देखें'
+    },
+    faqs: {
+      title: 'सामान्य प्रश्न',
+      subtitle: 'मेरी सेवाओं और प्रक्रिया के बारे में सामान्य प्रश्न'
+    },
+    enterprises: {
+      title: 'असाधारण डिजाइन समाधान देने के लिए प्रमुख ब्रांडों द्वारा विश्वसनीय'
+    },
+    myStack: {
+      title: 'मेरा स्टैक',
+      button: 'मेरा स्टैक देखें'
     },
     footer: {
       rights: 'सभी अधिकार सुरक्षित',
@@ -1841,6 +2105,75 @@ export const translations = {
         }
       ]
     },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: 'डिज़ाइन इंजीनियर',
+        location: 'मेक्सिको सिटी में स्थित',
+        intro: 'यहीं पर मैं आती हूँ। अपने काम की प्रेमी, अपने शिल्प की माहिर। मैं यहाँ ऐसे उत्पाद बनाने के लिए हूँ जो न केवल यह दर्शाते हैं कि आप कौन हैं और आपके आदर्श क्या हैं, बल्कि ऐसे उत्पाद जो वास्तव में उन लोगों के साथ प्रतिध्वनित होते हैं जो उन्हें अनुभव करते हैं और अपने उद्देश्य को प्राप्त करते हैं।'
+      },
+      experience: {
+        years: '5+ साल',
+        title1: 'डिजिटल अनुभव',
+        title2: 'बनाना',
+        description: 'UI/UX डिज़ाइन से लेकर फ़ुल-स्टैक डेवलपमेंट तक, मैंने दुनिया भर की कंपनियों के साथ काम किया है, सहज डिजिटल अनुभव बनाते हुए जो सौंदर्यशास्त्र को कार्यक्षमता के साथ मिलाते हैं।',
+        connectButton: 'जुड़ें'
+      },
+      stats: {
+        title1: 'संख्याएँ जो',
+        title2: 'बहुत कुछ कहती हैं',
+        description: 'हर परियोजना सीमाओं को आगे बढ़ाने और कुछ असाधारण बनाने का एक अवसर है।',
+        awards: 'पुरस्कार जीते',
+        clients: 'दुनिया भर में ग्राहक',
+        countries: 'देशों में लॉन्च किया गया'
+      },
+      philosophy: {
+        title1: 'डिज़ाइन सिर्फ वह नहीं है',
+        title2: 'जैसा वह दिखता है',
+        title3: 'यह वैसे काम करता है',
+        description1: 'मेरा मानना है कि ऐसे डिजिटल अनुभव बनाने में जो न केवल देखने में आश्चर्यजनक हों, बल्कि कार्यात्मक रूप से भी असाधारण हों। हर पिक्सेल का एक उद्देश्य होता है, हर बातचीत एक कहानी कहती है।',
+        description2: 'अपनी दृष्टि को जीवन देने के लिए तैयार हैं? आइए मिलकर कुछ असाधारण बनाएं।'
+      },
+      globe: {
+        title: 'वैश्विक प्रभाव',
+        description: 'मैंने दुनिया भर के ग्राहकों के साथ कुशल, प्रभावशाली डिजिटल उत्पाद बनाने के लिए सहयोग किया है जो वास्तविक व्यावसायिक परिणाम देते हैं।'
+      },
+      readMore: ' और पढ़ें'
+    },
+    projects: {
+      caseStudies: {
+        title: 'केस स्टडी',
+        subtitle: 'मेरे नवीनतम काम और रचनात्मक समाधानों का प्रदर्शन'
+      },
+      quickProjects: {
+        title: 'त्वरित परियोजनाएं',
+        description: 'मेरे लैंडिंग पेज, नो-कोड समाधान और रचनात्मक प्रयोगों के संग्रह का अन्वेषण करें।'
+      },
+      caseStudy: {
+        workflow: 'हमारी कार्यप्रणाली',
+        workflowSubtitle: 'सफलता के लिए एक सुव्यवस्थित प्रक्रिया',
+        solutions: 'समाधान',
+        finalThoughts: 'अंतिम विचार'
+      }
+    },
+    reviews: {
+      submit: 'समीक्षा भेजें'
+    },
+    serviceReviews: {
+      title: 'अपना अनुभव साझा करें',
+      subtitle: 'दूसरों को अपने प्रोजेक्ट पर करेन के साथ काम करने के अपने अनुभव के बारे में बताएं',
+      nameLabel: 'आपका नाम',
+      namePlaceholder: 'अपना पूरा नाम दर्ज करें',
+      positionLabel: 'पद (वैकल्पिक)',
+      positionPlaceholder: 'आपकी नौकरी का शीर्षक या कंपनी',
+      reviewLabel: 'आपकी समीक्षा',
+      reviewPlaceholder: 'करेन के साथ काम करने का अपना अनुभव साझा करें। आपको सेवा के बारे में सबसे ज्यादा क्या पसंद आया?',
+      submitting: 'भेजा जा रहा है...',
+      submit: 'समीक्षा भेजें',
+      privacy: 'समीक्षा सबमिट करके, आप मेरी गोपनीयता नीति से सहमत होते हैं। आपके डेटा को सावधानी से संभाला जाता है और केवल मॉडरेशन उद्देश्यों के लिए उपयोग किया जाता है।',
+      loading: 'समीक्षाएं लोड हो रही हैं...',
+      success: 'सेवा समीक्षा सफलतापूर्वक सबमिट की गई! यह मॉडरेशन के बाद दिखाई देगी।'
+    },
     topMarquee: {
       text: 'UX/UI डिज़ाइन और इंजीनियरिंग • FIGMA प्रोटोटाइप • डिज़ाइन सिस्टम • घटक पुस्तकालय • मोबाइल डिज़ाइन • डेवलपर हैंडऑफ • क्रिएटिव फ्रंटएंड डेवलपमेंट • REACT और NEXT.JS • WEBGL और THREE.JS • 3D ग्राफिक्स • इंटरैक्टिव आर्ट • रेस्पॉन्सिव डिज़ाइन • AI-संचालित ऑटोमेशन • चैटबॉट्स • मशीन लर्निंग • वर्कफ़्लो डिज़ाइन • N8N और MAKE • GEMINI API • OPENAI एकीकरण • फुल-स्टैक और DEVOPS • NODE.JS और PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD पाइपलाइन • VERCEL डिप्लॉयमेंट • GITHUB ACTIONS • SENTRY मॉनिटरिंग • VIBE CODING • क्रिएटिव डेवलपमेंट • JAVASCRIPT और TYPESCRIPT • क्लीन कोड • समस्या समाधान • नवाचार • '
     },
@@ -1984,6 +2317,23 @@ export const translations = {
       title: 'フルスタック開発者',
       subtitle: 'React、Astro、Three.jsで卓越したWebエクスペリエンスを創造',
       cta: 'プロジェクトを見る'
+    },
+    banner: {
+      leftMarquee: 'クリエイティブ • デベロッパー • デザイナー • ポートフォリオ •',
+      rightMarquee: 'フロントエンド • バックエンド • フルスタック • プロジェクト •',
+      projectsButton: 'プロジェクト',
+      resumeButton: '履歴書を見る'
+    },
+    faqs: {
+      title: 'よくある質問',
+      subtitle: '私のサービスとプロセスに関するよくある質問'
+    },
+    enterprises: {
+      title: '優れたデザインソリューションを提供するために主要ブランドから信頼されています'
+    },
+    myStack: {
+      title: '私のスタック',
+      button: 'スタックを見る'
     },
     footer: {
       rights: 'すべての権利を保有',
@@ -2238,6 +2588,75 @@ export const translations = {
         }
       ]
     },
+    me: {
+      hero: {
+        name: 'カレン・オルティス',
+        role: 'デザインエンジニア',
+        location: 'メキシコシティ在住',
+        intro: 'そこで私が登場します。自分の仕事が大好きで、自分の技術を使いこなす人。私は、あなたが誰であり、あなたの理想が何であるかを反映するだけでなく、それを体験する人々と真に共鳴し、その目的を達成する製品を作成するためにここにいます。'
+      },
+      experience: {
+        years: '5年以上',
+        title1: 'デジタル体験の',
+        title2: '創造',
+        description: 'UI/UXデザインからフルスタック開発まで、私は世界中の企業と協力し、美学と機能性を融合させたシームレスなデジタル体験を創造してきました。',
+        connectButton: '接続する'
+      },
+      stats: {
+        title1: '数字が',
+        title2: '物語る',
+        description: 'すべてのプロジェクトは、限界を押し広げ、並外れたものを創造する機会です。',
+        awards: '受賞歴',
+        clients: '世界中のクライアント',
+        countries: '展開国'
+      },
+      philosophy: {
+        title1: 'デザインは単なる',
+        title2: '見た目だけではない',
+        title3: 'それがどのように機能するかです',
+        description1: '私は、視覚的に美しいだけでなく、機能的にも優れたデジタル体験を創造することを信じています。すべてのピクセルには目的があり、すべてのインタラクションが物語を語ります。',
+        description2: 'あなたのビジョンを実現する準備はできましたか？一緒に並外れたものを作りましょう。'
+      },
+      globe: {
+        title: 'グローバルインパクト',
+        description: '私は世界中のクライアントと協力して、実際のビジネス成果を推進する効率的でインパクトのあるデジタル製品を作成してきました。'
+      },
+      readMore: '続きを読む'
+    },
+    projects: {
+      caseStudies: {
+        title: 'ケーススタディ',
+        subtitle: '私の最新の仕事と創造的な解決策を紹介します'
+      },
+      quickProjects: {
+        title: 'クイックプロジェクト',
+        description: '私のランディングページ、ノーコードソリューション、クリエイティブな実験のコレクションをご覧ください。'
+      },
+      caseStudy: {
+        workflow: '私たちのワークフロー',
+        workflowSubtitle: '成功への合理化されたプロセス',
+        solutions: 'ソリューション',
+        finalThoughts: '最終的な考え'
+      }
+    },
+    reviews: {
+      submit: 'レビューを送信'
+    },
+    serviceReviews: {
+      title: 'あなたの経験を共有してください',
+      subtitle: 'あなたのプロジェクトでカレンと一緒に働いた経験を他の人に伝えてください',
+      nameLabel: 'あなたの名前',
+      namePlaceholder: 'フルネームを入力してください',
+      positionLabel: '役職（任意）',
+      positionPlaceholder: 'あなたの役職または会社',
+      reviewLabel: 'あなたのレビュー',
+      reviewPlaceholder: 'カレンと一緒に働いた経験を共有してください。サービスの何が一番気に入りましたか？',
+      submitting: '送信中...',
+      submit: 'レビューを送信',
+      privacy: 'レビューを送信することにより、あなたは私のプライバシーポリシーに同意したことになります。あなたのデータは慎重に取り扱われ、モデレーション目的でのみ使用されます。',
+      loading: 'レビューを読み込んでいます...',
+      success: 'サービスレビューが正常に送信されました！モデレーション後に表示されます。'
+    },
     topMarquee: {
       text: 'UX/UIデザイン＆エンジニアリング • FIGMAプロトタイプ • デザインシステム • コンポーネントライブラリ • モバイルデザイン • 開発者ハンドオフ • クリエイティブフロントエンド開発 • REACT＆NEXT.JS • WEBGL＆THREE.JS • 3Dグラフィックス • インタラクティブアート • レスポンシブデザイン • AI駆動オートメーション • チャットボット • 機械学習 • ワークフローデザイン • N8N＆MAKE • GEMINI API • OPENAI統合 • フルスタック＆DEVOPS • NODE.JS＆PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CDパイプライン • VERCELデプロイ • GITHUB ACTIONS • SENTRY監視 • VIBE CODING • クリエイティブ開発 • JAVASCRIPT＆TYPESCRIPT • クリーンコード • 問題解決 • イノベーション • '
     },
@@ -2357,6 +2776,23 @@ export const translations = {
       title: '全栈开发工程师',
       subtitle: '使用React、Astro和Three.js创造卓越的网页体验',
       cta: '查看项目'
+    },
+    banner: {
+      leftMarquee: '创意 • 开发者 • 设计师 • 作品集 •',
+      rightMarquee: '前端 • 后端 • 全栈 • 项目 •',
+      projectsButton: '项目',
+      resumeButton: '查看简历'
+    },
+    faqs: {
+      title: '常见问题',
+      subtitle: '关于我的服务和流程的常见问题'
+    },
+    enterprises: {
+      title: '深受领先品牌信赖，提供卓越的设计解决方案'
+    },
+    myStack: {
+      title: '我的技术栈',
+      button: '查看技术栈'
     },
     footer: {
       rights: '版权所有',
@@ -2611,6 +3047,75 @@ export const translations = {
         }
       ]
     },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: '设计工程师',
+        location: '位于墨西哥城',
+        intro: '这就是我介入的地方。我热爱我的工作，精通我的手艺。我在这里创造的产品不仅能反映您和您的理想，而且能真正与体验它们并实现其目标的人产生共鸣。'
+      },
+      experience: {
+        years: '5年以上',
+        title1: '创造数字',
+        title2: '体验',
+        description: '从UI/UX设计到全栈开发，我与全球各地的公司合作，创造出将美学与功能融为一体的无缝数字体验。',
+        connectButton: '连接'
+      },
+      stats: {
+        title1: '数字不言自明',
+        title2: ' ',
+        description: '每个项目都是一个突破界限、创造非凡事物的机会。',
+        awards: '获奖',
+        clients: '全球客户',
+        countries: '推出的国家'
+      },
+      philosophy: {
+        title1: '设计不仅仅是',
+        title2: '它的外观',
+        title3: '它是如何工作的',
+        description1: '我相信创造的数字体验不仅在视觉上令人惊叹，而且在功能上也非常出色。每个像素都有其用途，每次互动都在讲述一个故事。',
+        description2: '准备好将您的愿景变为现实了吗？让我们一起创造非凡。'
+      },
+      globe: {
+        title: '全球影响',
+        description: '我与全球客户合作，创造了高效、有影响力的数字产品，推动了实际的业务成果。'
+      },
+      readMore: '阅读更多'
+    },
+    projects: {
+      caseStudies: {
+        title: '案例研究',
+        subtitle: '展示我最新的工作和创意解决方案'
+      },
+      quickProjects: {
+        title: '快速项目',
+        description: '探索我的登录页面、无代码解决方案和创意实验的集合。'
+      },
+      caseStudy: {
+        workflow: '我们的工作流程',
+        workflowSubtitle: '一个简化的成功流程',
+        solutions: '解决方案',
+        finalThoughts: '最后的想法'
+      }
+    },
+    reviews: {
+      submit: '提交评论'
+    },
+    serviceReviews: {
+      title: '分享您的经验',
+      subtitle: '告诉别人您在项目上与 Karen 合作的经验',
+      nameLabel: '您的姓名',
+      namePlaceholder: '请输入您的全名',
+      positionLabel: '职位（可选）',
+      positionPlaceholder: '您的职位或公司',
+      reviewLabel: '您的评论',
+      reviewPlaceholder: '分享您与 Karen 合作的经验。您最喜欢这项服务的哪一点？',
+      submitting: '提交中...',
+      submit: '提交评论',
+      privacy: '提交评论即表示您同意我的隐私政策。您的数据将得到谨慎处理，仅用于审核目的。',
+      loading: '正在加载评论...',
+      success: '服务评论已成功提交！审核后将会显示。'
+    },
     topMarquee: {
       text: 'UX/UI设计与工程 • FIGMA原型 • 设计系统 • 组件库 • 移动设计 • 开发者交接 • 创意前端开发 • REACT和NEXT.JS • WEBGL和THREE.JS • 3D图形 • 交互艺术 • 响应式设计 • AI驱动自动化 • 聊天机器人 • 机器学习 • 工作流设计 • N8N和MAKE • GEMINI API • OPENAI集成 • 全栈和DEVOPS • NODE.JS和PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD管道 • VERCEL部署 • GITHUB ACTIONS • SENTRY监控 • VIBE CODING • 创意开发 • JAVASCRIPT和TYPESCRIPT • 清洁代码 • 问题解决 • 创新 • '
     },
@@ -2730,6 +3235,23 @@ export const translations = {
       title: '全端開發工程師',
       subtitle: '使用React、Astro和Three.js創造卓越的網頁體驗',
       cta: '查看專案'
+    },
+    banner: {
+      leftMarquee: '創意 • 開發者 • 設計師 • 作品集 •',
+      rightMarquee: '前端 • 後端 • 全端 • 專案 •',
+      projectsButton: '專案',
+      resumeButton: '查看履歷'
+    },
+    faqs: {
+      title: '常見問題',
+      subtitle: '關於我的服務和流程的常見問題'
+    },
+    enterprises: {
+      title: '深受領先品牌信賴，提供卓越的設計解決方案'
+    },
+    myStack: {
+      title: '我的技術堆疊',
+      button: '查看技術堆疊'
     },
     footer: {
       rights: '版權所有',
@@ -2983,6 +3505,75 @@ export const translations = {
           highlight: '這種心態幫助我建構得更快、更乾淨，減少交接。'
         }
       ]
+    },
+    me: {
+      hero: {
+        name: 'Karen Ortiz',
+        role: '設計工程師',
+        location: '位於墨西哥城',
+        intro: '這就是我介入的地方。我熱愛我的工作，精通我的手藝。我在這裡創造的產品不僅能反映您和您的理想，而且能真正與體驗它們並實現其目標的人產生共鳴。'
+      },
+      experience: {
+        years: '5年以上',
+        title1: '創造數位',
+        title2: '體驗',
+        description: '從UI/UX設計到全端開發，我與全球各地的公司合作，創造出將美學與功能融為一體的無縫數位體驗。',
+        connectButton: '連接'
+      },
+      stats: {
+        title1: '數字不言自明',
+        title2: ' ',
+        description: '每個專案都是一個突破界限、創造非凡事物的機會。',
+        awards: '獲獎',
+        clients: '全球客戶',
+        countries: '推出的國家'
+      },
+      philosophy: {
+        title1: '設計不僅僅是',
+        title2: '它的外觀',
+        title3: '它是如何工作的',
+        description1: '我相信創造的數位體驗不僅在視覺上令人驚嘆，而且在功能上也非​​常出色。每個像素都有其用途，每次互動都在講述一個故事。',
+        description2: '準備好將您的願景變為現實了嗎？讓我們一起創造非凡。'
+      },
+      globe: {
+        title: '全球影響',
+        description: '我與全球客戶合作，創造了高效、有影響力的數位產品，推動了實際的業務成果。'
+      },
+      readMore: '閱讀更多'
+    },
+    projects: {
+      caseStudies: {
+        title: '案例研究',
+        subtitle: '展示我最新的工作和創意解決方案'
+      },
+      quickProjects: {
+        title: '快速專案',
+        description: '探索我的登錄頁面、無代碼解決方案和創意實驗的集合。'
+      },
+      caseStudy: {
+        workflow: '我們的工作流程',
+        workflowSubtitle: '一個簡化的成功流程',
+        solutions: '解決方案',
+        finalThoughts: '最後的想法'
+      }
+    },
+    reviews: {
+      submit: '提交評論'
+    },
+    serviceReviews: {
+      title: '分享您的經驗',
+      subtitle: '告訴別人您在專案上與 Karen 合作的經驗',
+      nameLabel: '您的姓名',
+      namePlaceholder: '請輸入您的全名',
+      positionLabel: '職位（可選）',
+      positionPlaceholder: '您的職位或公司',
+      reviewLabel: '您的評論',
+      reviewPlaceholder: '分享您與 Karen 合作的經驗。您最喜歡這項服務的哪一點？',
+      submitting: '提交中...',
+      submit: '提交評論',
+      privacy: '提交評論即表示您同意我的隱私政策。您的資料將得到謹慎處理，僅用於審核目的。',
+      loading: '正在載入評論...',
+      success: '服務評論已成功提交！審核後將會顯示。'
     },
     topMarquee: {
       text: 'UX/UI設計與工程 • FIGMA原型 • 設計系統 • 元件庫 • 行動設計 • 開發者交接 • 創意前端開發 • REACT和NEXT.JS • WEBGL和THREE.JS • 3D圖形 • 互動藝術 • 響應式設計 • AI驅動自動化 • 聊天機器人 • 機器學習 • 工作流程設計 • N8N和MAKE • GEMINI API • OPENAI整合 • 全端和DEVOPS • NODE.JS和PYTHON • FASTAPI • FIRESTORE • MONGODB • CI/CD管道 • VERCEL部署 • GITHUB ACTIONS • SENTRY監控 • VIBE CODING • 創意開發 • JAVASCRIPT和TYPESCRIPT • 清潔程式碼 • 問題解決 • 創新 • '

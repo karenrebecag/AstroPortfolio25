@@ -2,9 +2,12 @@
 // ShareBar Component - Social Media Sharing Strip
 import { ShareBarIsland } from './ShareBarIsland';
 import { motion } from 'motion/react';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
-<motion.div 
+<motion.div
   className="share-bar"
   initial={{ opacity: 0, y: 30 }}
   whileInView={{ opacity: 1, y: 0 }}
@@ -12,7 +15,7 @@ import { motion } from 'motion/react';
   transition={{ duration: 0.6, ease: "easeOut" }}
   client:load
 >
-  <ShareBarIsland client:visible />
+  <ShareBarIsland client:visible lang={lang} />
 </motion.div>
 
 <style>

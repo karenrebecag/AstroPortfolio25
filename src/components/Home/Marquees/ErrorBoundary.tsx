@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import type { ReactNode } from 'react';
+import { t, getLangFromUrl } from '../../../i18n/utils.js';
 
 interface Props {
   children: ReactNode;
@@ -27,17 +28,18 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
+      const lang = getLangFromUrl(new URL(window.location.href));
       return (
         this.props.fallback || (
           <div className="marquees-container">
             <div className="marquee-wrapper first-marquee">
               <div className="flex items-center justify-center h-full text-white font-display text-2xl">
-                CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO
+                {t('banner.leftMarquee', lang)}
               </div>
             </div>
             <div className="marquee-wrapper second-marquee">
               <div className="flex items-center justify-center h-full text-white font-display text-2xl">
-                FRONTEND • BACKEND • FULLSTACK • PROJECTS
+                {t('banner.rightMarquee', lang)}
               </div>
             </div>
           </div>

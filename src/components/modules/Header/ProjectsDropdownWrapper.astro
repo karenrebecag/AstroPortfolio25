@@ -1,45 +1,22 @@
 ---
 // ProjectsDropdownWrapper.astro - Wrapper for Projects Dropdown
 import ProjectsDropdownPortal from '../../ui/ProjectsDropdownPortal.tsx';
+import { getProjects } from '../../../lib/cms';
 
-// Define the projects data (this should match the data from ProjectsIsland.tsx)
-const projects = [
-  {
-    id: 1,
-    title1: "THIS",
-    title2: "PORTFOLIO",
-    description: "The very portfolio you're experiencing right now! A self-referential showcase built with Astro, React, and Three.js featuring custom cursor effects, magnetic buttons, flip text animations, and seamless interactions.",
-    tags: ["Astro", "React", "TypeScript", "Three.js", "Tailwind", "Motion", "Creative Coding"]
-  },
-  {
-    id: 2,
-    title1: "Aurin Task",
-    title2: "Manager",
-    description: "Enterprise task management platform revolutionizing team collaboration with AI-powered automation and real-time synchronization. Features intelligent task assignment suggestions, smart notifications, collaborative editing, advanced analytics, and bottleneck detection.",
-    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Google Gemini", "OpenAI", "Vercel"]
-  },
-  {
-    id: 3,
-    title1: "OPINATOR Platform",
-    title2: "Redesign",
-    description: "Complete UX/UI redesign of OPINATOR's live forms platform, enhancing user experience and accessibility for better form response rates. Led a collaborative team of five to redesign the entire WebApp interface, implementing a modular design system in Figma and developing the frontend with React. The redesign resulted in a 30% boost in form response rates and significantly improved developer workflows.",
-    tags: ["Figma", "React", "UX/UI Design", "Design System", "Frontend"]
-  },
-  {
-    id: 4,
-    title1: "Portfolio",
-    title2: "Website",
-    description: "Creative portfolio website with Three.js animations, responsive design, and optimized performance.",
-    tags: ["Astro", "Three.js", "TypeScript", "Tailwind"]
-  },
-  {
-    id: 5,
-    title1: "Mobile",
-    title2: "App",
-    description: "Cross-platform mobile application with real-time features, push notifications, and offline capabilities.",
-    tags: ["React Native", "Firebase", "Redux", "Expo"]
-  }
-];
+const { lang = 'en' } = Astro.props;
+
+// Fetch projects from Payload CMS
+const cmsProjects = await getProjects(false, lang);
+
+// Transform CMS projects to match the dropdown format
+const projects = cmsProjects.map((project, index) => ({
+  id: index + 1,
+  title1: project.homepageTitle1 || project.title.split(' ')[0] || 'Project',
+  title2: project.homepageTitle2 || project.title.split(' ').slice(1).join(' ') || '',
+  description: project.homepageDescription || 'No description available',
+  tags: project.homepageTags?.map(t => t.tag) || [],
+  slug: project.slug
+}));
 ---
 
 <div class="projects-dropdown-wrapper">

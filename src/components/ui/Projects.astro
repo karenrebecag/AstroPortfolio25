@@ -6,10 +6,11 @@ import { ProjectImageCursor } from './ProjectImageCursor.tsx';
 import ProjectMarqueeIsland from './ProjectMarqueeIsland.tsx';
 import ProjectSlider from './ProjectSlider.tsx';
 import { motion } from 'motion/react';
-import { getLangFromUrl } from '../../i18n/utils.js';
+import { getLangFromUrl, t } from '../../i18n/utils.js';
 import { getProjects, getQuickProjects } from '../../lib/cms';
 
 const lang = getLangFromUrl(Astro.url);
+const projectsTranslations = t('projects', lang);
 
 // Fetch projects from CMS
 const caseStudyProjects = await getProjects(false, lang);
@@ -128,7 +129,7 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <TextDisperse text="CASE STUDIES" className="giant-heading-disperse" client:idle />
+        <TextDisperse text={projectsTranslations.caseStudies.title} className="giant-heading-disperse" client:idle />
       </motion.div>
       
       <motion.p
@@ -139,7 +140,7 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
         transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         client:idle
       >
-Showcasing my latest work and creative solutions
+        {projectsTranslations.caseStudies.subtitle}
       </motion.p>
     </div>
     
@@ -176,9 +177,9 @@ Showcasing my latest work and creative solutions
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <h3 class="quick-projects-subtitle">Quick Projects</h3>
+        <h3 class="quick-projects-subtitle">{projectsTranslations.quickProjects.title}</h3>
         <p class="quick-projects-description-text">
-          Explore my collection of landing pages, no-code solutions, and creative experiments.
+          {projectsTranslations.quickProjects.description}
         </p>
       </motion.div>
     </div>

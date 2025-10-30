@@ -1,5 +1,8 @@
 ---
 import { StickyFooter } from './StickyFooter';
+import { getLangFromUrl } from '../../../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
-<StickyFooter client:visible />
+<StickyFooter client:visible lang={lang} />

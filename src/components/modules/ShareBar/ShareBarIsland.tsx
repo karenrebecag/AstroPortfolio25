@@ -4,20 +4,15 @@ import { useSimpleToast } from '../Toasts';
 import { translations } from '../../../i18n/translations.js';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 
-export function ShareBarIsland() {
-  const { showSuccess, showError } = useSimpleToast();
+interface ShareBarIslandProps {
+  lang?: string;
+}
 
-  // Get current language from URL
-  const getCurrentLang = () => {
-    if (typeof window !== 'undefined') {
-      return getLangFromUrl(new URL(window.location.href));
-    }
-    return 'en';
-  };
+export function ShareBarIsland({ lang = 'en' }: ShareBarIslandProps) {
+  const { showSuccess, showError } = useSimpleToast();
 
   // Get translations for current language
   const getTranslations = () => {
-    const lang = getCurrentLang();
     return translations[lang as keyof typeof translations]?.shareBar || translations.en.shareBar;
   };
 

@@ -1,5 +1,8 @@
 ---
 import { WhiteStickyFooter } from '../modules/Footer';
+import { getLangFromUrl } from '../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
-<WhiteStickyFooter client:visible />
+<WhiteStickyFooter client:visible lang={lang} />

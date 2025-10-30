@@ -62,27 +62,49 @@ export const useReviewsStore = create<ReviewsState>((set, get) => ({
   
   // API actions
   fetchReviews: async () => {
+    // Check if reviews are already in sessionStorage
+    const cachedReviews = sessionStorage.getItem('serviceReviews');
+    if (cachedReviews) {
+      try {
+        const parsedReviews = JSON.parse(cachedReviews);
+        // Convert timestamp strings back to Date objects
+        const reviews = parsedReviews.map((review: any) => ({
+          ...review,
+          timestamp: new Date(review.timestamp)
+        }));
+        set({ reviews, isLoading: false });
+        return;
+      } catch (error) {
+        console.error('Error parsing cached reviews:', error);
+        // If parsing fails, continue to fetch from API
+      }
+    }
+
     set({ isLoading: true, error: null });
-    
+
     try {
       const response = await fetch('/api/get-reviews');
       const result = await response.json();
-      
+
       if (result.success) {
         // Convert timestamp strings back to Date objects
         const reviews = result.reviews.map((review: any) => ({
           ...review,
           timestamp: new Date(review.timestamp)
         }));
+
+        // Cache reviews in sessionStorage
+        sessionStorage.setItem('serviceReviews', JSON.stringify(result.reviews));
+
         set({ reviews, isLoading: false });
       } else {
         set({ error: result.message, isLoading: false });
       }
     } catch (error) {
       console.error('Error fetching reviews:', error);
-      set({ 
-        error: 'Failed to load reviews. Please try again.', 
-        isLoading: false 
+      set({
+        error: 'Failed to load reviews. Please try again.',
+        isLoading: false
       });
     }
   },
@@ -113,8 +135,11 @@ export const useReviewsStore = create<ReviewsState>((set, get) => ({
       const result = await response.json();
       
       if (result.success) {
+        // Clear cached reviews so they'll be refetched
+        sessionStorage.removeItem('serviceReviews');
+
         // Reset form and close popup
-        set({ 
+        set({
           isSubmitting: false,
           showPopup: false,
           formData: { ...initialFormData }

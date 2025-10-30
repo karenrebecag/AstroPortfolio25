@@ -1,12 +1,15 @@
 ---
 // Marquees.astro
 import MarqueesIsland from './MarqueesIsland.tsx';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <section class="marquees-section">
   <div class="marquees-section-container">
     <div class="marquees-section-wrapper">
-      <MarqueesIsland client:visible />
+      <MarqueesIsland client:visible lang={lang} />
     </div>
   </div>
 </section>

@@ -1,6 +1,9 @@
 ---
 // RightMarqueeBanner - Large animated text moving from left to right
 import styles from './RightMarqueeBanner.module.css';
+import { t } from '../../../i18n/utils.js';
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <!-- Wrapper para prevenir layout shift -->
@@ -12,7 +15,7 @@ import styles from './RightMarqueeBanner.module.css';
       style="font-size: clamp(163px, 32.6vw, 326px); width: max-content; text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
     >
       <span class="marquee-content">
-        FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS • FRONTEND • BACKEND • FULLSTACK • PROJECTS •
+        {t('banner.rightMarquee', lang).repeat(3)}
       </span>
     </div>
   </div>

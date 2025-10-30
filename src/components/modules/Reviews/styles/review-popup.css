@@ -705,44 +705,72 @@
   }
 }
 
-/* Dark Mode Support */
+/* Force Light Mode - Override dark mode */
+.review-popup,
+:global(.dark-mode) .review-popup {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   .review-popup {
-    background: #1f2937;
-    color: #ffffff;
+    background: #ffffff !important;
+    color: #1f2937 !important;
   }
-  
-  .review-popup-title {
-    color: #ffffff;
-  }
-  
-  .review-popup-subtitle {
-    color: #9ca3af;
-  }
-  
-  .review-avatar-section {
-    background: #374151;
-    border-color: #4b5563;
-  }
-  
-  .review-avatar-section:hover {
-    background: #4b5563;
-    border-color: #9D7FC1;
-  }
-  
-  .review-form-input,
-  .review-form-textarea {
-    background: #374151;
-    border-color: #4b5563;
-    color: #ffffff;
-  }
-  
-  .review-form-input:focus,
-  .review-form-textarea:focus {
-    border-color: #9D7FC1;
-    box-shadow: 0 0 0 3px rgba(157, 127, 193, 0.2);
-    background: #4b5563;
-  }
+}
+
+.review-popup-title,
+:global(.dark-mode) .review-popup-title {
+  color: #1f2937 !important;
+}
+
+.review-popup-subtitle,
+:global(.dark-mode) .review-popup-subtitle {
+  color: #6b7280 !important;
+}
+
+.review-popup-close,
+:global(.dark-mode) .review-popup-close {
+  color: #6b7280 !important;
+}
+
+.review-popup-close:hover,
+:global(.dark-mode) .review-popup-close:hover {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+}
+
+.review-form-label,
+:global(.dark-mode) .review-form-label {
+  color: #374151 !important;
+}
+
+.review-form-label svg,
+:global(.dark-mode) .review-form-label svg {
+  color: #6b7280 !important;
+}
+
+.review-form-input,
+.review-form-textarea,
+:global(.dark-mode) .review-form-input,
+:global(.dark-mode) .review-form-textarea {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+.review-form-input:focus,
+.review-form-textarea:focus,
+:global(.dark-mode) .review-form-input:focus,
+:global(.dark-mode) .review-form-textarea:focus {
+  border-color: #4523AE !important;
+  box-shadow: 0 0 0 3px rgba(69, 35, 174, 0.1) !important;
+  background: #fefefe !important;
+}
+
+.review-char-count span,
+:global(.dark-mode) .review-char-count span {
+  color: #9ca3af !important;
 }
 
 /* Privacy Policy Notice */
@@ -770,15 +798,15 @@
 }
 
 :global(.dark-mode) .privacy-notice {
-  color: #9ca3af;
-  background: rgba(31, 41, 55, 0.5);
-  border-left-color: #9D7FC1;
+  color: #6b7280 !important;
+  background: rgba(243, 244, 246, 0.5) !important;
+  border-left-color: #9D7FC1 !important;
 }
 
 :global(.dark-mode) .privacy-link {
-  color: #a78bfa;
+  color: #9D7FC1 !important;
 }
 
 :global(.dark-mode) .privacy-link:hover {
-  color: #c4b5fd;
+  color: #7c3aed !important;
 }

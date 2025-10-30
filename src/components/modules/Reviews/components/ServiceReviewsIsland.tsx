@@ -6,9 +6,11 @@ import { useReviewsStore } from '../stores/reviewsStore';
 import { useSimpleToast } from '../../Toasts';
 import ReviewsSlider from './ReviewsSlider';
 import '../styles/review-popup.css';
+import { t } from '../../../../i18n/utils';
 
 interface ServiceReviewsIslandProps {
   reviews?: Review[];
+  lang: string;
 }
 
 // Fallback reviews data for services (different from project reviews)
@@ -55,7 +57,8 @@ const fallbackServiceReviews: Review[] = [
 const ServiceReviewPopup: React.FC<{ 
   showSuccess: (message: string) => void;
   showError: (message: string) => void;
-}> = ({ showSuccess, showError }) => {
+  lang: string;
+}> = ({ showSuccess, showError, lang }) => {
   const {
     formData,
     isSubmitting,
@@ -75,7 +78,7 @@ const ServiceReviewPopup: React.FC<{
     
     const success = await submitReview();
     if (success) {
-      showSuccess('Service review submitted successfully! It will appear after moderation.');
+      showSuccess(t('serviceReviews.success', lang));
       // Refresh reviews after a short delay
       setTimeout(() => {
         fetchReviews();
@@ -135,9 +138,9 @@ const ServiceReviewPopup: React.FC<{
         </button>
 
         <div className="review-popup-header">
-          <h2 className="review-popup-title">Share Your Experience</h2>
+          <h2 className="review-popup-title">{t('serviceReviews.title', lang)}</h2>
           <p className="review-popup-subtitle">
-            Tell others about working with Karen on your project
+            {t('serviceReviews.subtitle', lang)}
           </p>
         </div>
 
@@ -146,13 +149,13 @@ const ServiceReviewPopup: React.FC<{
             <div className="review-form-group">
               <label htmlFor="review-name" className="review-form-label">
                 <User size={16} />
-                Your Name
+                {t('serviceReviews.nameLabel', lang)}
               </label>
               <input
                 id="review-name"
                 type="text"
                 className="review-form-input"
-                placeholder="Enter your full name"
+                placeholder={t('serviceReviews.namePlaceholder', lang)}
                 value={formData.name}
                 onChange={(e) => setFormField('name', e.target.value)}
                 required
@@ -163,13 +166,13 @@ const ServiceReviewPopup: React.FC<{
             <div className="review-form-group">
               <label htmlFor="review-position" className="review-form-label">
                 <Briefcase size={16} />
-                Position (Optional)
+                {t('serviceReviews.positionLabel', lang)}
               </label>
               <input
                 id="review-position"
                 type="text"
                 className="review-form-input"
-                placeholder="Your job title or company"
+                placeholder={t('serviceReviews.positionPlaceholder', lang)}
                 value={formData.position}
                 onChange={(e) => setFormField('position', e.target.value)}
                 maxLength={100}
@@ -180,12 +183,12 @@ const ServiceReviewPopup: React.FC<{
           <div className="review-form-group">
             <label htmlFor="review-text" className="review-form-label">
               <MessageSquare size={16} />
-              Your Review
+              {t('serviceReviews.reviewLabel', lang)}
             </label>
             <textarea
               id="review-text"
               className="review-form-textarea"
-              placeholder="Share your experience working with Karen. What did you like most about the service?"
+              placeholder={t('serviceReviews.reviewPlaceholder', lang)}
               value={formData.review}
               onChange={(e) => setFormField('review', e.target.value)}
               required
@@ -215,12 +218,12 @@ const ServiceReviewPopup: React.FC<{
                 {isSubmitting ? (
                   <>
                     <div className="review-loading-spinner"></div>
-                    <span className="review-btn-text">Submitting...</span>
+                    <span className="review-btn-text">{t('serviceReviews.submitting', lang)}</span>
                   </>
                 ) : (
                   <>
                     <Star size={16} />
-                    <span className="review-btn-text">Submit Review</span>
+                    <span className="review-btn-text">{t('serviceReviews.submit', lang)}</span>
                   </>
                 )}
                 <div className="review-btn-inner-glow"></div>
@@ -230,11 +233,7 @@ const ServiceReviewPopup: React.FC<{
           
           {/* Privacy Policy Notice */}
           <p className="privacy-notice">
-            By submitting a review, you agree to my{' '}
-            <a href="/privacy" className="privacy-link" target="_blank" rel="noopener noreferrer">
-              Privacy Policy
-            </a>
-            . Your data is handled with care and only used for moderation purposes.
+            {t('serviceReviews.privacy', lang)}
           </p>
         </form>
       </motion.div>
@@ -242,8 +241,9 @@ const ServiceReviewPopup: React.FC<{
   );
 };
 
-const ServiceReviewsIsland: React.FC<ServiceReviewsIslandProps> = ({ 
-  reviews: propReviews = []
+const ServiceReviewsIsland: React.FC<ServiceReviewsIslandProps> = ({
+  reviews: propReviews = [],
+  lang = 'en'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -428,7 +428,7 @@ const ServiceReviewsIsland: React.FC<ServiceReviewsIslandProps> = ({
           {/* Content is generated dynamically with vanilla JavaScript */}
           {isLoading && (
             <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
-              Loading reviews...
+              {t('serviceReviews.loading', lang)}
             </div>
           )}
         </div>
@@ -445,13 +445,13 @@ const ServiceReviewsIsland: React.FC<ServiceReviewsIslandProps> = ({
           <button
             onClick={() => setShowPopup(true)}
             className="review-submit-btn"
-            data-cursor-text="Submit Your Review"
+            data-cursor-text={t('reviews.submit', lang)}
           >
             <div className="review-btn-glow"></div>
             <div className="review-btn-blob"></div>
             <div className="review-btn-content">
               <Star size={16} />
-              <span className="review-btn-text">Submit a Review</span>
+              <span className="review-btn-text">{t('reviews.submit', lang)}</span>
               <div className="review-btn-inner-glow"></div>
             </div>
           </button>
@@ -464,6 +464,7 @@ const ServiceReviewsIsland: React.FC<ServiceReviewsIslandProps> = ({
           <ServiceReviewPopup 
             showSuccess={showSuccess}
             showError={showError}
+            lang={lang}
           />
         )}
       </AnimatePresence>

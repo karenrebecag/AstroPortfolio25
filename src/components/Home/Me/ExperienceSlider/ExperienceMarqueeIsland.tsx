@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import type { ExperienceItem } from '../../../../data/experienceData';
+import { t } from '../../../../i18n/utils.js';
 
 interface ExperienceMarqueeIslandProps {
   experienceData: ExperienceItem[];
+  lang: string;
 }
 
 // Experience Card Component - Pure JSX (no innerHTML)
-const ExperienceCard: React.FC<{ experience: ExperienceItem }> = ({ experience }) => {
+const ExperienceCard: React.FC<{ experience: ExperienceItem, lang: string }> = ({ experience, lang }) => {
   const handleReadMore = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -40,7 +42,7 @@ const ExperienceCard: React.FC<{ experience: ExperienceItem }> = ({ experience }
           className="read-more-btn"
           onClick={handleReadMore}
         >
-          <span className="btn-text">Read More</span>
+          <span className="btn-text">{t('me.readMore', lang)}</span>
           <svg
             className="btn-icon"
             width="14"
@@ -60,7 +62,7 @@ const ExperienceCard: React.FC<{ experience: ExperienceItem }> = ({ experience }
   );
 };
 
-const ExperienceMarqueeIsland: React.FC<ExperienceMarqueeIslandProps> = ({ experienceData }) => {
+const ExperienceMarqueeIsland: React.FC<ExperienceMarqueeIslandProps> = ({ experienceData, lang }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -106,13 +108,13 @@ const ExperienceMarqueeIsland: React.FC<ExperienceMarqueeIslandProps> = ({ exper
           {/* First set of cards */}
           <div className="experience-set">
             {experienceData.map((experience) => (
-              <ExperienceCard key={`first-${experience.id}`} experience={experience} />
+              <ExperienceCard key={`first-${experience.id}`} experience={experience} lang={lang} />
             ))}
           </div>
           {/* Second set of cards (duplicated for seamless loop) */}
           <div className="experience-set">
             {experienceData.map((experience) => (
-              <ExperienceCard key={`second-${experience.id}`} experience={experience} />
+              <ExperienceCard key={`second-${experience.id}`} experience={experience} lang={lang} />
             ))}
           </div>
         </div>

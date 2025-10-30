@@ -3,13 +3,15 @@
 import styles from './BannerMarqueesWrapper.module.css';
 import LeftMarqueeBanner from './LeftMarqueeBanner.astro';
 import RightMarqueeBanner from './RightMarqueeBanner.astro';
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <div class={styles.marqueeContainer}>
   <div class={styles.marqueeRight}>
-    <RightMarqueeBanner />
+    <RightMarqueeBanner lang={lang} />
   </div>
   <div class={styles.marqueeLeft}>
-    <LeftMarqueeBanner />
+    <LeftMarqueeBanner lang={lang} />
   </div>
 </div>

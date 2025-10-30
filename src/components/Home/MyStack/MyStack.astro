@@ -4,6 +4,13 @@ import MyStackIsland from './components/MyStackIsland.tsx';
 import { DitheringShader } from "../../modules/Footer/shaders/DitheringShader";
 import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
 import { motion } from 'motion/react';
+import { t } from '../../../i18n/utils';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <section class="my-stack-section">
@@ -43,7 +50,7 @@ import { motion } from 'motion/react';
         transition={{ duration: 0.8, ease: "easeOut" }}
         client:idle
       >
-        <TextDisperseBlack text="MY STACK" className="title-disperse-black" client:idle />
+        <TextDisperseBlack text={t('myStack.title', lang)} className="title-disperse-black" client:idle />
       </motion.div>
       
       <!-- Check my Stack Button -->
@@ -56,7 +63,7 @@ import { motion } from 'motion/react';
         client:idle
       >
         <button class="check-stack-btn" onclick="window.location.href='/resume#skills'">
-          <span class="btn-text">Check my Stack</span>
+          <span class="btn-text">{t('myStack.button', lang)}</span>
           <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 17L17 7M17 7H7M17 7V17"/>
           </svg>

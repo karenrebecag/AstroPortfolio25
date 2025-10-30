@@ -26,7 +26,9 @@ interface FooterLinkGroup {
     links: FooterLink[];
 }
 
-type WhiteStickyFooterProps = React.ComponentProps<'footer'>;
+type WhiteStickyFooterProps = React.ComponentProps<'footer'> & {
+    lang?: string;
+};
 
 function Button({ children, size, variant, className, ...props }: {
     children: React.ReactNode;
@@ -48,25 +50,16 @@ function Button({ children, size, variant, className, ...props }: {
     );
 }
 
-// Get current language from URL
-const getCurrentLang = () => {
-    if (typeof window !== 'undefined') {
-        return getLangFromUrl(new URL(window.location.href));
-    }
-    return 'en';
-};
-
 // Get translations for current language
-const getTranslations = () => {
-    const lang = getCurrentLang();
+const getTranslations = (lang: string = 'en') => {
     return translations[lang as keyof typeof translations]?.stickyFooter || translations.en.stickyFooter;
 };
 
-export function WhiteStickyFooter({ className, ...props }: WhiteStickyFooterProps) {
+export function WhiteStickyFooter({ className, lang = 'en', ...props }: WhiteStickyFooterProps) {
     const [isHovered, setIsHovered] = useState(false);
     const [showSpaceInvaders, setShowSpaceInvaders] = useState(false);
     const { showSuccess, showError } = useSimpleToast();
-    const t = getTranslations();
+    const t = getTranslations(lang);
     
     const copyToClipboard = async () => {
         try {

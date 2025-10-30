@@ -53,8 +53,8 @@
   }
 
   .soft-skills-title-normal {
-    font-family: var(--font-display);
-    font-size: clamp(80px, 15vw, 200px);
+    font-family: 'Median', 'Median Fallback', serif;
+    font-size: clamp(104px, 19.5vw, 260px);
     font-weight: 400;
     color: #000000;
     line-height: 0.8;
@@ -75,6 +75,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    position: relative;
   }
 
   .skills-container-wrapper {

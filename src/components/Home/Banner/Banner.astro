@@ -5,6 +5,9 @@ import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
 import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 import MainButton from '../../modules/Header/MainButton.astro';
 import SecondaryButton from '../../ui/SecondaryButton.astro';
+import { t } from '../../../i18n/utils.js';
+
+const { lang = 'en' } = Astro.props;
 ---
 
 <div class={`${styles.bannerContainer} w-full h-screen overflow-hidden relative flex flex-col justify-end items-center`} id="bannerContainer">
@@ -13,7 +16,7 @@ import SecondaryButton from '../../ui/SecondaryButton.astro';
   <!-- Dark mode overlay gradient -->
   <div class={styles.darkOverlay} id="darkOverlay"></div>
 
-  <BannerMarqueesWrapper />
+  <BannerMarqueesWrapper lang={lang} />
   <div class={styles.bannerImageContainer}>
     <img
       id="banner-image"
@@ -28,8 +31,8 @@ import SecondaryButton from '../../ui/SecondaryButton.astro';
     />
   </div>
   <div class={`${styles.bannerButtonsWrapper} banner-buttons`}>
-    <SecondaryButton text="Projects" />
-    <MainButton text="Get my Resume" href="/resume" />
+    <SecondaryButton text={t('banner.projectsButton', lang)} />
+    <MainButton text={t('banner.resumeButton', lang)} href="/resume" />
   </div>
 </div>
 

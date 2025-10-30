@@ -7,12 +7,19 @@ import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
 import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
 import { BGPattern } from '../../ui/WhiteBackgroundTexture/bg-pattern.tsx';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
+import { getProjects } from '../../../lib/cms';
 import styles from './Header.module.css';
 
-const lang = getLangFromUrl(Astro.url);
+// Accept lang from props, fallback to URL detection
+const { lang: propLang } = Astro.props;
+const lang = propLang || getLangFromUrl(Astro.url);
+
+// Check if there are projects available
+const projects = await getProjects(false, lang);
+const hasProjects = projects.length > 0;
 ---
 
-<TopMarquee />
+<TopMarquee lang={lang} />
 
 <div class={styles['header-wrapper']} id="headerWrapper">
   <div class={`${styles['bg-container']} ${styles['light-pattern']}`}>
@@ -39,7 +46,11 @@ const lang = getLangFromUrl(Astro.url);
     <nav class={styles['nav']}>
       <a href="#about">{t('nav.about', lang)}</a>
       <a href="#services">{t('nav.services', lang)}</a>
-      <button type="button" id="projectsNavLink" class={styles['nav-button']}>{t('nav.projects', lang)}</button>
+      {hasProjects ? (
+        <button type="button" id="projectsNavLink" class={styles['nav-button']}>{t('nav.projects', lang)}</button>
+      ) : (
+        <a href="#projects" id="projectsNavLink">{t('nav.projects', lang)}</a>
+      )}
       <a href="#reviews">{t('nav.reviews', lang)}</a>
     </nav>
     
@@ -51,7 +62,7 @@ const lang = getLangFromUrl(Astro.url);
         </a>
       </div>
       <LanguageSelectorWrapper />
-      <ProjectsDropdownWrapper />
+      {hasProjects && <ProjectsDropdownWrapper lang={lang} />}
     </div>
     
     <button class={styles['menu-btn']} id="menuBtn" aria-label="Open navigation menu">

@@ -124,6 +124,11 @@ export function t(key, lang = defaultLang) {
   return value || key;
 }
 
+// Helper function to get all translations for a specific language
+export function getTranslations(lang = defaultLang) {
+  return translations[lang] || translations[defaultLang];
+}
+
 // Detect browser language
 export function getBrowserLanguage() {
   if (typeof navigator === 'undefined') return defaultLang;
