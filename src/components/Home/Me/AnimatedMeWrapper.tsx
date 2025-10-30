@@ -1,17 +1,58 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+
+// Custom hook for IntersectionObserver logic
+function useAnimateInView(options: IntersectionObserverInit = { threshold: 0.1, rootMargin: "-100px" }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Disconnect after first intersection
+        }
+      },
+      options
+    );
+
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [options]);
+
+  return { ref, isVisible, shouldReduceMotion };
+}
+
 
 interface AnimatedMeHeaderProps {
   children: React.ReactNode;
 }
 
 export function AnimatedMeHeader({ children }: AnimatedMeHeaderProps) {
+  const { ref, isVisible, shouldReduceMotion } = useAnimateInView();
+  const initial = { opacity: 0, x: -40 };
+  const animate = { opacity: 1, x: 0 };
+
+  if (shouldReduceMotion) {
+    return <div ref={ref} className="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl">{children}</div>;
+  }
+
   return (
     <motion.div 
+      ref={ref}
       className="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl"
-      initial={{ opacity: 0, x: -40 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      initial={initial}
+      animate={isVisible ? animate : initial}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       {children}
@@ -25,12 +66,20 @@ interface AnimatedMeSectionProps {
 }
 
 export function AnimatedMeSection({ children, delay = 0 }: AnimatedMeSectionProps) {
+  const { ref, isVisible, shouldReduceMotion } = useAnimateInView();
+  const initial = { opacity: 0, y: 40 };
+  const animate = { opacity: 1, y: 0 };
+
+  if (shouldReduceMotion) {
+    return <div ref={ref} className="content-section">{children}</div>;
+  }
+
   return (
     <motion.div 
+      ref={ref}
       className="content-section"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      initial={initial}
+      animate={isVisible ? animate : initial}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
     >
       {children}
@@ -45,32 +94,27 @@ interface AnimatedMeElementProps {
 }
 
 export function AnimatedMeElement({ children, delay = 0, direction = 'up' }: AnimatedMeElementProps) {
+  const { ref, isVisible, shouldReduceMotion } = useAnimateInView();
+
   const getInitialPosition = () => {
     switch (direction) {
-      case 'left':
-        return { opacity: 0, x: -30 };
-      case 'right':
-        return { opacity: 0, x: 30 };
-      default:
-        return { opacity: 0, y: 20 };
+      case 'left': return { opacity: 0, x: -30 };
+      case 'right': return { opacity: 0, x: 30 };
+      default: return { opacity: 0, y: 20 };
     }
   };
 
-  const getFinalPosition = () => {
-    switch (direction) {
-      case 'left':
-      case 'right':
-        return { opacity: 1, x: 0 };
-      default:
-        return { opacity: 1, y: 0 };
-    }
-  };
+  const getFinalPosition = () => ({ opacity: 1, x: 0, y: 0 });
+
+  if (shouldReduceMotion) {
+    return <div ref={ref}>{children}</div>;
+  }
 
   return (
     <motion.div 
+      ref={ref}
       initial={getInitialPosition()}
-      whileInView={getFinalPosition()}
-      viewport={{ once: true, margin: "-100px" }}
+      animate={isVisible ? getFinalPosition() : getInitialPosition()}
       transition={{ duration: 0.4, delay, ease: "easeOut" }}
     >
       {children}
@@ -84,11 +128,19 @@ interface AnimatedMeStatsProps {
 }
 
 export function AnimatedMeStats({ children, delay = 0 }: AnimatedMeStatsProps) {
+  const { ref, isVisible, shouldReduceMotion } = useAnimateInView();
+  const initial = { opacity: 0, scale: 0.8 };
+  const animate = { opacity: 1, scale: 1 };
+
+  if (shouldReduceMotion) {
+    return <div ref={ref}>{children}</div>;
+  }
+
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
+      ref={ref}
+      initial={initial}
+      animate={isVisible ? animate : initial}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
       whileHover={{ 
         scale: 1.05,
@@ -106,11 +158,19 @@ interface AnimatedMeButtonProps {
 }
 
 export function AnimatedMeButton({ children, delay = 0 }: AnimatedMeButtonProps) {
+  const { ref, isVisible, shouldReduceMotion } = useAnimateInView();
+  const initial = { opacity: 0, y: 20 };
+  const animate = { opacity: 1, y: 0 };
+
+  if (shouldReduceMotion) {
+    return <div ref={ref}>{children}</div>;
+  }
+  
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      ref={ref}
+      initial={initial}
+      animate={isVisible ? animate : initial}
       transition={{ duration: 0.4, delay, ease: "easeOut" }}
       whileHover={{ 
         y: -2,

@@ -13,7 +13,7 @@ const t = translations[lang as keyof typeof translations] || translations.en;
 const softSkillsData = t.aboutMe.skills;
 ---
 
-<section class={styles['gem-section']} data-gem-section>
+<section class={styles['gem-section']} data-gem-section style="content-visibility: auto; contain-intrinsic-size: 0 800px; contain: layout paint;">
 
   <!-- Gem 3D Background - moved outside gem-container for proper stacking -->
   <GemBackground client:visible className={styles['gem-background']} />

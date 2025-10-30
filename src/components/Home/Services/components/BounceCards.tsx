@@ -1,5 +1,6 @@
 import { motion } from "motion/react"
 import { cn } from "../../../../lib/utils"
+import { useState, useRef, useEffect } from 'react';
 
 interface Position {
   x: number
@@ -8,52 +9,18 @@ interface Position {
 }
 
 interface BounceCardsProps {
-  /**
-   * Additional CSS classes for the container
-   */
   className?: string
-  /**
-   * Array of image URLs to display
-   */
   images?: string[]
-  /**
-   * Width of the container in pixels
-   */
-  containerWidth?: number
-  /**
-   * Height of the container in pixels
-   */
-  containerHeight?: number
-  /**
-   * Delay before animation starts (in seconds)
-   */
   animationDelay?: number
-  /**
-   * Delay between each card animation (in seconds)
-   */
   animationStagger?: number
-  /**
-   * Array of positions for each card (optional, uses auto-layout if not provided)
-   */
   positions?: Position[]
-  /**
-   * Use automatic grid layout instead of manual positions
-   */
-  useAutoLayout?: boolean
 }
 
-/**
- * A component that displays a group of cards with a bouncing animation effect.
- * Uses Motion Dev for smooth animations and supports custom positioning and timing.
- */
 export function BounceCards({
   className = "",
   images = [],
-  containerWidth = 400,
-  containerHeight = 400,
   animationDelay = 0.5,
   animationStagger = 0.06,
-  useAutoLayout = true,
   positions = [
     { x: -35, y: 0, rotate: 10 },
     { x: -12, y: 0, rotate: 5 },
@@ -62,8 +29,35 @@ export function BounceCards({
     { x: 35, y: 0, rotate: 2 }
   ]
 }: BounceCardsProps) {
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldAnimate(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className={cn("relative w-full h-full", className)}
       style={{
         minHeight: '140px',
@@ -84,9 +78,9 @@ export function BounceCards({
             style={{
               left: '50%',
               top: '50%',
-              width: '25%',  // Relative to container
-              marginLeft: '-12.5%', // half of width to center
-              marginTop: '-12.5%'   // half of height to center
+              width: '25%',
+              marginLeft: '-12.5%',
+              marginTop: '-12.5%'
             }}
             initial={{
               scale: 0,
@@ -94,8 +88,13 @@ export function BounceCards({
               y: position.y,
               rotate: position.rotate
             }}
-            animate={{
+            animate={shouldAnimate ? {
               scale: 1,
+              x: position.x,
+              y: position.y,
+              rotate: position.rotate
+            } : {
+              scale: 0,
               x: position.x,
               y: position.y,
               rotate: position.rotate
@@ -116,10 +115,11 @@ export function BounceCards({
               src={src}
               alt={`card-${idx}`}
               loading="lazy"
+              decoding="async"
             />
           </motion.div>
         );
       })}
     </div>
-  )
+  );
 }
