@@ -42,28 +42,41 @@ export const GemBackground: React.FC<{ className?: string }> = ({ className = ''
   const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.5]); // 90 degrees max (más rotación)
   const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 1]); // 144 degrees max (más rotación)
   const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.75]); // 63 degrees max (más rotación)   
-  // Intersection Observer - ULTRA suave para la gema
+  // Initialize immediately on mount - la gema SIEMPRE debe empezar a cargar
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(entry.isIntersecting);
-        // Si está visible inmediatamente al montar, iniciar carga
-        if (entry.isIntersecting) {
-          setLoading(false);
+    // Forzar inicialización completa inmediatamente
+    setLoading(false);
+    setVisible(true); // Start visible to force initial render
+  }, [setLoading, setVisible]);
+
+  // Intersection Observer - controla visibilidad para optimización de render DESPUÉS de la inicialización
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    // Dar tiempo para que la gema se inicialice antes de aplicar observer
+    const initTimeout = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          setVisible(entry.isIntersecting);
+        },
+        {
+          threshold: 0,
+          rootMargin: '2000px 0px 2000px 0px' // MUCHO más amplio: casi siempre visible
         }
-      },
-      {
-        threshold: 0,
-        rootMargin: '2000px 0px 2000px 0px' // MUCHO más amplio: casi siempre visible
+      );
+
+      if (mountRef.current) {
+        observer.observe(mountRef.current);
       }
-    );
+    }, 500); // Esperar 500ms después de montar para aplicar observer
 
-    if (mountRef.current) {
-      observer.observe(mountRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [setVisible, setLoading]);
+    return () => {
+      clearTimeout(initTimeout);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [setVisible]);
 
   // Page Visibility API - optimizado con acciones memoizadas
   useEffect(() => {
