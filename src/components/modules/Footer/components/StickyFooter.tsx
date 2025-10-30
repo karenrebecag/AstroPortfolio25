@@ -92,12 +92,12 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
     return (
         <>
             <footer
-            className={`relative h-[800px] w-full ${className || ''}`}
+            className={`relative h-[900px] w-full ${className || ''}`}
             style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
             {...props}
         >
-            <div className="fixed bottom-0 h-[800px] w-full">
-                <div className="sticky top-[calc(100vh-800px)] h-full overflow-y-auto">
+            <div className="fixed bottom-0 h-[900px] w-full">
+                <div className="sticky top-[calc(100vh-900px)] h-full overflow-y-auto">
                     <div className="footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-white" style={{ 
                         backgroundColor: '#111111',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
@@ -110,7 +110,7 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
                         }}>
                             <DitheringShader
                                 width={1920}
-                                height={800}
+                                height={900}
                                 colorBack="#010111"
                                 colorFront="#4523AE"
                                 shape="wave"
