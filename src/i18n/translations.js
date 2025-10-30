@@ -36,7 +36,27 @@ export const translations = {
     },
     footer: {
       rights: 'All rights reserved',
-      language: 'Language'
+      language: 'Language',
+      techHighlights: {
+        caption: 'This portfolio was crafted with',
+        astro: { name: 'Astro', cursor: 'Astro · Frontend framework' },
+        react: { name: 'React', cursor: 'React · Interactive UI' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · Typed DX' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · Global state' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · Design system' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · Motion design' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · Interactive 3D' },
+        blender: { name: 'Blender', cursor: 'Blender · 3D modeling' },
+        figma: { name: 'Figma', cursor: 'Figma · UI design' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · Headless CMS' },
+        resend: { name: 'Resend', cursor: 'Resend · Transactional email' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · Realtime database' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · Security & edge' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · Deployment & edge' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · Primary IDE' },
+        claude: { name: 'Claude', cursor: 'Claude · AI assistance' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · Research copilot' }
+      }
     },
     common: {
       loading: 'Loading...',
@@ -682,7 +702,27 @@ export const translations = {
     },
     footer: {
       rights: 'Todos los derechos reservados',
-      language: 'Idioma'
+      language: 'Idioma',
+      techHighlights: {
+        caption: 'Este portafolio fue creado con',
+        astro: { name: 'Astro', cursor: 'Astro · Framework frontend' },
+        react: { name: 'React', cursor: 'React · UI interactiva' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · Experiencia tipada' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · Estado global' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · Sistema de diseño' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · Motion design' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · 3D interactivo' },
+        blender: { name: 'Blender', cursor: 'Blender · Modelado 3D' },
+        figma: { name: 'Figma', cursor: 'Figma · Diseño UI' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · Headless CMS' },
+        resend: { name: 'Resend', cursor: 'Resend · Email transaccional' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · Base de datos en tiempo real' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · Seguridad y edge' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · Despliegue y edge' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · IDE principal' },
+        claude: { name: 'Claude', cursor: 'Claude · Asistencia IA' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · Copiloto de investigación' }
+      }
     },
     common: {
       loading: 'Cargando...',
@@ -1328,7 +1368,27 @@ export const translations = {
     },
     footer: {
       rights: 'Tous droits réservés',
-      language: 'Langue'
+      language: 'Langue',
+      techHighlights: {
+        caption: 'Ce portfolio a été réalisé avec',
+        astro: { name: 'Astro', cursor: 'Astro · Framework frontend' },
+        react: { name: 'React', cursor: 'React · Interface interactive' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · Expérience typée' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · État global' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · Système de design' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · Motion design' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · 3D interactif' },
+        blender: { name: 'Blender', cursor: 'Blender · Modélisation 3D' },
+        figma: { name: 'Figma', cursor: 'Figma · Design UI' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · CMS headless' },
+        resend: { name: 'Resend', cursor: 'Resend · Emails transactionnels' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · Base de données temps réel' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · Sécurité et edge' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · Déploiement et edge' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · IDE principal' },
+        claude: { name: 'Claude', cursor: 'Claude · Assistance IA' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · Copilote de recherche' }
+      }
     },
     common: {
       loading: 'Chargement...',
@@ -1854,7 +1914,27 @@ export const translations = {
     },
     footer: {
       rights: 'सभी अधिकार सुरक्षित',
-      language: 'भाषा'
+      language: 'भाषा',
+      techHighlights: {
+        caption: 'यह पोर्टफोलियो इनके साथ बनाया गया है',
+        astro: { name: 'Astro', cursor: 'Astro · फ्रंटएंड फ्रेमवर्क' },
+        react: { name: 'React', cursor: 'React · इंटरएक्टिव UI' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · टाइप्ड DX' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · ग्लोबल स्टेट' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · डिज़ाइन सिस्टम' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · मोशन डिज़ाइन' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · इंटरैक्टिव 3D' },
+        blender: { name: 'Blender', cursor: 'Blender · 3D मॉडलिंग' },
+        figma: { name: 'Figma', cursor: 'Figma · UI डिज़ाइन' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · हेडलेस CMS' },
+        resend: { name: 'Resend', cursor: 'Resend · ट्रांजैक्शनल ईमेल' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · रीयलटाइम डेटाबेस' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · सुरक्षा और एज' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · डिप्लॉयमेंट और एज' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · प्राथमिक IDE' },
+        claude: { name: 'Claude', cursor: 'Claude · एआई सहायता' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · रिसर्च कोपायलट' }
+      }
     },
     common: {
       loading: 'लोड हो रहा है...',
@@ -2337,7 +2417,27 @@ export const translations = {
     },
     footer: {
       rights: 'すべての権利を保有',
-      language: '言語'
+      language: '言語',
+      techHighlights: {
+        caption: 'このポートフォリオは次のツールで制作しました',
+        astro: { name: 'Astro', cursor: 'Astro · フロントエンドフレームワーク' },
+        react: { name: 'React', cursor: 'React · インタラクティブUI' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · 型付きDX' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · グローバルステート' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · デザインシステム' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · モーションデザイン' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · インタラクティブ3D' },
+        blender: { name: 'Blender', cursor: 'Blender · 3Dモデリング' },
+        figma: { name: 'Figma', cursor: 'Figma · UIデザイン' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · ヘッドレスCMS' },
+        resend: { name: 'Resend', cursor: 'Resend · トランザクションメール' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · リアルタイムデータベース' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · セキュリティとエッジ' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · デプロイとエッジ' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · メインIDE' },
+        claude: { name: 'Claude', cursor: 'Claude · AIアシスタント' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · リサーチコパイロット' }
+      }
     },
     common: {
       loading: '読み込み中...',
@@ -2796,7 +2896,27 @@ export const translations = {
     },
     footer: {
       rights: '版权所有',
-      language: '语言'
+      language: '语言',
+      techHighlights: {
+        caption: '此作品集由以下工具打造',
+        astro: { name: 'Astro', cursor: 'Astro · 前端框架' },
+        react: { name: 'React', cursor: 'React · 交互式界面' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · 强类型体验' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · 全局状态' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · 设计系统' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · 动效设计' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · 互动3D' },
+        blender: { name: 'Blender', cursor: 'Blender · 3D建模' },
+        figma: { name: 'Figma', cursor: 'Figma · UI设计' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · 无头CMS' },
+        resend: { name: 'Resend', cursor: 'Resend · 事务邮件' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · 实时数据库' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · 安全与边缘网络' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · 部署与边缘' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · 主力IDE' },
+        claude: { name: 'Claude', cursor: 'Claude · AI助手' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · 研究副驾' }
+      }
     },
     common: {
       loading: '加载中...',
@@ -3255,7 +3375,27 @@ export const translations = {
     },
     footer: {
       rights: '版權所有',
-      language: '語言'
+      language: '語言',
+      techHighlights: {
+        caption: '此作品集以這些工具打造',
+        astro: { name: 'Astro', cursor: 'Astro · 前端框架' },
+        react: { name: 'React', cursor: 'React · 互動介面' },
+        typescript: { name: 'TypeScript', cursor: 'TypeScript · 強型別體驗' },
+        zustand: { name: 'Zustand', cursor: 'Zustand · 全域狀態' },
+        tailwind: { name: 'Tailwind CSS', cursor: 'Tailwind · 設計系統' },
+        gsap: { name: 'GSAP', cursor: 'GSAP · 動態設計' },
+        threejs: { name: 'Three.js', cursor: 'Three.js · 互動3D' },
+        blender: { name: 'Blender', cursor: 'Blender · 3D建模' },
+        figma: { name: 'Figma', cursor: 'Figma · UI設計' },
+        payload: { name: 'Payload CMS', cursor: 'Payload · 無頭CMS' },
+        resend: { name: 'Resend', cursor: 'Resend · 交易郵件' },
+        firestore: { name: 'Firestore', cursor: 'Firestore · 即時資料庫' },
+        cloudflare: { name: 'Cloudflare', cursor: 'Cloudflare · 安全與邊緣網路' },
+        vercel: { name: 'Vercel', cursor: 'Vercel · 部署與邊緣' },
+        windsurf: { name: 'Windsurf', cursor: 'Windsurf · 主要IDE' },
+        claude: { name: 'Claude', cursor: 'Claude · AI助手' },
+        perplexity: { name: 'Perplexity', cursor: 'Perplexity · 研究副駕' }
+      }
     },
     common: {
       loading: '載入中...',

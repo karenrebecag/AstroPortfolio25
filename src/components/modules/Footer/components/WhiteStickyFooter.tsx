@@ -304,7 +304,7 @@ export function WhiteStickyFooter({ className, lang = 'en', ...props }: WhiteSti
                             </motion.div>
 
                             <AnimatedContainer delay={0.35} className="w-full">
-                                <TechHighlightShowcase variant="light" />
+                                <TechHighlightShowcase variant="light" lang={lang} />
                             </AnimatedContainer>
                             
                             {/* Nav Links pequeños debajo de KAREN ORTIZ */}

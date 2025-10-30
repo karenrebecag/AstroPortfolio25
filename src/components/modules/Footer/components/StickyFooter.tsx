@@ -285,7 +285,7 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
                             </div>
 
                             <AnimatedContainer delay={0.25} className="w-full">
-                                <TechHighlightShowcase variant="dark" />
+                                <TechHighlightShowcase variant="dark" lang={lang} />
                             </AnimatedContainer>
                             
                             {/* Nav Links pequeños debajo de KAREN ORTIZ */}
