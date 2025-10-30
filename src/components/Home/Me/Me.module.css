@@ -1,6 +1,10 @@
   :global(.storytelling-scroll-container) {
     padding: 20rem 0rem;
     position: relative;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1400px;
+    contain: layout paint;
   }
 
   .story-grid {
@@ -396,6 +400,10 @@
     align-items: center;
     position: relative;
     /* min-height: 50vh; */
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 700px;
+    contain: layout paint;
   }
 
   .globe-container {
@@ -494,6 +502,10 @@
     position: relative;
     margin-top: 0;
     padding: 80px 0;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 550px;
+    contain: layout paint;
   }
 
   /* Experience Text Styles */

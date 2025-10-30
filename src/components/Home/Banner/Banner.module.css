@@ -1,5 +1,7 @@
 .bannerContainer {
   max-height: 85vh;
+  /* Performance optimization: contains layout and paint */
+  contain: layout paint;
 }
 
 /* Banner image container - moved from inline styles */

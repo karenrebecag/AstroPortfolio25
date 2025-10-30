@@ -3,6 +3,10 @@
     position: relative;
     width: 100%;
     padding: 5rem 0 0 0;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 900px;
+    contain: layout paint;
   }
 
   .gem-section::before {

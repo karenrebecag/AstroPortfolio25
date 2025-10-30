@@ -83,6 +83,10 @@ const { lang = 'en' } = Astro.props;
     position: relative;
     overflow: hidden;
     box-sizing: border-box; /* Incluir padding y border en el width */
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1200px;
+    contain: layout paint;
   }
 
   /* DitheringShader Background con opacidad muy baja */

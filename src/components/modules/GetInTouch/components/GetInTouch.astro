@@ -53,6 +53,10 @@ const { lang = 'en' } = Astro.props;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1400px;
+    contain: layout style paint;
   }
 
   /* DitheringShader Background - Igual que Projects pero con menor opacidad */

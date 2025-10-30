@@ -226,6 +226,10 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1800px;
+    contain: layout style paint;
   }
 
   .projects-container {

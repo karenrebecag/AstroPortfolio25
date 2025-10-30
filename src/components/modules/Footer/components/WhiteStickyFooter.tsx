@@ -92,12 +92,12 @@ export function WhiteStickyFooter({ className, lang = 'en', ...props }: WhiteSti
     return (
         <>
             <footer
-            className={`relative h-[900px] w-full ${className || ''}`}
+            className={`relative h-[1100px] w-full ${className || ''}`}
             style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
             {...props}
         >
-            <div className="fixed bottom-0 h-[900px] w-full">
-                <div className="sticky top-[calc(100vh-900px)] h-full overflow-y-auto">
+            <div className="fixed bottom-0 h-[1100px] w-full">
+                <div className="sticky top-[calc(100vh-1100px)] h-full overflow-y-auto">
                     <div className="white-footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-gray-900" style={{ 
                         backgroundColor: '#fdfdfd',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.08), 0 -10px 20px rgba(0, 0, 0, 0.04)'
@@ -107,7 +107,7 @@ export function WhiteStickyFooter({ className, lang = 'en', ...props }: WhiteSti
                         <div className="absolute inset-0 z-0" style={{ filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.0)' }}>
                             <DitheringShader
                                 width={1920}
-                                height={900}
+                                height={1100}
                                 colorBack="#fdfdfd"
                                 colorFront="#f0f0f0"
                                 shape="wave"

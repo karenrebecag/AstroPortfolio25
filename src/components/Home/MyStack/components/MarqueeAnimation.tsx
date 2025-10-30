@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -30,16 +30,50 @@ function MarqueeAnimation({
   const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
   const directionFactor = useRef<number>(1);
   const animationRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Performance optimization: pause when not visible
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Set direction factor
   useEffect(() => {
     directionFactor.current = direction === "left" ? 1 : -1;
   }, [direction]);
 
-  // Animation loop with cleanup
+  // Intersection Observer for visibility tracking
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: '200px' // Start animation before fully visible
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Page Visibility API for tab switching
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsPaused(document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  // Animation loop with performance optimizations
   useAnimationFrame((t, delta) => {
-    // Check for reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Only animate if visible AND not paused AND no reduced motion
+    if (!isVisible || isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
@@ -57,7 +91,7 @@ function MarqueeAnimation({
   }, []);
 
   return (
-    <div className="overflow-hidden w-full text-nowrap flex-nowrap flex relative">
+    <div ref={containerRef} className="overflow-hidden w-full text-nowrap flex-nowrap flex relative">
       <motion.div
         className={`font-bold uppercase text-4xl md:text-5xl flex flex-nowrap text-nowrap whitespace-nowrap ${className}`}
         style={{ x, width: "max-content" }}

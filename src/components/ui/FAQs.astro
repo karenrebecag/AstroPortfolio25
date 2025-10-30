@@ -81,6 +81,10 @@ const faqStructuredData = getFAQSchema();
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1000px;
+    contain: layout style paint;
   }
 
   /* Hide entire FAQs section on viewport < 768px */

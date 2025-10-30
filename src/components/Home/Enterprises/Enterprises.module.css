@@ -7,6 +7,10 @@
   padding: var(--enterprises-padding);
   overflow: hidden;
   transition: background var(--enterprises-transition);
+  /* Performance optimization: defer rendering until visible */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 180px;
+  contain: layout paint;
 }
 
 /* Dark mode for enterprises section */

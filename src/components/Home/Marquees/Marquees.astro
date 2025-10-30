@@ -19,6 +19,10 @@ const lang = getLangFromUrl(Astro.url);
     width: 100%;
     overflow: hidden;
     position: relative;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 200px;
+    contain: layout paint;
   }
 
   .marquees-section-container {

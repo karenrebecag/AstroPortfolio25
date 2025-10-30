@@ -73,6 +73,10 @@ const softSkillsData = t.aboutMe.skills;
   import { scroll } from 'motion';
   import { observeDarkMode } from '../../../utils/darkMode';
 
+  // Performance optimization: track scroll animation state
+  let scrollCleanup: (() => void) | null = null;
+  let isScrollActive = false;
+
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', () => {
     const gemSection = document.querySelector('[data-gem-section]');
@@ -113,29 +117,63 @@ const softSkillsData = t.aboutMe.skills;
     };
 
     // Observe dark mode changes using centralized utility
-    // Replaces duplicated detection logic
     const cleanupDarkMode = observeDarkMode(applyDarkMode);
 
-    // Scroll animation functionality
+    // Performance optimization: Intersection Observer for scroll animation
+    // Only activate scroll animation when section is near viewport
     if (gemSection && skillsScroll) {
-      // Calculate total scroll width
-      const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
+      const scrollObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !isScrollActive) {
+            // Activate scroll animation when visible
+            const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
 
-      if (scrollWidth > 0) {
-        // Create scroll-triggered horizontal animation for skill cards
-        scroll(
-          (progress: number) => {
-            skillsScroll.scrollLeft = progress * scrollWidth;
-          },
-          {
-            target: gemSection,
-            offset: ["start center", "end center"]
+            if (scrollWidth > 0) {
+              scrollCleanup = scroll(
+                (progress: number) => {
+                  skillsScroll.scrollLeft = progress * scrollWidth;
+                },
+                {
+                  target: gemSection,
+                  offset: ["start center", "end center"]
+                }
+              );
+              isScrollActive = true;
+            }
+          } else if (!entry.isIntersecting && isScrollActive) {
+            // Deactivate scroll animation when not visible
+            if (scrollCleanup) {
+              scrollCleanup();
+              scrollCleanup = null;
+            }
+            isScrollActive = false;
           }
-        );
-      }
-    }
+        },
+        {
+          rootMargin: '200px', // Start before fully visible
+          threshold: 0
+        }
+      );
 
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', cleanupDarkMode);
+      scrollObserver.observe(gemSection);
+
+      // Cleanup function for scroll observer
+      const cleanupScrollObserver = () => {
+        scrollObserver.disconnect();
+        if (scrollCleanup) {
+          scrollCleanup();
+          scrollCleanup = null;
+        }
+      };
+
+      // Combined cleanup
+      window.addEventListener('beforeunload', () => {
+        cleanupDarkMode();
+        cleanupScrollObserver();
+      });
+    } else {
+      // Fallback cleanup if elements not found
+      window.addEventListener('beforeunload', cleanupDarkMode);
+    }
   });
 </script>

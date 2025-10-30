@@ -92,25 +92,25 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
     return (
         <>
             <footer
-            className={`relative h-[900px] w-full ${className || ''}`}
+            className={`relative h-[1100px] w-full ${className || ''}`}
             style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
             {...props}
         >
-            <div className="fixed bottom-0 h-[900px] w-full">
-                <div className="sticky top-[calc(100vh-900px)] h-full overflow-y-auto">
+            <div className="fixed bottom-0 h-[1100px] w-full">
+                <div className="sticky top-[calc(100vh-1100px)] h-full overflow-y-auto">
                     <div className="footer-grid-texture relative flex h-full w-full flex-col justify-center items-center gap-5 text-white" style={{ 
                         backgroundColor: '#111111',
                         boxShadow: '0 -20px 40px rgba(0, 0, 0, 0.15), 0 -10px 20px rgba(0, 0, 0, 0.1)'
                     }}>
                         
                         {/* DitheringShader Background Scene */}
-                        <div className="absolute inset-0 z-0" style={{ 
+                        <div className="absolute inset-0 z-0" style={{
                             filter: 'hue-rotate(12deg) saturate(0.78) brightness(1.4)',
                             isolation: 'isolate'
                         }}>
                             <DitheringShader
                                 width={1920}
-                                height={900}
+                                height={1100}
                                 colorBack="#010111"
                                 colorFront="#4523AE"
                                 shape="wave"

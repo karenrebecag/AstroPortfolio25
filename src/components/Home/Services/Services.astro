@@ -68,12 +68,16 @@ const services = await getServices(lang);
     width: 100%;
     min-height: 100vh;
     padding: 65px 60px;
-   
+
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    /* Performance optimization: defer rendering until visible */
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1600px;
+    contain: layout style paint;
   }
 
   .services-container {
