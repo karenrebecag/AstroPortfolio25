@@ -19,7 +19,8 @@ export default defineConfig({
       bypassToken: process.env.ISR_BYPASS_TOKEN || 'cambiar-este-token-en-produccion-32-caracteres-minimo',
       // Excluir rutas que no deben usar ISR (pero incluir /api/revalidate)
       exclude: []
-    }
+    },
+    edgeMiddleware: false // Disable edge middleware to avoid cold start issues
   }),
   image: {
     remotePatterns: [

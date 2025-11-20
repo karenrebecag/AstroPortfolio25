@@ -51,21 +51,38 @@ async function fetchCollection<T>(
     }
 
     const url = `${CMS_URL}/api/${collection}?${params.toString()}`;
+    
+    console.log(`Fetching from CMS: ${url}`);
 
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
       },
+      // Add timeout and retry logic for production
+      signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${collection}: ${response.statusText}`);
+      console.error(`CMS fetch failed with status ${response.status}: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${collection}: ${response.status} ${response.statusText}`);
     }
 
     const data: CMSResponse<T> = await response.json();
+    
+    if (!data || !Array.isArray(data.docs)) {
+      console.error(`Invalid response format from CMS for ${collection}`);
+      return [];
+    }
+    
+    console.log(`Successfully fetched ${data.docs.length} ${collection} from CMS`);
     return data.docs;
   } catch (error) {
     console.error(`Error fetching ${collection}:`, error);
+    // In production, you might want to throw the error instead of returning empty array
+    // so you can handle it at the page level
+    if (import.meta.env.PROD) {
+      throw error;
+    }
     return [];
   }
 }
@@ -143,13 +160,55 @@ export interface Project {
     };
     id?: string;
   }[];
-  // Case study fields (for future use)
+  // Case study fields
+  mainTag?: string;
+  uploadDate?: string;
+  authorImage?: {
+    url: string;
+    alt?: string;
+  };
+  authorName?: string;
+  briefDescription?: any; // Rich text field
+  articleSections?: {
+    heading: string;
+    paragraphs: any; // Rich text field
+  }[];
+  mainImage?: {
+    url: string;
+    alt?: string;
+  };
+  quote?: {
+    text: any; // Rich text field
+    author: string;
+  };
+  galleryImages?: {
+    image: {
+      url: string;
+      alt?: string;
+    };
+    id?: string;
+  }[];
+  techStack?: {
+    heading: string;
+    description: any; // Rich text field
+  }[];
+  workflowSteps?: {
+    description: any; // Rich text field
+  }[];
+  achievements?: {
+    title: string;
+    description: any; // Rich text field
+  }[];
+  finalTitle?: string;
+  finalTags?: {
+    tag: string;
+    id?: string;
+  }[];
   caseStudyHeroImage?: {
     url: string;
     alt?: string;
   };
   caseStudyDescription?: string;
-  // ... other case study fields
   createdAt: string;
   updatedAt: string;
 }
