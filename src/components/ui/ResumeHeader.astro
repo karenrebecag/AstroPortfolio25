@@ -1,6 +1,7 @@
 ---
 // Resume Header component - Dark mode variation
-import MainButton from './MainButton.astro';
+
+import { Button } from './Button.tsx';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../i18n/utils.js';
 
@@ -42,7 +43,7 @@ const getHomePathForLang = (langCode: string) => {
     
     <div class="resume-header-actions-wrapper">
       <div class="resume-contact-btn-wrapper">
-        <MainButton text={t('nav.contact', lang)} href="#contact" />
+        <Button variant="default" href="#contact">{t('nav.contact', lang)}</Button>
       </div>
       <LanguageSelectorWrapper />
     </div>

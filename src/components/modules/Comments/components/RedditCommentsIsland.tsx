@@ -180,34 +180,20 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 />
                 <div className="reply-buttons">
                   {/* SecondaryButton Component - Cancel */}
-                  <div className="glass-button-wrap">
-                    <button 
-                      className="glass-button"
-                      onClick={() => { setShowReplyBox(false); setReplyText(''); }}
-                      data-cursor-text={t.cancel}
-                    >
-                      <span className="glass-button-text">{t.cancel}</span>
-                    </button>
-                    <div className="glass-button-shadow"></div>
-                  </div>
-                  
+                                    <Button
+                                      variant="ghost"
+                                      onClick={() => { setShowReplyBox(false); setReplyText(''); }}
+                                    >
+                                      {t.cancel}
+                                    </Button>                  
                   {/* MainButton Component - Submit Reply */}
-                  <div className="realism-button-wrapper">
-                    <button 
-                      className="realism-button"
-                      onClick={handleReplySubmit} 
-                      disabled={!replyText.trim()}
-                      data-cursor-text={t.submit}
-                    >
-                      <div className="button-glow"></div>
-                      <div className="button-blob"></div>
-                      <div className="button-content">
-                        <span className="button-text">{t.submit}</span>
-                        <div className="inner-glow"></div>
-                      </div>
-                    </button>
-                  </div>
-                </div>
+                                    <Button
+                                      variant="default"
+                                      onClick={handleReplySubmit}
+                                      disabled={!replyText.trim()}
+                                    >
+                                      {t.submit}
+                                    </Button>                </div>
               </div>
             </div>
           </motion.div>
@@ -502,22 +488,19 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                 />
                 
                 <div className="comment-submit-buttons">
-                  {/* MainButton Component - Post Comment */}
-                  <div className="realism-button-wrapper">
-                    <button 
-                      type="submit" 
-                      disabled={isSubmitting || !formData.name.trim() || !formData.comment.trim()}
-                      className="realism-button"
-                      data-cursor-text={t.submit}
-                    >
-                      <div className="button-glow"></div>
-                      <div className="button-blob"></div>
-                      <div className="button-content">
-                        <span className="button-text">{isSubmitting ? t.posting : t.submit}</span>
-                        <div className="inner-glow"></div>
-                      </div>
-                    </button>
-                  </div>
+                  {/* Primary Button - Post Comment */}
+                  <button
+                    type="submit"
+                    className="comment-submit-btn"
+                    disabled={isSubmitting || !formData.name.trim() || !formData.comment.trim()}
+                  >
+                    <span className="btn-glow"></span>
+                    <span className="btn-blob"></span>
+                    <span className="btn-content">
+                      <span className="btn-text">{isSubmitting ? t.posting : t.submit}</span>
+                      <span className="btn-inner-glow"></span>
+                    </span>
+                  </button>
                 </div>
                 
                 {/* Privacy Policy Notice */}

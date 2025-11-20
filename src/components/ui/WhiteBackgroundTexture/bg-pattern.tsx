@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './bg-pattern.module.css';
 
 type BGVariantType = 'dots' | 'diagonal-stripes' | 'grid' | 'horizontal-lines' | 'vertical-lines' | 'checkerboard';
@@ -51,38 +51,6 @@ function getBgImage(variant: BGVariantType, fill: string, size: number) {
 	}
 }
 
-// Custom hook para detectar dark mode
-const useDarkMode = () => {
-	const [isDark, setIsDark] = useState(false);
-
-	useEffect(() => {
-		// Función para verificar dark mode
-		const checkDarkMode = () => {
-			const hasDarkClass = document.documentElement.classList.contains('dark-mode') || 
-							   document.body.classList.contains('dark-mode');
-			setIsDark(hasDarkClass);
-		};
-
-		// Verificar al montar
-		checkDarkMode();
-
-		// Observer para cambios en las clases
-		const observer = new MutationObserver(checkDarkMode);
-		observer.observe(document.documentElement, { 
-			attributes: true, 
-			attributeFilter: ['class'] 
-		});
-		observer.observe(document.body, { 
-			attributes: true, 
-			attributeFilter: ['class'] 
-		});
-
-		return () => observer.disconnect();
-	}, []);
-
-	return isDark;
-};
-
 const BGPattern = ({
 	variant = 'vertical-lines',
 	mask = 'fade-edges',
@@ -92,16 +60,13 @@ const BGPattern = ({
 	style,
 	...props
 }: BGPatternProps) => {
-	const isDarkMode = useDarkMode();
-	
-	// Colores dinámicos basados en el tema
-	const dynamicFill = fill || (isDarkMode 
-		? 'rgba(255, 255, 255, 0.08)' // Patrón blanco semitransparente en dark mode
-		: 'rgba(0, 0, 0, 0.08)'       // Patrón negro semitransparente en light mode
-	);
+	// Fill debe ser pasado desde el componente padre
+	if (!fill) {
+		console.warn('BGPattern: fill prop is required');
+	}
 	
 	const bgSize = `${size}px ${size}px`;
-	const backgroundImage = getBgImage(variant, dynamicFill, size);
+	const backgroundImage = getBgImage(variant, fill || 'transparent', size);
 
 	return (
 		<div

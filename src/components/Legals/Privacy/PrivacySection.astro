@@ -5,7 +5,7 @@ export interface Props {
 
 const { privacyData } = Astro.props;
 
-import { TextDisperseBlack } from '../../ui/TextDisperseBlack';
+import { TextDisperse } from '../../ui/TextDisperse.tsx';
 import { InView } from '../../ui/InView';
 import PrivacyHighlights from './PrivacyHighlights.astro';
 import PrivacyDetails from './PrivacyDetails.astro';
@@ -15,7 +15,7 @@ import PrivacyDetails from './PrivacyDetails.astro';
 	<div class="section-container">
 		<div class="section-header">
 			<h2 class="section-title" id="privacy-message">
-				<TextDisperseBlack client:idle text={privacyData.title} />
+				<TextDisperse client:idle text={privacyData.title} />
 			</h2>
 			<div class="section-label">{privacyData.subtitle}</div>
 		</div>

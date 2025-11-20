@@ -1,15 +1,15 @@
 ---
 import { getLangFromUrl, languageOptions } from '../../../i18n/utils.js';
-import LanguageSelectorPortal from '../../ui/LanguageSelectorPortal.tsx';
-import styles from './LanguageSelectorWrapper.module.css';
+import LanguageSelector from '../../ui/LanguageSelector/LanguageSelector.tsx';
 
-const lang = getLangFromUrl(Astro.url);
+// Determinar el idioma actual desde la URL
+const currentLang = getLangFromUrl(Astro.url);
 ---
 
-<div class={styles['language-selector-wrapper']}>
-  <LanguageSelectorPortal
-    currentLang={lang}
+<div class="language-selector-wrapper">
+  <LanguageSelector
+    currentLang={currentLang}
     languages={languageOptions}
-    client:idle
+    client:load
   />
 </div>

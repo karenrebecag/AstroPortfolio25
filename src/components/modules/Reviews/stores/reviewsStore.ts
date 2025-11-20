@@ -62,24 +62,64 @@ export const useReviewsStore = create<ReviewsState>((set, get) => ({
   
   // API actions
   fetchReviews: async () => {
+    // STALE-WHILE-REVALIDATE PATTERN
     // Check if reviews are already in sessionStorage
-    const cachedReviews = sessionStorage.getItem('serviceReviews');
-    if (cachedReviews) {
+    const cachedData = sessionStorage.getItem('serviceReviews');
+    
+    if (cachedData) {
       try {
-        const parsedReviews = JSON.parse(cachedReviews);
+        const { reviews: cachedReviews, timestamp } = JSON.parse(cachedData);
+        
         // Convert timestamp strings back to Date objects
-        const reviews = parsedReviews.map((review: any) => ({
+        const reviews = cachedReviews.map((review: any) => ({
           ...review,
           timestamp: new Date(review.timestamp)
         }));
-        set({ reviews, isLoading: false });
-        return;
+        
+        // SERVE STALE CONTENT IMMEDIATELY (no loading state)
+        set({ reviews, isLoading: false, error: null });
+        
+        // REVALIDATE IN BACKGROUND if data is older than 1 minute
+        const isStale = Date.now() - timestamp > 60000; // 1 min
+        
+        if (isStale) {
+          console.log('🔄 Reviews cache is stale, revalidating in background...');
+          
+          // Background revalidation (no loading state, no user interruption)
+          fetch('/api/get-reviews')
+            .then(response => response.json())
+            .then(result => {
+              if (result.success) {
+                const freshReviews = result.reviews.map((review: any) => ({
+                  ...review,
+                  timestamp: new Date(review.timestamp)
+                }));
+                
+                // Update cache with fresh data + timestamp
+                sessionStorage.setItem('serviceReviews', JSON.stringify({
+                  reviews: result.reviews,
+                  timestamp: Date.now()
+                }));
+                
+                // Update state silently
+                set({ reviews: freshReviews });
+                console.log('✅ Reviews revalidated successfully');
+              }
+            })
+            .catch(error => {
+              console.warn('⚠️ Background revalidation failed, serving stale content:', error);
+              // Fail silently - user already has stale content showing
+            });
+        }
+        
+        return; // Exit early, we've served cached content
       } catch (error) {
         console.error('Error parsing cached reviews:', error);
         // If parsing fails, continue to fetch from API
       }
     }
 
+    // NO CACHE: First time loading - show loading state
     set({ isLoading: true, error: null });
 
     try {
@@ -93,8 +133,11 @@ export const useReviewsStore = create<ReviewsState>((set, get) => ({
           timestamp: new Date(review.timestamp)
         }));
 
-        // Cache reviews in sessionStorage
-        sessionStorage.setItem('serviceReviews', JSON.stringify(result.reviews));
+        // Cache reviews in sessionStorage with timestamp
+        sessionStorage.setItem('serviceReviews', JSON.stringify({
+          reviews: result.reviews,
+          timestamp: Date.now()
+        }));
 
         set({ reviews, isLoading: false });
       } else {
@@ -135,7 +178,7 @@ export const useReviewsStore = create<ReviewsState>((set, get) => ({
       const result = await response.json();
       
       if (result.success) {
-        // Clear cached reviews so they'll be refetched
+        // Clear cached reviews so they'll be refetched with fresh data
         sessionStorage.removeItem('serviceReviews');
 
         // Reset form and close popup

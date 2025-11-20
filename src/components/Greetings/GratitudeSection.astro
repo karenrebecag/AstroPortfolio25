@@ -5,7 +5,7 @@ export interface Props {
 
 const { greetingsData } = Astro.props;
 
-import { TextDisperseBlack } from '../ui/TextDisperseBlack.tsx';
+import { TextDisperse } from '../ui/TextDisperse.tsx';
 import { DecorativeFlower } from './DecorativeFlower.tsx';
 import { ArcGalleryHero } from './ArcGalleryHero.tsx';
 import GratitudeText from './GratitudeText.astro';
@@ -44,7 +44,7 @@ import GratitudeText from './GratitudeText.astro';
 	<div class="section-container">
 		<div class="section-header">
 			<h2 class="section-title" id="gratitude-message">
-				<TextDisperseBlack client:idle text={greetingsData.pageTitle} />
+				<TextDisperse client:idle text={greetingsData.pageTitle} />
 			</h2>
 			<div class="section-label">{greetingsData.subtitle}</div>
 		</div>

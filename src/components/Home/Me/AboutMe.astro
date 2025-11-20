@@ -1,5 +1,5 @@
 ---
-import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
+import { TextDisperse } from '../../ui/TextDisperse.tsx';
 import { motion } from 'motion/react';
 import { t } from '../../../i18n/utils.js';
 
@@ -45,7 +45,7 @@ const title = t('aboutMe.title', lang);
       transition={{ duration: 0.8, ease: "easeOut" }}
       client:visible
     >
-      <TextDisperseBlack 
+      <TextDisperse 
         text={title} 
         className="giant-text-disperse-black" 
         style={{ transform: 'scale(1.4)' }}

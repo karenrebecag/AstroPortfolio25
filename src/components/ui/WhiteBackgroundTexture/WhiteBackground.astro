@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  lightOpacity = 0.18,
-  darkOpacity = 0.25
+  lightOpacity = 0,
+  darkOpacity = 0.18
 } = Astro.props;
 
 const lightFill = `rgba(0, 0, 0, ${lightOpacity})`;
@@ -62,24 +62,22 @@ const darkFill = `rgba(157, 127, 193, ${darkOpacity})`;
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .light-pattern {
-    opacity: 1;
+    display: block;
   }
 
   .dark-pattern {
-    opacity: 0;
+    display: none;
   }
 
   :global(.dark-mode) .light-pattern {
-    opacity: 0;
+    display: none;
   }
 
   :global(.dark-mode) .dark-pattern {
-    opacity: 1;
+    display: block;
   }
 
   .content {

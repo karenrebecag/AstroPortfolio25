@@ -6,7 +6,7 @@ import {
   useSettingsState,
   useAnimationState,
   useThreeJSActions
-} from '../../../../utils/stores/threeJSStore';
+} from '../../../../stores/threeJSStore';
 import { observeDarkMode } from '../../../../utils/darkMode';
 
 // ✅ Store moved to utils/stores/threeJSStore.ts for better code organization

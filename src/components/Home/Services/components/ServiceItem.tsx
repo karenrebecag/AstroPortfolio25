@@ -68,10 +68,6 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
               {description}
             </p>
           </div>
-          <div className="service-images">
-            <div className="service-image"></div>
-            <div className="service-image"></div>
-          </div>
         </div>
       </div>
     </div>

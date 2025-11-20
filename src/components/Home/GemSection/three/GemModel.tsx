@@ -2,32 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { RGBELoader } from 'three-stdlib';
-import { create } from 'zustand';
-
-// Enhanced Zustand store for Gem performance control
-const useGemStore = create<{
-  isVisible: boolean;
-  isPaused: boolean;
-  isLoading: boolean;
-  quality: 'low' | 'medium' | 'high';
-  rotationSpeed: number;
-  setVisible: (visible: boolean) => void;
-  setPaused: (paused: boolean) => void;
-  setLoading: (loading: boolean) => void;
-  setQuality: (quality: 'low' | 'medium' | 'high') => void;
-  setRotationSpeed: (speed: number) => void;
-}>((set) => ({
-  isVisible: false,
-  isPaused: false,
-  isLoading: true,
-  quality: 'medium',
-  rotationSpeed: 1.0,
-  setVisible: (visible) => set({ isVisible: visible }),
-  setPaused: (paused) => set({ isPaused: paused }),
-  setLoading: (loading) => set({ isLoading: loading }),
-  setQuality: (quality) => set({ quality }),
-  setRotationSpeed: (speed) => set({ rotationSpeed: speed }),
-}));
+import { useVisibilityState, useSettingsState, useAnimationState } from '../../../../stores/threeJSStore';
 
 interface GemModelProps {
   scale?: number;
@@ -44,7 +19,9 @@ export const GemModel: React.FC<GemModelProps> = ({
 }) => {
   const { scene, gl, invalidate } = useThree();
   const ref = useRef<THREE.Object3D>(null);
-  const { isVisible, isPaused, quality, rotationSpeed } = useGemStore();
+  const { isVisible, isPaused } = useVisibilityState();
+  const { quality } = useSettingsState();
+  const { animationSpeed: rotationSpeed } = useAnimationState();
   
   // Performance optimization: detect reduced motion preference
   const prefersReducedMotion = useMemo(() => 

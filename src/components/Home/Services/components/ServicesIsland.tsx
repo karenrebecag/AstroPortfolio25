@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import FlipText from '../../../ui/FlipText';
-import { BounceCards } from './BounceCards';
 import { translations } from '../../../../i18n/translations.js';
 import type { Service as CMSService } from '../../../../lib/cms';
-
-interface Position {
-  x: number;
-  y: number;
-  rotate: number;
-}
 
 interface Service {
   id: number;
@@ -18,8 +11,6 @@ interface Service {
   tags: string[];
   technologies: string[];
   example: string;
-  images: string[];
-  positions: Position[];
 }
 
 interface ServicesIslandProps {
@@ -35,7 +26,7 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
   const t = translations[lang as keyof typeof translations] || translations.en;
   const servicesData = t.services?.items || translations.en.services.items;
 
-  // Fallback services array (keeping original structure for reference)
+  // Fallback services array
   const fallbackServices: Service[] = [
     {
       id: 1,
@@ -45,18 +36,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       tags: ["User Interface", "User Experience", "Design Systems", "Component Libraries", "Mobile Design", "Developer Handoff"],
       technologies: ["Figma", "Sketch", "Webflow", "Framer", "React", "TypeScript", "Storybook", "Tailwind", "Zeplin"],
       example: "Led UX/UI redesign for MonexOne app and developed reusable component library for Athenis AI, improving form response rates by 30% and developer efficiency by 25%.",
-      images: [
-        "https://picsum.photos/300/300?random=1",
-        "https://picsum.photos/300/300?random=2",
-        "https://picsum.photos/300/300?random=5",
-        "https://picsum.photos/300/300?random=6"
-      ],
-      positions: [
-        { x: -45, y: -5, rotate: 5 },
-        { x: -15, y: 8, rotate: -3 },
-        { x: 15, y: -3, rotate: 8 },
-        { x: 45, y: 5, rotate: -5 }
-      ]
     },
     {
       id: 2,
@@ -66,18 +45,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       tags: ["React", "Next.js", "WebGL", "3D Graphics", "Interactive Art", "Responsive Design"],
       technologies: ["JavaScript", "React", "TypeScript", "Next.js", "Astro", "Three.js", "WebGL", "GSAP", "SASS", "Tailwind"],
       example: "Built interactive landing page for Athenis AI with 3D visualizations and developed Aurin Task Manager with dynamic UI components and WebGL effects.",
-      images: [
-        "https://picsum.photos/300/300?random=9",
-        "https://picsum.photos/300/300?random=13",
-        "https://picsum.photos/300/300?random=11",
-        "https://picsum.photos/300/300?random=15"
-      ],
-      positions: [
-        { x: -43, y: -3, rotate: 3 },
-        { x: -15, y: 6, rotate: -5 },
-        { x: 15, y: -4, rotate: 7 },
-        { x: 43, y: 4, rotate: -2 }
-      ]
     },
     {
       id: 3,
@@ -87,18 +54,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       tags: ["AI Integration", "Process Automation", "Chatbots", "Machine Learning", "Workflow Design", "Efficiency"],
       technologies: ["Gemini API", "OpenAI API", "Anthropic API", "LangChain", "N8N", "Make", "Zapier", "Cursor", "Claude.ai", "Google Cloud AI"],
       example: "Integrated AI-powered chatbot and task summaries in Aurin Task Manager, plus automated task reporting reducing manual workload by 40%.",
-      images: [
-        "https://picsum.photos/300/300?random=21",
-        "https://picsum.photos/300/300?random=29",
-        "https://picsum.photos/300/300?random=23",
-        "https://picsum.photos/300/300?random=31"
-      ],
-      positions: [
-        { x: -41, y: 1, rotate: -4 },
-        { x: -14, y: -7, rotate: 3 },
-        { x: 14, y: 4, rotate: -5 },
-        { x: 41, y: -1, rotate: 2 }
-      ]
     },
     {
       id: 4,
@@ -108,18 +63,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       tags: ["Node.js", "Python", "APIs", "Database Design", "DevOps", "CI/CD", "Monitoring"],
       technologies: ["Node.js", "Python", "FastAPI", "Prisma", "Firestore", "Supabase", "PostgreSQL", "MongoDB", "Git", "Docker", "Vercel", "GitHub", "GitHub Actions", "Sentry", "Clerk"],
       example: "Implemented dynamic link system for Aurin Task Manager with Firestore and deployed with automated CI/CD pipelines for seamless updates.",
-      images: [
-        "https://picsum.photos/300/300?random=17",
-        "https://picsum.photos/300/300?random=33",
-        "https://picsum.photos/300/300?random=19",
-        "https://picsum.photos/300/300?random=35"
-      ],
-      positions: [
-        { x: -38, y: -4, rotate: 6 },
-        { x: -13, y: 7, rotate: -2 },
-        { x: 13, y: -5, rotate: 4 },
-        { x: 38, y: 3, rotate: -6 }
-      ]
     },
     {
       id: 5,
@@ -129,18 +72,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       tags: ["Creative Coding", "Innovation", "Problem Solving", "Clean Code"],
       technologies: ["JavaScript", "Python", "TypeScript", "React", "Node.js", "Wix Studio", "Shopify", "WordPress"],
       example: "Crafted custom animated UI components for MonexOne, combining creativity with robust functionality.",
-      images: [
-        "https://picsum.photos/300/300?random=25",
-        "https://picsum.photos/300/300?random=26",
-        "https://picsum.photos/300/300?random=27",
-        "https://picsum.photos/300/300?random=28"
-      ],
-      positions: [
-        { x: -39, y: -2, rotate: 5 },
-        { x: -11, y: 5, rotate: -3 },
-        { x: 11, y: -6, rotate: 7 },
-        { x: 39, y: 2, rotate: -4 }
-      ]
     }
   ];
 
@@ -154,30 +85,8 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
         tags: cmsService.serviceTags.map(tag => tag.tag),
         technologies: cmsService.techTags.map(tech => tech.tech),
         example: cmsService.exampleProject || '',
-        images: cmsService.images && cmsService.images.length > 0
-          ? cmsService.images.map(img => img.image.url)
-          : [
-              `https://picsum.photos/300/300?random=${index * 4 + 1}`,
-              `https://picsum.photos/300/300?random=${index * 4 + 2}`,
-              `https://picsum.photos/300/300?random=${index * 4 + 3}`,
-              `https://picsum.photos/300/300?random=${index * 4 + 4}`
-            ],
-        positions: [
-          { x: -45 + (index * 2), y: -5 + (index % 2), rotate: 5 - (index % 3) },
-          { x: -15 + (index % 3), y: 8 - (index % 2), rotate: -3 + (index % 4) },
-          { x: 15 - (index % 2), y: -3 + (index % 3), rotate: 8 - (index % 2) },
-          { x: 45 - (index % 4), y: 5 - (index % 2), rotate: -5 + (index % 3) }
-        ]
       }))
-    : fallbackServices.map((service, index) => ({
-        ...service,
-        images: [
-          `https://picsum.photos/300/300?random=${index * 4 + 1}`,
-          `https://picsum.photos/300/300?random=${index * 4 + 2}`,
-          `https://picsum.photos/300/300?random=${index * 4 + 3}`,
-          `https://picsum.photos/300/300?random=${index * 4 + 4}`
-        ],
-      }));
+    : fallbackServices;
 
   const handleServiceClick = (serviceId: number) => {
     setActiveService(activeService === serviceId ? 0 : serviceId); // Toggle para todos los dispositivos
@@ -239,14 +148,6 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
                     <h3 className="example-title">Example Project:</h3>
                     <p className="example-text">{service.example}</p>
                   </div>
-                </div>
-                <div className="service-images">
-                  <BounceCards
-                    images={service.images}
-                    animationDelay={0.2}
-                    animationStagger={0.15}
-                    positions={service.positions}
-                  />
                 </div>
               </div>
             </div>

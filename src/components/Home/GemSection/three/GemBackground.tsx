@@ -7,7 +7,7 @@ import {
   useSettingsState,
   useAnimationState,
   useThreeJSActions
-} from '../../../../utils/stores/threeJSStore';
+} from '../../../../stores/threeJSStore';
 import { RobustAssetLoader, ASSET_CONFIGS } from '../../../../utils/assetLoader';
 import { useScroll, useTransform } from 'motion/react';
 

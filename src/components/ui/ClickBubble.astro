@@ -1,158 +1,35 @@
 ---
 // ClickBubble.astro - Bubble de "Click" en pixel art que aparece al hacer hover
+import styles from './ClickBubble.module.css';
+
+const { 
+  clickBubble, 
+  bubbleContainer, 
+  bubbleText, 
+  bubbleTail, 
+  show, 
+  primary, 
+  success 
+} = styles;
 ---
 
-<div id="click-bubble" class="click-bubble">
-  <div class="bubble-container">
-    <div class="bubble-text">CLICK</div>
-    <div class="bubble-tail"></div>
+<div id="click-bubble" class={clickBubble}>
+  <div class={bubbleContainer}>
+    <div class={bubbleText}>CLICK</div>
+    <div class={bubbleTail}></div>
   </div>
 </div>
 
-<style>
-  .click-bubble {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9995;
-    opacity: 0;
-    transform: translate(-50%, -100%) translateY(-20px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
+<script define:vars={{ clickBubble, show, primary, success }}>
+  // Create a map of the imported style classes
+  const styleClasses = {
+    clickBubble,
+    show,
+    primary,
+    success,
+    default: '' // For the default case
+  };
 
-  .click-bubble.show {
-    opacity: 1;
-    transform: translate(-50%, -100%) translateY(-10px);
-  }
-
-  .bubble-container {
-    position: relative;
-    display: inline-block;
-  }
-
-  .bubble-text {
-    /* Pixel art styling with Video Game Font */
-    font-family: var(--font-game);
-    font-size: 11px;
-    font-weight: 400;
-    color: #000000;
-    background: #ffffff;
-    border: 2px solid #000000;
-    padding: 6px 10px;
-    text-align: center;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    
-    /* Pixel art borders */
-    border-radius: 0;
-    box-shadow: 
-      0 0 0 1px #ffffff,
-      3px 3px 0 0 #cccccc,
-      3px 3px 0 1px #000000;
-    
-    /* Disable text smoothing for pixel effect */
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: grayscale;
-    font-smooth: never;
-    text-rendering: optimizeSpeed;
-    
-    /* Animation */
-    animation: pixelPulse 0.6s ease-out;
-  }
-
-  .bubble-tail {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    
-    /* Pixel art triangle tail */
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 7px solid #000000;
-    
-    /* Shadow for the tail */
-    filter: drop-shadow(2px 2px 0 #cccccc);
-  }
-
-  .bubble-tail::after {
-    content: '';
-    position: absolute;
-    top: -9px;
-    left: -4px;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 6px solid #ffffff;
-  }
-
-  @keyframes pixelPulse {
-    0% {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  /* Ocultar en dispositivos táctiles */
-  @media (hover: none) and (pointer: coarse) {
-    .click-bubble {
-      display: none !important;
-    }
-  }
-
-  /* Variaciones de color para diferentes tipos de elementos */
-  .click-bubble.primary {
-    .bubble-text {
-      background: #ffffff;
-      color: #4523AE;
-      border-color: #4523AE;
-      box-shadow: 
-        0 0 0 1px #ffffff,
-        3px 3px 0 0 #b8a3ff,
-        3px 3px 0 1px #4523AE;
-    }
-    .bubble-tail {
-      border-top-color: #4523AE;
-      filter: drop-shadow(2px 2px 0 #b8a3ff);
-    }
-    .bubble-tail::after {
-      border-top-color: #ffffff;
-    }
-  }
-
-  .click-bubble.success {
-    .bubble-text {
-      background: #ffffff;
-      color: #22c55e;
-      border-color: #22c55e;
-      box-shadow: 
-        0 0 0 1px #ffffff,
-        3px 3px 0 0 #86efac,
-        3px 3px 0 1px #22c55e;
-    }
-    .bubble-tail {
-      border-top-color: #22c55e;
-      filter: drop-shadow(2px 2px 0 #86efac);
-    }
-    .bubble-tail::after {
-      border-top-color: #ffffff;
-    }
-  }
-</style>
-
-<script>
   // Detectar si es dispositivo táctil
   const isTouchDevice = () => {
     return 'ontouchstart' in window || 
@@ -170,10 +47,10 @@
       let targetX = 0;
       let targetY = 0;
       let isVisible = false;
-      let hideTimeout: ReturnType<typeof setTimeout> | null = null;
+      let hideTimeout = null;
 
       // Función para interpolar suavemente la posición
-      const lerp = (start: number, end: number, factor: number): number => {
+      const lerp = (start, end, factor) => {
         return start + (end - start) * factor;
       };
 
@@ -189,7 +66,7 @@
       };
 
       // Función para mostrar el bubble
-      const showBubble = (x: number, y: number, variant: string = 'default') => {
+      const showBubble = (x, y, variant = 'default') => {
         if (hideTimeout) {
           clearTimeout(hideTimeout);
           hideTimeout = null;
@@ -198,14 +75,14 @@
         targetX = x;
         targetY = y;
         
-        // Aplicar variante de color
-        bubble.className = `click-bubble ${variant}`;
+        // Aplicar variante de color usando las clases del módulo
+        bubble.className = `${styleClasses.clickBubble} ${styleClasses[variant] || ''}`;
         
         // Mostrar con delay para suavizar la aparición
         setTimeout(() => {
           if (!isVisible) {
             isVisible = true;
-            bubble.classList.add('show');
+            bubble.classList.add(styleClasses.show);
           }
         }, 50);
       };
@@ -219,14 +96,15 @@
         hideTimeout = setTimeout(() => {
           if (isVisible) {
             isVisible = false;
-            bubble.classList.remove('show');
-            bubble.className = 'click-bubble'; // Reset variant
+            bubble.classList.remove(styleClasses.show);
+            // Reset variant by setting class back to the base
+            bubble.className = styleClasses.clickBubble;
           }
         }, 100);
       };
 
       // Función para actualizar posición del bubble mientras se mueve el mouse
-      const updateBubbleOnMove = (x: number, y: number) => {
+      const updateBubbleOnMove = (x, y) => {
         if (isVisible) {
           targetX = x;
           targetY = y;
@@ -234,7 +112,7 @@
       };
 
       // Función para determinar la variante según el tipo de elemento
-      const getElementVariant = (element: Element): string => {
+      const getElementVariant = (element) => {
         if (element.matches('button[type="submit"], .btn-primary, .primary-button')) {
           return 'primary';
         }
@@ -246,53 +124,36 @@
 
       // Función para agregar efectos hover a elementos interactivos
       const addBubbleEffects = () => {
-        // Selector expandido para capturar todos los elementos interactivos del portfolio
         const interactiveSelectors = [
-          // Elementos básicos
           'a', 'button', '[role="button"]', 'input[type="submit"]', '.clickable',
-          // Botones específicos del portfolio
           '.realism-button', '.magnetic-button', '.main-button', '.secondary-button',
-          // Elementos con clases específicas de Karen's portfolio
           '.btn', '.btn-primary', '.btn-secondary', '.button', '.link',
-          // Cards y elementos interactivos
           '.card', '.project-card', '.service-card', '.review-card',
-          // Elementos de navegación
           '.nav-link', '.menu-item', '.header-link',
-          // Elementos de formulario
           'input', 'textarea', 'select', 'label[for]',
-          // Elementos con cursor pointer
           '[style*="cursor: pointer"]', '[style*="cursor:pointer"]',
-          // Elementos con data attributes que indican interactividad
           '[data-clickable]', '[data-interactive]', '[data-link]',
-          // Elementos específicos del portfolio de Karen
           '.flip-text-container', '.experience-card', '.skill-card',
           '.social-link', '.contact-link', '.download-link',
-          // Elementos con hover effects
           '.hover\\:scale-', '.hover\\:bg-', '.hover\\:text-',
-          // Elementos de Motion.dev que pueden ser clickeables
           '[whiletap]', '[whilehover]',
-          // SVGs y iconos clickeables
           'svg[role="button"]', '.icon[role="button"]', '.clickable-icon'
         ];
         
         const interactiveElements = document.querySelectorAll(interactiveSelectors.join(', '));
 
         interactiveElements.forEach((element) => {
-          // Verificar si el elemento ya tiene los event listeners para evitar duplicados
           if (element.classList.contains('bubble-attached')) {
             return;
           }
-
-          // Marcar el elemento como procesado usando una clase en lugar de atributo
           element.classList.add('bubble-attached');
           
-          // Verificar si el elemento es realmente clickeable
           const isClickable = (
             element.tagName === 'A' ||
             element.tagName === 'BUTTON' ||
-            (element as HTMLInputElement).type === 'submit' ||
+            element.type === 'submit' ||
             element.getAttribute('role') === 'button' ||
-            (element as any).onclick ||
+            element.onclick ||
             element.getAttribute('href') ||
             window.getComputedStyle(element).cursor === 'pointer' ||
             element.classList.contains('clickable') ||
@@ -302,9 +163,8 @@
           
           if (isClickable) {
             element.addEventListener('mouseenter', (e) => {
-              const mouseEvent = e as MouseEvent;
               const variant = getElementVariant(element);
-              showBubble(mouseEvent.clientX, mouseEvent.clientY, variant);
+              showBubble(e.clientX, e.clientY, variant);
             });
             
             element.addEventListener('mouseleave', () => {
@@ -312,48 +172,37 @@
             });
 
             element.addEventListener('mousemove', (e) => {
-              const mouseEvent = e as MouseEvent;
-              updateBubbleOnMove(mouseEvent.clientX, mouseEvent.clientY);
+              updateBubbleOnMove(e.clientX, e.clientY);
             });
           }
         });
       };
 
-      // Inicializar el loop de animación
       updateBubblePosition();
 
-      // Inicializar efectos con delay para asegurar que todos los componentes estén cargados
       const initializeBubbleEffects = () => {
         addBubbleEffects();
-        
-        // Re-aplicar después de un breve delay para capturar elementos que se cargan dinámicamente
         setTimeout(() => {
           addBubbleEffects();
         }, 1000);
       };
 
-      // Inicializar inmediatamente
       initializeBubbleEffects();
       
-      // También inicializar cuando el DOM esté completamente cargado
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeBubbleEffects);
       }
       
-      // Y una vez más cuando la página esté completamente cargada (incluyendo imágenes, etc.)
       window.addEventListener('load', () => {
         setTimeout(initializeBubbleEffects, 500);
       });
 
-      // Re-aplicar efectos cuando se cargue nuevo contenido dinámico
       const observer = new MutationObserver((mutations) => {
         let shouldReapply = false;
         
         mutations.forEach((mutation) => {
-          // Solo re-aplicar si se agregaron nuevos nodos
           if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
             mutation.addedNodes.forEach((node) => {
-              // Verificar si el nodo agregado es un elemento o contiene elementos
               if (node.nodeType === Node.ELEMENT_NODE) {
                 shouldReapply = true;
               }
@@ -362,7 +211,6 @@
         });
         
         if (shouldReapply) {
-          // Pequeño delay para asegurar que el DOM esté completamente actualizado
           setTimeout(() => {
             addBubbleEffects();
           }, 100);
@@ -372,11 +220,10 @@
       observer.observe(document.body, {
         childList: true,
         subtree: true,
-        attributes: false, // No necesitamos observar cambios de atributos
-        characterData: false // No necesitamos observar cambios de texto
+        attributes: false,
+        characterData: false
       });
 
-      // Limpiar al descargar la página
       window.addEventListener('beforeunload', () => {
         observer.disconnect();
         if (hideTimeout) {

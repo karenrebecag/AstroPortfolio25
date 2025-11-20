@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { JSX, ComponentProps } from 'react';
 import { motion } from 'motion/react';
 
@@ -30,6 +30,7 @@ type TextDisperseProps = ComponentProps<'div'> & {
 	text?: string;
 	children?: string | React.ReactNode;
 	onHover?: (isActive: boolean) => void;
+	style?: React.CSSProperties;
 };
 
 export function TextDisperse({
@@ -37,9 +38,15 @@ export function TextDisperse({
 	children,
 	onHover,
 	className,
+	style,
 	...props
 }: Omit<TextDisperseProps, 'onMouseEnter' | 'onMouseLeave'>) {
 	const [isAnimated, setIsAnimated] = useState(false);
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
 	const extractTextFromChildren = (children: any): string => {
 		if (typeof children === 'string') {
@@ -70,6 +77,8 @@ export function TextDisperse({
 		word.split('').forEach((char, i) => {
 			// Use modulo to cycle through transforms if word is longer than transforms array
 			const transformIndex = i % transforms.length;
+			// Create a stable key that won't change between server and client
+			const stableKey = `char-${i}-${word.length}`;
 			chars.push(
 				<motion.span
 					custom={i}
@@ -89,9 +98,16 @@ export function TextDisperse({
 							zIndex: 0,
 						},
 					}}
-					animate={isAnimated ? 'open' : 'closed'}
-					key={char + i}
+					animate={isClient && isAnimated ? 'open' : 'closed'}
+					key={stableKey}
 					className="inline-block"
+					style={{
+						color: 'inherit',
+						fontSize: 'inherit',
+						fontFamily: 'inherit',
+						lineHeight: 'inherit',
+						letterSpacing: 'inherit'
+					}}
 				>
 					{char}
 				</motion.span>,
@@ -101,11 +117,13 @@ export function TextDisperse({
 	};
 
 	const manageMouseEnter = () => {
+		if (!isClient) return;
 		onHover?.(true);
 		setIsAnimated(true);
 	};
 
 	const manageMouseLeave = () => {
+		if (!isClient) return;
 		onHover?.(false);
 		setIsAnimated(false);
 	};
@@ -118,17 +136,21 @@ export function TextDisperse({
 			className={`relative flex cursor-pointer justify-center md:justify-center sm:justify-start ${className || ''}`}
 			onMouseEnter={manageMouseEnter}
 			onMouseLeave={manageMouseLeave}
-			style={{ 
-				color: '#000000',
+			style={{
+				color: 'inherit',
 				fontSize: 'inherit',
 				fontFamily: 'inherit',
 				lineHeight: 'inherit',
 				letterSpacing: 'inherit',
-				overflow: 'visible'
+				overflowX: 'visible',
+				overflowY: 'visible',
+				transform: 'scale(1)',
+				...style
 			}}
+			suppressHydrationWarning={true}
 			{...props}
 		>
-			{splitWord(textToUse)}
+			{isClient ? splitWord(textToUse) : textToUse}
 		</div>
 	);
 }
