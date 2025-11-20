@@ -214,23 +214,174 @@ Karen Rebeca, Frontend Developer
 ## Strip 4: Tech Stack
 
 ### Technologies
-- Astro 5.13.8
-- React 19.1.1
-- TypeScript 5.9.2
-- Three.js 0.180.0
-- Motion.dev 12.23.16
-- GSAP 3.13.0
-- Lenis 1.3.11
-- Tailwind CSS 4.1.13
-- Zustand 5.0.8
-- Firebase 12.3.0
-- Payload CMS
-- Vercel (Hosting & ISR)
-- Cloudflare R2
-- Matter.js 0.20.0
-- COBE 0.6.5
-- WebGL / GLSL
-- Draco 3D Compression
+
+#### Tech Stack 01
+
+**Heading**
+Astro 5.13.8
+
+**Description**
+Core framework powering the portfolio with hybrid rendering capabilities. Used for SSG/SSR mix—static pages pre-rendered at build time for instant loading, while dynamic sections like comments use server-side rendering. Astro's partial hydration reduces JavaScript bundles by 90% compared to fully client-rendered alternatives.
+
+---
+
+#### Tech Stack 02
+
+**Heading**
+React 19.1.1
+
+**Description**
+Component library for complex interactive features. Powers the Projects Island with scattered images, 3D canvas integrations via react-three/fiber, custom cursor system, and Space Invaders game. Used selectively with Astro's client directives (client:idle, client:visible) for optimal performance.
+
+---
+
+#### Tech Stack 03
+
+**Heading**
+TypeScript 5.9.2
+
+**Description**
+Type safety across the entire codebase. Provides autocomplete, catches bugs during development, and improves maintainability. Configured with strict mode for maximum safety. Essential for managing complex state in Three.js scenes and ensuring API contract consistency with CMS integrations.
+
+---
+
+#### Tech Stack 04
+
+**Heading**
+Three.js 0.180.0
+
+**Description**
+WebGL rendering engine for 3D graphics. Powers the interactive gem section with scroll-based rotation, spinning globe visualization using COBE, and 3D tech stack cube. Optimized with quality detection system, viewport-based rendering via Intersection Observer, and GPU-aware performance adjustments.
+
+---
+
+#### Tech Stack 05
+
+**Heading**
+Motion.dev 12.23.16
+
+**Description**
+Modern animation library (evolution of Framer Motion) handling most UI animations. Provides spring-based physics for natural motion, declarative API for hover effects and page transitions, and layout animations. Used for FlipText reveals, TextDisperse effects, and smooth component enter/exit animations at 60fps.
+
+---
+
+#### Tech Stack 06
+
+**Heading**
+GSAP 3.13.0
+
+**Description**
+Timeline-based animation library for complex sequences. Handles scroll-triggered animations requiring precise control, coordinated multi-element animations, and advanced easing. Pairs with Motion.dev—GSAP for scroll narratives, Motion for component-level interactions. Used in marquee animations and scroll-based parallax effects.
+
+---
+
+#### Tech Stack 07
+
+**Heading**
+Lenis 1.3.11
+
+**Description**
+Lightweight (2KB) smooth scroll library built on native scrollTo—doesn't hijack scroll behavior like transform-based alternatives. Maintains position:sticky functionality, accessibility tool compatibility, and native browser features. Configured with FPS throttling (60fps standard, 30fps low-power mode) and device-specific lerp adjustments.
+
+---
+
+#### Tech Stack 08
+
+**Heading**
+Tailwind CSS 4.1.13
+
+**Description**
+Utility-first CSS framework with custom design system. Configured with responsive typography using clamp(), custom font families (InterTight, Boysen, Median, Karstar), and dark/light mode color variables. Integrated via Vite plugin for optimal build performance and automatic purging of unused styles.
+
+---
+
+#### Tech Stack 09
+
+**Heading**
+Zustand 5.0.8
+
+**Description**
+Minimal state management (1KB) for Three.js performance monitoring. Tracks active 3D components, frame rates, memory usage, and quality settings. Uses subscribeWithSelector middleware for granular updates without re-renders. Enables centralized performance management across multiple Three.js scenes.
+
+---
+
+#### Tech Stack 10
+
+**Heading**
+Firebase 12.3.0
+
+**Description**
+Backend-as-a-Service for real-time features. Firestore database handles comments and reviews with real-time subscriptions, like/reaction system, and moderation workflow. Firebase Admin SDK manages server-side operations via Astro API routes. Provides authentication-ready infrastructure for future user features.
+
+---
+
+#### Tech Stack 11
+
+**Heading**
+Payload CMS
+
+**Description**
+Headless CMS (decoupled in separate repository) managing structured content. Handles projects, services, experiences, FAQs, and marquee content with full locale support for 7 languages. Triggers Vercel ISR rebuilds via webhooks—only affected pages regenerate, not entire site. Provides admin interface for content updates.
+
+---
+
+#### Tech Stack 12
+
+**Heading**
+Vercel (Hosting & ISR)
+
+**Description**
+Deployment platform with edge network and Incremental Static Regeneration. Hybrid output with Vercel adapter enables mixing static and server-rendered pages. ISR allows on-demand page regeneration without full rebuilds. Integrated with Speed Insights and Analytics for real-time performance monitoring displayed in footer.
+
+---
+
+#### Tech Stack 13
+
+**Heading**
+Cloudflare R2
+
+**Description**
+Object storage and CDN for static assets. Serves optimized fonts (woff2 format), images (WebP), 3D models (GLB with Draco), and audio files (Space Invaders sounds). Edge network ensures fast asset delivery worldwide. Configured with cache headers for immutable assets (31536000s max-age).
+
+---
+
+#### Tech Stack 14
+
+**Heading**
+Matter.js 0.20.0
+
+**Description**
+2D physics engine for gravity-based interactions. Powers the Projects Island where project images respond to physics—draggable bodies, collision detection, and realistic motion. Custom React context registers components as physics bodies. Optimized with simple collision shapes (boxes, circles) instead of complex mesh generation.
+
+---
+
+#### Tech Stack 15
+
+**Heading**
+COBE 0.6.5
+
+**Description**
+Interactive 3D globe visualization library. Renders spinning Earth with customizable styling, rotation speed, and marker points. Lightweight alternative to full Three.js globe implementations. Used in hero section to add visual interest without heavy performance cost. Integrates seamlessly with React via canvas rendering.
+
+---
+
+#### Tech Stack 16
+
+**Heading**
+WebGL / GLSL
+
+**Description**
+Low-level graphics API and shader language for custom visual effects. Fragment shaders create dithering backgrounds with Bayer matrix patterns, simplex noise generation, and procedural animations. Runs on GPU for millions of parallel pixel calculations per frame. Enables unique visual effects impossible with CSS alone.
+
+---
+
+#### Tech Stack 17
+
+**Heading**
+Draco 3D Compression
+
+**Description**
+Google's geometry compression algorithm reducing 3D model sizes by 90%+. Compressed gem model from 31MB to ~200KB (mesh only), combined with WebP textures for total 732KB. Integrated via glTF KHR_draco_mesh_compression extension. Essential for web-viable 3D assets—uncompressed models would be unusable on mobile networks.
 
 ---
 
