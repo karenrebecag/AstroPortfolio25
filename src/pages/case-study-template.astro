@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import CaseStudy from '../components/modules/CaseStudy/CaseStudy.astro';
 import { StickyFooter } from '../components/modules/Footer/components/StickyFooter.tsx';
+import WhiteBackground from '../components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
 import '../styles/global.css';
 
 const caseStudyData = {
@@ -102,7 +103,7 @@ const caseStudyData = {
 };
 ---
 
-<Layout title="Case Study Template">
+<Layout title="Case Study Template" disableLenis={true}>
   <CaseStudy {...caseStudyData} />
   <StickyFooter client:visible />
 </Layout>

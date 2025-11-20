@@ -21,7 +21,7 @@ const WorkflowCard: React.FC<WorkflowCardProps> = ({ step, description }) => {
     justifyContent: 'center',
     alignItems: 'flex-start',
     gap: '10px',
-    transition: 'background-color 0.3s, color 0.3s',
+    transition: 'all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   const stepStyle: React.CSSProperties = {
@@ -29,22 +29,23 @@ const WorkflowCard: React.FC<WorkflowCardProps> = ({ step, description }) => {
     fontSize: '48px',
     lineHeight: '50px',
     color: '#1F1F1F',
-    transition: 'color 0.3s',
+    transition: 'color 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   const descriptionStyle: React.CSSProperties = {
     fontFamily: 'Inter Tight, sans-serif',
     fontSize: '18px',
     color: '#1F1F1F',
-    transition: 'color 0.3s',
+    transition: 'color 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   return (
     <div style={cardStyle} className="workflow-card">
       <style>{`
         .workflow-card:hover {
-          background: black;
+          background: #000000;
           color: white;
+          transform: scale(1.03);
         }
         .workflow-card:hover .step-text,
         .workflow-card:hover .description-text {
@@ -72,12 +73,14 @@ export const ProcessWorkflow: React.FC<ProcessWorkflowProps> = ({ steps }) => {
     target: targetRef,
   });
 
+  // Scroll from Card 1 (left) to Last Card (right)
+  // Start at 0% (showing first card) and move left (negative) to reveal next cards
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(steps.length - 1) * 85}vw`]);
 
   return (
     <section ref={targetRef} className="relative">
-      <div className="sticky top-0 flex  pt-[50vh] items-end overflow-hidden">
-        <motion.div style={{ x }} className="flex items-end ">
+      <div className="sticky top-0 flex pt-[50vh] items-end overflow-hidden">
+        <motion.div style={{ x }} className="flex flex-row-reverse items-end">
           {steps.map((step) => (
             <WorkflowCard
               key={step.step}

@@ -38,10 +38,15 @@ const HorizontalScrollCarousel: React.FC<HorizontalScrollCarouselProps> = ({ ima
 
 const Card: React.FC<{ src: string }> = ({ src }) => {
   return (
-    <div className="group relative h-[450px] w-[450px] overflow-hidden rounded-lg">
+    <div className="group relative h-[450px] overflow-hidden rounded-lg">
       <img
         src={src}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{ 
+          height: '100%', 
+          width: 'auto',
+          objectFit: 'contain',
+          maxWidth: 'none'
+        }}
         alt="carousel image"
       />
     </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import FlipText from './FlipText';
 import type { Project as CMSProject } from '../../lib/cms';
 
 interface Position {
@@ -161,13 +160,13 @@ const ProjectsIsland: React.FC<ProjectsIslandProps> = ({ projects: cmsProjects }
     const project = projects.find(p => p.id === projectId);
     if (project?.slug) {
       // Navegar a la página del case study usando el slug del CMS
-      window.location.href = `/p_${project.slug}`;
+      window.location.href = `/${project.slug}`;
     } else {
       // Fallback para proyectos legacy
       if (projectId === 1) {
-        window.location.href = '/p_ThisPortfolio';
+        window.location.href = '/ThisPortfolio';
       } else if (projectId === 2) {
-        window.location.href = '/p_AurinTaskManager';
+        window.location.href = '/AurinTaskManager';
       } else {
         console.log(`Read more about project ${projectId}`);
       }
@@ -192,16 +191,9 @@ const ProjectsIsland: React.FC<ProjectsIslandProps> = ({ projects: cmsProjects }
             </div>
             <div className="project-content">
               <div className="project-title-container">
-                <FlipText
-                  text={project.title1}
-                  className={`project-title ${!isActive ? 'inactive' : ''}`}
-                  isHovered={isHovered}
-                />
-                <FlipText
-                  text={project.title2}
-                  className={`project-title ${!isActive ? 'inactive' : ''}`}
-                  isHovered={isHovered}
-                />
+                <h3 className={`project-title ${!isActive ? 'inactive' : ''}`}>
+                  {project.title1} {project.title2}
+                </h3>
               </div>
               <div className="project-details">
                 <div className="project-info">

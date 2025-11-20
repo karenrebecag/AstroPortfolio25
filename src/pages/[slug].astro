@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CaseStudy from '../components/modules/CaseStudy/CaseStudy.astro';
+import { StickyFooter } from '../components/modules/Footer/components/StickyFooter.tsx';
+import WhiteBackground from '../components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
+import { getProjects } from '../lib/cms';
+import '../styles/global.css';
+
+// Get slug from URL params
+const { slug } = Astro.params;
+
+// Fetch all projects and find the one matching this slug
+const projects = await getProjects(false, 'en');
+const project = projects.find((p) => p.slug === slug);
+
+// If project not found, return 404
+if (!project) {
+  return Astro.redirect('/404');
+}
+
+// Helper function to extract text from rich text
+function extractTextFromRichText(richText: any): string {
+  if (!richText || !richText.root || !richText.root.children) return '';
+
+  let text = '';
+  for (const child of richText.root.children) {
+    if (child.type === 'paragraph' && child.children) {
+      for (const textNode of child.children) {
+        if (textNode.text) {
+          text += textNode.text + ' ';
+        }
+      }
+      text += '\n\n';
+    }
+  }
+  return text.trim();
+}
+
+// Map Payload data to CaseStudy component format
+const caseStudyData = {
+  bannerData: {
+    mainTag: project.mainTag || 'Project',
+    uploadDate: new Date(project.uploadDate || project.createdAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).toUpperCase(),
+    title: project.title,
+    authorImage: project.authorImage?.url || 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/A5A05E33-1DDD-4041-BCF4-4522767BFCEE.jpeg',
+    authorName: project.authorName || 'Karen Ortiz'
+  },
+  articleData: {
+    briefDescription: extractTextFromRichText(project.briefDescription),
+    section1: project.articleSections?.[0] ? {
+      title: project.articleSections[0].heading,
+      text: extractTextFromRichText(project.articleSections[0].paragraphs)
+    } : undefined,
+    section2: project.articleSections?.[1] ? {
+      title: project.articleSections[1].heading,
+      paragraphs: [extractTextFromRichText(project.articleSections[1].paragraphs)]
+    } : undefined,
+    section3: project.articleSections?.[2] ? {
+      title: project.articleSections[2].heading,
+      paragraphs: [extractTextFromRichText(project.articleSections[2].paragraphs)]
+    } : undefined,
+    section4: project.articleSections?.[3] ? {
+      title: project.articleSections[3].heading,
+      paragraphs: [extractTextFromRichText(project.articleSections[3].paragraphs)]
+    } : undefined,
+    image: project.mainImage ? {
+      src: project.mainImage.url,
+      alt: project.mainImage.alt || project.title
+    } : undefined,
+    quote: project.quote ? {
+      text: extractTextFromRichText(project.quote.text),
+      author: project.quote.author
+    } : undefined
+  },
+  galleryData: {
+    images: project.galleryImages?.map(img => img.image.url) || []
+  },
+  techStackData: {
+    techStack: project.techStack?.map(tech => ({
+      heading: tech.heading,
+      description: extractTextFromRichText(tech.description)
+    })) || []
+  },
+  processWorkflowData: {
+    title: 'Process Workflow',
+    subtitle: 'Our structured approach to bringing this project to life',
+    steps: project.workflowSteps?.map((step, index) => ({
+      step: index + 1,
+      description: extractTextFromRichText(step.description)
+    })) || []
+  },
+  projectAchievementsData: {
+    title: 'Key Achievements',
+    achievements: project.achievements?.map(achievement => ({
+      title: achievement.title,
+      description: extractTextFromRichText(achievement.description)
+    })) || [],
+    imageSrc: project.mainImage?.url || 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Abstract%20Abstract%20Glass%20Spectrum%201.webp'
+  },
+  finalThoughtsData: {
+    title: project.finalTitle || 'Final Thoughts',
+    achievements: project.finalTags?.map(tag => ({
+      description: tag.tag
+    })) || []
+  },
+  storyId: project.slug
+};
+
+const pageTitle = `${project.title} - Karen Ortiz Portfolio`;
+---
+
+<Layout title={pageTitle} disableLenis={true}>
+  <CaseStudy {...caseStudyData} />
+  <StickyFooter client:visible />
+</Layout>

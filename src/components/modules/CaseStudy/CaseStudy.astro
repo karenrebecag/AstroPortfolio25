@@ -43,33 +43,34 @@ const {
 } = Astro.props;
 ---
 
-<article>
-  <WhiteBackground>
-        <ArticleBanner {...bannerData} />
-        <ArticleSection {...articleData} />
-        
-        <div>
-          <HorizontalScrollGallery images={galleryData.images} client:visible />
-        </div>
+<WhiteBackground lightOpacity={0.10} darkOpacity={0.05}>
+  <article>
+    <ArticleBanner {...bannerData} />
+    <ArticleSection {...articleData} />
+    
+    <div>
+      <HorizontalScrollGallery images={galleryData.images} client:visible />
+    </div>
 
-            <StickyTechStack {...techStackData} />
+    <StickyTechStack {...techStackData} />
 
-            <ProcessWorkflowWrapper {...processWorkflowData} />
+    <ProcessWorkflowWrapper {...processWorkflowData} />
 
-          <ProjectAchievements {...projectAchievementsData} client:visible />
+    <ProjectAchievements {...projectAchievementsData} client:visible />
 
-          <FinalThoughts {...finalThoughtsData} />
+    <FinalThoughts {...finalThoughtsData} />
 
-        <div class="faqs-responsive-container">
-          <FAQs />
-        </div>
-      <CommentsSection storyId={storyId} />
-  </WhiteBackground>
+    <div class="faqs-responsive-container">
+      <FAQs />
+    </div>
+    
+    <CommentsSection storyId={storyId} />
 
-  <section id="contact">
-    <GetInTouch />
-  </section>
-</article>
+    <section id="contact">
+      <GetInTouch />
+    </section>
+  </article>
+</WhiteBackground>
 
 <style>
   /* Hide FAQs only on viewport < 480px */

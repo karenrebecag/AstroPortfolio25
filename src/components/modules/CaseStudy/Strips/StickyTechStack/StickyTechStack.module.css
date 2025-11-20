@@ -1,5 +1,6 @@
 .section {
     padding: 115px 60px;
+    position: relative;
 }
 
 /* Playfair font is loaded globally via astro-font */
@@ -10,26 +11,27 @@
     gap: 60px;
     max-width: 1400px;
     margin: 0 auto;
-    align-items: center; /* Center vertically */
-    justify-items: center; /* Center columns horizontally */
-    text-align: center; /* Center text inside grid cells */
+    align-items: flex-start; /* Align to top for sticky behavior */
 }
 
 .leftColumn {
+    position: sticky;
+    top: 120px; /* Sticky position from top */
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: start; /* Important for sticky to work */
 }
 
 .stickyTitle {
-    position: sticky;
-    top: 115px; /* Match top padding */
     font-style: italic;
     font-weight: 400;
     font-size: 85px;
     line-height: 111px;
     color: black;
     margin: 0;
+    text-align: center;
 }
 
 .rightColumn {
@@ -37,6 +39,7 @@
     flex-direction: column;
     gap: 48px; /* Space between tech items */
     align-items: center; /* Center the items horizontally */
+    padding-bottom: 200px; /* Extra space for better scroll behavior */
 }
 
 .techItem {

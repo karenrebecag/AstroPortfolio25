@@ -41,7 +41,7 @@ const hasProjects = projects.length > 0;
     />
   </div>
   <header class={styles['header']} id="mainHeader">
-    <div class={styles['logo']} id="logoBtn">KAREN ORTIZ</div>
+    <a href="/" class={styles['logo']} id="logoBtn">KAREN ORTIZ</a>
     
     <nav class={styles['nav']}>
       <a href="#about">{t('nav.about', lang)}</a>
@@ -229,10 +229,10 @@ const hasProjects = projects.length > 0;
 
     // Header scroll behavior
     let lastScrollY = window.scrollY;
-    let isScrolling = false;
+    let ticking = false;
 
     const handleScroll = () => {
-      if (!isScrolling) {
+      if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           const scrollDifference = currentScrollY - lastScrollY;
@@ -246,62 +246,41 @@ const hasProjects = projects.length > 0;
             headerWrapper.classList.remove('scrolled');
           }
 
-          // Hide/show logic - apply styles directly
-          if (scrollDifference > 5 && currentScrollY > 100) {
+          // Always show header at the very top
+          if (currentScrollY < 10) {
+            if (headerWrapper.classList.contains('hidden')) {
+              headerWrapper.classList.remove('hidden');
+              (headerWrapper as HTMLElement).style.display = '';
+              (headerWrapper as HTMLElement).style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+              (headerWrapper as HTMLElement).style.transform = 'translateY(0)';
+              (headerWrapper as HTMLElement).style.opacity = '1';
+            }
+          }
+          // Hide/show logic for scrolling
+          else if (scrollDifference > 8 && currentScrollY > 100) {
             // Scrolling down - hide header
             if (!headerWrapper.classList.contains('hidden')) {
               headerWrapper.classList.add('hidden');
-
-              // Animate OUT first, then hide
-              const allHeaders = document.querySelectorAll('[id="headerWrapper"]');
-
-              allHeaders.forEach((header) => {
-                // First set up the animation
-                (header as HTMLElement).style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-                (header as HTMLElement).style.transform = 'translateY(-100%)';
-                (header as HTMLElement).style.opacity = '0';
-              });
-
-              // Only hide after animation completes
-              setTimeout(() => {
-                allHeaders.forEach((header) => {
-                  (header as HTMLElement).style.display = 'none';
-                });
-              }, 400);
+              (headerWrapper as HTMLElement).style.transition = 'transform 0.3s ease-in, opacity 0.3s ease-in';
+              (headerWrapper as HTMLElement).style.transform = 'translateY(-100%)';
+              (headerWrapper as HTMLElement).style.opacity = '0';
             }
-          } else if (scrollDifference < -2 || currentScrollY < 80) {
-            // Scrolling up or near top - show header
+          } else if (scrollDifference < -5) {
+            // Scrolling up - show header
             if (headerWrapper.classList.contains('hidden')) {
               headerWrapper.classList.remove('hidden');
-
-              // Show first, then animate IN
-              const allHeaders = document.querySelectorAll('[id="headerWrapper"]');
-
-              allHeaders.forEach((header) => {
-                // Make sure it's visible but still in hidden position
-                (header as HTMLElement).style.display = '';
-                (header as HTMLElement).style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
-                (header as HTMLElement).style.transform = 'translateY(-60px)';
-                (header as HTMLElement).style.opacity = '0';
-              });
-
-              // Animate IN after a frame
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  allHeaders.forEach((header) => {
-                    (header as HTMLElement).style.transform = 'translateY(0%)';
-                    (header as HTMLElement).style.opacity = '1';
-                  });
-                });
-              });
+              (headerWrapper as HTMLElement).style.display = '';
+              (headerWrapper as HTMLElement).style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+              (headerWrapper as HTMLElement).style.transform = 'translateY(0)';
+              (headerWrapper as HTMLElement).style.opacity = '1';
             }
           }
 
           lastScrollY = currentScrollY;
-          isScrolling = false;
+          ticking = false;
         });
+        ticking = true;
       }
-      isScrolling = true;
     };
 
     // Throttled scroll listener

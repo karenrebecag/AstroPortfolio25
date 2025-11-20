@@ -272,7 +272,7 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
 
   :global(.giant-heading-disperse) {
     font-family: var(--font-display) !important;
-    font-size: clamp(80px, 15vw, 200px) !important;
+    font-size: clamp(60px, 12vw, 160px) !important;
     font-weight: 400 !important;
     color: white !important;
     line-height: 0.8 !important;
@@ -389,11 +389,6 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     transition: color 0.3s ease;
   }
 
-  /* Hover effect for FlipText inside project titles */
-  :global(.project-item:hover .project-title .flip-text-container span) {
-    color: #9D7FC1 !important;
-    transition: color 0.3s ease;
-  }
 
   :global(.project-number) {
     color: white;
@@ -427,6 +422,7 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     align-items: center;
     gap: clamp(20px, 4vw, 30px);
     flex-wrap: wrap;
+    overflow: hidden;
   }
 
   :global(.project-title) {
@@ -434,9 +430,13 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     margin: 0;
     transition: color 0.3s ease;
     font-family: var(--font-display) !important;
-    font-size: clamp(2rem, 6vw, 3.5rem) !important;
+    font-size: clamp(1.75rem, 5vw, 3rem) !important;
     font-weight: 900 !important;
-    line-height: 0.9 !important;
+    line-height: 1.1 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
   }
 
   :global(.project-title.inactive) {
@@ -449,17 +449,6 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
   }
 
 
-  /* Ensure FlipText inherits the color from project-title */
-  .project-title :global(.flip-text-container) {
-    color: inherit;
-  }
-
-  /* Override some Tailwind styles to make sure our transitions work */
-  .project-title :global(.flip-text-container) span {
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
 
   :global(.project-details) {
     width: 100%;
@@ -593,6 +582,11 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
       gap: 10px;
     }
 
+    :global(.project-title) {
+      font-size: clamp(1.5rem, 6vw, 2.25rem) !important;
+      line-height: 1.2 !important;
+    }
+
     :global(.project-details) {
       flex-direction: column;
       gap: 20px;
@@ -625,6 +619,11 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
 
     :global(.project-content) {
       gap: 30px;
+    }
+
+    :global(.project-title) {
+      font-size: clamp(1.25rem, 7vw, 1.75rem) !important;
+      line-height: 1.25 !important;
     }
   }
 

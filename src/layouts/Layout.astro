@@ -6,9 +6,10 @@ import SpeedInsights from '@vercel/speed-insights/astro';
 export interface Props {
 	title: string;
 	lang?: string;
+	disableLenis?: boolean;
 }
 
-const { title, lang = 'en' } = Astro.props;
+const { title, lang = 'en', disableLenis = false } = Astro.props;
 const metadata = getLanguageMetadata(lang);
 import '../styles/fonts.css';
 import CustomCursor from '../components/ui/CustomCursor.astro';
@@ -214,8 +215,8 @@ import { GlobalToastContainer } from '../components/modules/Toasts';
 		<ScrollIndicator />
 		<Header lang={lang} />
 		<slot />
-		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
-		<LenisIsland client:idle />
+		<!-- Lenis Smooth Scroll Island - DESACTIVADO GLOBALMENTE para mejor performance -->
+		<!-- {!disableLenis && <LenisIsland client:idle />} -->
 		<!-- Global Toast Container - Permite toasts desde cualquier componente -->
 		<GlobalToastContainer client:only="react" />
 		<Analytics />
