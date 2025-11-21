@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import type { Project as CMSProject } from '../../lib/cms';
 
 interface ProjectImageData {
   id: number;
@@ -6,34 +7,9 @@ interface ProjectImageData {
   alt: string;
 }
 
-// Mapeo de imágenes por proyecto
-const projectImages: Record<number, ProjectImageData> = {
-  1: {
-    id: 1,
-    src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/KarenBillboard.webp',
-    alt: 'THIS PORTFOLIO - Meta Project',
-  },
-  2: {
-    id: 2,
-    src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Frame%202147225832.webp',
-    alt: 'Aurin Task Manager - Enterprise Dashboard',
-  },
-  3: {
-    id: 3,
-    src: 'https://picsum.photos/300/300?random=13',
-    alt: 'E-Commerce Platform',
-  },
-  4: {
-    id: 4,
-    src: 'https://picsum.photos/300/300?random=17',
-    alt: 'Portfolio Website',
-  },
-  5: {
-    id: 5,
-    src: 'https://picsum.photos/300/300?random=21',
-    alt: 'Mobile App',
-  },
-};
+interface ProjectImageCursorProps {
+  projects: CMSProject[];
+}
 
 // Hook para detectar dispositivos desktop
 const useIsDesktop = () => {
@@ -54,7 +30,7 @@ const useIsDesktop = () => {
   return isDesktop;
 };
 
-export const ProjectImageCursor: React.FC = () => {
+export const ProjectImageCursor: React.FC<ProjectImageCursorProps> = ({ projects: cmsProjects }) => {
   const isDesktop = useIsDesktop();
   const [activeImage, setActiveImage] = useState<ProjectImageData | null>(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -63,6 +39,26 @@ export const ProjectImageCursor: React.FC = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const requestRef = useRef<number | null>(null);
   const prevCursorPosition = useRef({ x: 0, y: 0 });
+
+  // Fallback images for projects without mainImage
+  const fallbackImages: Record<number, string> = {
+    1: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/KarenBillboard.webp',
+    2: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Frame%202147225832.webp',
+    3: 'https://picsum.photos/300/300?random=13',
+    4: 'https://picsum.photos/300/300?random=17',
+    5: 'https://picsum.photos/300/300?random=21',
+  };
+
+  // Build project images map from CMS data
+  const projectImages: Record<number, ProjectImageData> = cmsProjects.reduce((acc, project, index) => {
+    const projectId = index + 1;
+    acc[projectId] = {
+      id: projectId,
+      src: project.mainImage?.url || fallbackImages[projectId] || `https://picsum.photos/300/300?random=${projectId}`,
+      alt: project.mainImage?.alt || project.title || `Project ${projectId}`,
+    };
+    return acc;
+  }, {} as Record<number, ProjectImageData>);
 
   // Smooth cursor movement with easing
   const handleMouseMove = useCallback((e: MouseEvent) => {
