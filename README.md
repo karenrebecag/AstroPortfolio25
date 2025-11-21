@@ -177,30 +177,6 @@ const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.12]);
 
 Estos valores no son arbitrarios; están calculados para crear una sensación de rotación orgánica que mantiene la elegancia visual mientras proporciona feedback táctil satisfactorio.
 
-### **3.3 Lenis: Suavizado de Scroll Inteligente**
-
-La implementación de **Lenis** no es una simple inclusión de librería; es una configuración profundamente personalizada que adapta el comportamiento del scroll según el dispositivo:
-
-```javascript
-// LenisIsland.jsx - Configuración adaptativa
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  lerp: 0.07,
-  wheelMultiplier: 1,
-  touchMultiplier: 2,
-});
-
-// Detección de dispositivos de gama baja
-const isLowEndDevice = navigator.hardwareConcurrency <= 2;
-if (isLowEndDevice) {
-  lenis.options.lerp = 0.15;
-  frameInterval = 1000 / 30; // 30 FPS en lugar de 60
-}
-```
-
-Esta implementación demuestra una consideración cuidadosa por la accesibilidad y la experiencia del usuario en diferentes contextos tecnológicos.
-
 ---
 
 ## **IV. Shaders y Gráficos Computacionales**

@@ -61,7 +61,6 @@ sitemap({
             'motion': ['motion/react', 'motion'],
             'react-vendor': ['react', 'react-dom'],
             'three': ['three'],
-            'lenis': ['lenis'],
             'lucide': ['lucide-react']
           }
         }

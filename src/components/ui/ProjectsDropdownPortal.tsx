@@ -138,9 +138,9 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
   };
 
   const getProjectUrl = (project: Project) => {
-    // Use slug if available, fallback to URL or projects section
+    // Use slug if available (same pattern as ProjectsIsland.tsx)
     if (project.slug) {
-      return `/projects/${project.slug}`;
+      return `/${project.slug}`;
     }
     if (project.url) {
       return project.url;
@@ -188,8 +188,8 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
-            padding: '16px 18px',
+            gap: '6px',
+            padding: '12px 16px',
             color: isDarkMode ? '#ffffff' : '#000000',
             textDecoration: 'none',
             borderBottom: index === projects.length - 1 ? 'none' : isDarkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '2px solid #000000',
@@ -234,23 +234,6 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
               </span>
             </div>
           </div>
-          <p style={{
-            fontSize: 'var(--text-xs)',
-            color: isDarkMode ? '#cccccc' : '#666',
-            fontWeight: 'var(--font-weight-normal)',
-            letterSpacing: 'var(--tracking-normal)',
-            opacity: 0.8,
-            fontFamily: 'var(--font-primary)',
-            fontStyle: 'normal',
-            margin: 0,
-            lineHeight: '1.4',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}>
-            {project.description}
-          </p>
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -295,6 +278,7 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
       <button
         ref={triggerRef}
         onClick={toggleDropdown}
+        data-projects-dropdown-trigger
         style={{
           position: 'absolute',
           opacity: 0,

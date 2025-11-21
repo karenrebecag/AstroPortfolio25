@@ -1,7 +1,7 @@
 ---
 import ResumeLayout from '../../layouts/ResumeLayout.astro';
 import AdvancedSEO from '../../components/seo/AdvancedSEO.astro';
-import HeaderPill from '../../components/modules/Header/HeaderPill.astro';
+import Header from '../../components/modules/Header/Header.astro';
 import { ResumeSection } from '../../components/Resume/ResumeSection.tsx';
 import { ResumeTag, ResumeTagGroup } from '../../components/Resume/ResumeTag.tsx';
 import { SkillTag, SkillGroup } from '../../components/Resume/SkillTag.tsx';
@@ -51,7 +51,7 @@ const resumeSEOConfig = {
   <!-- FAQ Schema for Resume-related questions -->
   <script type="application/ld+json" set:html={JSON.stringify(getResumeFAQSchema())}></script>
   
-  <HeaderPill />
+  <Header lang={lang} />
 
   <div class="resume-page-container">
   

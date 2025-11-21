@@ -13,7 +13,6 @@ const metadata = getLanguageMetadata(lang);
 import '../styles/fonts.css';
 import CustomCursor from '../components/ui/CustomCursor.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';
-import LenisIsland from '../components/ui/LenisIsland.jsx';
 import PageLoader from '../components/ui/PageLoader.astro';
 ---
 
@@ -113,8 +112,6 @@ import PageLoader from '../components/ui/PageLoader.astro';
 		<ScrollIndicator />
 		<!-- No Header here - CV pages use their own CVHeader -->
 		<slot />
-		<!-- Lenis Smooth Scroll Island - Se carga solo en el cliente para optimizar performance -->
-		<LenisIsland client:idle />
 		<Analytics />
 		<SpeedInsights />
 	</body>

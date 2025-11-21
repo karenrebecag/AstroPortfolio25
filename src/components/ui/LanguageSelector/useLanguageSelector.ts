@@ -35,7 +35,7 @@ export const useLanguageSelector = () => {
     container.style.width = '100%';
     container.style.height = '100%';
     container.style.pointerEvents = 'none';
-    container.style.zIndex = '9000'; // Below cursor, above header
+    container.style.zIndex = '9995'; // Above header (9990), below cursor (9997)
 
     document.body.appendChild(container);
     setPortalContainer(container);
@@ -59,7 +59,7 @@ export const useLanguageSelector = () => {
       dropdown.style.top = `${triggerRect.bottom + 8}px`;
       dropdown.style.right = `${window.innerWidth - triggerRect.right}px`;
       dropdown.style.pointerEvents = 'auto';
-      dropdown.style.zIndex = '9001';
+      dropdown.style.zIndex = '9996'; // Above header and portal container
     }
   };
 
