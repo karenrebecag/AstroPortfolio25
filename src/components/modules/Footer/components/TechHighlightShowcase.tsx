@@ -8,22 +8,6 @@ type TechHighlightShowcaseProps = {
     lang?: string;
 };
 
-const baseClasses = {
-    dark: {
-        caption: 'text-xs uppercase tracking-[0.4em] text-white/60 font-primary',
-        capsule: 'group relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition duration-300 hover:border-white/30 hover:bg-white/10 sm:h-12 sm:w-12',
-    },
-    light: {
-        caption: 'text-xs uppercase tracking-[0.4em] text-gray-500 font-primary',
-        capsule: 'group relative flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-200 bg-gray-900 text-white shadow-sm transition duration-300 hover:border-gray-300 hover:bg-gray-800 sm:h-12 sm:w-12',
-    },
-};
-
-const marqueeCapsule = {
-    dark: 'group relative flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition duration-300 hover:border-white/30 hover:bg-white/10',
-    light: 'group relative flex h-10 w-10 items-center justify-center rounded-2xl border border-gray-200 bg-gray-900 text-white shadow-sm transition duration-300 hover:border-gray-300 hover:bg-gray-800',
-};
-
 const getHighlightEntry = (lang: string, id: TechHighlightId) => {
     const langHighlights = translations[lang as keyof typeof translations]?.footer?.techHighlights as Record<string, any> | undefined;
     const fallbackHighlights = translations.en.footer?.techHighlights as Record<string, any> | undefined;
@@ -53,41 +37,17 @@ export function TechHighlightShowcase({ variant, lang = 'en' }: TechHighlightSho
 
     const caption = getCaption(lang);
 
+    const isDark = variant === 'dark';
+
     return (
-        <div className="flex w-full flex-col items-center gap-6 text-center">
-            <p className={baseClasses[variant].caption}>
+        <section className="w-full">
+            {/* Caption */}
+            <p className={`text-xs uppercase tracking-[0.4em] text-center mb-6 font-primary ${isDark ? 'text-white/60' : 'text-gray-500'}`}>
                 {caption}
             </p>
 
-            <div className="hidden w-full flex-col items-center gap-4 md:flex">
-                <div className="flex w-full max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-5">
-                    {techHighlights.map((tech) => {
-                        const { name, cursor, title } = getHighlightEntry(lang, tech.id);
-
-                        return (
-                            <a
-                                key={tech.id}
-                                href={tech.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={baseClasses[variant].capsule}
-                                data-cursor-text={cursor}
-                                aria-label={title}
-                                title={title}
-                            >
-                                <img
-                                    src={tech.icon}
-                                    alt={`${name} logo`}
-                                    className="h-6 w-6 brightness-0 invert opacity-85 transition duration-300 group-hover:opacity-100 sm:h-7 sm:w-7"
-                                    loading="lazy"
-                                />
-                            </a>
-                        );
-                    })}
-                </div>
-            </div>
-
-            <div className="relative w-full overflow-hidden md:hidden">
+            {/* Marquee - visible en todos los viewports */}
+            <div className="relative w-full overflow-hidden" style={{ paddingTop: '2rem' }}>
                 <motion.div
                     className="flex w-max items-center gap-4 px-2"
                     animate={{ x: ['0%', '-50%'] }}
@@ -102,7 +62,16 @@ export function TechHighlightShowcase({ variant, lang = 'en' }: TechHighlightSho
                                 href={tech.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={marqueeCapsule[variant]}
+                                className={`
+                                    group relative flex items-center justify-center
+                                    w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12
+                                    rounded-2xl border transition-all duration-300
+                                    ${isDark
+                                        ? 'border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10'
+                                        : 'border-gray-200 bg-gray-900 hover:border-gray-300 hover:bg-gray-800'
+                                    }
+                                    backdrop-blur-sm
+                                `}
                                 data-cursor-text={cursor}
                                 aria-label={title}
                                 title={title}
@@ -110,7 +79,7 @@ export function TechHighlightShowcase({ variant, lang = 'en' }: TechHighlightSho
                                 <img
                                     src={tech.icon}
                                     alt={`${name} logo`}
-                                    className="h-6 w-6 brightness-0 invert opacity-85 transition duration-300 group-hover:opacity-100"
+                                    className="w-6 h-6 sm:w-7 sm:h-7 brightness-0 invert opacity-85 group-hover:opacity-100 transition-opacity duration-300"
                                     loading="lazy"
                                 />
                             </a>
@@ -118,6 +87,6 @@ export function TechHighlightShowcase({ variant, lang = 'en' }: TechHighlightSho
                     })}
                 </motion.div>
             </div>
-        </div>
+        </section>
     );
 }

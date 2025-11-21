@@ -15,7 +15,7 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
 
   return (
     <div
-      className={`flip-text-container relative block overflow-hidden font-black uppercase ${className}`}
+      className={`flip-text-container relative block overflow-hidden whitespace-nowrap font-black uppercase ${className}`}
       style={{
         lineHeight: 'inherit',
         fontSize: 'inherit',
@@ -23,12 +23,9 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
         fontWeight: 'inherit',
         height: 'auto',
         minHeight: 'fit-content',
-        wordWrap: 'break-word',
-        overflowWrap: 'break-word',
-        whiteSpace: 'normal',
       }}
     >
-      <motion.div className="flex flex-wrap">
+      <motion.div className="flex">
         {text.split("").map((letter, i) => (
           <motion.span
             key={`top-${i}`}
@@ -51,7 +48,7 @@ const FlipText: React.FC<FlipTextProps> = ({ text, className = '', isHovered = f
           </motion.span>
         ))}
       </motion.div>
-      <motion.div className="absolute inset-0 flex flex-wrap">
+      <motion.div className="absolute inset-0 flex">
         {text.split("").map((letter, i) => (
           <motion.span
             key={`bottom-${i}`}

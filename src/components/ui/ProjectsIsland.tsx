@@ -22,6 +22,30 @@ interface ProjectsIslandProps {
   projects: CMSProject[];
 }
 
+// Helper function to convert Payload rich text to plain text
+const richTextToPlainText = (richText: any): string => {
+  if (!richText) return '';
+
+  // If it's already a string, return it
+  if (typeof richText === 'string') return richText;
+
+  // If it's a Payload rich text object, extract text from children
+  if (Array.isArray(richText)) {
+    return richText.map(node => {
+      if (node.text) return node.text;
+      if (node.children) return richTextToPlainText(node.children);
+      return '';
+    }).join(' ');
+  }
+
+  // If it has a root array (Payload v2 format)
+  if (richText.root?.children) {
+    return richTextToPlainText(richText.root.children);
+  }
+
+  return '';
+};
+
 const ProjectsIsland: React.FC<ProjectsIslandProps> = ({ projects: cmsProjects }) => {
   const [activeProject, setActiveProject] = useState<number>(1); // Primer proyecto activo por defecto
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -131,7 +155,7 @@ const ProjectsIsland: React.FC<ProjectsIslandProps> = ({ projects: cmsProjects }
         id: index + 1,
         title1: cmsProject.homepageTitle1 || cmsProject.title.split(' ').slice(0, 1).join(' '),
         title2: cmsProject.homepageTitle2 || cmsProject.title.split(' ').slice(1).join(' '),
-        description: cmsProject.homepageDescription || '',
+        description: richTextToPlainText(cmsProject.briefDescription) || cmsProject.homepageDescription || '',
         tags: cmsProject.homepageTags?.map(tag => tag.tag) || [],
         images: cmsProject.homepageImages && cmsProject.homepageImages.length > 0
           ? cmsProject.homepageImages.map(img => img.image.url)

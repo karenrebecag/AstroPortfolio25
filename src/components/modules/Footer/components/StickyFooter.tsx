@@ -284,9 +284,11 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
                                 />
                             </div>
 
-                            <AnimatedContainer delay={0.25} className="w-full">
-                                <TechHighlightShowcase variant="dark" lang={lang} />
-                            </AnimatedContainer>
+                            <div className="w-full relative z-10">
+                                <AnimatedContainer delay={0.25} className="w-full">
+                                    <TechHighlightShowcase variant="dark" lang={lang} />
+                                </AnimatedContainer>
+                            </div>
                             
                             {/* Nav Links pequeños debajo de KAREN ORTIZ */}
                             <div className="flex items-center justify-center gap-8 mt-4 mb-8">
@@ -459,10 +461,10 @@ if (typeof document !== 'undefined') {
         
         .karen-ortiz-flip-text {
             font-family: var(--font-display) !important;
-            font-size: 10.5vw !important;
+            font-size: 9.5vw !important;
             font-weight: 400 !important;
             color: white !important;
-            text-align: center !important;
+            text-align: start !important;
             line-height: 0.9 !important;
             letter-spacing: -0.02em !important;
             text-transform: uppercase !important;
@@ -492,7 +494,7 @@ if (typeof document !== 'undefined') {
             }
             
             .karen-ortiz-flip-text .flip-text-container {
-                font-size: clamp(120px, 15vw, 400px) !important;
+                font-size: clamp(120px, 14vw, 400px) !important;
                 width: 100% !important;
                 justify-content: center !important;
             }
