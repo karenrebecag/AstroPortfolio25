@@ -1,0 +1,28 @@
+---
+import { AnimatedGroup } from '@/components/ui/AnimatedGroup';
+import styles from './SimpleGallery.module.css';
+
+export interface Props {
+  images: string[];
+}
+
+const { images } = Astro.props;
+
+if (!images || images.length === 0) {
+  return null;
+}
+---
+
+<section class={styles.section}>
+  <div class={styles.grid}>
+    {images.map((img: string, index: number) => (
+      <div class={styles.imageWrapper}>
+        <img
+          src={img}
+          alt={`Gallery image ${index + 1}`}
+          class={styles.image}
+        />
+      </div>
+    ))}
+  </div>
+</section>

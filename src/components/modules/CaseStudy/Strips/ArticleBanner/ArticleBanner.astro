@@ -17,9 +17,7 @@ const { mainTag, uploadDate, title, authorImage, authorName } = Astro.props;
         <div class={styles.container}>
             <div class={styles.content}>
                 <div class={styles.meta}>
-                    <div class={styles.tag}>
-                        <div class={styles.tagText}>{mainTag}</div>
-                    </div>
+                    <span class={styles.badge}>{mainTag}</span>
                     <div class={styles.date}>{uploadDate}</div>
                     <div class={styles.separator}>/</div>
                 </div>

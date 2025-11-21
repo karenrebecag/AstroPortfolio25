@@ -1,0 +1,41 @@
+---
+/**
+ * Badge Component - Purple badge for tags
+ */
+
+export interface Props {
+  text: string;
+  className?: string;
+}
+
+const { text, className = '' } = Astro.props;
+---
+
+<span class={`badge ${className}`}>
+  {text}
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(157, 127, 193, 0.1);
+    color: #9D7FC1;
+    border: 1px solid rgba(157, 127, 193, 0.3);
+    font-family: "VideoGameFont", monospace;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .badge:hover {
+    background: rgba(157, 127, 193, 0.15);
+    border-color: rgba(157, 127, 193, 0.5);
+    transform: translateY(-1px);
+  }
+</style>

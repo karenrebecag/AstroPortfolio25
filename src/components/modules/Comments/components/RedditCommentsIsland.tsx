@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import TypeSound from '../../../ui/TypeSound.tsx';
+import { TextDisperseBlack } from '../../../ui/TextDisperseBlack.tsx';
 import { Heart, MessageSquare, Reply, ChevronDown, ChevronUp, ArrowUpDown, Upload, Trash2 } from 'lucide-react';
 import { useCommentsStore } from '../stores/commentsStore';
 import { useToast } from '../../Toasts';
@@ -387,35 +388,20 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
     >
       <TypeSound />
 
-      {/* Add Comment Title */}
-      <motion.div 
-        className="add-comment-title"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <span>{t.title}</span>
-            <p className="add-comment-hint">
-              {t.subtitle}
-            </p>
-          </div>
-          
-          {/* Clear Cache Button - only show if there's cached data */}
-          {hasCachedData && (
-            <button
-              onClick={handleClearCache}
-              className="clear-cache-btn"
-              data-cursor-text={t.delete}
-              title={t.delete}
-            >
-              <Trash2 size={16} />
-            </button>
-          )}
+      {/* Removed duplicate title - title and subtitle are now only in CommentsSection.astro */}
+      {/* Clear Cache Button - only show if there's cached data */}
+      {hasCachedData && (
+        <div className="flex items-end justify-end mb-4">
+          <button
+            onClick={handleClearCache}
+            className="clear-cache-btn"
+            data-cursor-text={t.delete}
+            title={t.delete}
+          >
+            <Trash2 size={16} />
+          </button>
         </div>
-      </motion.div>
+      )}
 
       {/* New comment form */}
       <motion.div
@@ -471,11 +457,12 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
                 
                 <input
                   type="email"
-                  placeholder="Your email (optional)"
+                  placeholder="Your email"
                   value={formData.email}
                   onChange={(e) => setFormField('email', e.target.value)}
                   className="comment-input"
                   data-cursor-text="Add Your Email"
+                  required
                 />
                 
                 <textarea
@@ -517,29 +504,7 @@ const RedditCommentsIsland: React.FC<RedditCommentsIslandProps> = ({ storyId }) 
         </div>
       </motion.div>
 
-      {/* Comments Header */}
-      <motion.div 
-        className="comments-header"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className="comments-title">
-          <span>{t.title}</span>
-          <span className="comments-count-pill">{nestedComments.length}</span>
-        </div>
-        <div className="comments-sort">
-          <ArrowUpDown className="sort-icon" />
-          <select className="sort-dropdown" data-cursor-text="Sort Comments" aria-label="Sort comments by date">
-            <option value="latest">Latest</option>
-            <option value="oldest">Oldest</option>
-          </select>
-        </div>
-      </motion.div>
-
-      {/* Separator line */}
-      <div className="comments-separator"></div>
+      {/* Removed redundant Comments Header - title and subtitle are now handled by CommentsSection.astro */}
 
       {/* Comments list container with scroll */}
       <div className="comments-list-container">

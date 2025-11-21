@@ -1,12 +1,12 @@
 ---
 import ArticleBanner from './Strips/ArticleBanner/ArticleBanner.astro';
 import ArticleSection from './Strips/ArticleSection/ArticleSection.astro';
-import { HorizontalScrollGallery } from './Strips/HorizontalScrollGallery/HorizontalScrollGallery.tsx';
+import SimpleGallery from './Strips/SimpleGallery/SimpleGallery.astro';
 import StickyTechStack from './Strips/StickyTechStack/StickyTechStack.astro';
 import ProcessWorkflowWrapper from './Strips/ProcessWorkflow/ProcessWorkflowWrapper.astro';
 import { ProjectAchievements } from './Strips/ProjectAchievements/ProjectAchievements.tsx';
 import FinalThoughts from './Strips/FinalThoughts/FinalThoughts.astro';
-import FAQs from '@/components/ui/FAQs.astro';
+import CaseStudyFAQs from '@/components/ui/CaseStudyFAQs.astro';
 import GetInTouch from '@/components/modules/GetInTouch/components/GetInTouch.astro';
 import CommentsSection from '@/components/ui/CommentsSection.astro';
 import WhiteBackground from '@/components/ui/WhiteBackgroundTexture/WhiteBackground.astro';
@@ -28,18 +28,20 @@ export interface Props {
   processWorkflowData: ProcessWorkflowWrapperProps;
   projectAchievementsData: ProjectAchievementsProps;
   finalThoughtsData: FinalThoughtsProps;
+  faqs?: { question: string; answer: string }[];
   storyId: string;
 }
 
-const { 
-    bannerData, 
-    articleData, 
-    galleryData, 
-    techStackData, 
-    processWorkflowData, 
-    projectAchievementsData, 
+const {
+    bannerData,
+    articleData,
+    galleryData,
+    techStackData,
+    processWorkflowData,
+    projectAchievementsData,
     finalThoughtsData,
-    storyId 
+    faqs = [],
+    storyId
 } = Astro.props;
 ---
 
@@ -48,9 +50,7 @@ const {
     <ArticleBanner {...bannerData} />
     <ArticleSection {...articleData} />
     
-    <div>
-      <HorizontalScrollGallery images={galleryData.images} client:visible />
-    </div>
+    <SimpleGallery images={galleryData.images} />
 
     <StickyTechStack {...techStackData} />
 
@@ -61,9 +61,9 @@ const {
     <FinalThoughts {...finalThoughtsData} />
 
     <div class="faqs-responsive-container">
-      <FAQs />
+      <CaseStudyFAQs faqs={faqs} />
     </div>
-    
+
     <CommentsSection storyId={storyId} />
 
     <section id="contact">

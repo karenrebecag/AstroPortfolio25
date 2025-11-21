@@ -1,33 +1,55 @@
 ---
 import styles from './ArticleSection.module.css';
+import RichText from '@/components/ui/RichText.astro';
 
 export interface Props {
-  briefDescription: string;
-  section1: { title: string; text: string; };
-  section2: { title: string; paragraphs: string[]; };
+  briefDescription: string | any;
+  section1: { title: string; text: string | any; };
+  section2: { title: string; paragraphs: (string | any)[]; };
   image: { src: string; alt: string; };
-  quote: { text: string; author: string; };
-  section3: { title: string; paragraphs: string[]; };
-  section4: { title: string; paragraphs: string[]; };
+  quote: { text: string | any; author: string; };
+  section3: { title: string; paragraphs: (string | any)[]; };
+  section4: { title: string; paragraphs: (string | any)[]; };
 }
 
 const { briefDescription, section1, section2, image, quote, section3, section4 } = Astro.props;
+
+// Helper to check if content is rich text (object) or plain string
+const isRichText = (content: any) => content && typeof content === 'object' && !Array.isArray(content);
 ---
 
 <section class={styles.section}>
     <div class={styles.container}>
         <div class={styles.content}>
-            <p class={styles.briefDescription}>{briefDescription}</p>
+            <div class={styles.briefDescription}>
+                {isRichText(briefDescription) ? (
+                    <RichText content={briefDescription} />
+                ) : (
+                    <p>{briefDescription}</p>
+                )}
+            </div>
 
             <div class={styles.textBlock}>
                 <h2 class={styles.textBlockTitle}>{section1.title}</h2>
-                <p class={styles.textBlockParagraph}>{section1.text}</p>
+                <div class={styles.textBlockParagraph}>
+                    {isRichText(section1.text) ? (
+                        <RichText content={section1.text} />
+                    ) : (
+                        <p>{section1.text}</p>
+                    )}
+                </div>
             </div>
 
             <div class={styles.textBlock}>
                 <h2 class={styles.textBlockTitle}>{section2.title}</h2>
                 {section2.paragraphs.map(p => (
-                    <p class={styles.textBlockParagraph}>{p}</p>
+                    <div class={styles.textBlockParagraph}>
+                        {isRichText(p) ? (
+                            <RichText content={p} />
+                        ) : (
+                            <p>{p}</p>
+                        )}
+                    </div>
                 ))}
             </div>
 
@@ -38,7 +60,13 @@ const { briefDescription, section1, section2, image, quote, section3, section4 }
 
         <div class={styles.quoteContainer}>
             <div class={styles.quoteContent}>
-                <blockquote class={styles.quoteText}>"{quote.text}"</blockquote>
+                {isRichText(quote.text) ? (
+                    <blockquote class={styles.quoteText}>
+                        <RichText content={quote.text} />
+                    </blockquote>
+                ) : (
+                    <blockquote class={styles.quoteText}>"{quote.text}"</blockquote>
+                )}
                 <cite class={styles.quoteAuthor}>{quote.author}</cite>
             </div>
         </div>
@@ -47,14 +75,26 @@ const { briefDescription, section1, section2, image, quote, section3, section4 }
             <div class={styles.textBlock}>
                 <h2 class={styles.textBlockTitle}>{section3.title}</h2>
                 {section3.paragraphs.map(p => (
-                    <p class={styles.textBlockParagraph}>{p}</p>
+                    <div class={styles.textBlockParagraph}>
+                        {isRichText(p) ? (
+                            <RichText content={p} />
+                        ) : (
+                            <p>{p}</p>
+                        )}
+                    </div>
                 ))}
             </div>
 
             <div class={styles.textBlock}>
                 <h2 class={styles.textBlockTitle}>{section4.title}</h2>
                 {section4.paragraphs.map(p => (
-                    <p class={styles.textBlockParagraph}>{p}</p>
+                    <div class={styles.textBlockParagraph}>
+                        {isRichText(p) ? (
+                            <RichText content={p} />
+                        ) : (
+                            <p>{p}</p>
+                        )}
+                    </div>
                 ))}
             </div>
         </div>

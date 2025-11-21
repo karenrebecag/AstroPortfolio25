@@ -209,6 +209,11 @@ export interface Project {
     alt?: string;
   };
   caseStudyDescription?: string;
+  faqs?: {
+    question: string;
+    answer: string;
+    id?: string;
+  }[];
   createdAt: string;
   updatedAt: string;
 }

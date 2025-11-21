@@ -1,0 +1,351 @@
+---
+// CaseStudyFAQs.astro - Sección de preguntas frecuentes específicas del caso de estudio
+import FAQsIsland from './FAQsIsland.tsx';
+import { TextDisperse } from './TextDisperse.tsx';
+import { motion } from 'motion/react';
+import { getFAQSchema } from '../../utils/structuredData';
+import type { HomeFAQ } from '../../lib/cms';
+
+export interface Props {
+  faqs: {
+    question: string;
+    answer: string;
+  }[];
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  faqs = [],
+  title = 'FAQs',
+  subtitle = 'Find answers to common questions about this project'
+} = Astro.props;
+
+// Debug: Log FAQs data
+console.log('CaseStudyFAQs - Received FAQs:', faqs);
+console.log('CaseStudyFAQs - FAQs length:', faqs?.length || 0);
+
+// Transform case study FAQs to HomeFAQ format
+const transformedFaqs: HomeFAQ[] = faqs.map((faq, index) => ({
+  id: `faq-${index + 1}`,
+  question: faq.question,
+  answer: faq.answer,
+  order: index + 1,
+  status: 'published' as const,
+  createdAt: '',
+  updatedAt: ''
+}));
+
+// Add FAQ structured data for SEO
+const faqStructuredData = transformedFaqs.length > 0 ? getFAQSchema(transformedFaqs) : null;
+---
+
+<!-- FAQ Schema for SEO optimization -->
+{faqStructuredData && (
+  <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)}></script>
+)}
+
+{transformedFaqs && transformedFaqs.length > 0 && (
+  <section class="faqs-section">
+    <div class="faqs-container">
+      <!-- Giant Heading with TextDisperse -->
+      <div class="giant-heading-wrapper">
+        <motion.div
+          className="giant-heading-container"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          client:idle
+        >
+          <TextDisperse text={title} className="giant-heading-disperse" client:idle />
+        </motion.div>
+
+        <motion.p
+          className="giant-heading-subtitle"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+          client:idle
+        >
+          {subtitle}
+        </motion.p>
+      </div>
+
+      <div class="faqs-content">
+        <!-- FAQs List - Optimized Island Component with scroll animation -->
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+          client:visible
+        >
+          <FAQsIsland faqs={transformedFaqs} client:visible />
+        </motion.div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .faqs-section {
+    width: 100%;
+    padding: 65px 60px;
+    background: #050112;
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 1000px;
+    contain: layout style paint;
+  }
+
+  /* Hide entire FAQs section on viewport < 768px */
+  @media (max-width: 767px) {
+    :global(.faqs-section) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+
+  .faqs-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Giant Heading Styles */
+  :global(.giant-heading-wrapper) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 0 0 0;
+  }
+
+  :global(.giant-heading-container) {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+  }
+
+  :global(.giant-heading-subtitle) {
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-primary);
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    margin: 0;
+    max-width: 600px;
+  }
+
+  :global(.giant-heading-disperse) {
+    font-family: var(--font-display) !important;
+    font-size: clamp(80px, 15vw, 200px) !important;
+    font-weight: 400 !important;
+    color: white !important;
+    line-height: 0.8 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  @media (max-width: 768px) {
+    :global(.giant-heading-container) {
+      justify-content: center;
+    }
+
+    :global(.giant-heading-disperse) {
+      font-size: clamp(60px, 12vw, 120px) !important;
+      justify-content: center !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :global(.giant-heading-disperse) {
+      font-size: clamp(50px, 10vw, 80px) !important;
+    }
+  }
+
+  :global(.giant-heading-disperse span) {
+    font-family: var(--font-display) !important;
+    color: white !important;
+  }
+
+  .faqs-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 80px;
+  }
+
+  /* FAQs List Styles */
+  :global(.faqs-list) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  :global(.faq-item) {
+    width: 100%;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    gap: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  :global(.faq-number) {
+    color: #808080;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    min-width: 40px;
+    transition: color 0.3s ease;
+  }
+
+  :global(.faq-item.active .faq-number) {
+    color: white;
+  }
+
+  :global(.faq-content) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  :global(.faq-question-container) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  :global(.faq-question) {
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 400;
+    line-height: clamp(28px, 4vw, 36px);
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  :global(.faq-item:not(.active) .faq-question) {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  :global(.faq-icon) {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.icon) {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 300;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+  }
+
+  :global(.icon.active) {
+    transform: rotate(45deg);
+    color: #9D7FC1;
+  }
+
+  :global(.faq-answer) {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    margin-top: -24px;
+  }
+
+  :global(.faq-answer.active) {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 0;
+  }
+
+  :global(.faq-answer p) {
+    color: #cccccc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .faqs-section {
+      padding: 40px 20px;
+    }
+
+    .faqs-content {
+      gap: 40px;
+    }
+
+    :global(.faq-item) {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px 0;
+    }
+
+    :global(.faq-number) {
+      min-width: auto;
+    }
+
+    :global(.faq-question-container) {
+      gap: 15px;
+    }
+
+    :global(.faq-answer.active) {
+      max-height: 600px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .faqs-content {
+      gap: 40px;
+      padding-bottom: 100px;
+    }
+
+    :global(.faqs-list) {
+      gap: 24px;
+    }
+
+    :global(.faq-item) {
+      gap: 16px;
+      padding: 20px 0;
+    }
+  }
+</style>

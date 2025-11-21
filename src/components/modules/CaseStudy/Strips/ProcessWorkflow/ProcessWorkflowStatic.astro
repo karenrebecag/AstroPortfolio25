@@ -1,0 +1,49 @@
+---
+import styles from './ProcessWorkflowStatic.module.css';
+import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+import { TextDisperseBlack } from '@/components/ui/TextDisperseBlack.tsx';
+
+export interface WorkflowStep {
+  step: number;
+  description: string;
+}
+
+export interface Props {
+  title: string;
+  subtitle: string;
+  steps: WorkflowStep[];
+  badge?: string;
+}
+
+const { title, subtitle, steps, badge = 'Process Workflow' } = Astro.props;
+---
+
+<AnimatedComponent client:visible>
+  <section class={styles.section}>
+    <div class={styles.container}>
+      <div class={styles.header}>
+        <span class={styles.badge}>
+          {badge}
+        </span>
+        <h2 class={styles.title}>
+          <TextDisperseBlack text={title} client:visible />
+        </h2>
+        <p class={styles.subtitle}>{subtitle}</p>
+      </div>
+
+      <div class={styles.stepsContainer}>
+        {steps.map((step, index) => (
+          <div class={styles.stepItem}>
+            <span class={styles.stepNumber}>
+              {index + 1}
+            </span>
+            <div class={styles.stepContent}>
+              <h3 class={styles.stepTitle}>Step {step.step}</h3>
+              <p class={styles.stepDescription}>{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</AnimatedComponent>

@@ -33,6 +33,9 @@
     font-family: var(--font-primary);
     font-weight: 400;
     line-height: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .textBlock {
@@ -59,22 +62,52 @@
     font-family: var(--font-primary);
     font-weight: 400;
     line-height: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .imageContainer {
     align-self: stretch;
-    padding: 90px 0; /* Adjusted padding */
+    padding: 90px 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 .image {
     width: 100%;
-    height: auto; /* Changed to auto for responsiveness */
-    box-shadow: 0px 4px 50.8px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
+    height: auto;
+    box-shadow: none;
+    border-radius: 0;
+    object-fit: cover;
+}
+
+/* Large viewports: max-width 2500px with rounded borders */
+@media (min-width: 2500px) {
+    .imageContainer {
+        width: auto;
+        position: static;
+        left: auto;
+        right: auto;
+        margin-left: 0;
+        margin-right: 0;
+        align-self: center;
+    }
+
+    .image {
+        max-width: 2500px;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 50.8px rgba(0, 0, 0, 0.05);
+    }
 }
 
 .quoteContainer {
@@ -109,6 +142,9 @@
     font-weight: 400;
     text-transform: capitalize;
     line-height: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .quoteAuthor {

@@ -31,13 +31,14 @@ if (!project) {
 }
 
 // Helper function to extract text from rich text with safe fallback
+// This is only used for fallback when rich text is not available
 function extractTextFromRichText(richText: any): string {
   try {
     if (!richText) return '';
-    
+
     // Handle different possible structures
     if (typeof richText === 'string') return richText;
-    
+
     if (!richText.root || !richText.root.children) return '';
 
     let text = '';
@@ -56,6 +57,17 @@ function extractTextFromRichText(richText: any): string {
     console.error('Error extracting text from rich text:', error);
     return '';
   }
+}
+
+// Helper function to pass rich text as-is (or fallback to text extraction)
+function getRichTextOrString(richText: any): any {
+  if (!richText) return '';
+  // If it's already a string, return it
+  if (typeof richText === 'string') return richText;
+  // If it's a valid rich text object, return it as-is
+  if (richText.root && richText.root.children) return richText;
+  // Otherwise, try to extract text
+  return extractTextFromRichText(richText);
 }
 
 // Map Payload data to CaseStudy component format with safe fallbacks
@@ -83,29 +95,29 @@ const caseStudyData = {
     authorName: project.authorName || 'Karen Ortiz'
   },
   articleData: {
-    briefDescription: extractTextFromRichText(project.briefDescription) || '',
+    briefDescription: getRichTextOrString(project.briefDescription),
     section1: project.articleSections?.[0] ? {
       title: project.articleSections[0].heading || '',
-      text: extractTextFromRichText(project.articleSections[0].paragraphs) || ''
+      text: getRichTextOrString(project.articleSections[0].paragraphs)
     } : undefined,
     section2: project.articleSections?.[1] ? {
       title: project.articleSections[1].heading || '',
-      paragraphs: [extractTextFromRichText(project.articleSections[1].paragraphs) || '']
+      paragraphs: [getRichTextOrString(project.articleSections[1].paragraphs)]
     } : undefined,
     section3: project.articleSections?.[2] ? {
       title: project.articleSections[2].heading || '',
-      paragraphs: [extractTextFromRichText(project.articleSections[2].paragraphs) || '']
+      paragraphs: [getRichTextOrString(project.articleSections[2].paragraphs)]
     } : undefined,
     section4: project.articleSections?.[3] ? {
       title: project.articleSections[3].heading || '',
-      paragraphs: [extractTextFromRichText(project.articleSections[3].paragraphs) || '']
+      paragraphs: [getRichTextOrString(project.articleSections[3].paragraphs)]
     } : undefined,
     image: project.mainImage?.url ? {
       src: project.mainImage.url,
       alt: project.mainImage.alt || project.title || 'Project image'
     } : undefined,
     quote: project.quote?.text ? {
-      text: extractTextFromRichText(project.quote.text) || '',
+      text: getRichTextOrString(project.quote.text),
       author: project.quote.author || ''
     } : undefined
   },
@@ -118,7 +130,7 @@ const caseStudyData = {
     techStack: Array.isArray(project.techStack)
       ? project.techStack.filter(tech => tech?.heading).map(tech => ({
           heading: tech.heading,
-          description: extractTextFromRichText(tech.description) || ''
+          description: getRichTextOrString(tech.description)
         }))
       : []
   },
@@ -144,14 +156,44 @@ const caseStudyData = {
   },
   finalThoughtsData: {
     title: project.finalTitle || 'Final Thoughts',
-    achievements: Array.isArray(project.finalTags)
-      ? project.finalTags.filter(tag => tag?.tag).map(tag => ({
-          description: tag.tag
-        }))
-      : []
+    tags: Array.isArray(project.finalTags)
+      ? project.finalTags.filter(tag => tag?.tag).map(tag => tag.tag)
+      : [],
+    nav: (() => {
+      // Get random projects for navigation (excluding current project)
+      const otherProjects = projects.filter(p => p.slug !== project.slug);
+
+      if (otherProjects.length === 0) return undefined;
+
+      // Shuffle and pick 2 random projects
+      const shuffled = otherProjects.sort(() => Math.random() - 0.5);
+      const prevProject = shuffled[0];
+      const nextProject = shuffled[1] || shuffled[0]; // Fallback to same if only 1 available
+
+      return {
+        prevPost: {
+          title: prevProject.title,
+          href: `/${prevProject.slug}`
+        },
+        nextPost: {
+          title: nextProject.title,
+          href: `/${nextProject.slug}`
+        }
+      };
+    })()
   },
+  faqs: Array.isArray(project.templateFAQs)
+    ? project.templateFAQs.filter(faq => faq?.question && faq?.answer).map(faq => ({
+        question: faq.question,
+        answer: extractTextFromRichText(faq.answer) || faq.answer
+      }))
+    : [],
   storyId: project.slug || ''
 };
+
+// Debug: Log FAQs data from Payload
+console.log('Project templateFAQs from Payload:', project.templateFAQs);
+console.log('Processed FAQs for CaseStudy:', caseStudyData.faqs);
 
 const pageTitle = `${project.title} - Karen Ortiz Portfolio`;
 ---

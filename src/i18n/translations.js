@@ -131,7 +131,7 @@ export const translations = {
       commentFailed: 'Failed to post comment. Please try again.',
       loadingComments: 'Loading comments...',
       noComments: 'No comments yet. Be the first to comment!',
-      enterName: 'Enter your name (optional)',
+      enterName: 'Your name',
       enterComment: 'Please enter a comment',
       posting: 'Posting...',
       delete: 'Delete',
@@ -159,8 +159,8 @@ export const translations = {
       easterEggHint: 'Hm? Somebody said 80s?'
     },
     commentsSection: {
-      title: 'Discussion',
-      subtitle: 'Share your thoughts and join the conversation'
+      title: 'Comments',
+      subtitle: 'Share your thoughts about this project'
     },
     contact: {
       title: 'Get In Touch',
@@ -797,7 +797,7 @@ export const translations = {
       commentFailed: 'Error al publicar comentario. Inténtalo de nuevo.',
       loadingComments: 'Cargando comentarios...',
       noComments: '¡Aún no hay comentarios. Sé la primera persona en comentar!',
-      enterName: 'Ingresa tu nombre (opcional)',
+      enterName: 'Tu nombre',
       enterComment: 'Por favor ingresa un comentario',
       posting: 'Publicando...',
       delete: 'Eliminar',
@@ -825,8 +825,8 @@ export const translations = {
       easterEggHint: '¿Hm? ¿Alguien dijo los 80s?'
     },
     commentsSection: {
-      title: 'Discusión',
-      subtitle: 'Comparte tus pensamientos y únete a la conversación'
+      title: 'Comentarios',
+      subtitle: 'Comparte tus pensamientos sobre este proyecto'
     },
     contact: {
       title: 'Contacto',
@@ -1463,7 +1463,7 @@ export const translations = {
       commentFailed: 'Échec de la publication du commentaire. Veuillez réessayer.',
       loadingComments: 'Chargement des commentaires...',
       noComments: 'Aucun commentaire pour le moment. Soyez le premier à commenter !',
-      enterName: 'Entrez votre nom (optionnel)',
+      enterName: 'Votre nom',
       enterComment: 'Veuillez entrer un commentaire',
       posting: 'Publication...',
       delete: 'Supprimer',
@@ -1491,8 +1491,8 @@ export const translations = {
       easterEggHint: 'Hm ? Quelqu\'un a dit les années 80 ?'
     },
     commentsSection: {
-      title: 'Discussion',
-      subtitle: 'Partagez vos pensées et rejoignez la conversation'
+      title: 'Commentaires',
+      subtitle: 'Partagez vos réflexions sur ce projet'
     },
     contact: {
       title: 'Entrer en Contact',
@@ -2009,7 +2009,7 @@ export const translations = {
       commentFailed: 'टिप्पणी पोस्ट करने में विफल। कृपया पुनः प्रयास करें।',
       loadingComments: 'टिप्पणियाँ लोड हो रही हैं...',
       noComments: 'अभी तक कोई टिप्पणी नहीं। पहले टिप्पणी करने वाले बनें!',
-      enterName: 'अपना नाम दर्ज करें (वैकल्पिक)',
+      enterName: 'आपका नाम',
       enterComment: 'कृपया एक टिप्पणी दर्ज करें',
       posting: 'पोस्ट कर रहे हैं...',
       delete: 'हटाएं',
@@ -2037,8 +2037,8 @@ export const translations = {
       easterEggHint: 'हम्म? किसी ने 80s कहा?'
     },
     commentsSection: {
-      title: 'चर्चा',
-      subtitle: 'अपने विचार साझा करें और बातचीत में शामिल हों'
+      title: 'टिप्पणियाँ',
+      subtitle: 'इस प्रोजेक्ट के बारे में अपने विचार साझा करें'
     },
     contact: {
       title: 'संपर्क में रहें',
@@ -2512,7 +2512,7 @@ export const translations = {
       commentFailed: 'コメントの投稿に失敗しました。もう一度お試しください。',
       loadingComments: 'コメントを読み込んでいます...',
       noComments: 'まだコメントがありません。最初にコメントしてください！',
-      enterName: 'お名前を入力してください（任意）',
+      enterName: 'お名前',
       enterComment: 'コメントを入力してください',
       posting: '投稿中...',
       delete: '削除',
@@ -2540,8 +2540,8 @@ export const translations = {
       easterEggHint: 'ん？誰か80年代って言った？'
     },
     commentsSection: {
-      title: 'ディスカッション',
-      subtitle: 'あなたの考えを共有し、会話に参加してください'
+      title: 'コメント',
+      subtitle: 'このプロジェクトについてのご意見をお聞かせください'
     },
     contact: {
       title: 'お問い合わせ',
@@ -2991,7 +2991,7 @@ export const translations = {
       commentFailed: '评论发表失败。请重试。',
       loadingComments: '正在加载评论...',
       noComments: '暂无评论。成为第一个评论的人！',
-      enterName: '输入您的姓名（可选）',
+      enterName: '您的姓名',
       enterComment: '请输入评论',
       posting: '发表中...',
       delete: '删除',
@@ -3019,8 +3019,8 @@ export const translations = {
       easterEggHint: '嗯？有人说80年代？'
     },
     commentsSection: {
-      title: '讨论',
-      subtitle: '分享您的想法并加入对话'
+      title: '评论',
+      subtitle: '分享您对这个项目的想法'
     },
     contact: {
       title: '联系我们',
@@ -3470,7 +3470,7 @@ export const translations = {
       commentFailed: '留言發表失敗。請重試。',
       loadingComments: '正在載入留言...',
       noComments: '暫無留言。成為第一個留言的人！',
-      enterName: '輸入您的姓名（可選）',
+      enterName: '您的姓名',
       enterComment: '請輸入留言',
       posting: '發表中...',
       delete: '刪除',
@@ -3498,8 +3498,8 @@ export const translations = {
       easterEggHint: '嗯？有人說80年代？'
     },
     commentsSection: {
-      title: '討論',
-      subtitle: '分享您的想法並加入對話'
+      title: '評論',
+      subtitle: '分享您對這個專案的想法'
     },
     contact: {
       title: '聯絡我們',

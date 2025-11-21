@@ -63,6 +63,13 @@ const {
     font-family: var(--font-primary);
   }
 
+  /* Remove side padding on mobile */
+  @media (max-width: 768px) {
+    :global(.comments-section) {
+      padding: 3rem 0;
+    }
+  }
+
   :global(.dark-mode .comments-section) {
     background: #111111;
   }
@@ -433,13 +440,26 @@ const {
     margin-bottom: clamp(40px, 6vw, 80px);
     padding-top: clamp(60px, 8vw, 120px);
     background: transparent;
-    transition: 
+    transition:
       background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   :global(.dark-mode .section-header) {
     background: transparent;
+  }
+
+  /* Center title and subtitle in all viewports */
+  :global(.section-title) {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  :global(.section-subtitle) {
+    text-align: center;
+    width: 100%;
   }
 
   /* ==============================================
@@ -459,6 +479,24 @@ const {
 
   :global(.dark-mode .add-comment-title) {
     color: #ffffff;
+  }
+
+  /* TextDisperseBlack inside add-comment-title */
+  :global(.add-comment-title .relative.flex.cursor-pointer) {
+    justify-content: flex-start !important;
+    color: #1f2937 !important;
+    font-size: var(--text-lg) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.dark-mode .add-comment-title .relative.flex.cursor-pointer) {
+    color: #ffffff !important;
+  }
+
+  :global(.add-comment-title .relative.flex.cursor-pointer span) {
+    color: inherit !important;
+    font-size: inherit !important;
   }
 
   :global(.add-comment-hint) {
@@ -588,6 +626,204 @@ const {
     gap: 0.75rem;
     align-items: end;
     justify-content: flex-end;
+    padding-top: 2rem;
+  }
+
+  /* Comment Submit Button - MainButton Style Replication */
+  :global(.comment-submit-btn) {
+    position: relative;
+    padding: 2px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    background: radial-gradient(circle 80px at 80% -10%, #ffffff, #181b1b);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: clamp(16px, 2.8vw, 22px);
+    overflow: visible;
+    display: inline-block;
+  }
+
+  :global(.comment-submit-btn:disabled) {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  :global(.comment-submit-btn .btn-glow) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 65%;
+    height: 60%;
+    border-radius: 120px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
+    transition: all 0.3s ease-out;
+    z-index: -1;
+  }
+
+  :global(.dark-mode .comment-submit-btn .btn-glow) {
+    box-shadow: 0 0 20px rgba(255, 245, 250, 0.22);
+  }
+
+  :global(.comment-submit-btn .btn-blob) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50%;
+    border-radius: 17px;
+    background: radial-gradient(circle 60px at 0% 100%, #3fff75, rgba(0, 255, 128, 0.31), transparent);
+    box-shadow: -2px 9px 40px rgba(0, 255, 45, 0.25);
+    transition: all 0.3s ease-out;
+    z-index: 1;
+  }
+
+  :global(.dark-mode .comment-submit-btn .btn-blob) {
+    background: radial-gradient(circle 60px at 0% 100%, #ff75c3, rgba(255, 128, 192, 0.31), transparent);
+    box-shadow: -2px 9px 40px rgba(255, 45, 150, 0.25);
+  }
+
+  :global(.comment-submit-btn .btn-content) {
+    position: relative;
+    padding: clamp(12px, 2.2vw, 16px) clamp(20px, 4vw, 28px);
+    border-radius: 14px;
+    color: white;
+    background: radial-gradient(circle 80px at 80% -50%, #777777, #0f1111);
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  :global(.comment-submit-btn .btn-text) {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 2;
+  }
+
+  :global(.comment-submit-btn .btn-inner-glow) {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: radial-gradient(circle 60px at 0% 100%, rgba(0, 225, 255, 0.1), rgba(0, 0, 255, 0.067), transparent);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  :global(.dark-mode .comment-submit-btn .btn-inner-glow) {
+    background: radial-gradient(circle 60px at 0% 100%, rgba(255, 150, 225, 0.1), rgba(255, 100, 200, 0.067), transparent);
+  }
+
+  /* Hover Effects */
+  :global(.comment-submit-btn:hover .btn-glow) {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.38);
+  }
+
+  :global(.dark-mode .comment-submit-btn:hover .btn-glow) {
+    box-shadow: 0 0 40px rgba(255, 240, 245, 0.38);
+  }
+
+  :global(.comment-submit-btn:hover .btn-blob) {
+    width: 90px;
+    box-shadow: -4px 1px 45px rgba(0, 255, 45, 0.38);
+  }
+
+  :global(.dark-mode .comment-submit-btn:hover .btn-blob) {
+    box-shadow: -4px 1px 45px rgba(255, 45, 150, 0.38);
+  }
+
+  :global(.comment-submit-btn:hover .btn-content) {
+    transform: scale(1.09);
+  }
+
+  :global(.comment-submit-btn:hover .btn-inner-glow) {
+    opacity: 1.5;
+    background: radial-gradient(circle 80px at 0% 100%, rgba(0, 225, 255, 0.15), rgba(0, 0, 255, 0.1), transparent);
+  }
+
+  :global(.dark-mode .comment-submit-btn:hover .btn-inner-glow) {
+    background: radial-gradient(circle 80px at 0% 100%, rgba(255, 150, 225, 0.15), rgba(255, 100, 200, 0.1), transparent);
+  }
+
+  :global(.comment-submit-btn:hover .btn-text) {
+    text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Active state */
+  :global(.comment-submit-btn:active) {
+    transform: scale(0.98);
+    transition: all 0.1s ease-out;
+  }
+
+  :global(.comment-submit-btn:active .btn-content) {
+    transform: scale(1.08);
+  }
+
+  /* Focus state for accessibility */
+  :global(.comment-submit-btn:focus-visible) {
+    outline: 2px solid rgba(63, 255, 117, 0.5);
+    outline-offset: 4px;
+  }
+
+  :global(.dark-mode .comment-submit-btn:focus-visible) {
+    outline: 2px solid rgba(255, 117, 200, 0.5);
+  }
+
+  /* Enhanced glow effects */
+  :global(.comment-submit-btn::before) {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: linear-gradient(45deg,
+      rgba(255, 255, 255, 0.1),
+      transparent,
+      rgba(63, 255, 117, 0.1));
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  :global(.dark-mode .comment-submit-btn::before) {
+    background: linear-gradient(45deg,
+      rgba(255, 245, 250, 0.1),
+      transparent,
+      rgba(255, 117, 200, 0.1));
+  }
+
+  :global(.comment-submit-btn:hover::before) {
+    opacity: 1;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    :global(.comment-submit-buttons) {
+      width: 100%;
+    }
+
+    :global(.comment-submit-btn) {
+      font-size: clamp(14px, 3.5vw, 18px);
+      width: 100%;
+    }
+
+    :global(.comment-submit-btn .btn-content) {
+      padding: clamp(10px, 2.5vw, 14px) clamp(16px, 4.5vw, 22px);
+      width: 100%;
+    }
+
+    :global(.comment-submit-btn .btn-blob) {
+      width: 40px;
+    }
+
+    :global(.comment-submit-btn:hover .btn-blob) {
+      width: 70px;
+    }
   }
 
   /* ==============================================
@@ -1298,8 +1534,9 @@ const {
   /* Mobile Responsive Adjustments */
   @media (max-width: 768px) {
     :global(.reddit-comments-container) {
-      padding: 30px 20px;
-      border-radius: 25px;
+      padding: 30px 16px;
+      border-radius: 20px;
+      margin: 0 16px;
     }
 
     :global(.add-comment-title) {
@@ -1439,7 +1676,7 @@ const {
      Following Dark Mode Standards from DarkMode.md
      ============================================== */
 
-  /* Fix hardcoded inline styles for TextDisperseBlack */
+  /* Fix hardcoded inline styles for TextDisperseBlack - Centered in all viewports */
   :global(.comments-section .relative.flex.cursor-pointer) {
     justify-content: center !important;
     color: #1f2937 !important;
@@ -1450,6 +1687,7 @@ const {
     line-height: var(--leading-tight) !important;
     letter-spacing: var(--tracking-tight) !important;
     transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    margin: 0 auto !important;
   }
 
   :global(.dark-mode .comments-section .relative.flex.cursor-pointer) {

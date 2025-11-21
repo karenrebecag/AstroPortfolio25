@@ -1,8 +1,10 @@
 ---
-import styles from './ProcessWorkflowWrapper.module.css';
-import { ProcessWorkflow } from './ProcessWorkflow.tsx';
-import type { WorkflowStep } from './ProcessWorkflow.tsx';
-import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+import ProcessWorkflowStatic from './ProcessWorkflowStatic.astro';
+
+export interface WorkflowStep {
+    step: number;
+    description: string;
+}
 
 export interface Props {
     title: string;
@@ -12,12 +14,4 @@ export interface Props {
 
 const { title, subtitle, steps } = Astro.props;
 ---
-<AnimatedComponent client:visible>
-    <div class={styles.wrapper}>
-        <div class={styles.titleSection}>
-            <h2 class={styles.title}>{title}</h2>
-            <p class={styles.subtitle}>{subtitle}</p>
-        </div>
-        <ProcessWorkflow steps={steps} client:visible />
-    </div>
-</AnimatedComponent>
+<ProcessWorkflowStatic title={title} subtitle={subtitle} steps={steps} />

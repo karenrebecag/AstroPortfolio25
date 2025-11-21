@@ -1,10 +1,12 @@
 ---
 import styles from './StickyTechStack.module.css';
 import AnimatedComponent from '@/components/ui/AnimatedComponent.tsx';
+import RichText from '@/components/ui/RichText.astro';
+import { TextDisperseBlack } from '@/components/ui/TextDisperseBlack.tsx';
 
 export interface Tech {
   heading: string;
-  description: string;
+  description: string | any;
 }
 
 export interface Props {
@@ -12,18 +14,37 @@ export interface Props {
 }
 
 const { techStack } = Astro.props;
+
+// Helper to check if content is rich text
+const isRichText = (content: any) => content && typeof content === 'object' && !Array.isArray(content);
 ---
 <AnimatedComponent client:visible>
     <section class={`${styles.section} playfair-display-1`}>
         <div class={styles.container}>
             <div class={styles.leftColumn}>
-                <h2 class={styles.stickyTitle}>Tech Stack</h2>
+                <h2 class={styles.stickyTitle}>
+                    <TextDisperseBlack text="Tech Stack" client:visible />
+                </h2>
             </div>
             <div class={styles.rightColumn}>
-                {techStack.map((tech) => (
+                <h2 class={styles.mobileTitle}>
+                    <TextDisperseBlack text="Tech Stack" client:visible />
+                </h2>
+                {techStack.map((tech, index) => (
                     <div class={styles.techItem}>
-                        <h3 class={styles.techHeading}>{tech.heading}</h3>
-                        <p class={styles.techDescription}>{tech.description}</p>
+                        <span class={styles.techNumber}>
+                            {index + 1}
+                        </span>
+                        <div class={styles.techContent}>
+                            <h3 class={styles.techHeading}>{tech.heading}</h3>
+                            <div class={styles.techDescription}>
+                                {isRichText(tech.description) ? (
+                                    <RichText content={tech.description} />
+                                ) : (
+                                    <p>{tech.description}</p>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
