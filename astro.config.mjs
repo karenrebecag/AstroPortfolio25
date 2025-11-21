@@ -69,7 +69,7 @@ sitemap({
     },
     ssr: {
       // Optimize SSR performance
-      noExternal: ['motion']
+      noExternal: ['motion', '@splidejs/react-splide', '@splidejs/splide']
     }
   },
   i18n: {
