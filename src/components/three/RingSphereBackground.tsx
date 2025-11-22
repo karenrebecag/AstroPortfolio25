@@ -173,10 +173,10 @@ export const RingSphereBackground: React.FC<{ className?: string }> = ({ classNa
   // Motion.dev scroll velocity setup
   const { scrollYProgress } = useScroll();
   
-  // Transform scroll progress to rotation values (more evident, rotating right)
-  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.25]); // 45 degrees max
-  const rotationY = useTransform(scrollYProgress, [0, 1], [0, -Math.PI * 0.5]); // 90 degrees max (right rotation)  
-  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.15]); // 27 degrees max
+  // Transform scroll progress to rotation values (ACENTUADO en eje transversal/horizontal - Y axis)
+  const rotationX = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.1]); // 18 degrees max (muy sutil)
+  const rotationY = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 3]); // 540 degrees max (1.5 vueltas completas en eje transversal!)
+  const rotationZ = useTransform(scrollYProgress, [0, 1], [0, Math.PI * 0.05]); // 9 degrees max (muy sutil)
 
   // Intersection Observer - optimizado con acciones memoizadas
   useEffect(() => {

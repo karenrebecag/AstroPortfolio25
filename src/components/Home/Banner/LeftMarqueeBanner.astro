@@ -177,7 +177,12 @@ const { lang = 'en' } = Astro.props;
 </style>
 
 <script>
-  // JavaScript para animación infinita fluida del marquee izquierdo
+  import { gsap } from 'gsap';
+  import { Observer } from 'gsap/Observer';
+
+  gsap.registerPlugin(Observer);
+
+  // Animación infinita fluida del marquee izquierdo con aceleración en scroll usando GSAP
   function initLeftMarquee() {
     const leftMarquee = document.getElementById('left-marquee');
     if (!leftMarquee) return;
@@ -185,34 +190,44 @@ const { lang = 'en' } = Astro.props;
     const leftContent = leftMarquee.querySelectorAll('.marquee-content');
     if (leftContent.length === 0) return;
 
-    // Calcular ancho explícito para Safari
+    // Configurar animación infinita con GSAP
+    const tl = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: 'none' }
+    });
+
+    // Calcular ancho total del contenido
     const firstElement = leftContent[0] as HTMLElement;
     const contentWidth = firstElement.getBoundingClientRect().width;
 
-    let leftPosition = 0;
-    const speed = 1; // Velocidad en píxeles por frame
+    // Animar de 0 a -contentWidth (movimiento hacia la IZQUIERDA)
+    tl.to(leftMarquee, {
+      x: -contentWidth,
+      duration: contentWidth / 60, // 60px por segundo = velocidad base
+      ease: 'none'
+    });
 
-    function animateLeftMarquee() {
-      leftPosition -= speed;
+    // Observer para aceleración en scroll
+    Observer.create({
+      onChangeY(self) {
+        let factor = 1.5; // Factor de aceleración
 
-      // Resetear posición cuando el primer elemento sale completamente
-      if (Math.abs(leftPosition) >= contentWidth) {
-        leftPosition = 0;
+        if (self.deltaY < 0) {
+          // Scroll hacia arriba: reducir velocidad
+          factor *= -0.5;
+        }
+
+        // Aplicar aceleración temporal con GSAP
+        gsap.timeline({
+          defaults: { ease: 'none' }
+        })
+          .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
+          .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
       }
-
-      // Usar translate3d para webkit optimization
-      (leftMarquee as HTMLElement).style.transform = `translate3d(${leftPosition}px, 0, 0)`;
-
-      requestAnimationFrame(animateLeftMarquee);
-    }
-
-    // Doble RAF para Safari
-    requestAnimationFrame(() => {
-      requestAnimationFrame(animateLeftMarquee);
     });
   }
 
-  // Iniciar animación cuando el DOM esté listo
+  // Iniciar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLeftMarquee);
   } else {

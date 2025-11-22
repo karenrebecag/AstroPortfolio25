@@ -70,17 +70,16 @@ const softSkillsData = t.aboutMe.skills;
 </section>
 
 <script>
-  import { scroll } from 'motion';
+  import { gsap } from 'gsap';
+  import { Observer } from 'gsap/Observer';
   import { observeDarkMode } from '../../../utils/darkMode';
 
-  // Performance optimization: track scroll animation state
-  let scrollCleanup: (() => void) | null = null;
-  let isScrollActive = false;
+  gsap.registerPlugin(Observer);
 
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', () => {
     const gemSection = document.querySelector('[data-gem-section]');
-    const skillsScroll = document.querySelector('[data-skills-scroll]');
+    const skillsScroll = document.querySelector('[data-skills-scroll]') as HTMLElement;
     const titleElement = document.querySelector('[data-title="about-me"]');
 
     // Apply dark mode styles - only for title and card backgrounds
@@ -119,57 +118,48 @@ const softSkillsData = t.aboutMe.skills;
     // Observe dark mode changes using centralized utility
     const cleanupDarkMode = observeDarkMode(applyDarkMode);
 
-    // Performance optimization: Intersection Observer for scroll animation
-    // Only activate scroll animation when section is near viewport
+    // GSAP Infinite Marquee Animation with Scroll Acceleration
     if (gemSection && skillsScroll) {
-      const scrollObserver = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !isScrollActive) {
-            // Activate scroll animation when visible
-            const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
+      // Calcular ancho total del scroll
+      const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
 
-            if (scrollWidth > 0) {
-              scrollCleanup = scroll(
-                (progress: number) => {
-                  skillsScroll.scrollLeft = progress * scrollWidth;
-                },
-                {
-                  target: gemSection,
-                  offset: ["start center", "end center"]
-                }
-              );
-              isScrollActive = true;
+      if (scrollWidth > 0) {
+        // Configurar animación infinita con GSAP (scroll horizontal automático - MÁS LENTO)
+        const tl = gsap.timeline({
+          repeat: -1,
+          defaults: { ease: 'none' }
+        });
+
+        // Animar scrollLeft de 0 al máximo - VELOCIDAD REDUCIDA a 30px/s
+        tl.to(skillsScroll, {
+          scrollLeft: scrollWidth,
+          duration: scrollWidth / 30, // 30px por segundo = velocidad más lenta
+          ease: 'none'
+        });
+
+        // Observer para aceleración en scroll de página
+        Observer.create({
+          onChangeY(self) {
+            let factor = 1.5; // Factor de aceleración
+
+            if (self.deltaY < 0) {
+              // Scroll hacia arriba: reducir velocidad
+              factor *= -0.5;
             }
-          } else if (!entry.isIntersecting && isScrollActive) {
-            // Deactivate scroll animation when not visible
-            if (scrollCleanup) {
-              scrollCleanup();
-              scrollCleanup = null;
-            }
-            isScrollActive = false;
+
+            // Aplicar aceleración temporal con GSAP
+            gsap.timeline({
+              defaults: { ease: 'none' }
+            })
+              .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
+              .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
           }
-        },
-        {
-          rootMargin: '200px', // Start before fully visible
-          threshold: 0
-        }
-      );
-
-      scrollObserver.observe(gemSection);
-
-      // Cleanup function for scroll observer
-      const cleanupScrollObserver = () => {
-        scrollObserver.disconnect();
-        if (scrollCleanup) {
-          scrollCleanup();
-          scrollCleanup = null;
-        }
-      };
+        });
+      }
 
       // Combined cleanup
       window.addEventListener('beforeunload', () => {
         cleanupDarkMode();
-        cleanupScrollObserver();
       });
     } else {
       // Fallback cleanup if elements not found

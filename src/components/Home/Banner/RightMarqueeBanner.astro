@@ -157,7 +157,12 @@ const { lang = 'en' } = Astro.props;
 </style>
 
 <script>
-  // JavaScript para animación infinita fluida del marquee derecho (movimiento hacia la derecha ====>)
+  import { gsap } from 'gsap';
+  import { Observer } from 'gsap/Observer';
+
+  gsap.registerPlugin(Observer);
+
+  // Animación infinita fluida del marquee derecho con aceleración en scroll usando GSAP (movimiento hacia la DERECHA ====>)
   function initRightMarquee() {
     const rightMarquee = document.getElementById('right-marquee');
     if (!rightMarquee) return;
@@ -165,35 +170,44 @@ const { lang = 'en' } = Astro.props;
     const rightContent = rightMarquee.querySelectorAll('.marquee-content');
     if (rightContent.length === 0) return;
 
-    // Calcular ancho explícito para Safari
+    // Configurar animación infinita con GSAP
+    const tl = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: 'none' }
+    });
+
+    // Calcular ancho total del contenido
     const firstElement = rightContent[0] as HTMLElement;
     const contentWidth = firstElement.getBoundingClientRect().width;
 
-    // Iniciar desde 0 (visible en el viewport) y moverse hacia la derecha
-    let rightPosition = 0;
-    const speed = 1; // Velocidad en píxeles por frame (positiva para movimiento hacia la derecha)
+    // Animar de 0 a +contentWidth (movimiento hacia la DERECHA)
+    tl.to(rightMarquee, {
+      x: contentWidth,
+      duration: contentWidth / 60, // 60px por segundo = velocidad base
+      ease: 'none'
+    });
 
-    function animateRightMarquee() {
-      rightPosition += speed; // Movimiento hacia la derecha (positivo)
+    // Observer para aceleración en scroll
+    Observer.create({
+      onChangeY(self) {
+        let factor = 1.5; // Factor de aceleración
 
-      // Resetear posición cuando todo el contenido sale por la derecha
-      if (rightPosition >= contentWidth) {
-        rightPosition = 0;
+        if (self.deltaY < 0) {
+          // Scroll hacia arriba: reducir velocidad
+          factor *= -0.5;
+        }
+
+        // Aplicar aceleración temporal con GSAP
+        gsap.timeline({
+          defaults: { ease: 'none' }
+        })
+          .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
+          .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
       }
-
-      // Usar translate3d para webkit optimization
-      (rightMarquee as HTMLElement).style.transform = `translate3d(${rightPosition}px, 0, 0)`;
-
-      requestAnimationFrame(animateRightMarquee);
-    }
-
-    // Doble RAF para Safari
-    requestAnimationFrame(() => {
-      requestAnimationFrame(animateRightMarquee);
     });
   }
 
-  // Iniciar animación cuando el DOM esté listo
+  // Iniciar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initRightMarquee);
   } else {
