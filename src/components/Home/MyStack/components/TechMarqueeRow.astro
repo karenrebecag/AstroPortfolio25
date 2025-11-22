@@ -1,0 +1,87 @@
+---
+// TechMarqueeRow.astro - Single marquee row with GSAP animation
+import styles from '../TechMarquees.module.css';
+
+interface Props {
+  text: string;
+  direction: 'left' | 'right';
+  speed?: number;
+  index: number;
+}
+
+const { text, direction, speed = 60, index } = Astro.props;
+const marqueeId = `tech-marquee-${index}`;
+---
+
+<div class={styles.techMarqueeWrapper}>
+  <div
+    id={marqueeId}
+    class={`${styles.marqueeText} font-game`}
+    data-direction={direction}
+    data-speed={speed}
+  >
+    <span class="marquee-content">{text.repeat(6)}</span>
+  </div>
+</div>
+
+<script define:vars={{ marqueeId, direction, speed }}>
+  import { gsap } from 'gsap';
+  import { Observer } from 'gsap/Observer';
+
+  gsap.registerPlugin(Observer);
+
+  // Animación infinita fluida del marquee con aceleración en scroll usando GSAP
+  function initTechMarquee() {
+    const marquee = document.getElementById(marqueeId);
+    if (!marquee) return;
+
+    const content = marquee.querySelector('.marquee-content');
+    if (!content) return;
+
+    // Configurar animación infinita con GSAP
+    const tl = gsap.timeline({
+      repeat: -1,
+      defaults: { ease: 'none' }
+    });
+
+    // Calcular ancho total del contenido
+    const contentWidth = (content as HTMLElement).getBoundingClientRect().width / 6;
+
+    // Determinar dirección de animación
+    const isLeftDirection = direction === 'left';
+    const targetX = isLeftDirection ? -contentWidth : contentWidth;
+
+    // Animar
+    tl.to(marquee, {
+      x: targetX,
+      duration: contentWidth / speed,
+      ease: 'none'
+    });
+
+    // Observer para aceleración en scroll
+    Observer.create({
+      onChangeY(self) {
+        let factor = 1.5; // Factor de aceleración
+
+        if (self.deltaY < 0) {
+          // Scroll hacia arriba: reducir velocidad
+          factor *= -0.5;
+        }
+
+        // Aplicar aceleración temporal con GSAP
+        gsap.timeline({
+          defaults: { ease: 'none' }
+        })
+          .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
+          .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
+      }
+    });
+  }
+
+  // Iniciar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTechMarquee);
+  } else {
+    initTechMarquee();
+  }
+</script>

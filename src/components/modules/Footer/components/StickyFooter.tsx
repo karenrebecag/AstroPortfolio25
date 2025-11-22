@@ -14,7 +14,7 @@ import { useSimpleToast } from '../../Toasts';
 import { SpaceInvadersIsland } from '../game/SpaceInvadersIsland';
 import { translations } from '../../../../i18n/translations.js';
 import { getLangFromUrl } from '../../../../i18n/utils.js';
-import { TechHighlightShowcase } from './TechHighlightShowcase';
+import { TechHighlightShowcaseGSAP } from './TechHighlightShowcaseGSAP';
 
 interface FooterLink {
     title: string;
@@ -286,7 +286,7 @@ export function StickyFooter({ className, lang = 'en', ...props }: StickyFooterP
 
                             <div className="w-full relative z-10">
                                 <AnimatedContainer delay={0.25} className="w-full">
-                                    <TechHighlightShowcase variant="dark" lang={lang} />
+                                    <TechHighlightShowcaseGSAP variant="dark" lang={lang} />
                                 </AnimatedContainer>
                             </div>
                             

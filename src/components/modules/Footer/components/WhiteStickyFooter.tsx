@@ -14,7 +14,7 @@ import { useSimpleToast } from '../../Toasts';
 import { SpaceInvadersIsland } from '../game/SpaceInvadersIsland';
 import { translations } from '../../../../i18n/translations.js';
 import { getLangFromUrl } from '../../../../i18n/utils.js';
-import { TechHighlightShowcase } from './TechHighlightShowcase';
+import { TechHighlightShowcaseGSAP } from './TechHighlightShowcaseGSAP';
 
 interface FooterLink {
     title: string;
@@ -304,7 +304,7 @@ export function WhiteStickyFooter({ className, lang = 'en', ...props }: WhiteSti
                             </motion.div>
 
                             <AnimatedContainer delay={0.35} className="w-full">
-                                <TechHighlightShowcase variant="light" lang={lang} />
+                                <TechHighlightShowcaseGSAP variant="light" lang={lang} />
                             </AnimatedContainer>
                             
                             {/* Nav Links pequeños debajo de KAREN ORTIZ */}
