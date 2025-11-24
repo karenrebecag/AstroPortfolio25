@@ -4,7 +4,7 @@
 export const backgroundPatternConfig = {
   // Default opacities for general use (WhiteBackground, etc.)
   default: {
-    light: 0.04,
+    light: 0.05,
     dark: 0.02,
   },
 
