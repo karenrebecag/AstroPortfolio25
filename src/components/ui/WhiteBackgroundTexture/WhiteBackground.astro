@@ -1,5 +1,6 @@
 ---
 import { BGPattern } from './bg-pattern.tsx';
+import { backgroundPatternConfig, getBackgroundFill } from '../../../config/backgroundPatterns';
 
 interface Props {
   lightOpacity?: number;
@@ -7,12 +8,12 @@ interface Props {
 }
 
 const {
-  lightOpacity = 0,
-  darkOpacity = 0.18
+  lightOpacity = backgroundPatternConfig.default.light,
+  darkOpacity = backgroundPatternConfig.default.dark
 } = Astro.props;
 
-const lightFill = `rgba(0, 0, 0, ${lightOpacity})`;
-const darkFill = `rgba(157, 127, 193, ${darkOpacity})`;
+const lightFill = getBackgroundFill.light(lightOpacity);
+const darkFill = getBackgroundFill.dark(darkOpacity);
 ---
 
 <div class="white-background-wrapper">

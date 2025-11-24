@@ -3,8 +3,6 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { motion } from 'motion/react';
 import { experienceData, type ExperienceItem } from '../../../../data/experienceData';
 import '@splidejs/splide/css/core';
-import { Button } from '../../../ui/Button.tsx';
-import { t } from '../../../../i18n/utils.js';
 
 interface ExperienceSliderProps {
   experienceData?: ExperienceItem[];
@@ -13,7 +11,6 @@ interface ExperienceSliderProps {
 
 const ExperienceSlider: React.FC<ExperienceSliderProps> = ({
   experienceData: propsExperienceData,
-  lang
 }) => {
   // Use props data or fallback to imported data
   const data = propsExperienceData || experienceData;
@@ -103,11 +100,7 @@ const ExperienceSlider: React.FC<ExperienceSliderProps> = ({
                   {experience.highlight}
                 </p>
               </div>
-
-              {/* Read More Button */}
-                            <Button variant="readmore" href="/resume#experience">
-                              {t('me.readMore', lang)}
-                            </Button>            </motion.div>
+            </motion.div>
           </SplideSlide>
         ))}
       </Splide>

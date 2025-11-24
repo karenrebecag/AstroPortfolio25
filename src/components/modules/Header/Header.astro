@@ -8,6 +8,7 @@ import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
 import { BGPattern } from '../../ui/WhiteBackgroundTexture/bg-pattern.tsx';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
 import { getProjects } from '../../../lib/cms';
+import { getHeaderBackgroundFill } from '../../../config/backgroundPatterns';
 import styles from './Header.module.css';
 
 // Accept lang from props, fallback to URL detection
@@ -28,7 +29,7 @@ const hasProjects = projects.length > 0;
       variant="vertical-lines"
       mask="none"
       size={32}
-      fill="rgba(0, 0, 0, 0.02)"
+      fill={getHeaderBackgroundFill.light()}
     />
   </div>
   <div class={`${styles['bg-container']} ${styles['dark-pattern']}`}>
@@ -37,7 +38,7 @@ const hasProjects = projects.length > 0;
       variant="vertical-lines"
       mask="none"
       size={32}
-      fill="rgba(157, 127, 193, 0.05)"
+      fill={getHeaderBackgroundFill.dark()}
     />
   </div>
   <header class={styles['header']} id="mainHeader">

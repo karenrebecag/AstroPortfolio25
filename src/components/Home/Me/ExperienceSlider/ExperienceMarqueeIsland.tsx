@@ -9,15 +9,6 @@ interface ExperienceMarqueeIslandProps {
 
 // Experience Card Component - Pure JSX (no innerHTML)
 const ExperienceCard: React.FC<{ experience: ExperienceItem, lang: string }> = ({ experience, lang }) => {
-  const handleReadMore = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (experience.resumeAnchor) {
-      window.location.href = `/resume${experience.resumeAnchor}`;
-    }
-  };
-
   return (
     <div className="experience-card-marquee">
       <div className="experience-header">
@@ -36,27 +27,6 @@ const ExperienceCard: React.FC<{ experience: ExperienceItem, lang: string }> = (
       <div className="experience-description">
         <span className="description-normal">{experience.description}</span>
         <span className="description-highlight">{experience.highlight}</span>
-      </div>
-      <div className="experience-actions">
-        <button
-          className="read-more-btn"
-          onClick={handleReadMore}
-        >
-          <span className="btn-text">{t('me.readMore', lang)}</span>
-          <svg
-            className="btn-icon"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M7 17L17 7M17 7H7M17 7V17"/>
-          </svg>
-        </button>
       </div>
     </div>
   );

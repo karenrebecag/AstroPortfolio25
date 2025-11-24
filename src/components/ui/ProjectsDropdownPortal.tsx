@@ -86,20 +86,28 @@ const ProjectsDropdownPortal: React.FC<ProjectsDropdownPortalProps> = ({
       }
     };
 
+    let lastScrollY = window.scrollY;
     const handleScroll = () => {
       if (isOpen) {
-        closeDropdown();
+        const currentScrollY = window.scrollY;
+        const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+
+        // Only close if scroll is significant (more than 50px)
+        if (scrollDifference > 50) {
+          closeDropdown();
+        }
+        lastScrollY = currentScrollY;
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscape);
-    document.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isOpen]);
 
