@@ -238,19 +238,34 @@ const {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.glass-button-wrap');
-    
-    buttons.forEach(button => {
-      button.addEventListener('mouseenter', function(e) {
+
+    buttons.forEach(buttonWrap => {
+      const button = buttonWrap.querySelector('.glass-button');
+
+      // Mouse hover effect
+      buttonWrap.addEventListener('mouseenter', function(e) {
         const mouseEvent = e as MouseEvent;
-        const rect = button.getBoundingClientRect();
+        const rect = buttonWrap.getBoundingClientRect();
         const x = mouseEvent.clientX - rect.left;
         const y = mouseEvent.clientY - rect.top;
-        
-        (button as HTMLElement).style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+
+        (buttonWrap as HTMLElement).style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
       });
-      
-      button.addEventListener('mouseleave', function() {
-        (button as HTMLElement).style.transform = 'translate(0px, 0px)';
+
+      buttonWrap.addEventListener('mouseleave', function() {
+        (buttonWrap as HTMLElement).style.transform = 'translate(0px, 0px)';
+      });
+
+      // Scroll to projects section on click
+      button?.addEventListener('click', function(e) {
+        e.preventDefault();
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection) {
+          projectsSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       });
     });
   });

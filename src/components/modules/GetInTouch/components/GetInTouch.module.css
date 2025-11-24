@@ -793,6 +793,11 @@
       width: 100%;
     }
 
+    /* Reducir título 30% en mobile - aplicar a TextDisperse */
+    :global(.contact-title-text) {
+      font-size: clamp(56px, 10.5vw, 140px) !important;
+    }
+
     :global(.contact-title span) {
       font-size: clamp(40px, 12vw, 60px);
       line-height: 1.1;

@@ -12,7 +12,7 @@ const { lang = 'en' } = Astro.props;
     <div
       id="left-marquee"
       class="whitespace-nowrap font-display font-bold select-none text-right"
-      style="font-size: clamp(163px, 32.6vw, 326px); background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); height: clamp(163px, 32.6vw, 326px); line-height: 1; will-change: transform; contain: layout style paint;"
+      style="background: linear-gradient(90deg, #b190ff, #7449ff); background-clip: text; -webkit-background-clip: text; color: transparent; width: max-content; text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3); line-height: 1; will-change: transform; contain: layout style paint;"
     >
       <span class="marquee-content">
         {t('banner.leftMarquee', lang)}
@@ -37,6 +37,25 @@ const { lang = 'en' } = Astro.props;
 </div>
 
 <style>
+  /* Base font-size and height for all viewports */
+  #left-marquee {
+    font-size: clamp(163px, 32.6vw, 326px);
+    height: clamp(163px, 32.6vw, 326px);
+  }
+
+  /* Mobile viewport adjustments - 30% larger font-size and more spacing */
+  @media (max-width: 767px) {
+    #left-marquee {
+      font-size: clamp(212px, 42.4vw, 424px); /* 30% increase from base clamp */
+      height: clamp(212px, 42.4vw, 424px);
+      letter-spacing: 0.05em; /* More separation between letters */
+    }
+
+    .marquee-content {
+      padding: 0 2rem; /* More spacing between repeated content */
+    }
+  }
+
   /* Dark mode styles - Intense neon illumination stroke text */
   :global(.dark-mode) #left-marquee {
     background: none !important;

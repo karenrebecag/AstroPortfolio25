@@ -189,6 +189,20 @@
     }
   }
 
+  @media (max-width: 767px) {
+    :global(.storytelling-scroll-container) {
+      display: none !important;
+    }
+
+    :global(.globe-section) {
+      display: none !important;
+    }
+
+    :global(.experience-container) {
+      display: none !important;
+    }
+  }
+
   @media (max-width: 768px) {
     :global(.storytelling-scroll-container) {
       padding-top: 10rem; /* reduced from 20rem */

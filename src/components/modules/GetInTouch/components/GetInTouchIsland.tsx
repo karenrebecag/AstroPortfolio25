@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, Heart, DollarSign, MessageSquare, Paperclip, Send, Loader2, User, Globe, X, FileText } from 'lucide-react';
 import FlipText from '../../../ui/FlipText.tsx';
@@ -16,6 +16,20 @@ interface GetInTouchIslandProps {
 }
 
 const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = 'en' }) => {
+  // Hook para detectar el ancho de la ventana
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Zustand store hooks optimizados - acceso directo
   const formData = useContactFormStore((state) => state.formData);
   const { focusedField, isHovered, isSubmitting } = useContactFormStore((state) => state.uiState);
@@ -27,7 +41,7 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
   const setFocusedField = useContactFormStore((state) => state.setFocusedField);
   const setIsHovered = useContactFormStore((state) => state.setIsHovered);
   const setIsSubmitting = useContactFormStore((state) => state.setIsSubmitting);
-  
+
   // Hook de toasts
   const { showSuccess, showError, ToastContainer } = useToast();
 
@@ -129,26 +143,26 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
     <div className="contact-form">
       <TypeSound />
       {/* Header Section */}
-      <motion.div 
+      <motion.div
         className="contact-header"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
 
-        <motion.div 
+        <motion.div
           className="contact-title"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.3, delay: 0.05 }}
         >
-          <TextDisperse 
+          <TextDisperse
             text={contactT.title}
-            className="text-white font-display"
+            className="text-white font-display contact-title-text"
             style={{
-              fontSize: 'clamp(80px, 15vw, 200px)',
+              fontSize: isMobile ? 'clamp(56px, 10.5vw, 140px)' : 'clamp(80px, 15vw, 200px)',
               fontFamily: 'var(--font-display)',
               fontWeight: 400,
               lineHeight: '0.8',
@@ -159,12 +173,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
           />
         </motion.div>
         
-        <motion.p 
+        <motion.p
           className="contact-description"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           style={{
             color: 'rgba(255, 255, 255, 0.7)',
             fontFamily: 'var(--font-primary)',
@@ -182,21 +196,21 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
       </motion.div>
 
       {/* Form Section */}
-      <motion.form 
-        onSubmit={handleSubmit} 
+      <motion.form
+        onSubmit={handleSubmit}
         className="contact-form-container"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, delay: 0.3 }}
+        transition={{ duration: 0.3, delay: 0.15 }}
       >
         {/* Name and Email Row */}
-        <motion.div 
+        <motion.div
           className="form-row"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.25, delay: 0.05 }}
         >
           <div className="form-field">
             <label className="field-label">
@@ -237,12 +251,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
         </motion.div>
 
         {/* Phone and Country Row */}
-        <motion.div 
+        <motion.div
           className="form-row"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.25, delay: 0.08 }}
         >
           <div className="form-field">
             <label className="field-label">
@@ -283,12 +297,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
         </motion.div>
 
         {/* Interests Section */}
-        <motion.div 
+        <motion.div
           className="interests-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.25, delay: 0.1 }}
         >
           <label className="field-label">
             <Heart size={18} className="inline-block" />
@@ -304,7 +318,7 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.4, delay: 0.7 + (index * 0.1) }}
+                transition={{ duration: 0.2, delay: 0.15 + (index * 0.03) }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -315,12 +329,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
         </motion.div>
 
         {/* Budget Section */}
-        <motion.div 
+        <motion.div
           className="budget-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.25, delay: 0.12 }}
         >
           <label className="field-label">
             <DollarSign size={18} className="inline-block" />
@@ -336,7 +350,7 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.4, delay: 0.9 + (index * 0.1) }}
+                transition={{ duration: 0.2, delay: 0.17 + (index * 0.03) }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -347,12 +361,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
         </motion.div>
 
         {/* Message Section */}
-        <motion.div 
+        <motion.div
           className="message-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 1.0 }}
+          transition={{ duration: 0.25, delay: 0.14 }}
         >
           <label className="field-label">
             <MessageSquare size={18} className="inline-block" />
@@ -452,12 +466,12 @@ const GetInTouchIsland: React.FC<GetInTouchIslandProps> = React.memo(({ lang = '
       </motion.form>
 
       {/* Email Badge */}
-      <motion.div 
+      <motion.div
         className="email-badge"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
       >
         <Mail size={16} />
         <span>{contactT.emailBadge}</span>

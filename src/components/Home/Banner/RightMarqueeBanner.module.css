@@ -132,6 +132,14 @@
   
 
 
+  /* Mobile viewport adjustments - 30% larger wrapper height */
+  @media (max-width: 767px) {
+    .right-marquee-wrapper {
+      height: clamp(212px, 42.4vw, 424px); /* 30% increase from base clamp */
+      min-height: 212px;
+    }
+  }
+
   /* Gradientes laterales para pantallas grandes */
   @media (min-width: 2560px) {
     .right-marquee-wrapper::before,

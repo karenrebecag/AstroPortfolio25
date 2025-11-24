@@ -643,6 +643,6 @@
     }
 
     .menu-btn {
-      display: flex;
+      display: none;
     }
   }

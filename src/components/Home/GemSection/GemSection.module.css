@@ -280,6 +280,12 @@
     word-wrap: break-word;
   }
 
+  @media (max-width: 767px) {
+    .gem-section {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
     .gem-section {
       padding: 3.125rem 0; /* 50px */

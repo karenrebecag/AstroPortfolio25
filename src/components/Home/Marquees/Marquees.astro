@@ -102,20 +102,26 @@ const lang = getLangFromUrl(Astro.url);
     z-index: 2;
   }
 
+  @media (max-width: 767px) {
+    :global(.marquees-section) {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
     .marquees-section {
       background-size: 20px 20px;
     }
-    
+
     :global(.marquees-container) {
       height: 150px;
     }
-    
+
     :global(.marquee-wrapper) {
       height: 60px;
       width: 300%;
     }
-    
+
     :global(.first-marquee) {
       transform: rotate(5deg);
     }

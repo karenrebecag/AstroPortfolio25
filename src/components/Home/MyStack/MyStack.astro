@@ -502,11 +502,17 @@ const { lang = 'en' } = Astro.props;
     transform: translate(2px, -2px);
   }
 
+  @media (max-width: 767px) {
+    :global(.my-stack-section) {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
     .my-stack-section {
       background-size: 20px 20px;
     }
-    
+
     .title-wrapper {
       padding: 0px 30px 0px 30px;
       margin: 0 auto -80px auto;
