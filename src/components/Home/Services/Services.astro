@@ -67,7 +67,6 @@ const services = await getServices(lang);
 <style>
   :global(.services-section) {
     width: 100%;
-    min-height: 100vh;
     padding: 65px 60px;
 
     overflow: hidden;
@@ -484,12 +483,27 @@ const services = await getServices(lang);
     }
 
     .services-header {
- 
+
 
     }
 
     .services-description {
       max-width: 100%;
+    }
+
+    /* Reduce padding-bottom in mobile */
+    .services-content {
+      padding-bottom: 50px;
+    }
+
+    /* Reduce gap between service cards in mobile */
+    :global(.services-list) {
+      gap: 24px;
+    }
+
+    /* Remove padding-top from collapsed service items */
+    :global(.service-item:not(.active)) {
+      padding-top: 30px;
     }
 
     /* Further adjust service titles for mobile */
