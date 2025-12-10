@@ -21,6 +21,7 @@ interface CMSResponse<T> {
 
 /**
  * Generic fetch function for Payload CMS collections
+ * With retry logic and graceful error handling for production
  */
 async function fetchCollection<T>(
   collection: string,
@@ -31,60 +32,94 @@ async function fetchCollection<T>(
     locale?: string;
   }
 ): Promise<T[]> {
-  try {
-    const params = new URLSearchParams();
+  const maxRetries = 3;
+  const timeoutMs = 15000; // 15 second timeout (increased from 10s)
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const params = new URLSearchParams();
 
-    if (options?.limit) {
-      params.append('limit', options.limit.toString());
-    }
+      if (options?.limit) {
+        params.append('limit', options.limit.toString());
+      }
 
-    if (options?.sort) {
-      params.append('sort', options.sort);
-    }
+      if (options?.sort) {
+        params.append('sort', options.sort);
+      }
 
-    if (options?.where) {
-      params.append('where', JSON.stringify(options.where));
-    }
+      if (options?.where) {
+        params.append('where', JSON.stringify(options.where));
+      }
 
-    if (options?.locale) {
-      params.append('locale', options.locale);
-    }
+      if (options?.locale) {
+        params.append('locale', options.locale);
+      }
 
-    const url = `${CMS_URL}/api/${collection}?${params.toString()}`;
-    
-    console.log(`Fetching from CMS: ${url}`);
+      const url = `${CMS_URL}/api/${collection}?${params.toString()}`;
+      
+      console.log(`[CMS] Fetching ${collection} (attempt ${attempt}/${maxRetries}): ${url}`);
 
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Add timeout and retry logic for production
-      signal: AbortSignal.timeout(10000), // 10 second timeout
-    });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    if (!response.ok) {
-      console.error(`CMS fetch failed with status ${response.status}: ${response.statusText}`);
-      throw new Error(`Failed to fetch ${collection}: ${response.status} ${response.statusText}`);
-    }
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      });
 
-    const data: CMSResponse<T> = await response.json();
-    
-    if (!data || !Array.isArray(data.docs)) {
-      console.error(`Invalid response format from CMS for ${collection}`);
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.error(`[CMS] Fetch failed with status ${response.status}: ${response.statusText}`);
+        // If we got a server error (5xx), retry
+        if (response.status >= 500 && attempt < maxRetries) {
+          console.log(`[CMS] Server error, retrying in ${attempt * 1000}ms...`);
+          await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+          continue;
+        }
+        throw new Error(`Failed to fetch ${collection}: ${response.status} ${response.statusText}`);
+      }
+
+      const data: CMSResponse<T> = await response.json();
+      
+      if (!data || !Array.isArray(data.docs)) {
+        console.error(`[CMS] Invalid response format for ${collection}`);
+        return [];
+      }
+      
+      console.log(`[CMS] Successfully fetched ${data.docs.length} ${collection}`);
+      return data.docs;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error(`[CMS] Error fetching ${collection} (attempt ${attempt}/${maxRetries}):`, errorMessage);
+      
+      // If it's a timeout or network error and we have retries left, try again
+      if (attempt < maxRetries) {
+        const isRetryableError = 
+          errorMessage.includes('abort') || 
+          errorMessage.includes('timeout') ||
+          errorMessage.includes('network') ||
+          errorMessage.includes('ECONNREFUSED') ||
+          errorMessage.includes('fetch failed');
+          
+        if (isRetryableError) {
+          console.log(`[CMS] Retryable error, waiting ${attempt * 1000}ms before retry...`);
+          await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+          continue;
+        }
+      }
+      
+      // After all retries or non-retryable error, return empty array
+      // This prevents the serverless function from crashing
+      console.error(`[CMS] All retries exhausted or non-retryable error for ${collection}. Returning empty array.`);
       return [];
     }
-    
-    console.log(`Successfully fetched ${data.docs.length} ${collection} from CMS`);
-    return data.docs;
-  } catch (error) {
-    console.error(`Error fetching ${collection}:`, error);
-    // In production, you might want to throw the error instead of returning empty array
-    // so you can handle it at the page level
-    if (import.meta.env.PROD) {
-      throw error;
-    }
-    return [];
   }
+  
+  // Fallback (should not reach here, but just in case)
+  return [];
 }
 
 /**
