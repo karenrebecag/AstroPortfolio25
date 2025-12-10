@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { Observer } from 'gsap/Observer';
+import gsap from 'gsap';
 import { techHighlights, type TechHighlightId } from './techHighlights';
 import { translations } from '../../../../i18n/translations.js';
+
+// Dynamic import for Observer to avoid ESM/CommonJS issues in Vercel
+let Observer: any = null;
 
 type TechHighlightShowcaseGSAPProps = {
     variant: 'dark' | 'light';
@@ -46,50 +48,66 @@ export function TechHighlightShowcaseGSAP({ variant, lang = 'en' }: TechHighligh
     useEffect(() => {
         if (!marqueeRef.current) return;
 
-        // Registrar plugin de GSAP
-        gsap.registerPlugin(Observer);
+        let isMounted = true;
 
-        const marquee = marqueeRef.current;
+        // Dynamically load Observer to avoid ESM/CommonJS issues
+        const initAnimation = async () => {
+            try {
+                const { Observer: GSAPObserver } = await import('gsap/Observer');
+                
+                if (!isMounted || !marqueeRef.current) return;
 
-        // Calcular el ancho total del contenido
-        const contentWidth = marquee.scrollWidth / 2; // Dividimos entre 2 porque está duplicado
+                // Register GSAP plugin
+                gsap.registerPlugin(GSAPObserver);
 
-        // Crear animación infinita con GSAP
-        timelineRef.current = gsap.timeline({
-            repeat: -1,
-            defaults: { ease: 'none' }
-        });
+                const marquee = marqueeRef.current;
 
-        // Animar de 0 a -contentWidth (movimiento hacia la IZQUIERDA) - Velocidad MUY lenta
-        timelineRef.current.to(marquee, {
-            x: -contentWidth,
-            duration: contentWidth / 20, // 20px por segundo = velocidad base (mucho más lento que 60px)
-            ease: 'none'
-        });
+                // Calculate total content width
+                const contentWidth = marquee.scrollWidth / 2; // Divide by 2 because it's duplicated
 
-        // Observer para aceleración en scroll - Aceleración reducida
-        observerRef.current = Observer.create({
-            onChangeY(self) {
-                if (!timelineRef.current) return;
-
-                let factor = 1.2; // Factor de aceleración reducido (antes era 1.5)
-
-                if (self.deltaY < 0) {
-                    // Scroll hacia arriba: reducir velocidad
-                    factor *= -0.3;
-                }
-
-                // Aplicar aceleración temporal con GSAP - más suave y gradual
-                gsap.timeline({
+                // Create infinite animation with GSAP
+                timelineRef.current = gsap.timeline({
+                    repeat: -1,
                     defaults: { ease: 'none' }
-                })
-                    .to(timelineRef.current, { timeScale: factor * 1.3, duration: 0.3, overwrite: true }) // factor reducido de 2x a 1.3x
-                    .to(timelineRef.current, { timeScale: 1, duration: 1.5 }, '+=0.5'); // Retorno más suave y lento
+                });
+
+                // Animate from 0 to -contentWidth (movement to the LEFT) - Very slow speed
+                timelineRef.current.to(marquee, {
+                    x: -contentWidth,
+                    duration: contentWidth / 20, // 20px per second = base speed
+                    ease: 'none'
+                });
+
+                // Observer for scroll acceleration - Reduced acceleration
+                observerRef.current = GSAPObserver.create({
+                    onChangeY(self: { deltaY: number }) {
+                        if (!timelineRef.current) return;
+
+                        let factor = 1.2; // Reduced acceleration factor
+
+                        if (self.deltaY < 0) {
+                            // Scroll up: reduce speed
+                            factor *= -0.3;
+                        }
+
+                        // Apply temporary acceleration with GSAP - smoother and more gradual
+                        gsap.timeline({
+                            defaults: { ease: 'none' }
+                        })
+                            .to(timelineRef.current, { timeScale: factor * 1.3, duration: 0.3, overwrite: true })
+                            .to(timelineRef.current, { timeScale: 1, duration: 1.5 }, '+=0.5');
+                    }
+                });
+            } catch (error) {
+                console.warn('[TechHighlightShowcaseGSAP] Failed to load Observer:', error);
             }
-        });
+        };
+
+        initAnimation();
 
         // Cleanup
         return () => {
+            isMounted = false;
             if (timelineRef.current) {
                 timelineRef.current.kill();
             }

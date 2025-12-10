@@ -196,18 +196,26 @@ const { lang = 'en' } = Astro.props;
 </style>
 
 <script>
-  import { gsap } from 'gsap';
-  import { Observer } from 'gsap/Observer';
-
-  gsap.registerPlugin(Observer);
+  import gsap from 'gsap';
 
   // Animación infinita fluida del marquee izquierdo con aceleración en scroll usando GSAP
-  function initLeftMarquee() {
+  async function initLeftMarquee() {
     const leftMarquee = document.getElementById('left-marquee');
     if (!leftMarquee) return;
 
     const leftContent = leftMarquee.querySelectorAll('.marquee-content');
     if (leftContent.length === 0) return;
+
+    // Dynamically import Observer to avoid ESM/CommonJS issues
+    let Observer: any;
+    try {
+      const module = await import('gsap/Observer');
+      Observer = module.Observer;
+      gsap.registerPlugin(Observer);
+    } catch (error) {
+      console.warn('[LeftMarqueeBanner] Failed to load Observer:', error);
+      return;
+    }
 
     // Configurar animación infinita con GSAP
     const tl = gsap.timeline({
@@ -228,7 +236,7 @@ const { lang = 'en' } = Astro.props;
 
     // Observer para aceleración en scroll
     Observer.create({
-      onChangeY(self) {
+      onChangeY(self: { deltaY: number }) {
         let factor = 1.5; // Factor de aceleración
 
         if (self.deltaY < 0) {

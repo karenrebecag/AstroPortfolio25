@@ -70,14 +70,11 @@ const softSkillsData = t.aboutMe.skills;
 </section>
 
 <script>
-  import { gsap } from 'gsap';
-  import { Observer } from 'gsap/Observer';
+  import gsap from 'gsap';
   import { observeDarkMode } from '../../../utils/darkMode';
 
-  gsap.registerPlugin(Observer);
-
   // Wait for DOM to be ready
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     const gemSection = document.querySelector('[data-gem-section]');
     const skillsScroll = document.querySelector('[data-skills-scroll]') as HTMLElement;
     const titleElement = document.querySelector('[data-title="about-me"]');
@@ -124,6 +121,10 @@ const softSkillsData = t.aboutMe.skills;
       const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
 
       if (scrollWidth > 0) {
+        // Importar Observer dinámicamente para evitar problemas ESM/CommonJS
+        const { Observer } = await import('gsap/Observer');
+        gsap.registerPlugin(Observer);
+
         // Configurar animación infinita con GSAP (scroll horizontal automático - MÁS LENTO)
         const tl = gsap.timeline({
           repeat: -1,

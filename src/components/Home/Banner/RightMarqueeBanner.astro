@@ -176,18 +176,19 @@ const { lang = 'en' } = Astro.props;
 </style>
 
 <script>
-  import { gsap } from 'gsap';
-  import { Observer } from 'gsap/Observer';
-
-  gsap.registerPlugin(Observer);
+  import gsap from 'gsap';
 
   // Animación infinita fluida del marquee derecho con aceleración en scroll usando GSAP (movimiento hacia la DERECHA ====>)
-  function initRightMarquee() {
+  async function initRightMarquee() {
     const rightMarquee = document.getElementById('right-marquee');
     if (!rightMarquee) return;
 
     const rightContent = rightMarquee.querySelectorAll('.marquee-content');
     if (rightContent.length === 0) return;
+
+    // Importar Observer dinámicamente para evitar problemas ESM/CommonJS
+    const { Observer } = await import('gsap/Observer');
+    gsap.registerPlugin(Observer);
 
     // Configurar animación infinita con GSAP
     const tl = gsap.timeline({
