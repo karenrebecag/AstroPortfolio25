@@ -3,7 +3,7 @@ import styles from './GemSection.module.css';
 import SilkBackground from './three/SilkBackground.tsx';
 import GemBackground from './three/GemBackground.tsx';
 import SoftSkillsSlider from './SoftSkillsSlider.tsx';
-import { motion, transform } from 'motion/react';
+import { motion } from 'motion/react';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 
@@ -20,25 +20,34 @@ const softSkillsData = t.aboutMe.skills;
 
   <div class={styles['gem-container']}>
 
-    <!-- Desktop: Cards Container con scroll horizontal (visible en vp >= 768px) -->
+    <!-- Desktop: Draggable Marquee (visible en vp >= 768px) -->
     <div class={styles['skills-container-desktop']}>
-      <div class={styles['skills-container-wrapper']} data-skills-wrapper>
-        <div class={styles['skills-scroll']} data-skills-scroll>
-          {softSkillsData.map((skill) => (
-            <div class={styles['skill-card']} data-skill-card>
-              <SilkBackground client:visible className={styles['skill-card-silk-bg']} data-silk-bg />
-              <div class={styles['skill-header']}>
-                <div class={styles['skill-number']}>{skill.id}</div>
+      <div
+        class={styles['draggable-marquee']}
+        data-draggable-marquee-init=""
+        data-direction="left"
+        data-duration="25"
+        data-multiplier="30"
+        data-sensitivity="0.008"
+      >
+        <div class={styles['draggable-marquee-collection']} data-draggable-marquee-collection>
+          <div class={styles['draggable-marquee-list']} data-draggable-marquee-list>
+            {softSkillsData.map((skill) => (
+              <div class={styles['skill-card']} data-skill-card draggable="false">
+                <SilkBackground client:visible className={styles['skill-card-silk-bg']} data-silk-bg />
+                <div class={styles['skill-header']}>
+                  <div class={styles['skill-number']}>{skill.id}</div>
+                </div>
+                <div class={styles['skill-content']}>
+                  <div class={styles['skill-title']}>{skill.title}</div>
+                </div>
+                <div class={styles['skill-description']}>
+                  <span class={styles['description-normal']}>{skill.description}</span>
+                  <span class={styles['description-highlight']}>{skill.highlight}</span>
+                </div>
               </div>
-              <div class={styles['skill-content']}>
-                <div class={styles['skill-title']}>{skill.title}</div>
-              </div>
-              <div class={styles['skill-description']}>
-                <span class={styles['description-normal']}>{skill.description}</span>
-                <span class={styles['description-highlight']}>{skill.highlight}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -73,36 +82,154 @@ const softSkillsData = t.aboutMe.skills;
   import gsap from 'gsap';
   import { observeDarkMode } from '../../../utils/darkMode';
 
+  /**
+   * Draggable Marquee with Directional Control
+   * - Infinite loop animation with GSAP
+   * - Drag to control speed and direction
+   * - Pauses when out of viewport for performance
+   */
+  async function initDraggableMarquee(): Promise<void> {
+    // Import Observer and ScrollTrigger dynamically
+    const [{ Observer }, { ScrollTrigger }] = await Promise.all([
+      import('gsap/Observer'),
+      import('gsap/ScrollTrigger')
+    ]);
+    gsap.registerPlugin(Observer, ScrollTrigger);
+
+    const wrappers = document.querySelectorAll<HTMLElement>('[data-draggable-marquee-init]');
+
+    const getNumberAttr = (el: HTMLElement, name: string, fallback: number): number => {
+      const value = parseFloat(el.getAttribute(name) || '');
+      return Number.isFinite(value) ? value : fallback;
+    };
+
+    wrappers.forEach((wrapper) => {
+      if (wrapper.getAttribute('data-draggable-marquee-init') === 'initialized') return;
+
+      const collection = wrapper.querySelector<HTMLElement>('[data-draggable-marquee-collection]');
+      const list = wrapper.querySelector<HTMLElement>('[data-draggable-marquee-list]');
+      if (!collection || !list) return;
+
+      const duration = getNumberAttr(wrapper, 'data-duration', 25);
+      const multiplier = getNumberAttr(wrapper, 'data-multiplier', 30);
+      const sensitivity = getNumberAttr(wrapper, 'data-sensitivity', 0.008);
+
+      const wrapperWidth = wrapper.getBoundingClientRect().width;
+      const listWidth = list.scrollWidth || list.getBoundingClientRect().width;
+      if (!wrapperWidth || !listWidth) return;
+
+      // Clone lists to create seamless infinite loop
+      const minRequiredWidth = wrapperWidth + listWidth + 100;
+      while (collection.scrollWidth < minRequiredWidth) {
+        const listClone = list.cloneNode(true) as HTMLElement;
+        listClone.setAttribute('data-draggable-marquee-clone', '');
+        listClone.setAttribute('aria-hidden', 'true');
+        collection.appendChild(listClone);
+      }
+
+      const wrapX = gsap.utils.wrap(-listWidth, 0);
+
+      gsap.set(collection, { x: 0 });
+
+      // Create infinite loop animation
+      const marqueeLoop = gsap.to(collection, {
+        x: -listWidth,
+        duration,
+        ease: 'none',
+        repeat: -1,
+        onReverseComplete: () => marqueeLoop.progress(1),
+        modifiers: {
+          x: (x: string) => wrapX(parseFloat(x)) + 'px'
+        }
+      });
+
+      // Handle initial direction
+      const initialDirectionAttr = (wrapper.getAttribute('data-direction') || 'left').toLowerCase();
+      const baseDirection = initialDirectionAttr === 'right' ? -1 : 1;
+
+      const timeScale = { value: baseDirection };
+      wrapper.setAttribute('data-direction', baseDirection < 0 ? 'right' : 'left');
+
+      if (baseDirection < 0) marqueeLoop.progress(1);
+
+      function applyTimeScale(): void {
+        marqueeLoop.timeScale(timeScale.value);
+        wrapper.setAttribute('data-direction', timeScale.value < 0 ? 'right' : 'left');
+      }
+
+      applyTimeScale();
+
+      // Drag observer for interactive control
+      const marqueeObserver = Observer.create({
+        target: wrapper,
+        type: 'pointer,touch',
+        preventDefault: true,
+        debounce: false,
+        onChangeX: (observerEvent: { velocityX: number }) => {
+          let velocityTimeScale = observerEvent.velocityX * -sensitivity;
+          velocityTimeScale = gsap.utils.clamp(-multiplier, multiplier, velocityTimeScale);
+
+          gsap.killTweensOf(timeScale);
+
+          const restingDirection = velocityTimeScale < 0 ? -1 : 1;
+
+          gsap.timeline({ onUpdate: applyTimeScale })
+            .to(timeScale, { value: velocityTimeScale, duration: 0.1, overwrite: true })
+            .to(timeScale, { value: restingDirection, duration: 1.0 });
+        }
+      });
+
+      // Pause when out of viewport for performance
+      ScrollTrigger.create({
+        trigger: wrapper,
+        start: 'top bottom',
+        end: 'bottom top',
+        onEnter: () => {
+          marqueeLoop.resume();
+          applyTimeScale();
+          marqueeObserver.enable();
+        },
+        onEnterBack: () => {
+          marqueeLoop.resume();
+          applyTimeScale();
+          marqueeObserver.enable();
+        },
+        onLeave: () => {
+          marqueeLoop.pause();
+          marqueeObserver.disable();
+        },
+        onLeaveBack: () => {
+          marqueeLoop.pause();
+          marqueeObserver.disable();
+        }
+      });
+
+      wrapper.setAttribute('data-draggable-marquee-init', 'initialized');
+    });
+  }
+
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', async () => {
-    const gemSection = document.querySelector('[data-gem-section]');
-    const skillsScroll = document.querySelector('[data-skills-scroll]') as HTMLElement;
     const titleElement = document.querySelector('[data-title="about-me"]');
 
-    // Apply dark mode styles - only for title and card backgrounds
-    // SilkBackground component handles its own dark mode visibility
-    const applyDarkMode = (isDark: boolean) => {
-      // Update title color
+    // Apply dark mode styles
+    const applyDarkMode = (isDark: boolean): void => {
       if (titleElement) {
         (titleElement as HTMLElement).style.transition = 'color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         (titleElement as HTMLElement).style.color = isDark ? '#f8f4ff' : '#000000';
       }
 
-      // Update card backgrounds (NOT silk background - that's handled in React component)
+      // Update card backgrounds (SilkBackground handles its own dark mode)
       const skillCards = document.querySelectorAll('[data-skill-card]');
       skillCards.forEach(card => {
         const cardElement = card as HTMLElement;
-
-        // Add smooth transition
         cardElement.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
         if (isDark) {
-          // Dark mode: transparent background with purple border
           cardElement.style.background = 'transparent';
           cardElement.style.backgroundImage = 'none';
           cardElement.style.border = '1px solid rgb(123, 111, 178)';
         } else {
-          // Light mode: show fallback image background
           cardElement.style.background = "url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg')";
           cardElement.style.backgroundSize = 'cover';
           cardElement.style.backgroundPosition = 'center';
@@ -112,59 +239,11 @@ const softSkillsData = t.aboutMe.skills;
       });
     };
 
-    // Observe dark mode changes using centralized utility
     const cleanupDarkMode = observeDarkMode(applyDarkMode);
 
-    // GSAP Infinite Marquee Animation with Scroll Acceleration
-    if (gemSection && skillsScroll) {
-      // Calcular ancho total del scroll
-      const scrollWidth = skillsScroll.scrollWidth - skillsScroll.clientWidth;
+    // Initialize the draggable marquee
+    await initDraggableMarquee();
 
-      if (scrollWidth > 0) {
-        // Importar Observer dinámicamente para evitar problemas ESM/CommonJS
-        const { Observer } = await import('gsap/Observer');
-        gsap.registerPlugin(Observer);
-
-        // Configurar animación infinita con GSAP (scroll horizontal automático - MÁS LENTO)
-        const tl = gsap.timeline({
-          repeat: -1,
-          defaults: { ease: 'none' }
-        });
-
-        // Animar scrollLeft de 0 al máximo - VELOCIDAD REDUCIDA a 30px/s
-        tl.to(skillsScroll, {
-          scrollLeft: scrollWidth,
-          duration: scrollWidth / 30, // 30px por segundo = velocidad más lenta
-          ease: 'none'
-        });
-
-        // Observer para aceleración en scroll de página
-        Observer.create({
-          onChangeY(self) {
-            let factor = 1.5; // Factor de aceleración
-
-            if (self.deltaY < 0) {
-              // Scroll hacia arriba: reducir velocidad
-              factor *= -0.5;
-            }
-
-            // Aplicar aceleración temporal con GSAP
-            gsap.timeline({
-              defaults: { ease: 'none' }
-            })
-              .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
-              .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
-          }
-        });
-      }
-
-      // Combined cleanup
-      window.addEventListener('beforeunload', () => {
-        cleanupDarkMode();
-      });
-    } else {
-      // Fallback cleanup if elements not found
-      window.addEventListener('beforeunload', cleanupDarkMode);
-    }
+    window.addEventListener('beforeunload', cleanupDarkMode);
   });
 </script>

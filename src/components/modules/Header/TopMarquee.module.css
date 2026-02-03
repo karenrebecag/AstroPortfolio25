@@ -1,59 +1,90 @@
-.topMarqueeContainer {
+/* TopMarquee - CSS Marquee Pattern */
+
+/* Container */
+.marquee {
   width: 100%;
   height: 32px;
-  background-color: #7754cd;
-  overflow: hidden;
+  background: linear-gradient(90deg, #7754cd 0%, #8b5cf6 50%, #7754cd 100%);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10001;
   display: flex;
-  justify-content: center;
-  transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.topMarqueeWrapper {
-  width: 100%;
-  max-width: 1800px;
-  height: 100%;
   overflow: hidden;
-  position: relative;
 }
 
-.topMarquee {
+/* List (animated element) */
+.marqueeList {
+  flex: none;
   display: flex;
-  white-space: nowrap;
-  width: max-content;
-  height: 100%;
   align-items: center;
-  animation: marqueeScroll 120s linear infinite;
+  animation: marqueeScroll linear infinite;
+  animation-play-state: paused;
 }
 
-@keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* Item */
+.marqueeItem {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0 0.75em;
+  height: 32px;
 }
 
+/* Text */
 .marqueeText {
   font-family: 'Boysen', var(--font-primary);
   font-size: 14px;
   font-weight: 400;
   color: white;
   letter-spacing: 0.5px;
-  padding-right: 0;
-  min-height: 32px;
-  display: inline-flex;
-  align-items: center;
-  contain: layout style;
-  will-change: transform;
-  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  white-space: nowrap;
+  line-height: 1;
 }
 
-/* Gradientes laterales para pantallas grandes */
+/* Star separator */
+.marqueeStar {
+  width: 12px;
+  height: 12px;
+  color: #c9fc7d;
+  flex-shrink: 0;
+}
+
+/* Animation */
+@keyframes marqueeScroll {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .marquee {
+    height: 28px;
+  }
+
+  .marqueeItem {
+    height: 28px;
+    gap: 0.5em;
+    padding: 0 0.5em;
+  }
+
+  .marqueeText {
+    font-size: 12px;
+  }
+
+  .marqueeStar {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Large screens - edge fade gradients */
 @media (min-width: 2560px) {
-  .topMarqueeWrapper::before,
-  .topMarqueeWrapper::after {
+  .marquee::before,
+  .marquee::after {
     content: '';
     position: absolute;
     top: 0;
@@ -63,25 +94,13 @@
     pointer-events: none;
   }
 
-  .topMarqueeWrapper::before {
+  .marquee::before {
     left: 0;
-    background: linear-gradient(to right, #7256c6, transparent);
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: linear-gradient(to right, #7754cd, transparent);
   }
 
-  .topMarqueeWrapper::after {
+  .marquee::after {
     right: 0;
-    background: linear-gradient(to left, #7256c6, transparent);
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-}
-
-@media (max-width: 768px) {
-  .topMarqueeContainer {
-    height: 28px;
-  }
-
-  .marqueeText {
-    font-size: 12px;
+    background: linear-gradient(to left, #7754cd, transparent);
   }
 }

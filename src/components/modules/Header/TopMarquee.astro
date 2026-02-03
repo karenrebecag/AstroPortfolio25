@@ -1,102 +1,83 @@
 ---
-// TopMarquee - Lightweight marquee banner for header
+// TopMarquee - CSS Marquee pattern for header
+// Features: IntersectionObserver pause, dynamic speed calculation
 import styles from './TopMarquee.module.css';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import { getTopMarqueeServices } from '../../../lib/cms';
 
-// Detectar idioma de la URL actual
 const lang = getLangFromUrl(Astro.url);
 const t = translations[lang as keyof typeof translations] || translations.en;
 
-// Fetch marquee services from CMS
 const servicesFromCMS = await getTopMarqueeServices(lang);
 
-// Use CMS data or fallback to translations
-const marqueeText = servicesFromCMS.length > 0
-  ? servicesFromCMS.map(service => service.text).join(' • ') + ' • '
-  : t.topMarquee.text;
+const marqueeItems = servicesFromCMS.length > 0
+  ? servicesFromCMS.map(service => service.text)
+  : t.topMarquee.text.split(' • ').filter(Boolean);
 ---
 
-<div class={styles.topMarqueeContainer} id="topMarqueeContainer">
-  <div class={styles.topMarqueeWrapper} id="topMarqueeWrapper">
-    <div id="top-marquee" class={styles.topMarquee}>
-      <span class={styles.marqueeText}>
-        {marqueeText}
-      </span>
-      <span class={styles.marqueeText}>
-        {marqueeText}
-      </span>
-    </div>
+<div data-css-marquee class={styles.marquee}>
+  <div data-css-marquee-list class={styles.marqueeList}>
+    {marqueeItems.map((item) => (
+      <div class={styles.marqueeItem}>
+        <span class={styles.marqueeText}>{item}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 50 50"
+          fill="none"
+          class={styles.marqueeStar}
+          aria-hidden="true"
+        >
+          <path
+            d="M17.6777 32.3223C12.9893 27.6339 6.63041 25 0 25C6.63041 25 12.9893 22.3661 17.6777 17.6777C22.3661 12.9893 25 6.63041 25 0C25 6.63041 27.6339 12.9893 32.3223 17.6777C37.0107 22.3661 43.3696 25 50 25C43.3696 25 37.0107 27.6339 32.3223 32.3223C27.6339 37.0107 25 43.3696 25 50C25 43.3696 22.3661 37.0107 17.6777 32.3223Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+    ))}
   </div>
 </div>
 
 <script>
-  // Dark mode handler for TopMarquee
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('topMarqueeContainer');
-    const wrapper = document.getElementById('topMarqueeWrapper');
-    const marqueeTexts = document.querySelectorAll('#top-marquee span');
+  function initTopMarquee() {
+    const PIXELS_PER_SECOND = 50;
+    const marquees = document.querySelectorAll<HTMLElement>('[data-css-marquee]');
 
-    const applyDarkMode = (isDark: boolean) => {
-      if (!container || !wrapper) return;
-
-      if (isDark) {
-        // Dark mode styles
-        (container as HTMLElement).style.background = 'linear-gradient(90deg, #160021 0%, #1b0027 50%, #3d005c 100%)';
-
-        marqueeTexts.forEach(text => {
-          (text as HTMLElement).style.color = '#f8f4ff';
-          (text as HTMLElement).style.textShadow = '0 0 8px rgba(255, 255, 255, 0.3)';
-        });
-
-        // Large screen gradients
-        if (window.innerWidth >= 2560) {
-          const before = window.getComputedStyle(wrapper, '::before');
-          const after = window.getComputedStyle(wrapper, '::after');
-          // Note: ::before/::after need to be set in CSS with data attributes
-          wrapper.setAttribute('data-dark-mode', 'true');
-        }
-      } else {
-        // Light mode styles (reset to CSS module defaults)
-        (container as HTMLElement).style.background = '';
-
-        marqueeTexts.forEach(text => {
-          (text as HTMLElement).style.color = '';
-          (text as HTMLElement).style.textShadow = '';
-        });
-
-        wrapper.removeAttribute('data-dark-mode');
+    // Duplicate list for seamless loop
+    marquees.forEach(marquee => {
+      const list = marquee.querySelector('[data-css-marquee-list]');
+      if (list && !marquee.querySelector('[data-css-marquee-list]:nth-child(2)')) {
+        const duplicate = list.cloneNode(true) as HTMLElement;
+        marquee.appendChild(duplicate);
       }
-    };
+    });
 
-    // Check initial dark mode state
-    const checkInitialDarkMode = () => {
-      const isDark = document.documentElement.classList.contains('dark-mode');
-      applyDarkMode(isDark);
-    };
+    // IntersectionObserver for performance (pause when out of view)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          const lists = entry.target.querySelectorAll<HTMLElement>('[data-css-marquee-list]');
+          lists.forEach(list => {
+            list.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+          });
+        });
+      },
+      { threshold: 0 }
+    );
 
-    // Listen for dark mode toggle changes
-    window.addEventListener('darkModeChange', ((event: CustomEvent) => {
-      applyDarkMode(event.detail.isDark);
-    }) as EventListener);
-
-    // Apply initial state with small delay to ensure DOM is ready
-    setTimeout(checkInitialDarkMode, 100);
-  });
-</script>
-
-<style>
-  /* Dark mode gradients for ::before and ::after using data attribute */
-  @media (min-width: 2560px) {
-    #topMarqueeWrapper[data-dark-mode="true"]::before {
-      background: linear-gradient(to right, #3d005c, transparent) !important;
-    }
-
-    #topMarqueeWrapper[data-dark-mode="true"]::after {
-      background: linear-gradient(to left, #3d005c, transparent) !important;
-    }
+    // Calculate duration and observe
+    marquees.forEach(marquee => {
+      const lists = marquee.querySelectorAll<HTMLElement>('[data-css-marquee-list]');
+      lists.forEach(list => {
+        const duration = list.offsetWidth / PIXELS_PER_SECOND;
+        list.style.animationDuration = `${duration}s`;
+        list.style.animationPlayState = 'paused';
+      });
+      observer.observe(marquee);
+    });
   }
-</style>
+
+  document.addEventListener('DOMContentLoaded', initTopMarquee);
+</script>
 
 

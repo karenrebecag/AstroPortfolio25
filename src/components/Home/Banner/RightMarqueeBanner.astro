@@ -1,236 +1,143 @@
 ---
-// RightMarqueeBanner - Large animated text moving from left to right
+// RightMarqueeBanner - Large animated text moving from left to right with scroll direction
 import styles from './RightMarqueeBanner.module.css';
 import { t } from '../../../i18n/utils.js';
 
 const { lang = 'en' } = Astro.props;
 ---
 
-<!-- Wrapper para prevenir layout shift -->
-<div class={styles.rightMarqueeContainer}>
-  <div class={styles.rightMarqueeWrapper}>
-    <div
-      id="right-marquee"
-      class="whitespace-nowrap font-display font-bold text-gray-1000/50 select-none text-left"
-      style="width: max-content; text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398); line-height: 1; will-change: transform; contain: layout style paint;"
-    >
-      <span class="marquee-content">
-        {t('banner.rightMarquee', lang).repeat(3)}
-      </span>
+<!-- Advanced Marquee with Scroll Direction -->
+<div class={styles['right-marquee-container']}>
+  <div
+    id="right-marquee"
+    data-marquee-scroll-direction-target
+    data-marquee-direction="right"
+    data-marquee-status="normal"
+    data-marquee-speed="20"
+    data-marquee-scroll-speed="8"
+    data-marquee-duplicate="3"
+    class={`${styles['marquee-advanced']} ${styles['right-marquee-wrapper']}`}
+  >
+    <div data-marquee-scroll-target class={styles['marquee-advanced__scroll']}>
+      <div data-marquee-collection-target class={styles['marquee-advanced__collection']}>
+        <div class={styles['marquee-advanced__item']}>
+          <p class={`${styles['marquee__advanced__p']} font-display font-bold`}>
+            {t('banner.rightMarquee', lang)}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-  /* Base font-size and height for all viewports */
-  #right-marquee {
-    font-size: clamp(163px, 32.6vw, 326px);
-    height: clamp(163px, 32.6vw, 326px);
-  }
-
-  /* Mobile viewport adjustments - 30% larger font-size and more spacing */
-  @media (max-width: 767px) {
-    #right-marquee {
-      font-size: clamp(212px, 42.4vw, 424px); /* 30% increase from base clamp */
-      height: clamp(212px, 42.4vw, 424px);
-      letter-spacing: 0.05em; /* More separation between letters */
-    }
-
-    .marquee-content {
-      padding: 0 2rem; /* More spacing between repeated content */
-    }
-  }
-
-  /* Dark mode styles - Intense cyan illumination stroke text */
-  :global(.dark-mode) #right-marquee {
-    color: transparent !important;
-    -webkit-text-stroke: 1px rgb(221, 255, 255);
-    -webkit-text-fill-color: transparent;
-    text-shadow:
-      /* Core white illumination */
-      0 0 2px rgba(255, 255, 255, 1),
-      0 0 5px rgba(255, 255, 255, 0.9),
-      0 0 10px rgba(255, 255, 255, 0.8),
-      /* Cyan neon illumination layers */
-      0 0 20px rgba(0, 255, 255, 1),
-      0 0 40px rgba(0, 255, 255, 0.9),
-      0 0 60px rgba(0, 255, 255, 0.8),
-      0 0 80px rgba(0, 255, 255, 0.7),
-      0 0 100px rgba(0, 255, 255, 0.6),
-      0 0 120px rgba(0, 255, 255, 0.5);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    filter: brightness(1.2) saturate(1.3)
-            drop-shadow(0 0 40px rgba(0, 255, 255, 0.15))
-            drop-shadow(0 0 80px rgba(0, 255, 255, 0.08))
-            drop-shadow(0 0 120px rgba(0, 255, 255, 0.04));
-  }
-
-  /* Hover effect - Maximum cyan illumination with flicker */
-  :global(.dark-mode) :global(.rightMarqueeWrapper):hover #right-marquee {
-    -webkit-text-stroke: 1px rgb(237, 248, 248);
-    text-shadow:
-      /* Intense core illumination */
-      0 0 3px rgba(255, 255, 255, 1),
-      0 0 8px rgba(255, 255, 255, 1),
-      0 0 15px rgba(255, 255, 255, 0.9),
-      /* Maximum cyan neon illumination */
-      0 0 25px rgba(0, 255, 255, 1),
-      0 0 50px rgba(0, 255, 255, 1),
-      0 0 75px rgba(0, 255, 255, 0.9),
-      0 0 100px rgba(0, 255, 255, 0.8),
-      0 0 125px rgba(0, 255, 255, 0.7),
-      0 0 150px rgba(0, 255, 255, 0.6),
-      0 0 175px rgba(0, 255, 255, 0.5);
-    filter: brightness(1.5) saturate(1.5)
-            drop-shadow(0 0 60px rgba(0, 255, 255, 0.25))
-            drop-shadow(0 0 120px rgba(0, 255, 255, 0.15))
-            drop-shadow(0 0 180px rgba(0, 255, 255, 0.08));
-    animation: intenseCyanFlicker 2s ease-in-out infinite alternate;
-  }
-
-  /* Intense cyan flicker animation - realistic neon effect */
-  @keyframes intenseCyanFlicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-      text-shadow:
-        /* Core white illumination */
-        0 0 3px rgba(255, 255, 255, 1),
-        0 0 8px rgba(255, 255, 255, 1),
-        0 0 15px rgba(255, 255, 255, 0.9),
-        /* Maximum cyan neon illumination */
-        0 0 25px rgba(0, 255, 255, 1),
-        0 0 50px rgba(0, 255, 255, 1),
-        0 0 75px rgba(0, 255, 255, 0.9),
-        0 0 100px rgba(0, 255, 255, 0.8),
-        0 0 125px rgba(0, 255, 255, 0.7),
-        0 0 150px rgba(0, 255, 255, 0.6),
-        0 0 175px rgba(0, 255, 255, 0.5);
-      filter: brightness(1.5) saturate(1.5);
-    }
-    20%, 22%, 24%, 55% {
-      text-shadow:
-        /* Dimmed flicker state */
-        0 0 1px rgba(255, 255, 255, 0.6),
-        0 0 3px rgba(255, 255, 255, 0.4),
-        0 0 8px rgba(0, 255, 255, 0.6),
-        0 0 15px rgba(0, 255, 255, 0.4),
-        0 0 25px rgba(0, 255, 255, 0.3);
-      filter: brightness(0.8) saturate(0.8);
-    }
-  }
-
-  /* Performance optimizations */
-  :global(.dark-mode) #right-marquee {
-    /* GPU acceleration for smooth animations */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-
-  /* Accessibility: Respect user's motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    :global(.dark-mode) :global(.rightMarqueeWrapper):hover #right-marquee {
-      animation: none !important;
-    }
-  }
-
-  /* 🍎 Safari-Only Fallback - Dark mode simple solo para Safari, Chromium mantiene efectos neon */
-  @supports (-webkit-appearance: none) and (not (background: paint(something))) {
-    :global(.dark-mode) #right-marquee {
-      /* Anular todos los efectos complejos solo en Safari */
-      color: #1f2937 !important;
-      -webkit-text-stroke: none !important;
-      -webkit-text-fill-color: #1f2937 !important;
-      text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398) !important;
-      filter: none !important;
-      animation: none !important;
-      transition: none !important;
-
-      /* Mantener optimizaciones de performance */
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-
-    /* Anular hover effects solo en Safari */
-    :global(.dark-mode) :global(.rightMarqueeWrapper):hover #right-marquee {
-      color: #1f2937 !important;
-      -webkit-text-stroke: none !important;
-      -webkit-text-fill-color: #1f2937 !important;
-      text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398) !important;
-      filter: none !important;
-      animation: none !important;
-    }
-  }
-
-  /* Gradientes laterales para pantallas grandes */
-  @media (min-width: 2560px) {
-    /* Dark mode gradients */
-    :global(.dark-mode) :global(.rightMarqueeWrapper)::before {
-      background: linear-gradient(to right, #050112, transparent) !important;
-    }
-
-    :global(.dark-mode) :global(.rightMarqueeWrapper)::after {
-      background: linear-gradient(to left, #050112, transparent) !important;
-    }
-  }
+  /* Styles moved to CSS module - only keeping global keyframes here */
 </style>
 
 <script>
   import gsap from 'gsap';
 
-  // Animación infinita fluida del marquee derecho con aceleración en scroll usando GSAP (movimiento hacia la DERECHA ====>)
-  async function initRightMarquee() {
-    const rightMarquee = document.getElementById('right-marquee');
-    if (!rightMarquee) return;
+  // Advanced Marquee with Scroll Direction - Right Marquee
+  async function initRightMarqueeAdvanced() {
+    const marquee = document.getElementById('right-marquee');
+    if (!marquee) return;
 
-    const rightContent = rightMarquee.querySelectorAll('.marquee-content');
-    if (rightContent.length === 0) return;
+    // Query marquee elements
+    const marqueeContent = marquee.querySelector('[data-marquee-collection-target]');
+    const marqueeScroll = marquee.querySelector('[data-marquee-scroll-target]');
+    if (!marqueeContent || !marqueeScroll) return;
 
-    // Importar Observer dinámicamente para evitar problemas ESM/CommonJS
-    const { Observer } = await import('gsap/Observer');
-    gsap.registerPlugin(Observer);
+    // Dynamically import ScrollTrigger to avoid ESM/CommonJS issues
+    let ScrollTrigger: any;
+    try {
+      const module = await import('gsap/ScrollTrigger');
+      ScrollTrigger = module.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+    } catch (error) {
+      console.warn('[RightMarqueeBanner] Failed to load ScrollTrigger:', error);
+      return;
+    }
 
-    // Configurar animación infinita con GSAP
-    const tl = gsap.timeline({
+    // Get data attributes
+    const speed = marquee.dataset.marqueeSpeed || '15';
+    const direction = marquee.dataset.marqueeDirection || 'right';
+    const duplicate = marquee.dataset.marqueeDuplicate || '2';
+    const scrollSpeed = marquee.dataset.marqueeScrollSpeed || '10';
+
+    // Convert data attributes to usable types
+    const marqueeSpeedAttr = parseFloat(speed);
+    const marqueeDirectionAttr = direction === 'right' ? 1 : -1; // 1 for right, -1 for left
+    const duplicateAmount = parseInt(duplicate);
+    const scrollSpeedAttr = parseFloat(scrollSpeed);
+    const speedMultiplier = window.innerWidth < 479 ? 0.25 : window.innerWidth < 991 ? 0.5 : 1;
+
+    let marqueeSpeed = marqueeSpeedAttr * ((marqueeContent as HTMLElement).offsetWidth / window.innerWidth) * speedMultiplier;
+
+    // Precompute styles for the scroll container
+    (marqueeScroll as HTMLElement).style.marginLeft = `${scrollSpeedAttr * -1}%`;
+    (marqueeScroll as HTMLElement).style.width = `${(scrollSpeedAttr * 2) + 100}%`;
+
+    // Duplicate marquee content
+    if (duplicateAmount > 0) {
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < duplicateAmount; i++) {
+        fragment.appendChild(marqueeContent.cloneNode(true));
+      }
+      marqueeScroll.appendChild(fragment);
+    }
+
+    // GSAP animation for marquee content
+    const marqueeItems = marquee.querySelectorAll('[data-marquee-collection-target]');
+    const animation = gsap.to(marqueeItems, {
+      xPercent: -100, // Move completely out of view
       repeat: -1,
-      defaults: { ease: 'none' }
-    });
+      duration: marqueeSpeed,
+      ease: 'linear'
+    }).totalProgress(0.5);
 
-    // Calcular ancho total del contenido
-    const firstElement = rightContent[0] as HTMLElement;
-    const contentWidth = firstElement.getBoundingClientRect().width;
+    // Initialize marquee in the correct direction
+    gsap.set(marqueeItems, { xPercent: marqueeDirectionAttr === 1 ? 100 : -100 });
+    animation.timeScale(marqueeDirectionAttr); // Set correct direction
+    animation.play(); // Start animation immediately
 
-    // Animar de 0 a +contentWidth (movimiento hacia la DERECHA)
-    tl.to(rightMarquee, {
-      x: contentWidth,
-      duration: contentWidth / 60, // 60px por segundo = velocidad base
-      ease: 'none'
-    });
+    // Set initial marquee status
+    marquee.setAttribute('data-marquee-status', 'normal');
 
-    // Observer para aceleración en scroll
-    Observer.create({
-      onChangeY(self) {
-        let factor = 1.5; // Factor de aceleración
+    // ScrollTrigger logic for direction inversion
+    ScrollTrigger.create({
+      trigger: marquee,
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate: (self: { direction: number }) => {
+        const isInverted = self.direction === 1; // Scrolling down
+        const currentDirection = isInverted ? -marqueeDirectionAttr : marqueeDirectionAttr;
 
-        if (self.deltaY < 0) {
-          // Scroll hacia arriba: reducir velocidad
-          factor *= -0.5;
-        }
-
-        // Aplicar aceleración temporal con GSAP
-        gsap.timeline({
-          defaults: { ease: 'none' }
-        })
-          .to(tl, { timeScale: factor * 2, duration: 0.2, overwrite: true })
-          .to(tl, { timeScale: 1, duration: 1 }, '+=0.3');
+        // Update animation direction and marquee status
+        animation.timeScale(currentDirection);
+        marquee.setAttribute('data-marquee-status', isInverted ? 'normal' : 'inverted');
       }
     });
+
+    // Extra speed effect on scroll (parallax scrub)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: marquee,
+        start: '0% 100%',
+        end: '100% 0%',
+        scrub: 0
+      }
+    });
+
+    const scrollStart = marqueeDirectionAttr === -1 ? scrollSpeedAttr : -scrollSpeedAttr;
+    const scrollEnd = -scrollStart;
+
+    tl.fromTo(marqueeScroll, { x: `${scrollStart}vw` }, { x: `${scrollEnd}vw`, ease: 'none' });
   }
 
-  // Iniciar cuando el DOM esté listo
+  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initRightMarquee);
+    document.addEventListener('DOMContentLoaded', initRightMarqueeAdvanced);
   } else {
-    initRightMarquee();
+    initRightMarqueeAdvanced();
   }
 </script>

@@ -4,7 +4,6 @@ import TopMarquee from './TopMarquee.astro';
 import MainButton from './MainButton.astro';
 import LanguageSelectorWrapper from './LanguageSelectorWrapper.astro';
 import ProjectsDropdownWrapper from './ProjectsDropdownWrapper.astro';
-import HeaderDarkModeToggleWrapper from './HeaderDarkModeToggleWrapper.astro';
 import { BGPattern } from '../../ui/WhiteBackgroundTexture/bg-pattern.tsx';
 import { getLangFromUrl, t, languageOptions, useTranslatedPath } from '../../../i18n/utils.js';
 import { getProjects } from '../../../lib/cms';
@@ -56,7 +55,6 @@ const hasProjects = projects.length > 0;
     </nav>
     
     <div class={styles['header-actions-wrapper']}>
-      <HeaderDarkModeToggleWrapper />
       <div class={styles['contact-btn-wrapper']}>
         <a href="#contact" class={styles['contact-link']}>
           <MainButton text={t('nav.contact', lang)} />

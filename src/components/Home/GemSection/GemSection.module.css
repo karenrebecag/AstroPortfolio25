@@ -74,7 +74,7 @@
 
   /* Dark mode will be handled via JavaScript to avoid CSS scoping issues */
 
-  /* Dual System: Desktop Scroll + Mobile Slider */
+  /* Dual System: Desktop Draggable Marquee + Mobile Slider */
   .skills-container-desktop {
     display: flex;
     width: 100%;
@@ -82,18 +82,9 @@
     position: relative;
   }
 
-  .skills-container-wrapper {
-    width: 100%;
-    max-width: 1800px;
-    overflow: hidden;
-    position: relative;
-    min-height: 25rem;
-    z-index: 2; /* Below gem (z-index: 10) and gem-container (z-index: 5) */
-  }
-
   .skills-container-mobile {
     display: none;
-    z-index: 2; /* Below gem (z-index: 10) and gem-container (z-index: 5) */
+    z-index: 2;
   }
 
   @media (max-width: 767px) {
@@ -103,78 +94,72 @@
 
     .skills-container-mobile {
       display: block;
-      padding: 0; /* Sin padding en móvil */
+      padding: 0;
     }
 
     .gem-container {
-      padding: 0; /* Sin padding en móvil */
+      padding: 0;
     }
   }
 
-
-  .skills-container-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 1;
-    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Gradientes laterales para pantallas grandes */
-  @media (min-width: 2560px) {
-    .skills-container-wrapper::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 2;
-    }
-  }
-
-  .skills-scroll {
+  /* Draggable Marquee Styles */
+  .draggable-marquee {
     display: flex;
-    gap: 30px;
-    overflow-x: hidden; /* Cambiado de 'auto' a 'hidden' para deshabilitar scroll manual */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    height: 100%;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0 30px;
-    position: relative;
-    z-index: 1; /* Ensure proper stacking within container */
-    pointer-events: none; /* Deshabilita interacciones de arrastre */
+    flex: none;
+    width: 100%;
+    overflow: hidden;
+    min-height: 25rem;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y pinch-zoom;
+    padding: 40px 0;
   }
 
-  .skills-scroll::-webkit-scrollbar {
-    display: none;
+  .draggable-marquee:active {
+    cursor: grabbing;
+  }
+
+  .draggable-marquee-collection {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
+    will-change: transform;
+    gap: 30px;
+    padding: 20px 30px;
+  }
+
+  .draggable-marquee-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
+    gap: 30px;
+    padding: 20px 0;
   }
 
   .skill-card {
     flex: 0 0 auto;
     min-width: 24.375rem;
     width: 24.375rem;
-    min-height: 16.8rem; 
-    padding: 1.25rem; 
-    background: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg'); /* Fallback visible */
+    min-height: 16.8rem;
+    padding: 1.25rem;
+    background: url('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SilkCardFallback.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border: 1px solid rgba(74, 36, 181, 0.3);
-    border-radius: 1.25rem; /* 20px */
+    border-radius: 1.25rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 0.75rem; /* 12px */
-    margin: 1.25rem 0; /* 20px */
-    transition: 
+    gap: 0.75rem;
+    margin: 0;
+    transition:
       background-color 0.3s ease,
       background-image 0.3s ease,
       border-color 0.3s ease,
@@ -184,7 +169,15 @@
     position: relative;
     overflow: hidden;
     z-index: 4;
-    pointer-events: auto; /* Rehabilita interacciones en las cards individuales */
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .skill-card * {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
   }
 
   :global(.dark-mode .skill-card) {
@@ -288,12 +281,12 @@
 
   @media (max-width: 768px) {
     .gem-section {
-      padding: 3.125rem 0; /* 50px */
+      padding: 3.125rem 0;
     }
 
     .gem-container {
-      gap: 2.5rem; /* 40px */
-      padding: 0 1.25rem; /* 20px */
+      gap: 2.5rem;
+      padding: 0 1.25rem;
     }
 
     .soft-skills-title-container {
@@ -304,43 +297,48 @@
       font-size: clamp(60px, 12vw, 120px);
     }
 
-    .skills-container-wrapper {
-      min-height: 20rem; /* 320px mínimo */
+    .draggable-marquee {
+      min-height: 20rem;
+    }
+
+    .draggable-marquee-collection {
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .draggable-marquee-list {
+      gap: 20px;
     }
 
     .skill-card {
-      min-width: 20rem; /* 320px */
-      width: 20rem; /* 320px */
-      min-height: 15.6rem; /* 250px - 40% menos altura para tablet */
-    }
-
-    .skills-scroll {
-      padding: 0 1.25rem; /* 20px */
+      min-width: 20rem;
+      width: 20rem;
+      min-height: 15.6rem;
     }
 
     .skill-number {
-      font-size: 1.125rem; /* 18px - reducido de 20px */
-      line-height: 1.5rem; /* 24px - reducido de 28px */
+      font-size: 1.125rem;
+      line-height: 1.5rem;
     }
 
     .skill-icon {
-      font-size: 1.75rem; /* 28px - reducido de 32px */
+      font-size: 1.75rem;
     }
 
     .skill-title {
-      font-size: 1.125rem; /* 18px - reducido de 20px */
-      line-height: 1.5rem; /* 24px - reducido de 28px */
+      font-size: 1.125rem;
+      line-height: 1.5rem;
     }
 
     .skill-description .description-normal {
-      font-size: 0.875rem; /* 14px - reducido de 16px */
-      line-height: 1.25rem; /* 20px - reducido de 24px */
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       color: rgba(255, 255, 255, 0.9);
     }
 
     .skill-description .description-highlight {
-      font-size: 0.875rem; /* 14px - reducido de 16px */
-      line-height: 1.25rem; /* 20px - reducido de 24px */
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       color: #E0D4FF;
     }
   }
@@ -350,43 +348,48 @@
       font-size: clamp(50px, 10vw, 80px);
     }
 
-    .skills-container-wrapper {
-      min-height: 18.75rem; /* 300px mínimo */
+    .draggable-marquee {
+      min-height: 18.75rem;
+    }
+
+    .draggable-marquee-collection {
+      gap: 15px;
+      padding: 0 15px;
+    }
+
+    .draggable-marquee-list {
+      gap: 15px;
     }
 
     .skill-card {
-      min-width: 17.5rem; /* 280px */
-      width: 17.5rem; /* 280px */
-      min-height: 14.4rem; /* 230px - 40% menos altura para mobile */
-    }
-
-    .skills-scroll {
-      padding: 0 0.9375rem; /* 15px */
+      min-width: 17.5rem;
+      width: 17.5rem;
+      min-height: 14.4rem;
     }
 
     .skill-number {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.5rem; /* 24px */
+      font-size: 1.125rem;
+      line-height: 1.5rem;
     }
 
     .skill-icon {
-      font-size: 1.75rem; /* 28px */
+      font-size: 1.75rem;
     }
 
     .skill-title {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.5rem; /* 24px */
+      font-size: 1.125rem;
+      line-height: 1.5rem;
     }
 
     .skill-description .description-normal {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.25rem; /* 20px */
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       color: rgba(255, 255, 255, 0.9);
     }
 
     .skill-description .description-highlight {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.25rem; /* 20px */
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       color: #E0D4FF;
     }
   }

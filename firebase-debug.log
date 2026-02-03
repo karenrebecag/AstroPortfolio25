@@ -1,0 +1,21 @@
+[debug] [2026-02-03T01:32:50.086Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-03T01:32:50.090Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-03T01:32:50.090Z] Checked if tokens are valid: false, expires at: 1770055073797
+[debug] [2026-02-03T01:32:50.090Z] Checked if tokens are valid: false, expires at: 1770055073797
+[debug] [2026-02-03T01:32:50.090Z] > refreshing access token with scopes: []
+[debug] [2026-02-03T01:32:50.091Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-03T01:32:50.091Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-03T01:32:50.093Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-03T01:32:50.093Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-03T01:32:50.093Z] Checked if tokens are valid: false, expires at: 1770055073797
+[debug] [2026-02-03T01:32:50.093Z] Checked if tokens are valid: false, expires at: 1770055073797
+[debug] [2026-02-03T01:32:50.093Z] > refreshing access token with scopes: []
+[debug] [2026-02-03T01:32:50.093Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-03T01:32:50.093Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-03T01:32:50.259Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-03T01:32:50.259Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-03T01:32:50.285Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-03T01:32:50.287Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-03T01:32:50.287Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-03T01:32:50.303Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-03T01:32:50.601Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403

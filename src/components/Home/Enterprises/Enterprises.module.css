@@ -28,45 +28,6 @@
   width: 100%;
   max-width: 1200px;
   position: relative;
-  overflow: hidden;
-}
-
-/* Gradientes laterales para disimular el overflow */
-.enterprisesWrapper::before,
-.enterprisesWrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.enterprisesWrapper::before {
-  left: 0;
-  background: linear-gradient(to right, #000, transparent);
-  transition: opacity var(--enterprises-transition);
-}
-
-.enterprisesWrapper::after {
-  right: 0;
-  background: linear-gradient(to left, #000, transparent);
-  transition: opacity var(--enterprises-transition);
-}
-
-/* Dark mode gradients */
-:global(.dark-mode) .enterprisesWrapper::before {
-  background: linear-gradient(to right, 0b0213, transparent) !important;
-}
-
-:global(.dark-mode) .enterprisesWrapper::after {
-  background: linear-gradient(to left, 0b0213, transparent) !important;
-}
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
   padding: 0 24px;
   text-align: center;
 }
@@ -85,29 +46,114 @@
   color: #e6d9f0 !important;
 }
 
-.slider {
+/* ========================================
+   Logo Wall Cycle - Single Row Layout
+   ======================================== */
+
+.logo-wall {
   display: flex;
-  gap: 80px;
-  animation: scroll 50s linear infinite;
-  width: max-content;
-  will-change: transform;
+  justify-content: center;
+  width: 100%;
 }
 
-.logo {
-  filter: grayscale(1) brightness(1.2);
-  opacity: 0.8;
+.logo-wall__collection {
+  width: 100%;
+}
+
+.logo-wall__list {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+/* Single row: show 5 logos on desktop */
+.logo-wall__item {
+  width: 16%;
+  max-width: 110px;
+  position: relative;
+}
+
+/* Hide extra logos beyond the first 5 on desktop */
+[data-logo-wall-list] [data-logo-wall-item]:nth-child(n+6) {
+  display: none;
+}
+
+.logo-wall__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo-wall__logo-before {
+  padding-top: 55%;
+}
+
+.logo-wall__logo-target {
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 55%;
+  display: flex;
+  position: absolute;
+}
+
+.logo-wall__logo-img {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
   object-fit: contain;
+  filter: grayscale(1) brightness(1.2);
+  opacity: 0.9;
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-@keyframes scroll {
-  to { transform: translateX(-50%); }
+.logo-wall__logo:hover .logo-wall__logo-img {
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
 }
 
+/* ========================================
+   Responsive: Tablet - show 4 logos
+   ======================================== */
+@media screen and (max-width: 991px) {
+  .logo-wall__item {
+    width: 25%;
+    max-width: 140px;
+  }
 
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+5) {
+    display: none;
+  }
+
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(-n+4) {
+    display: block;
+  }
+}
+
+/* ========================================
+   Responsive: Mobile - show 3 logos
+   ======================================== */
+@media screen and (max-width: 767px) {
+  .logo-wall__item {
+    width: 33.333%;
+    max-width: 120px;
+  }
+
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(n+4) {
+    display: none;
+  }
+
+  [data-logo-wall-list] [data-logo-wall-item]:nth-child(-n+3) {
+    display: block;
+  }
+}
+
+/* ========================================
+   Accessibility: Reduced motion
+   ======================================== */
 @media (prefers-reduced-motion: reduce) {
-  .slider { 
-    animation: none; 
-    justify-content: center; 
-    flex-wrap: wrap; 
+  .logo-wall__logo-target {
+    transition: none !important;
   }
 }

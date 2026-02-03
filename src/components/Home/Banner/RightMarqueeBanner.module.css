@@ -4,27 +4,56 @@
     justify-content: center;
   }
 
-  .right-marquee-wrapper {
+  /* Advanced Marquee Structure */
+  .marquee-advanced {
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .marquee-advanced__scroll {
+    will-change: transform;
     width: 100%;
-    max-width: 1800px;
+    display: flex;
+    position: relative;
+  }
+
+  .marquee-advanced__collection {
+    will-change: transform;
+    display: flex;
+    position: relative;
+  }
+
+  .marquee-advanced__item {
+    justify-content: flex-start;
+    align-items: center;
+    font-size: clamp(163px, 32.6vw, 326px);
+    display: flex;
+    line-height: 1;
+  }
+
+  .marquee__advanced__p {
+    white-space: nowrap;
+    margin-bottom: 0;
+    margin-right: 0.25em;
+    font-size: 1em;
+    color: #1f2937; /* Solid black text */
+    text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.2);
+  }
+
+  .right-marquee-wrapper {
+    /* Reserve space to prevent layout shift */
+    width: 100%;
+    max-width: 100vw;
     height: clamp(163px, 32.6vw, 326px);
     min-height: 163px;
-    overflow: hidden;
-    position: relative;
-    contain: strict;
-    
+
     /* Fix webkit compositing layer bug */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
-  
+
   #right-marquee {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: max-content !important;
-    display: flex;
-    
     /* Hardware acceleration webkit */
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
@@ -33,7 +62,7 @@
   }
 
   /* Dark mode styles - Optimized cyan illumination stroke text (9→4 layers) */
-  :global(.dark-mode) #right-marquee {
+  :global(.dark-mode) .marquee__advanced__p {
     color: transparent !important;
     -webkit-text-stroke: 1px rgb(221, 255, 255);
     -webkit-text-fill-color: transparent;
@@ -49,7 +78,7 @@
   }
 
   /* Hover effect - Optimized cyan illumination with flicker (11→5 layers) */
-  :global(.dark-mode) .right-marquee-wrapper:hover #right-marquee {
+  :global(.dark-mode) .right-marquee-wrapper:hover .marquee__advanced__p {
     -webkit-text-stroke: 1px rgb(237, 248, 248);
     /* Reduced from 11 to 5 critical layers for better paint performance */
     text-shadow:
@@ -85,7 +114,7 @@
   }
 
   /* Performance optimizations */
-  :global(.dark-mode) #right-marquee {
+  :global(.dark-mode) .marquee__advanced__p {
     /* GPU acceleration for smooth animations */
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -93,7 +122,7 @@
 
   /* Accessibility: Respect user's motion preferences with subtle hover */
   @media (prefers-reduced-motion: reduce) {
-    :global(.dark-mode) .right-marquee-wrapper:hover #right-marquee {
+    :global(.dark-mode) .right-marquee-wrapper:hover .marquee__advanced__p {
       animation: none !important;
       /* Maintain subtle hover effect without animation */
       filter: brightness(1.2) saturate(1.2);
@@ -102,7 +131,7 @@
 
   /* 🍎 Safari-Only Fallback - Dark mode simple solo para Safari, Chromium mantiene efectos neon */
   @supports (-webkit-appearance: none) and (not (background: paint(something))) {
-    :global(.dark-mode) #right-marquee {
+    :global(.dark-mode) .marquee__advanced__p {
       /* Anular todos los efectos complejos solo en Safari */
       color: #1f2937 !important;
       -webkit-text-stroke: none !important;
@@ -111,16 +140,16 @@
       filter: none !important;
       animation: none !important;
       transition: none !important;
-      
+
       /* Mantener optimizaciones de performance */
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
-    
+
     /* Anular hover effects solo en Safari */
-    :global(.dark-mode) .right-marquee-wrapper:hover #right-marquee {
+    :global(.dark-mode) .right-marquee-wrapper:hover .marquee__advanced__p {
       color: #1f2937 !important;
       -webkit-text-stroke: none !important;
       -webkit-text-fill-color: #1f2937 !important;
@@ -129,14 +158,20 @@
       animation: none !important;
     }
   }
-  
-
 
   /* Mobile viewport adjustments - 30% larger wrapper height */
   @media (max-width: 767px) {
     .right-marquee-wrapper {
       height: clamp(212px, 42.4vw, 424px); /* 30% increase from base clamp */
       min-height: 212px;
+    }
+
+    .marquee-advanced__item {
+      font-size: clamp(212px, 42.4vw, 424px); /* 30% increase from base clamp */
+    }
+
+    .marquee__advanced__p {
+      letter-spacing: 0.05em; /* More separation between letters */
     }
   }
 

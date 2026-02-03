@@ -549,39 +549,42 @@
     transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Experience Marquee Styles */
-  :global(.experience-marquee-wrapper) {
+  /* Draggable Experience Marquee Styles */
+  :global(.experience-draggable-marquee) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
     width: 100%;
     overflow: hidden;
-    position: relative;
-    mask: linear-gradient(
-      to right,
-      transparent 0%,
-      black 10%,
-      black 90%,
-      transparent 100%
-    );
-    -webkit-mask: linear-gradient(
-      to right,
-      transparent 0%,
-      black 10%,
-      black 90%,
-      transparent 100%
-    );
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y pinch-zoom;
+    padding: 40px 0;
   }
 
-  :global(.experience-marquee) {
+  :global(.experience-draggable-marquee:active) {
+    cursor: grabbing;
+  }
+
+  :global(.experience-marquee-collection) {
     display: flex;
-    animation: experienceMarqueeScroll 45s linear infinite;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
     will-change: transform;
+    gap: 2rem;
+    padding: 20px 30px;
   }
 
-
-
-  :global(.experience-set) {
+  :global(.experience-marquee-list) {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: none;
     gap: 2rem;
-    flex-shrink: 0;
+    padding: 20px 0;
   }
 
   /* Experience Card Marquee */
@@ -603,6 +606,15 @@
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  :global(.experience-card-marquee *) {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
   }
 
   :global(.experience-header) {
@@ -737,30 +749,16 @@
     transform: translate(1px, -1px);
   }
 
-  /* Marquee Animation */
-  @keyframes experienceMarqueeScroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
   /* Reduce motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
-    :global(.experience-marquee) {
-      animation: none;
-    }
-    
-    :global(.experience-marquee-wrapper) {
+    :global(.experience-draggable-marquee) {
       overflow-x: auto;
       scroll-behavior: smooth;
     }
-    
-    :global(.experience-marquee) {
-      justify-content: flex-start;
-      gap: 2rem;
+
+    :global(.experience-marquee-collection) {
+      animation: none !important;
+      transform: none !important;
     }
   }
 
@@ -870,34 +868,30 @@
       min-height: 250px;
     }
 
-    :global(.experience-set) {
+    :global(.experience-marquee-collection),
+    :global(.experience-marquee-list) {
       gap: 1.5rem;
     }
 
-    :global(.experience-marquee) {
-      animation-duration: 35s;
-    }
-
- 
     :global(.experience-number) {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.225rem; /* 19.6px */
+      font-size: 0.875rem;
+      line-height: 1.225rem;
     }
 
     :global(.experience-title) {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.225rem; /* 19.6px */
+      font-size: 0.875rem;
+      line-height: 1.225rem;
     }
 
     :global(.experience-company) {
-      font-size: 0.7rem; /* 11.2px */
-      line-height: 1.05rem; /* 16.8px */
+      font-size: 0.7rem;
+      line-height: 1.05rem;
     }
 
     :global(.description-normal),
     :global(.description-highlight) {
-      font-size: 0.7rem; /* 11.2px */
-      line-height: 1.05rem; /* 16.8px */
+      font-size: 0.7rem;
+      line-height: 1.05rem;
     }
   }
 
@@ -911,34 +905,30 @@
       min-height: 230px;
     }
 
-    :global(.experience-set) {
+    :global(.experience-marquee-collection),
+    :global(.experience-marquee-list) {
       gap: 1rem;
     }
 
-    :global(.experience-marquee) {
-      animation-duration: 30s;
-    }
-
-  
     :global(.experience-number) {
-      font-size: 0.79rem; /* 12.6px */
-      line-height: 1.05rem; /* 16.8px */
+      font-size: 0.79rem;
+      line-height: 1.05rem;
     }
 
     :global(.experience-title) {
-      font-size: 0.79rem; /* 12.6px */
-      line-height: 1.05rem; /* 16.8px */
+      font-size: 0.79rem;
+      line-height: 1.05rem;
     }
 
     :global(.experience-company) {
-      font-size: 0.61rem; /* 9.8px */
-      line-height: 0.875rem; /* 14px */
+      font-size: 0.61rem;
+      line-height: 0.875rem;
     }
 
     :global(.description-normal),
     :global(.description-highlight) {
-      font-size: 0.61rem; /* 9.8px */
-      line-height: 0.875rem; /* 14px */
+      font-size: 0.61rem;
+      line-height: 0.875rem;
     }
   }
 

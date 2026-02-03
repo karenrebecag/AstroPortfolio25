@@ -1,46 +1,219 @@
 ---
-import { Image } from 'astro:assets';
 import styles from './Enterprises.module.css';
 import { t } from '../../../i18n/utils.js';
 
 const { lang = 'en' } = Astro.props;
 
 const logos = [
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientLogo-1.png', alt: 'Ancient', width: 132, height: 44 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAILogo.png', alt: 'Athenis AI', width: 132, height: 44 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/OpinatorLogo.png', alt: 'Opinator', width: 132, height: 44 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SodioWhite.png', alt: 'Sodio', width: 53, height: 18 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SpilLogo.png', alt: 'Spil', width: 53, height: 18 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCraftersLogo.png', alt: 'WebCrafters', width: 132, height: 44 },
-  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ZoekLogo.png', alt: 'Zoek', width: 53, height: 18 }
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AncientLogo-1.png', alt: 'Ancient' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/AthenisAILogo.png', alt: 'Athenis AI' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/OpinatorLogo.png', alt: 'Opinator' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SodioWhite.png', alt: 'Sodio' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/SpilLogo.png', alt: 'Spil' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/WebCraftersLogo.png', alt: 'WebCrafters' },
+  { src: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ZoekLogo.png', alt: 'Zoek' }
 ];
-
-// Duplicar array para el efecto de loop infinito
-const duplicatedLogos = logos.concat(logos);
 ---
 
 <section class={styles.enterprises}>
   <div class={styles.enterprisesContainer}>
     <div class={styles.enterprisesWrapper}>
-      <div class={styles.container}>
-        <h2 class={styles.title}>{t('enterprises.title', lang)}</h2>
-        <div class={styles.slider}>
-          {duplicatedLogos.map((logo, index) => (
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.width}
-              height={logo.height}
-              class={styles.logo}
-              loading="lazy"
-              decoding="async"
-              format="webp"
-            />
-          ))}
+      <h2 class={styles.title}>{t('enterprises.title', lang)}</h2>
+
+      <!-- Logo Wall Cycle -->
+      <div
+        data-logo-wall-shuffle="true"
+        data-logo-wall-cycle-init
+        class={styles['logo-wall']}
+      >
+        <div class={styles['logo-wall__collection']}>
+          <div data-logo-wall-list class={styles['logo-wall__list']}>
+            {logos.map((logo) => (
+              <div data-logo-wall-item class={styles['logo-wall__item']}>
+                <div data-logo-wall-target-parent class={styles['logo-wall__logo']}>
+                  <div class={styles['logo-wall__logo-before']}></div>
+                  <div data-logo-wall-target class={styles['logo-wall__logo-target']}>
+                    <img
+                      src={logo.src}
+                      loading="lazy"
+                      alt={logo.alt}
+                      class={styles['logo-wall__logo-img']}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<script>
+  import gsap from 'gsap';
 
+  async function initLogoWallCycle() {
+    const loopDelay = 1.5;   // Loop Duration
+    const duration  = 0.9;   // Animation Duration
+
+    // Dynamically import ScrollTrigger
+    let ScrollTrigger: any;
+    try {
+      const module = await import('gsap/ScrollTrigger');
+      ScrollTrigger = module.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+    } catch (error) {
+      console.warn('[LogoWall] Failed to load ScrollTrigger:', error);
+      return;
+    }
+
+    document.querySelectorAll('[data-logo-wall-cycle-init]').forEach(root => {
+      const list = root.querySelector('[data-logo-wall-list]');
+      if (!list) return;
+
+      const items = Array.from(list.querySelectorAll('[data-logo-wall-item]'));
+
+      const shuffleFront = root.getAttribute('data-logo-wall-shuffle') !== 'false';
+      const originalTargets = items
+        .map(item => item.querySelector('[data-logo-wall-target]'))
+        .filter(Boolean) as Element[];
+
+      let visibleItems: Element[] = [];
+      let visibleCount = 0;
+      let pool: Element[] = [];
+      let pattern: number[] = [];
+      let patternIndex = 0;
+      let tl: gsap.core.Timeline;
+
+      function isVisible(el: Element) {
+        return window.getComputedStyle(el).display !== 'none';
+      }
+
+      function shuffleArray<T>(arr: T[]): T[] {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function setup() {
+        if (tl) {
+          tl.kill();
+        }
+        visibleItems = items.filter(isVisible);
+        visibleCount = visibleItems.length;
+
+        pattern = shuffleArray(
+          Array.from({ length: visibleCount }, (_, i) => i)
+        );
+        patternIndex = 0;
+
+        // remove all injected targets
+        items.forEach(item => {
+          item.querySelectorAll('[data-logo-wall-target]').forEach(old => old.remove());
+        });
+
+        pool = originalTargets.map(n => n.cloneNode(true) as Element);
+
+        let front: Element[], rest: Element[];
+        if (shuffleFront) {
+          const shuffledAll = shuffleArray(pool);
+          front = shuffledAll.slice(0, visibleCount);
+          rest = shuffleArray(shuffledAll.slice(visibleCount));
+        } else {
+          front = pool.slice(0, visibleCount);
+          rest = shuffleArray(pool.slice(visibleCount));
+        }
+        pool = front.concat(rest);
+
+        for (let i = 0; i < visibleCount; i++) {
+          const parent =
+            visibleItems[i].querySelector('[data-logo-wall-target-parent]') ||
+            visibleItems[i];
+          const logoToAppend = pool.shift();
+          if (logoToAppend) {
+            parent.appendChild(logoToAppend);
+          }
+        }
+
+        tl = gsap.timeline({ repeat: -1, repeatDelay: loopDelay });
+        tl.call(swapNext);
+        tl.play();
+      }
+
+      function swapNext() {
+        const nowCount = items.filter(isVisible).length;
+        if (nowCount !== visibleCount) {
+          setup();
+          return;
+        }
+        if (!pool.length) return;
+
+        const idx = pattern[patternIndex % visibleCount];
+        patternIndex++;
+
+        const container = visibleItems[idx];
+        const parent =
+          container.querySelector('[data-logo-wall-target-parent]') ||
+          container.querySelector('*:has(> [data-logo-wall-target])') ||
+          container;
+        const existing = parent.querySelectorAll('[data-logo-wall-target]');
+        if (existing.length > 1) return;
+
+        const current = parent.querySelector('[data-logo-wall-target]');
+        const incoming = pool.shift();
+        if (!incoming) return;
+
+        gsap.set(incoming, { yPercent: 50, autoAlpha: 0 });
+        parent.appendChild(incoming);
+
+        if (current) {
+          gsap.to(current, {
+            yPercent: -50,
+            autoAlpha: 0,
+            duration,
+            ease: "expo.inOut",
+            onComplete: () => {
+              current.remove();
+              pool.push(current);
+            }
+          });
+        }
+
+        gsap.to(incoming, {
+          yPercent: 0,
+          autoAlpha: 1,
+          duration,
+          delay: 0.1,
+          ease: "expo.inOut"
+        });
+      }
+
+      setup();
+
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top bottom',
+        end: 'bottom top',
+        onEnter: () => tl.play(),
+        onLeave: () => tl.pause(),
+        onEnterBack: () => tl.play(),
+        onLeaveBack: () => tl.pause()
+      });
+
+      document.addEventListener('visibilitychange', () =>
+        document.hidden ? tl.pause() : tl.play()
+      );
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogoWallCycle);
+  } else {
+    initLogoWallCycle();
+  }
+</script>

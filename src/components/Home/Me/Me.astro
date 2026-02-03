@@ -222,17 +222,17 @@ const experienceData = experiencesFromCMS.length > 0
     </motion.div>
   </div>
   
-  <!-- Desktop: Marquee Infinito (visible en vp >= 768px) -->
+  <!-- Desktop: Draggable Marquee (visible en vp >= 768px) -->
   <div class={styles['experience-marquee-desktop']}>
     <div class={styles['experience-marquee-container']}>
       <div class={styles['experience-marquee-wrapper-limited']}>
-        <ExperienceMarqueeIsland experienceData={experienceData} client:visible={{rootMargin: "400px"}} />
+        <ExperienceMarqueeIsland experienceData={experienceData} lang={lang} client:visible={{rootMargin: "400px"}} />
       </div>
     </div>
   </div>
 
   <!-- Mobile: Slider Manual (visible en vp < 768px) -->
   <div class={styles['experience-slider-mobile']}>
-    <ExperienceSlider experienceData={experienceData} client:visible={{rootMargin: "400px"}} />
+    <ExperienceSlider experienceData={experienceData} lang={lang} client:visible={{rootMargin: "400px"}} />
   </div>
 </div>
