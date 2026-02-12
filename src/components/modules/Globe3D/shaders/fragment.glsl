@@ -1,3 +1,5 @@
+precision mediump float;
+
 uniform sampler2D u_map_tex;
 
 varying float vOpacity;

@@ -56,7 +56,7 @@
   .section-content {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
+    gap: 1rem;
     align-items: flex-start;
   }
 

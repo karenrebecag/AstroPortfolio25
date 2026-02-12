@@ -11,27 +11,38 @@ const initialState: Globe3DState = {
   pointerPosition: null,
   coordinates2D: [0, 0],
   popupVisible: false,
-  elapsedTime: 0,
 };
 
-export const useGlobe3DStore = create<Globe3DStore>((set) => ({
+export const useGlobe3DStore = create<Globe3DStore>((set, get) => ({
   ...initialState,
 
   setLoading: (loading) => {
+    if (get().isLoading === loading) return;
     set({ isLoading: loading });
-    // Fade in when loading completes
     if (!loading) {
       setTimeout(() => set({ opacity: 1 }), 100);
     }
   },
 
-  setInteracting: (interacting) => set({ isInteracting: interacting }),
+  setInteracting: (interacting) => {
+    if (get().isInteracting === interacting) return;
+    set({ isInteracting: interacting });
+  },
 
-  setPaused: (paused) => set({ isPaused: paused }),
+  setPaused: (paused) => {
+    if (get().isPaused === paused) return;
+    set({ isPaused: paused });
+  },
 
-  setHovered: (hovered) => set({ isHovered: hovered }),
+  setHovered: (hovered) => {
+    if (get().isHovered === hovered) return;
+    set({ isHovered: hovered });
+  },
 
-  setOpacity: (opacity) => set({ opacity }),
+  setOpacity: (opacity) => {
+    if (get().opacity === opacity) return;
+    set({ opacity });
+  },
 
   setActiveMarker: (marker) => set({ activeMarker: marker }),
 
@@ -39,9 +50,10 @@ export const useGlobe3DStore = create<Globe3DStore>((set) => ({
 
   setCoordinates2D: (coords) => set({ coordinates2D: coords }),
 
-  setPopupVisible: (visible) => set({ popupVisible: visible }),
-
-  setElapsedTime: (time) => set({ elapsedTime: time }),
+  setPopupVisible: (visible) => {
+    if (get().popupVisible === visible) return;
+    set({ popupVisible: visible });
+  },
 
   reset: () => set(initialState),
 }));

@@ -1,195 +1,178 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
+import type { QuickProject } from './types';
 
-// Definición del tipo para un solo proyecto
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  url: string;
-  type: string;
-}
-
-// Props del componente
 interface ProjectMarqueeIslandProps {
-  projects: Project[];
+  projects: QuickProject[];
 }
 
 const ProjectMarqueeIsland: React.FC<ProjectMarqueeIslandProps> = React.memo(({ projects: projectData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
+  /** Create a single project card using safe DOM APIs (no innerHTML) */
+  const createProjectCard = useCallback((project: QuickProject) => {
+    const card = document.createElement('div');
+    card.className = 'project-card-marquee';
+    card.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${CSS.escape(project.image)})`;
+
+    // Content wrapper
+    const content = document.createElement('div');
+    content.className = 'project-card-content';
+
+    // Header: number + type
+    const header = document.createElement('div');
+    header.className = 'project-card-header';
+
+    const number = document.createElement('div');
+    number.className = 'project-number';
+    number.textContent = project.id;
+
+    const type = document.createElement('div');
+    type.className = 'project-type';
+    type.textContent = project.type;
+
+    header.appendChild(number);
+    header.appendChild(type);
+
+    // Body: title + description
+    const body = document.createElement('div');
+    body.className = 'project-card-body';
+
+    const title = document.createElement('h3');
+    title.className = 'project-card-title';
+    title.textContent = project.title;
+
+    const desc = document.createElement('p');
+    desc.className = 'project-card-description';
+    desc.textContent = project.description;
+
+    body.appendChild(title);
+    body.appendChild(desc);
+
+    // Footer: tags + visit button
+    const footer = document.createElement('div');
+    footer.className = 'project-card-footer';
+
+    const tags = document.createElement('div');
+    tags.className = 'project-tags';
+    for (const tagText of project.tags) {
+      const tag = document.createElement('span');
+      tag.className = 'project-tag';
+      tag.textContent = tagText;
+      tags.appendChild(tag);
+    }
+
+    const visitBtn = document.createElement('button');
+    visitBtn.className = 'project-visit-btn';
+    visitBtn.dataset.url = project.url;
+
+    const visitText = document.createElement('span');
+    visitText.className = 'visit-text';
+    visitText.textContent = 'Visit';
+
+    const visitIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    visitIcon.setAttribute('class', 'visit-icon');
+    visitIcon.setAttribute('width', '12');
+    visitIcon.setAttribute('height', '12');
+    visitIcon.setAttribute('viewBox', '0 0 24 24');
+    visitIcon.setAttribute('fill', 'none');
+    visitIcon.setAttribute('stroke', 'currentColor');
+    visitIcon.setAttribute('stroke-width', '2');
+    visitIcon.setAttribute('stroke-linecap', 'round');
+    visitIcon.setAttribute('stroke-linejoin', 'round');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M7 17L17 7M17 7H7M17 7V17');
+    visitIcon.appendChild(path);
+
+    visitBtn.appendChild(visitText);
+    visitBtn.appendChild(visitIcon);
+
+    visitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const url = visitBtn.dataset.url;
+      if (url) window.open(url, '_blank', 'noopener,noreferrer');
+    });
+
+    footer.appendChild(tags);
+    footer.appendChild(visitBtn);
+
+    content.appendChild(header);
+    content.appendChild(body);
+    content.appendChild(footer);
+    card.appendChild(content);
+
+    // Card-level click
+    card.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.project-visit-btn')) {
+        if (project.url) window.open(project.url, '_blank', 'noopener,noreferrer');
+      }
+    });
+
+    return card;
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Crear el marquee de project cards
-    const createProjectMarquee = () => {
-      const container = containerRef.current;
-      if (!container) return;
+    const container = containerRef.current;
 
-      // Limpiar contenido existente
-      container.innerHTML = '';
+    // Build marquee DOM
+    const buildMarquee = (items: QuickProject[], reverse: boolean) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = reverse
+        ? 'project-marquee-wrapper project-marquee-reverse'
+        : 'project-marquee-wrapper';
 
-      // Crear marquee wrapper
-      const marqueeWrapper = document.createElement('div');
-      marqueeWrapper.className = 'project-marquee-wrapper';
+      const track = document.createElement('div');
+      track.className = reverse
+        ? 'project-marquee project-marquee-opposite'
+        : 'project-marquee';
 
-      // Crear marquee container
-      const marqueeContainer = document.createElement('div');
-      marqueeContainer.className = 'project-marquee';
-
-      // Función para crear una card de project
-      const createProjectCard = (project: typeof projectData[0]) => {
-        const card = document.createElement('div');
-        card.className = 'project-card-marquee';
-        card.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${project.image})`;
-        
-        card.innerHTML = `
-          <div class="project-card-content">
-            <div class="project-card-header">
-              <div class="project-number">${project.id}</div>
-              <div class="project-type">${project.type}</div>
-            </div>
-            <div class="project-card-body">
-              <h3 class="project-card-title">${project.title}</h3>
-              <p class="project-card-description">${project.description}</p>
-            </div>
-            <div class="project-card-footer">
-              <div class="project-tags">
-                ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-              </div>
-              <button class="project-visit-btn" data-url="${project.url}">
-                <span class="visit-text">Visit</span>
-                <svg class="visit-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        `;
-        
-        // Agregar event listener al botón Visit
-        const visitBtn = card.querySelector('.project-visit-btn') as HTMLButtonElement;
-        if (visitBtn) {
-          visitBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const url = visitBtn.dataset.url;
-            if (url) {
-              window.open(url, '_blank', 'noopener,noreferrer');
-            }
-          });
+      // Two identical sets for seamless loop
+      for (let i = 0; i < 2; i++) {
+        const set = document.createElement('div');
+        set.className = 'project-set';
+        for (const project of items) {
+          set.appendChild(createProjectCard(project));
         }
+        track.appendChild(set);
+      }
 
-        // Agregar event listener a toda la card para navegación
-        card.addEventListener('click', (e) => {
-          // Solo si no se clickeó el botón Visit
-          if (!(e.target as Element).closest('.project-visit-btn')) {
-            const url = project.url;
-            if (url) {
-              window.open(url, '_blank', 'noopener,noreferrer');
-            }
+      wrapper.appendChild(track);
+      return wrapper;
+    };
+
+    // First marquee (normal order)
+    container.appendChild(buildMarquee(projectData, false));
+
+    // Second marquee (reversed order)
+    container.appendChild(buildMarquee([...projectData].reverse(), true));
+
+    // Pause animation when off-screen
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const marquees = entry.target.querySelectorAll<HTMLElement>('.project-marquee');
+          const state = entry.isIntersecting ? 'running' : 'paused';
+          for (const m of marquees) {
+            m.style.animationPlayState = state;
           }
-        });
-        
-        return card;
-      };
-
-      // Crear primera serie de cards
-      const firstSet = document.createElement('div');
-      firstSet.className = 'project-set';
-      projectData.forEach(project => {
-        firstSet.appendChild(createProjectCard(project));
-      });
-
-      // Crear segunda serie de cards (duplicada para seamless loop)
-      const secondSet = document.createElement('div');
-      secondSet.className = 'project-set';
-      projectData.forEach(project => {
-        secondSet.appendChild(createProjectCard(project));
-      });
-
-      // Agregar ambos sets al marquee
-      marqueeContainer.appendChild(firstSet);
-      marqueeContainer.appendChild(secondSet);
-      marqueeWrapper.appendChild(marqueeContainer);
-      container.appendChild(marqueeWrapper);
-
-      // Crear segundo marquee (dirección opuesta con elementos invertidos)
-      const marqueeWrapper2 = document.createElement('div');
-      marqueeWrapper2.className = 'project-marquee-wrapper project-marquee-reverse';
-
-      const marqueeContainer2 = document.createElement('div');
-      marqueeContainer2.className = 'project-marquee project-marquee-opposite';
-
-      // Crear primera serie de cards invertidas
-      const firstSetReverse = document.createElement('div');
-      firstSetReverse.className = 'project-set';
-      // Invertir el orden del array
-      [...projectData].reverse().forEach(project => {
-        firstSetReverse.appendChild(createProjectCard(project));
-      });
-
-      // Crear segunda serie de cards invertidas (duplicada para seamless loop)
-      const secondSetReverse = document.createElement('div');
-      secondSetReverse.className = 'project-set';
-      [...projectData].reverse().forEach(project => {
-        secondSetReverse.appendChild(createProjectCard(project));
-      });
-
-      // Agregar ambos sets al segundo marquee
-      marqueeContainer2.appendChild(firstSetReverse);
-      marqueeContainer2.appendChild(secondSetReverse);
-      marqueeWrapper2.appendChild(marqueeContainer2);
-      container.appendChild(marqueeWrapper2);
-    };
-
-    // Configurar IntersectionObserver para performance
-    const setupIntersectionObserver = () => {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const marquees = entry.target.querySelectorAll('.project-marquee');
-            marquees.forEach((marquee) => {
-              if (entry.isIntersecting) {
-                (marquee as HTMLElement).style.animationPlayState = 'running';
-              } else {
-                (marquee as HTMLElement).style.animationPlayState = 'paused';
-              }
-            });
-          });
-        },
-        {
-          rootMargin: '200px 0px',
-          threshold: 0.1
         }
-      );
+      },
+      { rootMargin: '200px 0px', threshold: 0.1 }
+    );
+    observerRef.current.observe(container);
 
-      if (containerRef.current) {
-        observerRef.current.observe(containerRef.current);
-      }
-    };
-
-    // Crear el marquee al montar el componente
-    createProjectMarquee();
-    setupIntersectionObserver();
-
-    // Cleanup function
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-      if (containerRef.current) {
-        containerRef.current.innerHTML = '';
-      }
+      observerRef.current?.disconnect();
+      container.innerHTML = '';
     };
-  }, []);
+  }, [projectData, createProjectCard]);
 
   return (
     <div ref={containerRef} className="project-marquee-container">
-      {/* Container will be populated by vanilla JS */}
+      {/* Container populated by vanilla JS for marquee performance */}
     </div>
   );
 });

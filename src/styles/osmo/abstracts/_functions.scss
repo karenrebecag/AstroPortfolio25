@@ -1,0 +1,68 @@
+// ==========================================================================
+// Osmo Scaling System — Functions
+// ==========================================================================
+
+@use "variables" as *;
+
+/// Validate a single breakpoint config map
+/// @param {String} $name - Breakpoint name (for error messages)
+/// @param {Map} $config - The breakpoint configuration
+@function osmo-validate-breakpoint($name, $config) {
+  $required-keys: (unit, ideal, min, max);
+
+  @each $key in $required-keys {
+    @if not map-has-key($config, $key) {
+      @error "Osmo: Breakpoint '#{$name}' is missing required key '#{$key}'.";
+    }
+  }
+
+  $unit: map-get($config, unit);
+  $ideal: map-get($config, ideal);
+  $min: map-get($config, min);
+  $max: map-get($config, max);
+
+  // Validate unitless values
+  @if unit($unit) != "" {
+    @error "Osmo: '#{$name}.unit' must be unitless. Got #{$unit}.";
+  }
+  @if unit($ideal) != "" {
+    @error "Osmo: '#{$name}.ideal' must be unitless. Got #{$ideal}.";
+  }
+
+  // Validate min < max
+  @if $min >= $max {
+    @error "Osmo: '#{$name}.min' (#{$min}) must be less than '#{$name}.max' (#{$max}).";
+  }
+
+  // Validate positive values
+  @if $unit <= 0 {
+    @error "Osmo: '#{$name}.unit' must be positive. Got #{$unit}.";
+  }
+  @if $ideal <= 0 {
+    @error "Osmo: '#{$name}.ideal' must be positive. Got #{$ideal}.";
+  }
+
+  @return true;
+}
+
+/// Convert a Figma pixel value to rem using the Osmo system.
+/// Use in SCSS for static values. At runtime, rem scales via --size-font on body.
+/// @param {Number} $figma-px - The pixel value from Figma
+/// @param {Number} $base - The base unit (default: 16)
+/// @return {Number} rem value
+@function osmo-rem($figma-px, $base: 16) {
+  @if unit($figma-px) == "px" {
+    $figma-px: math.div($figma-px, 1px);
+  }
+  @return math.div($figma-px, $base) * 1rem;
+}
+
+/// Get a specific breakpoint config from the map
+/// @param {String} $name - Breakpoint name
+/// @return {Map} Breakpoint configuration
+@function osmo-get-bp($name) {
+  @if not map-has-key($osmo-breakpoints, $name) {
+    @error "Osmo: Unknown breakpoint '#{$name}'. Available: #{map-keys($osmo-breakpoints)}.";
+  }
+  @return map-get($osmo-breakpoints, $name);
+}

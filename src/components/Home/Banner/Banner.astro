@@ -1,7 +1,6 @@
 ---
-// Banner component integrating BannerButtonsWrapper and Marquees
+// Banner component with Marquees
 import styles from './Banner.module.css';
-import BannerButtonsWrapper from './BannerButtonsWrapper.astro';
 import BannerMarqueesWrapper from './BannerMarqueesWrapper.astro';
 import MainButton from '../../modules/Header/MainButton.astro';
 import SecondaryButton from '../../ui/SecondaryButton.astro';
@@ -26,6 +25,7 @@ const { lang = 'en' } = Astro.props;
       alt="Karen Rebeca Ortiz - Design Engineer Portfolio"
       fetchpriority="high"
       loading="eager"
+      decoding="async"
       width="520"
       height="537"
     />
@@ -37,61 +37,34 @@ const { lang = 'en' } = Astro.props;
 </div>
 
 
-
-
 <script>
-  // Dark mode handler for Banner
-  const applyDarkMode = (isDark: boolean) => {
-    const bannerContainer = document.getElementById('bannerContainer');
-    const darkOverlay = document.getElementById('darkOverlay');
-    const bannerImage = document.getElementById('banner-image') as HTMLImageElement;
+  // Dark mode handler — only image src swap (styles handled by CSS module)
+  const swapBannerImage = (isDark: boolean) => {
+    const bannerImage = document.getElementById('banner-image') as HTMLImageElement | null;
+    if (!bannerImage) return;
 
-    if (!bannerContainer || !darkOverlay || !bannerImage) return;
-
-    if (isDark) {
-      // Dark mode Banner background
-      (bannerContainer as HTMLElement).style.backgroundSize = '40px 40px, 40px 40px';
-      (bannerContainer as HTMLElement).style.backgroundPosition = 'center';
-      (bannerContainer as HTMLElement).style.backgroundRepeat = 'repeat';
-      // Show dark overlay
-      (darkOverlay as HTMLElement).style.opacity = '1';
-
-      // Banner image dark src and filter
-      const darkSrc = bannerImage.getAttribute('data-dark-src');
-      if (darkSrc) bannerImage.src = darkSrc;
-      (bannerImage as HTMLElement).style.filter = 'drop-shadow(0 0 60px #c31e9225) drop-shadow(0 0 80px rgba(195, 30, 146, 0.06)) drop-shadow(0 0 180px rgba(195, 30, 146, 0.02))';
-    } else {
-      // Light mode - reset to defaults
-      (bannerContainer as HTMLElement).style.background = '';
-      (bannerContainer as HTMLElement).style.backgroundImage = '';
-      (bannerContainer as HTMLElement).style.backgroundSize = '';
-      (bannerContainer as HTMLElement).style.backgroundPosition = '';
-      (bannerContainer as HTMLElement).style.backgroundRepeat = '';
-      // Hide dark overlay
-      (darkOverlay as HTMLElement).style.opacity = '';
-
-      // Banner image light src and reset filter
-      const lightSrc = bannerImage.getAttribute('data-light-src');
-      if (lightSrc) bannerImage.src = lightSrc;
-      (bannerImage as HTMLElement).style.filter = '';
-    }
+    const src = bannerImage.getAttribute(isDark ? 'data-dark-src' : 'data-light-src');
+    if (src) bannerImage.src = src;
   };
 
-  // Check initial dark mode state
-  const checkInitialDarkMode = () => {
-    const isDark = document.documentElement.classList.contains('dark-mode');
-    applyDarkMode(isDark);
-  };
+  const onDarkModeChange = ((event: CustomEvent) => {
+    swapBannerImage(event.detail.isDark);
+  }) as EventListener;
 
-  // Listen for dark mode toggle changes
-  window.addEventListener('darkModeChange', ((event: CustomEvent) => {
-    applyDarkMode(event.detail.isDark);
-  }) as EventListener);
-
-  // Execute immediately if DOM is ready, otherwise wait
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkInitialDarkMode);
-  } else {
-    checkInitialDarkMode();
+  function init() {
+    swapBannerImage(document.documentElement.classList.contains('dark-mode'));
   }
+
+  window.addEventListener('darkModeChange', onDarkModeChange);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Cleanup on Astro page navigation
+  document.addEventListener('astro:before-preparation', () => {
+    window.removeEventListener('darkModeChange', onDarkModeChange);
+  }, { once: true });
 </script>

@@ -1,0 +1,266 @@
+/* Shared Marquee Banner styles — color variants via CSS custom properties */
+
+.marqueeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Advanced Marquee Structure */
+.marqueeAdvanced {
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.marqueeScroll {
+  will-change: transform;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.marqueeCollection {
+  will-change: transform;
+  display: flex;
+  position: relative;
+}
+
+.marqueeItem {
+  justify-content: flex-start;
+  align-items: center;
+  font-size: clamp(163px, 32.6vw, 326px);
+  display: flex;
+  line-height: 1;
+}
+
+.marqueeText {
+  white-space: nowrap;
+  margin-bottom: 0;
+  margin-right: 0.25em;
+  font-size: 1em;
+}
+
+/* --- Left variant (purple gradient) --- */
+.left .marqueeText {
+  background: linear-gradient(90deg, #b190ff, #7449ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3);
+}
+
+/* --- Right variant (solid dark) --- */
+.right .marqueeText {
+  color: #1f2937;
+  text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.2);
+}
+
+/* Marquee wrapper — shared layout */
+.marqueeWrapper {
+  width: 100%;
+  max-width: 100vw;
+  height: clamp(163px, 32.6vw, 326px);
+  min-height: 163px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Hardware acceleration for marquee elements */
+.marqueeAdvanced {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* =============================================
+   Dark mode styles — shared neon structure
+   Color variants use CSS custom properties
+   ============================================= */
+
+/* Default neon color variables per variant */
+.left {
+  --neon-r: 157;
+  --neon-g: 127;
+  --neon-b: 193;
+  --neon-stroke: #d51da4;
+}
+
+.right {
+  --neon-r: 0;
+  --neon-g: 255;
+  --neon-b: 255;
+  --neon-stroke: rgb(221, 255, 255);
+}
+
+/* Dark mode base neon text */
+:global(.dark-mode) .marqueeText {
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1px var(--neon-stroke);
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 1),
+    0 0 20px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 1),
+    0 0 60px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.6),
+    0 0 120px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(1.2) saturate(1.3)
+    drop-shadow(0 0 40px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.15));
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Dark mode hover neon intensified */
+:global(.dark-mode) .marqueeWrapper:hover .marqueeText {
+  -webkit-text-stroke: 1px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 1);
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 1),
+    0 0 25px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 1),
+    0 0 75px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.8),
+    0 0 125px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.5),
+    0 0 175px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.3);
+  filter: brightness(1.5) saturate(1.5)
+    drop-shadow(0 0 60px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.25));
+  animation: neonFlicker 1.8s ease-in-out infinite alternate;
+}
+
+/* Right variant uses slightly different hover stroke */
+:global(.dark-mode) .right .marqueeWrapper:hover .marqueeText {
+  -webkit-text-stroke: 1px rgb(237, 248, 248);
+}
+
+/* Neon flicker animation — shared */
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 10px #fff,
+      0 0 42px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 1),
+      0 0 82px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.7),
+      0 0 151px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.4);
+    filter: brightness(2) saturate(1.5);
+  }
+  20%, 24%, 55% {
+    text-shadow:
+      0 0 3px rgba(255, 255, 255, 0.4),
+      0 0 8px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.6),
+      0 0 25px rgba(var(--neon-r), var(--neon-g), var(--neon-b), 0.3);
+    filter: brightness(0.8) saturate(0.8);
+  }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :global(.dark-mode) .marqueeWrapper:hover .marqueeText {
+    animation: none !important;
+    filter: brightness(1.2) saturate(1.2);
+  }
+}
+
+/* Safari-Only Fallback — disable complex neon effects */
+@supports (-webkit-appearance: none) and (not (background: paint(something))) {
+  /* Left variant: gradient fallback */
+  :global(.dark-mode) .left .marqueeText {
+    background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-stroke: none !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  :global(.dark-mode) .left .marqueeWrapper:hover .marqueeText {
+    background: linear-gradient(90deg, #b190ff, #7449ff) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-stroke: none !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0px 4px 8px rgba(59, 2, 111, 0.3) !important;
+    filter: none !important;
+    animation: none !important;
+  }
+
+  /* Right variant: solid color fallback */
+  :global(.dark-mode) .right .marqueeText {
+    color: #1f2937 !important;
+    -webkit-text-stroke: none !important;
+    -webkit-text-fill-color: #1f2937 !important;
+    text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398) !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  :global(.dark-mode) .right .marqueeWrapper:hover .marqueeText {
+    color: #1f2937 !important;
+    -webkit-text-stroke: none !important;
+    -webkit-text-fill-color: #1f2937 !important;
+    text-shadow: 0px 4px 8px rgba(2, 2, 2, 0.398) !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* Mobile viewport adjustments — 30% larger */
+@media (max-width: 767px) {
+  .marqueeWrapper {
+    height: clamp(252px, 52.4vw, 484px);
+    min-height: 212px;
+  }
+
+  .marqueeItem {
+    font-size: clamp(212px, 42.4vw, 424px);
+  }
+
+  .marqueeText {
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Large screen edge gradients */
+@media (min-width: 2560px) {
+  .marqueeWrapper::before,
+  .marqueeWrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .marqueeWrapper::before {
+    left: 0;
+    background: linear-gradient(to right, white, transparent);
+  }
+
+  .marqueeWrapper::after {
+    right: 0;
+    background: linear-gradient(to left, white, transparent);
+  }
+
+  :global(.dark-mode) .marqueeWrapper::before {
+    background: linear-gradient(to right, #050112, transparent);
+  }
+
+  :global(.dark-mode) .marqueeWrapper::after {
+    background: linear-gradient(to left, #050112, transparent);
+  }
+}

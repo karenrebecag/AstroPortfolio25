@@ -1,128 +1,69 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import {
-  useSilkStore,
-  useVisibilityState,
-  useSettingsState,
-  useAnimationState,
-  useThreeJSActions
-} from '../../../../stores/threeJSStore';
+import { detectQuality, type QualityLevel } from '../../../../stores/threeJSStore';
 import { observeDarkMode } from '../../../../utils/darkMode';
 
-// ✅ Store moved to utils/stores/threeJSStore.ts for better code organization
-// This eliminates ~130 lines of duplicated store logic
+// Detect quality once at module level (shared across all card instances)
+const quality: QualityLevel =
+  typeof window !== 'undefined' ? detectQuality() : 'medium';
 
 export const SilkBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<{
-    scene: THREE.Scene;
-    camera: THREE.Camera;
-    renderer: THREE.WebGLRenderer;
-    material: THREE.ShaderMaterial;
-    animationId: number | null;
-  } | null>(null);
-  
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // ✅ Using unified store with optimized selectors
-  const { isVisible, isPaused, isLoading } = useVisibilityState();
-  const { quality, opacity } = useSettingsState();
-  const { animationSpeed } = useAnimationState();
-  const { setVisible, setPaused, setLoading } = useThreeJSActions();
+  // Per-instance state (non-reactive — read in animation loop only)
+  const stateRef = useRef({
+    isVisible: false,
+    isPaused: false,
+    opacity: 0,
+    time: 0,
+  });
 
-  // ✅ Unified visibility control using centralized utilities
+  // Single effect: create scene once, control animation internally.
+  // No dependency on isVisible / isPaused — avoids remounting.
   useEffect(() => {
-    let isIntersecting = false;
-
-    const updateVisibility = (isDark: boolean) => {
-      // Only show if NOT in dark mode AND intersecting
-      const shouldBeVisible = !isDark && isIntersecting;
-      setVisible(shouldBeVisible);
-    };
-
-    // Intersection Observer
-    const intersectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        isIntersecting = entry.isIntersecting;
-        // Use observeDarkMode to get current state and update
-        updateVisibility(!document.documentElement.classList.contains('dark-mode'));
-      },
-      {
-        threshold: 0,
-        rootMargin: '800px 0px 200px 0px'
-      }
-    );
-
-    if (mountRef.current) {
-      intersectionObserver.observe(mountRef.current);
-    }
-
-    // Dark mode observer - eliminates ~50 lines of duplicated code
-    const cleanupDarkMode = observeDarkMode((isDark) => {
-      updateVisibility(isDark);
-    });
-
-    return () => {
-      intersectionObserver.disconnect();
-      cleanupDarkMode();
-    };
-  }, [setVisible]);
-
-  // Page Visibility API - optimizado con acciones memoizadas
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setPaused(document.hidden);
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [setPaused]);
-
-  useEffect(() => {
-    if (!mountRef.current || !isVisible) return;
-
+    if (!mountRef.current) return;
     const currentMount = mountRef.current;
-    
-    // Scene setup
+    const state = stateRef.current;
+
+    // ── Scene ──
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: false, // Disable for performance
+
+    // Renderer with adaptive pixel ratio
+    const maxPixelRatio = quality === 'low' ? 1 : quality === 'medium' ? 1.5 : 2;
+    const renderer = new THREE.WebGLRenderer({
+      antialias: false,
       alpha: true,
-      powerPreference: 'high-performance'
+      powerPreference: 'high-performance',
     });
-    
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxPixelRatio));
     currentMount.appendChild(renderer.domElement);
 
-    // Enhanced silk shader based on your reference
+    // ── Silk shader (precision mediump for mobile perf) ──
     const silkMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0.0 },
         uColor: { value: new THREE.Color(0.616, 0.498, 0.757) }, // #9D7FC1
         uContrastColor: { value: new THREE.Color(0.271, 0.137, 0.682) }, // #4523AE
         uSpeed: { value: 5.0 },
-        uScale: { value: 1.0 * (quality === 'low' ? 0.5 : quality === 'medium' ? 1.0 : 1.5) },
+        uScale: { value: quality === 'low' ? 0.5 : quality === 'medium' ? 1.0 : 1.5 },
         uRotation: { value: 0.0 },
         uNoiseIntensity: { value: 1.5 },
-        uOpacity: { value: 0.0 }
+        uOpacity: { value: 0.0 },
       },
       vertexShader: `
         varying vec2 vUv;
-        varying vec3 vPosition;
-
         void main() {
-          vPosition = position;
           vUv = uv;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
-        varying vec2 vUv;
-        varying vec3 vPosition;
+        precision mediump float;
 
+        varying vec2 vUv;
         uniform float uTime;
         uniform vec3  uColor;
         uniform vec3  uContrastColor;
@@ -148,10 +89,10 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
         }
 
         void main() {
-          float rnd        = noise(gl_FragCoord.xy);
-          vec2  uv         = rotateUvs(vUv * uScale, uRotation);
-          vec2  tex        = uv * uScale;
-          float tOffset    = uSpeed * uTime * 0.01; // Slower for performance
+          float rnd     = noise(gl_FragCoord.xy);
+          vec2  uv      = rotateUvs(vUv * uScale, uRotation);
+          vec2  tex     = uv * uScale;
+          float tOffset = uSpeed * uTime * 0.01;
 
           tex.y += 0.03 * sin(8.0 * tex.x - tOffset);
 
@@ -161,114 +102,127 @@ export const SilkBackground: React.FC<{ className?: string }> = ({ className = '
                                            0.02 * tOffset) +
                                    sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
-          vec4 col = vec4(uColor, 1.0) * vec4(pattern) + 
-                     vec4(uContrastColor, 1.0) * (1.0 - pattern) - 
+          vec4 col = vec4(uColor, 1.0) * vec4(pattern) +
+                     vec4(uContrastColor, 1.0) * (1.0 - pattern) -
                      rnd / 15.0 * uNoiseIntensity;
-          
+
           col.a = uOpacity;
           gl_FragColor = col;
         }
       `,
       transparent: true,
-      blending: THREE.NormalBlending
+      blending: THREE.NormalBlending,
     });
 
-    // Simple plane geometry
     const geometry = new THREE.PlaneGeometry(2, 2);
-    const mesh = new THREE.Mesh(geometry, silkMaterial);
-    scene.add(mesh);
+    scene.add(new THREE.Mesh(geometry, silkMaterial));
 
-    // Store scene references
-    sceneRef.current = {
-      scene,
-      camera,
-      renderer,
-      material: silkMaterial,
-      animationId: null
+    // ── Animation ──
+    const animateCallback = () => {
+      state.time += 0.1;
+      silkMaterial.uniforms.uTime.value = state.time;
+      silkMaterial.uniforms.uOpacity.value = state.opacity;
+      renderer.render(scene, camera);
     };
 
-    let time = 0;
-    const animate = () => {
-      // ✅ Use unified store's getState
-      const currentState = useSilkStore.getState();
-
-      if (!currentState.isPaused && currentState.isVisible) {
-        time += 0.1 * currentState.animationSpeed; // Match the original speed
-        silkMaterial.uniforms.uTime.value = time;
-        silkMaterial.uniforms.uOpacity.value = currentState.opacity;
-        renderer.render(scene, camera);
+    const syncAnimationLoop = () => {
+      if (state.isVisible && !state.isPaused) {
+        renderer.setAnimationLoop(animateCallback);
+      } else {
+        renderer.setAnimationLoop(null);
       }
-
-      sceneRef.current!.animationId = requestAnimationFrame(animate);
     };
 
-    // Start animation con smooth loading - usando acción memoizada
-    const timer = setTimeout(() => {
-      setLoading(false);
-      setIsLoaded(true);
-      animate();
-    }, 300);
+    // ── Visibility: Intersection + Dark Mode ──
+    let isIntersecting = false;
 
-    // Resize handler
+    const updateVisibility = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      state.isVisible = !isDark && isIntersecting;
+      state.opacity = state.isVisible ? 1 : 0;
+      syncAnimationLoop();
+    };
+
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        updateVisibility();
+      },
+      { threshold: 0, rootMargin: '800px 0px 200px 0px' }
+    );
+    intersectionObserver.observe(currentMount);
+
+    const cleanupDarkMode = observeDarkMode(() => updateVisibility());
+
+    // Page Visibility API
+    const handleVisibilityChange = () => {
+      state.isPaused = document.hidden;
+      syncAnimationLoop();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // ── Debounced resize ──
+    let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      if (!currentMount || !sceneRef.current) return;
-      
-      const width = currentMount.clientWidth;
-      const height = currentMount.clientHeight;
-      
-      sceneRef.current.renderer.setSize(width, height);
-      // Update camera aspect if needed (for orthographic camera, we don't need to update uniforms)
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!currentMount) return;
+        renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+      }, 150);
     };
-
     window.addEventListener('resize', handleResize);
 
+    // ── WebGL context loss / recovery ──
+    const onContextLost = (e: Event) => {
+      e.preventDefault();
+      renderer.setAnimationLoop(null);
+    };
+    const onContextRestored = () => syncAnimationLoop();
+    renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+    renderer.domElement.addEventListener('webglcontextrestored', onContextRestored);
+
+    setIsLoaded(true);
+
+    // ── Cleanup ──
     return () => {
-      clearTimeout(timer);
+      clearTimeout(resizeTimer);
+      intersectionObserver.disconnect();
+      cleanupDarkMode();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
-      
-      if (sceneRef.current) {
-        if (sceneRef.current.animationId) {
-          cancelAnimationFrame(sceneRef.current.animationId);
-        }
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', onContextRestored);
 
-        // Cleanup completo de recursos Three.js - siguiendo la guía
-        sceneRef.current.scene.traverse((child: THREE.Object3D) => {
-          if (child instanceof THREE.Mesh) {
-            if (child.material) {
-              if (Array.isArray(child.material)) {
-                child.material.forEach(material => material.dispose());
-              } else {
-                child.material.dispose();
-              }
-            }
-            if (child.geometry) {
-              child.geometry.dispose();
-            }
+      renderer.setAnimationLoop(null);
+
+      // Recursive disposal
+      scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.geometry?.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose());
+          } else {
+            child.material?.dispose();
           }
-        });
-
-        // Cleanup específico del material shader
-        sceneRef.current.material.dispose();
-        geometry.dispose();
-        sceneRef.current.renderer.dispose();
-
-        if (currentMount.contains(sceneRef.current.renderer.domElement)) {
-          currentMount.removeChild(sceneRef.current.renderer.domElement);
         }
+      });
+      silkMaterial.dispose();
+      geometry.dispose();
+      renderer.dispose();
+
+      if (currentMount.contains(renderer.domElement)) {
+        currentMount.removeChild(renderer.domElement);
       }
     };
-  }, [isVisible, isPaused, quality, setLoading]);
+  }, []); // No dependencies — scene created once, animation controlled internally
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className={`absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${
-        isLoaded && !isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       } ${className}`}
-      style={{ 
-        zIndex: 1,
-        mixBlendMode: 'normal'
-      }}
+      style={{ zIndex: 1, mixBlendMode: 'normal' }}
     />
   );
 };

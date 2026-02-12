@@ -696,7 +696,6 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
   :global(.project-marquee) {
     display: flex;
     animation: projectMarqueeScroll 50s linear infinite;
-    will-change: transform;
   }
 
   :global(.project-set) {
@@ -933,22 +932,14 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     }
   }
 
-  @keyframes projectMarqueeScrollReverse {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
   /* Second Marquee - Opposite Direction */
   :global(.project-marquee-reverse) {
     margin-top: 2rem;
   }
 
   :global(.project-marquee-opposite) {
-    animation: projectMarqueeScrollReverse 50s linear infinite;
+    animation: projectMarqueeScroll 50s linear infinite;
+    animation-direction: reverse;
   }
 
   /* Loading State */
@@ -1021,11 +1012,6 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
 
   .project-slider-mobile {
     display: none;
-  }
-
-  /* Second Marquee - Only visible on desktop */
-  :global(.project-marquee-reverse) {
-    display: block;
   }
 
   @media (max-width: 767px) {
@@ -1228,46 +1214,18 @@ const projectData = projectDataFromCMS.length > 0 ? projectDataFromCMS : fallbac
     }
   }
 
-  @media (max-width: 480px) {
-    .quick-projects-container {
-      padding: 40px 0;
-    }
-
-    .quick-projects-text-container {
-      padding: 0 20px 30px 20px;
-    }
-
-    :global(.project-card-marquee) {
-      width: 260px;
-      height: 340px;
-    }
-
-    :global(.project-set) {
-      gap: 1rem;
-    }
-
-    :global(.project-marquee),
-    :global(.project-marquee-opposite) {
-      animation-duration: 35s;
-    }
-  }
-
   /* Reduce motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
     :global(.project-marquee),
     :global(.project-marquee-opposite) {
       animation: none;
+      justify-content: flex-start;
+      gap: 2rem;
     }
-    
+
     :global(.project-marquee-wrapper) {
       overflow-x: auto;
       scroll-behavior: smooth;
-    }
-    
-    :global(.project-marquee),
-    :global(.project-marquee-opposite) {
-      justify-content: flex-start;
-      gap: 2rem;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StickyFooter, WhiteStickyFooter } from '../modules/Footer';
+import { StickyFooter } from '../modules/Footer';
 
 interface DynamicFooterProps {
   isDark: boolean;
@@ -7,5 +7,5 @@ interface DynamicFooterProps {
 }
 
 export function DynamicFooter({ isDark, lang = 'en' }: DynamicFooterProps) {
-  return isDark ? <StickyFooter lang={lang} /> : <WhiteStickyFooter lang={lang} />;
+  return <StickyFooter lang={lang} variant={isDark ? 'dark' : 'light'} />;
 }

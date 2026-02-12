@@ -1,4 +1,4 @@
---- 
+---
 // Me.astro - About section component
 import MainButton from '../../modules/Header/MainButton.astro';
 import SecondaryButton from '../../ui/SecondaryButton.astro';
@@ -8,8 +8,6 @@ import GlobeBackground from './ExperienceSlider/GlobeBackground.tsx';
 import { TextDisperseBlack } from '../../ui/TextDisperseBlack.tsx';
 import ExperienceMarqueeIsland from './ExperienceSlider/ExperienceMarqueeIsland.tsx';
 import ExperienceSlider from './ExperienceSlider/ExperienceSlider.tsx';
-import { motion } from 'motion/react';
-import { AnimatedMeHeader, AnimatedMeSection, AnimatedMeElement, AnimatedMeStats, AnimatedMeButton } from './AnimatedMeWrapper.tsx';
 import styles from './Me.module.css';
 import { getLangFromUrl, t } from '../../../i18n/utils.js';
 import { getExperiences } from '../../../lib/cms';
@@ -41,163 +39,120 @@ const experienceData = experiencesFromCMS.length > 0
 
     <!-- Left Column: 3D Cube - Visible on desktop, hidden on mobile -->
     <div class={styles['cube-column-desktop']}>
-      <AnimatedMeHeader client:visible={{rootMargin: "200px"}}>
+      <div class="sticky-image-column sticky top-0 h-screen flex items-center rounded-2xl" data-reveal-group data-stagger="0">
         <div class="w-full aspect-square relative overflow-hidden rounded-lg" style="min-height: 400px; max-height: 600px;">
-          <!-- Cube 3D Background -->
           <CubeBackground client:visible={{rootMargin: "200px"}} className={styles['cube-3d-container']} />
         </div>
-      </AnimatedMeHeader>
+      </div>
     </div>
-    
+
     <!-- Right Column: Scrolling Content -->
     <div class={styles['scrolling-content-column']}>
 
       <!-- Content Section 1: Introduction -->
-      <AnimatedMeSection client:visible={{rootMargin: "100px"}} delay={0.1}>
+      <div class="content-section" data-reveal-group data-stagger="80" data-start="top 85%">
         <div class={`${styles['section-content']} relative z-10`}>
           <div class="relative">
-            <!-- Purple circle positioned behind the heading -->
-            <AnimatedMeElement client:visible delay={0.2} direction="right">
-              <div class={`me-purple-circle bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10`}></div>
-            </AnimatedMeElement>
-            <AnimatedMeElement client:visible delay={0.25}>
-              <h2 class={`me-hero-title text-hero font-median relative z-10 ${styles['me-hero-text']}`}>
-                {meTranslations.hero.name}, <strong class="text-[#7350cc] font-semibold">{meTranslations.hero.role}</strong>
-              </h2>
-            </AnimatedMeElement>
+            <div class={`me-purple-circle bg-[#D9CCFF] rounded-full absolute -top-4 -left-8 -z-10`}></div>
+            <h2 class={`me-hero-title text-hero font-median relative z-10 ${styles['me-hero-text']}`}>
+              {meTranslations.hero.name}, <strong class="text-[#7350cc] font-semibold">{meTranslations.hero.role}</strong>
+            </h2>
           </div>
-          <AnimatedMeElement client:visible delay={0.3}>
-            <h3 class={`${styles['me-heading-lg']} me-heading-lg text-heading-lg ${styles['me-heading-text-dark']} me-heading-text-dark font-secondary font-bold`}>
-              {meTranslations.hero.location}
-            </h3>
-          </AnimatedMeElement>
-          <AnimatedMeElement client:visible delay={0.35}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              {meTranslations.hero.intro}
-            </p>
-          </AnimatedMeElement>
+          <h3 class={`${styles['me-heading-lg']} me-heading-lg text-heading-lg ${styles['me-heading-text-dark']} me-heading-text-dark font-secondary font-bold`}>
+            {meTranslations.hero.location}
+          </h3>
+          <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+            {meTranslations.hero.intro}
+          </p>
         </div>
-      </AnimatedMeSection>
+      </div>
 
       <!-- Content Section 2: Experience -->
-      <AnimatedMeSection client:visible delay={0.15}>
+      <div class="content-section" data-reveal-group data-stagger="80" data-start="top 85%">
         <div class={`${styles['section-content']} relative z-10`}>
-          <AnimatedMeElement client:visible delay={0.4}>
-            <div class={`${styles['section-heading']}`}>
-              <h2 class={`me-section-title text-hero font-median text-[#7350cc]`}>{meTranslations.experience.years}</h2>
-              <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title1}</h3>
-              <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title2}</h3>
-            </div>
-          </AnimatedMeElement>
-          <AnimatedMeElement client:visible delay={0.45}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              {meTranslations.experience.description}
-            </p>
-          </AnimatedMeElement>
-          <AnimatedMeButton client:visible delay={0.5}>
-            <div class="flex items-start gap-9 button-container-me">
-              <MainButton 
-                text={meTranslations.experience.connectButton}
-                href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/"
-              />
-            </div>
-          </AnimatedMeButton>
+          <div class={`${styles['section-heading']}`} data-reveal-group-nested data-stagger="60">
+            <h2 class={`me-section-title text-hero font-median text-[#7350cc]`}>{meTranslations.experience.years}</h2>
+            <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title1}</h3>
+            <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.experience.title2}</h3>
+          </div>
+          <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+            {meTranslations.experience.description}
+          </p>
+          <div class="flex items-start gap-9 button-container-me">
+            <MainButton
+              text={meTranslations.experience.connectButton}
+              href="https://www.linkedin.com/in/karen-rebeca-ortiz-b5a860282/"
+            />
+          </div>
         </div>
-      </AnimatedMeSection>
+      </div>
 
       <!-- Content Section 3: Stats -->
-      <AnimatedMeSection client:visible delay={0.2}>
+      <div class="content-section" data-reveal-group data-stagger="80" data-start="top 85%">
         <div class={`${styles['section-content']} relative z-10`}>
-          <AnimatedMeElement client:visible delay={0.55}>
-            <div class={`${styles['section-heading']}`}>
-              <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.stats.title1}</h2>
-              <h3 class={`me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.stats.title2}</h3>
-            </div>
-          </AnimatedMeElement>
-                    
-          <AnimatedMeElement client:visible delay={0.75}>
-            <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              {meTranslations.stats.description}
-            </p>
-          </AnimatedMeElement>
+          <div class={`${styles['section-heading']}`} data-reveal-group-nested data-stagger="60">
+            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.stats.title1}</h2>
+            <h3 class={`me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.stats.title2}</h3>
+          </div>
+          <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+            {meTranslations.stats.description}
+          </p>
 
           <!-- Stats Grid -->
-          <div class="grid grid-cols-3 gap-6">
-            <AnimatedMeStats client:visible delay={0.6}>
-              <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
-                  <Number value={4} delay={500} className="font-primary font-extrabold" client:visible />
-                </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.awards}</div>
+          <div class="grid grid-cols-3 gap-6" data-reveal-group-nested data-stagger="100">
+            <div class="text-center">
+              <div class={`${styles['me-stats-number']} me-stats-number ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                <Number value={4} delay={500} className="font-primary font-extrabold" client:visible />
               </div>
-            </AnimatedMeStats>
-            
-            <AnimatedMeStats client:visible delay={0.65}>
-              <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
-                  <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
-                  <Number value={30} delay={700} className="font-primary font-extrabold" client:visible />
-                </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.clients}</div>
+              <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.awards}</div>
+            </div>
+            <div class="text-center">
+              <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
+                <Number value={30} delay={700} className="font-primary font-extrabold" client:visible />
               </div>
-            </AnimatedMeStats>
-            
-            <AnimatedMeStats client:visible delay={0.7}>
-              <div class="text-center">
-                <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
-                  <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
-                  <Number value={10} delay={900} className="font-primary font-extrabold" client:visible />
-                </div>
-                <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.countries}</div>
+              <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.clients}</div>
+            </div>
+            <div class="text-center">
+              <div class={`${styles['me-stats-number']} me-stats-number flex items-center justify-center ${styles['me-stats-text-dark']} me-stats-text-dark text-display font-primary font-extrabold mb-2`}>
+                <span class="font-primary font-extrabold text-[#7350cc] mr-1">+</span>
+                <Number value={10} delay={900} className="font-primary font-extrabold" client:visible />
               </div>
-            </AnimatedMeStats>
+              <div class={`${styles['me-body-sm']} me-body-sm text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>{meTranslations.stats.countries}</div>
+            </div>
           </div>
-
         </div>
-      </AnimatedMeSection>
+      </div>
 
       <!-- Content Section 4: Philosophy -->
-      <AnimatedMeSection client:visible delay={0.25}>
+      <div class="content-section" data-reveal-group data-stagger="80" data-start="top 85%">
         <div class={`${styles['section-content']} relative z-10`}>
-          <AnimatedMeElement client:visible delay={0.8}>
-            <div class={`${styles['section-heading']}`}>
-              <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title1}</h2>
-              <h3 class={`me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.philosophy.title2}</h3>
-              <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title3}</h3>
-            </div>
-          </AnimatedMeElement>
-          <AnimatedMeElement client:visible delay={0.85}>
-            <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              {meTranslations.philosophy.description1}
-            </p>
-          </AnimatedMeElement>
-          <AnimatedMeElement client:visible delay={0.9}>
-            <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
-              {meTranslations.philosophy.description2}
-            </p>
-          </AnimatedMeElement>
+          <div class={`${styles['section-heading']}`} data-reveal-group-nested data-stagger="60">
+            <h2 class={`${styles['me-section-title']} me-section-title text-hero font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title1}</h2>
+            <h3 class={`me-section-subtitle font-median text-[#7350cc]`}>{meTranslations.philosophy.title2}</h3>
+            <h3 class={`me-section-subtitle font-median ${styles['me-section-text-dark']} me-section-text-dark`}>{meTranslations.philosophy.title3}</h3>
+          </div>
+          <p class={`${styles['me-body-lg']} me-body-lg text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+            {meTranslations.philosophy.description1}
+          </p>
+          <p class={`${styles['me-body-md']} me-body-md text-body-lg font-medium text-[rgba(8,8,8,0.6)] font-primary`}>
+            {meTranslations.philosophy.description2}
+          </p>
         </div>
-      </AnimatedMeSection>
+      </div>
 
     </div>
   </div>
 </div>
 
 <!-- Globe Section - Above Experience Cards -->
-<div class={`${styles['globe-section']} globe-section`}>
+<div class={`${styles['globe-section']} globe-section`} data-reveal-group data-stagger="100" data-start="top 80%">
   <div class={styles['globe-title-wrapper']}>
-    <motion.div
-      className={styles['globe-title-container']}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      client:idle={{timeout: 500}}
-    >
+    <div class={styles['globe-title-container']}>
       <div class={`${styles['globe-title-text-wrapper']} globe-title-text-wrapper`}>
         <TextDisperseBlack text={meTranslations.globe.title} className={`${styles['globe-title-disperse']} globe-title-disperse`} client:idle={{timeout: 500}} />
       </div>
-    </motion.div>
+    </div>
   </div>
   <div class={styles['globe-container']}>
     <GlobeBackground client:visible={{rootMargin: "300px"}} className={styles['globe-3d-container']} />
@@ -207,21 +162,14 @@ const experienceData = experiencesFromCMS.length > 0
 <!-- Experience Cards Section - Dual System: Marquee (Desktop) + Slider (Mobile) -->
 <div class={`${styles['experience-container']} experience-container ${styles['cards-section']}`}>
   <!-- Text Above Experience Cards -->
-  <div class={styles['experience-text-container']}>
-    <motion.div
-      className={styles['experience-text-wrapper']}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      client:idle={{timeout: 500}}
-    >
+  <div class={styles['experience-text-container']} data-reveal-group data-start="top 85%">
+    <div class={styles['experience-text-wrapper']}>
       <p class={`${styles['experience-description-text']} experience-description-text`}>
         {meTranslations.globe.description}
       </p>
-    </motion.div>
+    </div>
   </div>
-  
+
   <!-- Desktop: Draggable Marquee (visible en vp >= 768px) -->
   <div class={styles['experience-marquee-desktop']}>
     <div class={styles['experience-marquee-container']}>
@@ -236,3 +184,126 @@ const experienceData = experiencesFromCMS.length > 0
     <ExperienceSlider experienceData={experienceData} lang={lang} client:visible={{rootMargin: "400px"}} />
   </div>
 </div>
+
+<script>
+  // GSAP Elements Reveal on Scroll - Osmo Pattern
+  async function initContentRevealScroll() {
+    const gsapModule = await import('gsap');
+    const scrollTriggerModule = await import('gsap/ScrollTrigger');
+
+    const gsap = gsapModule.default;
+    const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('[data-reveal-group]').forEach(groupEl => {
+      const groupStaggerSec = (parseFloat(groupEl.getAttribute('data-stagger') || '100')) / 1000;
+      const groupDistance = groupEl.getAttribute('data-distance') || '2em';
+      const triggerStart = groupEl.getAttribute('data-start') || 'top 80%';
+
+      const animDuration = 0.8;
+      const animEase = "power4.inOut";
+
+      if (prefersReduced) {
+        gsap.set(groupEl, { clearProps: 'all', y: 0, autoAlpha: 1 });
+        return;
+      }
+
+      const directChildren = Array.from(groupEl.children).filter(el => el.nodeType === 1);
+      if (!directChildren.length) {
+        gsap.set(groupEl, { y: groupDistance, autoAlpha: 0 });
+        ScrollTrigger.create({
+          trigger: groupEl,
+          start: triggerStart,
+          once: true,
+          onEnter: () => gsap.to(groupEl, {
+            y: 0,
+            autoAlpha: 1,
+            duration: animDuration,
+            ease: animEase,
+            onComplete: () => gsap.set(groupEl, { clearProps: 'all' })
+          })
+        });
+        return;
+      }
+
+      const slots: Array<{type: string; el?: Element; parentEl?: Element; nestedEl?: Element; includeParent?: boolean}> = [];
+      directChildren.forEach(child => {
+        const nestedGroup = child.matches('[data-reveal-group-nested]')
+          ? child
+          : child.querySelector(':scope [data-reveal-group-nested]');
+
+        if (nestedGroup) {
+          const includeParent = child.getAttribute('data-ignore') === 'false' || nestedGroup.getAttribute('data-ignore') === 'false';
+          slots.push({ type: 'nested', parentEl: child, nestedEl: nestedGroup, includeParent });
+        } else {
+          slots.push({ type: 'item', el: child });
+        }
+      });
+
+      slots.forEach(slot => {
+        if (slot.type === 'item' && slot.el) {
+          const isNestedSelf = slot.el.matches('[data-reveal-group-nested]');
+          const d = isNestedSelf ? groupDistance : (slot.el.getAttribute('data-distance') || groupDistance);
+          gsap.set(slot.el, { y: d, autoAlpha: 0 });
+        } else if (slot.nestedEl) {
+          if (slot.includeParent && slot.parentEl) gsap.set(slot.parentEl, { y: groupDistance, autoAlpha: 0 });
+          const nestedD = slot.nestedEl.getAttribute('data-distance') || groupDistance;
+          Array.from(slot.nestedEl.children).forEach(target => gsap.set(target, { y: nestedD, autoAlpha: 0 }));
+        }
+      });
+
+      ScrollTrigger.create({
+        trigger: groupEl,
+        start: triggerStart,
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+
+          slots.forEach((slot, slotIndex) => {
+            const slotTime = slotIndex * groupStaggerSec;
+
+            if (slot.type === 'item' && slot.el) {
+              tl.to(slot.el, {
+                y: 0,
+                autoAlpha: 1,
+                duration: animDuration,
+                ease: animEase,
+                onComplete: () => gsap.set(slot.el!, { clearProps: 'all' })
+              }, slotTime);
+            } else if (slot.nestedEl) {
+              if (slot.includeParent && slot.parentEl) {
+                tl.to(slot.parentEl, {
+                  y: 0,
+                  autoAlpha: 1,
+                  duration: animDuration,
+                  ease: animEase,
+                  onComplete: () => gsap.set(slot.parentEl!, { clearProps: 'all' })
+                }, slotTime);
+              }
+              const nestedMs = parseFloat(slot.nestedEl.getAttribute('data-stagger') || '');
+              const nestedStaggerSec = isNaN(nestedMs) ? groupStaggerSec : nestedMs / 1000;
+              Array.from(slot.nestedEl.children).forEach((nestedChild, nestedIndex) => {
+                tl.to(nestedChild, {
+                  y: 0,
+                  autoAlpha: 1,
+                  duration: animDuration,
+                  ease: animEase,
+                  onComplete: () => gsap.set(nestedChild, { clearProps: 'all' })
+                }, slotTime + nestedIndex * nestedStaggerSec);
+              });
+            }
+          });
+        }
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContentRevealScroll);
+  } else {
+    initContentRevealScroll();
+  }
+</script>

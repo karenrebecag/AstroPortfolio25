@@ -1,0 +1,112 @@
+/* Default light mode styles */
+.container {
+  color: #1f2937;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.exitButton {
+  background: #f9fafb !important;
+  color: #1f2937 !important;
+  transition:
+    background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stats {
+  color: #1f2937;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.score {
+  color: #4a3293;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.lives {
+  color: #6b46c1;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.level {
+  color: #2d1b69;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  transition:
+    background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modalTitle {
+  color: #1f2937 !important;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modalText {
+  color: #6b46c1 !important;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.finalScore {
+  color: #4a3293;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.restartButton {
+  background: #4a3293 !important;
+  color: #ffffff !important;
+  transition:
+    background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark mode styles */
+:global(.dark-mode) .container {
+  color: #edeafd;
+}
+
+:global(.dark-mode) .exitButton {
+  background: #1f1f1f !important;
+  color: #edeafd !important;
+}
+
+:global(.dark-mode) .stats {
+  color: #edeafd;
+}
+
+:global(.dark-mode) .score {
+  color: #8464ee;
+}
+
+:global(.dark-mode) .lives {
+  color: #c1b9f9;
+}
+
+:global(.dark-mode) .level {
+  color: #6431d0;
+}
+
+:global(.dark-mode) .modal {
+  background: #1f1f1f !important;
+  border: 1px solid #333333 !important;
+}
+
+:global(.dark-mode) .modalTitle {
+  color: #edeafd !important;
+}
+
+:global(.dark-mode) .modalText {
+  color: #c1b9f9 !important;
+}
+
+:global(.dark-mode) .finalScore {
+  color: #8464ee;
+}
+
+:global(.dark-mode) .restartButton {
+  background: #6431d0 !important;
+  color: #edeafd !important;
+}

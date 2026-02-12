@@ -1,0 +1,170 @@
+/* TechMarquees Advanced - Scroll Direction Implementation */
+
+.techMarqueesSection {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.techMarqueesContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Individual marquee wrapper */
+.techMarqueeWrapper {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  opacity: 0.07;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.techMarqueeWrapper:hover {
+  opacity: 0.2;
+}
+
+/* Advanced Marquee Structure */
+.marqueeAdvanced {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.marqueeAdvancedScroll {
+  will-change: transform;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.marqueeAdvancedCollection {
+  will-change: transform;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.marqueeAdvancedItem {
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+
+.marqueeText {
+  white-space: nowrap;
+  margin-bottom: 0;
+  margin-right: 0.75em;
+  font-family: 'Boysen', sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #1f2937;
+  letter-spacing: 0em;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Separator dot */
+.marqueeSeparator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: currentColor;
+  border-radius: 50%;
+  margin: 0 0.5em;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* Tablet responsive */
+@media (max-width: 991px) {
+  .techMarqueeWrapper {
+    height: 55px;
+  }
+
+  .marqueeText {
+    font-size: 56px;
+  }
+
+  .marqueeSeparator {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .techMarqueeWrapper {
+    height: 50px;
+  }
+
+  .marqueeText {
+    font-size: 48px;
+  }
+
+  .marqueeSeparator {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 479px) {
+  .techMarqueeWrapper {
+    height: 45px;
+  }
+
+  .marqueeText {
+    font-size: 40px;
+  }
+
+  .marqueeSeparator {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Dark mode styles */
+:global(.dark-mode) .marqueeText {
+  color: #d4a5ff;
+}
+
+:global(.dark-mode) .techMarqueeWrapper {
+  opacity: 0.07;
+}
+
+:global(.dark-mode) .techMarqueeWrapper:hover {
+  opacity: 0.2;
+}
+
+/* Performance optimizations */
+.marqueeAdvanced {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.marqueeAdvancedScroll,
+.marqueeAdvancedCollection {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Accessibility: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeAdvancedScroll,
+  .marqueeAdvancedCollection {
+    will-change: auto;
+    animation: none !important;
+  }
+}

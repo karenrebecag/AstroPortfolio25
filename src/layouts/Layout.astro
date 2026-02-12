@@ -11,6 +11,7 @@ export interface Props {
 const { title, lang = 'en' } = Astro.props;
 const metadata = getLanguageMetadata(lang);
 import '../styles/fonts.css';
+import '../styles/osmo/main.scss';
 import CustomCursor from '../components/ui/CustomCursor.astro';
 import ClickBubble from '../components/ui/ClickBubble.astro';
 import ScrollIndicator from '../components/ui/ScrollIndicator.astro';

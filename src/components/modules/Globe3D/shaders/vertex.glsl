@@ -1,3 +1,5 @@
+precision mediump float;
+
 uniform sampler2D u_map_tex;
 uniform float u_dot_size;
 uniform float u_time_since_click;

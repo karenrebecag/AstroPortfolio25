@@ -1,0 +1,33 @@
+// ==========================================================================
+// Osmo Scaling System — Layout
+// ==========================================================================
+
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Generate all breakpoints from the config map
+@include osmo-generate-breakpoints();
+
+// Apply base font scaling — this is the key!
+// All rem values in the project will now scale proportionally.
+body {
+  font-size: var(--size-font);
+}
+
+// Generate type scale for headings (h1-h6 + .h1-.h6 classes)
+// Based on Major Third ratio (1.25):
+//   h1 = base × 1.25^4 = ~2.44x
+//   h2 = base × 1.25^3 = ~1.95x
+//   h3 = base × 1.25^2 = ~1.56x
+//   h4 = base × 1.25^1 = ~1.25x
+//   h5 = base × 1.25^0 = 1x (same as body)
+//   h6 = base × 1.25^-1 = ~0.8x
+@include osmo-type-scale();
+
+// Container utility
+.osmo-container {
+  @include osmo-container();
+}
+
+// Debug overlay (only renders when $osmo-debug: true in _variables.scss)
+@include osmo-debug-overlay();

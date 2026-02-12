@@ -1,13 +1,12 @@
 ---
 // LeftMarqueeBanner - Large animated text moving from right to left with scroll direction
-import styles from './LeftMarqueeBanner.module.css';
+import styles from './MarqueeBanner.module.css';
 import { t } from '../../../i18n/utils.js';
 
 const { lang = 'en' } = Astro.props;
 ---
 
-<!-- Advanced Marquee with Scroll Direction -->
-<div class={styles['left-marquee-container']}>
+<div class={`${styles.marqueeContainer} ${styles.left}`}>
   <div
     id="left-marquee"
     data-marquee-scroll-direction-target
@@ -16,12 +15,12 @@ const { lang = 'en' } = Astro.props;
     data-marquee-speed="20"
     data-marquee-scroll-speed="8"
     data-marquee-duplicate="3"
-    class={`${styles['marquee-advanced']} ${styles['left-marquee-wrapper']}`}
+    class={`${styles.marqueeAdvanced} ${styles.marqueeWrapper}`}
   >
-    <div data-marquee-scroll-target class={styles['marquee-advanced__scroll']}>
-      <div data-marquee-collection-target class={styles['marquee-advanced__collection']}>
-        <div class={styles['marquee-advanced__item']}>
-          <p class={`${styles['marquee__advanced__p']} font-display font-bold`}>
+    <div data-marquee-scroll-target class={styles.marqueeScroll}>
+      <div data-marquee-collection-target class={styles.marqueeCollection}>
+        <div class={styles.marqueeItem}>
+          <p class={`${styles.marqueeText} font-display font-bold`}>
             {t('banner.leftMarquee', lang)}
           </p>
         </div>
@@ -30,114 +29,16 @@ const { lang = 'en' } = Astro.props;
   </div>
 </div>
 
-<style>
-  /* Styles moved to CSS module - only keeping global keyframes here */
-</style>
-
 <script>
-  import gsap from 'gsap';
+  import { initMarqueeAdvanced, cleanupMarquees } from '../../../utils/initMarquee';
 
-  // Advanced Marquee with Scroll Direction - Left Marquee
-  async function initLeftMarqueeAdvanced() {
-    const marquee = document.getElementById('left-marquee');
-    if (!marquee) return;
+  function init() { initMarqueeAdvanced('left-marquee'); }
 
-    // Query marquee elements
-    const marqueeContent = marquee.querySelector('[data-marquee-collection-target]');
-    const marqueeScroll = marquee.querySelector('[data-marquee-scroll-target]');
-    if (!marqueeContent || !marqueeScroll) return;
-
-    // Dynamically import ScrollTrigger to avoid ESM/CommonJS issues
-    let ScrollTrigger: any;
-    try {
-      const module = await import('gsap/ScrollTrigger');
-      ScrollTrigger = module.ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
-    } catch (error) {
-      console.warn('[LeftMarqueeBanner] Failed to load ScrollTrigger:', error);
-      return;
-    }
-
-    // Get data attributes
-    const speed = marquee.dataset.marqueeSpeed || '15';
-    const direction = marquee.dataset.marqueeDirection || 'left';
-    const duplicate = marquee.dataset.marqueeDuplicate || '2';
-    const scrollSpeed = marquee.dataset.marqueeScrollSpeed || '10';
-
-    // Convert data attributes to usable types
-    const marqueeSpeedAttr = parseFloat(speed);
-    const marqueeDirectionAttr = direction === 'right' ? 1 : -1; // 1 for right, -1 for left
-    const duplicateAmount = parseInt(duplicate);
-    const scrollSpeedAttr = parseFloat(scrollSpeed);
-    const speedMultiplier = window.innerWidth < 479 ? 0.25 : window.innerWidth < 991 ? 0.5 : 1;
-
-    let marqueeSpeed = marqueeSpeedAttr * ((marqueeContent as HTMLElement).offsetWidth / window.innerWidth) * speedMultiplier;
-
-    // Precompute styles for the scroll container
-    (marqueeScroll as HTMLElement).style.marginLeft = `${scrollSpeedAttr * -1}%`;
-    (marqueeScroll as HTMLElement).style.width = `${(scrollSpeedAttr * 2) + 100}%`;
-
-    // Duplicate marquee content
-    if (duplicateAmount > 0) {
-      const fragment = document.createDocumentFragment();
-      for (let i = 0; i < duplicateAmount; i++) {
-        fragment.appendChild(marqueeContent.cloneNode(true));
-      }
-      marqueeScroll.appendChild(fragment);
-    }
-
-    // GSAP animation for marquee content
-    const marqueeItems = marquee.querySelectorAll('[data-marquee-collection-target]');
-    const animation = gsap.to(marqueeItems, {
-      xPercent: -100, // Move completely out of view
-      repeat: -1,
-      duration: marqueeSpeed,
-      ease: 'linear'
-    }).totalProgress(0.5);
-
-    // Initialize marquee in the correct direction
-    gsap.set(marqueeItems, { xPercent: marqueeDirectionAttr === 1 ? 100 : -100 });
-    animation.timeScale(marqueeDirectionAttr); // Set correct direction
-    animation.play(); // Start animation immediately
-
-    // Set initial marquee status
-    marquee.setAttribute('data-marquee-status', 'normal');
-
-    // ScrollTrigger logic for direction inversion
-    ScrollTrigger.create({
-      trigger: marquee,
-      start: 'top bottom',
-      end: 'bottom top',
-      onUpdate: (self: { direction: number }) => {
-        const isInverted = self.direction === 1; // Scrolling down
-        const currentDirection = isInverted ? -marqueeDirectionAttr : marqueeDirectionAttr;
-
-        // Update animation direction and marquee status
-        animation.timeScale(currentDirection);
-        marquee.setAttribute('data-marquee-status', isInverted ? 'normal' : 'inverted');
-      }
-    });
-
-    // Extra speed effect on scroll (parallax scrub)
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: marquee,
-        start: '0% 100%',
-        end: '100% 0%',
-        scrub: 0
-      }
-    });
-
-    const scrollStart = marqueeDirectionAttr === -1 ? scrollSpeedAttr : -scrollSpeedAttr;
-    const scrollEnd = -scrollStart;
-
-    tl.fromTo(marqueeScroll, { x: `${scrollStart}vw` }, { x: `${scrollEnd}vw`, ease: 'none' });
-  }
-
-  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLeftMarqueeAdvanced);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    initLeftMarqueeAdvanced();
+    init();
   }
+
+  document.addEventListener('astro:before-preparation', cleanupMarquees, { once: true });
 </script>

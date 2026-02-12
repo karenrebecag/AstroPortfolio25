@@ -30,7 +30,7 @@ export const CAMERA_BOUNDS = {
   right: 1.1,
   top: 1.1,
   bottom: -1.1,
-  near: 0,
+  near: 0.01,
   far: 3,
 };
 

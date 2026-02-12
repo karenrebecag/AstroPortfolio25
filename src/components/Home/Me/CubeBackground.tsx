@@ -1,234 +1,239 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RGBELoader } from 'three-stdlib';
-import { create } from 'zustand';
-import { useShallow } from 'zustand/react/shallow';
-import { createThreeJSCleanup } from '../../../utils/zustand-optimizations';
+import { detectQuality, type QualityLevel } from '../../../stores/threeJSStore';
+import { RobustAssetLoader, ASSET_CONFIGS } from '../../../utils/assetLoader';
+import { observeDarkMode } from '../../../utils/darkMode';
 
-// Enhanced Zustand store for Cube performance control - siguiendo el mismo patrón que GemBackground
-const useCubeStore = create<{
-  isVisible: boolean;
-  isPaused: boolean;
-  isLoading: boolean;
-  opacity: number;
-  quality: 'low' | 'medium' | 'high';
-  rotationSpeed: number;
-  setVisible: (visible: boolean) => void;
-  setPaused: (paused: boolean) => void;
-  setLoading: (loading: boolean) => void;
-  setOpacity: (opacity: number) => void;
-  setQuality: (quality: 'low' | 'medium' | 'high') => void;
-  setRotationSpeed: (speed: number) => void;
-}>((set, get) => ({
-  isVisible: false,
-  isPaused: false,
-  isLoading: true,
-  opacity: 0,
-  quality: 'medium',
-  rotationSpeed: 1.0,
-  setVisible: (visible) => {
-    set({ isVisible: visible });
-    // Smooth opacity transition - igual que GemBackground
-    if (visible) {
-      setTimeout(() => set({ opacity: 1 }), 200);
-    } else {
-      setTimeout(() => set({ opacity: 0 }), 100);
+// Module-level loader instances (reused across mounts)
+const rgbeLoader = new RGBELoader();
+const objectLoader = new THREE.ObjectLoader();
+
+// Detect quality once at module level
+const quality: QualityLevel =
+  typeof window !== 'undefined' ? detectQuality() : 'medium';
+
+/** Dispose all texture properties on a material, then the material itself. */
+function disposeMaterial(material: THREE.Material) {
+  for (const key of Object.keys(material)) {
+    const value = (material as any)[key];
+    if (value instanceof THREE.Texture) value.dispose();
+  }
+  material.dispose();
+}
+
+/** Recursively dispose every geometry and material in a scene graph. */
+function disposeScene(root: THREE.Object3D) {
+  root.traverse((child) => {
+    if (child instanceof THREE.Mesh) {
+      child.geometry?.dispose();
+      if (Array.isArray(child.material)) {
+        child.material.forEach(disposeMaterial);
+      } else if (child.material) {
+        disposeMaterial(child.material);
+      }
     }
-  },
-  setPaused: (paused) => set({ isPaused: paused }),
-  setLoading: (loading) => set({ isLoading: loading }),
-  setOpacity: (opacity) => set({ opacity }),
-  setQuality: (quality) => set({ quality }),
-  setRotationSpeed: (speed) => set({ rotationSpeed: speed }),
-}));
+  });
+}
 
 export const CubeBackground: React.FC<{ className?: string }> = ({ className = '' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Per-instance state (non-reactive — read in animation loop / scroll handler only)
+  const stateRef = useRef({
+    isVisible: false,
+    isPaused: false,
+  });
+
+  // Scene refs for scroll handler access
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
     renderer: THREE.WebGLRenderer;
     cube: THREE.Object3D | null;
-    animationId: number | null;
+    envMap: THREE.Texture | null;
+    hdrTexture: THREE.DataTexture | null;
   } | null>(null);
-  
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Selectores optimizados con useShallow - evita re-renders innecesarios
-  const { isVisible, isPaused, isLoading } = useCubeStore(
-    useShallow((state) => ({
-      isVisible: state.isVisible,
-      isPaused: state.isPaused,
-      isLoading: state.isLoading,
-    }))
-  );
-  
-  const { quality, opacity } = useCubeStore(
-    useShallow((state) => ({
-      quality: state.quality,
-      opacity: state.opacity,
-    }))
-  );
-  
-  const { rotationSpeed } = useCubeStore(
-    useShallow((state) => ({
-      rotationSpeed: state.rotationSpeed,
-    }))
-  );
-  
-  // Actions memoizadas
-  const { setVisible, setPaused, setLoading } = useCubeStore(
-    useShallow((state) => ({
-      setVisible: state.setVisible,
-      setPaused: state.setPaused,
-      setLoading: state.setLoading,
-    }))
-  );
-  
-  // Cleanup helper para Three.js
-  const cleanup = useMemo(() => createThreeJSCleanup(), []);
 
-  // Intersection Observer - optimizado con acciones memoizadas
+  // Single effect: create scene once, control rendering internally.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(entry.isIntersecting);
-      },
-      { 
-        threshold: 0,
-        rootMargin: '800px 0px 200px 0px' // Mismo rango que GemBackground
-      }
-    );
-
-    if (mountRef.current) {
-      observer.observe(mountRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [setVisible]);
-
-  // Page Visibility API - optimizado con acciones memoizadas
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setPaused(document.hidden);
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [setPaused]);
-
-  // Three.js setup - siguiendo EXACTAMENTE el patrón de GemBackground
-  useEffect(() => {
-    if (!mountRef.current || !isVisible) return;
-
+    if (!mountRef.current) return;
     const currentMount = mountRef.current;
+    const state = stateRef.current;
 
-    // Scene setup
+    // ── Scene ──
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, currentMount.clientWidth / currentMount.clientHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(
+      50,
+      currentMount.clientWidth / currentMount.clientHeight,
+      0.5,
+      20
+    );
     camera.position.set(0, 0, 4);
 
-    // Renderer setup con MISMAS optimizaciones que GemBackground
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: false, // Disable for performance
+    // Renderer with adaptive pixel ratio per quality tier
+    const maxPixelRatio = quality === 'low' ? 1 : quality === 'medium' ? 1.5 : 2;
+    const renderer = new THREE.WebGLRenderer({
+      antialias: false,
       alpha: true,
-      powerPreference: 'high-performance'
+      powerPreference: 'high-performance',
     });
-    
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxPixelRatio));
     renderer.toneMappingExposure = 1.2;
-    
-    // Enable soft shadows for blurry effect
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = quality !== 'low';
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.shadowMap.autoUpdate = true;
     currentMount.appendChild(renderer.domElement);
 
-    // Lighting setup optimizado para sombras blurry
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
+    // ── Lighting ──
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-    // Main frontal light - como si viniera del espectador/usuario
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-    directionalLight.position.set(0, 1, 8); // Frontal position - desde donde está el usuario
-    directionalLight.castShadow = true;
-    
-    // Configure shadow properties for minimal opacity
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 15;
-    directionalLight.shadow.camera.left = -4;
-    directionalLight.shadow.camera.right = 4;
-    directionalLight.shadow.camera.top = 4;
-    directionalLight.shadow.camera.bottom = -4;
-    directionalLight.shadow.radius = 10; // Blur radius for soft shadows
-    directionalLight.shadow.blurSamples = 15;
-    scene.add(directionalLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    dirLight.position.set(0, 1, 8);
+    dirLight.castShadow = quality !== 'low';
+    if (quality !== 'low') {
+      const shadowSize = quality === 'high' ? 1024 : 512;
+      dirLight.shadow.mapSize.width = shadowSize;
+      dirLight.shadow.mapSize.height = shadowSize;
+      dirLight.shadow.camera.near = 0.5;
+      dirLight.shadow.camera.far = 15;
+      dirLight.shadow.camera.left = -4;
+      dirLight.shadow.camera.right = 4;
+      dirLight.shadow.camera.top = 4;
+      dirLight.shadow.camera.bottom = -4;
+      dirLight.shadow.radius = 10;
+      dirLight.shadow.blurSamples = 15;
+    }
+    scene.add(dirLight);
 
-    // Subtle fill light from slightly off-center for depth
     const pointLight = new THREE.PointLight(0xb8a3ff, 0.2);
-    pointLight.position.set(1, 0, 6); // Also frontal but slightly offset
-    pointLight.castShadow = false; // No shadows from fill light
+    pointLight.position.set(1, 0, 6);
     scene.add(pointLight);
 
-    // Create ultra-subtle ground plane for minimal shadows
-    const groundGeometry = new THREE.PlaneGeometry(8, 8);
-    const groundMaterial = new THREE.ShadowMaterial({ 
-      opacity: 0.03, // Ultra minimal opacity - barely visible
-      transparent: true 
-    });
-    const groundPlane = new THREE.Mesh(groundGeometry, groundMaterial);
-    groundPlane.rotation.x = -Math.PI / 2;
-    groundPlane.position.y = -1.2; // Very close to cube
-    groundPlane.receiveShadow = true;
-    scene.add(groundPlane);
+    // Shadow ground (only when shadows enabled)
+    if (quality !== 'low') {
+      const groundGeometry = new THREE.PlaneGeometry(8, 8);
+      const groundMaterial = new THREE.ShadowMaterial({
+        opacity: 0.03,
+        transparent: true,
+      });
+      const groundPlane = new THREE.Mesh(groundGeometry, groundMaterial);
+      groundPlane.rotation.x = -Math.PI / 2;
+      groundPlane.position.y = -1.2;
+      groundPlane.receiveShadow = true;
+      scene.add(groundPlane);
+    }
 
-    let cubeObject: THREE.Object3D | null = null;
-
-    // Load HDR environment from Cloudflare R2 with fallback - optimizado según calidad
-    const hdrLoader = new RGBELoader();
-    
-    // Configure loader for external URLs with CORS support
-    hdrLoader.setCrossOrigin('anonymous');
-    
-    const loadHDR = (url: string, isRetry = false) => {
-      hdrLoader.load(
-        url,
-        (hdr) => {
-          hdr.mapping = THREE.EquirectangularReflectionMapping;
-          hdr.generateMipmaps = quality !== 'low'; // Solo mipmaps para medium/high
-
-          try {
-            const pmrem = new THREE.PMREMGenerator(renderer);
-            const envMap = pmrem.fromEquirectangular(hdr).texture;
-            scene.environment = envMap;
-            pmrem.dispose();
-          } catch (error) {
-            console.error('Failed to create envMap:', error);
-          }
-        },
-        undefined,
-        (error) => {
-          console.error('Failed to load HDR from:', url, error);
-
-          // Fallback to local HDR if Cloudflare fails
-          if (!isRetry) {
-            loadHDR('/hdr/large_corridor_1k.hdr', true);
-          } else {
-            console.error('Both HDR sources failed to load');
-          }
-        }
-      );
+    sceneRef.current = {
+      scene,
+      camera,
+      renderer,
+      cube: null,
+      envMap: null,
+      hdrTexture: null,
     };
-    
-    // Try Cloudflare R2 first, fallback to local
-    loadHDR('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr');
 
-    // Crear material IDÉNTICO a la gema - mismos shaders, colores y texturas
-    const createCubeMaterial = () => {
-      const baseConfig = {
+    // ── Scroll-based rendering (render on demand, not continuous) ──
+    let scrollRafId: ReturnType<typeof requestAnimationFrame> | null = null;
+
+    const renderOnce = () => {
+      if (sceneRef.current?.cube) {
+        renderer.render(scene, camera);
+      }
+    };
+
+    const updateRotationFromScroll = () => {
+      if (!state.isVisible || state.isPaused || !sceneRef.current?.cube) return;
+
+      // Throttle: only one RAF per scroll event batch
+      if (scrollRafId !== null) return;
+      scrollRafId = requestAnimationFrame(() => {
+        scrollRafId = null;
+        if (!sceneRef.current?.cube || !state.isVisible || state.isPaused) return;
+
+        const scrollProgress = window.scrollY * 0.001;
+        sceneRef.current.cube.rotation.x = 0.1 + scrollProgress * 0.5;
+        sceneRef.current.cube.rotation.y = 0.2 + scrollProgress * 0.8;
+        sceneRef.current.cube.rotation.z = 0.1 + scrollProgress * 0.3;
+
+        renderer.render(scene, camera);
+      });
+    };
+
+    window.addEventListener('scroll', updateRotationFromScroll, { passive: true });
+
+    // ── Visibility: Intersection + Dark Mode ──
+    let isIntersecting = false;
+
+    const updateVisibility = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      state.isVisible = !isDark && isIntersecting;
+
+      // Render once when becoming visible
+      if (state.isVisible && sceneRef.current?.cube) {
+        updateRotationFromScroll();
+      }
+    };
+
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        updateVisibility();
+      },
+      { threshold: 0, rootMargin: '800px 0px 200px 0px' }
+    );
+    intersectionObserver.observe(currentMount);
+
+    const cleanupDarkMode = observeDarkMode(() => updateVisibility());
+
+    // Page Visibility API
+    const handleVisibilityChange = () => {
+      state.isPaused = document.hidden;
+      if (!document.hidden && state.isVisible) {
+        updateRotationFromScroll();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // ── Load HDR environment ──
+    RobustAssetLoader.loadWithRetry(
+      (url) =>
+        new Promise<THREE.DataTexture>((resolve, reject) => {
+          rgbeLoader.load(url, resolve, undefined, reject);
+        }),
+      ASSET_CONFIGS.CUBE_HDR,
+      { retries: 3, verbose: true }
+    )
+      .then((hdr) => {
+        if (!hdr || !sceneRef.current) return;
+        hdr.mapping = THREE.EquirectangularReflectionMapping;
+        hdr.generateMipmaps = quality !== 'low';
+        try {
+          const pmrem = new THREE.PMREMGenerator(renderer);
+          const envMap = pmrem.fromEquirectangular(hdr).texture;
+          scene.environment = envMap;
+          sceneRef.current.hdrTexture = hdr;
+          sceneRef.current.envMap = envMap;
+          pmrem.dispose();
+        } catch (err) {
+          console.error('Failed to create envMap:', err);
+        }
+      })
+      .catch((err) => console.error('Failed to load HDR:', err));
+
+    // ── Material factory ──
+    const createCubeMaterial = (): THREE.Material => {
+      if (quality === 'low') {
+        return new THREE.MeshStandardMaterial({
+          color: new THREE.Color('#ffffff'),
+          roughness: 0.1,
+          metalness: 0.3,
+          envMapIntensity: 1.5,
+        });
+      }
+
+      const base = {
         transmission: 1.0,
         thickness: 4.2,
         ior: 2.4,
@@ -238,194 +243,127 @@ export const CubeBackground: React.FC<{ className?: string }> = ({ className = '
         clearcoatRoughness: 0.01,
         reflectivity: 1.0,
         attenuationDistance: 0.5,
-        attenuationColor: new THREE.Color('#b8a3ff'), // MISMO color que la gema
-        color: new THREE.Color('#ffffff'), // MISMO color que la gema
+        attenuationColor: new THREE.Color('#b8a3ff'),
+        color: new THREE.Color('#ffffff'),
       };
 
-      // Quality-based optimizations - EXACTAMENTE igual que GemBackground
-      switch (quality) {
-        case 'low':
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 1.5,
-            roughness: 0.1,
-            clearcoat: 0.5,
-          });
-        case 'high':
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 3.0,
-            sheen: 1,
-            sheenColor: new THREE.Color('#ffffff'), // MISMO que la gema
-            sheenRoughness: 0.1,
-            iridescence: 1.0,
-            iridescenceIOR: 1.5,
-            iridescenceThicknessRange: [200, 600] as [number, number],
-          });
-        default: // medium
-          return new THREE.MeshPhysicalMaterial({
-            ...baseConfig,
-            envMapIntensity: 2.0,
-            iridescence: 0.5,
-            iridescenceIOR: 1.3,
-          });
+      if (quality === 'high') {
+        return new THREE.MeshPhysicalMaterial({
+          ...base,
+          envMapIntensity: 3.0,
+          sheen: 1,
+          sheenColor: new THREE.Color('#ffffff'),
+          sheenRoughness: 0.1,
+          iridescence: 1.0,
+          iridescenceIOR: 1.5,
+          iridescenceThicknessRange: [200, 600] as [number, number],
+        });
       }
-    };
 
-    // Load cube model from Cloudflare R2 - siguiendo patrón de carga optimizada igual que GemBackground
-    const objectLoader = new THREE.ObjectLoader();
-    objectLoader.load('https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Cube.json', (object) => {
-      cubeObject = object;
-      const cubeMaterial = createCubeMaterial();
-      
-      // Apply material to loaded object
-      object.traverse((child: THREE.Object3D) => {
-        if (child instanceof THREE.Mesh) {
-          child.material = cubeMaterial;
-          child.castShadow = true; // Always cast shadows for blurry effect
-          child.receiveShadow = true; // Can also receive shadows from other objects
-        }
+      return new THREE.MeshPhysicalMaterial({
+        ...base,
+        envMapIntensity: 2.0,
+        iridescence: 0.5,
+        iridescenceIOR: 1.3,
       });
-
-      // Position and scale - optimizado para la columna izquierda de Me.astro
-      object.scale.set(0.8, 0.8, 0.8);
-      object.position.set(0, 0, 0);
-      object.rotation.set(0.1, 0.2, 0.1);
-
-      scene.add(object);
-
-      // Recompute bounding volumes for proper culling
-      object.traverse((child: THREE.Object3D) => {
-        if (child instanceof THREE.Mesh && child.geometry) {
-          child.geometry.computeBoundingBox();
-          child.geometry.computeBoundingSphere();
-        }
-      });
-    }, undefined, (error) => {
-      console.error('Error loading cube model:', error);
-    });
-
-    sceneRef.current = {
-      scene,
-      camera,
-      renderer,
-      cube: cubeObject,
-      animationId: null
     };
 
-    // Scroll-based rotation function
-    const updateRotationFromScroll = () => {
-      if (!cubeObject || !sceneRef.current) return;
-      
-      const scrollY = window.scrollY;
-      const scrollProgress = scrollY * 0.001; // Adjust multiplier for rotation speed
-      
-      // Rotate based on scroll position
-      cubeObject.rotation.x = 0.1 + scrollProgress * 0.5;
-      cubeObject.rotation.y = 0.2 + scrollProgress * 0.8;
-      cubeObject.rotation.z = 0.1 + scrollProgress * 0.3;
-      
-      sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
-    };
-
-    // Static render function (no continuous animation)
-    const render = () => {
-      const currentState = useCubeStore.getState();
-      
-      if (!currentState.isPaused && currentState.isVisible && sceneRef.current) {
-        sceneRef.current.renderer.render(sceneRef.current.scene, sceneRef.current.camera);
-      }
-    };
-
-    // Add scroll listener for rotation
-    window.addEventListener('scroll', updateRotationFromScroll, { passive: true });
-
-    // Start with initial render - usando acción memoizada
-    const timer = setTimeout(() => {
-      setLoading(false);
-      setIsLoaded(true);
-      render();
-      updateRotationFromScroll(); // Initial rotation based on current scroll
-    }, 300);
-
-    // Resize handler
-    const handleResize = () => {
-      if (!currentMount || !sceneRef.current) return;
-      
-      const width = currentMount.clientWidth;
-      const height = currentMount.clientHeight;
-      
-      sceneRef.current.camera.aspect = width / height;
-      sceneRef.current.camera.updateProjectionMatrix();
-      sceneRef.current.renderer.setSize(width, height);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', updateRotationFromScroll);
-      
-      if (sceneRef.current) {
-        if (sceneRef.current.animationId) {
-          cancelAnimationFrame(sceneRef.current.animationId);
-        }
-        
-        // Comprehensive Three.js cleanup - siguiendo mejores prácticas
-        sceneRef.current.scene.traverse((child: THREE.Object3D) => {
+    // ── Load cube model ──
+    RobustAssetLoader.loadWithRetry(
+      (url) =>
+        new Promise<THREE.Object3D>((resolve, reject) => {
+          objectLoader.load(url, resolve, undefined, reject);
+        }),
+      ASSET_CONFIGS.CUBE_MODEL,
+      { retries: 3, verbose: true }
+    )
+      .then((object) => {
+        if (!object || !sceneRef.current) return;
+        const mat = createCubeMaterial();
+        object.traverse((child) => {
           if (child instanceof THREE.Mesh) {
-            // Dispose geometry
-            if (child.geometry) {
-              child.geometry.dispose();
-            }
-
-            // Dispose materials (handle both single and array)
-            if (child.material) {
-              if (Array.isArray(child.material)) {
-                child.material.forEach(material => {
-                  material.dispose();
-                  // Dispose material textures
-                  if (material.map) material.map.dispose();
-                  if (material.normalMap) material.normalMap.dispose();
-                  if (material.roughnessMap) material.roughnessMap.dispose();
-                  if (material.metalnessMap) material.metalnessMap.dispose();
-                  if (material.envMap) material.envMap.dispose();
-                });
-              } else {
-                child.material.dispose();
-                // Dispose material textures
-                if (child.material.map) child.material.map.dispose();
-                if (child.material.normalMap) child.material.normalMap.dispose();
-                if (child.material.roughnessMap) child.material.roughnessMap.dispose();
-                if (child.material.metalnessMap) child.material.metalnessMap.dispose();
-                if (child.material.envMap) child.material.envMap.dispose();
-              }
-            }
+            child.material = mat;
+            child.castShadow = quality !== 'low';
+            child.receiveShadow = quality !== 'low';
           }
         });
 
-        // Dispose renderer and remove from DOM
-        sceneRef.current.renderer.dispose();
-        sceneRef.current.renderer.forceContextLoss();
+        object.scale.set(0.8, 0.8, 0.8);
+        object.position.set(0, 0, 0);
+        object.rotation.set(0.1, 0.2, 0.1);
+        scene.add(object);
+        sceneRef.current.cube = object;
 
-        if (currentMount && currentMount.contains(sceneRef.current.renderer.domElement)) {
-          currentMount.removeChild(sceneRef.current.renderer.domElement);
+        setIsLoaded(true);
+
+        // Initial render based on current scroll position
+        if (state.isVisible) {
+          const scrollProgress = window.scrollY * 0.001;
+          object.rotation.x = 0.1 + scrollProgress * 0.5;
+          object.rotation.y = 0.2 + scrollProgress * 0.8;
+          object.rotation.z = 0.1 + scrollProgress * 0.3;
+          renderer.render(scene, camera);
         }
-      }
+      })
+      .catch((err) => console.error('Failed to load cube model:', err));
+
+    // ── Debounced resize ──
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!currentMount || !sceneRef.current) return;
+        const { clientWidth: w, clientHeight: h } = currentMount;
+        sceneRef.current.camera.aspect = w / h;
+        sceneRef.current.camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderOnce();
+      }, 150);
     };
-  }, [isVisible, isPaused, quality, setLoading]);
+    window.addEventListener('resize', handleResize);
+
+    // ── WebGL context loss / recovery ──
+    const onContextLost = (e: Event) => {
+      e.preventDefault();
+    };
+    const onContextRestored = () => {
+      if (state.isVisible) renderOnce();
+    };
+    renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+    renderer.domElement.addEventListener('webglcontextrestored', onContextRestored);
+
+    // ── Cleanup ──
+    return () => {
+      clearTimeout(resizeTimer);
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      intersectionObserver.disconnect();
+      cleanupDarkMode();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', updateRotationFromScroll);
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', onContextRestored);
+
+      // Complete recursive disposal
+      disposeScene(scene);
+      sceneRef.current?.envMap?.dispose();
+      sceneRef.current?.hdrTexture?.dispose();
+
+      renderer.dispose();
+      if (currentMount.contains(renderer.domElement)) {
+        currentMount.removeChild(renderer.domElement);
+      }
+      sceneRef.current = null;
+    };
+  }, []); // No dependencies — scene created once, rendering controlled internally
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
       className={`absolute inset-0 pointer-events-none transition-all duration-700 ease-out ${
-        isLoaded && !isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       } ${className}`}
-      style={{ 
-        zIndex: 2, // Por encima del DitheringShader background
-        mixBlendMode: 'normal'
-      }}
+      style={{ zIndex: 2, mixBlendMode: 'normal' }}
     />
   );
 };

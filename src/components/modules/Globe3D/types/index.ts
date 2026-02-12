@@ -45,7 +45,6 @@ export interface Globe3DState {
   pointerPosition: { x: number; y: number; z: number } | null;
   coordinates2D: [number, number];
   popupVisible: boolean;
-  elapsedTime: number;
 }
 
 export interface Globe3DActions {
@@ -58,7 +57,6 @@ export interface Globe3DActions {
   setPointerPosition: (pos: { x: number; y: number; z: number } | null) => void;
   setCoordinates2D: (coords: [number, number]) => void;
   setPopupVisible: (visible: boolean) => void;
-  setElapsedTime: (time: number) => void;
   reset: () => void;
 }
 

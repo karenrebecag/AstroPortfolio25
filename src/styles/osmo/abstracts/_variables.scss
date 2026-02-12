@@ -1,0 +1,58 @@
+// ==========================================================================
+// Osmo Scaling System — Configuration
+// ==========================================================================
+//
+// Design specs: Figma artboard 1920px, base font-size 16px
+//
+// Each key is a breakpoint name. The first entry is the default (no media query).
+// All subsequent entries generate a max-width media query using their 'max' value.
+//
+// - unit:  Body font-size (px) in Figma design (unitless number)
+// - ideal: Figma frame/artboard width (unitless number)
+// - min:   Minimum container width (with px unit)
+// - max:   Maximum container width (with px unit)
+
+$osmo-breakpoints: (
+  desktop: (
+    unit: 16,
+    ideal: 1920,
+    min: 1440px,
+    max: 2560px,
+  ),
+  tablet: (
+    unit: 16,
+    ideal: 834,
+    min: 768px,
+    max: 1439px,
+  ),
+  mobile-landscape: (
+    unit: 16,
+    ideal: 550,
+    min: 480px,
+    max: 767px,
+  ),
+  mobile-portrait: (
+    unit: 16,
+    ideal: 390,
+    min: 320px,
+    max: 479px,
+  ),
+) !default;
+
+// Type Scale Ratio — Major Third (1.25)
+// Common ratios: 1.067 Minor Second, 1.125 Major Second, 1.2 Minor Third,
+//                1.25 Major Third, 1.333 Perfect Fourth, 1.5 Perfect Fifth
+$osmo-type-ratio: 1.25 !default;
+
+// Type scale steps (maps heading level to exponent of the ratio)
+$osmo-type-steps: (
+  h1: 4,
+  h2: 3,
+  h3: 2,
+  h4: 1,
+  h5: 0,
+  h6: -1,
+) !default;
+
+// Debug mode (set to true during development to see overlay)
+$osmo-debug: false !default;

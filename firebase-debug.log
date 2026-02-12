@@ -19,3 +19,44 @@
 [debug] [2026-02-03T01:32:50.287Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
 [debug] [2026-02-03T01:32:50.303Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
 [debug] [2026-02-03T01:32:50.601Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403
+[debug] [2026-02-04T23:11:44.738Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-04T23:11:44.742Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-04T23:11:44.744Z] Checked if tokens are valid: false, expires at: 1770240645790
+[debug] [2026-02-04T23:11:44.744Z] Checked if tokens are valid: false, expires at: 1770240645790
+[debug] [2026-02-04T23:11:44.744Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T23:11:44.746Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T23:11:44.746Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:11:44.749Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-04T23:11:44.749Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-04T23:11:44.749Z] Checked if tokens are valid: false, expires at: 1770240645790
+[debug] [2026-02-04T23:11:44.749Z] Checked if tokens are valid: false, expires at: 1770240645790
+[debug] [2026-02-04T23:11:44.749Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T23:11:44.749Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T23:11:44.749Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:11:44.971Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T23:11:44.971Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:11:45.040Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-04T23:11:45.044Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T23:11:45.045Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:11:45.070Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-04T23:11:45.391Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403
+[debug] [2026-02-04T23:11:45.392Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-02-04T23:11:45.406Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-04T23:11:45.407Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-04T23:11:45.407Z] Checked if tokens are valid: true, expires at: 1770250304045
+[debug] [2026-02-04T23:11:45.407Z] Checked if tokens are valid: true, expires at: 1770250304045
+[debug] [2026-02-04T23:11:45.408Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-04T23:11:45.413Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403
+[debug] [2026-02-12T18:00:08.089Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-12T18:00:08.098Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-12T18:00:08.099Z] Checked if tokens are valid: true, expires at: 1770922726980
+[debug] [2026-02-12T18:00:08.099Z] Checked if tokens are valid: true, expires at: 1770922726980
+[debug] [2026-02-12T18:00:08.099Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-02-12T18:00:08.099Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-02-12T18:00:08.100Z] Checked if tokens are valid: true, expires at: 1770922726980
+[debug] [2026-02-12T18:00:08.100Z] Checked if tokens are valid: true, expires at: 1770922726980
+[debug] [2026-02-12T18:00:08.102Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-12T18:00:08.106Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo [none]
+[debug] [2026-02-12T18:00:08.336Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403
+[debug] [2026-02-12T18:00:08.336Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-02-12T18:00:08.476Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/portfolioastrocomments/billingInfo 403

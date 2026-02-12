@@ -200,38 +200,55 @@ const services = await getServices(lang);
     transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Services List */
+  /* Services List - Stacking Cards Collection */
   :global(.services-list) {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 64px;
+  }
+
+  :global(.services-list.stacking-cards-collection) {
+    /* No gap - we use margin-top for stacking effect */
   }
 
   :global(.service-item) {
     width: 100%;
     padding: 60px 20px 80px 20px;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     border: 1px solid rgb(255, 255, 255);
-    border-radius: 20px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     display: flex;
     flex-direction: row;
     gap: 54px;
-    cursor: pointer;
-    transition: 
+    cursor: default;
+    position: relative;
+    will-change: transform;
+    transform-origin: center top;
+    transition:
       background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Stacking effect - negative margin creates overlap */
+  :global(.service-item[data-stacking-cards-item]:not(:first-child)) {
+    margin-top: -24px;
+  }
+
+  /* Add shadow for depth effect */
+  :global(.service-item[data-stacking-cards-item]) {
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   }
 
   /* Light mode hover effects for service items */
   :global(.service-item:hover) {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 1);
     border-color: rgba(69, 35, 174, 0.2);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.15);
   }
 
   /* Hover effects for clickable service items */
@@ -449,12 +466,7 @@ const services = await getServices(lang);
     font-style: italic;
   }
 
-  /* Collapsed State */
-  :global(.service-item:not(.active) .service-details) {
-    opacity: 0;
-    max-height: 0;
-    margin-top: -54px;
-  }
+  /* All cards are always expanded - no collapsed state */
 
 
 
@@ -496,14 +508,9 @@ const services = await getServices(lang);
       padding-bottom: 50px;
     }
 
-    /* Reduce gap between service cards in mobile */
-    :global(.services-list) {
-      gap: 24px;
-    }
-
-    /* Remove padding-top from collapsed service items */
-    :global(.service-item:not(.active)) {
-      padding-top: 30px;
+    /* Reduce stacking overlap on mobile */
+    :global(.service-item[data-stacking-cards-item]:not(:first-child)) {
+      margin-top: -16px;
     }
 
     /* Further adjust service titles for mobile */
@@ -544,8 +551,9 @@ const services = await getServices(lang);
       padding-bottom: 100px;
     }
 
-    :global(.services-list) {
-      gap: 32px;
+    /* Smaller overlap on very small screens */
+    :global(.service-item[data-stacking-cards-item]:not(:first-child)) {
+      margin-top: -12px;
     }
 
     :global(.service-item) {
@@ -615,14 +623,13 @@ const services = await getServices(lang);
     background: #0e021a;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(172, 172, 172, 0.143);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
   }
 
   :global(.dark-mode .service-item:hover) {
-    background: #0e021a;
+    background: #120320;
     border-color: rgba(157, 127, 193, 0.4);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
+    box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.5);
   }
 
   :global(.dark-mode .service-number) {

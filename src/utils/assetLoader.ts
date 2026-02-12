@@ -330,5 +330,45 @@ export const ASSET_CONFIGS = {
     fallback: '/assets/silk-fallback.jpg',
     defaultValue: undefined,
     errorMessage: 'Silk background texture'
-  }
+  },
+
+  /**
+   * Cube 3D Model
+   */
+  CUBE_MODEL: {
+    primary: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/Cube.json',
+    fallback: '/assets/Cube.json',
+    defaultValue: null,
+    errorMessage: 'Cube 3D model'
+  },
+
+  /**
+   * Cube HDR Environment (shared with Gem)
+   */
+  CUBE_HDR: {
+    primary: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr',
+    fallback: '/hdr/large_corridor_1k.hdr',
+    defaultValue: null,
+    errorMessage: 'Cube HDR environment map'
+  },
+
+  /**
+   * RingSphere 3D Model
+   */
+  RINGSPHERE_MODEL: {
+    primary: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/ringSphere.json',
+    fallback: '/assets/ringSphere.json',
+    defaultValue: null,
+    errorMessage: 'RingSphere 3D model'
+  },
+
+  /**
+   * RingSphere HDR Environment (shared)
+   */
+  RINGSPHERE_HDR: {
+    primary: 'https://pub-3ed7c563bcaa4c7c8ed703c87bbc1631.r2.dev/large_corridor_1k-1.hdr',
+    fallback: '/hdr/large_corridor_1k.hdr',
+    defaultValue: null,
+    errorMessage: 'RingSphere HDR environment map'
+  },
 } as const;

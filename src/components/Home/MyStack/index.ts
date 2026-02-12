@@ -10,6 +10,3 @@
 export { AnimatedTechStackHeader, AnimatedTechSection, AnimatedTechItem } from './components/AnimatedTechStackWrapper';
 export { default as TechMarqueesIsland } from './components/TechMarqueesIsland';
 export { default as MyStackIsland } from './components/MyStackIsland';
-export { MarqueeAnimation } from './components/MarqueeAnimation';
-
-// Re-export types (check MarqueeAnimation.tsx for available types)

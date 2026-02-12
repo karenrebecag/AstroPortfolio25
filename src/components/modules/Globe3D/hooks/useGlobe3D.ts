@@ -25,6 +25,29 @@ import type { Globe3DConfig, Globe3DRefs, MarkerPoint, ShaderUniforms } from '..
 import vertexShader from '../shaders/vertex.glsl?raw';
 import fragmentShader from '../shaders/fragment.glsl?raw';
 
+/** Dispose all texture properties on a material, then the material itself. */
+function disposeMaterial(material: THREE.Material) {
+  for (const key of Object.keys(material)) {
+    const value = (material as any)[key];
+    if (value instanceof THREE.Texture) value.dispose();
+  }
+  material.dispose();
+}
+
+/** Recursively dispose every geometry and material in a scene graph. */
+function disposeScene(root: THREE.Object3D) {
+  root.traverse((child) => {
+    if (child instanceof THREE.Mesh || child instanceof THREE.Points) {
+      child.geometry?.dispose();
+      if (Array.isArray(child.material)) {
+        child.material.forEach(disposeMaterial);
+      } else if (child.material) {
+        disposeMaterial(child.material);
+      }
+    }
+  });
+}
+
 interface UseGlobe3DOptions {
   containerRef: React.RefObject<HTMLDivElement | null>;
   canvas3DRef: React.RefObject<HTMLCanvasElement | null>;
@@ -68,7 +91,10 @@ export function useGlobe3D({
   const popupOpenTlRef = useRef<gsap.core.Timeline | null>(null);
   const popupCloseTlRef = useRef<gsap.core.Timeline | null>(null);
 
-  const store = useGlobe3DStore();
+  // Use individual selectors instead of entire store
+  const isLoading = useGlobe3DStore((s) => s.isLoading);
+  const isInteracting = useGlobe3DStore((s) => s.isInteracting);
+
   const mergedConfig = { ...DEFAULT_CONFIG, ...config };
 
   const updateSize = useCallback(() => {
@@ -101,16 +127,16 @@ export function useGlobe3D({
     let timestamp: number;
     controls.addEventListener('start', () => {
       timestamp = Date.now();
-      store.setInteracting(true);
+      useGlobe3DStore.getState().setInteracting(true);
     });
     controls.addEventListener('end', () => {
       draggedRef.current = Date.now() - timestamp > 200;
-      store.setInteracting(false);
+      useGlobe3DStore.getState().setInteracting(false);
     });
 
     refs.current.controls = controls as unknown as THREE.Object3D;
     return controls;
-  }, [mergedConfig, store]);
+  }, [mergedConfig]);
 
   const createGlobe = useCallback(
     (texture: THREE.Texture) => {
@@ -264,8 +290,8 @@ export function useGlobe3D({
       containerRef.current.clientHeight
     );
 
-    store.setCoordinates2D([x2d, y2d]);
-  }, [store]);
+    useGlobe3DStore.getState().setCoordinates2D([x2d, y2d]);
+  }, []);
 
   const handleClick = useCallback(
     (e: MouseEvent | TouchEvent) => {
@@ -293,7 +319,7 @@ export function useGlobe3D({
         onGlobeClick?.(coords);
 
         if (popupRef.current) {
-          popupRef.current.innerHTML = `${coords.lat.toFixed(4)}° ${coords.lat >= 0 ? 'N' : 'S'}, ${Math.abs(coords.long).toFixed(4)}° ${coords.long >= 0 ? 'E' : 'W'}`;
+          popupRef.current.innerHTML = `${coords.lat.toFixed(4)}\u00B0 ${coords.lat >= 0 ? 'N' : 'S'}, ${Math.abs(coords.long).toFixed(4)}\u00B0 ${coords.long >= 0 ? 'E' : 'W'}`;
         }
 
         showPopupAnimation(true);
@@ -314,7 +340,6 @@ export function useGlobe3D({
   const triggerHoverDistortion = useCallback(() => {
     if (!materialRef.current || !refs.current.clock) return;
 
-    // Trigger distortion effect at a random point on the globe
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     const x = Math.sin(phi) * Math.cos(theta);
@@ -326,26 +351,24 @@ export function useGlobe3D({
   }, []);
 
   const handleMouseEnter = useCallback(() => {
-    store.setHovered(true);
+    useGlobe3DStore.getState().setHovered(true);
     triggerHoverDistortion();
-  }, [store, triggerHoverDistortion]);
+  }, [triggerHoverDistortion]);
 
   const handleMouseLeave = useCallback(() => {
-    store.setHovered(false);
-  }, [store]);
+    useGlobe3DStore.getState().setHovered(false);
+  }, []);
 
   const render = useCallback(() => {
     if (!refs.current.renderer || !refs.current.scene || !refs.current.camera || !materialRef.current) {
       return;
     }
 
-    const currentState = useGlobe3DStore.getState();
+    const { isPaused } = useGlobe3DStore.getState();
 
-    // Only render if not paused
-    if (!currentState.isPaused) {
+    if (!isPaused) {
       if (refs.current.clock) {
         materialRef.current.uniforms.u_time_since_click.value = refs.current.clock.getElapsedTime();
-        store.setElapsedTime(refs.current.clock.getElapsedTime());
       }
 
       checkIntersects();
@@ -361,21 +384,22 @@ export function useGlobe3D({
     }
 
     animationFrameRef.current = requestAnimationFrame(render);
-  }, [checkIntersects, updateOverlayGraphic, store]);
+  }, [checkIntersects, updateOverlayGraphic]);
 
   // Initialize scene
   useEffect(() => {
     if (!canvas3DRef.current || !containerRef.current || !canvas2DRef.current) return;
 
+    const store = useGlobe3DStore.getState();
     store.setLoading(true);
 
     // Setup renderer
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas3DRef.current,
       alpha: true,
-      antialias: true,
+      antialias: false,
     });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     refs.current.renderer = renderer;
 
@@ -420,7 +444,7 @@ export function useGlobe3D({
       createPopupTimelines();
       updateSize();
 
-      store.setLoading(false);
+      useGlobe3DStore.getState().setLoading(false);
       render();
     });
 
@@ -431,16 +455,37 @@ export function useGlobe3D({
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
 
-    const handleResize = () => updateSize();
+    // Debounced resize
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => updateSize(), 150);
+    };
     window.addEventListener('resize', handleResize);
 
-    // Page Visibility API - pause when tab is inactive
+    // Page Visibility API
     const handleVisibilityChange = () => {
-      store.setPaused(document.hidden);
+      useGlobe3DStore.getState().setPaused(document.hidden);
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
+    // WebGL context loss / recovery
+    const onContextLost = (e: Event) => {
+      e.preventDefault();
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
+    const onContextRestored = () => {
+      render();
+    };
+    renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+    renderer.domElement.addEventListener('webglcontextrestored', onContextRestored);
+
     return () => {
+      clearTimeout(resizeTimer);
+
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -451,29 +496,31 @@ export function useGlobe3D({
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', onContextRestored);
 
-      // Cleanup Three.js resources
-      refs.current.renderer?.dispose();
-      refs.current.scene?.clear();
+      // Complete recursive disposal (instead of scene.clear())
+      disposeScene(scene);
       materialRef.current?.dispose();
+      renderer.dispose();
 
       popupOpenTlRef.current?.kill();
       popupCloseTlRef.current?.kill();
 
-      store.reset();
+      useGlobe3DStore.getState().reset();
     };
   }, []);
 
   // Update markers when they change
   useEffect(() => {
-    if (!store.isLoading) {
+    if (!isLoading) {
       addMarkers();
     }
-  }, [markers, store.isLoading, addMarkers]);
+  }, [markers, isLoading, addMarkers]);
 
   return {
     refs: refs.current,
-    isLoading: store.isLoading,
-    isInteracting: store.isInteracting,
+    isLoading,
+    isInteracting,
   };
 }

@@ -63,23 +63,21 @@ const generateSrcSet = (format: string) => {
 
 <script>
   // Add loaded class when image loads for fade-in effect
-  document.addEventListener('DOMContentLoaded', () => {
+  function initImageLoad() {
     const img = document.querySelector('.me-portfolio-img') as HTMLImageElement;
-    
-    if (img) {
-      if (img.complete && img.naturalHeight !== 0) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', () => {
-          img.classList.add('loaded');
-        });
-        
-        // Handle error case
-        img.addEventListener('error', () => {
-          console.warn('Failed to load optimized image, using fallback');
-          img.classList.add('loaded');
-        });
-      }
+    if (!img) return;
+
+    if (img.complete && img.naturalHeight !== 0) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => { img.classList.add('loaded'); }, { once: true });
+      img.addEventListener('error', () => { img.classList.add('loaded'); }, { once: true });
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initImageLoad, { once: true });
+  } else {
+    initImageLoad();
+  }
 </script>

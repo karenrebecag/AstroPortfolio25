@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { Project as CMSProject } from '../../lib/cms';
 
 interface ProjectImageData {
@@ -49,16 +49,18 @@ export const ProjectImageCursor: React.FC<ProjectImageCursorProps> = ({ projects
     5: 'https://picsum.photos/300/300?random=21',
   };
 
-  // Build project images map from CMS data
-  const projectImages: Record<number, ProjectImageData> = cmsProjects.reduce((acc, project, index) => {
-    const projectId = index + 1;
-    acc[projectId] = {
-      id: projectId,
-      src: project.mainImage?.url || fallbackImages[projectId] || `https://picsum.photos/300/300?random=${projectId}`,
-      alt: project.mainImage?.alt || project.title || `Project ${projectId}`,
-    };
-    return acc;
-  }, {} as Record<number, ProjectImageData>);
+  // Build project images map from CMS data (memoized — cmsProjects is stable)
+  const projectImages = useMemo<Record<number, ProjectImageData>>(() =>
+    cmsProjects.reduce((acc, project, index) => {
+      const projectId = index + 1;
+      acc[projectId] = {
+        id: projectId,
+        src: project.mainImage?.url || fallbackImages[projectId] || `https://picsum.photos/300/300?random=${projectId}`,
+        alt: project.mainImage?.alt || project.title || `Project ${projectId}`,
+      };
+      return acc;
+    }, {} as Record<number, ProjectImageData>),
+  [cmsProjects]);
 
   // Smooth cursor movement with easing
   const handleMouseMove = useCallback((e: MouseEvent) => {

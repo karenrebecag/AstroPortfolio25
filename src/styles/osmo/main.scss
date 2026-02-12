@@ -1,0 +1,30 @@
+// ==========================================================================
+// Osmo Scaling System — Main Entry Point
+// ==========================================================================
+//
+// This file generates the Osmo fluid scaling system.
+// Import it in your Astro base layout to activate proportional scaling.
+//
+// How it works:
+//   1. Sets CSS custom properties on :root for each breakpoint
+//   2. Sets body { font-size: var(--size-font) } so all rem units scale
+//   3. Generates type scale for h1-h6 based on Major Third ratio (1.25)
+//
+// Usage in components:
+//   - Use rem for any value that should scale with the viewport
+//   - Use the osmo-rem($figma-px) function to convert Figma px → rem
+//   - Example: padding: osmo-rem(24) → 1.5rem (scales proportionally)
+//
+// Design specs:
+//   Desktop: 1920px ideal, 16px base, range 1440px–2560px
+//   Tablet:  834px ideal, 16px base, range 768px–1439px
+//   Mobile:  550px ideal, 16px base, range 480px–767px
+//   Portrait: 390px ideal, 16px base, range 320px–479px
+
+// Abstracts (no CSS output)
+@forward "abstracts/variables";
+@forward "abstracts/functions";
+@forward "abstracts/mixins";
+
+// Base (generates CSS)
+@use "base/layout";

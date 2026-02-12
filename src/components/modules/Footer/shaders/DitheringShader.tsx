@@ -1,9 +1,6 @@
-"use client"
-
 import type React from "react"
-import { useEffect, useRef, useState, useMemo } from "react"
-import { create } from 'zustand'
-import { useShallow } from 'zustand/react/shallow'
+import { useEffect, useRef, useState } from "react"
+import { observeDarkMode } from "../../../../utils/darkMode"
 
 // GLSL utility functions
 const declarePI = `
@@ -130,7 +127,7 @@ void main() {
   float t = .5 * u_time;
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   uv -= .5;
-  
+
   // Apply pixelization
   float pxSize = u_pxSize;
   vec2 pxSizeUv = gl_FragCoord.xy;
@@ -139,7 +136,7 @@ void main() {
   vec2 pixelizedUv = floor(pxSizeUv) * pxSize / u_resolution.xy;
   pixelizedUv += .5;
   pixelizedUv -= .5;
-  
+
   vec2 shape_uv = pixelizedUv;
   vec2 dithering_uv = pxSizeUv;
   vec2 ditheringNoise_uv = uv * u_resolution;
@@ -258,123 +255,6 @@ export const DitheringTypes = {
 export type DitheringShape = keyof typeof DitheringShapes
 export type DitheringType = keyof typeof DitheringTypes
 
-// Optimized Zustand store for DitheringShader performance control
-// Dividido en slices por funcionalidad para evitar re-renders innecesarios
-const useDitheringStore = create<{
-  // Visibility slice - para control de renderizado
-  isVisible: boolean;
-  isPaused: boolean;
-  isLoading: boolean;
-
-  // Animation slice - para propiedades de animación
-  speed: number;
-
-  // Settings slice - para configuración que cambia poco
-  width: number;
-  height: number;
-  colorBack: string;
-  colorFront: string;
-  shape: DitheringShape;
-  type: DitheringType;
-  pxSize: number;
-
-  // Actions - memoizadas para evitar recreación
-  setVisible: (visible: boolean) => void;
-  setPaused: (paused: boolean) => void;
-  setLoading: (loading: boolean) => void;
-  setSpeed: (speed: number) => void;
-  setDimensions: (width: number, height: number) => void;
-  setColors: (colorBack: string, colorFront: string) => void;
-  setShaderSettings: (shape: DitheringShape, type: DitheringType, pxSize: number) => void;
-
-  // Batch updater para múltiples cambios
-  batchUpdate: (updates: Partial<{
-    isVisible: boolean;
-    isPaused: boolean;
-    isLoading: boolean;
-    speed: number;
-    width: number;
-    height: number;
-    colorBack: string;
-    colorFront: string;
-    shape: DitheringShape;
-    type: DitheringType;
-    pxSize: number;
-  }>) => void;
-}>((set, get) => ({
-  // Initial state
-  isVisible: false,
-  isPaused: false,
-  isLoading: true,
-  speed: 0.3,
-  width: 800,
-  height: 800,
-  colorBack: "#010111",
-  colorFront: "#4523AE",
-  shape: "warp",
-  type: "8x8",
-  pxSize: 2,
-
-  // Optimized actions con batch updates cuando es posible
-  setVisible: (visible) => {
-    const currentState = get();
-    if (currentState.isVisible === visible) return;
-    set({ isVisible: visible });
-  },
-
-  setPaused: (paused) => {
-    const currentState = get();
-    if (currentState.isPaused === paused) return;
-    set({ isPaused: paused });
-  },
-
-  setLoading: (loading) => {
-    const currentState = get();
-    if (currentState.isLoading === loading) return;
-    set({ isLoading: loading });
-  },
-
-  setSpeed: (speed) => {
-    const currentState = get();
-    if (currentState.speed === speed) return;
-    set({ speed });
-  },
-
-  setDimensions: (width, height) => {
-    const currentState = get();
-    if (currentState.width === width && currentState.height === height) return;
-    set({ width, height });
-  },
-
-  setColors: (colorBack, colorFront) => {
-    const currentState = get();
-    if (currentState.colorBack === colorBack && currentState.colorFront === colorFront) return;
-    set({ colorBack, colorFront });
-  },
-
-  setShaderSettings: (shape, type, pxSize) => {
-    const currentState = get();
-    if (currentState.shape === shape && currentState.type === type && currentState.pxSize === pxSize) return;
-    set({ shape, type, pxSize });
-  },
-
-  // Batch updater para múltiples cambios simultáneos
-  batchUpdate: (updates) => {
-    const currentState = get();
-    const filteredUpdates: Partial<typeof currentState> = {};
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (currentState[key as keyof typeof currentState] !== value) {
-        (filteredUpdates as any)[key] = value;
-      }
-    });
-
-    if (Object.keys(filteredUpdates).length > 0) {
-      set(filteredUpdates);
-    }
-  },
-}));
-
 interface DitheringShaderProps {
   width?: number
   height?: number
@@ -418,11 +298,11 @@ function createShader(gl: WebGL2RenderingContext, type: number, source: string):
 
 function createProgram(
   gl: WebGL2RenderingContext,
-  vertexShaderSource: string,
-  fragmentShaderSource: string,
-): WebGLProgram | null {
-  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
-  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
+  vertexSrc: string,
+  fragmentSrc: string,
+): { program: WebGLProgram; vertexShader: WebGLShader; fragmentShader: WebGLShader } | null {
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexSrc)
+  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentSrc)
 
   if (!vertexShader || !fragmentShader) return null
 
@@ -439,7 +319,7 @@ function createProgram(
     return null
   }
 
-  return program
+  return { program, vertexShader, fragmentShader }
 }
 
 export function DitheringShader({
@@ -455,188 +335,218 @@ export function DitheringShader({
   style = {},
 }: DitheringShaderProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number | undefined>(undefined)
-  const programRef = useRef<WebGLProgram | null>(null)
-  const glRef = useRef<WebGL2RenderingContext | null>(null)
-  const uniformLocationsRef = useRef<Record<string, WebGLUniformLocation | null>>({})
-  const startTimeRef = useRef<number>(Date.now())
   const mountRef = useRef<HTMLDivElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  // Selectores optimizados con useShallow - evita re-renders innecesarios
-  const { isVisible, isPaused, isLoading } = useDitheringStore(
-    useShallow((state) => ({
-      isVisible: state.isVisible,
-      isPaused: state.isPaused,
-      isLoading: state.isLoading,
-    }))
-  );
+  // All mutable state in a single ref — read in animation loop only
+  const stateRef = useRef({
+    isVisible: false,
+    isPaused: false,
+    animationId: null as number | null,
+    gl: null as WebGL2RenderingContext | null,
+    program: null as WebGLProgram | null,
+    vertexShader: null as WebGLShader | null,
+    fragmentShader: null as WebGLShader | null,
+    positionBuffer: null as WebGLBuffer | null,
+    uniforms: {} as Record<string, WebGLUniformLocation | null>,
+    startTime: Date.now(),
+    // Cached prop values (read by render loop)
+    colorBackRgba: hexToRgba(colorBack),
+    colorFrontRgba: hexToRgba(colorFront),
+    shapeValue: DitheringShapes[shape],
+    typeValue: DitheringTypes[type],
+    pxSize,
+    speed,
+    width,
+    height,
+  })
 
-  const { setVisible, setPaused, setLoading, batchUpdate } = useDitheringStore(
-    useShallow((state) => ({
-      setVisible: state.setVisible,
-      setPaused: state.setPaused,
-      setLoading: state.setLoading,
-      batchUpdate: state.batchUpdate,
-    }))
-  );
+  // Update cached prop values when props change (no effect re-run needed)
+  const s = stateRef.current
+  s.colorBackRgba = hexToRgba(colorBack)
+  s.colorFrontRgba = hexToRgba(colorFront)
+  s.shapeValue = DitheringShapes[shape]
+  s.typeValue = DitheringTypes[type]
+  s.pxSize = pxSize
+  s.speed = speed
+  s.width = width
+  s.height = height
 
-  // Intersection Observer para performance
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        rootMargin: '400px 0px 100px 0px'
-      }
-    );
-
-    if (mountRef.current) {
-      observer.observe(mountRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [setVisible]);
-
-  // Page Visibility API para performance
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      setPaused(document.hidden);
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [setPaused]);
-
-  // Sincronizar props con store
-  useEffect(() => {
-    batchUpdate({
-      speed,
-      width,
-      height,
-      colorBack,
-      colorFront,
-      shape,
-      type,
-      pxSize,
-    });
-  }, [width, height, colorBack, colorFront, shape, type, pxSize, speed, batchUpdate]);
-
+  // Single effect: create WebGL context once, control animation internally
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || !isVisible) return
+    if (!canvas || !mountRef.current) return
+    const currentMount = mountRef.current
+    const state = stateRef.current
 
     const gl = canvas.getContext("webgl2")
-    
     if (!gl) {
       console.error("WebGL2 not supported")
       return
     }
-
-    glRef.current = gl
+    state.gl = gl
 
     // Create shader program
-    const program = createProgram(gl, vertexShaderSource, fragmentShaderSource)
-    if (!program) return
+    const result = createProgram(gl, vertexShaderSource, fragmentShaderSource)
+    if (!result) return
 
-    programRef.current = program
+    state.program = result.program
+    state.vertexShader = result.vertexShader
+    state.fragmentShader = result.fragmentShader
 
     // Get uniform locations
-    uniformLocationsRef.current = {
-      u_time: gl.getUniformLocation(program, "u_time"),
-      u_resolution: gl.getUniformLocation(program, "u_resolution"),
-      u_colorBack: gl.getUniformLocation(program, "u_colorBack"),
-      u_colorFront: gl.getUniformLocation(program, "u_colorFront"),
-      u_shape: gl.getUniformLocation(program, "u_shape"),
-      u_type: gl.getUniformLocation(program, "u_type"),
-      u_pxSize: gl.getUniformLocation(program, "u_pxSize"),
+    state.uniforms = {
+      u_time: gl.getUniformLocation(result.program, "u_time"),
+      u_resolution: gl.getUniformLocation(result.program, "u_resolution"),
+      u_colorBack: gl.getUniformLocation(result.program, "u_colorBack"),
+      u_colorFront: gl.getUniformLocation(result.program, "u_colorFront"),
+      u_shape: gl.getUniformLocation(result.program, "u_shape"),
+      u_type: gl.getUniformLocation(result.program, "u_type"),
+      u_pxSize: gl.getUniformLocation(result.program, "u_pxSize"),
     }
 
     // Set up position attribute
-    const positionAttributeLocation = gl.getAttribLocation(program, "a_position")
+    const positionAttributeLocation = gl.getAttribLocation(result.program, "a_position")
     const positionBuffer = gl.createBuffer()
+    state.positionBuffer = positionBuffer
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-    const positions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW)
     gl.enableVertexAttribArray(positionAttributeLocation)
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0)
 
-    // Set canvas size
-    canvas.width = width
-    canvas.height = height
-    gl.viewport(0, 0, width, height)
+    // Set initial canvas size
+    canvas.width = state.width
+    canvas.height = state.height
+    gl.viewport(0, 0, state.width, state.height)
 
-    // Animation loop optimizado con store state
+    // ── Animation loop ──
     const render = () => {
-      const currentState = useDitheringStore.getState();
+      if (!state.isVisible || state.isPaused) return
+      if (!state.gl || !state.program) return
 
-      if (!currentState.isVisible || currentState.isPaused) {
-        if (currentState.speed !== 0) {
-          animationRef.current = requestAnimationFrame(render);
+      // Update canvas size if props changed
+      if (canvas.width !== state.width || canvas.height !== state.height) {
+        canvas.width = state.width
+        canvas.height = state.height
+        state.gl.viewport(0, 0, state.width, state.height)
+      }
+
+      const currentTime = (Date.now() - state.startTime) * 0.001 * state.speed
+
+      state.gl.clear(state.gl.COLOR_BUFFER_BIT)
+      state.gl.useProgram(state.program)
+
+      const loc = state.uniforms
+      if (loc.u_time) state.gl.uniform1f(loc.u_time, currentTime)
+      if (loc.u_resolution) state.gl.uniform2f(loc.u_resolution, state.width, state.height)
+      if (loc.u_colorBack) state.gl.uniform4fv(loc.u_colorBack, state.colorBackRgba)
+      if (loc.u_colorFront) state.gl.uniform4fv(loc.u_colorFront, state.colorFrontRgba)
+      if (loc.u_shape) state.gl.uniform1f(loc.u_shape, state.shapeValue)
+      if (loc.u_type) state.gl.uniform1f(loc.u_type, state.typeValue)
+      if (loc.u_pxSize) state.gl.uniform1f(loc.u_pxSize, state.pxSize)
+
+      state.gl.drawArrays(state.gl.TRIANGLES, 0, 6)
+
+      if (state.speed !== 0) {
+        state.animationId = requestAnimationFrame(render)
+      }
+    }
+
+    // Start / stop animation
+    const syncAnimation = () => {
+      if (state.isVisible && !state.isPaused && state.speed !== 0) {
+        // Only start if not already running
+        if (state.animationId === null) {
+          state.animationId = requestAnimationFrame(render)
         }
-        return;
-      }
-
-      const currentTime = (Date.now() - startTimeRef.current) * 0.001 * currentState.speed;
-
-      const context = glRef.current
-      const shaderProgram = programRef.current
-
-      if (!context || !shaderProgram) return
-
-      context.clear(context.COLOR_BUFFER_BIT)
-      context["useProgram"](shaderProgram)
-
-      // Set uniforms usando valores de props para garantizar consistencia
-      const locations = uniformLocationsRef.current
-
-      if (locations.u_time) context.uniform1f(locations.u_time, currentTime)
-      if (locations.u_resolution) context.uniform2f(locations.u_resolution, width, height)
-      if (locations.u_colorBack) context.uniform4fv(locations.u_colorBack, hexToRgba(colorBack))
-      if (locations.u_colorFront) context.uniform4fv(locations.u_colorFront, hexToRgba(colorFront))
-      if (locations.u_shape) context.uniform1f(locations.u_shape, DitheringShapes[shape])
-      if (locations.u_type) context.uniform1f(locations.u_type, DitheringTypes[type])
-      if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, pxSize)
-
-      context.drawArrays(context.TRIANGLES, 0, 6)
-
-      if (currentState.speed !== 0) {
-        animationRef.current = requestAnimationFrame(render)
+      } else {
+        if (state.animationId !== null) {
+          cancelAnimationFrame(state.animationId)
+          state.animationId = null
+        }
       }
     }
 
-    const startAnimation = () => {
-      const currentState = useDitheringStore.getState();
-      if (currentState.speed !== 0) {
-        animationRef.current = requestAnimationFrame(render)
-      }
+    // ── Visibility: Intersection + Dark Mode ──
+    let isIntersecting = false
+
+    const updateVisibility = () => {
+      const isDark = document.documentElement.classList.contains('dark-mode')
+      state.isVisible = !isDark && isIntersecting
+      syncAnimation()
     }
 
-    // Start con smooth loading usando acción memoizada
-    const timer = setTimeout(() => {
-      setLoading(false);
-      startAnimation();
-    }, 100);
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting
+        updateVisibility()
+      },
+      { threshold: 0, rootMargin: '400px 0px 100px 0px' }
+    )
+    intersectionObserver.observe(currentMount)
 
+    const cleanupDarkMode = observeDarkMode(() => updateVisibility())
+
+    // Page Visibility API
+    const handleVisibilityChange = () => {
+      state.isPaused = document.hidden
+      syncAnimation()
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // ── WebGL context loss / recovery ──
+    const onContextLost = (e: Event) => {
+      e.preventDefault()
+      if (state.animationId !== null) {
+        cancelAnimationFrame(state.animationId)
+        state.animationId = null
+      }
+    }
+    const onContextRestored = () => {
+      syncAnimation()
+    }
+    canvas.addEventListener('webglcontextlost', onContextLost)
+    canvas.addEventListener('webglcontextrestored', onContextRestored)
+
+    // Start with smooth loading
+    setIsLoaded(true)
+    syncAnimation()
+
+    // ── Cleanup ──
     return () => {
-      clearTimeout(timer);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      intersectionObserver.disconnect()
+      cleanupDarkMode()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      canvas.removeEventListener('webglcontextlost', onContextLost)
+      canvas.removeEventListener('webglcontextrestored', onContextRestored)
+
+      if (state.animationId !== null) {
+        cancelAnimationFrame(state.animationId)
       }
 
-      // Cleanup completo de WebGL resources
-      if (glRef.current && programRef.current) {
-        glRef.current.deleteProgram(programRef.current);
-
-        // Cleanup de buffers y otros recursos WebGL
-        const buffers = glRef.current.getParameter(glRef.current.ARRAY_BUFFER_BINDING);
-        if (buffers) {
-          glRef.current.deleteBuffer(buffers);
+      // Complete WebGL cleanup
+      if (state.gl) {
+        if (state.positionBuffer) state.gl.deleteBuffer(state.positionBuffer)
+        if (state.program) {
+          if (state.vertexShader) {
+            state.gl.detachShader(state.program, state.vertexShader)
+            state.gl.deleteShader(state.vertexShader)
+          }
+          if (state.fragmentShader) {
+            state.gl.detachShader(state.program, state.fragmentShader)
+            state.gl.deleteShader(state.fragmentShader)
+          }
+          state.gl.deleteProgram(state.program)
         }
       }
+
+      state.gl = null
+      state.program = null
+      state.vertexShader = null
+      state.fragmentShader = null
+      state.positionBuffer = null
     }
-  }, [width, height, colorBack, colorFront, shape, type, pxSize, speed, isVisible, setLoading])
+  }, []) // No dependencies — WebGL context created once, uniforms updated from refs
 
   return (
     <div
@@ -656,7 +566,7 @@ export function DitheringShader({
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          opacity: isVisible && !isLoading ? 1 : 0,
+          opacity: isLoaded ? 1 : 0,
           transition: "opacity 0.3s ease-out",
         }}
       />

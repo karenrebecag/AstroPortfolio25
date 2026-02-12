@@ -1,0 +1,212 @@
+/* Marquees Advanced - Scroll Direction Implementation */
+
+.marquees-section {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  /* Performance optimization: defer rendering until visible */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 200px;
+  contain: layout paint;
+}
+
+.marquees-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem 0;
+}
+
+/* Wrapper for rotated marquees */
+.marquee-wrapper {
+  position: absolute;
+  width: 200%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transform-origin: center;
+  overflow: hidden;
+}
+
+.first-marquee {
+  background: #7256c6;
+  transform: rotate(5deg);
+  z-index: 1;
+}
+
+.second-marquee {
+  background: #000000;
+  transform: rotate(-5deg);
+  z-index: 2;
+}
+
+/* Advanced Marquee Structure */
+.marquee-advanced {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.marquee-advanced__scroll {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.marquee-advanced__collection {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.marquee-advanced__item {
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+
+.marquee__advanced__p {
+  white-space: nowrap;
+  margin-bottom: 0;
+  margin-right: 0.5em;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Arrow SVG styling */
+.marquee__advanced__arrow-svg {
+  color: #ff4c24;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.625, 0.05, 0, 1);
+  transform: rotate(-180deg);
+}
+
+/* Arrow rotation based on scroll direction */
+[data-marquee-status="inverted"] .marquee__advanced__arrow-svg {
+  transform: rotate(-359.999deg);
+}
+
+[data-marquee-direction="right"][data-marquee-status="normal"] .marquee__advanced__arrow-svg {
+  transform: rotate(-359.999deg);
+}
+
+[data-marquee-direction="right"][data-marquee-status="inverted"] .marquee__advanced__arrow-svg {
+  transform: rotate(-180deg);
+}
+
+/* Tablet responsive */
+@media (max-width: 991px) {
+  .marquees-container {
+    height: 175px;
+    padding: 8rem 0;
+  }
+
+  .marquee-wrapper {
+    height: 70px;
+    width: 250%;
+  }
+
+  .marquee__advanced__p {
+    font-size: 2rem;
+  }
+
+  .marquee__advanced__arrow-svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+}
+
+/* Mobile: hide entire section */
+@media (max-width: 767px) {
+  .marquees-section {
+    display: none;
+  }
+}
+
+/* Dark mode styles */
+:global(.dark-mode) .first-marquee {
+  background: #9D7FC1;
+}
+
+:global(.dark-mode) .second-marquee {
+  background: #4523AE;
+}
+
+:global(.dark-mode) .marquee__advanced__p {
+  color: #ffffff;
+}
+
+:global(.dark-mode) .marquee__advanced__arrow-svg {
+  color: #ff7a5c;
+}
+
+/* Gradients for large screens */
+@media (min-width: 2560px) {
+  .marquees-section::before,
+  .marquees-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .marquees-section::before {
+    left: 0;
+    background: linear-gradient(to right, #FEFEFE, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .marquees-section::after {
+    right: 0;
+    background: linear-gradient(to left, #FEFEFE, transparent);
+    transition: background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  :global(.dark-mode) .marquees-section::before {
+    background: linear-gradient(to right, #07001e, transparent);
+  }
+
+  :global(.dark-mode) .marquees-section::after {
+    background: linear-gradient(to left, #07001e, transparent);
+  }
+}
+
+/* Accessibility: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-wrapper,
+  .marquee-advanced__scroll,
+  .marquee-advanced__collection {
+    animation: none !important;
+  }
+}
+
+/* Performance optimizations */
+.marquee-advanced {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.marquee-advanced__scroll,
+.marquee-advanced__collection {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

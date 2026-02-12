@@ -344,3 +344,32 @@
     background: radial-gradient(circle, var(--tw-gradient-stops));
   }
 }
+
+/* ================================
+   Footer Parallax Effect - Osmo Pattern
+   https://osmo.supply/
+   ================================ */
+
+.footer-parallax-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-parallax-dark,
+.footer-parallax-light {
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.footer-parallax-dark {
+  background-color: #111111;
+}
+
+.footer-parallax-light {
+  background-color: #fdfdfd;
+}

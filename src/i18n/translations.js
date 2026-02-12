@@ -18,21 +18,21 @@ export const translations = {
       cta: 'View Projects'
     },
     banner: {
-      leftMarquee: 'CREATIVE • DEVELOPER • DESIGNER • PORTFOLIO •',
-      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROJECTS •',
+      leftMarquee: 'DESIGN ENGINEER • PIXEL TO PRODUCTION • NO MIDDLEMEN • BUILT TO CONVERT •',
+      rightMarquee: 'UI/UX • CREATIVE DEV • FULLSTACK • AI AUTOMATION • 30+ CLIENTS WORLDWIDE •',
       projectsButton: 'Projects',
       resumeButton: 'Get my Resume'
     },
     faqs: {
       title: 'FAQS',
-      subtitle: 'Common questions about my services and process'
+      subtitle: 'Everything you need to know before working with a design engineer \u2014 process, pricing, timelines, and what to expect.'
     },
     enterprises: {
       title: 'Trusted by Leading Brands to Deliver Exceptional Design Solutions'
     },
     myStack: {
       title: 'MY STACK',
-      button: 'Check my Stack'
+      button: 'See Full Toolkit'
     },
     footer: {
       rights: 'All rights reserved',
@@ -163,8 +163,8 @@ export const translations = {
       subtitle: 'Share your thoughts about this project'
     },
     contact: {
-      title: 'Get In Touch',
-      subtitle: 'Ready to bring your ideas to life? Let\'s discuss your project',
+      title: 'Let\'s Talk',
+      subtitle: 'Share your project details and get a personalized response within 24 hours \u2014 no commitment required.',
       form: {
         name: {
           label: 'Your Name',
@@ -183,7 +183,7 @@ export const translations = {
           placeholder: 'United States, Canada, Mexico'
         },
         interests: {
-          label: 'I\'m interested in...',
+          label: 'What do you need?',
           options: [
             'UX/UI Design & Engineering',
             'Creative Frontend Development',
@@ -202,8 +202,8 @@ export const translations = {
           ]
         },
         message: {
-          label: 'More About The Project',
-          placeholder: 'Tell me more about your project...'
+          label: 'Project Details',
+          placeholder: 'What are your goals, timeline, and any references or inspiration?'
         },
         attachment: {
           label: 'Add an Attachment',
@@ -211,12 +211,12 @@ export const translations = {
           remove: 'Remove'
         },
         submit: {
-          label: 'Send Request',
+          label: 'Send My Project Brief',
           sending: 'Sending...'
         }
       },
       messages: {
-        success: 'Message sent successfully! I will contact you soon.',
+        success: 'Got it! I\'ll review your project brief and reply within 24 hours with next steps.',
         error: 'Failed to send message. Please try again.',
         validation: 'Please complete name, email and message fields',
         fileTooBig: 'File is too large. Maximum size is 10MB.',
@@ -271,39 +271,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: 'DESIGN MATTERS',
-          description: 'Good UX isn\'t magic—it\'s iteration.',
-          highlight: 'I look at spacing, hierarchy, content, motion... everything users feel but can\'t explain.'
+          title: 'PIXEL-PERFECT, PURPOSE-DRIVEN',
+          description: 'Your users judge your product in seconds.',
+          highlight: 'I obsess over spacing, hierarchy, and motion—the invisible details that make users trust your brand and stay.'
         },
         {
           id: '02',
-          title: 'building my own',
-          description: 'Founding WebCrafters gave me the space to lead full processes—from first call to delivery.',
-          highlight: 'I work with teams that value clarity, ownership, and honest feedback.'
+          title: 'END-TO-END OWNERSHIP',
+          description: 'From discovery call to final delivery, I own every step of the process.',
+          highlight: 'No middlemen. No telephone games. One person who designs, codes, and ships your product.'
         },
         {
           id: '03',
-          title: 'EVOLVING WITH INTENTION',
-          description: 'Design and dev move fast—but not everything should be rushed.',
-          highlight: 'I adapt, but I stay grounded in usability, accessibility, and real needs.'
+          title: 'BUILT TO LAST',
+          description: 'Fast doesn\'t mean rushed. Every decision behind your product is deliberate.',
+          highlight: 'Accessibility, performance, and scalability baked in—so your product grows with your business.'
         },
         {
           id: '04',
-          title: 'PRODUCT THINKING',
-          description: 'I design with users in mind, but I also think about dev time, scalability, and business goals.',
-          highlight: 'Each screen is a decision—and I care about all of them.'
+          title: 'YOUR GOALS, MY BLUEPRINT',
+          description: 'Pretty isn\'t enough. I design for conversion, retention, and growth.',
+          highlight: 'Every screen, every interaction is engineered to move your users closer to your business goals.'
         },
         {
           id: '05',
-          title: 'Curiosity First',
-          description: 'I\'ve always been curious about how things work. Design came as a way to solve problems—not just make things pretty.',
-          highlight: 'Understanding both the visual and the structural side has always made sense to me.'
+          title: 'PROBLEMS SOLVED, NOT JUST DESIGNED',
+          description: 'I don\'t start with pixels. I start with your problem.',
+          highlight: 'Understanding the "why" behind every project means your product solves real needs—not just looks good in a portfolio.'
         },
         {
           id: '06',
-          title: 'Bringing Design AND CODE',
-          description: 'I\'m both a developer and a designer, which means I don\'t just make it look good—I make it work.',
-          highlight: 'This mindset helps me build faster, cleaner, and with fewer handoffs.'
+          title: 'DESIGN + CODE, ZERO GAPS',
+          description: 'Most designers hand off a Figma file and hope for the best. I ship production code.',
+          highlight: 'One person. Design and development. Faster iteration, fewer miscommunications, better results.'
         }
       ]
     },
@@ -312,19 +312,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: 'Design Engineer',
         location: 'Based in Mexico City',
-        intro: 'That is where I come in. A lover of my work, a wrangler of my craft. I am here to create products that not only reflect who you are and what your ideals stand for, but products that truly resonate with those who experience them and achieve their objective.'
+        intro: 'You need more than a pretty website. You need a digital product that earns trust, converts visitors, and grows with your business. That\'s exactly what I build.'
       },
       experience: {
         years: '5+ Years',
         title1: 'Creating Digital',
         title2: 'Experiences',
-        description: 'From UI/UX design to full-stack development, I\'ve worked with companies across the globe, creating seamless digital experiences that merge aesthetics with functionality.',
-        connectButton: 'Connect'
+        description: 'From startups to established brands across 10+ countries, I\'ve designed and built products that don\'t just look good\u2014they perform. Strategy, design, and code, all from one person.',
+        connectButton: 'Let\'s Talk'
       },
       stats: {
         title1: 'Numbers That',
         title2: 'Speak Volumes',
-        description: 'Every project is an opportunity to push boundaries and create something extraordinary.',
+        description: 'Real projects. Real results. Here\'s what 5+ years of designing and shipping digital products looks like.',
         awards: 'Awards won',
         clients: 'Worldwide clients',
         countries: 'Countries launched'
@@ -333,23 +333,23 @@ export const translations = {
         title1: 'Design Is Not Just',
         title2: 'What It Looks Like',
         title3: 'It\'s How It Works',
-        description1: 'I believe in creating digital experiences that are not only visually stunning but also functionally exceptional. Every pixel serves a purpose, every interaction tells a story.',
-        description2: 'Ready to bring your vision to life? Let\'s create something extraordinary together.'
+        description1: 'Every decision I make\u2014from layout to animation\u2014is driven by one question: does this help the user take the next step? If it doesn\'t convert, it doesn\'t matter how beautiful it is.',
+        description2: 'Ready to turn your idea into a product that actually works? Let\'s talk.'
       },
       globe: {
         title: 'GLOBAL IMPACT',
-        description: 'I\'ve collaborated with clients worldwide to create efficient, impactful digital products that drive real business results.'
+        description: 'Clients across 10+ countries trust me to design and develop digital products that drive measurable results\u2014more leads, more conversions, more growth.'
       },
       readMore: 'Read More'
     },
     projects: {
       caseStudies: {
         title: 'CASE STUDIES',
-        subtitle: 'Showcasing my latest work and creative solutions'
+        subtitle: 'Real-world UX/UI design, fullstack development, and AI automation projects \u2014 from strategy to shipped product.'
       },
       quickProjects: {
         title: 'Quick Projects',
-        description: 'Explore my collection of landing pages, no-code solutions, and creative experiments.'
+        description: 'Landing pages, no-code builds, and creative experiments \u2014 fast turnaround projects showcasing design and development range.'
       }
     },
     reviews: {
@@ -684,21 +684,21 @@ export const translations = {
       cta: 'Ver Proyectos'
     },
     banner: {
-      leftMarquee: 'CREATIVA • DESARROLLADORA • DISEÑADORA • PORTAFOLIO •',
-      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROYECTOS •',
+      leftMarquee: 'DESIGN ENGINEER • DEL PIXEL A PRODUCCIÓN • SIN INTERMEDIARIOS • HECHO PARA CONVERTIR •',
+      rightMarquee: 'UI/UX • DESARROLLO CREATIVO • FULLSTACK • AUTOMATIZACIÓN IA • +30 CLIENTES EN EL MUNDO •',
       projectsButton: 'Proyectos',
       resumeButton: 'Ver mi CV'
     },
     faqs: {
       title: 'PREGUNTAS FRECUENTES',
-      subtitle: 'Preguntas comunes sobre mis servicios y proceso'
+      subtitle: 'Todo lo que necesitas saber antes de trabajar con una design engineer \u2014 proceso, precios, tiempos y qu\u00e9 esperar.'
     },
     enterprises: {
       title: 'Con la confianza de marcas líderes para ofrecer soluciones de diseño excepcionales'
     },
     myStack: {
       title: 'MI STACK',
-      button: 'Ver mi Stack'
+      button: 'Ver Toolkit Completo'
     },
     footer: {
       rights: 'Todos los derechos reservados',
@@ -829,8 +829,8 @@ export const translations = {
       subtitle: 'Comparte tus pensamientos sobre este proyecto'
     },
     contact: {
-      title: 'Contacto',
-      subtitle: '¿Listo para dar vida a tus ideas? Hablemos de tu proyecto',
+      title: 'Hablemos',
+      subtitle: 'Comparte los detalles de tu proyecto y recibe una respuesta personalizada en 24 horas \u2014 sin compromiso.',
       form: {
         name: {
           label: 'Tu Nombre',
@@ -849,7 +849,7 @@ export const translations = {
           placeholder: 'México, Estados Unidos, Canadá'
         },
         interests: {
-          label: 'Me interesa...',
+          label: '\u00bfQu\u00e9 necesitas?',
           options: [
             'Diseño UX/UI e Ingeniería',
             'Desarrollo Frontend Creativo',
@@ -868,8 +868,8 @@ export const translations = {
           ]
         },
         message: {
-          label: 'Más Sobre el Proyecto',
-          placeholder: 'Cuéntame más sobre tu proyecto...'
+          label: 'Detalles del Proyecto',
+          placeholder: '\u00bfCu\u00e1les son tus objetivos, tiempos y alguna referencia o inspiraci\u00f3n?'
         },
         attachment: {
           label: 'Agregar un Archivo',
@@ -877,12 +877,12 @@ export const translations = {
           remove: 'Eliminar'
         },
         submit: {
-          label: 'Enviar Solicitud',
+          label: 'Enviar Mi Brief',
           sending: 'Enviando...'
         }
       },
       messages: {
-        success: '¡Mensaje enviado exitosamente! Te contactaré pronto.',
+        success: '\u00a1Recibido! Revisar\u00e9 tu brief y responder\u00e9 en 24 horas con los siguientes pasos.',
         error: 'Error al enviar mensaje. Inténtalo de nuevo.',
         validation: 'Por favor completa los campos de nombre, email y mensaje',
         fileTooBig: 'El archivo es muy grande. El tamaño máximo es 10MB.',
@@ -937,39 +937,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: 'EL DISEÑO IMPORTA',
-          description: 'Una buena UX no es magia—es iteración.',
-          highlight: 'Observo espaciado, jerarquía, contenido, movimiento... todo lo que los usuarios sienten pero no pueden explicar.'
+          title: 'CADA PÍXEL CON PROPÓSITO',
+          description: 'Tus usuarios juzgan tu producto en segundos.',
+          highlight: 'Me obsesiono con el espaciado, la jerarquía y el movimiento—los detalles invisibles que hacen que confíen en tu marca y se queden.'
         },
         {
           id: '02',
-          title: 'construyendo lo mío',
-          description: 'Fundar WebCrafters me dio el espacio para liderar procesos completos—desde la primera llamada hasta la entrega.',
-          highlight: 'Trabajo con equipos que valoran la claridad, la responsabilidad y la retroalimentación honesta.'
+          title: 'DE PRINCIPIO A FIN',
+          description: 'Desde la primera llamada hasta la entrega final, me hago cargo de cada paso del proceso.',
+          highlight: 'Sin intermediarios. Sin teléfono descompuesto. Una persona que diseña, programa y entrega tu producto.'
         },
         {
           id: '03',
-          title: 'EVOLUCIONANDO',
-          description: 'El diseño y el desarrollo se mueven rápido—pero no todo debe ser apresurado.',
-          highlight: 'Me adapto, pero me mantengo firme en usabilidad, accesibilidad y necesidades reales.'
+          title: 'HECHO PARA DURAR',
+          description: 'Rápido no significa apresurado. Cada decisión detrás de tu producto es deliberada.',
+          highlight: 'Accesibilidad, rendimiento y escalabilidad integrados—para que tu producto crezca con tu negocio.'
         },
         {
           id: '04',
-          title: 'PENSAMIENTO DE PRODUCTO',
-          description: 'Diseño pensando en los usuarios, pero también considero tiempo de desarrollo, escalabilidad y objetivos de negocio.',
-          highlight: 'Cada pantalla es una decisión—y me importan todas.'
+          title: 'TUS METAS, MI PLAN',
+          description: 'Bonito no es suficiente. Diseño para conversión, retención y crecimiento.',
+          highlight: 'Cada pantalla, cada interacción está diseñada para acercar a tus usuarios a los objetivos de tu negocio.'
         },
         {
           id: '05',
-          title: 'Curiosidad Primero',
-          description: 'Siempre he sido curiosa sobre cómo funcionan las cosas. El diseño llegó como una forma de resolver problemas—no solo hacer cosas bonitas.',
-          highlight: 'Entender tanto el lado visual como el estructural siempre me ha hecho sentido.'
+          title: 'PROBLEMAS RESUELTOS, NO SOLO DISEÑADOS',
+          description: 'No empiezo con píxeles. Empiezo con tu problema.',
+          highlight: 'Entender el "por qué" detrás de cada proyecto significa que tu producto resuelve necesidades reales—no solo se ve bien en un portafolio.'
         },
         {
           id: '06',
-          title: 'Trayendo Diseño Y CÓDIGO',
-          description: 'Soy tanto desarrolladora como diseñadora, lo que significa que no solo hago que se vea bien—hago que funcione.',
-          highlight: 'Esta mentalidad me ayuda a construir más rápido, más limpio y con menos handoffs.'
+          title: 'DISEÑO + CÓDIGO, CERO BRECHAS',
+          description: 'La mayoría de los diseñadores entregan un archivo de Figma y cruzan los dedos. Yo entrego código en producción.',
+          highlight: 'Una persona. Diseño y desarrollo. Iteración más rápida, menos malentendidos, mejores resultados.'
         }
       ]
     },
@@ -978,19 +978,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: 'Ingeniera de Diseño',
         location: 'Residente en la Ciudad de México',
-        intro: 'Ahí es donde entro yo. Amante de mi trabajo, domadora de mi oficio. Estoy aquí para crear productos que no solo reflejen quién eres y lo que representan tus ideales, sino productos que realmente resuenen con quienes los experimentan y logren su objetivo.'
+        intro: 'Necesitas más que un sitio web bonito. Necesitas un producto digital que genere confianza, convierta visitantes y crezca con tu negocio. Eso es exactamente lo que construyo.'
       },
       experience: {
         years: '5+ Años',
         title1: 'Creando Experiencias',
         title2: 'Digitales',
-        description: 'Desde el diseño UI/UX hasta el desarrollo full-stack, he trabajado con empresas de todo el mundo, creando experiencias digitales fluidas que fusionan la estética con la funcionalidad.',
-        connectButton: 'Conectar'
+        description: 'Desde startups hasta marcas consolidadas en más de 10 países, he diseñado y construido productos que no solo se ven bien\u2014rinden. Estrategia, diseño y código, todo de una sola persona.',
+        connectButton: 'Hablemos'
       },
       stats: {
         title1: 'Números Que',
         title2: 'Hablan Por Sí Mismos',
-        description: 'Cada proyecto es una oportunidad para superar los límites y crear algo extraordinario.',
+        description: 'Proyectos reales. Resultados reales. Así se ven 5+ años diseñando y entregando productos digitales.',
         awards: 'Premios ganados',
         clients: 'Clientes mundiales',
         countries: 'Países lanzados'
@@ -999,23 +999,23 @@ export const translations = {
         title1: 'El Diseño No Es Solo',
         title2: 'Lo Que Parece',
         title3: 'Es Cómo Funciona',
-        description1: 'Creo en la creación de experiencias digitales que no solo son visualmente impresionantes sino también funcionalmente excepcionales. Cada píxel tiene un propósito, cada interacción cuenta una historia.',
-        description2: '¿Listo para dar vida a tu visión? Creemos algo extraordinario juntos.'
+        description1: 'Cada decisión que tomo\u2014desde el layout hasta la animación\u2014parte de una pregunta: ¿esto ayuda al usuario a dar el siguiente paso? Si no convierte, no importa lo bonito que sea.',
+        description2: '¿Listo para convertir tu idea en un producto que realmente funcione? Hablemos.'
       },
       globe: {
         title: 'IMPACTO GLOBAL',
-        description: 'He colaborado con clientes de todo el mundo para crear productos digitales eficientes e impactantes que impulsan resultados comerciales reales.'
+        description: 'Clientes en más de 10 países confían en mí para diseñar y desarrollar productos digitales que generan resultados medibles\u2014más leads, más conversiones, más crecimiento.'
       },
       readMore: 'Leer más'
     },
     projects: {
       caseStudies: {
         title: 'CASOS DE ESTUDIO',
-        subtitle: 'Mostrando mi último trabajo y soluciones creativas'
+        subtitle: 'Proyectos reales de dise\u00f1o UX/UI, desarrollo fullstack y automatizaci\u00f3n con IA \u2014 de la estrategia al producto final.'
       },
       quickProjects: {
-        title: 'Proyectos Rápidos',
-        description: 'Explora mi colección de landing pages, soluciones sin código y experimentos creativos.'
+        title: 'Proyectos R\u00e1pidos',
+        description: 'Landing pages, soluciones no-code y experimentos creativos \u2014 proyectos de entrega r\u00e1pida que demuestran versatilidad en dise\u00f1o y desarrollo.'
       }
     },
     reviews: {
@@ -1350,21 +1350,21 @@ export const translations = {
       cta: 'Voir les Projets'
     },
     banner: {
-      leftMarquee: 'CRÉATIVE • DÉVELOPPEUSE • DESIGNEUSE • PORTFOLIO •',
-      rightMarquee: 'FRONTEND • BACKEND • FULLSTACK • PROJETS •',
+      leftMarquee: 'DESIGN ENGINEER • DU PIXEL À LA PRODUCTION • SANS INTERMÉDIAIRES • CONÇU POUR CONVERTIR •',
+      rightMarquee: 'UI/UX • DÉVELOPPEMENT CRÉATIF • FULLSTACK • AUTOMATISATION IA • +30 CLIENTS DANS LE MONDE •',
       projectsButton: 'Projets',
       resumeButton: 'Voir mon CV'
     },
     faqs: {
       title: 'FAQ',
-      subtitle: 'Questions courantes sur mes services et mon processus'
+      subtitle: 'Tout ce que vous devez savoir avant de travailler avec une design engineer \u2014 processus, tarifs, d\u00e9lais et \u00e0 quoi vous attendre.'
     },
     enterprises: {
       title: 'La confiance des plus grandes marques pour des solutions de design exceptionnelles'
     },
     myStack: {
       title: 'MA STACK',
-      button: 'Voir ma Stack'
+      button: 'Voir le Toolkit Complet'
     },
     footer: {
       rights: 'Tous droits réservés',
@@ -1495,8 +1495,8 @@ export const translations = {
       subtitle: 'Partagez vos réflexions sur ce projet'
     },
     contact: {
-      title: 'Entrer en Contact',
-      subtitle: 'Prêt à donner vie à vos idées ? Discutons de votre projet',
+      title: 'Parlons-en',
+      subtitle: 'Partagez les détails de votre projet et recevez une réponse personnalisée sous 24 heures — sans engagement.',
       form: {
         name: {
           label: 'Votre Nom',
@@ -1515,7 +1515,7 @@ export const translations = {
           placeholder: 'France, Canada, Belgique'
         },
         interests: {
-          label: 'Je suis intéressé par...',
+          label: 'De quoi avez-vous besoin ?',
           options: [
             'Design UX/UI et Ingénierie',
             'Développement Frontend Créatif',
@@ -1534,8 +1534,8 @@ export const translations = {
           ]
         },
         message: {
-          label: 'Plus sur le Projet',
-          placeholder: 'Parlez-moi de votre projet...'
+          label: 'Détails du Projet',
+          placeholder: 'Quels sont vos objectifs, délais et références ou inspirations ?'
         },
         attachment: {
           label: 'Ajouter une Pièce Jointe',
@@ -1543,12 +1543,12 @@ export const translations = {
           remove: 'Supprimer'
         },
         submit: {
-          label: 'Envoyer la Demande',
+          label: 'Envoyer Mon Brief',
           sending: 'Envoi...'
         }
       },
       messages: {
-        success: 'Message envoyé avec succès ! Je vous contacterai bientôt.',
+        success: 'Reçu ! Je réviserai votre brief et répondrai sous 24 heures avec les prochaines étapes.',
         error: 'Échec de l\'envoi du message. Veuillez réessayer.',
         validation: 'Veuillez compléter les champs nom, email et message',
         fileTooBig: 'Le fichier est trop volumineux. La taille maximale est de 10MB.',
@@ -1603,39 +1603,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: 'LE DESIGN COMPTE',
-          description: 'Une bonne UX n\'est pas de la magie—c\'est de l\'itération.',
-          highlight: 'Je regarde l\'espacement, la hiérarchie, le contenu, le mouvement... tout ce que les utilisateurs ressentent mais ne peuvent pas expliquer.'
+          title: 'CHAQUE PIXEL A UN BUT',
+          description: 'Vos utilisateurs jugent votre produit en quelques secondes.',
+          highlight: 'Je suis obsédée par l\'espacement, la hiérarchie et le mouvement—les détails invisibles qui font que vos utilisateurs font confiance à votre marque et restent.'
         },
         {
           id: '02',
-          title: 'construire le mien',
-          description: 'Fonder WebCrafters m\'a donné l\'espace pour diriger des processus complets—du premier appel à la livraison.',
-          highlight: 'Je travaille avec des équipes qui valorisent la clarté, la responsabilité et les retours honnêtes.'
+          title: 'DE BOUT EN BOUT',
+          description: 'Du premier appel à la livraison finale, je prends en charge chaque étape du processus.',
+          highlight: 'Pas d\'intermédiaires. Pas de téléphone arabe. Une seule personne qui conçoit, code et livre votre produit.'
         },
         {
           id: '03',
-          title: 'ÉVOLUER AVEC INTENTION',
-          description: 'Le design et le dev bougent vite—mais tout ne doit pas être précipité.',
-          highlight: 'Je m\'adapte, mais je reste ancré dans l\'utilisabilité, l\'accessibilité et les vrais besoins.'
+          title: 'CONÇU POUR DURER',
+          description: 'Rapide ne veut pas dire bâclé. Chaque décision derrière votre produit est délibérée.',
+          highlight: 'Accessibilité, performance et évolutivité intégrées—pour que votre produit grandisse avec votre entreprise.'
         },
         {
           id: '04',
-          title: 'PENSÉE PRODUIT',
-          description: 'Je conçois en pensant aux utilisateurs, mais je pense aussi au temps de dev, à l\'évolutivité et aux objectifs business.',
-          highlight: 'Chaque écran est une décision—et je me soucie de tous.'
+          title: 'VOS OBJECTIFS, MON PLAN',
+          description: 'Joli ne suffit pas. Je conçois pour la conversion, la rétention et la croissance.',
+          highlight: 'Chaque écran, chaque interaction est conçu pour rapprocher vos utilisateurs de vos objectifs business.'
         },
         {
           id: '05',
-          title: 'Curiosité d\'abord',
-          description: 'J\'ai toujours été curieuse de savoir comment les choses fonctionnent. Le design est venu comme un moyen de résoudre des problèmes—pas seulement rendre les choses jolies.',
-          highlight: 'Comprendre à la fois le côté visuel et structurel a toujours eu du sens pour moi.'
+          title: 'DES PROBLÈMES RÉSOLUS, PAS JUSTE DESIGNÉS',
+          description: 'Je ne commence pas par les pixels. Je commence par votre problème.',
+          highlight: 'Comprendre le "pourquoi" de chaque projet signifie que votre produit répond à de vrais besoins—pas juste à faire beau dans un portfolio.'
         },
         {
           id: '06',
-          title: 'Apporter Design ET CODE',
-          description: 'Je suis à la fois développeuse et designer, ce qui signifie que je ne fais pas que rendre ça beau—je fais que ça marche.',
-          highlight: 'Cet état d\'esprit m\'aide à construire plus vite, plus proprement et avec moins de handoffs.'
+          title: 'DESIGN + CODE, ZÉRO LACUNE',
+          description: 'La plupart des designers livrent un fichier Figma en croisant les doigts. Moi, je livre du code en production.',
+          highlight: 'Une personne. Design et développement. Itération plus rapide, moins de malentendus, meilleurs résultats.'
         }
       ]
     },
@@ -1644,19 +1644,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: 'Ingénieure en Design',
         location: 'Basée à Mexico',
-        intro: 'C\'est là que j\'interviens. Amoureuse de mon travail, dompteuse de mon art. Je suis ici pour créer des produits qui non seulement reflètent qui vous êtes et ce que vos idéaux représentent, mais des produits qui résonnent vraiment avec ceux qui les expérimentent et atteignent leur objectif.'
+        intro: 'Vous avez besoin de plus qu\'un joli site web. Vous avez besoin d\'un produit digital qui inspire confiance, convertit les visiteurs et grandit avec votre entreprise. C\'est exactement ce que je construis.'
       },
       experience: {
         years: '5+ Ans',
         title1: 'Créer des Expériences',
         title2: 'Numériques',
-        description: 'De la conception UI/UX au développement full-stack, j\'ai travaillé avec des entreprises du monde entier, créant des expériences numériques fluides qui fusionnent l\'esthétique avec la fonctionnalité.',
-        connectButton: 'Connecter'
+        description: 'Des startups aux marques établies dans plus de 10 pays, j\'ai conçu et développé des produits qui ne se contentent pas d\'être beaux\u2014ils performent. Stratégie, design et code, le tout par une seule personne.',
+        connectButton: 'Parlons-en'
       },
       stats: {
         title1: 'Des Chiffres Qui',
         title2: 'Parlent d\'Eux-Mêmes',
-        description: 'Chaque projet est une opportunité de repousser les limites et de créer quelque chose d\'extraordinaire.',
+        description: 'Des projets réels. Des résultats réels. Voici à quoi ressemblent 5+ années de conception et livraison de produits digitaux.',
         awards: 'Prix remportés',
         clients: 'Clients mondiaux',
         countries: 'Pays lancés'
@@ -1665,23 +1665,23 @@ export const translations = {
         title1: 'Le Design N\'est Pas Seulement',
         title2: 'Ce à Quoi Il Ressemble',
         title3: 'C\'est Comment Il Fonctionne',
-        description1: 'Je crois en la création d\'expériences numériques qui ne sont pas seulement visuellement époustouflantes mais aussi fonctionnellement exceptionnelles. Chaque pixel a un but, chaque interaction raconte une histoire.',
-        description2: 'Prêt à donner vie à votre vision ? Créons ensemble quelque chose d\'extraordinaire.'
+        description1: 'Chaque décision que je prends\u2014du layout à l\'animation\u2014repose sur une question : est-ce que cela aide l\'utilisateur à passer à l\'étape suivante ? Si ça ne convertit pas, peu importe la beauté.',
+        description2: 'Prêt à transformer votre idée en un produit qui fonctionne vraiment ? Parlons-en.'
       },
       globe: {
         title: 'IMPACT MONDIAL',
-        description: 'J\'ai collaboré avec des clients du monde entier pour créer des produits numériques efficaces et percutants qui génèrent de réels résultats commerciaux.'
+        description: 'Des clients dans plus de 10 pays me font confiance pour concevoir et développer des produits digitaux qui génèrent des résultats mesurables\u2014plus de leads, plus de conversions, plus de croissance.'
       },
       readMore: 'Lire la suite'
     },
     projects: {
       caseStudies: {
         title: 'ÉTUDES DE CAS',
-        subtitle: 'Présentation de mes derniers travaux et solutions créatives'
+        subtitle: 'Projets r\u00e9els de design UX/UI, d\u00e9veloppement fullstack et automatisation IA \u2014 de la strat\u00e9gie au produit livr\u00e9.'
       },
       quickProjects: {
         title: 'Projets Rapides',
-        description: 'Découvrez ma collection de pages de destination, de solutions sans code et d\'expériences créatives.'
+        description: 'Landing pages, solutions no-code et exp\u00e9riences cr\u00e9atives \u2014 des projets livr\u00e9s rapidement qui d\u00e9montrent une polyvalence en design et d\u00e9veloppement.'
       },
       caseStudy: {
         workflow: 'Notre Flux de Travail',
@@ -1896,21 +1896,21 @@ export const translations = {
       cta: 'प्रोजेक्ट्स देखें'
     },
     banner: {
-      leftMarquee: 'रचनात्मक • डेवलपर • डिज़ाइनर • पोर्टफोलियो •',
-      rightMarquee: 'फ्रंटएंड • बैकएंड • फुलस्टैक • प्रोजेक्ट्स •',
+      leftMarquee: 'डिज़ाइन इंजीनियर • पिक्सेल से प्रोडक्शन तक • कोई बिचौलिया नहीं • कन्वर्ट करने के लिए बनाया •',
+      rightMarquee: 'UI/UX • क्रिएटिव डेव • फुलस्टैक • AI ऑटोमेशन • दुनिया भर में 30+ क्लाइंट •',
       projectsButton: 'परियोजनाएँ',
       resumeButton: 'मेरा रिज्यूमे देखें'
     },
     faqs: {
       title: 'सामान्य प्रश्न',
-      subtitle: 'मेरी सेवाओं और प्रक्रिया के बारे में सामान्य प्रश्न'
+      subtitle: 'एक डिज़ाइन इंजीनियर के साथ काम करने से पहले आपको जो कुछ जानना चाहिए \u2014 प्रक्रिया, मूल्य, समयसीमा और क्या उम्मीद करें।'
     },
     enterprises: {
       title: 'असाधारण डिजाइन समाधान देने के लिए प्रमुख ब्रांडों द्वारा विश्वसनीय'
     },
     myStack: {
       title: 'मेरा स्टैक',
-      button: 'मेरा स्टैक देखें'
+      button: 'पूरा टूलकिट देखें'
     },
     footer: {
       rights: 'सभी अधिकार सुरक्षित',
@@ -2041,8 +2041,8 @@ export const translations = {
       subtitle: 'इस प्रोजेक्ट के बारे में अपने विचार साझा करें'
     },
     contact: {
-      title: 'संपर्क में रहें',
-      subtitle: 'अपने विचारों को जीवंत बनाने के लिए तैयार हैं? आइए आपके प्रोजेक्ट पर चर्चा करें',
+      title: 'बात करें',
+      subtitle: 'अपने प्रोजेक्ट का विवरण साझा करें और 24 घंटे के भीतर व्यक्तिगत प्रतिक्रिया प्राप्त करें — कोई प्रतिबद्धता नहीं।',
       form: {
         name: {
           label: 'आपका नाम',
@@ -2061,7 +2061,7 @@ export const translations = {
           placeholder: 'भारत, अमेरिका, कनाडा'
         },
         interests: {
-          label: 'मुझे रुचि है...',
+          label: 'आपको क्या चाहिए?',
           options: [
             'UX/UI डिज़ाइन और इंजीनियरिंग',
             'क्रिएटिव फ्रंटएंड डेवलपमेंट',
@@ -2080,8 +2080,8 @@ export const translations = {
           ]
         },
         message: {
-          label: 'प्रोजेक्ट के बारे में और',
-          placeholder: 'अपने प्रोजेक्ट के बारे में बताएं...'
+          label: 'प्रोजेक्ट विवरण',
+          placeholder: 'आपके लक्ष्य, समयसीमा और कोई संदर्भ या प्रेरणा क्या हैं?'
         },
         attachment: {
           label: 'एक अटैचमेंट जोड़ें',
@@ -2089,12 +2089,12 @@ export const translations = {
           remove: 'हटाएं'
         },
         submit: {
-          label: 'अनुरोध भेजें',
+          label: 'मेरा प्रोजेक्ट ब्रीफ भेजें',
           sending: 'भेजा जा रहा है...'
         }
       },
       messages: {
-        success: 'संदेश सफलतापूर्वक भेजा गया! मैं जल्द ही आपसे संपर्क करूंगा।',
+        success: 'मिल गया! मैं आपके ब्रीफ की समीक्षा करूंगी और 24 घंटे के भीतर अगले कदमों के साथ जवाब दूंगी।',
         error: 'संदेश भेजने में विफल। कृपया पुनः प्रयास करें।',
         validation: 'कृपया नाम, ईमेल और संदेश फ़ील्ड पूरे करें',
         fileTooBig: 'फ़ाइल बहुत बड़ी है। अधिकतम आकार 10MB है।',
@@ -2149,39 +2149,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: 'डिज़ाइन मायने रखता है',
-          description: 'अच्छा UX जादू नहीं है—यह पुनरावृत्ति है।',
-          highlight: 'मैं स्पेसिंग, पदानुक्रम, सामग्री, गति... सब कुछ देखता हूं जो उपयोगकर्ता महसूस करते हैं लेकिन समझा नहीं सकते।'
+          title: 'हर पिक्सेल का एक मकसद',
+          description: 'आपके यूजर्स आपके प्रोडक्ट को सेकंडों में जज करते हैं।',
+          highlight: 'मैं स्पेसिंग, हायरार्की और मोशन पर जुनूनी हूं—वो अदृश्य डिटेल्स जो यूजर्स को आपके ब्रांड पर भरोसा दिलाती हैं और उन्हें रुकने पर मजबूर करती हैं।'
         },
         {
           id: '02',
-          title: 'अपना निर्माण',
-          description: 'WebCrafters की स्थापना ने मुझे पूरी प्रक्रियाओं का नेतृत्व करने का स्थान दिया—पहली कॉल से डिलीवरी तक।',
-          highlight: 'मैं उन टीमों के साथ काम करता हूं जो स्पष्टता, स्वामित्व और ईमानदार फीडबैक को महत्व देती हैं।'
+          title: 'शुरू से अंत तक',
+          description: 'पहली कॉल से फाइनल डिलीवरी तक, प्रक्रिया का हर कदम मेरी जिम्मेदारी है।',
+          highlight: 'कोई बिचौलिया नहीं। कोई भ्रम नहीं। एक व्यक्ति जो डिज़ाइन करता है, कोड करता है और आपका प्रोडक्ट डिलीवर करता है।'
         },
         {
           id: '03',
-          title: 'इरादे के साथ विकसित होना',
-          description: 'डिज़ाइन और डेव तेज़ी से आगे बढ़ते हैं—लेकिन सब कुछ जल्दबाजी में नहीं होना चाहिए।',
-          highlight: 'मैं अनुकूलित होता हूं, लेकिन उपयोगिता, पहुंच और वास्तविक आवश्यकताओं में स्थिर रहता हूं।'
+          title: 'टिकाऊ बनाया गया',
+          description: 'तेज़ का मतलब जल्दबाज़ी नहीं। आपके प्रोडक्ट के पीछे हर फैसला सोच-समझकर लिया गया है।',
+          highlight: 'एक्सेसिबिलिटी, परफॉर्मेंस और स्केलेबिलिटी पहले से बिल्ट-इन—ताकि आपका प्रोडक्ट आपके बिज़नेस के साथ बढ़े।'
         },
         {
           id: '04',
-          title: 'उत्पाद सोच',
-          description: 'मैं उपयोगकर्ताओं को ध्यान में रखकर डिज़ाइन करता हूं, लेकिन मैं डेव समय, स्केलेबिलिटी और व्यावसायिक लक्ष्यों के बारे में भी सोचता हूं।',
-          highlight: 'हर स्क्रीन एक निर्णय है—और मुझे सभी की परवाह है।'
+          title: 'आपके लक्ष्य, मेरा ब्लूप्रिंट',
+          description: 'सुंदर काफी नहीं है। मैं कन्वर्ज़न, रिटेंशन और ग्रोथ के लिए डिज़ाइन करती हूं।',
+          highlight: 'हर स्क्रीन, हर इंटरैक्शन आपके यूजर्स को आपके बिज़नेस गोल्स के करीब लाने के लिए इंजीनियर किया गया है।'
         },
         {
           id: '05',
-          title: 'जिज्ञासा पहले',
-          description: 'मैं हमेशा से उत्सुक रहा हूं कि चीजें कैसे काम करती हैं। डिज़ाइन समस्याओं को हल करने के तरीके के रूप में आया—सिर्फ चीजों को सुंदर बनाने के लिए नहीं।',
-          highlight: 'दृश्य और संरचनात्मक दोनों पक्षों को समझना हमेशा मेरे लिए समझ में आया है।'
+          title: 'समस्याएं हल होती हैं, सिर्फ डिज़ाइन नहीं',
+          description: 'मैं पिक्सेल से शुरू नहीं करती। मैं आपकी समस्या से शुरू करती हूं।',
+          highlight: 'हर प्रोजेक्ट के पीछे "क्यों" समझने का मतलब है कि आपका प्रोडक्ट असली ज़रूरतें पूरी करता है—सिर्फ पोर्टफोलियो में अच्छा नहीं दिखता।'
         },
         {
           id: '06',
-          title: 'डिज़ाइन और कोड लाना',
-          description: 'मैं एक डेवलपर और डिज़ाइनर दोनों हूं, जिसका मतलब है कि मैं सिर्फ इसे अच्छा नहीं दिखाता—मैं इसे काम करवाता हूं।',
-          highlight: 'यह मानसिकता मुझे तेज़, साफ़ और कम हैंडऑफ़ के साथ निर्माण करने में मदद करती है।'
+          title: 'डिज़ाइन + कोड, ज़ीरो गैप',
+          description: 'ज़्यादातर डिज़ाइनर एक Figma फाइल देकर उम्मीद करते हैं। मैं प्रोडक्शन कोड डिलीवर करती हूं।',
+          highlight: 'एक व्यक्ति। डिज़ाइन और डेवलपमेंट। तेज़ इटरेशन, कम गलतफहमियां, बेहतर रिज़ल्ट।'
         }
       ]
     },
@@ -2190,19 +2190,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: 'डिज़ाइन इंजीनियर',
         location: 'मेक्सिको सिटी में स्थित',
-        intro: 'यहीं पर मैं आती हूँ। अपने काम की प्रेमी, अपने शिल्प की माहिर। मैं यहाँ ऐसे उत्पाद बनाने के लिए हूँ जो न केवल यह दर्शाते हैं कि आप कौन हैं और आपके आदर्श क्या हैं, बल्कि ऐसे उत्पाद जो वास्तव में उन लोगों के साथ प्रतिध्वनित होते हैं जो उन्हें अनुभव करते हैं और अपने उद्देश्य को प्राप्त करते हैं।'
+        intro: 'आपको सिर्फ एक सुंदर वेबसाइट से ज़्यादा चाहिए। आपको एक ऐसा डिजिटल प्रोडक्ट चाहिए जो भरोसा बनाए, विज़िटर्स को कस्टमर बनाए और आपके बिज़नेस के साथ बढ़े। बस यही मैं बनाती हूं।'
       },
       experience: {
         years: '5+ साल',
         title1: 'डिजिटल अनुभव',
         title2: 'बनाना',
-        description: 'UI/UX डिज़ाइन से लेकर फ़ुल-स्टैक डेवलपमेंट तक, मैंने दुनिया भर की कंपनियों के साथ काम किया है, सहज डिजिटल अनुभव बनाते हुए जो सौंदर्यशास्त्र को कार्यक्षमता के साथ मिलाते हैं।',
-        connectButton: 'जुड़ें'
+        description: 'स्टार्टअप्स से लेकर 10+ देशों में स्थापित ब्रांड्स तक, मैंने ऐसे प्रोडक्ट्स डिज़ाइन और बनाए हैं जो सिर्फ अच्छे नहीं दिखते\u2014परफॉर्म करते हैं। स्ट्रैटेजी, डिज़ाइन और कोड, सब एक व्यक्ति से।',
+        connectButton: 'बात करें'
       },
       stats: {
         title1: 'संख्याएँ जो',
         title2: 'बहुत कुछ कहती हैं',
-        description: 'हर परियोजना सीमाओं को आगे बढ़ाने और कुछ असाधारण बनाने का एक अवसर है।',
+        description: 'असली प्रोजेक्ट्स। असली नतीजे। 5+ साल डिजिटल प्रोडक्ट्स डिज़ाइन और डिलीवर करने का यह रिकॉर्ड है।',
         awards: 'पुरस्कार जीते',
         clients: 'दुनिया भर में ग्राहक',
         countries: 'देशों में लॉन्च किया गया'
@@ -2211,26 +2211,26 @@ export const translations = {
         title1: 'डिज़ाइन सिर्फ वह नहीं है',
         title2: 'जैसा वह दिखता है',
         title3: 'यह वैसे काम करता है',
-        description1: 'मेरा मानना है कि ऐसे डिजिटल अनुभव बनाने में जो न केवल देखने में आश्चर्यजनक हों, बल्कि कार्यात्मक रूप से भी असाधारण हों। हर पिक्सेल का एक उद्देश्य होता है, हर बातचीत एक कहानी कहती है।',
-        description2: 'अपनी दृष्टि को जीवन देने के लिए तैयार हैं? आइए मिलकर कुछ असाधारण बनाएं।'
+        description1: 'मेरा हर फैसला\u2014लेआउट से एनिमेशन तक\u2014एक सवाल से तय होता है: क्या यह यूज़र को अगला कदम उठाने में मदद करता है? अगर कन्वर्ट नहीं करता, तो खूबसूरती से कोई फ़र्क नहीं पड़ता।',
+        description2: 'अपने आइडिया को एक ऐसे प्रोडक्ट में बदलने के लिए तैयार हैं जो वाकई काम करे? बात करते हैं।'
       },
       globe: {
         title: 'वैश्विक प्रभाव',
-        description: 'मैंने दुनिया भर के ग्राहकों के साथ कुशल, प्रभावशाली डिजिटल उत्पाद बनाने के लिए सहयोग किया है जो वास्तविक व्यावसायिक परिणाम देते हैं।'
+        description: '10+ देशों में क्लाइंट्स मुझ पर भरोसा करते हैं\u2014ऐसे डिजिटल प्रोडक्ट्स डिज़ाइन और डेवलप करने के लिए जो मापने योग्य नतीजे देते हैं\u2014ज़्यादा लीड्स, ज़्यादा कन्वर्ज़न, ज़्यादा ग्रोथ।'
       },
       readMore: ' और पढ़ें'
     },
     projects: {
       caseStudies: {
         title: 'केस स्टडी',
-        subtitle: 'मेरे नवीनतम काम और रचनात्मक समाधानों का प्रदर्शन'
+        subtitle: 'UX/UI \u0921\u093f\u0937\u093e\u0907\u0928, \u092b\u0941\u0932\u0938\u094d\u091f\u0948\u0915 \u0921\u0947\u0935\u0932\u092a\u092e\u0947\u0902\u091f \u0914\u0930 AI \u0911\u091f\u094b\u092e\u0947\u0936\u0928 \u0915\u0947 \u0935\u093e\u0938\u094d\u0924\u0935\u093f\u0915 \u092a\u094d\u0930\u094b\u091c\u0947\u0915\u094d\u091f\u094d\u0938 \u2014 \u0938\u094d\u091f\u094d\u0930\u0948\u091f\u0947\u091c\u0940 \u0938\u0947 \u0936\u093f\u092a\u094d\u0921 \u092a\u094d\u0930\u094b\u0921\u0915\u094d\u091f \u0924\u0915\u0964'
       },
       quickProjects: {
-        title: 'त्वरित परियोजनाएं',
-        description: 'मेरे लैंडिंग पेज, नो-कोड समाधान और रचनात्मक प्रयोगों के संग्रह का अन्वेषण करें।'
+        title: '\u0924\u094d\u0935\u0930\u093f\u0924 \u092a\u0930\u093f\u092f\u094b\u091c\u0928\u093e\u090f\u0901',
+        description: '\u0932\u0948\u0902\u0921\u093f\u0902\u0917 \u092a\u0947\u091c, \u0928\u094b-\u0915\u094b\u0921 \u092c\u093f\u0932\u094d\u0921\u094d\u0938 \u0914\u0930 \u0915\u094d\u0930\u093f\u090f\u091f\u093f\u0935 \u090f\u0915\u094d\u0938\u092a\u0947\u0930\u093f\u092e\u0947\u0902\u091f\u094d\u0938 \u2014 \u0921\u093f\u0936\u093e\u0907\u0928 \u0914\u0930 \u0921\u0947\u0935\u0932\u092a\u092e\u0947\u0902\u091f \u0915\u0940 \u092c\u0939\u0941\u092e\u0941\u0916\u0940 \u092a\u094d\u0930\u0924\u093f\u092d\u093e \u0926\u093f\u0916\u093e\u0928\u0947 \u0935\u093e\u0932\u0947 \u092b\u093e\u0938\u094d\u091f \u091f\u0930\u094d\u0928\u0905\u0930\u093e\u0909\u0902\u0921 \u092a\u094d\u0930\u094b\u091c\u0947\u0915\u094d\u091f\u094d\u0938\u0964'
       },
       caseStudy: {
-        workflow: 'हमारी कार्यप्रणाली',
+        workflow: '\u0939\u092e\u093e\u0930\u0940 \u0915\u093e\u0930\u094d\u092f\u092a\u094d\u0930\u0923\u093e\u0932\u0940',
         workflowSubtitle: 'सफलता के लिए एक सुव्यवस्थित प्रक्रिया',
         solutions: 'समाधान',
         finalThoughts: 'अंतिम विचार'
@@ -2399,21 +2399,21 @@ export const translations = {
       cta: 'プロジェクトを見る'
     },
     banner: {
-      leftMarquee: 'クリエイティブ • デベロッパー • デザイナー • ポートフォリオ •',
-      rightMarquee: 'フロントエンド • バックエンド • フルスタック • プロジェクト •',
+      leftMarquee: 'デザインエンジニア • ピクセルからプロダクションまで • 仲介者なし • コンバージョンのために構築 •',
+      rightMarquee: 'UI/UX • クリエイティブ開発 • フルスタック • AI自動化 • 世界30+クライアント •',
       projectsButton: 'プロジェクト',
       resumeButton: '履歴書を見る'
     },
     faqs: {
       title: 'よくある質問',
-      subtitle: '私のサービスとプロセスに関するよくある質問'
+      subtitle: 'デザインエンジニアと仕事を始める前に知っておくべきこと \u2014 プロセス、料金、スケジュール、期待できること。'
     },
     enterprises: {
       title: '優れたデザインソリューションを提供するために主要ブランドから信頼されています'
     },
     myStack: {
       title: '私のスタック',
-      button: 'スタックを見る'
+      button: '全ツールキットを見る'
     },
     footer: {
       rights: 'すべての権利を保有',
@@ -2544,8 +2544,8 @@ export const translations = {
       subtitle: 'このプロジェクトについてのご意見をお聞かせください'
     },
     contact: {
-      title: 'お問い合わせ',
-      subtitle: 'あなたのアイデアを実現する準備はできていますか？プロジェクトについて話し合いましょう',
+      title: '相談する',
+      subtitle: 'プロジェクトの詳細を共有してください。24時間以内にパーソナライズされた回答をお届けします — 義務はありません。',
       form: {
         name: {
           label: 'お名前',
@@ -2564,7 +2564,7 @@ export const translations = {
           placeholder: '日本、アメリカ、カナダ'
         },
         interests: {
-          label: '興味があるのは...',
+          label: '何が必要ですか？',
           options: [
             'UX/UIデザイン＆エンジニアリング',
             'クリエイティブフロントエンド開発',
@@ -2583,8 +2583,8 @@ export const translations = {
           ]
         },
         message: {
-          label: 'プロジェクトについて詳しく',
-          placeholder: 'プロジェクトについて詳しく教えてください...'
+          label: 'プロジェクト詳細',
+          placeholder: '目標、スケジュール、参考やインスピレーションはありますか？'
         },
         attachment: {
           label: '添付ファイルを追加',
@@ -2592,12 +2592,12 @@ export const translations = {
           remove: '削除'
         },
         submit: {
-          label: 'リクエストを送信',
+          label: 'プロジェクトブリーフを送信',
           sending: '送信中...'
         }
       },
       messages: {
-        success: 'メッセージが正常に送信されました！すぐにご連絡いたします。',
+        success: '受信しました！ブリーフを確認し、24時間以内に次のステップをご連絡します。',
         error: 'メッセージの送信に失敗しました。もう一度お試しください。',
         validation: '名前、メール、メッセージフィールドを完了してください',
         fileTooBig: 'ファイルが大きすぎます。最大サイズは10MBです。',
@@ -2652,39 +2652,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: 'デザインが重要',
-          description: '良いUXは魔法ではありません—反復です。',
-          highlight: 'スペーシング、階層、コンテンツ、モーション...ユーザーが感じるが説明できないすべてを見ています。'
+          title: 'すべてのピクセルに意味がある',
+          description: 'ユーザーはあなたの製品を数秒で判断します。',
+          highlight: 'スペーシング、階層構造、モーション—ユーザーがブランドを信頼し、離れない理由となる見えないディテールにこだわります。'
         },
         {
           id: '02',
-          title: '自分自身を構築',
-          description: 'WebCraftersの設立により、最初の電話から納品まで、完全なプロセスをリードする空間を得ました。',
-          highlight: '明確さ、オーナーシップ、正直なフィードバックを重視するチームと働いています。'
+          title: 'エンドツーエンドの責任',
+          description: '最初のヒアリングから最終納品まで、プロセスの全ステップを一人で担当します。',
+          highlight: '仲介者なし。伝言ゲームなし。デザインし、コーディングし、あなたの製品を届ける一人の存在。'
         },
         {
           id: '03',
-          title: '意図的な進化',
-          description: 'デザインと開発は速く動きます—しかし、すべてを急ぐべきではありません。',
-          highlight: '適応しますが、使いやすさ、アクセシビリティ、実際のニーズに根ざしています。'
+          title: '長く使えるものを',
+          description: '速いことは雑なことではありません。あなたの製品の裏にあるすべての判断は意図的です。',
+          highlight: 'アクセシビリティ、パフォーマンス、スケーラビリティを最初から組み込み—ビジネスの成長に合わせて製品も成長します。'
         },
         {
           id: '04',
-          title: 'プロダクト思考',
-          description: 'ユーザーを念頭に置いてデザインしますが、開発時間、スケーラビリティ、ビジネス目標についても考えます。',
-          highlight: '各画面は決定です—そして私はそのすべてを大切にしています。'
+          title: 'あなたの目標が私の設計図',
+          description: '見た目だけでは足りません。コンバージョン、リテンション、成長のためにデザインします。',
+          highlight: 'すべての画面、すべてのインタラクションは、ユーザーをビジネス目標に近づけるよう設計されています。'
         },
         {
           id: '05',
-          title: '好奇心第一',
-          description: '物事がどのように機能するかについて常に好奇心を持っていました。デザインは問題を解決する方法として来ました—単に物事を美しくするためではありません。',
-          highlight: '視覚的側面と構造的側面の両方を理解することは、常に私にとって理にかなっていました。'
+          title: '問題を解決する、ただデザインするだけではない',
+          description: 'ピクセルから始めません。あなたの課題から始めます。',
+          highlight: 'プロジェクトの「なぜ」を理解することで、ポートフォリオ映えだけでなく、本当のニーズに応える製品を作ります。'
         },
         {
           id: '06',
-          title: 'デザインとコードを持参',
-          description: '私は開発者でありデザイナーでもあります。つまり、見た目を良くするだけでなく、機能させます。',
-          highlight: 'この考え方により、より速く、よりクリーンに、より少ないハンドオフで構築できます。'
+          title: 'デザイン＋コード、ギャップゼロ',
+          description: '多くのデザイナーはFigmaファイルを渡して祈るだけ。私はプロダクションコードを納品します。',
+          highlight: '一人で完結。デザインと開発。速いイテレーション、少ないミスコミュニケーション、より良い成果。'
         }
       ]
     },
@@ -2693,19 +2693,19 @@ export const translations = {
         name: 'カレン・オルティス',
         role: 'デザインエンジニア',
         location: 'メキシコシティ在住',
-        intro: 'そこで私が登場します。自分の仕事が大好きで、自分の技術を使いこなす人。私は、あなたが誰であり、あなたの理想が何であるかを反映するだけでなく、それを体験する人々と真に共鳴し、その目的を達成する製品を作成するためにここにいます。'
+        intro: 'きれいなウェブサイト以上のものが必要です。信頼を獲得し、訪問者を顧客に変え、ビジネスと共に成長するデジタルプロダクトが。それがまさに私が作るものです。'
       },
       experience: {
         years: '5年以上',
         title1: 'デジタル体験の',
         title2: '創造',
-        description: 'UI/UXデザインからフルスタック開発まで、私は世界中の企業と協力し、美学と機能性を融合させたシームレスなデジタル体験を創造してきました。',
-        connectButton: '接続する'
+        description: 'スタートアップから10カ国以上の確立されたブランドまで、見た目だけでなく成果を出すプロダクトを設計・開発してきました。戦略、デザイン、コード、すべて一人で。',
+        connectButton: '話しましょう'
       },
       stats: {
         title1: '数字が',
         title2: '物語る',
-        description: 'すべてのプロジェクトは、限界を押し広げ、並外れたものを創造する機会です。',
+        description: 'リアルなプロジェクト。リアルな成果。5年以上デジタルプロダクトを設計・納品してきた実績です。',
         awards: '受賞歴',
         clients: '世界中のクライアント',
         countries: '展開国'
@@ -2714,26 +2714,26 @@ export const translations = {
         title1: 'デザインは単なる',
         title2: '見た目だけではない',
         title3: 'それがどのように機能するかです',
-        description1: '私は、視覚的に美しいだけでなく、機能的にも優れたデジタル体験を創造することを信じています。すべてのピクセルには目的があり、すべてのインタラクションが物語を語ります。',
-        description2: 'あなたのビジョンを実現する準備はできましたか？一緒に並外れたものを作りましょう。'
+        description1: 'レイアウトからアニメーションまで、すべての判断は一つの問いに基づいています：これはユーザーが次のステップに進む助けになるか？コンバージョンしなければ、どんなに美しくても意味がありません。',
+        description2: 'アイデアを本当に機能するプロダクトに変える準備はできましたか？お話ししましょう。'
       },
       globe: {
         title: 'グローバルインパクト',
-        description: '私は世界中のクライアントと協力して、実際のビジネス成果を推進する効率的でインパクトのあるデジタル製品を作成してきました。'
+        description: '10カ国以上のクライアントが、測定可能な成果を生むデジタルプロダクトの設計・開発を私に託しています\u2014より多くのリード、コンバージョン、成長。'
       },
       readMore: '続きを読む'
     },
     projects: {
       caseStudies: {
         title: 'ケーススタディ',
-        subtitle: '私の最新の仕事と創造的な解決策を紹介します'
+        subtitle: 'UX/UI\u30c7\u30b6\u30a4\u30f3\u3001\u30d5\u30eb\u30b9\u30bf\u30c3\u30af\u958b\u767a\u3001AI\u81ea\u52d5\u5316\u306e\u5b9f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8 \u2014 \u6226\u7565\u304b\u3089\u7d0d\u54c1\u307e\u3067\u3002'
       },
       quickProjects: {
-        title: 'クイックプロジェクト',
-        description: '私のランディングページ、ノーコードソリューション、クリエイティブな実験のコレクションをご覧ください。'
+        title: '\u30af\u30a4\u30c3\u30af\u30d7\u30ed\u30b8\u30a7\u30af\u30c8',
+        description: '\u30e9\u30f3\u30c7\u30a3\u30f3\u30b0\u30da\u30fc\u30b8\u3001\u30ce\u30fc\u30b3\u30fc\u30c9\u69cb\u7bc9\u3001\u30af\u30ea\u30a8\u30a4\u30c6\u30a3\u30d6\u306a\u5b9f\u9a13 \u2014 \u30c7\u30b6\u30a4\u30f3\u3068\u958b\u767a\u306e\u5e45\u5e83\u3055\u3092\u793a\u3059\u30b9\u30d4\u30fc\u30c9\u7d0d\u54c1\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3002'
       },
       caseStudy: {
-        workflow: '私たちのワークフロー',
+        workflow: '\u79c1\u305f\u3061\u306e\u30ef\u30fc\u30af\u30d5\u30ed\u30fc',
         workflowSubtitle: '成功への合理化されたプロセス',
         solutions: 'ソリューション',
         finalThoughts: '最終的な考え'
@@ -2878,21 +2878,21 @@ export const translations = {
       cta: '查看项目'
     },
     banner: {
-      leftMarquee: '创意 • 开发者 • 设计师 • 作品集 •',
-      rightMarquee: '前端 • 后端 • 全栈 • 项目 •',
+      leftMarquee: '设计工程师 • 从像素到生产 • 零中间人 • 为转化而生 •',
+      rightMarquee: 'UI/UX • 创意开发 • 全栈 • AI自动化 • 全球30+客户 •',
       projectsButton: '项目',
       resumeButton: '查看简历'
     },
     faqs: {
       title: '常见问题',
-      subtitle: '关于我的服务和流程的常见问题'
+      subtitle: '与设计工程师合作前你需要了解的一切 \u2014 流程、价格、时间线和预期成果。'
     },
     enterprises: {
       title: '深受领先品牌信赖，提供卓越的设计解决方案'
     },
     myStack: {
       title: '我的技术栈',
-      button: '查看技术栈'
+      button: '查看完整工具箱'
     },
     footer: {
       rights: '版权所有',
@@ -3023,8 +3023,8 @@ export const translations = {
       subtitle: '分享您对这个项目的想法'
     },
     contact: {
-      title: '联系我们',
-      subtitle: '准备好将您的想法变为现实了吗？让我们讨论您的项目',
+      title: '聊聊项目',
+      subtitle: '分享您的项目详情，24小时内获得个性化回复 — 无需承诺。',
       form: {
         name: {
           label: '您的姓名',
@@ -3043,7 +3043,7 @@ export const translations = {
           placeholder: '中国，美国，加拿大'
         },
         interests: {
-          label: '我感兴趣的是...',
+          label: '您需要什么？',
           options: [
             'UX/UI设计与工程',
             '创意前端开发',
@@ -3062,8 +3062,8 @@ export const translations = {
           ]
         },
         message: {
-          label: '更多关于项目',
-          placeholder: '告诉我更多关于您的项目...'
+          label: '项目详情',
+          placeholder: '您的目标、时间线以及任何参考或灵感是什么？'
         },
         attachment: {
           label: '添加附件',
@@ -3071,12 +3071,12 @@ export const translations = {
           remove: '删除'
         },
         submit: {
-          label: '发送请求',
+          label: '发送项目简报',
           sending: '发送中...'
         }
       },
       messages: {
-        success: '消息发送成功！我会尽快与您联系。',
+        success: '收到了！我将审阅您的简报，并在24小时内回复下一步计划。',
         error: '消息发送失败。请重试。',
         validation: '请完成姓名、邮箱和消息字段',
         fileTooBig: '文件太大。最大大小为10MB。',
@@ -3131,39 +3131,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: '设计很重要',
-          description: '好的UX不是魔法—是迭代。',
-          highlight: '我关注间距、层次、内容、动效...用户感受到但无法解释的一切。'
+          title: '每个像素都有意义',
+          description: '你的用户在几秒内就会判断你的产品。',
+          highlight: '我对间距、层次和动效有着极致追求——那些让用户信任你的品牌并留下来的隐形细节。'
         },
         {
           id: '02',
-          title: '建立我自己的',
-          description: '创立WebCrafters给了我领导完整流程的空间—从第一通电话到交付。',
-          highlight: '我与重视清晰度、所有权和诚实反馈的团队合作。'
+          title: '端到端交付',
+          description: '从第一次沟通到最终交付，我负责流程的每一步。',
+          highlight: '没有中间人。没有传话游戏。一个人完成设计、编码和产品交付。'
         },
         {
           id: '03',
-          title: '有意识地发展',
-          description: '设计和开发发展很快—但不是所有事情都应该匆忙。',
-          highlight: '我适应，但我坚持可用性、可访问性和真实需求。'
+          title: '经得起时间考验',
+          description: '快速不等于仓促。你产品背后的每个决策都经过深思熟虑。',
+          highlight: '无障碍性、性能和可扩展性从一开始就内置——让你的产品与业务同步成长。'
         },
         {
           id: '04',
-          title: '产品思维',
-          description: '我设计时考虑用户，但我也考虑开发时间、可扩展性和业务目标。',
-          highlight: '每个屏幕都是一个决定—我关心所有这些。'
+          title: '你的目标，我的蓝图',
+          description: '好看是不够的。我为转化、留存和增长而设计。',
+          highlight: '每个页面、每个交互都经过精心设计，让你的用户更接近你的商业目标。'
         },
         {
           id: '05',
-          title: '好奇心优先',
-          description: '我一直对事物如何运作感到好奇。设计作为解决问题的方式出现—不仅仅是让事物变得漂亮。',
-          highlight: '理解视觉和结构方面对我来说总是有意义的。'
+          title: '解决问题，不只是做设计',
+          description: '我不从像素开始。我从你的问题开始。',
+          highlight: '理解每个项目背后的"为什么"，意味着你的产品解决真实需求——而不只是在作品集里好看。'
         },
         {
           id: '06',
-          title: '带来设计和代码',
-          description: '我既是开发者又是设计师，这意味着我不仅让它看起来好—我让它工作。',
-          highlight: '这种心态帮助我构建得更快、更干净，减少交接。'
+          title: '设计+代码，零断层',
+          description: '大多数设计师交出一个Figma文件然后听天由命。我交付生产代码。',
+          highlight: '一个人。设计加开发。更快迭代，更少误解，更好结果。'
         }
       ]
     },
@@ -3172,19 +3172,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: '设计工程师',
         location: '位于墨西哥城',
-        intro: '这就是我介入的地方。我热爱我的工作，精通我的手艺。我在这里创造的产品不仅能反映您和您的理想，而且能真正与体验它们并实现其目标的人产生共鸣。'
+        intro: '你需要的不只是一个漂亮的网站。你需要一个能赢得信任、转化访客、与你的业务一起成长的数字产品。这正是我做的。'
       },
       experience: {
         years: '5年以上',
         title1: '创造数字',
         title2: '体验',
-        description: '从UI/UX设计到全栈开发，我与全球各地的公司合作，创造出将美学与功能融为一体的无缝数字体验。',
-        connectButton: '连接'
+        description: '从初创公司到横跨10多个国家的成熟品牌，我设计和开发的产品不仅好看\u2014还能带来成果。策略、设计和代码，全部由一人完成。',
+        connectButton: '聊聊吧'
       },
       stats: {
         title1: '数字不言自明',
         title2: ' ',
-        description: '每个项目都是一个突破界限、创造非凡事物的机会。',
+        description: '真实项目。真实成果。这就是5年以上设计和交付数字产品的样子。',
         awards: '获奖',
         clients: '全球客户',
         countries: '推出的国家'
@@ -3193,26 +3193,26 @@ export const translations = {
         title1: '设计不仅仅是',
         title2: '它的外观',
         title3: '它是如何工作的',
-        description1: '我相信创造的数字体验不仅在视觉上令人惊叹，而且在功能上也非常出色。每个像素都有其用途，每次互动都在讲述一个故事。',
-        description2: '准备好将您的愿景变为现实了吗？让我们一起创造非凡。'
+        description1: '我做的每个决定\u2014从布局到动效\u2014都基于一个问题：这是否帮助用户迈出下一步？如果不能转化，再好看也没用。',
+        description2: '准备好把你的想法变成一个真正有效的产品了吗？聊聊吧。'
       },
       globe: {
         title: '全球影响',
-        description: '我与全球客户合作，创造了高效、有影响力的数字产品，推动了实际的业务成果。'
+        description: '10多个国家的客户信任我设计和开发能带来可衡量成果的数字产品\u2014更多线索、更多转化、更多增长。'
       },
       readMore: '阅读更多'
     },
     projects: {
       caseStudies: {
         title: '案例研究',
-        subtitle: '展示我最新的工作和创意解决方案'
+        subtitle: 'UX/UI\u8bbe\u8ba1\u3001\u5168\u6808\u5f00\u53d1\u548cAI\u81ea\u52a8\u5316\u7684\u771f\u5b9e\u9879\u76ee \u2014 \u4ece\u7b56\u7565\u5230\u4ea4\u4ed8\u3002'
       },
       quickProjects: {
-        title: '快速项目',
-        description: '探索我的登录页面、无代码解决方案和创意实验的集合。'
+        title: '\u5feb\u901f\u9879\u76ee',
+        description: '\u843d\u5730\u9875\u3001\u65e0\u4ee3\u7801\u6784\u5efa\u548c\u521b\u610f\u5b9e\u9a8c \u2014 \u5c55\u793a\u8bbe\u8ba1\u548c\u5f00\u53d1\u591a\u6837\u6027\u7684\u5feb\u901f\u4ea4\u4ed8\u9879\u76ee\u3002'
       },
       caseStudy: {
-        workflow: '我们的工作流程',
+        workflow: '\u6211\u4eec\u7684\u5de5\u4f5c\u6d41\u7a0b',
         workflowSubtitle: '一个简化的成功流程',
         solutions: '解决方案',
         finalThoughts: '最后的想法'
@@ -3357,21 +3357,21 @@ export const translations = {
       cta: '查看專案'
     },
     banner: {
-      leftMarquee: '創意 • 開發者 • 設計師 • 作品集 •',
-      rightMarquee: '前端 • 後端 • 全端 • 專案 •',
+      leftMarquee: '設計工程師 • 從像素到生產 • 零中間人 • 為轉化而生 •',
+      rightMarquee: 'UI/UX • 創意開發 • 全端 • AI自動化 • 全球30+客戶 •',
       projectsButton: '專案',
       resumeButton: '查看履歷'
     },
     faqs: {
       title: '常見問題',
-      subtitle: '關於我的服務和流程的常見問題'
+      subtitle: '與設計工程師合作前你需要了解的一切 \u2014 流程、價格、時間線和預期成果。'
     },
     enterprises: {
       title: '深受領先品牌信賴，提供卓越的設計解決方案'
     },
     myStack: {
       title: '我的技術堆疊',
-      button: '查看技術堆疊'
+      button: '查看完整工具箱'
     },
     footer: {
       rights: '版權所有',
@@ -3502,8 +3502,8 @@ export const translations = {
       subtitle: '分享您對這個專案的想法'
     },
     contact: {
-      title: '聯絡我們',
-      subtitle: '準備好將您的想法變為現實了嗎？讓我們討論您的專案',
+      title: '聊聊專案',
+      subtitle: '分享您的專案詳情，24小時內獲得個人化回覆 — 無需承諾。',
       form: {
         name: {
           label: '您的姓名',
@@ -3522,7 +3522,7 @@ export const translations = {
           placeholder: '台灣，美國，加拿大'
         },
         interests: {
-          label: '我感興趣的是...',
+          label: '您需要什麼？',
           options: [
             'UX/UI設計與工程',
             '創意前端開發',
@@ -3541,8 +3541,8 @@ export const translations = {
           ]
         },
         message: {
-          label: '更多關於專案',
-          placeholder: '告訴我更多關於您的專案...'
+          label: '專案詳情',
+          placeholder: '您的目標、時間線以及任何參考或靈感是什麼？'
         },
         attachment: {
           label: '新增附件',
@@ -3550,12 +3550,12 @@ export const translations = {
           remove: '刪除'
         },
         submit: {
-          label: '發送請求',
+          label: '發送專案簡報',
           sending: '發送中...'
         }
       },
       messages: {
-        success: '訊息發送成功！我會盡快與您聯繫。',
+        success: '收到了！我將審閱您的簡報，並在24小時內回覆下一步計畫。',
         error: '訊息發送失敗。請重試。',
         validation: '請完成姓名、電子郵件和訊息欄位',
         fileTooBig: '檔案太大。最大大小為10MB。',
@@ -3610,39 +3610,39 @@ export const translations = {
       skills: [
         {
           id: '01',
-          title: '設計很重要',
-          description: '好的UX不是魔法—是迭代。',
-          highlight: '我關注間距、層次、內容、動效...使用者感受到但無法解釋的一切。'
+          title: '每個像素都有意義',
+          description: '你的使用者在幾秒內就會判斷你的產品。',
+          highlight: '我對間距、層次和動效有著極致追求——那些讓使用者信任你的品牌並留下來的隱形細節。'
         },
         {
           id: '02',
-          title: '建立我自己的',
-          description: '創立WebCrafters給了我領導完整流程的空間—從第一通電話到交付。',
-          highlight: '我與重視清晰度、所有權和誠實回饋的團隊合作。'
+          title: '端到端交付',
+          description: '從第一次溝通到最終交付，我負責流程的每一步。',
+          highlight: '沒有中間人。沒有傳話遊戲。一個人完成設計、編碼和產品交付。'
         },
         {
           id: '03',
-          title: '有意識地發展',
-          description: '設計和開發發展很快—但不是所有事情都應該匆忙。',
-          highlight: '我適應，但我堅持可用性、可訪問性和真實需求。'
+          title: '經得起時間考驗',
+          description: '快速不等於倉促。你產品背後的每個決策都經過深思熟慮。',
+          highlight: '無障礙性、效能和可擴展性從一開始就內建——讓你的產品與業務同步成長。'
         },
         {
           id: '04',
-          title: '產品思維',
-          description: '我設計時考慮使用者，但我也考慮開發時間、可擴展性和業務目標。',
-          highlight: '每個螢幕都是一個決定—我關心所有這些。'
+          title: '你的目標，我的藍圖',
+          description: '好看是不夠的。我為轉化、留存和成長而設計。',
+          highlight: '每個頁面、每個互動都經過精心設計，讓你的使用者更接近你的商業目標。'
         },
         {
           id: '05',
-          title: '好奇心優先',
-          description: '我一直對事物如何運作感到好奇。設計作為解決問題的方式出現—不僅僅是讓事物變得漂亮。',
-          highlight: '理解視覺和結構方面對我來說總是有意義的。'
+          title: '解決問題，不只是做設計',
+          description: '我不從像素開始。我從你的問題開始。',
+          highlight: '理解每個專案背後的「為什麼」，意味著你的產品解決真實需求——而不只是在作品集裡好看。'
         },
         {
           id: '06',
-          title: '帶來設計和程式碼',
-          description: '我既是開發者又是設計師，這意味著我不僅讓它看起來好—我讓它運作。',
-          highlight: '這種心態幫助我建構得更快、更乾淨，減少交接。'
+          title: '設計+程式碼，零斷層',
+          description: '大多數設計師交出一個Figma檔案然後聽天由命。我交付生產程式碼。',
+          highlight: '一個人。設計加開發。更快迭代，更少誤解，更好結果。'
         }
       ]
     },
@@ -3651,19 +3651,19 @@ export const translations = {
         name: 'Karen Ortiz',
         role: '設計工程師',
         location: '位於墨西哥城',
-        intro: '這就是我介入的地方。我熱愛我的工作，精通我的手藝。我在這裡創造的產品不僅能反映您和您的理想，而且能真正與體驗它們並實現其目標的人產生共鳴。'
+        intro: '你需要的不只是一個漂亮的網站。你需要一個能贏得信任、轉化訪客、與你的業務一起成長的數位產品。這正是我做的。'
       },
       experience: {
         years: '5年以上',
         title1: '創造數位',
         title2: '體驗',
-        description: '從UI/UX設計到全端開發，我與全球各地的公司合作，創造出將美學與功能融為一體的無縫數位體驗。',
-        connectButton: '連接'
+        description: '從新創公司到橫跨10多個國家的成熟品牌，我設計和開發的產品不僅好看\u2014還能帶來成果。策略、設計和程式碼，全部由一人完成。',
+        connectButton: '聊聊吧'
       },
       stats: {
         title1: '數字不言自明',
         title2: ' ',
-        description: '每個專案都是一個突破界限、創造非凡事物的機會。',
+        description: '真實專案。真實成果。這就是5年以上設計和交付數位產品的樣子。',
         awards: '獲獎',
         clients: '全球客戶',
         countries: '推出的國家'
@@ -3672,26 +3672,26 @@ export const translations = {
         title1: '設計不僅僅是',
         title2: '它的外觀',
         title3: '它是如何工作的',
-        description1: '我相信創造的數位體驗不僅在視覺上令人驚嘆，而且在功能上也非​​常出色。每個像素都有其用途，每次互動都在講述一個故事。',
-        description2: '準備好將您的願景變為現實了嗎？讓我們一起創造非凡。'
+        description1: '我做的每個決定\u2014從佈局到動效\u2014都基於一個問題：這是否幫助使用者邁出下一步？如果不能轉化，再好看也沒用。',
+        description2: '準備好把你的想法變成一個真正有效的產品了嗎？聊聊吧。'
       },
       globe: {
         title: '全球影響',
-        description: '我與全球客戶合作，創造了高效、有影響力的數位產品，推動了實際的業務成果。'
+        description: '10多個國家的客戶信任我設計和開發能帶來可衡量成果的數位產品\u2014更多線索、更多轉化、更多成長。'
       },
       readMore: '閱讀更多'
     },
     projects: {
       caseStudies: {
         title: '案例研究',
-        subtitle: '展示我最新的工作和創意解決方案'
+        subtitle: 'UX/UI\u8a2d\u8a08\u3001\u5168\u7aef\u958b\u767c\u548cAI\u81ea\u52d5\u5316\u7684\u771f\u5be6\u5c08\u6848 \u2014 \u5f9e\u7b56\u7565\u5230\u4ea4\u4ed8\u3002'
       },
       quickProjects: {
-        title: '快速專案',
-        description: '探索我的登錄頁面、無代碼解決方案和創意實驗的集合。'
+        title: '\u5feb\u901f\u5c08\u6848',
+        description: '\u843d\u5730\u9801\u3001\u7121\u4ee3\u78bc\u69cb\u5efa\u548c\u5275\u610f\u5be6\u9a57 \u2014 \u5c55\u793a\u8a2d\u8a08\u548c\u958b\u767c\u591a\u6a23\u6027\u7684\u5feb\u901f\u4ea4\u4ed8\u5c08\u6848\u3002'
       },
       caseStudy: {
-        workflow: '我們的工作流程',
+        workflow: '\u6211\u5011\u7684\u5de5\u4f5c\u6d41\u7a0b',
         workflowSubtitle: '一個簡化的成功流程',
         solutions: '解決方案',
         finalThoughts: '最後的想法'

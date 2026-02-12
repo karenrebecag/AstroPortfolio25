@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import FlipText from '../../../ui/FlipText';
+import React from 'react';
 import { translations } from '../../../../i18n/translations.js';
 import type { Service as CMSService } from '../../../../lib/cms';
+import { useStackingCardsParallax } from '../hooks/useStackingCardsParallax';
 
 interface Service {
   id: number;
@@ -19,8 +19,12 @@ interface ServicesIslandProps {
 }
 
 const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, lang = 'en' }) => {
-  const [activeService, setActiveService] = useState<number>(1); // Primer servicio activo por defecto
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
+  // Initialize stacking cards parallax effect
+  const { containerRef } = useStackingCardsParallax({
+    yPercent: 50,
+    scale: 0.95,
+    fadeOut: false,
+  });
 
   // Obtener traducciones para el idioma actual (para fallback)
   const t = translations[lang as keyof typeof translations] || translations.en;
@@ -88,39 +92,23 @@ const ServicesIsland: React.FC<ServicesIslandProps> = ({ services: cmsServices, 
       }))
     : fallbackServices;
 
-  const handleServiceClick = (serviceId: number) => {
-    setActiveService(activeService === serviceId ? 0 : serviceId); // Toggle para todos los dispositivos
-    setHoveredService(activeService === serviceId ? null : serviceId);
-  };
-
   return (
-    <div className="services-list">
+    <div className="services-list stacking-cards-collection" ref={containerRef}>
       {services.map((service) => {
-        const isActive = activeService === service.id;
-        const isHovered = hoveredService === service.id;
-
         return (
           <div
             key={service.id}
-            className={`service-item clickable ${isActive ? 'active' : ''}`}
+            className="service-item active"
             data-service={service.id}
-            onClick={() => handleServiceClick(service.id)}
+            data-stacking-cards-item
           >
-            <div className={`service-number ${!isActive ? 'inactive' : ''}`}>
+            <div className="service-number">
               {service.id.toString().padStart(2, '0')}.
             </div>
-            <div className="service-content">
+            <div className="service-content" data-stacking-cards-content>
               <div className="service-title-container">
-                <FlipText
-                  text={service.title1}
-                  className={`service-title ${!isActive ? 'inactive' : ''}`}
-                  isHovered={isHovered}
-                />
-                <FlipText
-                  text={service.title2}
-                  className={`service-title ${!isActive ? 'inactive' : ''}`}
-                  isHovered={isHovered}
-                />
+                <h3 className="service-title">{service.title1}</h3>
+                <h3 className="service-title">{service.title2}</h3>
               </div>
               <div className="service-details">
                 <div className="service-info">

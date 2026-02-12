@@ -4,6 +4,13 @@
   contain: layout paint;
 }
 
+/* Dark mode background pattern */
+:global(.dark-mode) .bannerContainer {
+  background-size: 40px 40px, 40px 40px;
+  background-position: center;
+  background-repeat: repeat;
+}
+
 /* Banner image container - moved from inline styles */
 .bannerImageContainer {
   position: absolute;
@@ -55,6 +62,16 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:global(.dark-mode) .darkOverlay {
+  opacity: 1;
+}
+
+/* Dark mode image filter */
+:global(.dark-mode) .bannerImageContainer img {
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 60px #c31e9225) drop-shadow(0 0 80px rgba(195, 30, 146, 0.06)) drop-shadow(0 0 180px rgba(195, 30, 146, 0.02));
 }
 
 @keyframes slideUp {

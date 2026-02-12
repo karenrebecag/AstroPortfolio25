@@ -1,64 +1,54 @@
 import React, { useEffect, useRef } from 'react';
-
-interface ProjectData {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  url: string;
-  type: string;
-}
+import type { QuickProject } from './types';
 
 interface ProjectSliderProps {
-  projectData: ProjectData[];
+  projectData: QuickProject[];
 }
 
 const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const splideRef = useRef<any>(null);
 
   useEffect(() => {
-    // Importar Splide dinámicamente solo en el cliente
+    let mounted = true;
+
     const loadSplide = async () => {
       try {
         const { Splide } = await import('@splidejs/splide');
-        
-        if (sliderRef.current) {
-          const splide = new Splide(sliderRef.current, {
-            type: 'slide',
-            perPage: 1,
-            perMove: 1,
-            gap: '1rem',
-            padding: '2rem',
-            arrows: true,
-            pagination: true,
-            autoplay: false,
-            pauseOnHover: true,
-            pauseOnFocus: true,
-            resetProgress: false,
-            breakpoints: {
-              768: {
-                padding: '1rem',
-              },
-              480: {
-                padding: '0.5rem',
-              }
-            }
-          });
 
-          splide.mount();
+        if (!mounted || !sliderRef.current) return;
 
-          // Cleanup function
-          return () => {
-            splide.destroy();
-          };
-        }
+        splideRef.current = new Splide(sliderRef.current, {
+          type: 'slide',
+          perPage: 1,
+          perMove: 1,
+          gap: '1rem',
+          padding: '2rem',
+          arrows: true,
+          pagination: true,
+          autoplay: false,
+          pauseOnHover: true,
+          pauseOnFocus: true,
+          resetProgress: false,
+          breakpoints: {
+            768: { padding: '1rem' },
+            480: { padding: '0.5rem' }
+          }
+        });
+
+        splideRef.current.mount();
       } catch (error) {
         console.error('Error loading Splide:', error);
       }
     };
 
     loadSplide();
+
+    return () => {
+      mounted = false;
+      splideRef.current?.destroy();
+      splideRef.current = null;
+    };
   }, []);
 
   const handleVisitClick = (url: string, e: React.MouseEvent) => {
@@ -68,7 +58,6 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
   };
 
   const handleCardClick = (url: string, e: React.MouseEvent) => {
-    // Solo si no se clickeó el botón Visit
     if (!(e.target as Element).closest('.project-visit-btn')) {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
@@ -81,7 +70,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
           <ul className="splide__list">
             {projectData.map((project) => (
               <li key={project.id} className="splide__slide project-slide">
-                <div 
+                <div
                   className="project-card-slider"
                   style={{
                     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(${project.image})`,
@@ -106,7 +95,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
                           <span key={index} className="project-tag-slider">{tag}</span>
                         ))}
                       </div>
-                      <button 
+                      <button
                         className="project-visit-btn-slider"
                         onClick={(e) => handleVisitClick(project.url, e)}
                       >
